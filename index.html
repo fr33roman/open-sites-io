@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>open-sites.io — сайты, которые продают. Лендинг за 3–5 дней</title>
+  <meta name="description" content="Создаём продающие сайты и Telegram Mini Apps за дни, а не месяцы. Фиксированная цена, безлимитные правки до сдачи, заявки прямо в ваш Telegram.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+Georgian:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="blobs" aria-hidden="true">
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
+  <div class="blob blob-3"></div>
+  <div class="blob blob-4"></div>
+</div>
+
+<header class="nav" id="nav">
+  <div class="wrap nav-inner">
+    <a class="logo" href="#">open-sites<span class="dot">.io</span></a>
+    <div class="nav-right">
+      <nav class="nav-links" id="navLinks">
+        <a href="#services" data-i18n="nav.services">Услуги</a>
+        <a href="#cases" data-i18n="nav.cases">Кейсы</a>
+        <a href="#process" data-i18n="nav.process">Процесс</a>
+        <a href="#faq" data-i18n="nav.faq">FAQ</a>
+        <a class="btn btn-primary btn-sm btn-pulse" href="brief.html" data-i18n="nav.cta">Оставить заявку</a>
+      </nav>
+      <div class="lang-dd" id="langDd">
+        <button type="button" class="lang-current" id="langCurrent" aria-haspopup="listbox" aria-expanded="false" aria-label="Язык / Language">
+          <span id="langCurLabel">RU</span>
+          <svg class="chev" viewBox="0 0 12 8" aria-hidden="true"><path d="M1 1.5 6 6.5 11 1.5" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="lang-menu" id="langMenu" role="listbox">
+          <button type="button" class="lang-opt on" data-lang="ru" role="option">RU</button>
+          <button type="button" class="lang-opt" data-lang="en" role="option">EN</button>
+          <button type="button" class="lang-opt" data-lang="ka" role="option">ქა</button>
+        </div>
+      </div>
+      <button class="burger" id="burger" aria-label="Меню"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <!-- HERO -->
+  <section class="hero">
+    <div class="wrap">
+      <div class="hero-badge"><span class="live"></span> <span data-i18n="hero.badge">Берём проекты на июнь — осталось 3 места</span></div>
+      <h1><span data-i18n="hero.h1a">Сайты, которые</span> <span class="grad-text" data-i18n="hero.h1b">продают</span>.<br><span data-i18n="hero.h1c">Запуск за 3–5 дней.</span></h1>
+      <p class="lead" data-i18n="hero.lead">Лендинги, сайты для бизнеса и Telegram Mini Apps. Фиксированная цена, безлимитные правки до сдачи, заявки клиентов — сразу в ваш Telegram.</p>
+      <div class="hero-cta">
+        <a class="btn btn-primary btn-pulse" href="brief.html" data-i18n="hero.cta1">Получить скидку −20%</a>
+        <a class="btn btn-ghost" href="#cases" data-i18n="hero.cta2">Смотреть кейсы</a>
+      </div>
+      <p class="hero-note" data-i18n="hero.note">Скидка фиксируется на бесплатной консультации — это просто разговор, ни к чему не обязывает.</p>
+    </div>
+  </section>
+
+  <!-- RIBBON: ровная тонкая линия с плывущим переливом -->
+  <div class="ribbon" aria-hidden="true">
+    <span class="rib-line"></span>
+  </div>
+
+  <!-- STATS -->
+  <section class="section" style="padding-bottom: 40px;">
+    <div class="wrap">
+      <div class="stats reveal">
+        <div class="stat"><b><span class="count" data-to="5">0</span> <span data-i18n="stats.days">дней</span></b><span data-i18n="stats.l1">средний срок запуска</span></div>
+        <div class="stat"><b>×<span class="count" data-to="3">0</span></b><span data-i18n="stats.l2">быстрее классических студий</span></div>
+        <div class="stat"><b><span class="count" data-to="100">0</span>%</b><span data-i18n="stats.l3">правок до сдачи бесплатно</span></div>
+        <div class="stat"><b>24/7</b><span data-i18n="stats.l4">заявки падают в ваш Telegram</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section class="section" id="services">
+    <div class="wrap">
+      <span class="sec-tag reveal" data-i18n="svc.tag">Услуги</span>
+      <h2 class="reveal" data-i18n="svc.h2">Что мы делаем</h2>
+      <p class="sec-sub reveal" data-i18n="svc.sub">Цена фиксируется до старта и не меняется. В каждый проект входят адаптив под телефоны, форма заявки и базовое SEO.</p>
+      <div class="svc-coverflow reveal" id="svcFlow">
+        <div class="svc-stage" id="svcStage">
+
+          <article class="svc-card">
+            <div class="svc-ico">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 4.5 13H11l-1 9 8.5-11H12l1-9z"/></svg>
+            </div>
+            <h3 data-i18n="svc.1.t">Лендинг</h3>
+            <p data-i18n="svc.1.d">Продающая страница под одну услугу или товар</p>
+          </article>
+
+          <article class="svc-card">
+            <div class="svc-ico">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18"/><path d="M7 6.5h.01M10 6.5h.01"/></svg>
+            </div>
+            <h3 data-i18n="svc.2.t">Сайт для бизнеса</h3>
+            <p data-i18n="svc.2.d">Многостраничный сайт компании под ключ</p>
+          </article>
+
+          <article class="svc-card">
+            <div class="svc-ico">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21.5 3 2.5 10.5l6 2.2"/><path d="M21.5 3 15 21l-3.5-7.3L21.5 3z"/><path d="m8.5 12.7 3 1L21.5 3"/></svg>
+            </div>
+            <h3 data-i18n="svc.3.t">Telegram Mini App</h3>
+            <p data-i18n="svc.3.d">Приложение прямо внутри Telegram</p>
+          </article>
+
+          <article class="svc-card">
+            <div class="svc-ico">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3c2.7 2.6 2.7 15.4 0 18M12 3c-2.7 2.6-2.7 15.4 0 18"/></svg>
+            </div>
+            <h3 data-i18n="svc.4.t">Помощь с доменом</h3>
+            <p data-i18n="svc.4.d">Домен, почта и SSL — техчасть на нас</p>
+          </article>
+
+          <article class="svc-card">
+            <div class="svc-ico">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 5 6v6c0 4.2 3 7.4 7 8.8 4-1.4 7-4.6 7-8.8V6l-7-3z"/><path d="m9 11.8 2 2 4-4.2"/></svg>
+            </div>
+            <h3 data-i18n="svc.5.t">Сопровождение</h3>
+            <p data-i18n="svc.5.d">Поддержка и развитие после запуска</p>
+          </article>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES TABLE -->
+  <section class="section" id="services-table" style="padding-top: 0;">
+    <div class="wrap">
+      <div class="svc-table reveal" id="svcTable">
+        <div class="svc-row svc-row-head">
+          <span data-i18n="tbl.h1">Услуга</span><span data-i18n="tbl.h2">Описание</span><span data-i18n="tbl.h3">Сроки</span><span data-i18n="tbl.h4">Стоимость</span>
+        </div>
+
+        <div class="svc-row">
+          <span class="svc-name" data-i18n="svc.1.t">Лендинг</span>
+          <span class="svc-desc" data-i18n="tbl.1.d">Продающая страница: оффер, выгоды, кейсы, отзывы, FAQ и форма заявки. Для рекламы и быстрого старта продаж.</span>
+          <span class="svc-term" data-label="Сроки" data-i18n="tbl.1.term" data-i18n-label="tbl.h3">3–5 дней</span>
+          <span class="svc-cost" data-label="Стоимость" data-i18n="cost.1" data-i18n-label="tbl.h4">от 30 000 ₽</span>
+        </div>
+
+        <div class="svc-row">
+          <span class="svc-name" data-i18n="svc.2.t">Сайт для бизнеса</span>
+          <span class="svc-desc" data-i18n="tbl.2.d">Услуги, прайс, портфолио, команда и контакты. Онлайн-запись, интеграция с CRM и базовое SEO.</span>
+          <span class="svc-term" data-label="Сроки" data-i18n="tbl.2.term" data-i18n-label="tbl.h3">1–2 недели</span>
+          <span class="svc-cost" data-label="Стоимость" data-i18n="cost.2" data-i18n-label="tbl.h4">от 70 000 ₽</span>
+        </div>
+
+        <div class="svc-row">
+          <span class="svc-name" data-i18n="svc.3.t">Telegram Mini App</span>
+          <span class="svc-desc" data-i18n="tbl.3.d">Каталог, запись, оплата и личный кабинет прямо в Telegram. Клиенты пользуются без скачивания приложений.</span>
+          <span class="svc-term" data-label="Сроки" data-i18n="tbl.3.term" data-i18n-label="tbl.h3">от 1 недели</span>
+          <span class="svc-cost" data-label="Стоимость" data-i18n="cost.3" data-i18n-label="tbl.h4">от 80 000 ₽</span>
+        </div>
+
+        <div class="svc-row">
+          <span class="svc-name" data-i18n="svc.4.t">Помощь с доменом</span>
+          <span class="svc-desc" data-i18n="tbl.4.d">Подбор и регистрация домена, почта на вашем адресе, SSL и подключение к сайту. Всю техчасть берём на себя.</span>
+          <span class="svc-term" data-label="Сроки" data-i18n="tbl.4.term" data-i18n-label="tbl.h3">под ключ</span>
+          <span class="svc-cost" data-label="Стоимость" data-i18n="cost.4" data-i18n-label="tbl.h4">от 2 000 ₽</span>
+        </div>
+
+        <div class="svc-row">
+          <span class="svc-name" data-i18n="svc.5.t">Сопровождение</span>
+          <span class="svc-desc" data-i18n="tbl.5.d">Обновления, правки контента, бэкапы, мониторинг доступности и скорости. Сайт всегда онлайн и актуален.</span>
+          <span class="svc-term" data-label="Сроки" data-i18n="tbl.5.term" data-i18n-label="tbl.h3">ежемесячно</span>
+          <span class="svc-cost" data-label="Стоимость" data-i18n-label="tbl.h4"><span data-i18n="cost.5">от 3 000 ₽</span><small data-i18n="cost.permonth">/мес</small></span>
+        </div>
+      </div>
+      <p class="price-note" id="priceNote" data-i18n="price.note" hidden>Цены указаны ориентировочно и пересчитаны по текущему курсу.</p>
+    </div>
+  </section>
+
+  <!-- CASES -->
+  <section class="section" id="cases">
+    <div class="wrap">
+      <span class="sec-tag reveal" data-i18n="cases.tag">Кейсы</span>
+      <h2 class="reveal" data-i18n="cases.h2">Цифры вместо обещаний</h2>
+      <div class="car reveal">
+        <div class="car-viewport">
+          <div class="car-track" id="carTrack">
+
+            <article class="case">
+              <div class="case-visual" style="background: radial-gradient(circle at 30% 30%, #312e81, #0c0a1d);">
+                <span class="badge-demo" data-i18n="cases.badge">концепт</span>
+                <div class="mock" style="background: linear-gradient(135deg, #1e1b4b, #4c1d95);">GRANITE</div>
+              </div>
+              <div class="case-body">
+                <div class="niche" data-i18n="cases.1.n">Ремонт и отделка</div>
+                <h3 data-i18n="cases.1.t">Лендинг для студии ремонта</h3>
+                <p data-i18n="cases.1.d">Заменили устаревший сайт-визитку на лендинг с калькулятором сметы и квиз-формой. Запуск за 4 дня.</p>
+                <div class="case-metric"><b class="grad-text">+212%</b><span data-i18n="cases.1.m">заявок в первый месяц</span></div>
+              </div>
+            </article>
+
+            <article class="case">
+              <div class="case-visual" style="background: radial-gradient(circle at 70% 30%, #831843, #170b13);">
+                <span class="badge-demo" data-i18n="cases.badge">концепт</span>
+                <div class="mock" style="background: linear-gradient(135deg, #4a044e, #9d174d);">Lumi Beauty</div>
+              </div>
+              <div class="case-body">
+                <div class="niche" data-i18n="cases.2.n">Салон красоты</div>
+                <h3 data-i18n="cases.2.t">Сайт с онлайн-записью</h3>
+                <p data-i18n="cases.2.d">Сайт с записью без звонков и напоминаниями в Telegram. Администратор разгружен, окна в расписании заполнены.</p>
+                <div class="case-metric"><b class="grad-text">+38%</b><span data-i18n="cases.2.m">выручки за два месяца</span></div>
+              </div>
+            </article>
+
+            <article class="case">
+              <div class="case-visual" style="background: radial-gradient(circle at 30% 70%, #134e4a, #07140f);">
+                <span class="badge-demo" data-i18n="cases.badge">концепт</span>
+                <div class="mock" style="background: linear-gradient(135deg, #064e3b, #0e7490);">TEPLO.PRO</div>
+              </div>
+              <div class="case-body">
+                <div class="niche" data-i18n="cases.3.n">Отопительное оборудование</div>
+                <h3 data-i18n="cases.3.t">Витрина с подбором по параметрам</h3>
+                <p data-i18n="cases.3.d">Каталог котлов с фильтром-подборщиком: клиент сам собирает комплект, менеджер получает готовую заявку.</p>
+                <div class="case-metric"><b class="grad-text">+27%</b><span data-i18n="cases.3.m">к среднему чеку</span></div>
+              </div>
+            </article>
+
+            <article class="case">
+              <div class="case-visual" style="background: radial-gradient(circle at 70% 70%, #155e75, #06101d);">
+                <span class="badge-demo" data-i18n="cases.badge">концепт</span>
+                <div class="mock" style="background: linear-gradient(135deg, #0e7490, #6d28d9);">FitPulse</div>
+              </div>
+              <div class="case-body">
+                <div class="niche" data-i18n="cases.4.n">Фитнес-студия</div>
+                <h3 data-i18n="cases.4.t">Telegram Mini App для записи</h3>
+                <p data-i18n="cases.4.d">Запись на тренировки прямо в Telegram: расписание, абонементы, оплата. Без скачивания приложений.</p>
+                <div class="case-metric"><b class="grad-text">1 800</b><span data-i18n="cases.4.m">записей через мини-апп за квартал</span></div>
+              </div>
+            </article>
+
+          </div>
+        </div>
+        <div class="car-nav">
+          <button class="car-btn" id="carPrev" aria-label="←">←</button>
+          <div class="car-dots" id="carDots"></div>
+          <button class="car-btn" id="carNext" aria-label="→">→</button>
+        </div>
+        <p class="cases-note" data-i18n="cases.note">Кейсы с пометкой «концепт» — демонстрационные работы студии. Раздел обновляется по мере выхода клиентских проектов.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROCESS -->
+  <section class="section" id="process">
+    <div class="wrap">
+      <span class="sec-tag reveal" data-i18n="proc.tag">Процесс</span>
+      <h2 class="reveal"><span data-i18n="proc.h2a">От заявки до запуска —</span> <span class="grad-text" data-i18n="proc.h2b">4 шага</span></h2>
+      <div class="steps">
+        <div class="step reveal">
+          <div class="num">1</div>
+          <h3 data-i18n="proc.1.t">Бриф</h3>
+          <p data-i18n="proc.1.d">Заполняете короткую анкету: галочки и выпадающие списки, никаких сочинений. Прикладываете референсы — сайты, которые нравятся.</p>
+          <span class="time" data-i18n="proc.1.time">≈ 7 минут</span>
+        </div>
+        <div class="step reveal">
+          <div class="num">2</div>
+          <h3 data-i18n="proc.2.t">Концепт</h3>
+          <p data-i18n="proc.2.d">Показываем дизайн главного экрана. Не понравится — переделаем или вернём предоплату.</p>
+          <span class="time" data-i18n="proc.2.time">24–48 часов</span>
+        </div>
+        <div class="step reveal">
+          <div class="num">3</div>
+          <h3 data-i18n="proc.3.t">Сборка</h3>
+          <p data-i18n="proc.3.d">Собираем сайт целиком. Правки на этом этапе — без ограничений и доплат.</p>
+          <span class="time" data-i18n="proc.3.time">2–7 дней</span>
+        </div>
+        <div class="step reveal">
+          <div class="num">4</div>
+          <h3 data-i18n="proc.4.t">Запуск</h3>
+          <p data-i18n="proc.4.d">Публикуем на вашем домене, настраиваем заявки в ваш Telegram, передаём все доступы.</p>
+          <span class="time" data-i18n="proc.4.time">1 день</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- OFFER + TIMER -->
+  <section class="section" id="offer">
+    <div class="wrap">
+      <div class="offer reveal">
+        <h2 data-i18n="offer.h2">−20% на первый проект</h2>
+        <p class="calm" data-i18n="offer.calm">Оставьте заявку, пока действует предложение, — скидка закрепится за вами на <b>бесплатной консультации</b>. Это просто разговор о вашей задаче: без оплаты, без обязательств, бриф можно заполнить за 7 минут.</p>
+        <div class="timer" id="timer">
+          <div class="t-cell"><b id="tH">00</b><span data-i18n="offer.h">часов</span></div>
+          <div class="t-cell"><b id="tM">00</b><span data-i18n="offer.m">минут</span></div>
+          <div class="t-cell"><b id="tS">00</b><span data-i18n="offer.s">секунд</span></div>
+        </div>
+        <a class="btn btn-primary btn-pulse" href="brief.html" data-i18n="offer.cta">Забронировать скидку</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="section" id="faq" style="padding-top: 40px;">
+    <div class="wrap">
+      <span class="sec-tag reveal" data-i18n="faq.tag">FAQ</span>
+      <h2 class="reveal" data-i18n="faq.h2">Частые вопросы</h2>
+      <div class="faq reveal">
+        <details>
+          <summary><span data-i18n="faq.q1">Почему так быстро? В студиях это занимает месяцы.</span></summary>
+          <div class="a" data-i18n="faq.a1">Мы используем собственную систему шаблонов и ИИ-инструменты разработки: типовые блоки уже отлажены, поэтому время уходит на ваш дизайн и тексты, а не на рутину. Скорость не означает шаблонность — внешний вид собирается под ваш референс.</div>
+        </details>
+        <details>
+          <summary><span data-i18n="faq.q2">Что если мне не понравится результат?</span></summary>
+          <div class="a" data-i18n="faq.a2">Сначала вы видите концепт главного экрана. Не нравится — переделываем или возвращаем предоплату. На этапе сборки правки безлимитные и бесплатные до сдачи проекта.</div>
+        </details>
+        <details>
+          <summary><span data-i18n="faq.q3">Сколько это стоит и от чего зависит цена?</span></summary>
+          <div class="a" data-i18n="faq.a3">Лендинг — от 30 000 ₽, сайт для бизнеса — от 70 000 ₽, Telegram Mini App — от 80 000 ₽. Цена зависит от количества блоков и интеграций (CRM, оплата, онлайн-запись) и фиксируется до старта — никаких «вылезло по ходу».</div>
+        </details>
+        <details>
+          <summary><span data-i18n="faq.q4">Нужно ли мне разбираться в технике? Домен, хостинг…</span></summary>
+          <div class="a" data-i18n="faq.a4">Нет. Поможем купить домен (это 10 минут и от ~300 ₽/год), хостинг для большинства проектов бесплатный. Все доступы остаются у вас — сайт принадлежит вам, а не нам.</div>
+        </details>
+        <details>
+          <summary><span data-i18n="faq.q5">Что происходит с сайтом после запуска?</span></summary>
+          <div class="a" data-i18n="faq.a5">Месяц бесплатной поддержки после сдачи. Дальше — по желанию: тариф поддержки от 3 000 ₽/мес (правки, обновления, мониторинг) или сайт просто работает сам, он ваш.</div>
+        </details>
+        <details>
+          <summary><span data-i18n="faq.q6">Скидка по таймеру — это правда или маркетинг?</span></summary>
+          <div class="a" data-i18n="faq.a6">Правда: мы берём ограниченное число проектов в месяц, и скидка действует на ближайшие свободные места. Если успели оставить заявку — скидка закрепляется за вами на консультации, даже если сам проект стартует позже.</div>
+        </details>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="wrap footer-inner">
+    <div>
+      <div class="logo">open-sites<span class="dot">.io</span></div>
+      <div class="muted" data-i18n="footer.tagline">Сайты, которые продают. 2026</div>
+    </div>
+    <div class="muted">
+      Telegram: <a href="https://t.me/open_sites" target="_blank" rel="noopener">@open_sites</a> ·
+      <a href="mailto:hello@open-sites.io">hello@open-sites.io</a>
+    </div>
+  </div>
+</footer>
+
+<a class="float-cta btn btn-primary btn-sm btn-pulse" id="floatCta" href="brief.html" data-i18n="float.cta">Заявка −20%</a>
+
+<script src="i18n.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
