@@ -1,0 +1,706 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Кружок — детский центр (демо open-sites.io)</title>
+<meta name="description" content="Демо-сайт студии open-sites.io: детский центр «Кружок». Выбираете возраст ребёнка — остаются только подходящие занятия с днями, временем и ценой. ">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#F0EDE6">
+<link rel="canonical" href="https://open-sites.io/works/kruzhok/">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="ru_RU">
+<meta property="og:site_name" content="open-sites.io">
+<meta property="og:title" content="Кружок — детский центр">
+<meta property="og:description" content="Нажмите возраст ребёнка — останутся только те занятия, куда его возьмут. Дни, время и цена сразу.">
+<meta property="og:url" content="https://open-sites.io/works/kruzhok/">
+<meta property="og:image" content="https://open-sites.io/works/kruzhok/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23F0EDE6'/%3E%3Ccircle cx='16' cy='16' r='10' fill='none' stroke='%234F6F52' stroke-width='2.6'/%3E%3Ccircle cx='16' cy='16' r='3.4' fill='%23E08A4C'/%3E%3C/svg%3E">
+<script>document.documentElement.className += ' js';</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://images.unsplash.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Literata:opsz,wght@7..72,400;7..72,600&family=Ysabeau+Office:wght@400;500;600&display=swap">
+<style>
+/* ============ токены (см. DESIGN.md) ============ */
+:root{
+  --oat:#F0EDE6;      /* фон */
+  --paper:#FAF8F4;    /* плашки */
+  --ink:#2A2622;      /* текст */
+  --soft:#6B6358;     /* второстепенный, 5:1 */
+  --moss:#4F6F52;     /* действие */
+  --moss-d:#3F5A42;
+  --apricot:#E08A4C;  /* только заливка меток возраста */
+  --line:rgba(42,38,34,.16);
+  --disp:"Literata",Georgia,serif;
+  --text:"Ysabeau Office","Segoe UI",system-ui,sans-serif;
+  --gut:40px;
+  --sec:80px;
+}
+@media (max-width:1000px){:root{--gut:24px}}
+@media (max-width:700px){:root{--gut:16px}}
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+@media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
+body{margin:0;background:var(--oat);color:var(--ink);
+  font:400 17px/1.6 var(--text);-webkit-font-smoothing:antialiased;overflow-x:clip}
+img{display:block;max-width:100%}
+a{color:inherit}
+h1,h2,h3,p,ul,ol,dl,dd,figure{margin:0}
+ul,ol{list-style:none;padding:0}
+button,input,select,textarea{font:inherit;color:inherit}
+[hidden]{display:none!important}
+.nw{white-space:nowrap}
+.sr{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+:focus-visible{outline:2px solid var(--moss);outline-offset:3px}
+[id]{scroll-margin-top:78px}
+.skip{position:absolute;left:12px;top:-80px;background:var(--ink);color:var(--paper);padding:12px 18px;border-radius:999px;z-index:60}
+.skip:focus{top:12px}
+
+/* ============ кнопки ============ */
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:0 24px;
+  border:1px solid var(--moss);border-radius:999px;background:var(--moss);color:#fff;
+  font-weight:600;font-size:16px;text-decoration:none;cursor:pointer;transition:background .16s,border-color .16s}
+.btn:hover{background:var(--moss-d);border-color:var(--moss-d)}
+.btn:disabled{background:transparent;border-color:var(--line);color:var(--soft);cursor:not-allowed}
+.btn--line{background:transparent;color:var(--moss)}
+.btn--line:hover{background:rgba(79,111,82,.1)}
+.link{color:var(--moss);text-underline-offset:4px}
+
+/* ============ закреплённая строка ============ */
+.top{position:sticky;top:0;z-index:50;display:flex;align-items:center;gap:20px;
+  padding:10px var(--gut);background:rgba(240,237,230,.95);border-bottom:1px solid var(--line);
+  backdrop-filter:blur(8px)}
+.mark{display:inline-flex;align-items:center;gap:9px;font-family:var(--disp);font-weight:600;font-size:19px;
+  text-decoration:none;min-height:44px;padding:7px 0}
+.mark i{width:16px;height:16px;border:3px solid var(--moss);border-radius:50%;display:inline-block}
+.nav{display:none;gap:22px;margin-left:auto;font-size:15px;color:var(--soft)}
+.nav a{text-decoration:none}
+.nav a:hover{color:var(--ink)}
+/* Правка 21.09: кнопка мягко пульсирует, чтобы её замечали.
+   При «уменьшить движение» пульсация выключается. */
+@keyframes softPulse{0%,100%{box-shadow:0 0 0 0 rgba(79,111,82,.42)}
+  50%{box-shadow:0 0 0 10px rgba(79,111,82,0)}}
+@media (prefers-reduced-motion:no-preference){
+  .top .btn{animation:softPulse 2.6s ease-in-out infinite}
+  .top .btn:hover,.top .btn:focus-visible{animation-play-state:paused}
+}
+.top .btn{margin-left:auto;min-height:44px;padding:0 18px;font-size:15px}
+@media (min-width:1060px){.nav{display:flex}.top .btn{margin-left:0}}
+
+/* ============ секции ============ */
+.sec{border-top:1px solid var(--line)}
+.sec__in{max-width:1200px;margin:0 auto;padding:clamp(40px,5.5vw,var(--sec)) var(--gut)}
+h2{font-family:var(--disp);font-weight:400;font-size:clamp(23px,3vw,38px);line-height:1.15}
+h3{font-family:var(--disp);font-weight:600;font-size:19px;line-height:1.3}
+.note{color:var(--soft);font-size:15px;line-height:1.6;max-width:72ch}
+
+/* ============ 1. герой ============ */
+/* Правка 21.09: кадр детской комнаты на фоне первого экрана. Он оживляет
+   страницу, но уходит в овсяный фон, чтобы текст читался.
+   Правка 22.09: прежний кадр был детским лицом крупным планом — после подъёма
+   яркости это стало видно. Заменён на детей со спины: правило «детских лиц нет»
+   (SITE-FACTORY §7.5) держим. */
+.hero{position:relative;isolation:isolate;max-width:1200px;margin:0 auto;
+  padding:clamp(32px,4.5vw,64px) var(--gut) 0}
+.hero__bg{position:absolute;inset:-40px 0 0;z-index:-1;overflow:hidden;border-radius:0 0 28px 28px}
+/* Правка 22.09: кадр был блёклый и еле заметный — поднята непрозрачность и цвет,
+   пелена сверху ослаблена. Ниже по кадру пелена остаётся плотной: там тёмный текст. */
+.hero__bg img{width:100%;height:100%;object-fit:cover;object-position:50% 30%;opacity:.82;filter:saturate(1.02)}
+.hero__bg::after{content:"";position:absolute;inset:0;
+  background:linear-gradient(180deg,rgba(240,237,230,.3) 0%,rgba(240,237,230,.74) 55%,var(--oat) 100%)}
+h1{font-family:var(--disp);font-weight:400;font-size:clamp(30px,4.4vw,60px);line-height:1.12;max-width:16ch}
+.hero p{margin-top:18px;font-size:clamp(17px,1.4vw,20px);line-height:1.5;max-width:58ch;color:var(--soft)}
+/* Правка 24.09 (17:07): подпись плохо читалась на фоне фото — жирнее, тёмным, на светлой подложке */
+.hero .hero__lead{display:inline-block;margin-top:16px;padding:8px 16px;border-radius:14px;background:rgba(240,237,230,.9);
+  -webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);color:var(--ink);font-weight:600;
+  box-shadow:0 8px 20px -14px rgba(42,38,34,.5)}
+/* Три цифры рядом: самое важное читается за секунду */
+.trust{display:flex;flex-wrap:wrap;gap:14px 32px;margin-top:22px;padding-top:20px;border-top:1px solid var(--line)}
+.trust div{min-width:126px}
+.trust b{display:block;font-family:var(--disp);font-weight:600;font-size:28px;line-height:1;color:var(--moss)}
+.trust b.is-apricot{color:#B86A2E}
+.trust span{display:block;margin-top:7px;color:var(--soft);font-size:13.5px;line-height:1.35}
+
+/* Появление блоков: 700 мс, один раз. Без скрипта всё видно сразу. */
+.js .reveal{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease}
+.js .reveal.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){
+  .js .reveal{opacity:1;transform:none;transition:none}
+  .flow li:hover,.t:hover,.g:hover{transform:none}
+}
+
+/* ============ круги возрастов ============ */
+.ages{display:flex;flex-wrap:wrap;gap:10px;margin-top:clamp(26px,3vw,40px)}
+.age{display:inline-flex;flex:none;flex-direction:column;align-items:center;justify-content:center;
+  width:64px;height:64px;border:1px solid var(--line);border-radius:50%;background:var(--paper);
+  cursor:pointer;transition:background .16s,border-color .16s,color .16s}
+.age b{font-family:var(--disp);font-weight:600;font-size:21px;line-height:1}
+.age span{font-size:11px;color:var(--soft);margin-top:2px}
+.age--all b{font-size:17px}
+.age:hover{border-color:var(--moss)}
+.age[aria-pressed="true"]{background:var(--moss);border-color:var(--moss);color:#fff}
+.age[aria-pressed="true"] span{color:rgba(255,255,255,.8)}
+.count{margin-top:18px;font-size:16px;color:var(--soft)}
+.count b{color:var(--ink);font-weight:600}
+@media (max-width:520px){.age{width:56px;height:56px}.age b{font-size:19px}}
+
+/* ============ карточки занятий ============ */
+.groups{display:grid;grid-template-columns:1fr;gap:12px;margin-top:22px}
+@media (min-width:720px){.groups{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (min-width:1080px){.groups{grid-template-columns:repeat(3,minmax(0,1fr))}}
+/* Правка 21.09: у каждого занятия своя иллюстрация — как на «Графе».
+   Детских лиц в кадрах нет: это запрет регламента, а не придирка. */
+.g__ph{display:block;margin:-18px -18px 14px;overflow:hidden;background:var(--line)}
+.g__ph img{display:block;width:100%;height:clamp(118px,12vw,146px);object-fit:cover;
+  transition:transform .4s ease}
+.g:hover .g__ph img{transform:scale(1.05)}
+.g{overflow:hidden;background:var(--paper);border-top:3px solid var(--moss);border-radius:0 0 10px 10px;
+  padding:18px 18px 16px;display:flex;flex-direction:column;gap:8px}
+.g__top{display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+.g__age{display:inline-flex;align-items:center;height:26px;padding:0 11px;border-radius:999px;
+  background:var(--apricot);color:var(--ink);font-weight:600;font-size:13px}
+.g__len{color:var(--soft);font-size:13px}
+.g h3{margin-top:2px}
+.g__d{color:var(--soft);font-size:15px;line-height:1.5}
+.g__b{margin-top:auto;padding-top:12px;border-top:1px solid var(--line);
+  display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:8px}
+.g__w{font-size:15px}
+.g__p{font-family:var(--disp);font-weight:600;font-size:18px;white-space:nowrap}
+.g__p i{font-family:var(--text);font-style:normal;font-size:13px;font-weight:400;color:var(--soft)}
+.g[hidden]{display:none}
+.g{transition:transform .3s ease,box-shadow .3s ease}
+.g:hover{transform:translateY(-6px);box-shadow:0 18px 40px -20px rgba(42,38,34,.4)}
+.g__go{margin-top:10px;align-self:flex-start;min-height:44px;padding:0 18px;font-size:14px}
+
+/* ============ как проходит ============ */
+.flow{display:grid;grid-template-columns:1fr;gap:14px;margin-top:22px;counter-reset:step}
+@media (min-width:640px){.flow{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (min-width:1080px){.flow{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.flow li{position:relative;background:var(--paper);border:1px solid var(--line);border-radius:14px;
+  box-shadow:0 8px 22px -14px rgba(42,38,34,.32);padding:22px 20px;
+  transition:transform .3s ease,box-shadow .3s ease}
+.flow li:hover{transform:translateY(-6px);box-shadow:0 18px 40px -20px rgba(42,38,34,.4)}
+.flow li::before{counter-increment:step;content:counter(step,decimal-leading-zero);
+  display:block;font-family:var(--disp);font-size:24px;color:var(--apricot);margin-bottom:8px;line-height:1}
+.flow p{margin-top:6px;color:var(--soft);font-size:15px;line-height:1.5}
+
+/* ============ педагоги ============ */
+.teachers{display:grid;grid-template-columns:1fr;gap:14px;margin-top:22px}
+@media (min-width:620px){.teachers{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (min-width:1080px){.teachers{grid-template-columns:repeat(5,minmax(0,1fr))}}
+/* Правка 21.09: кадр над именем педагога. Лица не ставим — чужой человек
+   в роли «нашего педагога» это обман (SITE-FACTORY §6). Вместо лица —
+   предмет занятия: книги, краски, шахматы, буквы. */
+.t__ph{display:block;width:100%;height:104px;border-radius:12px;overflow:hidden;
+  margin-bottom:12px;background:var(--line)}
+.t__ph img{width:100%;height:100%;object-fit:cover;transition:transform .4s ease}
+.t:hover .t__ph img{transform:scale(1.05)}
+.t{display:grid;gap:6px;background:var(--paper);border:1px solid var(--line);border-radius:14px;
+  box-shadow:0 8px 22px -14px rgba(42,38,34,.32);padding:20px 18px;
+  transition:transform .3s ease,box-shadow .3s ease}
+.t:hover{transform:translateY(-6px);box-shadow:0 18px 40px -20px rgba(42,38,34,.4)}
+.t__n{font-family:var(--disp);font-weight:600;font-size:clamp(20px,2.2vw,26px);line-height:1.1}
+.t__d{display:inline-block;margin-top:6px;padding:5px 11px;border-radius:999px;justify-self:start;
+  background:rgba(79,111,82,.1);color:var(--moss-d);font-size:13px;white-space:nowrap}
+.t__s{color:var(--soft);font-size:15px;line-height:1.4}
+
+/* ============ место ============ */
+.place{display:grid;grid-template-columns:1fr;gap:24px;margin-top:22px;align-items:stretch}
+@media (min-width:900px){
+  /* Правка 21.09: слева таблица, справа коллаж — один симметричный блок. */
+  .place > div{display:flex;flex-direction:column}
+  .place ul{flex:1;grid-auto-rows:1fr}
+}
+/* Правка 22.09: коллаж стоял по верху и был мельче списка — колонки съезжали.
+   Теперь обе колонки одной высоты, а плитки коллажа делят её поровну. */
+@media (min-width:900px){
+  .place{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:40px;align-items:stretch}
+  .place .collage{height:100%;grid-auto-rows:1fr;align-content:stretch}
+}
+/* Строки с круглыми маркерами — перекличка с кружками возрастов наверху.
+   Карточек здесь нарочно нет: у «Суппорта» чертёж, у «Гонга» табло цифр. */
+/* Правка 21.09: описание места — компактная таблица, а не строки во всю ширину. */
+.place ul{display:grid;gap:0;background:var(--paper);border:1px solid var(--line);
+  border-radius:16px;overflow:hidden;align-content:stretch}
+.place li{position:relative;display:flex;align-items:center;padding:14px 18px 14px 48px;
+  font-size:15.5px;line-height:1.4;
+  border-bottom:1px dotted rgba(42,38,34,.22)}
+.place li:last-child{border-bottom:0}
+.place li::before{content:"";position:absolute;left:16px;top:50%;margin-top:-9px;width:18px;height:18px;border-radius:50%;
+  border:2px solid var(--apricot)}
+.place li::after{content:"";position:absolute;left:22px;top:50%;margin-top:-3px;width:6px;height:6px;border-radius:50%;
+  background:var(--apricot)}
+/* Фото аркой: округлый верх — мягче, чем прямоугольник у соседних работ */
+/* Правка 21.09: вместо двух крупных кадров — коллаж из шести. */
+.collage{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;align-content:stretch}
+@media (min-width:560px){.collage{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.collage img{width:100%;height:100%;min-height:clamp(120px,13.5vw,172px);object-fit:cover;border-radius:12px;
+  background:var(--line);filter:brightness(1.05) saturate(.95);transition:transform .4s ease}
+.collage img:hover{transform:scale(1.03)}
+figcaption{margin-top:10px;color:var(--soft);font-size:13px;line-height:1.5}
+
+/* ============ цены ============ */
+/* Правка 22.09: прайс читался как второстепенный — плашка во всю ширину секции,
+   строки крупнее, первая (бесплатное пробное) выделена: это главный довод.
+   Между названием и ценой — точечная линия: на широкой строке иначе провал. */
+.pr{max-width:none;margin-top:22px;background:var(--paper);border:1px solid var(--line);
+  border-radius:16px;box-shadow:0 8px 22px -14px rgba(42,38,34,.32);overflow:hidden}
+/* Наводишь на строку — соседние гаснут: помогает не потерять нужную глазами */
+.pr:hover li{opacity:.45}
+.pr li:hover{opacity:1;background:rgba(79,111,82,.07)}
+@media (hover:none){.pr:hover li{opacity:1}}
+.pr li{display:grid;grid-template-columns:minmax(0,auto) minmax(24px,1fr) auto;gap:8px 16px;
+  padding:17px clamp(20px,2.4vw,30px);
+  transition:opacity .3s ease,background .3s ease;
+  border-bottom:1px solid var(--line);align-items:baseline}
+.pr span:first-child{grid-column:1;font-size:17px}
+/* Линия ложится на базовую строку текста: у соседей разный кегль, по центру она висит */
+.pr li::before{content:"";grid-column:2;align-self:baseline;height:0;
+  border-bottom:1px dotted var(--line);margin:0 2px}
+.pr span:last-child{grid-column:3;font-family:var(--disp);font-weight:600;font-size:18px;
+  color:var(--moss-d);white-space:nowrap}
+.pr li:last-child{border-bottom:0}
+/* Главное в прайсе — что первое занятие бесплатное. Остальное читают после. */
+.pr li.is-key{background:rgba(79,111,82,.09)}
+.pr li.is-key span:first-child{font-weight:600}
+.pr li.is-key span:last-child{font-size:21px}
+/* На телефоне в строку не влезает: длинная цена сжимала название до нуля и текст
+   налезал сам на себя. Складываем в два этажа — название сверху, цена под ним. */
+@media (max-width:620px){
+  .pr li{grid-template-columns:minmax(0,1fr);gap:3px}
+  .pr li::before{display:none}
+  .pr span:first-child{grid-column:1;font-size:16px;color:var(--soft)}
+  .pr span:last-child{grid-column:1;white-space:normal;font-size:17px}
+  .pr li.is-key span:last-child{font-size:19px}
+}
+
+/* Правка 24.09: при наведении прайс мягко переливается — по рамке медленно бежит
+   блик в цветах сайта, мох переходит в абрикос. Приём с концепта open-sites.io,
+   но спокойнее: оборот 3,6 с и мягкое появление, чтобы не спорить с детской темой. */
+@property --kr{syntax:"<angle>";inherits:false;initial-value:0deg}
+.pr{position:relative;transition:box-shadow .5s ease}
+.pr::before{content:"";position:absolute;inset:0;z-index:1;padding:2px;border-radius:15px;
+  pointer-events:none;opacity:0;
+  background:conic-gradient(from var(--kr),transparent 0 52%,rgba(79,111,82,.8) 68%,
+    rgba(224,138,76,.85) 82%,transparent 96%);
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;
+  mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);mask-composite:exclude;
+  transition:opacity .6s ease}
+.pr:hover{box-shadow:0 16px 36px -16px rgba(79,111,82,.5)}
+.pr:hover::before{opacity:1;animation:krRing 3.6s linear infinite}
+@keyframes krRing{to{--kr:360deg}}
+@media (prefers-reduced-motion:reduce){.pr:hover::before{animation:none;opacity:.7}}
+
+/* ============ форма ============ */
+.book{display:grid;grid-template-columns:1fr;gap:26px;margin-top:22px}
+@media (min-width:1000px){.book{grid-template-columns:minmax(0,1fr) 280px;gap:44px}}
+.form{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.f{display:flex;flex-direction:column;gap:7px;grid-column:span 2}
+@media (min-width:600px){.f--half{grid-column:span 1}}
+.f label{font-size:14px;color:var(--soft)}
+.inp{width:100%;min-height:48px;padding:11px 14px;background:#fff;border:1px solid var(--line);
+  border-radius:10px;font-size:16px}
+.inp:focus-visible{border-color:var(--moss)}
+.consent{grid-column:1/-1;display:flex;align-items:flex-start;gap:12px}
+.consent input{flex:none;width:24px;height:24px;margin:11px 0 0;accent-color:var(--moss);cursor:pointer}
+.consent label{padding:10px 0;font-size:15px;line-height:1.5;cursor:pointer}
+.send{grid-column:1/-1;display:flex;flex-wrap:wrap;align-items:center;gap:14px}
+.send__hint{color:var(--soft);font-size:14px}
+.done{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:28px}
+.done__b{font-family:var(--disp);font-size:clamp(22px,3vw,30px);line-height:1.2}
+.done p+p{margin-top:12px}
+.noscript{grid-column:1/-1;color:var(--soft);font-size:15px}
+.side dl{display:grid;gap:10px}
+.side div{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+.side dt{color:var(--moss-d);font-size:12px;letter-spacing:.1em;text-transform:uppercase}
+.side dd{margin-top:3px;font-size:16px;line-height:1.4}
+
+/* ============ подвал ============ */
+.foot{border-top:1px solid var(--ink);background:var(--paper)}
+.foot__in{max-width:1200px;margin:0 auto;padding:clamp(32px,4vw,52px) var(--gut);
+  display:grid;grid-template-columns:1fr;gap:18px}
+@media (min-width:900px){.foot__in{grid-template-columns:260px minmax(0,1fr);gap:40px}}
+.plate{border:1px solid var(--line);border-radius:10px;padding:16px 18px;font-size:15px;line-height:1.55;
+  background:var(--oat)}
+.credits{color:var(--soft);font-size:13px}
+</style>
+</head>
+<body>
+<a class="skip" href="#zanyatiya">К занятиям</a>
+
+<header class="top">
+  <a class="mark" href="#top"><i aria-hidden="true"></i>Кружок</a>
+  <nav class="nav" aria-label="Разделы">
+    <a href="#zanyatiya">Занятия</a>
+    <a href="#kak">Как проходит</a>
+    <a href="#pedagogi">Педагоги</a>
+    <a href="#tseny">Цены</a>
+    <a href="#zapis">Контакты</a>
+  </nav>
+  <a class="btn" href="#zapis">Пробное занятие</a>
+</header>
+
+<main id="top">
+  <!-- ============ 1. герой и фильтр ============ -->
+  <section class="hero" aria-labelledby="h1">
+    <div class="hero__bg" aria-hidden="true">
+      <img src="https://images.unsplash.com/photo-1594608661623-aa0bd3a69d98?auto=format&fit=crop&w=2000&q=72"
+        alt="" width="2000" height="1333" fetchpriority="high" decoding="async">
+    </div>
+    <h1 id="h1">Сколько лет вашему ребёнку</h1>
+    <p class="hero__lead">Нажмите возраст — останутся занятия, куда его возьмут.</p>
+
+    <div class="trust">
+      <div><b>8 детей</b><span>больше в группу не берём</span></div>
+      <div><b>0 лари</b><span>первое занятие в каждой группе</span></div>
+      <div><b class="is-apricot">3 занятия</b><span>не подошло — вернём деньги за остальные</span></div>
+    </div>
+
+    <div class="ages" id="ages" role="group" aria-label="Возраст ребёнка"></div>
+    <p class="count" id="count"></p>
+  </section>
+
+  <!-- ============ 2. занятия ============ -->
+  <section id="zanyatiya" aria-labelledby="h-z" style="scroll-margin-top:78px">
+    <div class="sec__in" style="padding-top:clamp(22px,3vw,32px)">
+      <h2 class="sr" id="h-z">Занятия</h2>
+      <ul class="groups" id="groups">
+        <li class="g" data-min="2" data-max="3" data-n="Вместе с мамой">
+          <span class="g__ph"><img src="https://images.unsplash.com/photo-1509909756405-be0199881695?auto=format&fit=crop&w=800&q=74" alt="Воздушные шары" width="800" height="534" loading="lazy" decoding="async"></span>
+          <div class="g__top"><span class="g__age">2–3 года</span><span class="g__len">45 минут</span></div>
+          <h3>Вместе с мамой</h3>
+          <p class="g__d">Первый опыт группы: мама рядом, задача — не заплакать и повторить за педагогом.</p>
+          <div class="g__b"><span class="g__w">пн, ср 10:00</span><span class="g__p">180 <i>лари в месяц</i></span></div>
+        </li>
+        <li class="g" data-min="3" data-max="4" data-n="Подготовка к саду">
+          <span class="g__ph"><img src="https://images.unsplash.com/photo-1503919545889-aef636e10ad4?auto=format&fit=crop&w=800&q=74" alt="Ребёнок с рюкзаком идёт по дорожке" width="800" height="534" loading="lazy" decoding="async"></span>
+          <div class="g__top"><span class="g__age">3–4 года</span><span class="g__len">60 минут</span></div>
+          <h3>Подготовка к саду</h3>
+          <p class="g__d">Учимся оставаться без родителя, одеваться, ждать очереди и просить помощь словами.</p>
+          <div class="g__b"><span class="g__w">вт, чт 10:00</span><span class="g__p">200 <i>лари в месяц</i></span></div>
+        </li>
+        <li class="g" data-min="4" data-max="5" data-n="Речь и моторика">
+          <span class="g__ph"><img src="https://images.unsplash.com/photo-1560421683-6856ea585c78?auto=format&fit=crop&w=800&q=74" alt="Детские руки рисуют красками" width="800" height="534" loading="lazy" decoding="async"></span>
+          <div class="g__top"><span class="g__age">4–5 лет</span><span class="g__len">50 минут</span></div>
+          <h3>Речь и моторика</h3>
+          <p class="g__d">Логопедические упражнения в игре, пальчиковая гимнастика, много говорим вслух.</p>
+          <div class="g__b"><span class="g__w">пн, ср 16:00</span><span class="g__p">200 <i>лари в месяц</i></span></div>
+        </li>
+        <li class="g" data-min="3" data-max="6" data-n="Музыка и ритм">
+          <span class="g__ph"><img src="https://images.unsplash.com/photo-1555448248-2571daf6344b?auto=format&fit=crop&w=800&q=74" alt="Разводы краски" width="800" height="534" loading="lazy" decoding="async"></span>
+          <div class="g__top"><span class="g__age">3–6 лет</span><span class="g__len">45 минут</span></div>
+          <h3>Музыка и ритм</h3>
+          <p class="g__d">Ритм телом и шумовыми инструментами. Слух развивается раньше, чем кажется.</p>
+          <div class="g__b"><span class="g__w">сб 10:00</span><span class="g__p">200 <i>лари в месяц</i></span></div>
+        </li>
+        <li class="g" data-min="5" data-max="6" data-n="Подготовка к школе">
+          <span class="g__ph"><img src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=800&q=74" alt="Книги, карандаши и кубики с буквами" width="800" height="534" loading="lazy" decoding="async"></span>
+          <div class="g__top"><span class="g__age">5–6 лет</span><span class="g__len">60 минут</span></div>
+          <h3>Подготовка к школе</h3>
+          <p class="g__d">Буквы и счёт до двадцати, но главное — усидеть сорок минут и поднять руку, а не выкрикнуть.</p>
+          <div class="g__b"><span class="g__w">вт, чт, сб 17:00</span><span class="g__p">260 <i>лари в месяц</i></span></div>
+        </li>
+        <li class="g" data-min="6" data-max="8" data-n="Чтение и счёт">
+          <span class="g__ph"><img src="https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?auto=format&fit=crop&w=800&q=74" alt="Полка с книгами" width="800" height="534" loading="lazy" decoding="async"></span>
+          <div class="g__top"><span class="g__age">6–8 лет</span><span class="g__len">60 минут</span></div>
+          <h3>Чтение и счёт</h3>
+          <p class="g__d">Читаем вслух по очереди, считаем в столбик, разбираем ошибки без слова «неправильно».</p>
+          <div class="g__b"><span class="g__w">пн, ср 17:30</span><span class="g__p">240 <i>лари в месяц</i></span></div>
+        </li>
+        <li class="g" data-min="5" data-max="9" data-n="Рисование">
+          <span class="g__ph"><img src="https://images.unsplash.com/photo-1499892477393-f675706cbe6e?auto=format&fit=crop&w=800&q=74" alt="Краски и кисти" width="800" height="534" loading="lazy" decoding="async"></span>
+          <div class="g__top"><span class="g__age">5–9 лет</span><span class="g__len">60 минут</span></div>
+          <h3>Рисование</h3>
+          <p class="g__d">Гуашь, уголь, пастель. Работы не переделываем за ребёнка — даже если очень хочется.</p>
+          <div class="g__b"><span class="g__w">пт 16:00</span><span class="g__p">220 <i>лари в месяц</i></span></div>
+        </li>
+        <li class="g" data-min="7" data-max="10" data-n="Английский, начальный">
+          <span class="g__ph"><img src="https://images.unsplash.com/photo-1596464716127-f2a82984de30?auto=format&fit=crop&w=800&q=74" alt="Камни, краски и фломастеры на столе" width="800" height="534" loading="lazy" decoding="async"></span>
+          <div class="g__top"><span class="g__age">7–10 лет</span><span class="g__len">60 минут</span></div>
+          <h3>Английский, начальный</h3>
+          <p class="g__d">Говорим с первого занятия, грамматику подключаем через месяц.</p>
+          <div class="g__b"><span class="g__w">вт, чт 18:00</span><span class="g__p">260 <i>лари в месяц</i></span></div>
+        </li>
+        <li class="g" data-min="8" data-max="12" data-n="Робототехника">
+          <span class="g__ph"><img src="https://images.unsplash.com/photo-1587654780291-39c9404d746b?auto=format&fit=crop&w=800&q=74" alt="Россыпь деталей конструктора" width="800" height="534" loading="lazy" decoding="async"></span>
+          <div class="g__top"><span class="g__age">8–12 лет</span><span class="g__len">90 минут</span></div>
+          <h3>Робототехника</h3>
+          <p class="g__d">Конструктор и простой код. Один набор на двоих: договариваться — половина навыка.</p>
+          <div class="g__b"><span class="g__w">сб 11:00</span><span class="g__p">280 <i>лари в месяц</i></span></div>
+        </li>
+        <li class="g" data-min="9" data-max="12" data-n="Шахматы">
+          <span class="g__ph"><img src="https://images.unsplash.com/photo-1529699211952-734e80c4d42b?auto=format&fit=crop&w=800&q=74" alt="Шахматная доска с фигурами" width="800" height="534" loading="lazy" decoding="async"></span>
+          <div class="g__top"><span class="g__age">9–12 лет</span><span class="g__len">60 минут</span></div>
+          <h3>Шахматы</h3>
+          <p class="g__d">Партии с разбором. Проигрывать учимся отдельно — это тоже занятие.</p>
+          <div class="g__b"><span class="g__w">вт, пт 18:30</span><span class="g__p">200 <i>лари в месяц</i></span></div>
+        </li>
+        <li class="g" data-min="5" data-max="7" data-n="Лепка и аппликация">
+          <span class="g__ph"><img src="https://images.unsplash.com/photo-1518831959646-742c3a14ebf7?auto=format&fit=crop&w=800&q=74" alt="Ребёнок у цветочной стены" width="800" height="534" loading="lazy" decoding="async"></span>
+          <div class="g__top"><span class="g__age">5–7 лет</span><span class="g__len">50 минут</span></div>
+          <h3>Лепка и аппликация</h3>
+          <p class="g__d">Пластилин, глина, ножницы и клей. Руки устали — значит, занятие прошло.</p>
+          <div class="g__b"><span class="g__w">ср, сб 11:00</span><span class="g__p">190 <i>лари в месяц</i></span></div>
+        </li>
+        <li class="g" data-min="7" data-max="12" data-n="Логика и настольные игры">
+          <span class="g__ph"><img src="https://images.unsplash.com/photo-1553481187-be93c21490a9?auto=format&fit=crop&w=800&q=74" alt="Игральный кубик" width="800" height="534" loading="lazy" decoding="async"></span>
+          <div class="g__top"><span class="g__age">7–12 лет</span><span class="g__len">60 минут</span></div>
+          <h3>Логика и настольные игры</h3>
+          <p class="g__d">Считаем ходы, договариваемся о правилах, учимся ждать свой ход.</p>
+          <div class="g__b"><span class="g__w">чт 17:00, сб 12:30</span><span class="g__p">180 <i>лари в месяц</i></span></div>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ============ 3. как проходит ============ -->
+  <section class="sec reveal" id="kak" aria-labelledby="h-k">
+    <div class="sec__in">
+      <h2 id="h-k">Один урок по шагам</h2>
+      <ul class="flow">
+        <li><h3>Группа до восьми человек</h3><p>Больше — и педагог не успевает подойти к каждому.</p></li>
+        <li><h3>Первые пять минут — круг</h3><p>Здороваемся и говорим, кто как спал. Так ребёнок переключается.</p></li>
+        <li><h3>Середина — работа</h3><p>Двадцать-тридцать минут, в которые собственно учатся.</p></li>
+        <li><h3>Последние десять минут — свободное</h3><p>Дорисовать, доиграть, показать родителю.</p></li>
+        <li><h3>Родитель ждёт в холле</h3><p>С двух до трёх лет — наоборот, мама на занятии.</p></li>
+        <li><h3>После занятия — фраза о вашем ребёнке</h3>
+          <p>Одно наблюдение вместо отчёта: отчёты никто не читает.</p></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ============ 4. педагоги ============ -->
+  <section class="sec reveal" id="pedagogi" aria-labelledby="h-p">
+    <div class="sec__in">
+      <h2 id="h-p">Педагоги</h2>
+      <ul class="teachers">
+        <li class="t"><span class="t__ph"><img src="https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?auto=format&fit=crop&w=800&q=74" alt="Полка с книгами" width="800" height="534" loading="lazy" decoding="async"></span><span class="t__n">Ирина</span><span class="t__s">подготовка к школе, чтение и счёт</span><span class="t__d">пн, вт, ср, чт, сб</span></li>
+        <li class="t"><span class="t__ph"><img src="https://images.unsplash.com/photo-1509909756405-be0199881695?auto=format&fit=crop&w=800&q=74" alt="Воздушные шары" width="800" height="534" loading="lazy" decoding="async"></span><span class="t__n">Ольга</span><span class="t__s">речь и моторика, вместе с мамой</span><span class="t__d">пн, ср, чт</span></li>
+        <li class="t"><span class="t__ph"><img src="https://images.unsplash.com/photo-1499892477393-f675706cbe6e?auto=format&fit=crop&w=800&q=74" alt="Краски и кисти" width="800" height="534" loading="lazy" decoding="async"></span><span class="t__n">Мария</span><span class="t__s">рисование, музыка и ритм</span><span class="t__d">пт, сб</span></li>
+        <li class="t"><span class="t__ph"><img src="https://images.unsplash.com/photo-1529699211952-734e80c4d42b?auto=format&fit=crop&w=800&q=74" alt="Шахматная доска" width="800" height="534" loading="lazy" decoding="async"></span><span class="t__n">Антон</span><span class="t__s">робототехника, шахматы</span><span class="t__d">вт, пт, сб</span></li>
+        <li class="t"><span class="t__ph"><img src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=800&q=74" alt="Кубики с буквами" width="800" height="534" loading="lazy" decoding="async"></span><span class="t__n">Кетеван</span><span class="t__s">английский</span><span class="t__d">вт, чт</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ============ 5. место ============ -->
+  <section class="sec reveal" id="mesto" aria-labelledby="h-m">
+    <div class="sec__in">
+      <h2 id="h-m">Место</h2>
+      <div class="place">
+        <div>
+          <ul>
+            <li>Две комнаты: тихая для малышей, шумная для старших.</li>
+            <li>В холле есть где посидеть родителю и куда поставить коляску.</li>
+            <li>Обувь и куртки — на своих крючках, у каждого подписанное место.</li>
+            <li>Влажная уборка после каждой группы, проветривание между занятиями.</li>
+            <li>Аптечка и педагог с действующей справкой о первой помощи.</li>
+          </ul>
+        </div>
+        <figure class="collage">
+          <img src="https://images.unsplash.com/photo-1722622102266-de29b50f4d3d?auto=format&fit=crop&w=900&q=74" alt="Стена с деревянными крючками" width="900" height="600" loading="lazy" decoding="async">
+          <img src="https://images.unsplash.com/photo-1709709309456-ce2c6daff9af?auto=format&fit=crop&w=900&q=74" alt="Детские стулья в тёплом свете" width="900" height="600" loading="lazy" decoding="async">
+          <img src="https://images.unsplash.com/photo-1545558014-8692077e9b5c?auto=format&fit=crop&w=900&q=74" alt="Игрушки: кубики, паровозик, конструктор" width="900" height="600" loading="lazy" decoding="async">
+          <img src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=900&q=74" alt="Книги и кубики с буквами" width="900" height="600" loading="lazy" decoding="async">
+          <img src="https://images.unsplash.com/photo-1499892477393-f675706cbe6e?auto=format&fit=crop&w=900&q=74" alt="Краски и кисти" width="900" height="600" loading="lazy" decoding="async">
+          <img src="https://images.unsplash.com/photo-1587654780291-39c9404d746b?auto=format&fit=crop&w=900&q=74" alt="Детали конструктора" width="900" height="600" loading="lazy" decoding="async">
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 6. цены ============ -->
+  <section class="sec reveal" id="tseny" aria-labelledby="h-t">
+    <div class="sec__in">
+      <h2 id="h-t">Цены и скидки</h2>
+      <ul class="pr">
+        <li class="is-key"><span>Пробное занятие</span><span>бесплатно, одно в каждой группе</span></li>
+        <li><span>Абонемент на восемь занятий</span><span>180–280 лари, в карточке группы</span></li>
+        <li><span>Разовое занятие</span><span>40 лари</span></li>
+        <li><span>Второй ребёнок из семьи</span><span>−15 %</span></li>
+        <li><span>Пропуски по болезни</span><span>переносим, до двух в месяц, без справки</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ============ 7. запись ============ -->
+  <section class="sec reveal" id="zapis" aria-labelledby="h-b">
+    <div class="sec__in">
+      <div class="book">
+        <div>
+          <h2 id="h-b">Пробное занятие</h2>
+          <form class="form" id="form" action="#zapis" method="post" novalidate style="margin-top:20px">
+            <div class="f f--half">
+              <label for="f-name">Имя родителя</label>
+              <input class="inp" id="f-name" name="name" type="text" autocomplete="name" required>
+            </div>
+            <div class="f f--half">
+              <label for="f-phone">Телефон</label>
+              <input class="inp" id="f-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="+995 555 00 00 00" required>
+            </div>
+            <div class="f f--half">
+              <label for="f-kid">Имя и возраст ребёнка</label>
+              <input class="inp" id="f-kid" name="kid" type="text" placeholder="Например: Лиза, 5 лет">
+            </div>
+            <div class="f f--half">
+              <label for="f-group">Занятие</label>
+              <input class="inp" id="f-group" name="group" type="text" placeholder="Выберите в списке выше">
+            </div>
+            <div class="consent">
+              <input type="checkbox" id="f-agree" name="agree" aria-describedby="send-hint">
+              <label for="f-agree">Соглашаюсь с <a class="link" href="#zapis" id="policy">политикой обработки персональных данных</a></label>
+            </div>
+            <div class="send">
+              <button class="btn" type="submit" id="send" disabled>Записаться на пробное</button>
+              <p class="send__hint" id="send-hint">Кнопка заработает, когда отметите согласие.</p>
+            </div>
+          </form>
+
+          <div class="done" id="done" role="status" tabindex="-1" hidden>
+            <p class="done__b">Записали.</p>
+            <p>Педагог позвонит сегодня и предложит день пробного занятия.</p>
+            <p><button class="btn btn--line" type="button" id="again" style="margin-top:6px">Вернуться к форме</button></p>
+          </div>
+        </div>
+
+        <div class="side">
+          <dl>
+            <div><dt>Адрес</dt><dd>Улица Садовая, 14</dd></div>
+            <div><dt>Часы</dt><dd>Пн–сб 9:00–20:00</dd></div>
+            <div><dt>Группы</dt><dd>До восьми человек</dd></div>
+            <div><dt>Оплата</dt><dd>Картой или наличными</dd></div>
+          </dl>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <div class="foot__in">
+    <div>
+      <span class="mark"><i aria-hidden="true"></i>Кружок</span>
+      <p class="note" style="margin-top:8px">Детский центр.<br>Улица Садовая, 14 · пн–сб 9:00–20:00</p>
+    </div>
+    <div>
+    </div>
+  </div>
+</footer>
+
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"ChildCare","name":"Кружок","description":"Детский центр: подготовка к школе, речь и моторика, рисование, робототехника, английский.","url":"https://open-sites.io/works/kruzhok/","image":"https://open-sites.io/works/kruzhok/og.jpg","priceRange":"40–280 GEL","address":{"@type":"PostalAddress","streetAddress":"улица Садовая, 14"},"openingHours":"Mo-Sa 09:00-20:00"}
+</script>
+
+<script>
+(function () {
+  'use strict';
+  var groups = [].slice.call(document.querySelectorAll('.g'));
+  var ages = document.getElementById('ages');
+  var count = document.getElementById('count');
+  var field = document.getElementById('f-group');
+  var current = 'all';
+
+  function plural(n, a, b, c) {
+    var n10 = n % 10, n100 = n % 100;
+    if (n10 === 1 && n100 !== 11) return a;
+    if (n10 >= 2 && n10 <= 4 && (n100 < 12 || n100 > 14)) return b;
+    return c;
+  }
+
+  /* кнопки возрастов строим скриптом: без JS фильтра нет, и кружки были бы обманом */
+  var list = [['all', 'Все', 'возрасты']];
+  for (var y = 2; y <= 12; y++) list.push([y, y, plural(y, 'год', 'года', 'лет')]);
+  list.forEach(function (a) {
+    var b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'age' + (a[0] === 'all' ? ' age--all' : '');
+    b.setAttribute('data-age', a[0]);
+    b.setAttribute('aria-pressed', a[0] === 'all' ? 'true' : 'false');
+    b.innerHTML = '<b>' + a[1] + '</b>' + (a[2] ? '<span>' + a[2] + '</span>' : '');
+    b.setAttribute('aria-label', a[0] === 'all' ? 'Все возрасты' : a[1] + ' ' + a[2]);
+    b.addEventListener('click', function () { pick(a[0]); });
+    ages.appendChild(b);
+  });
+
+  /* кнопка «записаться» в каждой карточке — тоже только со скриптом */
+  groups.forEach(function (g) {
+    var b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'btn btn--line g__go';
+    b.textContent = 'Записаться на пробное';
+    b.addEventListener('click', function () {
+      if (field) field.value = g.getAttribute('data-n') + ', ' + g.querySelector('.g__age').textContent;
+      document.getElementById('zapis').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      setTimeout(function () { document.getElementById('f-name').focus(); }, 420);
+    });
+    g.appendChild(b);
+  });
+
+  function pick(age) {
+    current = age;
+    [].forEach.call(ages.children, function (b) {
+      b.setAttribute('aria-pressed', b.getAttribute('data-age') === String(age) ? 'true' : 'false');
+    });
+    var shown = 0;
+    groups.forEach(function (g) {
+      var ok = age === 'all' || (+g.getAttribute('data-min') <= age && age <= +g.getAttribute('data-max'));
+      g.hidden = !ok;
+      if (ok) shown++;
+    });
+    count.innerHTML = age === 'all'
+      ? 'Всего <b>' + groups.length + '</b> ' + plural(groups.length, 'занятие', 'занятия', 'занятий') +
+        ' для возрастов от двух до двенадцати лет.'
+      : 'Для <b>' + age + ' ' + plural(age, 'года', 'лет', 'лет') + '</b> подходит <b>' + shown + '</b> ' +
+        plural(shown, 'занятие', 'занятия', 'занятий') + ' из ' + groups.length + '.';
+  }
+  pick('all');
+
+  /* ---- появление блоков при прокрутке ---- */
+  var reduce = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+  var revs = [].slice.call(document.querySelectorAll('.reveal'));
+  if (reduce || !('IntersectionObserver' in window)) {
+    revs.forEach(function (el) { el.classList.add('in'); });
+  } else {
+    var io = new IntersectionObserver(function (es) {
+      es.forEach(function (e) {
+        if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+      });
+    }, { threshold: .12, rootMargin: '0px 0px -40px 0px' });
+    revs.forEach(function (el) { io.observe(el); });
+    setTimeout(function () { revs.forEach(function (el) { el.classList.add('in'); }); }, 1500);
+  }
+
+  /* ---- форма ---- */
+  var form = document.getElementById('form');
+  var agree = document.getElementById('f-agree');
+  var send = document.getElementById('send');
+  var hint = document.getElementById('send-hint');
+  var done = document.getElementById('done');
+  function sync() {
+    send.disabled = !agree.checked;
+    hint.textContent = agree.checked ? 'Это демо-сайт: заявка никуда не уйдёт.'
+                                     : 'Кнопка заработает, когда отметите согласие.';
+  }
+  agree.addEventListener('change', sync);
+  sync();
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    if (!agree.checked) return;
+    form.hidden = true; done.hidden = false; done.focus();
+  });
+  document.getElementById('again').addEventListener('click', function () {
+    done.hidden = true; form.hidden = false; document.getElementById('f-name').focus();
+  });
+  document.getElementById('policy').addEventListener('click', function (e) {
+    e.preventDefault();
+    alert('Это демонстрационный сайт. На настоящем сайте центра здесь открывается страница ' +
+          'с политикой обработки персональных данных — её текст даёт сам владелец.');
+  });
+})();
+</script>
+</body>
+</html>

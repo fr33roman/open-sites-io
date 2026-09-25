@@ -1,0 +1,812 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Ладонь — массаж в Батуми (демо open-sites.io)</title>
+<meta name="description" content="Демо-сайт студии open-sites.io: студия массажа «Ладонь» на улице Ангиса в Батуми. Выбираете длительность и программу — видите раскладку сеанса по минутам. ">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#3C332C">
+<link rel="canonical" href="https://open-sites.io/works/ladon/">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="ru_RU">
+<meta property="og:site_name" content="open-sites.io">
+<meta property="og:title" content="Ладонь — массаж в Батуми">
+<meta property="og:description" content="Час — это сорок минут спины и десять шеи. Выберите длительность и программу: покажем, из чего сложится сеанс, минута за минутой.">
+<meta property="og:url" content="https://open-sites.io/works/ladon/">
+<meta property="og:image" content="https://open-sites.io/works/ladon/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%233C332C'/%3E%3Cpath d='M11 26v-9m0-2V9a1.6 1.6 0 0 1 3.2 0v5m0 0V7a1.6 1.6 0 0 1 3.2 0v7m0 0V9a1.6 1.6 0 0 1 3.2 0v8c0 5-2.4 9-6 9h-1' fill='none' stroke='%23D79B6E' stroke-width='1.8' stroke-linecap='round'/%3E%3C/svg%3E">
+<script>document.documentElement.className += ' js';</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://images.unsplash.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Alegreya:wght@400;500&family=Alegreya+Sans:wght@400;500;700&display=swap">
+<style>
+/* ============ токены (см. DESIGN.md) ============ */
+:root{
+  --cocoa:#3C332C;    /* какао — средний тон, а не почти-чёрный */
+  --cocoa-d:#2E2721;  /* линейка минут, подвал */
+  --cocoa-l:#4A4038;  /* сегменты, поля формы */
+  --light:#EDE4DA;    /* текст, 9,8:1 */
+  --dust:#B4A596;     /* подписи, 5,1:1 */
+  --clay:#D79B6E;     /* единственный акцент, 5,2:1 */
+  --line:rgba(237,228,218,.2);
+  --serif:"Alegreya",Georgia,serif;
+  --sans:"Alegreya Sans","Segoe UI",system-ui,sans-serif;
+  --gut:40px;
+  --sec:84px;
+}
+@media (max-width:1000px){:root{--gut:24px}}
+@media (max-width:700px){:root{--gut:16px}}
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+@media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
+body{margin:0;background:var(--cocoa);color:var(--light);
+  font:400 18px/1.6 var(--sans);-webkit-font-smoothing:antialiased;overflow-x:clip}
+img{display:block;max-width:100%}
+a{color:inherit}
+h1,h2,h3,p,ul,ol,dl,dd,figure{margin:0}
+ul,ol{list-style:none;padding:0}
+button,input,select,textarea{font:inherit;color:inherit}
+[hidden]{display:none!important}
+.nw{white-space:nowrap}
+.sr{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+:focus-visible{outline:2px solid var(--clay);outline-offset:3px}
+[id]{scroll-margin-top:78px}
+.skip{position:absolute;left:12px;top:-80px;background:var(--light);color:var(--cocoa);padding:12px 18px;border-radius:2px;z-index:60}
+.skip:focus{top:12px}
+
+/* ============ кнопки ============ */
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:50px;padding:0 26px;
+  border:1px solid var(--light);border-radius:2px;background:var(--light);color:var(--cocoa);
+  font-weight:700;font-size:17px;text-decoration:none;cursor:pointer;transition:background .18s,color .18s}
+.btn:hover{background:transparent;color:var(--light)}
+.btn:disabled{background:transparent;border-color:var(--line);color:var(--dust);cursor:not-allowed}
+.btn--line{background:transparent;color:var(--light)}
+.btn--line:hover{background:var(--light);color:var(--cocoa)}
+.link{color:var(--clay);text-underline-offset:4px}
+
+/* ============ закреплённая строка ============ */
+.top{position:sticky;top:0;z-index:50;display:flex;align-items:center;gap:20px;
+  padding:10px var(--gut);background:rgba(60,51,44,.95);border-bottom:1px solid var(--line);
+  backdrop-filter:blur(8px)}
+/* Логотип 22.09: четыре линии ладони и дуга запястья. Линии прорисовываются
+   при загрузке, при наведении расходятся веером — знак «живой», но тихий.
+   При «уменьшить движение» просто стоит на месте. */
+.mark{font-family:var(--serif);font-weight:500;font-size:21px;letter-spacing:.06em;text-decoration:none;
+  display:inline-flex;align-items:center;gap:10px;min-height:44px;padding:5px 0}
+.mark__ico{display:flex;width:30px;height:30px;flex:none}
+.mark__ico svg{width:100%;height:100%}
+.mark .ln,.mark .pl{stroke:var(--clay);stroke-width:1.9;stroke-linecap:round;fill:none}
+.mark .pl{stroke:var(--light);opacity:.55}
+.mark__txt{line-height:1}
+@media (prefers-reduced-motion:no-preference){
+  /* Логотип 23.09: линии не просто прорисовываются, а продолжают жить —
+     тихо дышат по очереди, будто ладонь дышит вместе с человеком.
+     Наведение по-прежнему разводит их веером. */
+  .mark .ln{stroke-dasharray:22;stroke-dashoffset:22;transform-origin:17px 27px;
+    animation:drawLine .9s ease forwards, breathLine 4.2s ease-in-out .9s infinite;
+    transition:transform .45s ease}
+  .mark .ln2{animation-delay:.12s,1.15s}
+  .mark .ln3{animation-delay:.24s,1.4s}
+  .mark .ln4{animation-delay:.36s,1.65s}
+  .mark .pl{stroke-dasharray:34;stroke-dashoffset:34;
+    animation:drawLine 1s ease .5s forwards, glowPalm 4.2s ease-in-out 1.5s infinite}
+  .mark:hover .ln1{transform:rotate(-7deg) translateY(-1px)}
+  .mark:hover .ln2{transform:rotate(-3deg) translateY(-1px)}
+  .mark:hover .ln3{transform:rotate(3deg) translateY(-1px)}
+  .mark:hover .ln4{transform:rotate(7deg) translateY(-1px)}
+  .mark:hover .ln{animation-play-state:running,paused}
+}
+@keyframes drawLine{to{stroke-dashoffset:0}}
+/* «Дыхание»: линия чуть подрастает и светлеет, потом возвращается. */
+@keyframes breathLine{0%,100%{opacity:.75;transform:scaleY(1)}
+  50%{opacity:1;transform:scaleY(1.09)}}
+@keyframes glowPalm{0%,100%{opacity:.45}50%{opacity:.8}}
+.nav{display:none;gap:22px;margin-left:auto;font-size:16px;color:var(--dust)}
+.nav a{text-decoration:none}
+.nav a:hover{color:var(--light)}
+.top .btn{margin-left:auto;min-height:44px;padding:0 18px;font-size:16px}
+@media (min-width:1040px){.nav{display:flex}.top .btn{margin-left:0}}
+
+/* ============ колонка ============ */
+.col{max-width:1080px;margin:0 auto;padding:0 var(--gut)}
+.sec{border-top:1px solid var(--line);padding:clamp(40px,5.5vw,var(--sec)) 0}
+h2{font-family:var(--serif);font-weight:400;font-size:clamp(25px,3.2vw,42px);line-height:1.12}
+h3{font-family:var(--sans);font-weight:700;font-size:18px;line-height:1.35}
+.note{color:var(--dust);font-size:16px;line-height:1.6;max-width:68ch}
+.lbl{font-weight:500;font-size:13px;color:var(--dust)}
+
+/* ============ 1. герой ============ */
+/* Правка 23.09: вместо пустоты справа — тёплый живой слой: тёплые пятна
+   света, три струйки пара и «волокна дерева», которые медленно дышат.
+   Всё нарисовано, без единой фотографии — в духе этой работы. */
+.hero{position:relative;overflow:hidden;padding:clamp(30px,4.5vw,64px) 0 0}
+.warmth{position:absolute;inset:0;z-index:-1;pointer-events:none;overflow:hidden}
+.warmth .glow{position:absolute;border-radius:50%;filter:blur(60px)}
+.warmth .g1{width:360px;height:360px;right:-60px;top:-80px;background:rgba(215,155,110,.22)}
+.warmth .g2{width:300px;height:300px;right:140px;top:120px;background:rgba(196,128,80,.16)}
+.warmth .grain{position:absolute;right:0;top:0;width:min(42vw,430px);height:100%;opacity:.5}
+.warmth .grain path{fill:none;stroke:rgba(215,155,110,.3);stroke-width:1.2}
+.warmth .steam{position:absolute;bottom:-40px;width:8px;height:120px;border-radius:999px;
+  background:linear-gradient(180deg,rgba(237,228,218,0),rgba(237,228,218,.22),rgba(237,228,218,0));
+  filter:blur(6px);opacity:0}
+.warmth .s1{right:26%}
+.warmth .s2{right:18%}
+.warmth .s3{right:10%}
+@media (prefers-reduced-motion:no-preference){
+  .warmth .glow{animation:breathe 9s ease-in-out infinite}
+  .warmth .g2{animation-delay:-4s}
+  .warmth .grain{animation:sway 14s ease-in-out infinite}
+  .warmth .steam{animation:rise 9s ease-in-out infinite}
+  .warmth .s2{animation-delay:-3s}
+  .warmth .s3{animation-delay:-6s}
+}
+@keyframes breathe{0%,100%{transform:scale(1);opacity:.85}50%{transform:scale(1.12);opacity:1}}
+@keyframes sway{0%,100%{transform:translateX(0)}50%{transform:translateX(-10px)}}
+@keyframes rise{0%{transform:translateY(0) scaleX(1);opacity:0}
+  18%{opacity:.7}
+  100%{transform:translateY(-260px) scaleX(1.5);opacity:0}}
+@media (max-width:760px){.warmth .grain{width:56vw;opacity:.35}.warmth .steam{display:none}}
+h1{font-family:var(--serif);font-weight:400;font-size:clamp(30px,4.8vw,70px);line-height:1.06;max-width:15ch}
+.hero p{margin-top:20px;font-size:clamp(17px,1.4vw,20px);line-height:1.55;max-width:60ch;color:var(--dust)}
+
+/* выбор */
+/* Правка 23.09: выбор времени, программа и раскладка — в одной скруглённой
+   рамке. Раньше это были три отдельных куска и они распадались взглядом. */
+.panel{margin-top:clamp(26px,3vw,40px);background:var(--cocoa-l);border:1px solid var(--line);
+  border-radius:24px;padding:clamp(18px,2.4vw,28px)}
+.pick{margin-top:0}
+/* Внутри светлой рамки прежние тона давали 4,2:1 — осветляем. */
+.panel .lbl{color:#CFC4B6}
+.panel .prog,.panel .min{color:#EDE4DA}
+.panel .prog[aria-pressed="false"],.panel .min[aria-pressed="false"]{color:#DED3C5}
+.pick fieldset{border:0;padding:0;margin:0}
+.pick legend{padding:0;margin-bottom:10px}
+.mins{display:flex;flex-wrap:wrap;gap:8px}
+.min{flex:none;min-height:52px;padding:0 20px;border:1px solid var(--line);border-radius:2px;
+  background:transparent;color:var(--light);font-family:var(--serif);font-weight:500;font-size:19px;
+  font-variant-numeric:tabular-nums;cursor:pointer;transition:background .18s,border-color .18s,color .18s}
+.min:hover:not(:disabled){border-color:var(--light)}
+.min:disabled{color:var(--dust);opacity:.45;cursor:not-allowed}
+.min[aria-pressed="true"]{background:var(--clay);border-color:var(--clay);color:var(--cocoa)}
+.progs{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px}
+.prog{flex:none;min-height:52px;padding:0 18px;border:1px solid var(--line);border-radius:2px;
+  background:transparent;color:var(--dust);font-size:17px;cursor:pointer;
+  transition:border-color .18s,color .18s}
+.prog:hover{color:var(--light);border-color:var(--light)}
+.prog[aria-pressed="true"]{color:var(--cocoa);background:var(--light);border-color:var(--light);font-weight:700}
+.pickNote{margin-top:14px;color:var(--dust);font-size:15px;line-height:1.55;max-width:68ch}
+
+/* ============ линейка минут ============ */
+/* Правка 22.09: линейка скруглена, строки отзываются на наведение. */
+.ruler{display:grid;grid-template-columns:72px minmax(0,1fr);gap:0;margin-top:22px;
+  border-radius:20px;overflow:hidden;
+  background:var(--cocoa-d);border:1px solid var(--line);border-radius:2px;overflow:hidden}
+@media (max-width:640px){.ruler{grid-template-columns:54px minmax(0,1fr)}}
+.ruler__t{display:flex;flex-direction:column;padding:14px 10px;border-right:1px solid var(--line);
+  background:rgba(0,0,0,.12)}
+.ruler__t span{display:block;font-family:var(--serif);font-weight:500;font-size:15px;color:var(--clay);
+  font-variant-numeric:tabular-nums}
+.ruler__b{padding:0}
+.ruler__b > div{transition:background .3s ease,transform .3s ease}
+.ruler__b > div:hover{background:rgba(215,155,110,.12);transform:translateX(3px)}
+@media (prefers-reduced-motion:reduce){.ruler__b > div{transition:none}}
+.seg{display:grid;grid-template-columns:auto minmax(0,1fr);gap:4px 14px;padding:14px 18px;
+  border-bottom:1px solid var(--line);align-items:baseline}
+.seg:last-child{border-bottom:0}
+.seg__m{font-family:var(--serif);font-weight:500;font-size:19px;color:var(--clay);
+  font-variant-numeric:tabular-nums;white-space:nowrap}
+.seg__n{font-weight:700;font-size:18px;line-height:1.3}
+.seg__d{grid-column:2;color:var(--dust);font-size:16px;line-height:1.5}
+@media (max-width:640px){.seg{grid-template-columns:1fr;padding:13px 14px}.seg__d{grid-column:1}}
+.bar{display:grid;height:100%}
+.bar i{display:block;background:var(--clay);opacity:.3;border-bottom:1px solid var(--cocoa-d)}
+.bar i:nth-child(odd){opacity:.55}
+.bar i:last-child{border-bottom:0}
+.ruler__sum{padding:16px 20px;border-top:1px solid var(--light);display:flex;flex-wrap:wrap;
+  background:rgba(215,155,110,.08);
+  justify-content:space-between;gap:10px;align-items:baseline}
+.ruler__sum b{font-family:var(--serif);font-weight:500;font-size:clamp(22px,2.4vw,30px);
+  font-variant-numeric:tabular-nums}
+.ruler__sum .btn{min-height:46px;font-size:16px;border-radius:999px}
+/* Кнопка записи пульсирует; под курсором замирает. */
+@keyframes softPulse{0%,100%{box-shadow:0 0 0 0 rgba(215,155,110,.45)}
+  50%{box-shadow:0 0 0 12px rgba(215,155,110,0)}}
+@media (prefers-reduced-motion:no-preference){
+  .ruler__sum .btn{animation:softPulse 2.6s ease-in-out infinite}
+  .ruler__sum .btn:hover,.ruler__sum .btn:focus-visible{animation-play-state:paused}
+}
+.fade{transition:opacity .18s ease}
+.fade.is-out{opacity:0}
+@media (prefers-reduced-motion:reduce){.fade,.min,.prog{transition:none}}
+
+/* без JS линейки нет, но программы читаются списком */
+/* Три цифры рядом: самое важное читается за секунду */
+/* Правка 22.09: три цифры стали панелями — так их видно как отдельные факты,
+   а не как строку через запятую. Решение подсмотрено у «Вера-дентал». */
+.trust{display:grid;grid-template-columns:1fr;gap:12px;margin-top:24px}
+@media (min-width:620px){.trust{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.tr-card{background:var(--cocoa-l);border:1px solid var(--line);border-radius:16px;padding:18px 20px;
+  transition:transform .3s ease,border-color .3s ease,box-shadow .3s ease}
+.tr-card:hover{transform:translateY(-4px);border-color:var(--clay);
+  box-shadow:0 16px 34px -20px rgba(0,0,0,.65)}
+.trust b{display:block;font-family:var(--f-disp);font-size:27px;line-height:1;color:var(--light)}
+.trust b.is-clay{color:var(--clay)}
+.trust span{display:block;margin-top:7px;color:var(--dust);font-size:13.5px;line-height:1.35}
+
+/* Появление блоков: 700 мс, один раз. Без скрипта всё видно сразу. */
+.js .reveal{opacity:0;transform:translateY(22px);transition:opacity .7s ease,transform .7s ease}
+.js .reveal.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){.js .reveal{opacity:1;transform:none;transition:none}
+  .r__bar{transition:none}}
+
+.plain-progs{margin-top:26px;border-top:1px solid var(--light)}
+.js .plain-progs{display:none}
+.plain-progs li{padding:16px 0;border-bottom:1px solid var(--line)}
+.plain-progs p{margin-top:5px;color:var(--dust);font-size:16px;line-height:1.55}
+
+/* ============ фото ============ */
+.shots{display:grid;grid-template-columns:1fr;gap:12px;margin-top:26px}
+@media (min-width:760px){.shots{grid-template-columns:1.4fr 1fr 1fr}}
+.shots img{width:100%;height:clamp(180px,22vw,280px);object-fit:cover;background:var(--cocoa-l);
+  filter:saturate(.92) brightness(.98)}
+figcaption{margin-top:10px;color:var(--dust);font-size:14px;line-height:1.5}
+
+/* ============ списки ============ */
+/* Правка 22.09: прайс стал карточкой, строки подсвечиваются и чуть съезжают. */
+.rows{margin-top:24px;background:var(--cocoa-l);border:1px solid var(--line);border-radius:20px;
+  overflow:hidden}
+.rows .r{padding:16px 20px;transition:background .3s ease,transform .3s ease}
+.rows .r:last-child{border-bottom:0}
+.rows .r:hover{background:rgba(215,155,110,.12);transform:translateX(4px)}
+@media (prefers-reduced-motion:reduce){.rows .r{transition:none}}
+/* Цена лежит на шкале минут: длина полосы = длительность сеанса.
+   Главная мысль сайта — время, и прайс говорит о том же. */
+.r__bar{grid-column:1/-1;height:3px;background:var(--clay);border-radius:2px;opacity:.55;
+  transform-origin:left;transform:scaleX(var(--w,1));transition:opacity .25s}
+.r:hover .r__bar{opacity:1}
+.r{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:6px 16px;padding:14px 0;
+  border-bottom:1px solid var(--line);align-items:baseline}
+.r span:last-child{font-family:var(--serif);font-weight:500;font-size:20px;white-space:nowrap;
+  font-variant-numeric:tabular-nums}
+/* Правка 22.09: пункты стали окошками. При наведении окно чуть подрастает,
+   подсвечивается и пульсирует рамкой. Фотографий здесь нет намеренно: кадров
+   в стиле работы (лён, дерево, руки) хватило ровно на кабинет, а повторять
+   одни и те же снимки дважды на странице хуже, чем обойтись без них. */
+.know{display:grid;grid-template-columns:1fr;gap:14px;margin-top:24px;counter-reset:kn}
+@media (min-width:620px){.know{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (min-width:1080px){.know{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.know li{position:relative;background:var(--cocoa-l);border:1px solid var(--line);border-radius:18px;
+  padding:22px 20px;transition:transform .3s ease,border-color .3s ease,box-shadow .3s ease}
+.know li::before{counter-increment:kn;content:counter(kn,decimal-leading-zero);
+  display:block;font-family:var(--serif);font-size:24px;color:var(--clay);margin-bottom:10px;line-height:1}
+.know li:hover{transform:translateY(-6px) scale(1.02);border-color:var(--clay);
+  box-shadow:0 18px 40px -22px rgba(0,0,0,.7)}
+@media (prefers-reduced-motion:no-preference){
+  .know li:hover{animation:softPulse 2.2s ease-in-out infinite}
+}
+.know p{margin-top:5px;color:var(--dust);font-size:16px;line-height:1.55}
+.masters{margin-top:24px;display:grid;grid-template-columns:1fr;gap:14px}
+@media (min-width:620px){.masters{grid-template-columns:repeat(3,minmax(0,1fr))}}
+/* Правка 22.09: мастера стали карточками с лицами — как в «Кружке» и «Гонге». */
+.ms{display:grid;gap:6px;background:var(--cocoa-l);border:1px solid var(--line);border-radius:18px;
+  padding:20px 18px;transition:transform .3s ease,border-color .3s ease,box-shadow .3s ease}
+.ms:hover{transform:translateY(-6px);border-color:var(--clay);box-shadow:0 18px 40px -22px rgba(0,0,0,.7)}
+@media (prefers-reduced-motion:no-preference){.ms:hover{animation:softPulse 2.2s ease-in-out infinite}}
+.ms__ph{display:block;width:96px;height:96px;border-radius:50%;overflow:hidden;margin-bottom:12px;
+  border:1px solid var(--line)}
+.ms__ph img{width:100%;height:100%;object-fit:cover;object-position:50% 22%;transition:transform .4s ease}
+.ms:hover .ms__ph img{transform:scale(1.06)}
+.ms__n{font-family:var(--serif);font-weight:500;font-size:clamp(21px,2.2vw,27px);line-height:1.1}
+.ms__d{display:inline-block;margin-top:8px;padding:5px 12px;border-radius:999px;justify-self:start;
+  background:rgba(215,155,110,.14);color:var(--clay);font-size:13.5px;white-space:nowrap}
+.ms__s{color:var(--dust);font-size:15.5px;line-height:1.45}
+
+/* Правка 22.09: кабинет — шесть кадров в рамках, тезис под каждым.
+   При наведении рамка подрастает, подсвечивается и пульсирует. */
+.cab-grid{display:grid;grid-template-columns:1fr;gap:14px;margin-top:24px}
+@media (min-width:620px){.cab-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (min-width:1000px){.cab-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.cab-card{margin:0;background:var(--cocoa-l);border:1px solid var(--line);border-radius:18px;
+  overflow:hidden;transition:transform .3s ease,border-color .3s ease,box-shadow .3s ease}
+.cab-card:hover{transform:translateY(-6px) scale(1.015);border-color:var(--clay);
+  box-shadow:0 18px 40px -22px rgba(0,0,0,.7)}
+@media (prefers-reduced-motion:no-preference){.cab-card:hover{animation:softPulse 2.2s ease-in-out infinite}}
+.cab-card img{width:100%;height:clamp(150px,16vw,190px);object-fit:cover;display:block;
+  transition:transform .45s ease}
+.cab-card:hover img{transform:scale(1.05)}
+.cab-card figcaption{padding:16px 18px 18px}
+.cab-card b{display:block;font-family:var(--serif);font-weight:500;font-size:18px;color:var(--light)}
+.cab-card span{display:block;margin-top:6px;color:var(--dust);font-size:15px;line-height:1.45}
+
+/* ============ форма ============ */
+/* Правка 22.09: форма и контакты в одной рамке — без неё взгляд разбегался. */
+.book{display:grid;grid-template-columns:1fr;gap:26px;margin-top:24px;background:var(--cocoa-l);
+  border:1px solid var(--line);border-radius:22px;padding:clamp(20px,3vw,32px)}
+@media (min-width:1000px){.book{grid-template-columns:minmax(0,1fr) 280px;gap:44px}}
+.form{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.f{display:flex;flex-direction:column;gap:7px;grid-column:span 2}
+@media (min-width:600px){.f--half{grid-column:span 1}}
+.f label,.f legend{font-size:15px;color:var(--dust)}
+.inp{width:100%;min-height:50px;padding:12px 14px;background:var(--cocoa-l);border:1px solid var(--dust);
+  border-radius:2px;font-size:17px;color:var(--light)}
+.inp::placeholder{color:rgba(180,165,150,.7)}
+.inp:focus-visible{border-color:var(--light)}
+fieldset.f{border:0;padding:0;margin:0}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{position:relative}
+.chip input{position:absolute;opacity:0;width:1px;height:1px}
+.chip span{display:inline-flex;align-items:center;min-height:44px;padding:0 16px;border:1px solid var(--dust);
+  border-radius:2px;font-size:16px;cursor:pointer}
+.chip input:checked + span{background:var(--light);border-color:var(--light);color:var(--cocoa);font-weight:700}
+.chip input:focus-visible + span{outline:2px solid var(--clay);outline-offset:2px}
+.consent{grid-column:1/-1;display:flex;align-items:flex-start;gap:12px}
+.consent input{flex:none;width:24px;height:24px;margin:12px 0 0;accent-color:var(--clay);cursor:pointer}
+.consent label{padding:10px 0;font-size:16px;line-height:1.5;cursor:pointer}
+.send{grid-column:1/-1;display:flex;flex-wrap:wrap;align-items:center;gap:14px}
+.send__hint{color:var(--dust);font-size:15px}
+.done{background:var(--cocoa-l);border:1px solid var(--line);border-radius:2px;padding:28px}
+.done__b{font-family:var(--serif);font-size:clamp(24px,3vw,34px);line-height:1.15}
+.done p+p{margin-top:12px}
+.noscript{grid-column:1/-1;color:var(--dust);font-size:16px}
+.side dl{border-top:1px solid var(--light)}
+.side div{padding:12px 0;border-bottom:1px solid var(--line)}
+.side dt{color:var(--dust);font-size:14px}
+.side dd{margin-top:3px;font-size:17px;line-height:1.4}
+
+
+/* Правка 22.09: внутри светлых карточек текст осветлён — на их фоне
+   прежний тон давал 4,2:1 при норме 4,5. */
+.tr-card span,.know li p,.cab-card span,.ms__s{color:#CFC4B6}
+/* Рамка формы тоже светлее фона — подписи полей осветляем вместе с ней. */
+.book label,.book legend,.book .side dt,.book .side span{color:#CFC4B6}
+.book .link{color:#E8BE97}
+.book .btn:disabled{color:#CFC4B6;border-color:rgba(207,196,182,.4)}
+.ms__d{background:rgba(226,176,134,.18);color:#E8BE97}
+.trust .tr-card b.is-clay{color:#E8BE97}
+/* ============ подвал ============ */
+.foot{border-top:1px solid var(--line);background:var(--cocoa-d)}
+.foot__in{max-width:1080px;margin:0 auto;padding:clamp(32px,4vw,52px) var(--gut);
+  display:grid;grid-template-columns:1fr;gap:18px}
+@media (min-width:900px){.foot__in{grid-template-columns:250px minmax(0,1fr);gap:40px}}
+.plate{border:1px solid var(--line);border-radius:2px;padding:16px 18px;font-size:16px;line-height:1.55}
+.credits{color:var(--dust);font-size:14px}
+</style>
+</head>
+<body>
+<a class="skip" href="#minuty">К раскладке минут</a>
+
+<header class="top">
+  <a class="mark" href="#top" aria-label="Ладонь — на главную">
+    <span class="mark__ico" aria-hidden="true">
+      <svg viewBox="0 0 34 34" fill="none">
+        <path class="ln ln1" d="M9 27c-1.6-3.4-2-6.6-1.2-9.6"/>
+        <path class="ln ln2" d="M13.5 27c-1.3-4.6-1.4-9.2-.3-13.8"/>
+        <path class="ln ln3" d="M18.5 27c-.7-5.2-.5-10.4.6-15.6"/>
+        <path class="ln ln4" d="M23.5 27c.2-4.6.9-8.8 2.1-12.6"/>
+        <path class="pl" d="M6 24.5c2.6 4.2 6.3 6.3 11 6.3s8.4-2.1 11-6.3"/>
+      </svg>
+    </span>
+    <span class="mark__txt">ЛАДОНЬ</span>
+  </a>
+  <nav class="nav" aria-label="Разделы">
+    <a href="#minuty">Минуты</a>
+    <a href="#tseny">Цены</a>
+    <a href="#znat">Правила</a>
+    <a href="#mastera">Мастера</a>
+    <a href="#zapis">Контакты</a>
+  </nav>
+  <a class="btn" href="#zapis">Записаться</a>
+</header>
+
+<main id="top">
+  <!-- ============ 1. герой и раскладка ============ -->
+  <section class="hero" aria-labelledby="h1">
+    <div class="warmth" aria-hidden="true">
+      <span class="steam s1"></span><span class="steam s2"></span><span class="steam s3"></span>
+      <span class="glow g1"></span><span class="glow g2"></span>
+      <svg class="grain" viewBox="0 0 220 260" preserveAspectRatio="none">
+        <path d="M14 0c26 52 26 104 0 156s-26 104 0 156" />
+        <path d="M58 0c30 56 30 112 0 168s-30 112 0 168" />
+        <path d="M104 0c24 48 24 96 0 144s-24 96 0 144" />
+        <path d="M150 0c32 60 32 120 0 180s-32 120 0 180" />
+        <path d="M196 0c22 44 22 88 0 132s-22 88 0 132" />
+      </svg>
+    </div>
+    <div class="col">
+      <h1 id="h1">Спина скажет спасибо через час</h1>
+      <p>Выберите длительность и программу — увидите, из чего сложится сеанс.</p>
+
+      <div class="trust">
+        <div class="tr-card"><b>60 лари</b><span>тридцать минут, самый короткий сеанс</span></div>
+        <div class="tr-card"><b>1 сеанс</b><span>курс на первом визите не предлагаем</span></div>
+        <div class="tr-card"><b class="is-clay">0 слов</b><span>скажете — будем молчать весь сеанс</span></div>
+      </div>
+
+      <div class="panel">
+      <div class="pick" id="minuty">
+        <h2 class="sr">Раскладка сеанса по минутам</h2>
+        <fieldset>
+          <legend class="lbl">Сколько у вас времени</legend>
+          <div class="mins" id="mins"></div>
+        </fieldset>
+        <fieldset style="margin-top:22px">
+          <legend class="lbl">Программа</legend>
+          <div class="progs" id="progs"></div>
+        </fieldset>
+      </div>
+
+      <div class="ruler fade" id="ruler" aria-live="polite"></div>
+      </div>
+
+      <!-- версия без JavaScript -->
+      <ul class="plain-progs">
+        <li><h3>Спина и шея — 30, 60 или 90 минут</h3>
+          <p>Сидячая работа, ноет между лопаток. Больше всего минут — на спину.</p></li>
+        <li><h3>Всё тело — 60, 90 или 120 минут</h3>
+          <p>Когда устало всё сразу: спина, ноги, руки, шея и голова по очереди.</p></li>
+        <li><h3>Ноги и стопы — 30 или 60 минут</h3>
+          <p>После дня на ногах или долгого перелёта: голени, стопы, икры, дренажная растяжка.</p></li>
+        <li><h3>После тренировки — 60 или 90 минут</h3>
+          <p>На второй день после нагрузки: триггерные точки и растяжка.</p></li>
+        <li><h3>Голова, лицо и шея — 30 или 60 минут</h3>
+          <p>При головной боли от напряжения и от экрана: шея, трапеция, лицо, кожа головы.</p></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ============ 2. цены ============ -->
+  <section class="sec reveal" id="tseny" aria-labelledby="h-t">
+    <div class="col">
+      <h2 id="h-t">Сколько стоит сеанс</h2>
+      <ul class="rows">
+        <li class="r" style="--w:0.25"><span>30 минут</span><span>60 лари</span><i class="r__bar"></i></li>
+        <li class="r" style="--w:0.5"><span>60 минут</span><span>100 лари</span><i class="r__bar"></i></li>
+        <li class="r" style="--w:0.75"><span>90 минут</span><span>140 лари</span><i class="r__bar"></i></li>
+        <li class="r" style="--w:1.0"><span>120 минут</span><span>180 лари</span><i class="r__bar"></i></li>
+        <li class="r"><span>Абонемент на пять сеансов, срок три месяца</span><span>минус 10%</span></li>
+        <li class="r"><span>Выезд на дом, в пределах Батуми</span><span>плюс 40 лари</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ============ 3. правила ============ -->
+  <section class="sec reveal" id="znat" aria-labelledby="h-z">
+    <div class="col">
+      <h2 id="h-z">Что нужно знать</h2>
+      <ul class="know">
+        <li><h3>Разговаривать не обязательно</h3>
+          <p>Скажите в начале — будем молчать весь сеанс. Просят чаще, чем кажется.</p></li>
+        <li><h3>Массаж не лечит грыжу и не заменяет врача</h3>
+          <p>Резкая боль или отдаёт в ногу — сначала к врачу. Мы подождём.</p></li>
+        <li><h3>Масло по умолчанию без запаха</h3>
+          <p>Ароматическое — только если сами попросите.</p></li>
+        <li><h3>Скажите про синяки и давление</h3>
+          <p>Низкое давление и «вчера потянул» меняют то, как мы работаем.</p></li>
+        <li><h3>Не приходите сразу после еды</h3>
+          <p>Час — нормальный перерыв.</p></li>
+        <li><h3>После сеанса не бегите</h3>
+          <p>Пятнадцать минут тишины и стакан воды дают половину эффекта.</p></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ============ 4. мастера ============ -->
+  <section class="sec reveal" id="mastera" aria-labelledby="h-m">
+    <div class="col">
+      <h2 id="h-m">Руки, которые работают</h2>
+      <ul class="masters">
+        <li class="ms"><span class="ms__ph"><img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=800&q=76" alt="Тея, мастер по спине и шее" width="800" height="800" loading="lazy" decoding="async"></span><span class="ms__n">Тея</span><span class="ms__s">спина и шея, после тренировки</span><span class="ms__d">пн, вт, чт, сб</span></li>
+        <li class="ms"><span class="ms__ph"><img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=800&q=76" alt="Заур, мастер спортивного массажа" width="800" height="800" loading="lazy" decoding="async"></span><span class="ms__n">Заур</span><span class="ms__s">всё тело, спортивный</span><span class="ms__d">вт, ср, пт, сб</span></li>
+        <li class="ms"><span class="ms__ph"><img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=800&q=76" alt="Анна, мастер по голове и стопам" width="800" height="800" loading="lazy" decoding="async"></span><span class="ms__n">Анна</span><span class="ms__s">голова и лицо, ноги и стопы</span><span class="ms__d">пн, ср, пт, вс</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ============ 5. кабинет ============ -->
+  <section class="sec reveal" id="kabinet" aria-labelledby="h-k">
+    <div class="col">
+      <h2 id="h-k">Кабинет</h2>
+      <div class="cab-grid">
+        <figure class="cab-card">
+          <img src="https://images.unsplash.com/photo-1617016560766-cf9676c279fe?auto=format&fit=crop&w=900&q=76" alt="Льняная ткань на деревянной скамье" width="900" height="600" loading="lazy" decoding="async">
+          <figcaption><b>Один сеанс за раз</b><span>В коридоре никто не ждёт своей очереди.</span></figcaption>
+        </figure>
+        <figure class="cab-card">
+          <img src="https://images.unsplash.com/photo-1705290304455-35ffb433f560?auto=format&fit=crop&w=900&q=76" alt="Складки льняной ткани" width="900" height="600" loading="lazy" decoding="async">
+          <figcaption><b>Бельё одноразовое</b><span>Стол дезинфицируется после каждого сеанса.</span></figcaption>
+        </figure>
+        <figure class="cab-card">
+          <img src="https://images.unsplash.com/photo-1603741277347-4cd1bde5844a?auto=format&fit=crop&w=900&q=76" alt="Ткань на деревянном табурете" width="900" height="600" loading="lazy" decoding="async">
+          <figcaption><b>Душ, халат, полотенце</b><span>Всё выдаём на месте, приносить ничего не нужно.</span></figcaption>
+        </figure>
+        <figure class="cab-card">
+          <img src="https://images.unsplash.com/photo-1519824145371-296894a0daa9?auto=format&fit=crop&w=900&q=76" alt="Руки мастера на спине" width="900" height="600" loading="lazy" decoding="async">
+          <figcaption><b>Работаем руками</b><span>Без аппаратов и массажных пистолетов.</span></figcaption>
+        </figure>
+        <figure class="cab-card">
+          <img src="https://images.unsplash.com/photo-1515377905703-c4788e51af15?auto=format&fit=crop&w=900&q=76" alt="Масло в руках мастера" width="900" height="600" loading="lazy" decoding="async">
+          <figcaption><b>Масло без запаха</b><span>Ароматическое — только если сами попросите.</span></figcaption>
+        </figure>
+        <figure class="cab-card">
+          <img src="https://images.unsplash.com/photo-1604881991720-f91add269bed?auto=format&fit=crop&w=900&q=76" alt="Массаж кисти руки" width="900" height="600" loading="lazy" decoding="async">
+          <figcaption><b>Двадцать четыре градуса</b><span>Окно закрыто, сквозняка нет. Музыка — по вашему выбору.</span></figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 6. запись ============ -->
+  <section class="sec reveal" id="zapis" aria-labelledby="h-b">
+    <div class="col">
+      <div class="book">
+        <div>
+          <h2 id="h-b">Записаться</h2>
+          <form class="form" id="form" action="#zapis" method="post" novalidate style="margin-top:22px">
+            <div class="f f--half">
+              <label for="f-name">Имя</label>
+              <input class="inp" id="f-name" name="name" type="text" autocomplete="name" required>
+            </div>
+            <div class="f f--half">
+              <label for="f-phone">Телефон</label>
+              <input class="inp" id="f-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="+995 555 00 00 00" required>
+            </div>
+            <div class="f">
+              <label for="f-seans">Сеанс</label>
+              <input class="inp" id="f-seans" name="seans" type="text" placeholder="Заполнится из раскладки">
+            </div>
+            <fieldset class="f">
+              <legend>Когда удобно</legend>
+              <div class="chips">
+                <label class="chip"><input type="radio" name="when" value="morning"><span>Утром</span></label>
+                <label class="chip"><input type="radio" name="when" value="day"><span>Днём</span></label>
+                <label class="chip"><input type="radio" name="when" value="evening"><span>Вечером</span></label>
+                <label class="chip"><input type="radio" name="when" value="any"><span>Любое</span></label>
+              </div>
+            </fieldset>
+            <div class="f">
+              <label for="f-note">Что стоит знать</label>
+              <input class="inp" id="f-note" name="note" type="text" placeholder="Травмы, давление, беременность, «молчим весь сеанс»">
+            </div>
+            <div class="consent">
+              <input type="checkbox" id="f-agree" name="agree" aria-describedby="send-hint">
+              <label for="f-agree">Соглашаюсь с <a class="link" href="#zapis" id="policy">политикой обработки персональных данных</a></label>
+            </div>
+            <div class="send">
+              <button class="btn" type="submit" id="send" disabled>Отправить заявку</button>
+              <p class="send__hint" id="send-hint"></p>
+            </div>
+          </form>
+
+          <div class="done" id="done" role="status" tabindex="-1" hidden>
+            <p class="done__b">Записали.</p>
+            <p>Мастер напишет и подтвердит время сеанса.</p>
+            <p><button class="btn btn--line" type="button" id="again" style="margin-top:6px">Вернуться к форме</button></p>
+          </div>
+        </div>
+
+        <div class="side">
+          <dl>
+            <div><dt>Адрес</dt><dd>Улица Ангиса, Батуми</dd></div>
+            <div><dt>Часы</dt><dd>Пн–сб 10:00–21:00, вс по договорённости</dd></div>
+            <div><dt>Кабинет</dt><dd>Один сеанс за раз</dd></div>
+            <div><dt>Оплата</dt><dd>Картой или наличными</dd></div>
+          </dl>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <div class="foot__in">
+    <div>
+      <span class="mark"><span class="mark__txt">ЛАДОНЬ</span></span>
+      <p class="note" style="margin-top:8px">Студия массажа.<br>Улица Ангиса, Батуми · пн–сб 10:00–21:00</p>
+    </div>
+    <div>
+    </div>
+  </div>
+</footer>
+
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"HealthAndBeautyBusiness","name":"Ладонь","description":"Массаж в Батуми: спина и шея, всё тело, ноги и стопы. Сеансы 30-120 минут.","url":"https://open-sites.io/works/ladon/","image":"https://open-sites.io/works/ladon/og.jpg","priceRange":"60–180 GEL","address":{"@type":"PostalAddress","streetAddress":"улица Ангиса","addressLocality":"Батуми","addressCountry":"GE"},"openingHours":"Mo-Sa 10:00-21:00"}
+</script>
+
+<script>
+(function () {
+  'use strict';
+  var MINS = [30, 60, 90, 120];
+  var PRICE = { 30: 60, 60: 100, 90: 140, 120: 180 };
+  /* Доли сегментов в сумме дают 100%. Минуты считаются от выбранной длительности,
+     поэтому видно: в 30 минутах спине достаётся 12, а в 90 — 38. */
+  var PROG = [
+    { id:'spina', n:'Спина и шея', mins:[30,60,90],
+      note:'Самая частая программа: сидячая работа, ноет между лопаток.',
+      seg:[[8,'Разговор и осмотр','Спрашиваем, где болит, чего нельзя и нужно ли молчать весь сеанс.'],
+           [17,'Разогрев спины','Медленно и без давления: холодные мышцы не разминают.'],
+           [42,'Глубокая работа по спине','То, ради чего пришли. Здесь бывает терпимо больно — говорите.'],
+           [20,'Шея и плечи','Трапеция и основание черепа, откуда чаще всего идёт головная боль.'],
+           [8,'Растяжка и завершение','Мягко, чтобы мышца не «схватилась» обратно.'],
+           [5,'Тишина','Лежите. Вставать сразу — потерять половину сделанного.']] },
+    { id:'telo', n:'Всё тело', mins:[60,90,120],
+      note:'Когда устало всё сразу. За тридцать минут такую программу сделать нельзя.',
+      seg:[[6,'Разговор','Коротко: что болит, где не трогать.'],
+           [26,'Спина','Основное время всё равно здесь.'],
+           [16,'Ноги сзади','Икры и задняя поверхность бедра.'],
+           [12,'Руки и кисти','Кисти — отдельная история у всех, кто за клавиатурой.'],
+           [14,'Ноги спереди и живот','Живот — только по согласию, спрашиваем отдельно.'],
+           [18,'Шея, плечи, голова','Заканчиваем сверху: так легче встать.'],
+           [8,'Тишина','Без разговоров и без телефона.']] },
+    { id:'nogi', n:'Ноги и стопы', mins:[30,60],
+      note:'После дня на ногах или долгого перелёта.',
+      seg:[[8,'Разговор','Спрашиваем про отёки, варикоз и травмы.'],
+           [20,'Разогрев голеней','Снизу вверх, по ходу тока крови.'],
+           [34,'Стопы','Подошвенная фасция и свод. Самая неожиданно приятная часть.'],
+           [26,'Икры и бёдра','Плотно, с растяжкой.'],
+           [12,'Дренажная растяжка','Ноги в приподнятом положении, медленные движения.']] },
+    { id:'sport', n:'После тренировки', mins:[60,90],
+      note:'Лучше на второй день после нагрузки, а не сразу после зала.',
+      seg:[[8,'Разговор о нагрузке','Что делали, где тянет, есть ли соревнование на неделе.'],
+           [14,'Разогрев','Быстрее и жёстче, чем в обычном массаже.'],
+           [36,'Триггерные точки','Точечно, по 30–60 секунд на точку. Это ощутимо.'],
+           [26,'Растяжка','Пассивная, с вашим дыханием.'],
+           [16,'Холод и завершение','Холодный компресс на перегруженное место.']] },
+    { id:'golova', n:'Голова, лицо и шея', mins:[30,60],
+      note:'При головной боли от напряжения и от экрана.',
+      seg:[[10,'Разговор','Когда началась боль, как часто, что уже пробовали.'],
+           [30,'Шея и трапеция','Чаще всего боль идёт отсюда, а не из головы.'],
+           [30,'Лицо','Жевательные мышцы и виски — у тех, кто сжимает зубы.'],
+           [22,'Кожа головы','Медленно, пальцами, без масла.'],
+           [8,'Тишина','С закрытыми глазами, свет приглушаем.']] }
+  ];
+
+  var minsBox = document.getElementById('mins');
+  var progsBox = document.getElementById('progs');
+  var ruler = document.getElementById('ruler');
+  var pickNote = document.getElementById('pickNote');
+  var field = document.getElementById('f-seans');
+  var reduce = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+  var curMin = 60, curProg = PROG[0], first = true;
+
+  function plural(n, a, b, c) {
+    var n10 = n % 10, n100 = n % 100;
+    if (n10 === 1 && n100 !== 11) return a;
+    if (n10 >= 2 && n10 <= 4 && (n100 < 12 || n100 > 14)) return b;
+    return c;
+  }
+  function hm(m) {
+    if (m < 60) return m + ' ' + plural(m, 'минута', 'минуты', 'минут');
+    var h = Math.floor(m / 60), r = m % 60;
+    return h + ' ' + plural(h, 'час', 'часа', 'часов') + (r ? ' ' + r + ' ' + plural(r, 'минута', 'минуты', 'минут') : '');
+  }
+
+  MINS.forEach(function (m) {
+    var b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'min';
+    b.setAttribute('data-m', m);
+    b.textContent = m + ' мин';
+    b.setAttribute('aria-label', hm(m));
+    b.addEventListener('click', function () { if (!b.disabled) { curMin = m; draw(); } });
+    minsBox.appendChild(b);
+  });
+  PROG.forEach(function (p) {
+    var b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'prog';
+    b.setAttribute('data-p', p.id);
+    b.textContent = p.n;
+    b.addEventListener('click', function () {
+      curProg = p;
+      // если текущая длительность программе не подходит — берём ближайшую доступную
+      if (p.mins.indexOf(curMin) < 0) curMin = p.mins[0];
+      draw();
+    });
+    progsBox.appendChild(b);
+  });
+
+  function build() {
+    var total = curMin, used = 0, rows = '', bars = '';
+    curProg.seg.forEach(function (s, i) {
+      var m = (i === curProg.seg.length - 1) ? total - used : Math.round(total * s[0] / 100);
+      used += m;
+      var from = used - m;
+      rows += '<div class="seg"><span class="seg__m">' + from + '–' + used + '</span>' +
+        '<span class="seg__n">' + s[1] + '</span>' +
+        '<span class="seg__d">' + s[2] + ' · ' + m + ' ' + plural(m, 'минута', 'минуты', 'минут') + '</span></div>';
+      bars += '<i style="flex:' + m + '"></i>';
+    });
+    return '<div class="ruler__t"><span>0 мин</span>' +
+      '<div class="bar" style="display:flex;flex-direction:column;flex:1;margin:8px 0">' + bars + '</div>' +
+      '<span>' + total + ' мин</span></div>' +
+      '<div class="ruler__b">' + rows +
+      '<div class="ruler__sum"><b>' + hm(total) + ' · ' + PRICE[total] + ' лари</b>' +
+      '<a class="btn" href="#zapis" data-go="1">Записаться на этот сеанс</a></div></div>';
+  }
+
+  function draw() {
+    [].forEach.call(minsBox.children, function (b) {
+      var m = +b.getAttribute('data-m');
+      var ok = curProg.mins.indexOf(m) >= 0;
+      b.disabled = !ok;
+      b.setAttribute('aria-pressed', (ok && m === curMin) ? 'true' : 'false');
+    });
+    [].forEach.call(progsBox.children, function (b) {
+      b.setAttribute('aria-pressed', b.getAttribute('data-p') === curProg.id ? 'true' : 'false');
+    });
+    /* Подпись под выбором убрана правкой 22.09; проверяем наличие элемента,
+       иначе весь скрипт падал и линейка минут не строилась вовсе. */
+    if (pickNote) {
+      var closed = MINS.filter(function (m) { return curProg.mins.indexOf(m) < 0; });
+      pickNote.textContent = curProg.note + (closed.length
+        ? ' Варианты ' + closed.join(', ') + ' минут для неё закрыты.'
+        : '');
+    }
+
+    var html = build();
+    // первая отрисовка — без затухания: иначе страница открывается с полупрозрачной линейкой
+    if (reduce || first) { first = false; ruler.innerHTML = html; after();
+      if (field) field.value = curProg.n + ', ' + hm(curMin) + ', ' + PRICE[curMin] + ' лари';
+      return; }
+    ruler.classList.add('is-out');
+    setTimeout(function () { ruler.innerHTML = html; ruler.classList.remove('is-out'); after(); }, 180);
+
+    if (field) field.value = curProg.n + ', ' + hm(curMin) + ', ' + PRICE[curMin] + ' лари';
+  }
+
+  function after() {
+    var go = ruler.querySelector('[data-go]');
+    if (go) go.addEventListener('click', function () {
+      setTimeout(function () { document.getElementById('f-name').focus(); }, 420);
+    });
+  }
+
+  draw();
+
+  /* ---- появление блоков при прокрутке ---- */
+  var revs = [].slice.call(document.querySelectorAll('.reveal'));
+  if (reduce || !('IntersectionObserver' in window)) {
+    revs.forEach(function (el) { el.classList.add('in'); });
+  } else {
+    var iobs = new IntersectionObserver(function (es) {
+      es.forEach(function (e) {
+        if (e.isIntersecting) { e.target.classList.add('in'); iobs.unobserve(e.target); }
+      });
+    }, { threshold: .12, rootMargin: '0px 0px -40px 0px' });
+    revs.forEach(function (el) { iobs.observe(el); });
+    setTimeout(function () { revs.forEach(function (el) { el.classList.add('in'); }); }, 1500);
+  }
+
+  /* ---- форма ---- */
+  var form = document.getElementById('form');
+  var agree = document.getElementById('f-agree');
+  var send = document.getElementById('send');
+  var hint = document.getElementById('send-hint');
+  var done = document.getElementById('done');
+  function sync() {
+    send.disabled = !agree.checked;
+    hint.textContent = agree.checked ? 'Подтвердим время в мессенджере.' : '';
+  }
+  agree.addEventListener('change', sync);
+  sync();
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    if (!agree.checked) return;
+    form.hidden = true; done.hidden = false; done.focus();
+  });
+  document.getElementById('again').addEventListener('click', function () {
+    done.hidden = true; form.hidden = false; document.getElementById('f-name').focus();
+  });
+  document.getElementById('policy').addEventListener('click', function (e) {
+    e.preventDefault();
+    alert('Политика обработки персональных данных откроется отдельной страницей.');
+  });
+})();
+</script>
+</body>
+</html>

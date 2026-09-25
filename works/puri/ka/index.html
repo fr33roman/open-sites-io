@@ -1,0 +1,733 @@
+<!doctype html>
+<html lang="ka">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>პური — საცხობი-ყავახანა ბათუმში (open-sites.io დემო)</title>
+<meta name="description" content="საცხობი-ყავახანა „პური“ მაზნიაშვილის ქუჩაზე, ბათუმში: დედოს პური, კრუასანები, ხაჭაპური, მიტანა საუზმისთვის.">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#E8B93C">
+<link rel="canonical" href="https://open-sites.io/works/puri/ka/">
+<!--hreflang--><link rel="alternate" hreflang="ru" href="https://open-sites.io/works/puri/">
+<link rel="alternate" hreflang="en" href="https://open-sites.io/works/puri/en/">
+<link rel="alternate" hreflang="ka" href="https://open-sites.io/works/puri/ka/">
+<link rel="alternate" hreflang="x-default" href="https://open-sites.io/works/puri/"><!--/hreflang-->
+<meta property="og:type" content="website">
+<meta property="og:locale" content="ka_GE">
+<meta property="og:site_name" content="open-sites.io">
+<meta property="og:title" content="პური — საცხობი-ყავახანა ბათუმში">
+<meta property="og:description" content="თბილი პური თქვენი საუზმისთვის. შეაგროვეთ ყუთი — დავითვლით წონას, ჯამს და საუზმემდე მოგიტანთ.">
+<meta property="og:url" content="https://open-sites.io/works/puri/ka/">
+<meta property="og:image" content="https://open-sites.io/works/puri/ka/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23E8B93C'/%3E%3Cpath d='M6 20c0-6 4.5-9 10-9s10 3 10 9z' fill='%233A2417'/%3E%3Cpath d='M5 20h22v3H5z' fill='%233A2417'/%3E%3C/svg%3E">
+<script>document.documentElement.className += ' js';</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://images.unsplash.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Wix+Madefor+Text:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+Georgian:wght@600&text=%E1%83%9E%E1%83%A3%E1%83%A0%E1%83%98%E1%83%A5%E1%83%90%E1%83%97%E1%83%9A&display=swap">
+<style>
+/* ============ токены (см. DESIGN.md) ============ */
+:root{
+  --ochre:#E8B93C;   /* заливка страницы — цвет корки */
+  --crust:#3A2417;   /* текст, коробка, подвал */
+  --bark:#5C3B22;    /* второстепенный текст, 5,3:1 на охре */
+  --cream:#FBF3E2;   /* плитки витрины, поля */
+  --dough:#F2D98A;   /* разделители, неактивное */
+  --line:rgba(58,36,23,.22);
+  --disp:"Dela Gothic One","Segoe UI",system-ui,sans-serif;
+  --text:"Wix Madefor Text","Segoe UI",system-ui,sans-serif;
+  --gut:40px;
+  --sec:80px;
+}
+@media (max-width:1000px){:root{--gut:24px}}
+@media (max-width:700px){:root{--gut:16px}}
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+@media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
+body{margin:0;background:var(--ochre);color:var(--crust);
+  font:400 17px/1.55 var(--text);-webkit-font-smoothing:antialiased;overflow-x:clip}
+img{display:block;max-width:100%}
+a{color:inherit}
+h1,h2,h3,p,ul,ol,dl,dd,figure{margin:0}
+ul,ol{list-style:none;padding:0}
+button,input,select,textarea{font:inherit;color:inherit}
+[hidden]{display:none!important}
+.nw{white-space:nowrap}
+.sr{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+:focus-visible{outline:3px solid var(--crust);outline-offset:2px}
+[id]{scroll-margin-top:80px}
+.skip{position:absolute;left:12px;top:-80px;background:var(--crust);color:var(--cream);padding:12px 18px;border-radius:999px;z-index:60}
+.skip:focus{top:12px}
+
+/* ============ кнопки ============ */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:0 24px;
+  border:2px solid var(--crust);border-radius:999px;background:var(--crust);color:var(--cream);
+  font-family:var(--text);font-weight:600;font-size:16px;text-decoration:none;cursor:pointer;
+  transition:background .16s,color .16s}
+.btn:hover{background:transparent;color:var(--crust)}
+.btn:disabled{background:var(--dough);border-color:var(--dough);color:var(--bark);cursor:not-allowed}
+.btn--line{background:transparent;color:var(--crust)}
+.btn--line:hover{background:var(--crust);color:var(--cream)}
+.btn--cream{background:var(--cream);border-color:var(--cream);color:var(--crust)}
+.btn--cream:hover{background:transparent;color:var(--cream)}
+.link{color:inherit;text-underline-offset:4px}
+
+/* ============ закреплённая строка ============ */
+.top{position:sticky;top:0;z-index:50;display:flex;align-items:center;gap:16px;
+  padding:10px var(--gut);background:rgba(232,185,60,.95);border-bottom:2px solid var(--crust);
+  backdrop-filter:blur(8px)}
+.mark{font-family:var(--disp);font-size:20px;letter-spacing:-.02em;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:7px 0}
+.nav{display:none;gap:20px;margin-left:auto;font-size:15px;color:var(--bark)}
+.nav a{text-decoration:none}
+.nav a:hover{color:var(--crust)}
+.top .btn{margin-left:auto;min-height:44px;padding:0 18px;font-size:15px}
+@media (min-width:1080px){.nav{display:flex}.top .btn{margin-left:0}}
+
+/* ============ секции ============ */
+.sec__in{max-width:1400px;margin:0 auto;padding:clamp(40px,5vw,var(--sec)) var(--gut)}
+h2{font-family:var(--disp);font-size:clamp(24px,3.2vw,44px);line-height:1.06;letter-spacing:-.02em}
+h3{font-family:var(--text);font-weight:600;font-size:18px;line-height:1.3}
+.note{color:var(--bark);font-size:15px;line-height:1.5;max-width:70ch}
+
+/* ============ 1. герой ============ */
+.hero{max-width:1400px;margin:0 auto;padding:clamp(24px,4vw,52px) var(--gut) 0}
+h1{font-family:var(--disp);font-size:clamp(32px,6.2vw,100px);line-height:.94;letter-spacing:-.025em;max-width:14ch}
+.hero__lead{margin-top:20px;font-size:clamp(17px,1.5vw,20px);line-height:1.45;max-width:54ch;color:var(--bark)}
+.hero__lead b{color:var(--crust);font-weight:600}
+/* Ночь пекаря одной лентой: от заказа до двери. Первый экран не повторяет
+   «три цифры рядом» — этот приём уже занят шестью работами. */
+.clock{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:26px;
+  padding-top:20px;border-top:2px dashed var(--line)}
+@media (min-width:720px){.clock{grid-template-columns:repeat(4,minmax(0,1fr));gap:0}}
+.clock li{position:relative;padding-right:14px}
+@media (min-width:720px){
+  .clock li::after{content:"";position:absolute;right:14px;top:11px;left:auto;width:calc(100% - 78px);
+    border-top:2px dotted var(--line)}
+  .clock li:last-child::after{display:none}
+}
+.clock b{display:block;font-family:var(--disp);font-size:clamp(20px,2.4vw,27px);line-height:1;color:var(--crust)}
+.clock span{display:block;margin-top:8px;color:var(--bark);font-size:13.5px;line-height:1.3}
+.js .reveal{opacity:0;transform:translateY(22px);transition:opacity .7s ease,transform .7s ease}
+.js .reveal.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){.js .reveal{opacity:1;transform:none;transition:none}}
+.strip{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:clamp(24px,3vw,40px)}
+.strip img{width:100%;height:clamp(140px,22vw,300px);object-fit:cover;border-radius:14px;
+  background:var(--dough);filter:saturate(1.04)}
+@media (max-width:600px){
+  .strip{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .strip figure:nth-child(3){grid-column:1/-1}
+  .strip figure:nth-child(3) img{height:160px}
+}
+.credit{margin-top:10px;color:var(--bark);font-size:13px}
+
+/* ============ 2. витрина ============ */
+.sets{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}
+.set{display:flex;flex-direction:column;align-items:flex-start;gap:3px;min-height:56px;padding:10px 18px;
+  background:transparent;border:2px solid var(--crust);border-radius:999px;cursor:pointer;text-align:left;
+  transition:background .16s,color .16s}
+.set b{font-weight:600;font-size:15px}
+.set span{font-size:13px;color:var(--bark)}
+.set:hover{background:var(--crust);color:var(--cream)}
+.set:hover span{color:var(--dough)}
+
+.shelf{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:10px;margin-top:20px}
+@media (min-width:860px){.shelf > li:nth-child(5n+1){grid-column:span 2}}
+@media (max-width:520px){.shelf{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}}
+.item{display:flex;flex-direction:column;gap:6px;background:var(--cream);border-radius:14px;
+  padding:16px 16px 14px;min-height:150px}
+.item__n{font-weight:600;font-size:17px;line-height:1.25}
+.item__w{color:var(--bark);font-size:14px}
+.item__b{margin-top:auto;display:flex;align-items:center;justify-content:space-between;gap:10px}
+.item__p{font-family:var(--disp);font-size:20px;letter-spacing:-.02em}
+.item__p i{font-family:var(--text);font-style:normal;font-size:13px;font-weight:500;color:var(--bark)}
+.add{display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;flex:none;
+  border:2px solid var(--crust);border-radius:50%;background:transparent;cursor:pointer;
+  font-family:var(--disp);font-size:20px;line-height:1;transition:background .16s,color .16s}
+.add:hover{background:var(--crust);color:var(--cream)}
+.add.pop{animation:pop .22s ease}
+@keyframes pop{50%{transform:scale(.86)}}
+@media (prefers-reduced-motion:reduce){.add.pop{animation:none}}
+.item__c{font-size:13px;color:var(--bark);min-height:18px}
+
+/* ============ коробка ============ */
+.boxwrap{margin-top:clamp(26px,3vw,40px)}
+.box{background:var(--crust);color:var(--cream);border-radius:14px;padding:clamp(18px,2.4vw,28px)}
+.box h3{font-family:var(--disp);font-weight:400;font-size:clamp(20px,2.2vw,28px);letter-spacing:-.02em}
+.box__empty{margin-top:10px;color:var(--dough);font-size:16px;line-height:1.5}
+.box__list{margin-top:16px;border-top:1px solid rgba(251,243,226,.26)}
+.bi{display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:10px 14px;align-items:center;
+  padding:11px 0;border-bottom:1px solid rgba(251,243,226,.26)}
+.bi__n{font-size:16px;line-height:1.3}
+.bi__p{font-weight:600;white-space:nowrap}
+.qty{display:flex;align-items:center;gap:6px}
+.qty button{width:36px;height:36px;border:1px solid rgba(251,243,226,.5);border-radius:50%;
+  background:transparent;color:var(--cream);cursor:pointer;font-size:17px;line-height:1}
+.qty button:hover{background:rgba(251,243,226,.15)}
+.qty span{min-width:22px;text-align:center;font-weight:600;font-variant-numeric:tabular-nums}
+.box__sum{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px;padding-top:16px;
+  font-family:var(--disp);font-size:clamp(20px,2.4vw,30px);letter-spacing:-.02em}
+.box__w{color:var(--dough);font-family:var(--text);font-weight:500;font-size:15px;letter-spacing:0;align-self:flex-end}
+.box__ship{margin-top:8px;color:var(--dough);font-size:14px;line-height:1.5}
+.box fieldset{border:0;padding:16px 0 0;margin:0}
+.box legend{font-size:14px;color:var(--dough);padding:0}
+.win{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.win label{position:relative}
+.win input{position:absolute;opacity:0;width:1px;height:1px}
+.win span{display:inline-flex;align-items:center;min-height:44px;padding:0 16px;border-radius:999px;
+  border:1px solid rgba(251,243,226,.5);font-size:15px;cursor:pointer}
+.win input:checked + span{background:var(--cream);border-color:var(--cream);color:var(--crust);font-weight:600}
+.win input:disabled + span{opacity:.4;cursor:not-allowed}
+.win input:focus-visible + span{outline:2px solid var(--cream);outline-offset:2px}
+.box .btn{margin-top:18px}
+
+/* ============ как печём ============ */
+.how{background:var(--cream)}
+.how__grid{display:grid;grid-template-columns:1fr;gap:26px}
+@media (min-width:920px){.how__grid{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:44px;align-items:start}}
+.how ul{border-top:2px solid var(--crust);margin-top:22px}
+.how li{padding:16px 0;border-bottom:1px solid var(--line)}
+.how li p{margin-top:5px;color:var(--bark);font-size:15px;line-height:1.5}
+.how img{width:100%;height:auto;border-radius:14px;background:var(--dough)}
+
+/* ============ доставка ============ */
+/* Окна доставки — плитки в духе витрины, без карточек с тенью */
+.del{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:22px}
+@media (min-width:860px){.del{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.del li{background:var(--cream);border-radius:14px;padding:16px 18px;border-bottom:0;
+  font-size:15.5px;line-height:1.4}
+@media (min-width:860px){.del{grid-template-columns:repeat(2,minmax(0,1fr));column-gap:44px}}
+
+
+/* ============ заказ ============ */
+.book{display:grid;grid-template-columns:1fr;gap:26px;margin-top:22px}
+@media (min-width:1000px){.book{grid-template-columns:minmax(0,1fr) 280px;gap:44px}}
+.form{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.f{display:flex;flex-direction:column;gap:7px;grid-column:span 2}
+@media (min-width:600px){.f--half{grid-column:span 1}}
+.f label{font-size:14px;color:var(--bark)}
+.inp{width:100%;min-height:48px;padding:11px 14px;background:var(--cream);border:2px solid var(--crust);
+  border-radius:10px;font-size:16px}
+.inp::placeholder{color:#9a7e63}
+.consent{grid-column:1/-1;display:flex;align-items:flex-start;gap:12px}
+.consent input{flex:none;width:24px;height:24px;margin:11px 0 0;accent-color:var(--crust);cursor:pointer}
+.consent label{min-height:44px;padding:10px 0;font-size:15px;line-height:1.5;cursor:pointer}
+.send{grid-column:1/-1;display:flex;flex-wrap:wrap;align-items:center;gap:14px}
+.send__hint{color:var(--bark);font-size:14px}
+.done{background:var(--crust);color:var(--cream);border-radius:14px;padding:28px}
+.done__b{font-family:var(--disp);font-size:clamp(22px,3vw,32px);letter-spacing:-.02em;line-height:1.1}
+.done p+p{margin-top:12px}
+.noscript{grid-column:1/-1;color:var(--bark);font-size:15px}
+.side dl{border-top:2px solid var(--crust)}
+.side div{padding:12px 0;border-bottom:1px solid var(--line)}
+.side dt{color:var(--bark);font-size:13px}
+.side dd{margin-top:3px;font-size:16px;line-height:1.4}
+
+/* ============ подвал ============ */
+.foot{background:var(--crust);color:var(--cream)}
+.foot__in{max-width:1400px;margin:0 auto;padding:clamp(32px,4vw,52px) var(--gut);
+  display:grid;grid-template-columns:1fr;gap:18px}
+@media (min-width:900px){.foot__in{grid-template-columns:260px minmax(0,1fr);gap:40px}}
+.foot .note{color:var(--dough)}
+.plate{border:1px solid rgba(251,243,226,.3);border-radius:10px;padding:16px 18px;font-size:15px;line-height:1.5}
+.credits{color:var(--dough);font-size:13px}
+
+/* ═══════════ Правки 24.09 (пакет «Указки» 16:19) ═══════════ */
+/* 1. Логотип «Пури»: круглое клеймо с буханкой, над ней поднимается пар. */
+.brand{gap:10px;padding:4px 0}
+.brand__ico{width:38px;height:38px;flex:none;color:var(--crust)}
+.brand__cuts{stroke:var(--ochre)}
+.brand__word{display:flex;flex-direction:column;line-height:.95;font-size:23px;letter-spacing:-.01em}
+.brand__word small{font-family:var(--text);font-size:10.5px;font-weight:600;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--bark);margin-top:3px}
+.brand__word small [lang="ka"]{font-family:"Noto Sans Georgian",var(--text);letter-spacing:.04em;text-transform:none}
+@media (prefers-reduced-motion:no-preference){
+  .brand__steam path{animation:steam 3.2s ease-in-out infinite;transform-box:fill-box;transform-origin:50% 100%}
+  .brand__steam path:nth-child(2){animation-delay:.5s}
+  .brand__steam path:nth-child(3){animation-delay:1s}
+  .brand:hover .brand__ico{animation:stamp .5s ease}
+}
+@keyframes steam{0%,100%{opacity:.25;transform:translateY(1.5px)}50%{opacity:1;transform:translateY(-1px)}}
+@keyframes stamp{40%{transform:rotate(-8deg) scale(1.06)}}
+
+/* 3. Витрина: таблица в рамке. Строка = фото, название с весом, цена и плюс. */
+.shelf{grid-template-columns:1fr;gap:0;background:var(--cream);border:1.5px solid var(--crust);
+  border-radius:16px;overflow:hidden}
+.shelf > li:nth-child(5n+1){grid-column:auto}
+.item{display:grid;grid-template-columns:80px minmax(0,1fr) auto;grid-template-areas:"img n b" "img w b" "img c b";
+  column-gap:16px;row-gap:3px;align-items:center;min-height:0;background:transparent;border-radius:0;
+  padding:12px 18px;border-bottom:1px solid var(--line);transition:background .25s ease}
+.item:hover{background:rgba(232,185,60,.18)}
+.item__img{grid-area:img;width:80px;height:80px;border-radius:12px;object-fit:cover;background:var(--dough);
+  transition:transform .35s ease}
+.item:hover .item__img{transform:scale(1.05) rotate(-2deg)}
+.item__n{grid-area:n;align-self:end}
+.item__w{grid-area:w;align-self:start}
+.item__c{grid-area:c;min-height:0}
+.item__c:empty{display:none}
+.item__b{grid-area:b;margin-top:0;gap:14px}
+@media (min-width:860px){
+  .shelf{grid-template-columns:1fr 1fr}
+  .shelf > .item:nth-child(odd){border-right:1px solid var(--line)}
+  .shelf > .item:nth-last-child(-n+2){border-bottom:0}
+}
+@media (max-width:859px){.shelf > .item:last-child{border-bottom:0}}
+@media (max-width:520px){
+  .shelf{grid-template-columns:1fr}
+  .item{grid-template-columns:62px minmax(0,1fr) auto;column-gap:12px;padding:10px 12px}
+  .item__img{width:62px;height:62px;border-radius:10px}
+  .item__n{font-size:16px}
+  .item__w{font-size:13px}
+  .item__b{flex-direction:column;align-items:flex-end;gap:6px}
+}
+@media (prefers-reduced-motion:reduce){.item__img{transition:none}.item:hover .item__img{transform:none}}
+
+/* ═══════════ Языки 24.09: RU · EN · ქა — отдельные страницы (tools/i18n/make_lang.py) ═══════════ */
+.p-lang{position:relative;flex:none}
+.p-lang summary{list-style:none;display:inline-flex;align-items:center;justify-content:center;gap:7px;min-height:44px;min-width:56px;padding:0 12px;
+  border:2px solid var(--crust);border-radius:999px;font-weight:600;font-size:14px;cursor:pointer;transition:background .16s,color .16s}
+.p-lang summary::-webkit-details-marker{display:none}
+.p-lang summary::after{content:"";width:6px;height:6px;margin-top:-3px;border-right:2px solid currentColor;border-bottom:2px solid currentColor;transform:rotate(45deg)}
+.p-lang summary:hover,.p-lang[open] summary{background:var(--crust);color:var(--cream)}
+.p-lang div{position:absolute;right:0;top:calc(100% + 8px);z-index:60;display:flex;flex-direction:column;min-width:170px;padding:6px;
+  background:var(--cream);border:2px solid var(--crust);border-radius:14px;box-shadow:0 14px 30px -18px rgba(58,36,23,.6)}
+.p-lang a{display:flex;align-items:center;min-height:44px;padding:0 12px;border-radius:10px;text-decoration:none;font-size:15px}
+.p-lang a:hover{background:var(--dough)}
+.p-lang a[aria-current="page"]{font-weight:700}
+.p-lang a[lang="ka"]{font-family:"Noto Sans Georgian",var(--text)}
+@media (max-width:1079px){.p-lang{margin-left:auto}.top .btn{margin-left:0}}
+@media (max-width:420px){.top{gap:10px}.top .btn{padding:0 14px;font-size:14px}.brand__word small{display:none}}
+</style>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+Georgian:wght@400;500;600;800&display=swap">
+<style>
+:root{--disp:"Dela Gothic One","Noto Sans Georgian","Segoe UI",sans-serif;--text:"Wix Madefor Text","Noto Sans Georgian","Segoe UI",sans-serif}
+h1,h2,.mark,.clock b,.item__p,.box h3,.box__sum,.done__b,.brand__word{font-weight:800;font-synthesis:none}
+h1{font-size:clamp(30px,5.4vw,84px);line-height:1.08;letter-spacing:0}
+h2{letter-spacing:0;line-height:1.15}
+.brand__word{font-size:21px;letter-spacing:0}
+.brand__word small{text-transform:none;letter-spacing:.02em}
+</style>
+</head>
+<body>
+<a class="skip" href="#vitrina">ვიტრინაზე</a>
+
+<header class="top">
+  <a class="mark brand" href="#top" aria-label="პური — საცხობი ბათუმში, გვერდის დასაწყისი">
+    <svg class="brand__ico" viewBox="0 0 40 40" aria-hidden="true">
+      <circle cx="20" cy="20" r="18.4" fill="none" stroke="currentColor" stroke-width="2"/>
+      <g class="brand__steam" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
+        <path d="M15.5 11c-1.1-1.3 1.1-2.4 0-3.7"/><path d="M20 10.2c-1.1-1.3 1.1-2.4 0-3.7"/><path d="M24.5 11c-1.1-1.3 1.1-2.4 0-3.7"/>
+      </g>
+      <path d="M8.2 25c0-6.2 5.3-10.9 11.8-10.9S31.8 18.8 31.8 25c0 1.7-1.3 3-3 3H11.2c-1.7 0-3-1.3-3-3z" fill="currentColor"/>
+      <path class="brand__cuts" d="M14.3 19.6l2.5 3.5M19.1 18.2l2.5 3.9M24 19.2l2.3 3.3" fill="none" stroke-width="1.8" stroke-linecap="round"/>
+    </svg>
+    <span class="brand__word">პური<small>საცხობი · ბათუმი</small></span>
+  </a>
+  <nav class="nav" aria-label="განყოფილებები">
+    <a href="#vitrina">ვიტრინა</a>
+    <a href="#korobka">ყუთი</a>
+    <a href="#kak">როგორ ვაცხობთ</a>
+    <a href="#dostavka">მიტანა</a>
+    <a href="#zakaz">კონტაქტი</a>
+  </nav>
+<!--lang--><details class="p-lang"><summary aria-label="ენა">ქა</summary><div><a href="../" hreflang="ru" lang="ru">Русский</a><a href="../en/" hreflang="en" lang="en">English</a><a href="./" hreflang="ka" lang="ka" aria-current="page">ქართული</a></div></details><!--/lang-->
+  <a class="btn" href="#korobka" id="topBtn">ყუთის აწყობა</a>
+</header>
+
+<main id="top">
+  <!-- ============ 1. герой ============ -->
+  <section class="hero" aria-labelledby="h1">
+    <h1 id="h1">თბილი პური თქვენი საუზმისთვის</h1>
+    <p class="hero__lead">დილის შეკვეთას ვიღებთ <b>საღამოს ცხრა საათამდე</b>. შეაგროვეთ ყუთი — დავითვლით წონას და ჯამს.</p>
+
+    <ol class="clock">
+      <li><b>21:00</b><span>შეკვეთა მივიღეთ</span></li>
+      <li><b>03:00</b><span>ცომი მოვზილეთ და ფორმა მივეცით</span></li>
+      <li><b>06:00</b><span>ღუმელიდან ამოვიღეთ</span></li>
+      <li><b>07:00</b><span>კართან მოგიტანეთ</span></li>
+    </ol>
+    <div class="strip">
+      <figure><img src="https://images.unsplash.com/photo-1686154596696-d6f594a98af9?auto=format&fit=crop&w=900&q=76" alt="პური დახლზე" width="900" height="600" fetchpriority="high" decoding="async"></figure>
+      <figure><img src="https://images.unsplash.com/photo-1693483640461-267d788b6148?auto=format&fit=crop&w=900&q=76" alt="კრუასანები მწკრივად საცხობ ფურცელზე" width="900" height="600" decoding="async"></figure>
+      <figure><img src="https://images.unsplash.com/photo-1763297014734-e2ac58a6f3c0?auto=format&fit=crop&w=900&q=76" alt="ახლად გამომცხვარი პურები თაროზე" width="900" height="600" decoding="async"></figure>
+    </div>
+  </section>
+
+  <!-- ============ 2. витрина ============ -->
+  <section class="reveal" id="vitrina" aria-labelledby="h-v">
+    <div class="sec__in">
+      <h2 id="h-v">ვიტრინა</h2>
+      <p class="note" style="margin-top:12px">ფასები ცალზეა. მზა ნაკრები ყუთს ერთი შეხებით ავსებს.</p>
+
+      <div class="sets" id="sets" hidden>
+        <button class="set" type="button" data-set="cut:2,zakvaska:1,coffee:2"><b>დილა ორისთვის</b><span>ორი კრუასანი, ნახევარი პური, ორი ყავა</span></button>
+        <button class="set" type="button" data-set="cut:6,ulitka:3,chiabatta:1"><b>საუზმე ოფისში</b><span>ექვსი კრუასანი, სამი დარიჩინის ფუნთუშა, ჩიაბატა</span></button>
+        <button class="set" type="button" data-set="hach:1,kubdari:1,chiabatta:1"><b>სტუმრები ვახშამზე</b><span>ხაჭაპური, კუბდარი, ჩიაბატა</span></button>
+      </div>
+
+      <ul class="shelf" id="shelf">
+        <li class="item" data-id="hach" data-n="აჭარული ხაჭაპური" data-w="320" data-p="1200">
+          <img class="item__img" src="https://images.unsplash.com/photo-1758714068469-75887ca0b8c3?w=160&amp;h=160&amp;fit=crop&amp;q=70&amp;auto=format" srcset="https://images.unsplash.com/photo-1758714068469-75887ca0b8c3?w=160&amp;h=160&amp;fit=crop&amp;q=70&amp;auto=format 1x, https://images.unsplash.com/photo-1758714068469-75887ca0b8c3?w=240&amp;h=240&amp;fit=crop&amp;q=70&amp;auto=format 1.5x" alt="" width="80" height="80" loading="lazy" decoding="async">
+          <p class="item__n">აჭარული ხაჭაპური</p><p class="item__w">320 გრ · ნავი კვერცხით</p>
+          <div class="item__b"><p class="item__p">12 <i>ლარი</i></p></div><p class="item__c"></p></li>
+        <li class="item" data-id="kubdari" data-n="კუბდარი, ხორციანი ღვეზელი" data-w="280" data-p="1100">
+          <img class="item__img" src="https://images.unsplash.com/photo-1612950365098-e3914d82ee85?w=160&amp;h=160&amp;fit=crop&amp;q=70&amp;auto=format" srcset="https://images.unsplash.com/photo-1612950365098-e3914d82ee85?w=160&amp;h=160&amp;fit=crop&amp;q=70&amp;auto=format 1x, https://images.unsplash.com/photo-1612950365098-e3914d82ee85?w=240&amp;h=240&amp;fit=crop&amp;q=70&amp;auto=format 1.5x" alt="" width="80" height="80" loading="lazy" decoding="async">
+          <p class="item__n">კუბდარი</p><p class="item__w">280 გრ · ღვეზელი ხორცით და სანელებლებით</p>
+          <div class="item__b"><p class="item__p">11 <i>ლარი</i></p></div><p class="item__c"></p></li>
+        <li class="item" data-id="zakvaska" data-n="დედოს პური, ნახევარი" data-w="400" data-p="600">
+          <img class="item__img" src="https://images.unsplash.com/photo-1590301157172-7ba48dd1c2b2?w=160&amp;h=160&amp;fit=crop&amp;q=70&amp;auto=format" srcset="https://images.unsplash.com/photo-1590301157172-7ba48dd1c2b2?w=160&amp;h=160&amp;fit=crop&amp;q=70&amp;auto=format 1x, https://images.unsplash.com/photo-1590301157172-7ba48dd1c2b2?w=240&amp;h=240&amp;fit=crop&amp;q=70&amp;auto=format 1.5x" alt="" width="80" height="80" loading="lazy" decoding="async">
+          <p class="item__n">დედოს პური</p><p class="item__w">400 გრ · დიდი პურის ნახევარი</p>
+          <div class="item__b"><p class="item__p">6 <i>ლარი</i></p></div><p class="item__c"></p></li>
+        <li class="item" data-id="chiabatta" data-n="ჩიაბატა" data-w="300" data-p="500">
+          <img class="item__img" src="https://images.unsplash.com/photo-1667386773920-c73f3b02a3d6?w=160&amp;h=160&amp;fit=crop&amp;q=70&amp;auto=format" srcset="https://images.unsplash.com/photo-1667386773920-c73f3b02a3d6?w=160&amp;h=160&amp;fit=crop&amp;q=70&amp;auto=format 1x, https://images.unsplash.com/photo-1667386773920-c73f3b02a3d6?w=240&amp;h=240&amp;fit=crop&amp;q=70&amp;auto=format 1.5x" alt="" width="80" height="80" loading="lazy" decoding="async">
+          <p class="item__n">ჩიაბატა</p><p class="item__w">300 გრ · ზეითუნის ზეთზე</p>
+          <div class="item__b"><p class="item__p">5 <i>ლარი</i></p></div><p class="item__c"></p></li>
+        <li class="item" data-id="cut" data-n="კარაქის კრუასანი" data-w="70" data-p="450">
+          <img class="item__img" src="https://images.unsplash.com/photo-1691480162735-9b91238080f6?w=160&amp;h=160&amp;fit=crop&amp;q=70&amp;auto=format" srcset="https://images.unsplash.com/photo-1691480162735-9b91238080f6?w=160&amp;h=160&amp;fit=crop&amp;q=70&amp;auto=format 1x, https://images.unsplash.com/photo-1691480162735-9b91238080f6?w=240&amp;h=240&amp;fit=crop&amp;q=70&amp;auto=format 1.5x" alt="" width="80" height="80" loading="lazy" decoding="async">
+          <p class="item__n">კარაქის კრუასანი</p><p class="item__w">70 გრ · კარაქზე</p>
+          <div class="item__b"><p class="item__p">4,5 <i>ლარი</i></p></div><p class="item__c"></p></li>
+        <li class="item" data-id="cut-mind" data-n="ნუშიანი კრუასანი" data-w="90" data-p="600">
+          <img class="item__img" src="https://images.unsplash.com/photo-1710220988376-16dbd51fd1de?w=160&amp;h=160&amp;fit=crop&amp;q=70&amp;auto=format" srcset="https://images.unsplash.com/photo-1710220988376-16dbd51fd1de?w=160&amp;h=160&amp;fit=crop&amp;q=70&amp;auto=format 1x, https://images.unsplash.com/photo-1710220988376-16dbd51fd1de?w=240&amp;h=240&amp;fit=crop&amp;q=70&amp;auto=format 1.5x" alt="" width="80" height="80" loading="lazy" decoding="async">
+          <p class="item__n">ნუშიანი კრუასანი</p><p class="item__w">90 გრ · გუშინდელი, ხელახლა გამომცხვარი — ასეა ჩაფიქრებული</p>
+          <div class="item__b"><p class="item__p">6 <i>ლარი</i></p></div><p class="item__c"></p></li>
+        <li class="item" data-id="ulitka" data-n="დარიჩინის ფუნთუშა" data-w="110" data-p="500">
+          <img class="item__img" src="https://images.unsplash.com/photo-1686207855146-c3ffe2166d40?w=160&amp;h=160&amp;fit=crop&amp;q=70&amp;auto=format" srcset="https://images.unsplash.com/photo-1686207855146-c3ffe2166d40?w=160&amp;h=160&amp;fit=crop&amp;q=70&amp;auto=format 1x, https://images.unsplash.com/photo-1686207855146-c3ffe2166d40?w=240&amp;h=240&amp;fit=crop&amp;q=70&amp;auto=format 1.5x" alt="" width="80" height="80" loading="lazy" decoding="async">
+          <p class="item__n">დარიჩინის ფუნთუშა</p><p class="item__w">110 გრ</p>
+          <div class="item__b"><p class="item__p">5 <i>ლარი</i></p></div><p class="item__c"></p></li>
+        <li class="item" data-id="keks" data-n="ლიმონის კექსი" data-w="120" data-p="550">
+          <img class="item__img" src="https://images.unsplash.com/photo-1691242720316-7bea97eb655f?w=160&amp;h=160&amp;fit=crop&amp;q=70&amp;auto=format" srcset="https://images.unsplash.com/photo-1691242720316-7bea97eb655f?w=160&amp;h=160&amp;fit=crop&amp;q=70&amp;auto=format 1x, https://images.unsplash.com/photo-1691242720316-7bea97eb655f?w=240&amp;h=240&amp;fit=crop&amp;q=70&amp;auto=format 1.5x" alt="" width="80" height="80" loading="lazy" decoding="async">
+          <p class="item__n">ლიმონის კექსი</p><p class="item__w">120 გრ · ცედრით და სიროფით</p>
+          <div class="item__b"><p class="item__p">5,5 <i>ლარი</i></p></div><p class="item__c"></p></li>
+        <li class="item" data-id="pechenye" data-n="შვრიის ორცხობილა, 4 ცალი" data-w="160" data-p="600">
+          <img class="item__img" src="https://images.unsplash.com/photo-1631311253861-52eaf0337adb?w=160&amp;h=160&amp;fit=crop&amp;q=70&amp;auto=format" srcset="https://images.unsplash.com/photo-1631311253861-52eaf0337adb?w=160&amp;h=160&amp;fit=crop&amp;q=70&amp;auto=format 1x, https://images.unsplash.com/photo-1631311253861-52eaf0337adb?w=240&amp;h=240&amp;fit=crop&amp;q=70&amp;auto=format 1.5x" alt="" width="80" height="80" loading="lazy" decoding="async">
+          <p class="item__n">შვრიის ორცხობილა</p><p class="item__w">160 გრ · ოთხი ცალი</p>
+          <div class="item__b"><p class="item__p">6 <i>ლარი</i></p></div><p class="item__c"></p></li>
+        <li class="item" data-id="coffee" data-n="ყავა თან წასაღებად, 300 მლ" data-w="300" data-p="600">
+          <img class="item__img" src="https://images.unsplash.com/photo-1615485736894-a2d2e6d4cd9a?w=160&amp;h=160&amp;fit=crop&amp;q=70&amp;auto=format" srcset="https://images.unsplash.com/photo-1615485736894-a2d2e6d4cd9a?w=160&amp;h=160&amp;fit=crop&amp;q=70&amp;auto=format 1x, https://images.unsplash.com/photo-1615485736894-a2d2e6d4cd9a?w=240&amp;h=240&amp;fit=crop&amp;q=70&amp;auto=format 1.5x" alt="" width="80" height="80" loading="lazy" decoding="async">
+          <p class="item__n">ყავა თან წასაღებად</p><p class="item__w">300 მლ · შავი ან რძით</p>
+          <div class="item__b"><p class="item__p">6 <i>ლარი</i></p></div><p class="item__c"></p></li>
+      </ul>
+
+      <div class="boxwrap" id="korobka">
+        <div class="box">
+          <h3>ყუთი</h3>
+          <p class="box__empty" id="boxEmpty">ჯერ ცარიელია. დააჭირეთ პლიუსს პოზიციის გვერდით ან აიღეთ მზა ნაკრები —
+            დავითვლით წონას და ჯამს.</p>
+          <div id="boxBody" hidden>
+            <ul class="box__list" id="boxList"></ul>
+            <p class="box__sum"><span id="boxTotal">0 ლარი</span><span class="box__w" id="boxWeight">0 გრ</span></p>
+            <p class="box__ship" id="boxShip"></p>
+            <fieldset>
+              <legend>მიტანის დრო</legend>
+              <div class="win" id="win">
+                <label><input type="radio" name="win" value="8"><span>ხვალ 8:00–9:00</span></label>
+                <label><input type="radio" name="win" value="9"><span>ხვალ 9:00–10:00</span></label>
+                <label><input type="radio" name="win" value="10"><span>ხვალ 10:00–11:00</span></label>
+                <label><input type="radio" name="win" value="self"><span>თავად წავიღებ 7:00-დან</span></label>
+              </div>
+              <p class="box__ship" id="winNote"></p>
+            </fieldset>
+            <a class="btn btn--cream" href="#zakaz" id="toOrder">ყუთის შეკვეთა</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 3. как печём ============ -->
+  <section class="how reveal" id="kak" aria-labelledby="h-k">
+    <div class="sec__in">
+      <div class="how__grid">
+        <div>
+          <h2 id="h-k">როგორ ვაცხობთ</h2>
+          <ul>
+            <li><h3>დედო და არა პაკეტის საფუარი</h3>
+              <p>ის ოთხი წლისაა. აქედანაა მომჟავო ქერქი და მკვრივი გული.</p></li>
+            <li><h3>თვრამეტსაათიანი ამოსვლა 18 გრადუსზე</h3>
+              <p>ამიტომ პური საღამომდე არ ხმება.</p></li>
+            <li><h3>ქვის ღუმელი, 250 გრადუსი</h3>
+              <p>აქედანაა სქელი ქერქი და ბზარი ზემოდან. ეს წუნი არ არის — ნიშნავს, რომ ცომი მზად იყო.</p></li>
+            <li><h3>ღამით ვაცხობთ</h3>
+              <p>დილის ექვს საათზე დახლზეა, შვიდისთვის პირველ ყუთებს ვარიგებთ.</p></li>
+            <li><h3>რაც დღეში არ გაიყიდა — საღამოს ნახევარ ფასად</h3>
+              <p>გუშინდელი პური ვიტრინაზე არასდროს დევს — გარდა ნუშიანი კრუასანისა, ის რეცეპტით ასეთია.</p></li>
+          </ul>
+        </div>
+        <figure>
+          <img src="https://images.unsplash.com/photo-1711672284661-bd70e38f31b2?auto=format&fit=crop&w=1100&q=76" alt="საცხობის დახლი ცომეულით" width="1100" height="734" loading="lazy" decoding="async">
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 4. доставка ============ -->
+  <section class="reveal" id="dostavka" aria-labelledby="h-d">
+    <div class="sec__in">
+      <h2 id="h-d">მიტანის დრო</h2>
+      <ul class="del">
+        <li>ბათუმში — 5 ლარი. 40 ლარიდან — უფასოდ.</li>
+        <li>ერთსაათიანი ინტერვალები: 8:00–9:00, 9:00–10:00, 10:00–11:00.</li>
+        <li>საღამოს მიტანა — 18:00-დან 20:00-მდე.</li>
+        <li>თვითგატანა 7:00-დან: გვითხარით დრო და გადაგიდებთ.</li>
+        <li>გადახდა კურიერთან ბარათით ან ნაღდით.</li>
+        <li>თუ ოც წუთზე მეტს დავაგვიანებთ — მიტანა უფასოა.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ============ 5. заказ ============ -->
+  <section class="reveal" id="zakaz" aria-labelledby="h-z">
+    <div class="sec__in">
+      <div class="book">
+        <div>
+          <h2 id="h-z">ყუთის შეკვეთა</h2>
+          <form class="form" id="form" action="#zakaz" method="post" novalidate style="margin-top:20px">
+            <div class="f f--half">
+              <label for="f-name">სახელი</label>
+              <input class="inp" id="f-name" name="name" type="text" autocomplete="name" required>
+            </div>
+            <div class="f f--half">
+              <label for="f-phone">ტელეფონი</label>
+              <input class="inp" id="f-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="+995 555 00 00 00" required>
+            </div>
+            <div class="f">
+              <label for="f-addr">მისამართი</label>
+              <input class="inp" id="f-addr" name="address" type="text" placeholder="ქუჩა, სახლი, ბინა">
+            </div>
+            <div class="f">
+              <label for="f-order">შეკვეთა და დრო</label>
+              <input class="inp" id="f-order" name="order" type="text" placeholder="შეივსება ყუთიდან">
+            </div>
+            <div class="f">
+              <label for="f-note">კომენტარი კურიერს</label>
+              <input class="inp" id="f-note" name="note" type="text" placeholder="მაგ.: დომოფონი არ მუშაობს, დარეკეთ">
+            </div>
+            <div class="consent">
+              <input type="checkbox" id="f-agree" name="agree" aria-describedby="send-hint">
+              <label for="f-agree">ვეთანხმები <a class="link" href="#zakaz" id="policy">პერსონალური მონაცემების დამუშავების პოლიტიკას</a></label>
+            </div>
+            <div class="send">
+              <button class="btn" type="submit" id="send" disabled>შეკვეთის გაგზავნა</button>
+              <p class="send__hint" id="send-hint">ღილაკი ჩაირთვება, როცა თანხმობას მონიშნავთ.</p>
+            </div>
+          </form>
+
+          <div class="done" id="done" role="status" tabindex="-1" hidden>
+            <p class="done__b">ყუთი შეკვეთილია.</p>
+            <p>შეკვეთას მესენჯერში დაგიდასტურებთ და არჩეულ დროს მოგიტანთ.</p>
+            <p><button class="btn btn--cream" type="button" id="again" style="margin-top:6px">შეკვეთაზე დაბრუნება</button></p>
+          </div>
+        </div>
+
+        <div class="side">
+          <dl>
+            <div><dt>მისამართი</dt><dd>მაზნიაშვილის ქუჩა, ბათუმი</dd></div>
+            <div><dt>საათები</dt><dd>ყოველდღე 7:00–20:00</dd></div>
+            <div><dt>დილის შეკვეთა</dt><dd>21:00-მდე</dd></div>
+            <div><dt>გადახდა</dt><dd>ბარათით ან ნაღდით</dd></div>
+          </dl>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <div class="foot__in">
+    <div>
+      <span class="mark">პური</span>
+      <p class="note" style="margin-top:8px">საცხობი-ყავახანა.<br>მაზნიაშვილის ქუჩა, ბათუმი · ყოველდღე 7:00–20:00</p>
+    </div>
+    <div>
+    </div>
+  </div>
+</footer>
+
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Bakery","name":"პური","description":"საცხობი-ყავახანა მიტანით ბათუმში: დედოს პური და ცომეული საუზმისთვის.","url":"https://open-sites.io/works/puri/ka/","image":"https://open-sites.io/works/puri/ka/og.jpg","priceRange":"4–12 GEL","address":{"@type":"PostalAddress","streetAddress":"მაზნიაშვილის ქუჩა","addressLocality":"ბათუმი","addressCountry":"GE"},"openingHours":"Mo-Su 07:00-20:00","servesCuisine":"ცომეული","availableLanguage":["ka","ru","en"]}
+</script>
+
+<script>
+(function () {
+  'use strict';
+  /* Деньги — целыми тетри: складывать дробные лари нельзя, в сумме вылезает 38.400000000000006 */
+  var items = {}, order = [];
+  [].forEach.call(document.querySelectorAll('.item'), function (li) {
+    var id = li.getAttribute('data-id');
+    items[id] = { id: id, el: li, n: li.getAttribute('data-n'),
+                  w: +li.getAttribute('data-w'), p: +li.getAttribute('data-p') };
+    order.push(id);
+  });
+
+  var cart = {};
+  var boxEmpty = document.getElementById('boxEmpty');
+  var boxBody = document.getElementById('boxBody');
+  var boxList = document.getElementById('boxList');
+  var boxTotal = document.getElementById('boxTotal');
+  var boxWeight = document.getElementById('boxWeight');
+  var boxShip = document.getElementById('boxShip');
+  var topBtn = document.getElementById('topBtn');
+  var winNote = document.getElementById('winNote');
+  var orderField = document.getElementById('f-order');
+
+  function money(t) {
+    var l = Math.floor(t / 100), k = t % 100;
+    return (k ? (l + ',' + (k < 10 ? '0' + k : k)) : l) + ' ლარი';
+  }
+  function weight(g) { return g >= 1000 ? (g / 1000).toFixed(1).replace('.', ',') + ' კგ' : g + ' გრ'; }
+  function totals() {
+    var sum = 0, w = 0, n = 0;
+    order.forEach(function (id) { var q = cart[id] || 0; if (q) { sum += items[id].p * q; w += items[id].w * q; n += q; } });
+    return { sum: sum, w: w, n: n };
+  }
+
+  /* кнопки «плюс» в витрине — ставим скриптом: без JS коробки нет, и плюсы были бы обманом */
+  order.forEach(function (id) {
+    var b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'add';
+    b.textContent = '+';
+    b.setAttribute('aria-label', 'ყუთში ჩადება: ' + items[id].n);
+    b.addEventListener('click', function () {
+      add(id, 1);
+      b.classList.remove('pop');
+      void b.offsetWidth;
+      b.classList.add('pop');
+    });
+    items[id].el.querySelector('.item__b').appendChild(b);
+  });
+  document.getElementById('sets').hidden = false;
+  [].forEach.call(document.querySelectorAll('.set'), function (s) {
+    s.addEventListener('click', function () {
+      cart = {};
+      s.getAttribute('data-set').split(',').forEach(function (pair) {
+        var kv = pair.split(':');
+        if (items[kv[0]]) cart[kv[0]] = +kv[1];
+      });
+      draw();
+      document.getElementById('korobka').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    });
+  });
+
+  function add(id, d) {
+    cart[id] = Math.max(0, (cart[id] || 0) + d);
+    if (!cart[id]) delete cart[id];
+    draw();
+  }
+
+  function draw() {
+    var t = totals();
+    boxEmpty.hidden = t.n > 0;
+    boxBody.hidden = t.n === 0;
+    topBtn.textContent = t.n ? 'ყუთში: ' + t.n + ' · ' + money(t.sum) : 'ყუთის აწყობა';
+
+    boxList.innerHTML = '';
+    order.forEach(function (id) {
+      var q = cart[id]; if (!q) return;
+      var li = document.createElement('li');
+      li.className = 'bi';
+      li.innerHTML = '<span class="bi__n">' + items[id].n + '</span>' +
+        '<span class="qty"><button type="button" data-m="' + id + '" aria-label="ერთის მოკლება">−</button>' +
+        '<span>' + q + '</span>' +
+        '<button type="button" data-a="' + id + '" aria-label="კიდევ ერთის დამატება">+</button></span>' +
+        '<span class="bi__p">' + money(items[id].p * q) + '</span>';
+      boxList.appendChild(li);
+    });
+    boxTotal.textContent = money(t.sum);
+    boxWeight.textContent = weight(t.w) + ' · ' + t.n + ' ' + plural(t.n, 'პოზიცია', 'პოზიცია', 'პოზიცია');
+    boxShip.textContent = t.sum >= 4000
+      ? 'მიტანა უფასოა: ყუთში 40 ლარზე მეტია.'
+      : 'მიტანა 5 ლარი. უფასო მიტანამდე აკლია ' + money(4000 - t.sum) + '.';
+    syncOrderField();
+    // позиции, уже лежащие в коробке, подписываем прямо в витрине
+    order.forEach(function (id) {
+      items[id].el.querySelector('.item__c').textContent = cart[id] ? 'ყუთშია: ' + cart[id] : '';
+    });
+  }
+  function plural(n, a, b, c) {
+    var n10 = n % 10, n100 = n % 100;
+    if (n10 === 1 && n100 !== 11) return a;
+    if (n10 >= 2 && n10 <= 4 && (n100 < 12 || n100 > 14)) return b;
+    return c;
+  }
+  boxList.addEventListener('click', function (e) {
+    var t = e.target;
+    if (t.getAttribute('data-a')) add(t.getAttribute('data-a'), 1);
+    if (t.getAttribute('data-m')) add(t.getAttribute('data-m'), -1);
+  });
+
+  /* После 21:00 завтрашнее утро уже не собрать — тесто ставят ночью. Время батумское. */
+  function batumiHour() {
+    var d = new Date();
+    return new Date(d.getTime() + (d.getTimezoneOffset() + 240) * 60000).getHours();
+  }
+  var late = batumiHour() >= 21;
+  if (late) {
+    [].forEach.call(document.querySelectorAll('#win input'), function (i) {
+      if (i.value !== 'self') i.disabled = true;
+    });
+    winNote.textContent = 'საღამოს ცხრა საათი გავიდა — ხვალინდელი ცომი უკვე მზადდება. ' +
+      'დატოვეთ შეკვეთა: ზეგ დილით მოგიტანთ ან თვითგატანისთვის გადაგიდებთ.';
+  } else {
+    winNote.textContent = 'ხვალინდელი დილის შეკვეთას ვიღებთ 21:00-მდე.';
+  }
+  document.getElementById('win').addEventListener('change', syncOrderField);
+
+  function syncOrderField() {
+    if (!orderField) return;
+    var parts = [];
+    order.forEach(function (id) { if (cart[id]) parts.push(items[id].n + ' × ' + cart[id]); });
+    var w = document.querySelector('#win input:checked');
+    var when = w ? w.parentNode.querySelector('span').textContent : '';
+    orderField.value = parts.length ? parts.join(', ') + (when ? ' — ' + when : '') : '';
+  }
+  document.getElementById('toOrder').addEventListener('click', function () {
+    setTimeout(function () { document.getElementById('f-name').focus(); }, 420);
+  });
+
+  draw();
+
+  /* ---- появление блоков при прокрутке ---- */
+  var reduceM = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+  var revs = [].slice.call(document.querySelectorAll('.reveal'));
+  if (reduceM || !('IntersectionObserver' in window)) {
+    revs.forEach(function (el) { el.classList.add('in'); });
+  } else {
+    var iobs = new IntersectionObserver(function (es) {
+      es.forEach(function (e) {
+        if (e.isIntersecting) { e.target.classList.add('in'); iobs.unobserve(e.target); }
+      });
+    }, { threshold: .12, rootMargin: '0px 0px -40px 0px' });
+    revs.forEach(function (el) { iobs.observe(el); });
+    setTimeout(function () { revs.forEach(function (el) { el.classList.add('in'); }); }, 1500);
+  }
+
+  /* ---- форма ---- */
+  var form = document.getElementById('form');
+  var agree = document.getElementById('f-agree');
+  var send = document.getElementById('send');
+  var hint = document.getElementById('send-hint');
+  var done = document.getElementById('done');
+  function sync() {
+    send.disabled = !agree.checked;
+    hint.textContent = agree.checked ? 'შეკვეთას მესენჯერში დაგიდასტურებთ.'
+                                     : 'ღილაკი ჩაირთვება, როცა თანხმობას მონიშნავთ.';
+  }
+  agree.addEventListener('change', sync);
+  sync();
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    if (!agree.checked) return;
+    form.hidden = true; done.hidden = false; done.focus();
+  });
+  document.getElementById('again').addEventListener('click', function () {
+    done.hidden = true; form.hidden = false; document.getElementById('f-name').focus();
+  });
+  document.getElementById('policy').addEventListener('click', function (e) { e.preventDefault(); });
+})();
+</script>
+</body>
+</html>

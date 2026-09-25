@@ -1,0 +1,1188 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Бриф — open-sites.io | Заявка на сайт за 7 минут</title>
+  <meta name="description" content="Заполните бриф за 7 минут — получите концепт сайта за 24–48 часов.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+/* ============ open-sites.io ============ */
+:root {
+  --bg: #0a0a0d;
+  --surface: #101014;
+  --surface-2: #16161c;
+  --border: rgba(255, 255, 255, 0.07);
+  --text: #ededf0;
+  --silver: #c7cad3;
+  --muted: #8b8f9c;
+  --violet: #a78bfa;
+  --cyan: #aab8d4;
+  --pink: #f472b6;
+  --grad: linear-gradient(100deg, #e4defc 0%, #a78bfa 100%);
+  --grad-warm: linear-gradient(100deg, #f472b6, #a78bfa);
+  --radius: 16px;
+  --font-head: "Space Grotesk", sans-serif;
+  --font-body: "Inter", sans-serif;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+::selection { background: rgba(167, 139, 250, 0.3); }
+
+img { max-width: 100%; display: block; }
+a { color: inherit; text-decoration: none; }
+button { font-family: inherit; cursor: pointer; }
+
+.wrap { width: min(1140px, 92vw); margin: 0 auto; }
+
+h1, h2, h3 { font-family: var(--font-head); font-weight: 600; line-height: 1.15; }
+h2 { font-size: clamp(26px, 4vw, 42px); letter-spacing: -0.5px; }
+
+.grad-text {
+  background: var(--grad);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.section { padding: 116px 0; position: relative; scroll-margin-top: 88px; }
+.sec-tag {
+  display: inline-block;
+  font-size: 11.5px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--muted);
+  border: 1px solid var(--border);
+  border-radius: 100px;
+  padding: 6px 16px;
+  margin-bottom: 20px;
+}
+.sec-sub { color: var(--muted); max-width: 560px; margin-top: 14px; }
+
+/* ---------- floating blobs ---------- */
+.blobs { position: fixed; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; }
+.blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(110px);
+  opacity: 0.14;
+  will-change: transform;
+}
+.blob-1 { width: 520px; height: 520px; background: #6d28d9; top: -140px; left: -120px; animation: drift1 34s ease-in-out infinite alternate; }
+.blob-2 { width: 400px; height: 400px; background: #3b4a6b; top: 34%; right: -160px; animation: drift2 30s ease-in-out infinite alternate; }
+.blob-3 { width: 300px; height: 300px; background: #4c1d95; bottom: -100px; left: 30%; animation: drift3 38s ease-in-out infinite alternate; opacity: 0.1; }
+.blob-4 { display: none; }
+
+@keyframes drift1 { to { transform: translate(140px, 110px) scale(1.15); } }
+@keyframes drift2 { to { transform: translate(-120px, -90px) scale(1.2); } }
+@keyframes drift3 { to { transform: translate(90px, -130px) scale(0.9); } }
+
+@media (prefers-reduced-motion: reduce) {
+  .blob, .blobs, .btn-pulse, .rib-line { animation: none !important; }
+}
+
+/* ---------- nav ---------- */
+.nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 50;
+  transition: background 0.3s, border-color 0.3s;
+  border-bottom: 1px solid transparent;
+}
+.nav.scrolled {
+  background: rgba(8, 8, 11, 0.75);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom-color: var(--border);
+}
+.nav-inner { display: flex; align-items: center; justify-content: space-between; height: 70px; }
+.logo { font-family: var(--font-head); font-size: 17px; font-weight: 600; letter-spacing: -0.3px; }
+.logo .dot { color: var(--cyan); }
+.nav-links { display: flex; gap: 30px; align-items: center; }
+.nav-links a { font-size: 14.5px; color: var(--silver); transition: color 0.2s; }
+.nav-links a:hover { color: #fff; }
+.burger { display: none; background: none; border: none; flex-direction: column; gap: 5px; padding: 8px; }
+.burger span { width: 22px; height: 2px; background: var(--text); border-radius: 2px; transition: 0.3s; }
+
+/* ---------- buttons ---------- */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+  border-radius: 100px; padding: 15px 30px;
+  font-size: 15px; font-weight: 600; border: none;
+  transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
+  position: relative; overflow: hidden;
+}
+.btn:hover { transform: translateY(-2px); }
+.btn-sm { padding: 10px 22px; font-size: 14px; }
+
+.btn-primary { background: #f2f2f4; color: #0a0a0d; font-weight: 600; }
+.btn-primary:hover { background: #ffffff; box-shadow: 0 12px 34px rgba(0, 0, 0, 0.45); }
+.nav-links a.btn-primary { color: #0a0a0d; }
+.btn-ghost { background: transparent; color: var(--text); border: 1px solid var(--border); }
+.btn-ghost:hover { background: rgba(255, 255, 255, 0.05); border-color: rgba(255, 255, 255, 0.16); }
+
+/* премиум-минимализм: без пульсации и бликов */
+.btn-pulse { animation: none; }
+.btn-pulse::after { content: none; }
+
+/* ---------- hero ---------- */
+.hero { min-height: 100vh; display: flex; align-items: center; padding: 140px 0 80px; }
+.hero-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: 13px; color: var(--silver);
+  border: 1px solid var(--border); border-radius: 100px;
+  padding: 7px 16px; margin-bottom: 26px;
+  background: rgba(255, 255, 255, 0.04);
+}
+.hero-badge .live { width: 6px; height: 6px; border-radius: 50%; background: #34d399; box-shadow: 0 0 6px rgba(52, 211, 153, 0.6); }
+.hero h1 { font-size: clamp(34px, 6vw, 68px); letter-spacing: -1.5px; max-width: 850px; }
+.hero p.lead { color: var(--silver); font-size: clamp(16px, 2vw, 19px); max-width: 560px; margin: 26px 0 38px; }
+.hero-cta { display: flex; gap: 16px; flex-wrap: wrap; align-items: center; }
+.hero-note { font-size: 13px; color: var(--muted); margin-top: 16px; }
+
+/* ---------- переключатель языков (компактный, с выпадающим списком) ---------- */
+.nav-right { display: flex; align-items: center; gap: 22px; }
+.lang-dd { position: relative; }
+.lang-current {
+  display: inline-flex; align-items: center; gap: 6px; cursor: pointer;
+  background: rgba(255, 255, 255, 0.05); border: 1px solid var(--border); border-radius: 100px;
+  color: var(--silver); font-family: var(--font-body); font-size: 12.5px; font-weight: 600;
+  letter-spacing: 0.06em; padding: 7px 13px; transition: color 0.2s, border-color 0.2s, background 0.2s;
+}
+.lang-current:hover, .lang-dd.open .lang-current { color: #fff; border-color: rgba(139, 92, 246, 0.55); background: rgba(255, 255, 255, 0.08); }
+.lang-current .chev { width: 10px; height: 7px; transition: transform 0.25s; }
+.lang-dd:hover .chev, .lang-dd.open .chev { transform: rotate(180deg); }
+
+/* невидимый «мостик», чтобы список не закрывался при переводе курсора */
+.lang-dd::after { content: ""; position: absolute; top: 100%; left: 0; right: 0; height: 10px; }
+
+.lang-menu {
+  position: absolute; top: calc(100% + 10px); right: 0; z-index: 60;
+  display: flex; flex-direction: column; gap: 2px; padding: 6px; min-width: 92px;
+  background: rgba(16, 16, 22, 0.97); backdrop-filter: blur(12px);
+  border: 1px solid var(--border); border-radius: 14px;
+  box-shadow: 0 20px 44px rgba(0, 0, 0, 0.55);
+  opacity: 0; visibility: hidden; transform: translateY(-8px); transition: opacity 0.22s, transform 0.22s, visibility 0.22s;
+}
+.lang-dd:hover .lang-menu, .lang-dd.open .lang-menu { opacity: 1; visibility: visible; transform: none; }
+.lang-opt {
+  border: none; background: none; cursor: pointer; text-align: left;
+  color: var(--silver); font-family: var(--font-body); font-size: 13px; font-weight: 500;
+  padding: 9px 12px; border-radius: 9px; transition: background 0.18s, color 0.18s;
+}
+.lang-opt:hover { background: rgba(255, 255, 255, 0.07); color: #fff; }
+.lang-opt.on { background: var(--grad); color: #08080b; font-weight: 700; }
+
+/* грузинский текст — шрифт с поддержкой мхедрули */
+html[lang="ka"] body, html[lang="ka"] .lang-btn { font-family: "Noto Sans Georgian", "Inter", sans-serif; }
+html[lang="ka"] h1, html[lang="ka"] h2, html[lang="ka"] h3,
+html[lang="ka"] .logo, html[lang="ka"] .stat b, html[lang="ka"] .svc-name,
+html[lang="ka"] .case-metric b, html[lang="ka"] .t-cell b {
+  font-family: "Noto Sans Georgian", "Space Grotesk", sans-serif;
+}
+html[lang="ka"] h1, html[lang="ka"] h2 { letter-spacing: -0.2px; }
+
+.price-note { margin-top: 16px; font-size: 13px; color: var(--muted); text-align: center; }
+.price-note[hidden] { display: none; }
+
+/* ---------- ribbon: ровная тонкая линия с плывущим переливом ---------- */
+.ribbon { padding: 26px 0; }
+.rib-line {
+  display: block; height: 1px; width: min(1140px, 92vw); margin: 0 auto;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    rgba(139, 92, 246, 0.55) 30%,
+    rgba(34, 211, 238, 0.55) 50%,
+    rgba(139, 92, 246, 0.55) 70%,
+    transparent 100%);
+  background-size: 200% 100%;
+  animation: ribFlow 9s linear infinite;
+}
+@keyframes ribFlow { from { background-position: 200% 0; } to { background-position: -200% 0; } }
+@keyframes scrollX { to { transform: translateX(-50%); } }
+
+/* ---------- stats ---------- */
+.stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+.stat {
+  background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 28px 24px; text-align: center;
+}
+.stat b {
+  font-family: var(--font-head); font-weight: 600;
+  color: #ffffff; -webkit-text-fill-color: #ffffff;
+  font-size: clamp(32px, 4.2vw, 46px); line-height: 1;
+  white-space: nowrap; display: block; margin-bottom: 10px;
+}
+.stat b .count { font-size: inherit; color: #ffffff; -webkit-text-fill-color: #ffffff; }
+.stat span { color: var(--silver); font-size: 13.5px; }
+
+/* ---------- services coverflow ---------- */
+.svc-coverflow { margin-top: 52px; }
+.svc-stage {
+  position: relative; height: 280px; perspective: 1700px; transform-style: preserve-3d;
+}
+.svc-card {
+  position: absolute; top: 50%; left: 50%;
+  width: min(330px, 82vw); box-sizing: border-box; text-align: center;
+  background: var(--surface); border: 1px solid var(--border); border-radius: 20px;
+  padding: 36px 30px; box-shadow: 0 30px 70px rgba(0, 0, 0, 0.45);
+  transform: translate(-50%, -50%); backface-visibility: hidden; will-change: transform;
+  transition: transform 0.6s cubic-bezier(0.25, 0.8, 0.3, 1), opacity 0.5s, filter 0.5s, border-color 0.4s;
+}
+.svc-card.is-center { border-color: rgba(255, 255, 255, 0.18); box-shadow: 0 34px 90px rgba(0, 0, 0, 0.55); }
+.svc-ico {
+  width: 58px; height: 58px; border-radius: 16px; color: var(--silver);
+  display: flex; align-items: center; justify-content: center; margin: 0 auto 22px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border);
+}
+.svc-ico svg { width: 30px; height: 30px; }
+.svc-card h3 { font-size: 21px; margin-bottom: 8px; }
+.svc-card p { color: var(--silver); font-size: 14.5px; margin: 0; }
+
+/* ---------- таблица услуг ---------- */
+.svc-table {
+  margin-top: 40px; border: 1px solid var(--border); border-radius: 18px;
+  overflow: hidden; background: var(--surface);
+}
+.svc-row {
+  display: grid; grid-template-columns: 1.1fr 2.6fr 0.85fr 0.95fr; align-items: center;
+  gap: 24px; padding: 22px 30px; border-bottom: 1px solid var(--border);
+  transition: opacity 0.25s, background 0.25s;
+}
+.svc-row:last-child { border-bottom: none; }
+/* подсветка как на pricing Claude: при наведении на строку остальные затеняются */
+.svc-table:hover .svc-row:not(.svc-row-head):not(:hover) { opacity: 0.4; }
+.svc-row:not(.svc-row-head):hover { background: rgba(255, 255, 255, 0.04); }
+.svc-row-head {
+  font-size: 11.5px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted);
+  padding-block: 15px; background: rgba(255, 255, 255, 0.02);
+}
+.svc-name { font-family: var(--font-head); font-weight: 600; font-size: 17px; color: #fff; }
+.svc-desc { color: var(--silver); font-size: 14px; line-height: 1.5; }
+.svc-term { color: var(--cyan); font-size: 14px; white-space: nowrap; }
+.svc-cost { font-family: var(--font-head); font-weight: 600; font-size: 19px; color: #fff; white-space: nowrap; }
+.svc-cost small { font-family: var(--font-body); font-weight: 400; font-size: 13px; color: var(--muted); }
+.svc-term[data-label]::before, .svc-cost[data-label]::before { content: none; }
+
+/* ---------- (legacy) services grid ---------- */
+.cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 48px; }
+.card {
+  background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 32px 28px; position: relative; overflow: hidden;
+  transition: transform 0.3s, border-color 0.3s;
+}
+.card:hover { transform: translateY(-6px); border-color: rgba(255, 255, 255, 0.16); }
+.card::before {
+  content: ""; position: absolute; inset: 0 0 auto 0; height: 3px;
+  background: var(--grad); opacity: 0; transition: opacity 0.3s;
+}
+.card:hover::before { opacity: 1; }
+.card .ico { font-size: 30px; margin-bottom: 18px; }
+.card h3 { font-size: 19px; margin-bottom: 10px; }
+.card p { color: var(--muted); font-size: 14.5px; margin-bottom: 20px; }
+.card .price { font-family: var(--font-head); font-size: 17px; }
+.card .price small { color: var(--muted); font-family: var(--font-body); font-weight: 400; font-size: 13px; display: block; margin-top: 4px; }
+
+/* ---------- cases carousel ---------- */
+.car { position: relative; margin-top: 48px; }
+.car-viewport { overflow: hidden; border-radius: var(--radius); }
+.car-track { display: flex; transition: transform 0.55s cubic-bezier(0.25, 0.8, 0.3, 1); }
+.case {
+  flex: 0 0 100%; display: grid; grid-template-columns: 1.15fr 1fr; gap: 0;
+  background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
+  overflow: hidden; min-height: 380px;
+}
+.case-visual { position: relative; min-height: 260px; display: flex; align-items: center; justify-content: center; }
+.case-visual .mock {
+  width: 78%; aspect-ratio: 16/10; border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.45);
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-head); font-size: clamp(18px, 2.6vw, 28px); letter-spacing: 1px; color: rgba(255, 255, 255, 0.92);
+}
+.badge-demo {
+  position: absolute; top: 16px; left: 16px;
+  font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase;
+  background: rgba(8, 8, 11, 0.6); border: 1px solid var(--border);
+  padding: 5px 12px; border-radius: 100px; color: var(--silver);
+  backdrop-filter: blur(6px);
+}
+.case-body { padding: 40px 38px; display: flex; flex-direction: column; justify-content: center; }
+.case-body .niche { color: var(--cyan); font-size: 13px; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 12px; }
+.case-body h3 { font-size: 24px; margin-bottom: 12px; }
+.case-body p { color: var(--muted); font-size: 14.5px; margin-bottom: 24px; }
+.case-metric b { font-family: var(--font-head); font-size: clamp(30px, 4vw, 44px); display: block; }
+.case-metric span { color: var(--muted); font-size: 13.5px; }
+
+.car-nav { display: flex; gap: 12px; justify-content: center; align-items: center; margin-top: 26px; }
+.car-btn {
+  width: 46px; height: 46px; border-radius: 50%;
+  background: rgba(255, 255, 255, 0.06); border: 1px solid var(--border); color: var(--text);
+  font-size: 18px; transition: background 0.2s;
+}
+.car-btn:hover { background: rgba(255, 255, 255, 0.12); }
+.car-dots { display: flex; gap: 8px; margin: 0 8px; }
+.car-dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(255, 255, 255, 0.2); border: none; padding: 0; transition: 0.3s; }
+.car-dot.on { background: var(--cyan); width: 24px; border-radius: 100px; }
+.cases-note { text-align: center; color: var(--muted); font-size: 12.5px; margin-top: 18px; }
+
+/* ---------- process ---------- */
+.steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-top: 48px; counter-reset: step; }
+.step {
+  background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 30px 24px; position: relative; overflow: hidden;
+}
+/* повышенная специфичность: иначе .reveal (ниже по файлу) перебивает transform/transition */
+.steps .step.reveal, .steps .step {
+  transition: transform 0.4s cubic-bezier(0.2, 0.7, 0.2, 1), border-color 0.35s ease,
+              box-shadow 0.35s ease, background 0.35s ease, opacity 0.7s ease;
+}
+/* мягкое свечение, проявляется при наведении */
+.step::after {
+  content: ""; position: absolute; inset: -40% 50% auto -10%; height: 150%;
+  background: radial-gradient(60% 50% at 20% 0%, rgba(139, 92, 246, 0.18), transparent 70%);
+  opacity: 0; transition: opacity 0.4s; pointer-events: none;
+}
+.steps .step.reveal:hover, .steps .step:hover {
+  transform: translateY(-6px);
+  border-color: rgba(139, 92, 246, 0.5);
+  background: var(--surface-2);
+  box-shadow: 0 20px 44px rgba(0, 0, 0, 0.45), 0 0 34px rgba(139, 92, 246, 0.14);
+}
+.step:hover::after { opacity: 1; }
+.step:hover .num { box-shadow: 0 0 22px rgba(139, 92, 246, 0.55); }
+.step .num, .step h3, .step p, .step .time { position: relative; z-index: 1; }
+.step .num { transition: box-shadow 0.35s; }
+.step .num {
+  font-family: var(--font-head); font-size: 15px;
+  width: 40px; height: 40px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  background: transparent; color: var(--text); margin-bottom: 18px;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+}
+.step h3 { font-size: 16.5px; margin-bottom: 8px; }
+.step p { color: var(--muted); font-size: 14px; }
+.step .time { display: inline-block; margin-top: 14px; font-size: 12.5px; color: var(--silver); border: 1px solid var(--border); border-radius: 100px; padding: 3px 12px; }
+
+/* ---------- offer / timer ---------- */
+.offer {
+  background: linear-gradient(160deg, rgba(255, 255, 255, 0.045), rgba(255, 255, 255, 0.015));
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 24px; padding: clamp(36px, 5vw, 68px);
+  text-align: center; position: relative; overflow: hidden;
+}
+.offer h2 { margin-bottom: 12px; }
+.offer .calm { color: var(--silver); max-width: 520px; margin: 0 auto 30px; font-size: 15px; }
+.timer { display: flex; gap: 14px; justify-content: center; margin-bottom: 32px; }
+.t-cell {
+  background: rgba(8, 8, 11, 0.65); border: 1px solid var(--border); border-radius: 14px;
+  min-width: 84px; padding: 16px 10px;
+}
+.t-cell b { font-family: var(--font-head); font-size: clamp(24px, 4vw, 36px); display: block; }
+.t-cell span { font-size: 11.5px; color: var(--muted); text-transform: uppercase; letter-spacing: 1.5px; }
+
+/* ---------- FAQ ---------- */
+.faq { max-width: 760px; margin: 48px auto 0; }
+.faq details { border: 1px solid var(--border); border-radius: 14px; background: var(--surface); margin-bottom: 12px; overflow: hidden; }
+.faq summary {
+  list-style: none; cursor: pointer; padding: 20px 24px;
+  font-weight: 600; font-size: 15.5px;
+  display: flex; justify-content: space-between; align-items: center; gap: 16px;
+}
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::after { content: "+"; font-family: var(--font-head); color: var(--muted); font-size: 20px; transition: transform 0.3s; }
+.faq details[open] summary::after { transform: rotate(45deg); }
+.faq .a { padding: 0 24px 20px; color: var(--muted); font-size: 14.5px; }
+
+/* ---------- footer ---------- */
+.footer { border-top: 1px solid var(--border); padding: 48px 0; margin-top: 40px; }
+.footer-inner { display: flex; justify-content: space-between; align-items: center; gap: 24px; flex-wrap: wrap; }
+.footer .muted { color: var(--muted); font-size: 13.5px; }
+.footer a:hover { color: var(--cyan); }
+
+/* ---------- floating CTA ---------- */
+.float-cta {
+  position: fixed; right: 22px; bottom: 22px; z-index: 60;
+  opacity: 0; pointer-events: none; transform: translateY(16px);
+  transition: opacity 0.35s, transform 0.35s;
+}
+.float-cta.show { opacity: 1; pointer-events: auto; transform: none; }
+
+/* ---------- reveal on scroll ---------- */
+.reveal { opacity: 0; transform: translateY(26px); transition: opacity 0.7s ease, transform 0.7s ease; }
+.reveal.in { opacity: 1; transform: none; }
+
+/* ============ BRIEF PAGE ============ */
+.brief-page { padding: 90px 0 48px; min-height: 100vh; }
+.brief-head { text-align: center; margin-bottom: 22px; }
+.brief-head p { color: var(--muted); max-width: 520px; margin: 14px auto 0; }
+
+.brief-card {
+  max-width: 720px; margin: 0 auto;
+  background: var(--surface); border: 1px solid var(--border); border-radius: 24px;
+  padding: clamp(22px, 3vw, 34px);
+}
+.progress { height: 6px; background: rgba(255, 255, 255, 0.07); border-radius: 100px; margin-bottom: 22px; overflow: hidden; }
+.progress > div { height: 100%; background: var(--grad); border-radius: 100px; transition: width 0.4s ease; }
+.step-label { font-size: 12.5px; color: var(--muted); letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 8px; }
+.fstep h3 { font-size: 21px; margin-bottom: 18px; font-family: var(--font-head); }
+.fstep { display: none; }
+.fstep.on { display: block; animation: fadeStep 0.4s ease; }
+@keyframes fadeStep { from { opacity: 0; transform: translateX(18px); } to { opacity: 1; transform: none; } }
+
+.f-group { margin-bottom: 16px; }
+.f-group > label.f-label { display: block; font-weight: 600; font-size: 14.5px; margin-bottom: 10px; }
+.f-label small { color: var(--muted); font-weight: 400; display: block; margin-top: 2px; }
+.req { color: var(--pink); }
+
+input[type="text"], input[type="email"], textarea, select {
+  width: 100%; background: var(--surface-2); border: 1px solid var(--border);
+  border-radius: 12px; padding: 14px 16px; color: var(--text);
+  font-family: inherit; font-size: 15px; outline: none; transition: border-color 0.2s;
+}
+input:focus, textarea:focus, select:focus { border-color: var(--violet); }
+textarea { resize: vertical; min-height: 96px; }
+select option { background: var(--surface-2); }
+
+/* кастомный выпадающий список (заменяет системный <select>) */
+select.enhanced { display: none; }
+.cselect { position: relative; }
+.cselect-trigger {
+  width: 100%; background: var(--surface-2); border: 1px solid var(--border);
+  border-radius: 12px; padding: 14px 16px; color: var(--text); font-size: 15px;
+  display: flex; justify-content: space-between; align-items: center; gap: 12px;
+  cursor: pointer; text-align: left; transition: border-color 0.2s, background 0.2s;
+}
+.cselect-trigger:hover { border-color: rgba(255, 255, 255, 0.22); }
+.cselect.open .cselect-trigger { border-color: var(--violet); background: #181822; }
+.cselect-trigger .arrow { color: var(--muted); flex: none; transition: transform 0.25s; font-size: 11px; }
+.cselect.open .cselect-trigger .arrow { transform: rotate(180deg); }
+.cselect-panel {
+  position: absolute; left: 0; right: 0; top: calc(100% + 8px); z-index: 30;
+  background: #14141d; border: 1px solid rgba(255, 255, 255, 0.12); border-radius: 14px;
+  padding: 6px; box-shadow: 0 24px 60px rgba(0, 0, 0, 0.6);
+  opacity: 0; visibility: hidden; transform: translateY(-8px);
+  transition: opacity 0.2s, transform 0.2s, visibility 0.2s;
+  max-height: 280px; overflow-y: auto;
+}
+.cselect.open .cselect-panel { opacity: 1; visibility: visible; transform: none; }
+.cselect-opt {
+  padding: 11px 14px; border-radius: 9px; font-size: 14.5px; cursor: pointer; color: var(--silver);
+  display: flex; justify-content: space-between; align-items: center; gap: 10px;
+  transition: background 0.15s, color 0.15s;
+}
+.cselect-opt:hover { background: rgba(255, 255, 255, 0.06); color: #fff; }
+.cselect-opt.sel { background: rgba(34, 211, 238, 0.1); color: #fff; }
+.cselect-opt.sel::after { content: "✓"; color: var(--cyan); font-size: 13px; }
+
+.opt-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 10px; }
+.opt {
+  position: relative; display: block;
+}
+.opt input { position: absolute; opacity: 0; inset: 0; }
+.opt .opt-box {
+  border: 1px solid var(--border); border-radius: 12px; padding: 14px 16px;
+  background: var(--surface-2); font-size: 14px; cursor: pointer;
+  transition: border-color 0.2s, background 0.2s; display: block;
+}
+.opt .opt-box b { display: block; font-size: 14.5px; }
+.opt .opt-box small { color: var(--muted); font-size: 12.5px; }
+.opt input:checked + .opt-box { border-color: var(--cyan); background: rgba(34, 211, 238, 0.08); }
+.opt input:focus-visible + .opt-box { outline: 2px solid var(--violet); }
+
+.palette-row { display: flex; gap: 6px; margin-top: 8px; }
+.palette-row i { width: 22px; height: 22px; border-radius: 6px; display: inline-block; }
+
+.f-nav { display: flex; justify-content: space-between; gap: 14px; margin-top: 22px; }
+.f-error { color: var(--pink); font-size: 13.5px; margin-top: 10px; display: none; }
+.f-error.show { display: block; }
+
+.brief-done { text-align: center; display: none; }
+.brief-done.show { display: block; animation: fadeStep 0.5s ease; }
+
+.rocket-scene { position: relative; height: 110px; margin-bottom: 6px; overflow: hidden; }
+.rocket { position: absolute; top: 50%; left: -18%; width: 72px; height: 48px; animation: flyAcross 2.9s ease-in-out infinite; }
+.rocket::after {
+  content: ""; position: absolute; right: 102%; top: 50%; transform: translateY(-50%);
+  width: 90px; height: 6px; border-radius: 6px;
+  background: linear-gradient(270deg, rgba(34, 211, 238, 0.85), transparent);
+}
+@keyframes flyAcross {
+  0%   { left: -18%; opacity: 0; transform: translateY(-50%) rotate(-6deg) scale(0.9); }
+  14%  { opacity: 1; }
+  50%  { transform: translateY(-66%) rotate(2deg) scale(1.04); }
+  86%  { opacity: 1; }
+  100% { left: 116%; opacity: 0; transform: translateY(-42%) rotate(-4deg) scale(0.95); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .rocket { animation: none; left: 50%; transform: translate(-50%, -50%); }
+  .rocket::after { display: none; }
+}
+
+.done-contacts { margin-top: 30px; }
+.done-hint { color: var(--muted); font-size: 13.5px; margin-bottom: 14px; }
+.summary-box {
+  text-align: left; background: var(--surface-2); border: 1px solid var(--border);
+  border-radius: 14px; padding: 20px; margin: 24px 0;
+  font-size: 13.5px; white-space: pre-wrap; color: var(--silver);
+  max-height: 320px; overflow: auto;
+}
+
+/* ---------- адаптив ---------- */
+@media (max-width: 920px) {
+  .cards, .steps { grid-template-columns: 1fr 1fr; }
+  .case { grid-template-columns: 1fr; }
+  .case-body { padding: 28px 24px 34px; }
+}
+@media (max-width: 640px) {
+  .section { padding: 64px 0; }
+  .stats { grid-template-columns: 1fr 1fr; gap: 12px; }
+  .cards, .steps { grid-template-columns: 1fr; }
+  .nav-links {
+    position: fixed; inset: 70px 0 auto 0; flex-direction: column; gap: 0;
+    background: rgba(8, 8, 11, 0.97); border-bottom: 1px solid var(--border);
+    display: none; padding: 10px 0 20px;
+  }
+  .nav-links.open { display: flex; }
+  .nav-links a { padding: 13px 6vw; width: 100%; }
+  .burger { display: flex; }
+  .lang-switch { padding: 2px; }
+  .lang-btn { padding: 5px 8px; font-size: 11px; }
+  .timer { gap: 8px; }
+  .t-cell { min-width: 70px; }
+
+  /* герой: без огромного пустого зазора, контент сразу под шапкой */
+  .hero { min-height: auto; align-items: flex-start; padding: 92px 0 52px; }
+  .logo { font-size: 21px; }
+
+  /* таблица услуг -> карточки с подписями */
+  .svc-row, .svc-row-head { grid-template-columns: 1fr; gap: 7px; padding: 20px; }
+  .svc-row-head { display: none; }
+  .svc-name { font-size: 19px; }
+  .svc-term[data-label]::before, .svc-cost[data-label]::before {
+    content: attr(data-label) ": "; color: var(--muted);
+    font-family: var(--font-body); font-weight: 400; font-size: 13px;
+  }
+  .svc-cost { font-size: 20px; }
+  .svc-stage { height: 230px; }
+}
+
+</style>
+</head>
+<body>
+
+<div class="blobs" aria-hidden="true">
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
+  <div class="blob blob-4"></div>
+</div>
+
+<header class="nav scrolled">
+  <div class="wrap nav-inner">
+    <a class="logo" href="../">open-sites<span class="dot">.io</span></a>
+    <nav class="nav-links">
+      <a href="../#tariffs">Тарифы</a>
+      <a href="../#cases">Проекты</a>
+      <a href="../#faq">FAQ</a>
+    </nav>
+  </div>
+</header>
+
+<main class="brief-page">
+  <div class="wrap">
+    <div class="brief-head">
+      <h2>Бриф за <span class="grad-text">7 минут</span></h2>
+      <p>Никаких сочинений — галочки и списки. Чем точнее бриф, тем быстрее вы увидите концепт.</p>
+    </div>
+
+    <div class="brief-card" id="briefCard">
+      <div class="progress"><div id="progressBar" style="width: 20%"></div></div>
+      <div class="step-label" id="stepLabel">Шаг 1 из 5</div>
+
+      <form id="briefForm" onsubmit="return false;">
+
+        <!-- ШАГ 1: О проекте -->
+        <section class="fstep on">
+          <h3>О проекте</h3>
+          <div class="f-group" data-need-one="Выберите тип сайта.">
+            <label class="f-label">Какой сайт нужен? <span class="req">*</span></label>
+            <div class="opt-grid">
+              <label class="opt"><input type="radio" name="site_type" value="Лендинг"><span class="opt-box"><b>Лендинг</b><small>одна продающая страница</small></span></label>
+              <label class="opt"><input type="radio" name="site_type" value="Сайт для бизнеса"><span class="opt-box"><b>Сайт для бизнеса</b><small>несколько страниц</small></span></label>
+              <label class="opt"><input type="radio" name="site_type" value="Интернет-витрина / каталог"><span class="opt-box"><b>Витрина / каталог</b><small>товары и цены</small></span></label>
+              <label class="opt"><input type="radio" name="site_type" value="Telegram Mini App"><span class="opt-box"><b>Telegram Mini App</b><small>приложение в Telegram</small></span></label>
+              <label class="opt"><input type="radio" name="site_type" value="Приложение iOS / Android"><span class="opt-box"><b>Приложение</b><small>для iOS и Android</small></span></label>
+              <label class="opt"><input type="radio" name="site_type" value="Поддержка готового сайта"><span class="opt-box"><b>Поддержка</b><small>для готового сайта</small></span></label>
+              <label class="opt"><input type="radio" name="site_type" value="Не знаю, нужна консультация"><span class="opt-box"><b>Не знаю</b><small>подскажете на консультации</small></span></label>
+            </div>
+          </div>
+          <div class="f-group">
+            <label class="f-label" for="niche">Чем занимается ваш бизнес? <span class="req">*</span></label>
+            <input type="text" id="niche" name="niche" required data-err="Напишите пару слов о вашем бизнесе." placeholder="Например: студия маникюра в Казани, продажа котлов оптом…">
+          </div>
+          <div class="f-group">
+            <label class="f-label" for="has_site">Есть ли сайт сейчас?</label>
+            <select id="has_site" name="has_site">
+              <option value="Сайта нет">Сайта нет — делаем с нуля</option>
+              <option value="Есть, нужен новый">Есть, но нужен новый</option>
+              <option value="Есть, нужна доработка">Есть, нужна доработка</option>
+            </select>
+          </div>
+        </section>
+
+        <!-- ШАГ 2: Наполнение -->
+        <section class="fstep">
+          <h3>Что будет на сайте</h3>
+          <div class="f-group" data-need-one="Отметьте хотя бы один блок.">
+            <label class="f-label">Какие блоки нужны? <small>можно несколько</small></label>
+            <div class="opt-grid">
+              <label class="opt"><input type="checkbox" name="blocks" value="О компании"><span class="opt-box">О компании</span></label>
+              <label class="opt"><input type="checkbox" name="blocks" value="Услуги и цены"><span class="opt-box">Услуги и цены</span></label>
+              <label class="opt"><input type="checkbox" name="blocks" value="Портфолио / галерея"><span class="opt-box">Портфолио / галерея</span></label>
+              <label class="opt"><input type="checkbox" name="blocks" value="Отзывы"><span class="opt-box">Отзывы</span></label>
+              <label class="opt"><input type="checkbox" name="blocks" value="Форма заявки / записи"><span class="opt-box">Форма заявки / записи</span></label>
+              <label class="opt"><input type="checkbox" name="blocks" value="Калькулятор / квиз"><span class="opt-box">Калькулятор / квиз</span></label>
+              <label class="opt"><input type="checkbox" name="blocks" value="Карта и контакты"><span class="opt-box">Карта и контакты</span></label>
+              <label class="opt"><input type="checkbox" name="blocks" value="FAQ"><span class="opt-box">FAQ</span></label>
+              <label class="opt"><input type="checkbox" name="blocks" value="Решите за меня"><span class="opt-box">Решите за меня 🤝</span></label>
+            </div>
+          </div>
+          <div class="f-group">
+            <label class="f-label" for="texts">Тексты для сайта</label>
+            <select id="texts" name="texts">
+              <option value="Напишите за меня">Напишите за меня (входит в цену)</option>
+              <option value="Есть готовые">Есть готовые</option>
+              <option value="Есть черновики, нужна доработка">Есть черновики, нужна доработка</option>
+            </select>
+          </div>
+          <div class="f-group">
+            <label class="f-label" for="photos">Фотографии</label>
+            <select id="photos" name="photos">
+              <option value="Подберите стоковые">Подберите подходящие (бесплатные стоки)</option>
+              <option value="Есть свои">Есть свои фото</option>
+              <option value="Часть своих + стоки">Часть своих + дополните стоками</option>
+            </select>
+          </div>
+        </section>
+
+        <!-- ШАГ 3: Стиль -->
+        <section class="fstep">
+          <h3>Внешний вид</h3>
+          <div class="f-group" data-need-one="Выберите направление стиля.">
+            <label class="f-label">Какой стиль ближе? <span class="req">*</span></label>
+            <div class="opt-grid">
+              <label class="opt"><input type="radio" name="style" value="Тёмный с ярким акцентом"><span class="opt-box"><b>Тёмный + акцент</b><span class="palette-row"><i style="background:#0a0a0f"></i><i style="background:#c3c8d4"></i><i style="background:linear-gradient(135deg,#8b5cf6,#22d3ee)"></i></span></span></label>
+              <label class="opt"><input type="radio" name="style" value="Светлый минимализм"><span class="opt-box"><b>Светлый минимализм</b><span class="palette-row"><i style="background:#f8fafc"></i><i style="background:#0f172a"></i><i style="background:#3b82f6"></i></span></span></label>
+              <label class="opt"><input type="radio" name="style" value="Яркий, смелый"><span class="opt-box"><b>Яркий, смелый</b><span class="palette-row"><i style="background:#f59e0b"></i><i style="background:#ec4899"></i><i style="background:#8b5cf6"></i></span></span></label>
+              <label class="opt"><input type="radio" name="style" value="Строгий корпоративный"><span class="opt-box"><b>Строгий корпоративный</b><span class="palette-row"><i style="background:#1e3a8a"></i><i style="background:#e2e8f0"></i><i style="background:#475569"></i></span></span></label>
+              <label class="opt"><input type="radio" name="style" value="Полностью по референсу"><span class="opt-box"><b>Как на референсе</b><small>сделаем по примеру ниже</small></span></label>
+            </div>
+          </div>
+          <div class="f-group">
+            <label class="f-label">Настроение сайта <small>можно несколько</small></label>
+            <div class="opt-grid">
+              <label class="opt"><input type="checkbox" name="mood" value="Премиальный"><span class="opt-box">Премиальный</span></label>
+              <label class="opt"><input type="checkbox" name="mood" value="Технологичный"><span class="opt-box">Технологичный</span></label>
+              <label class="opt"><input type="checkbox" name="mood" value="Дружелюбный"><span class="opt-box">Дружелюбный</span></label>
+              <label class="opt"><input type="checkbox" name="mood" value="Строгий, деловой"><span class="opt-box">Строгий, деловой</span></label>
+              <label class="opt"><input type="checkbox" name="mood" value="Игривый"><span class="opt-box">Игривый</span></label>
+            </div>
+          </div>
+          <div class="f-group">
+            <label class="f-label" for="refs">Референсы — сайты, которые вам нравятся <span class="req">*</span>
+              <small>Вставьте 1–3 ссылки (можно конкурентов или просто «красивые сайты»). Если ссылок нет — опишите словами, что нравится. Это самый важный пункт брифа.</small>
+            </label>
+            <textarea id="refs" name="refs" required data-err="Добавьте хотя бы одну ссылку или опишите желаемый вид словами — без этого мы будем угадывать." placeholder="https://example.com — нравится первый экран&#10;https://another.com — нравятся цвета"></textarea>
+          </div>
+        </section>
+
+        <!-- ШАГ 4: Техника и бюджет -->
+        <section class="fstep">
+          <h3>Технические детали</h3>
+          <div class="f-group">
+            <label class="f-label">Что подключить? <small>можно несколько</small></label>
+            <div class="opt-grid">
+              <label class="opt"><input type="checkbox" name="integrations" value="Заявки в Telegram"><span class="opt-box">Заявки в Telegram</span></label>
+              <label class="opt"><input type="checkbox" name="integrations" value="Онлайн-запись"><span class="opt-box">Онлайн-запись</span></label>
+              <label class="opt"><input type="checkbox" name="integrations" value="Онлайн-оплата"><span class="opt-box">Онлайн-оплата</span></label>
+              <label class="opt"><input type="checkbox" name="integrations" value="CRM"><span class="opt-box">CRM</span></label>
+              <label class="opt"><input type="checkbox" name="integrations" value="Ничего / не знаю"><span class="opt-box">Ничего / не знаю</span></label>
+            </div>
+          </div>
+          <div class="f-group">
+            <label class="f-label" for="domain">Домен (адрес сайта)</label>
+            <select id="domain" name="domain">
+              <option value="Нужна помощь с покупкой">Нет — помогите купить</option>
+              <option value="Есть свой">Есть свой</option>
+            </select>
+          </div>
+          <div class="f-group">
+            <label class="f-label" for="budget">Ориентир по бюджету</label>
+            <select id="budget" name="budget">
+              <option value="">Выберите пакет</option>
+              <option value="Лендинг — $109">Лендинг — $109</option>
+              <option value="Сайт из нескольких страниц — $219">Сайт из нескольких страниц — $219</option>
+              <option value="Сайт с ИИ-консультантом — $295">Сайт с ИИ-консультантом — $295</option>
+              <option value="Магазин или каталог — $369">Магазин или каталог — $369</option>
+              <option value="Приложение или Telegram Mini App — после обсуждения">Приложение или Telegram Mini App — после обсуждения</option>
+              <option value="Поддержка сайта — $19 в месяц">Поддержка сайта — $19 в месяц</option>
+              <option value="Подскажите по брифу">Не знаю — подскажите по брифу</option>
+            </select>
+          </div>
+          <div class="f-group">
+            <label class="f-label" for="deadline">Когда нужен сайт?</label>
+            <select id="deadline" name="deadline">
+              <option value="Как можно скорее">Как можно скорее</option>
+              <option value="В течение 2 недель">В течение 2 недель</option>
+              <option value="В течение месяца">В течение месяца</option>
+              <option value="Не горит">Не горит, важно качество</option>
+            </select>
+          </div>
+        </section>
+
+        <!-- ШАГ 5: Контакты -->
+        <section class="fstep">
+          <h3>Как с вами связаться</h3>
+          <div class="f-group">
+            <label class="f-label" for="name">Как вас зовут? <span class="req">*</span></label>
+            <input type="text" id="name" name="name" required data-err="Подскажите, как к вам обращаться." placeholder="Имя">
+          </div>
+          <div class="f-group" data-need-one="Выберите хотя бы один способ связи.">
+            <label class="f-label">Где вам удобнее общаться? <small>можно несколько</small></label>
+            <div class="opt-grid">
+              <label class="opt"><input type="checkbox" name="channel" value="Telegram" checked><span class="opt-box">Telegram</span></label>
+              <label class="opt"><input type="checkbox" name="channel" value="WhatsApp"><span class="opt-box">WhatsApp</span></label>
+              <label class="opt"><input type="checkbox" name="channel" value="Instagram"><span class="opt-box">Instagram</span></label>
+              <label class="opt"><input type="checkbox" name="channel" value="Звонок / SMS"><span class="opt-box">Звонок / SMS</span></label>
+              <label class="opt"><input type="checkbox" name="channel" value="Email"><span class="opt-box">Email</span></label>
+            </div>
+          </div>
+          <div class="f-group">
+            <label class="f-label" for="contact">Контакт для связи <span class="req">*</span>
+              <small>Ник в Telegram/Instagram, номер WhatsApp или телефон — куда вам ответить. Для номера укажите код страны, например +7 900 000-00-00 или +1 202 555-0100.</small>
+            </label>
+            <input type="text" id="contact" name="contact" required data-err="Оставьте контакт, иначе мы не сможем ответить." placeholder="@username, +7 900 000-00-00, instagram.com/…">
+          </div>
+          <div class="f-group">
+            <label class="f-label" for="comment">Комментарий <small>всё, что не уместилось в галочки</small></label>
+            <textarea id="comment" name="comment" placeholder="Особые пожелания, вопросы, ссылка на ваш текущий сайт…"></textarea>
+          </div>
+        </section>
+
+        <p class="f-error" id="fError"></p>
+        <div class="f-nav">
+          <button type="button" class="btn btn-ghost" id="btnPrev" style="visibility:hidden">← Назад</button>
+          <button type="button" class="btn btn-primary btn-pulse" id="btnNext">Дальше →</button>
+        </div>
+      </form>
+    </div>
+
+    <!-- экран после отправки -->
+    <div class="brief-card brief-done" id="briefDone">
+      <div class="rocket-scene">
+        <svg class="rocket" viewBox="0 0 72 48" fill="none" aria-hidden="true">
+          <defs>
+            <linearGradient id="rg" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="#8b5cf6"/><stop offset="1" stop-color="#22d3ee"/>
+            </linearGradient>
+          </defs>
+          <path d="M18 17 L7 8 L15 20 Z" fill="#7c3aed"/>
+          <path d="M18 31 L7 40 L15 28 Z" fill="#7c3aed"/>
+          <path d="M14 24 C26 11, 46 11, 62 24 C46 37, 26 37, 14 24 Z" fill="url(#rg)"/>
+          <circle cx="46" cy="24" r="5.2" fill="#0a0a12"/><circle cx="46" cy="24" r="2.4" fill="#67e8f9"/>
+          <path d="M14 19 L1 24 L14 29 C9.5 24 9.5 24 14 19 Z" fill="#f472b6"/>
+        </svg>
+      </div>
+      <h3 id="doneTitle" style="font-family:var(--font-head); margin-bottom:12px;">Бриф отправлен!</h3>
+      <p id="doneText" style="color:var(--silver); max-width:480px; margin:0 auto;"></p>
+      <div class="done-contacts" id="doneContacts">
+        <p class="done-hint" id="doneHint">Хотите ускорить? Напишите нам напрямую:</p>
+        <div style="display:flex; gap:12px; justify-content:center; flex-wrap:wrap;">
+          <a class="btn btn-ghost btn-sm" id="dcTg" target="_blank" rel="noopener">Telegram</a>
+          <a class="btn btn-ghost btn-sm" id="dcWa" target="_blank" rel="noopener">WhatsApp</a>
+          <button class="btn btn-ghost btn-sm" id="dcCopy">Скопировать бриф</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="wrap footer-inner">
+    <div class="muted">open-sites.io · 2026</div>
+    <div class="muted">Telegram: <a href="https://t.me/open_sites" target="_blank" rel="noopener">@open_sites</a></div>
+  </div>
+</footer>
+
+<script>
+/* ============ open-sites.io — общий скрипт ============ */
+
+/* --- НАСТРОЙКА ОТПРАВКИ ЗАЯВОК ---
+   Вариант 1 (рекомендуется): создать бота через @BotFather, вписать токен и chat_id.
+   Вариант 2: оставить пустым — форма покажет готовый текст брифа с кнопкой
+   «скопировать» и ссылкой на ваш Telegram. */
+const CONFIG = {
+  TG_BOT_TOKEN: "",            // токен бота от @BotFather, например "123456:ABC-DEF..."
+  TG_CHAT_ID: "",              // ваш chat_id (узнать у @userinfobot)
+  TG_USERNAME: "open_sites",   // ваш ник в Telegram без @ — для кнопки «написать напрямую»
+  WA_PHONE: "",                // номер WhatsApp в формате 79000000000 (без + и пробелов); пусто = кнопка скрыта
+  IG_USERNAME: "",             // ник в Instagram без @; пусто = ссылка не показывается
+};
+
+/* ---------- навигация ---------- */
+const nav = document.getElementById("nav");
+if (nav) {
+  const onScroll = () => nav.classList.toggle("scrolled", window.scrollY > 30);
+  window.addEventListener("scroll", onScroll, { passive: true });
+  onScroll();
+}
+const burger = document.getElementById("burger");
+const navLinks = document.getElementById("navLinks");
+if (burger && navLinks) {
+  burger.addEventListener("click", () => navLinks.classList.toggle("open"));
+  navLinks.querySelectorAll("a").forEach((a) =>
+    a.addEventListener("click", () => navLinks.classList.remove("open"))
+  );
+}
+
+
+/* ---------- появление блоков при скролле ---------- */
+const io = new IntersectionObserver(
+  (entries) => entries.forEach((e) => {
+    if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); }
+  }),
+  { threshold: 0.12 }
+);
+document.querySelectorAll(".reveal").forEach((el) => io.observe(el));
+
+/* ---------- счётчики цифр ---------- */
+const counters = document.querySelectorAll(".count");
+const cio = new IntersectionObserver((entries) => {
+  entries.forEach((e) => {
+    if (!e.isIntersecting) return;
+    cio.unobserve(e.target);
+    const to = parseInt(e.target.dataset.to, 10);
+    const start = performance.now();
+    const dur = 1200;
+    const tick = (now) => {
+      const p = Math.min((now - start) / dur, 1);
+      e.target.textContent = Math.round(to * (1 - Math.pow(1 - p, 3)));
+      if (p < 1) requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
+  });
+}, { threshold: 0.6 });
+counters.forEach((el) => cio.observe(el));
+
+/* ---------- карусель кейсов ---------- */
+const track = document.getElementById("carTrack");
+if (track) {
+  const slides = track.children.length;
+  const dotsBox = document.getElementById("carDots");
+  let idx = 0;
+  let auto;
+
+  for (let i = 0; i < slides; i++) {
+    const d = document.createElement("button");
+    d.className = "car-dot";
+    d.setAttribute("aria-label", "Кейс " + (i + 1));
+    d.addEventListener("click", () => go(i, true));
+    dotsBox.appendChild(d);
+  }
+  const dots = dotsBox.children;
+
+  function go(i, manual) {
+    idx = (i + slides) % slides;
+    track.style.transform = `translateX(-${idx * 100}%)`;
+    [...dots].forEach((d, n) => d.classList.toggle("on", n === idx));
+    if (manual) restartAuto();
+  }
+  function restartAuto() {
+    clearInterval(auto);
+    auto = setInterval(() => go(idx + 1), 4000);
+  }
+  document.getElementById("carPrev").addEventListener("click", () => go(idx - 1, true));
+  document.getElementById("carNext").addEventListener("click", () => go(idx + 1, true));
+
+  /* свайп на телефоне */
+  let x0 = null;
+  track.addEventListener("touchstart", (e) => (x0 = e.touches[0].clientX), { passive: true });
+  track.addEventListener("touchend", (e) => {
+    if (x0 === null) return;
+    const dx = e.changedTouches[0].clientX - x0;
+    if (Math.abs(dx) > 40) go(idx + (dx < 0 ? 1 : -1), true);
+    x0 = null;
+  }, { passive: true });
+
+  go(0);
+  restartAuto();
+}
+
+/* ---------- витрина услуг (coverflow, авто-вращение без ручного листания) ---------- */
+const svcStage = document.getElementById("svcStage");
+if (svcStage) {
+  const cards = [...svcStage.children];
+  const n = cards.length;
+  let active = 0;
+  let autoS;
+
+  function layout() {
+    const w = svcStage.clientWidth;
+    const mobile = w < 640;
+    const near = Math.min(255, w * 0.34);
+    const far = near * 1.7;
+    cards.forEach((c, i) => {
+      let rel = i - active;
+      if (rel > n / 2) rel -= n;
+      if (rel < -n / 2) rel += n;
+      const a = Math.abs(rel);
+      let x = 0, scale = 1, ry = 0, z = 10, op = 1, blur = 0;
+      if (mobile) {
+        /* на телефоне показываем одну карточку — боковые уводим за экран, чтобы не накладывались */
+        if (rel !== 0) { x = Math.sign(rel) * w * 0.9; scale = 0.9; op = 0; z = 1; }
+      } else if (a === 1) {
+        x = rel * near; scale = 0.84; ry = rel * -26; z = 6; op = 0.78;
+      } else if (a >= 2) {
+        x = Math.sign(rel) * far; scale = 0.66; ry = Math.sign(rel) * -32; z = 3; op = 0.32; blur = 2;
+      }
+      c.style.transform = `translate(-50%, -50%) translateX(${x}px) scale(${scale}) rotateY(${ry}deg)`;
+      c.style.zIndex = z;
+      c.style.opacity = op;
+      c.style.filter = blur ? `blur(${blur}px)` : "none";
+      c.classList.toggle("is-center", rel === 0);
+    });
+  }
+
+  window.addEventListener("resize", layout);
+  layout();
+  autoS = setInterval(() => { active = (active + 1) % n; layout(); }, 3200);
+}
+
+/* ---------- плавающая кнопка заявки ---------- */
+const floatCta = document.getElementById("floatCta");
+if (floatCta) {
+  window.addEventListener("scroll", () => {
+    floatCta.classList.toggle("show", window.scrollY > window.innerHeight * 0.8);
+  }, { passive: true });
+}
+
+/* ============ БРИФ (brief.html) ============ */
+const briefForm = document.getElementById("briefForm");
+if (briefForm) {
+  const steps = [...briefForm.querySelectorAll(".fstep")];
+  const bar = document.getElementById("progressBar");
+  const stepLabel = document.getElementById("stepLabel");
+  const btnPrev = document.getElementById("btnPrev");
+  const btnNext = document.getElementById("btnNext");
+  const errBox = document.getElementById("fError");
+  const STORE = "os_brief_data";
+  let cur = 0;
+
+  /* восстанавливаем черновик ДО построения кастомных списков,
+     чтобы их подписи сразу показали сохранённые значения */
+  const saved = restoreState();
+
+  function show(i, doScroll) {
+    cur = i;
+    steps.forEach((s, n) => s.classList.toggle("on", n === i));
+    bar.style.width = ((i + 1) / steps.length) * 100 + "%";
+    stepLabel.textContent = `Шаг ${i + 1} из ${steps.length}`;
+    btnPrev.style.visibility = i === 0 ? "hidden" : "visible";
+    btnNext.textContent = i === steps.length - 1 ? "Отправить заявку ✦" : "Дальше →";
+    errBox.classList.remove("show");
+    /* прокручиваем только при переходе между шагами, не при первой загрузке —
+       иначе заголовок «Бриф за 7 минут» уезжает за верх экрана */
+    if (doScroll) briefForm.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+
+  function validate(i) {
+    const s = steps[i];
+    /* радиокнопки и чекбоксы, помеченные data-need-one */
+    for (const g of s.querySelectorAll("[data-need-one]")) {
+      if (!g.querySelector("input:checked")) {
+        return g.dataset.needOne;
+      }
+    }
+    for (const inp of s.querySelectorAll("input[required], textarea[required], select[required]")) {
+      if (!inp.value.trim()) {
+        inp.focus();
+        return inp.dataset.err || "Заполните обязательное поле.";
+      }
+    }
+    return null;
+  }
+
+  btnPrev.addEventListener("click", () => show(cur - 1, true));
+  btnNext.addEventListener("click", () => {
+    const err = validate(cur);
+    if (err) { errBox.textContent = err; errBox.classList.add("show"); return; }
+    if (cur < steps.length - 1) show(cur + 1, true);
+    else submitBrief();
+  });
+
+  /* ---------- кастомные выпадающие списки ---------- */
+  briefForm.querySelectorAll("select").forEach((sel) => {
+    sel.classList.add("enhanced");
+    const wrap = document.createElement("div");
+    wrap.className = "cselect";
+    const trigger = document.createElement("button");
+    trigger.type = "button";
+    trigger.className = "cselect-trigger";
+    const label = document.createElement("span");
+    const arrow = document.createElement("span");
+    arrow.className = "arrow";
+    arrow.textContent = "▼";
+    trigger.append(label, arrow);
+    const panel = document.createElement("div");
+    panel.className = "cselect-panel";
+
+    [...sel.options].forEach((o) => {
+      const item = document.createElement("div");
+      item.className = "cselect-opt";
+      item.textContent = o.textContent;
+      if (o.selected) item.classList.add("sel");
+      item.addEventListener("click", () => {
+        sel.value = o.value;
+        label.textContent = o.textContent;
+        panel.querySelectorAll(".cselect-opt").forEach((x) => x.classList.remove("sel"));
+        item.classList.add("sel");
+        wrap.classList.remove("open");
+        sel.dispatchEvent(new Event("change", { bubbles: true }));
+      });
+      panel.appendChild(item);
+    });
+    label.textContent = sel.options[sel.selectedIndex].textContent;
+
+    trigger.addEventListener("click", (e) => {
+      e.stopPropagation();
+      const wasOpen = wrap.classList.contains("open");
+      document.querySelectorAll(".cselect.open").forEach((c) => c.classList.remove("open"));
+      if (!wasOpen) wrap.classList.add("open");
+    });
+
+    wrap.append(trigger, panel);
+    sel.parentNode.insertBefore(wrap, sel.nextSibling);
+  });
+  document.addEventListener("click", () => {
+    document.querySelectorAll(".cselect.open").forEach((c) => c.classList.remove("open"));
+  });
+
+  function collect() {
+    const data = new FormData(briefForm);
+    const lines = ["📩 НОВАЯ ЗАЯВКА — open-sites.io", ""];
+    const fields = [
+      ["site_type", "Тип сайта"], ["niche", "Ниша / бизнес"], ["has_site", "Текущий сайт"],
+      ["blocks", "Блоки"], ["texts", "Тексты"], ["photos", "Фото"],
+      ["style", "Стиль"], ["mood", "Настроение"], ["refs", "Референсы"],
+      ["integrations", "Интеграции"], ["domain", "Домен"], ["budget", "Бюджет"],
+      ["deadline", "Сроки"], ["name", "Имя"], ["contact", "Контакт"],
+      ["channel", "Способ связи"], ["comment", "Комментарий"],
+    ];
+    for (const [key, label] of fields) {
+      const vals = data.getAll(key).filter(Boolean);
+      if (vals.length) lines.push(`▪️ ${label}: ${vals.join(", ")}`);
+    }
+    return lines.join("\n");
+  }
+
+  async function submitBrief() {
+    const text = collect();
+    btnNext.disabled = true;
+    btnNext.textContent = "Отправляем…";
+    let sent = false;
+
+    if (CONFIG.TG_BOT_TOKEN && CONFIG.TG_CHAT_ID) {
+      try {
+        const r = await fetch(`https://api.telegram.org/bot${CONFIG.TG_BOT_TOKEN}/sendMessage`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ chat_id: CONFIG.TG_CHAT_ID, text }),
+        });
+        sent = r.ok;
+      } catch (_) { sent = false; }
+    }
+
+    /* заявка ушла — очищаем сохранённый черновик */
+    localStorage.removeItem(STORE);
+
+    document.getElementById("briefCard").style.display = "none";
+    document.getElementById("briefDone").classList.add("show");
+
+    document.getElementById("doneTitle").textContent = "Бриф отправлен!";
+    document.getElementById("doneText").textContent = sent
+      ? "Мы уже получили вашу заявку и ответим в течение пары часов."
+      : "Заявка зафиксирована. Чтобы мы ответили быстрее, продублируйте бриф напрямую — кнопки ниже.";
+
+    /* ссылки на прямые каналы связи */
+    const tg = document.getElementById("dcTg");
+    tg.href = `https://t.me/${CONFIG.TG_USERNAME}`;
+    const wa = document.getElementById("dcWa");
+    if (CONFIG.WA_PHONE) {
+      wa.href = `https://wa.me/${CONFIG.WA_PHONE}`;
+    } else {
+      wa.style.display = "none";
+    }
+    document.getElementById("dcCopy").addEventListener("click", async (e) => {
+      try {
+        await navigator.clipboard.writeText(text);
+        e.target.textContent = "Скопировано ✓";
+      } catch (_) {
+        e.target.textContent = "Не удалось — скопируйте вручную";
+      }
+    });
+    /* если заявка ушла автоматически, прямые контакты — лишь по желанию */
+    document.getElementById("doneHint").textContent = sent
+      ? "Хотите ускорить? Можно написать нам и напрямую:"
+      : "Продублируйте бриф нам — так мы точно его получим:";
+  }
+
+  /* ---------- автосохранение черновика формы ---------- */
+  function saveState() {
+    const data = {};
+    briefForm.querySelectorAll("input, textarea, select").forEach((el) => {
+      if (!el.name) return;
+      if (el.type === "checkbox" || el.type === "radio") {
+        if (el.checked) (data[el.name] = data[el.name] || []).push(el.value);
+      } else {
+        data[el.name] = el.value;
+      }
+    });
+    data.__step = cur;
+    try { localStorage.setItem(STORE, JSON.stringify(data)); } catch (_) {}
+  }
+  function restoreState() {
+    let data = null;
+    try { data = JSON.parse(localStorage.getItem(STORE) || "null"); } catch (_) {}
+    if (!data) return null;
+    briefForm.querySelectorAll("input, textarea, select").forEach((el) => {
+      if (!el.name || !(el.name in data)) return;
+      const v = data[el.name];
+      if (el.type === "checkbox" || el.type === "radio") {
+        el.checked = Array.isArray(v) && v.includes(el.value);
+      } else {
+        el.value = v;
+      }
+    });
+    return data;
+  }
+
+  briefForm.addEventListener("input", saveState);
+  briefForm.addEventListener("change", saveState);
+
+  show(saved && Number.isInteger(saved.__step) ? saved.__step : 0, false);
+}
+
+</script>
+</body>
+</html>

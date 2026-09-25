@@ -1,0 +1,657 @@
+<!doctype html>
+<html lang="ka">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>სუფთა სახლი — დალაგება ბათუმში (open-sites.io დემო)</title>
+<meta name="description" content="სუფთა სახლი — დალაგება ბათუმსა და მახინჯაურში: თავისუფალი დრო დღესა და ხვალ, ფიქსირებული ფასი ფართობით, რა შედის დალაგებაში, გადახდა შემდეგ.">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#F4F5F5">
+<link rel="canonical" href="https://open-sites.io/works/chisty-dom/ka/">
+<!--hreflang--><link rel="alternate" hreflang="ru" href="https://open-sites.io/works/chisty-dom/">
+<link rel="alternate" hreflang="en" href="https://open-sites.io/works/chisty-dom/en/">
+<link rel="alternate" hreflang="ka" href="https://open-sites.io/works/chisty-dom/ka/">
+<link rel="alternate" hreflang="x-default" href="https://open-sites.io/works/chisty-dom/"><!--/hreflang-->
+<meta property="og:type" content="website">
+<meta property="og:locale" content="ka_GE">
+<meta property="og:site_name" content="open-sites.io">
+<meta property="og:title" content="სუფთა სახლი — დალაგება ბათუმში">
+<meta property="og:description" content="მოვალთ დღესვე: თავისუფალი დრო რეალურ დროში, ფიქსირებული ფასი ფართობით, გადახდა დალაგების შემდეგ.">
+<meta property="og:url" content="https://open-sites.io/works/chisty-dom/ka/">
+<meta property="og:image" content="https://open-sites.io/works/chisty-dom/ka/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23fff'/%3E%3Cpath d='M3 16L16 5l13 11M7 13v15h18V13' fill='none' stroke='%23101214' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M16 13.5l1.6 4.9 4.9 1.6-4.9 1.6L16 26.5l-1.6-4.9-4.9-1.6 4.9-1.6z' fill='%23101214'/%3E%3C/svg%3E">
+<script>document.documentElement.className += ' js';</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://images.unsplash.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Tenor+Sans&family=Onest:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+Georgian:wght@400;700&text=%E1%83%A5%E1%83%90%E1%83%A0%E1%83%97%E1%83%A3%E1%83%9A%E1%83%98&display=swap">
+<style>
+/* Чистый дом — пересборка 24.09 по заданию Романа (имя и логотип-домик — с 25.09): вместо сплошного текста — карточки и раздельные
+   блоки, больше фото и движения (образец — «Кружок», «Вера-дентал», наш сайт).
+   Лицо прежнее: белый лист без цветного акцента, цвет только в фотографиях, Tenor Sans + Onest,
+   доска окон выезда по настоящему времени. */
+:root{
+  --page:#F4F5F5;   /* светло-серый лист под карточками */
+  --paper:#FFFFFF;  /* карточки */
+  --ink:#101214;    /* текст, кнопки, выбранное */
+  --soft:#5F656A;   /* второстепенный текст, 5.4:1 на белом, 5.0:1 на листе */
+  --hair:#E2E4E6;
+  --wash:#EEF0F1;
+  --r:20px;
+  --gut:40px;
+  --lift:0 22px 44px -30px rgba(16,18,20,.5);
+  --disp:"Tenor Sans","Segoe UI",system-ui,sans-serif;
+  --text:"Onest","Segoe UI",system-ui,sans-serif;
+}
+@media (max-width:1000px){:root{--gut:24px}}
+@media (max-width:700px){:root{--gut:16px}}
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%;scroll-padding-top:78px}
+@media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
+body{margin:0;background:var(--page);color:var(--ink);font:400 17px/1.55 var(--text);-webkit-font-smoothing:antialiased;overflow-x:clip}
+img{display:block;max-width:100%}
+a{color:inherit}
+h1,h2,h3,p,ul,ol,dl,dd,figure,table{margin:0}
+ul,ol{list-style:none;padding:0}
+button,input,select{font:inherit;color:inherit}
+[hidden]{display:none!important}
+.sr{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
+.num{font-variant-numeric:tabular-nums}
+.n-skip{position:absolute;left:12px;top:-80px;background:var(--ink);color:#fff;padding:12px 18px;border-radius:999px;z-index:60}
+.n-skip:focus{top:12px}
+
+/* ───── кнопки ───── */
+.n-btn{position:relative;display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:0 24px;border:1.5px solid var(--ink);
+  border-radius:999px;background:var(--ink);color:#fff;font-weight:600;font-size:15.5px;text-decoration:none;cursor:pointer;overflow:hidden;isolation:isolate;
+  transition:background .2s,color .2s,transform .2s}
+.n-btn:hover{background:#2A2E33;transform:translateY(-2px)}
+.n-btn--line{background:transparent;color:var(--ink)}
+.n-btn--line:hover{background:var(--paper)}
+.n-btn:disabled,.n-btn:disabled:hover{background:var(--wash);border-color:var(--hair);color:#50565B;cursor:not-allowed;transform:none}
+/* «скребок»: светлая полоса проходит по кнопке, как по стеклу */
+.n-btn--wipe::after{content:"";position:absolute;z-index:-1;top:-30%;bottom:-30%;left:-40%;width:22%;background:rgba(255,255,255,.42);transform:skewX(-20deg);opacity:0}
+@media (prefers-reduced-motion:no-preference){.n-btn--wipe::after{animation:nWipe 5s ease-in-out 1.8s infinite}}
+@keyframes nWipe{0%{left:-40%;opacity:0}6%{opacity:1}26%{left:120%;opacity:1}27%,100%{left:120%;opacity:0}}
+
+/* ───── шапка ───── */
+.n-top{position:sticky;top:0;z-index:50;display:flex;align-items:center;gap:22px;padding:10px var(--gut);
+  background:rgba(244,245,245,.9);border-bottom:1px solid var(--hair);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+.n-logo{display:inline-flex;align-items:center;gap:10px;min-height:44px;text-decoration:none}
+.n-logo svg{flex:none;width:26px;height:26px}
+.n-logo b{font-family:var(--disp);font-weight:400;font-size:21px;letter-spacing:.12em;white-space:nowrap}
+@media (prefers-reduced-motion:no-preference){.n-logo__star{transform-box:fill-box;transform-origin:center;animation:nTwinkle 3.6s ease-in-out infinite}}
+@keyframes nTwinkle{0%,70%,100%{transform:scale(1) rotate(0)}80%{transform:scale(.7) rotate(45deg)}90%{transform:scale(1.12) rotate(90deg)}}
+.n-nav{display:none;gap:26px;margin-left:auto;font-size:15px;font-weight:500;color:var(--soft)}
+.n-nav a{text-decoration:none;padding:10px 0;transition:color .2s}
+.n-nav a:hover{color:var(--ink)}
+.n-top .n-btn{margin-left:auto;min-height:44px;padding:0 20px;font-size:15px}
+@media (min-width:1000px){.n-nav{display:flex}.n-top .n-btn{margin-left:0}}
+/* 25.09: «Чистый дом» длиннее «Начисто» — шапка не теснится: пункты и кнопка не переносятся и не сжимаются,
+   грузинскому меню нужна ширина от 1120 px, на узком телефоне знак мельче */
+.n-nav a,.n-top .n-btn{white-space:nowrap}
+.n-top .n-btn{flex:none}
+.n-logo{min-width:0}
+html[lang="ka"] .n-logo b{letter-spacing:.03em}
+@media (min-width:1000px) and (max-width:1120px){html[lang="ka"] .n-nav{display:none}html[lang="ka"] .n-top .n-btn{margin-left:auto}}
+@media (max-width:380px){.n-logo{gap:8px}.n-logo b{font-size:14px;letter-spacing:.04em}}
+@media (max-width:420px){html[lang="ka"] .n-logo b{font-size:13px;letter-spacing:0}}
+
+/* ───── общее ───── */
+.n-sec{max-width:1280px;margin:0 auto;padding:clamp(44px,5.5vw,76px) var(--gut) 0}
+.n-head{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:8px 40px;margin-bottom:22px}
+.n-head h2{font-family:var(--disp);font-weight:400;font-size:clamp(30px,3.6vw,48px);line-height:1.08;letter-spacing:-.01em}
+.n-head p{max-width:46ch;color:var(--soft);font-size:16px}
+.n-card{background:var(--paper);border:1px solid var(--hair);border-radius:var(--r)}
+.js .n-in{opacity:0;transform:translateY(16px);transition:opacity .6s ease,transform .6s cubic-bezier(.2,.8,.2,1);transition-delay:var(--dl,0s)}
+.js .n-in.is-on{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){.js .n-in{opacity:1;transform:none;transition:none}}
+
+/* ───── первый экран: доска окон + фото ───── */
+.n-hero{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:clamp(20px,3vw,40px);align-items:stretch;
+  max-width:1280px;margin:0 auto;padding:clamp(22px,3vw,44px) var(--gut) 0}
+.n-pill{display:inline-flex;align-items:center;gap:8px;padding:7px 14px;border-radius:999px;background:var(--paper);border:1px solid var(--hair);font-size:13.5px;font-weight:500}
+.n-pill i{width:7px;height:7px;border-radius:50%;background:var(--ink)}
+.n-hero h1{margin-top:14px;font-family:var(--disp);font-weight:400;font-size:clamp(42px,6vw,84px);line-height:1;letter-spacing:-.02em}
+.n-lead{margin-top:14px;max-width:44ch;font-size:clamp(17px,1.4vw,19px);line-height:1.5;color:var(--soft)}
+.n-lead b{color:var(--ink);font-weight:600}
+.n-board{margin-top:22px;padding:18px}
+.n-board__top{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px}
+.n-board__top b{font-weight:600;font-size:15px}
+.n-live{display:inline-flex;align-items:center;gap:7px;font-size:13px;color:var(--soft)}
+.n-live i{width:8px;height:8px;border-radius:50%;background:var(--ink)}
+@media (prefers-reduced-motion:no-preference){.n-live i{animation:nBlink 1.6s ease-in-out infinite}}
+@keyframes nBlink{50%{opacity:.25}}
+.n-days{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.n-day__h{display:flex;align-items:baseline;justify-content:space-between;gap:8px;padding-bottom:8px;border-bottom:1px solid var(--hair);margin-bottom:8px}
+.n-day__h b{font-family:var(--disp);font-weight:400;font-size:20px}
+.n-day__h span{font-size:12.5px;color:var(--soft)}
+.n-slots{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
+.n-slot{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:56px;padding:6px 4px;border:1.5px solid var(--hair);border-radius:14px;
+  background:var(--paper);cursor:pointer;transition:border-color .2s,background .2s,color .2s,transform .2s}
+.n-slot b{font-family:var(--disp);font-weight:400;font-size:19px;line-height:1.1;font-variant-numeric:tabular-nums}
+.n-slot span{font-size:11.5px;color:var(--soft)}
+.n-slot:hover:not(:disabled){border-color:var(--ink);transform:translateY(-2px)}
+.n-slot:disabled{cursor:not-allowed;background:var(--wash);border-color:transparent;color:#50565B}
+.n-slot:disabled b{text-decoration:line-through;text-decoration-thickness:1px}
+.n-slot[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:#fff}
+.n-slot[aria-pressed="true"] span{color:#D5D8DB}
+.n-slot.is-near:not([aria-pressed="true"]){border-color:var(--ink)}
+@media (prefers-reduced-motion:no-preference){.n-slot.is-near:not([aria-pressed="true"]){animation:nNear 2.2s ease-in-out infinite}}
+@keyframes nNear{50%{box-shadow:0 0 0 5px rgba(16,18,20,.1)}}
+.n-board__cap{margin-top:10px;font-size:13.5px;color:var(--soft)}
+.n-pick{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px;margin-top:12px;padding-top:12px;border-top:1px dashed #C9CDD0}
+.n-pick p{font-size:15px}
+.n-pick p b{font-weight:600}
+.n-nojs{margin-top:12px;font-size:15px;color:var(--soft)}
+.n-hero__ph{position:relative;min-height:520px;border-radius:24px;overflow:hidden;background:#DDE0E2}
+.n-hero__ph img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+/* фото «протирается» слева направо при открытии страницы */
+@media (prefers-reduced-motion:no-preference){
+  .n-hero__ph img{animation:nReveal 1.3s cubic-bezier(.6,0,.2,1) .2s both}
+  .n-hero__ph::before{content:"";position:absolute;z-index:1;top:0;bottom:0;width:18%;left:-20%;
+    background:linear-gradient(90deg,rgba(255,255,255,0),rgba(255,255,255,.75),rgba(255,255,255,0));animation:nStreak 1.3s cubic-bezier(.6,0,.2,1) .2s both}
+}
+@keyframes nReveal{from{clip-path:inset(0 100% 0 0)}to{clip-path:inset(0 0 0 0)}}
+@keyframes nStreak{from{left:-20%}to{left:105%}}
+.n-spark{position:absolute;z-index:2;width:22px;height:22px;color:#fff;filter:drop-shadow(0 2px 6px rgba(0,0,0,.25))}
+.n-spark--a{left:18%;top:20%}.n-spark--b{right:22%;top:38%;width:16px;height:16px}.n-spark--c{left:40%;bottom:30%;width:14px;height:14px}
+@media (prefers-reduced-motion:no-preference){
+  .n-spark{animation:nSpark 3.2s ease-in-out infinite;opacity:0}
+  .n-spark--b{animation-delay:1.1s}.n-spark--c{animation-delay:2.1s}
+}
+@keyframes nSpark{0%,100%{opacity:0;transform:scale(.4) rotate(0)}40%{opacity:1;transform:scale(1) rotate(45deg)}70%{opacity:0;transform:scale(.6) rotate(90deg)}}
+.n-float{position:absolute;z-index:2;left:14px;right:14px;bottom:14px;display:flex;flex-wrap:wrap;gap:8px}
+.n-float span{display:inline-flex;align-items:center;gap:8px;padding:9px 14px;border-radius:999px;background:rgba(255,255,255,.94);font-size:14px;font-weight:500;
+  box-shadow:0 10px 24px -16px rgba(16,18,20,.6)}
+.n-float svg{width:16px;height:16px}
+@media (max-width:900px){.n-hero{grid-template-columns:1fr}.n-hero__ph{min-height:0;aspect-ratio:4/3;order:-1}}
+@media (max-width:460px){.n-days{grid-template-columns:1fr}.n-board{padding:14px}}
+
+/* ───── цены: виды уборки плитками + таблица по метражу ───── */
+.n-types{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.n-type{display:flex;flex-direction:column;overflow:hidden;padding:0;text-align:left;cursor:pointer;transition:transform .3s,box-shadow .3s,border-color .3s}
+.n-type__ph{position:relative;aspect-ratio:16/9;overflow:hidden;background:#DDE0E2}
+.n-type__ph img{width:100%;height:100%;object-fit:cover;transition:transform .8s ease}
+.n-type__b{display:flex;align-items:flex-end;justify-content:space-between;gap:10px;padding:14px 16px 16px}
+.n-type__b > span{min-width:0}
+.n-type__b b{display:block;font-family:var(--disp);font-weight:400;font-size:22px;line-height:1.15}
+.n-type__b small{display:block;margin-top:3px;font-size:13.5px;line-height:1.35;color:var(--soft)}
+.n-type__b em{font-style:normal;font-weight:600;font-size:15px;white-space:nowrap}
+.n-type:hover{transform:translateY(-4px);box-shadow:var(--lift)}
+.n-type:hover .n-type__ph img{transform:scale(1.05)}
+.n-type[aria-pressed="true"]{border-color:var(--ink);box-shadow:inset 0 0 0 1px var(--ink),var(--lift)}
+.n-price{margin-top:12px;overflow:hidden}
+.n-table{width:100%;border-collapse:collapse}
+.n-table th,.n-table td{padding:14px 18px;text-align:left;border-bottom:1px solid var(--hair);vertical-align:middle;transition:background .3s}
+.n-table thead th{font-weight:500;font-size:13px;color:var(--soft)}
+.n-table tbody tr:last-child > *{border-bottom:0}
+.n-table tbody th{font-weight:600;font-size:16px;white-space:nowrap}
+.n-table td b{display:block;font-family:var(--disp);font-weight:400;font-size:24px;line-height:1.1;font-variant-numeric:tabular-nums}
+.n-table td span{display:block;margin-top:2px;font-size:13px;color:var(--soft)}
+.n-table td small{font-family:var(--text);font-size:14px;margin-right:3px}
+.n-table [data-col].is-col{background:var(--wash)}
+.n-table thead [data-col].is-col{color:var(--ink);font-weight:600}
+@media (hover:hover){.n-table tbody tr:hover > *{background:rgba(16,18,20,.03)}}
+.n-extras{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:10px;margin-top:12px}
+.n-extra{display:flex;flex-direction:column;gap:8px;padding:14px;transition:transform .25s,border-color .25s}
+.n-extra:hover{transform:translateY(-3px);border-color:var(--ink)}
+.n-extra svg{width:36px;height:36px;padding:8px;border-radius:11px;background:var(--wash)}
+.n-extra span{font-size:14px;line-height:1.3}
+.n-extra b{margin-top:auto;font-family:var(--disp);font-weight:400;font-size:20px}
+.n-note{margin-top:12px;padding:14px 18px;border-radius:14px;background:var(--ink);color:#fff;font-size:15px}
+@media (max-width:1100px){.n-extras{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media (max-width:760px){
+  .n-types{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;margin-right:calc(var(--gut) * -1);padding-right:var(--gut)}
+  .n-types::-webkit-scrollbar{display:none}
+  .n-type{flex:0 0 72%;scroll-snap-align:start}
+  .n-type__b{flex-direction:column;align-items:flex-start;gap:6px}
+  /* на телефоне в таблице одна колонка — выбранный вид уборки */
+  .js .n-table [data-col]:not(.is-col){display:none}
+  .n-table th,.n-table td{padding:12px 14px}
+  .n-extras{grid-template-columns:1fr 1fr;gap:8px}
+}
+
+/* ───── что входит ───── */
+.n-rooms{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.n-room{display:flex;flex-direction:column;overflow:hidden;transition:transform .3s,box-shadow .3s}
+.n-room:hover{transform:translateY(-4px);box-shadow:var(--lift)}
+.n-room__ph{aspect-ratio:4/3;overflow:hidden;background:#DDE0E2}
+.n-room__ph img{width:100%;height:100%;object-fit:cover;transition:transform .8s ease}
+.n-room:hover .n-room__ph img{transform:scale(1.05)}
+.n-room__b{padding:14px 16px 18px}
+.n-room h3{font-family:var(--disp);font-weight:400;font-size:22px}
+.n-checks{display:flex;flex-direction:column;gap:6px;margin-top:10px}
+.n-checks li{display:flex;align-items:flex-start;gap:8px;font-size:14.5px;line-height:1.35}
+.n-checks svg{flex:none;width:18px;height:18px;margin-top:1px}
+.n-checks path{stroke-dasharray:20;stroke-dashoffset:0}
+@media (prefers-reduced-motion:no-preference){
+  .js .n-room:not(.is-on) .n-checks path{stroke-dashoffset:20}
+  .n-room.is-on .n-checks path{transition:stroke-dashoffset .5s ease;transition-delay:calc(.35s + var(--i,0) * .12s)}
+}
+.n-not{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:12px;font-size:14.5px;color:var(--soft)}
+.n-not ul{display:flex;flex-wrap:wrap;gap:8px}
+.n-not li{padding:7px 13px;border-radius:999px;border:1px dashed #BFC4C8;background:var(--paper);color:var(--ink)}
+@media (max-width:1000px){.n-rooms{grid-template-columns:1fr 1fr}}
+@media (max-width:520px){.n-rooms{grid-template-columns:1fr}.n-room{flex-direction:row}.n-room__ph{flex:0 0 38%;aspect-ratio:auto}}
+
+/* ───── как работаем ───── */
+.n-how{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));grid-auto-rows:minmax(150px,auto);gap:12px}
+.n-how__ph{grid-row:span 2;position:relative;overflow:hidden;border-radius:var(--r);background:#DDE0E2}
+.n-how__ph img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.n-step{display:flex;flex-direction:column;gap:10px;padding:18px;transition:transform .25s,border-color .25s}
+.n-step:hover{transform:translateY(-3px);border-color:var(--ink)}
+.n-step svg{width:42px;height:42px;padding:9px;border-radius:12px;background:var(--ink);color:#fff}
+.n-step b{display:block;font-weight:600;font-size:16px;line-height:1.3}
+.n-step span{display:block;margin-top:4px;font-size:14.5px;line-height:1.4;color:var(--soft)}
+@media (max-width:1000px){.n-how{grid-template-columns:repeat(2,minmax(0,1fr))}.n-how__ph{grid-row:auto;grid-column:span 2;min-height:220px}}
+@media (max-width:520px){
+  .n-how{grid-template-columns:1fr;grid-auto-rows:auto;gap:8px}
+  .n-how__ph{grid-column:auto;min-height:200px}
+  .n-step{flex-direction:row;align-items:flex-start;gap:12px;padding:14px}
+  .n-step svg{flex:none}
+}
+
+/* ───── отзывы ───── */
+.n-revs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.n-rev{display:flex;flex-direction:column;gap:12px;padding:20px;transition:transform .3s,box-shadow .3s}
+.n-rev:hover{transform:translateY(-4px);box-shadow:var(--lift)}
+.n-rev__tag{align-self:flex-start;padding:4px 11px;border-radius:999px;background:var(--wash);font-size:12.5px;font-weight:500}
+.n-rev p{font-family:var(--disp);font-size:18px;line-height:1.45}
+.n-rev__who{margin-top:auto;display:flex;align-items:center;gap:10px;font-size:14.5px;font-weight:600}
+.n-rev__who i{display:grid;place-items:center;width:34px;height:34px;border-radius:50%;background:var(--ink);color:#fff;font-style:normal;font-size:13px}
+@media (max-width:1000px){.n-revs{grid-template-columns:1fr 1fr}}
+@media (max-width:560px){
+  .n-revs{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;margin-right:calc(var(--gut) * -1);padding-right:var(--gut)}
+  .n-revs::-webkit-scrollbar{display:none}
+  .n-rev{flex:0 0 84%;scroll-snap-align:start}
+}
+
+/* ───── заявка ───── */
+.n-ask{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,.7fr);gap:12px;align-items:stretch}
+.n-form-wrap{padding:clamp(20px,2.6vw,32px)}
+.n-form-wrap h2{font-family:var(--disp);font-weight:400;font-size:clamp(30px,3.6vw,48px);line-height:1.08}
+.n-form{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:18px}
+.n-f{display:flex;flex-direction:column;gap:6px}
+.n-f--w{grid-column:1/-1}
+.n-f label{font-size:14px;font-weight:500;color:var(--soft)}
+.n-inp{width:100%;min-height:48px;padding:0 14px;border:1px solid #C9CDD0;border-radius:12px;background:var(--paper);font-size:16px;transition:border-color .2s,box-shadow .2s}
+.n-inp:focus{outline:none;border-color:var(--ink);box-shadow:0 0 0 3px rgba(16,18,20,.12)}
+.n-inp::placeholder{color:#7C8287}
+.n-ok{grid-column:1/-1;display:flex;align-items:flex-start;gap:12px}
+.n-ok input{flex:none;width:24px;height:24px;margin:10px 0 0;accent-color:var(--ink);cursor:pointer}
+.n-ok label{min-height:44px;padding:9px 0;font-size:15px;line-height:1.5;cursor:pointer}
+.n-ok a{text-underline-offset:4px}
+.n-go{grid-column:1/-1;display:flex;flex-wrap:wrap;align-items:center;gap:14px}
+.n-go p{font-size:14px;color:var(--soft)}
+.n-done{margin-top:18px;padding:24px;border-radius:16px;background:var(--wash)}
+.n-done__b{font-family:var(--disp);font-size:30px}
+.n-done p + p{margin-top:8px}
+.n-side{display:grid;gap:10px;align-content:start}
+.n-side div{padding:16px 18px;border-radius:var(--r);background:var(--paper);border:1px solid var(--hair)}
+.n-side dt{font-size:13px;color:var(--soft)}
+.n-side dd{margin-top:3px;font-size:16px;font-weight:500;line-height:1.35}
+@media (max-width:900px){.n-ask{grid-template-columns:1fr}.n-side{grid-template-columns:1fr 1fr}}
+@media (max-width:560px){.n-form{grid-template-columns:1fr}.n-side{gap:8px}.n-side div{padding:12px 14px}}
+
+/* ───── подвал ───── */
+.n-foot{margin-top:clamp(44px,5.5vw,76px);background:var(--ink);color:#E6E8EA}
+.n-foot__in{max-width:1280px;margin:0 auto;padding:28px var(--gut);display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px 30px;font-size:14.5px}
+.n-foot__in a{text-decoration:none;display:inline-flex;align-items:center;min-height:44px}
+.n-foot__in > a:first-child{font-family:var(--disp);font-size:20px;letter-spacing:.12em}
+.n-foot__in p a{color:#fff;font-weight:600}
+.n-foot__in p{color:#B9BEC2}
+
+/* ───── языки: RU · EN · ქა — отдельные страницы (tools/i18n/make_lang.py) ───── */
+.n-lang{position:relative;flex:none}
+.n-lang summary{list-style:none;display:inline-flex;align-items:center;justify-content:center;gap:7px;min-height:44px;min-width:56px;padding:0 12px;
+  border:1.5px solid var(--ink);border-radius:999px;font-weight:600;font-size:14px;cursor:pointer;transition:background .2s,color .2s}
+.n-lang summary::-webkit-details-marker{display:none}
+.n-lang summary::after{content:"";width:6px;height:6px;margin-top:-3px;border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;transform:rotate(45deg)}
+.n-lang summary:hover,.n-lang[open] summary{background:var(--ink);color:#fff}
+.n-lang div{position:absolute;right:0;top:calc(100% + 8px);z-index:60;display:flex;flex-direction:column;min-width:170px;padding:6px;
+  background:var(--paper);border:1px solid var(--hair);border-radius:16px;box-shadow:var(--lift)}
+.n-lang a{display:flex;align-items:center;min-height:44px;padding:0 12px;border-radius:10px;text-decoration:none;font-size:15px}
+.n-lang a:hover{background:var(--wash)}
+.n-lang a[aria-current="page"]{font-weight:700}
+.n-lang a[lang="ka"]{font-family:"Noto Sans Georgian",var(--text)}
+.n-short{display:none}
+@media (max-width:999px){.n-lang{margin-left:auto}.n-top .n-btn{margin-left:0}}
+@media (max-width:560px){.n-top{gap:10px}.n-long{display:none}.n-short{display:inline}.n-top .n-btn{padding:0 16px}
+  .n-logo{gap:8px}.n-logo b{font-size:clamp(15px,4.2vw,21px);letter-spacing:.07em}}
+</style>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"LocalBusiness","name":"სუფთა სახლი","description":"დალაგება ბათუმსა და მახინჯაურში: მიმდინარე, გენერალური და რემონტის შემდგომი დალაგება ფიქსირებულ ფასად ფართობის მიხედვით.","url":"https://open-sites.io/works/chisty-dom/ka/","image":"https://open-sites.io/works/chisty-dom/ka/og.jpg","priceRange":"70–450 GEL","areaServed":["ბათუმი","მახინჯაური"],"address":{"@type":"PostalAddress","addressLocality":"ბათუმი","addressCountry":"GE"},"openingHours":"Mo-Su 08:00-21:00","telephone":"+995 555 00 00 00"}</script>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+Georgian:wght@300;400;500;600;700&display=swap">
+<style>
+:root{--disp:"Tenor Sans","Noto Sans Georgian","Segoe UI",sans-serif;--text:"Onest","Noto Sans Georgian","Segoe UI",sans-serif}
+.n-hero h1{font-size:clamp(38px,5.2vw,72px);line-height:1.08;letter-spacing:0}
+.n-head h2,.n-form-wrap h2{letter-spacing:0}
+</style>
+</head>
+<body>
+<a class="n-skip" href="#okna">თავისუფალ დროზე</a>
+
+<header class="n-top">
+  <a class="n-logo" href="#main" aria-label="სუფთა სახლი, დალაგება — დასაწყისში">
+    <svg viewBox="0 0 26 26" aria-hidden="true"><path d="M2.6 11.6L13 3.2l10.4 8.4M5.6 9.4V23h14.8V9.4" fill="none" stroke="#101214" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path class="n-logo__star" d="M13 11.2l1.3 3.7 3.7 1.3-3.7 1.3L13 21.2l-1.3-3.7-3.7-1.3 3.7-1.3z" fill="#101214"/></svg>
+    <b>სუფთა სახლი</b>
+  </a>
+  <nav class="n-nav" aria-label="განყოფილებები">
+    <a href="#okna">თავისუფალი დრო</a><a href="#tseny">ფასები</a><a href="#vhodit">რა შედის</a><a href="#otzyvy">შეფასებები</a>
+  </nav>
+<!--lang--><details class="n-lang"><summary aria-label="ენა">ქა</summary><div><a href="../" hreflang="ru" lang="ru">Русский</a><a href="../en/" hreflang="en" lang="en">English</a><a href="./" hreflang="ka" lang="ka" aria-current="page">ქართული</a></div></details><!--/lang-->
+  <a class="n-btn n-btn--wipe" href="#zayavka" aria-label="ბრიგადის გამოძახება"><span class="n-long">ბრიგადის გამოძახება</span><span class="n-short" aria-hidden="true">განაცხადი</span></a>
+</header>
+
+<main id="main">
+  <!-- ═════════ первый экран: доска окон выезда ═════════ -->
+  <section class="n-hero" aria-labelledby="h1">
+    <div>
+      <p class="n-pill"><i></i>დალაგება · ბათუმი და მახინჯაური</p>
+      <h1 id="h1">მოვალთ დღესვე</h1>
+      <p class="n-lead">თავისუფალი დრო დღესა და ხვალ — რეალურ დროში. <b>ფასი ფართობით:</b> დამატებით საათებში არ იხდით.</p>
+      <div class="n-board n-card" id="okna" aria-label="თავისუფალი დრო">
+        <div class="n-board__top"><b>თავისუფალი დრო</b><span class="n-live" aria-hidden="true"><i></i>ახლა</span></div>
+        <div class="n-days" id="board" hidden></div>
+        <p class="n-board__cap" id="boardCap" hidden></p>
+        <div class="n-pick" id="pick" hidden></div>
+        <p class="n-nojs" id="noJs">დროის დაფას JavaScript სჭირდება. მის გარეშე დაგვირეკეთ: 8:00–21:00.</p>
+      </div>
+    </div>
+    <figure class="n-hero__ph">
+      <img src="https://images.unsplash.com/photo-1609081144289-eacc3108cd03?w=900&amp;h=1100&amp;fit=crop&amp;q=78&amp;auto=format"
+        srcset="https://images.unsplash.com/photo-1609081144289-eacc3108cd03?w=600&amp;h=733&amp;fit=crop&amp;q=78&amp;auto=format 600w, https://images.unsplash.com/photo-1609081144289-eacc3108cd03?w=900&amp;h=1100&amp;fit=crop&amp;q=78&amp;auto=format 900w"
+        sizes="(max-width:900px) 92vw, 42vw" alt="ნათელი, სუფთა მისაღები: თეთრი დივანი, სავარძელი, ხალიჩა და მზე ფანჯრიდან" width="900" height="1100" fetchpriority="high">
+      <svg class="n-spark n-spark--a" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1l2.6 8.4L23 12l-8.4 2.6L12 23l-2.6-8.4L1 12l8.4-2.6z" fill="currentColor"/></svg>
+      <svg class="n-spark n-spark--b" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1l2.6 8.4L23 12l-8.4 2.6L12 23l-2.6-8.4L1 12l8.4-2.6z" fill="currentColor"/></svg>
+      <svg class="n-spark n-spark--c" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1l2.6 8.4L23 12l-8.4 2.6L12 23l-2.6-8.4L1 12l8.4-2.6z" fill="currentColor"/></svg>
+      <div class="n-float">
+        <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 12a8 8 0 1 1-16 0 8 8 0 0 1 16 0z"/><path d="M8.5 12.5l2.5 2.5 4.5-5"/></svg>გადახდა დალაგების შემდეგ</span>
+        <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="9" cy="8" r="3"/><circle cx="17" cy="9" r="2.3"/><path d="M3 19c.8-3 3.2-5 6-5s5.2 2 6 5M15 14.5c2.6-.4 4.8 1.2 5.5 4.5"/></svg>ბრიგადა: 2–3 ადამიანი</span>
+      </div>
+    </figure>
+  </section>
+
+  <!-- ═════════ цены ═════════ -->
+  <section class="n-sec" id="tseny" aria-labelledby="h-t">
+    <div class="n-head n-in"><h2 id="h-t">ფასები ფართობის მიხედვით</h2></div>
+    <div class="n-types">
+      <button class="n-type n-card n-in" type="button" aria-pressed="true" data-col="0">
+        <span class="n-type__ph"><img src="https://images.unsplash.com/photo-1728649054288-61f332ee389b?w=640&amp;h=360&amp;fit=crop&amp;q=74&amp;auto=format" alt="" width="640" height="360" loading="lazy" decoding="async"></span>
+        <span class="n-type__b"><span><b>მიმდინარე</b><small>კვირაში ან ორში ერთხელ, როცა მეტ-ნაკლებად წესრიგია</small></span><em>70 ₾-დან</em></span>
+      </button>
+      <button class="n-type n-card n-in" type="button" aria-pressed="false" data-col="1" style="--dl:.08s">
+        <span class="n-type__ph"><img src="https://images.unsplash.com/photo-1556912167-f556f1f39fdf?w=640&amp;h=360&amp;fit=crop&amp;q=74&amp;auto=format" alt="" width="640" height="360" loading="lazy" decoding="async"></span>
+        <span class="n-type__b"><span><b>გენერალური</b><small>სეზონში ერთხელ, ფანჯრებით და ტექნიკით გარედან</small></span><em>150 ₾-დან</em></span>
+      </button>
+      <button class="n-type n-card n-in" type="button" aria-pressed="false" data-col="2" style="--dl:.16s">
+        <span class="n-type__ph"><img src="https://images.unsplash.com/photo-1789352844192-7d495ffebb69?w=640&amp;h=360&amp;fit=crop&amp;q=74&amp;auto=format" alt="" width="640" height="360" loading="lazy" decoding="async"></span>
+        <span class="n-type__b"><span><b>რემონტის შემდეგ</b><small>სამშენებლო მტვერი, ორ ეტაპად</small></span><em>220 ₾-დან</em></span>
+      </button>
+    </div>
+    <div class="n-price n-card n-in">
+      <table class="n-table" id="ptab">
+        <caption class="sr">დალაგების ფასი ფართობით, ლარში</caption>
+        <thead><tr><th scope="col">ფართობი</th><th scope="col" data-col="0">მიმდინარე</th><th scope="col" data-col="1">გენერალური</th><th scope="col" data-col="2">რემონტის შემდეგ</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">40 მ²-მდე</th><td data-col="0"><b>70 ₾</b><span>3 სთ · 2 ადამიანი</span></td><td data-col="1"><b>150 ₾</b><span>5 სთ · 2 ადამიანი</span></td><td data-col="2"><b>220 ₾</b><span>6 სთ · 3 ადამიანი</span></td></tr>
+          <tr><th scope="row">40–60 მ²</th><td data-col="0"><b>90 ₾</b><span>3,5 სთ · 2 ადამიანი</span></td><td data-col="1"><b>190 ₾</b><span>6 სთ · 2 ადამიანი</span></td><td data-col="2"><b>280 ₾</b><span>7 სთ · 3 ადამიანი</span></td></tr>
+          <tr><th scope="row">60–90 მ²</th><td data-col="0"><b>120 ₾</b><span>4,5 სთ · 2 ადამიანი</span></td><td data-col="1"><b>250 ₾</b><span>7 სთ · 3 ადამიანი</span></td><td data-col="2"><b>360 ₾</b><span>8 სთ · 3 ადამიანი</span></td></tr>
+          <tr><th scope="row">90 მ²-ზე მეტი</th><td data-col="0"><b>150 ₾<small>-დან</small></b><span>შეფასებით</span></td><td data-col="1"><b>320 ₾<small>-დან</small></b><span>შეფასებით</span></td><td data-col="2"><b>450 ₾<small>-დან</small></b><span>შეფასებით</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <ul class="n-extras">
+      <li class="n-extra n-card n-in"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="3" width="16" height="18" rx="1"/><path d="M12 3v18M4 12h16"/></svg><span>ფანჯარა, თითო ფრთა</span><b>12 ₾</b></li>
+      <li class="n-extra n-card n-in" style="--dl:.04s"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M5 10h14M8 6v2M8 13v3"/></svg><span>მაცივარი შიგნიდან</span><b>25 ₾</b></li>
+      <li class="n-extra n-card n-in" style="--dl:.08s"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><rect x="6" y="9" width="12" height="8" rx="1"/><path d="M7 6.5h.01M10 6.5h.01"/></svg><span>ღუმელი</span><b>30 ₾</b></li>
+      <li class="n-extra n-card n-in" style="--dl:.12s"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="1"/><path d="M12 3v18M10 12h.01M14 12h.01"/></svg><span>კარადები შიგნიდან</span><b>30 ₾</b></li>
+      <li class="n-extra n-card n-in" style="--dl:.16s"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 20h18M5 20v-8h14v8M9 12v8M15 12v8M3 12h18M7 12V5h10v7"/></svg><span>აივანი</span><b>35 ₾</b></li>
+      <li class="n-extra n-card n-in" style="--dl:.2s"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 17h18l-2-6a5 5 0 0 0-5-3H8"/><path d="M3 17c0-3 2-6 5-6h11"/></svg><span>დაუთოება, საათი</span><b>25 ₾</b></li>
+    </ul>
+    <p class="n-note n-in">არ მოგეწონათ? 24 საათში დავბრუნდებით და უფასოდ გადავაკეთებთ. ეს ხელშეკრულებაშია.</p>
+  </section>
+
+  <!-- ═════════ что входит ═════════ -->
+  <section class="n-sec" id="vhodit" aria-labelledby="h-v">
+    <div class="n-head n-in"><h2 id="h-v">რა შედის დალაგებაში</h2><p>ეს სია მიმდინარე დალაგებისთვისაა. გენერალურს ემატება ფანჯრები და ტექნიკა გარედან.</p></div>
+    <ul class="n-rooms">
+      <li class="n-room n-card n-in">
+        <div class="n-room__ph"><img src="https://images.unsplash.com/photo-1556037843-347ddff9f4b0?w=560&amp;h=420&amp;fit=crop&amp;q=74&amp;auto=format" alt="სუფთა სამზარეულო: თეთრი ფილა, ხის დაფა, საწმენდის ბოთლი" width="560" height="420" loading="lazy" decoding="async"></div>
+        <div class="n-room__b"><h3>სამზარეულო</h3>
+          <ul class="n-checks">
+            <li style="--i:0"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 10.5l4 4 8-9"/></svg>ქურა და გამწოვი გარედან</li>
+            <li style="--i:1"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 10.5l4 4 8-9"/></svg>კედლის ფილა, ნიჟარა, სამუშაო ზედაპირი</li>
+            <li style="--i:2"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 10.5l4 4 8-9"/></svg>მიკროტალღოვანი შიგნიდან, იატაკი</li>
+          </ul></div>
+      </li>
+      <li class="n-room n-card n-in" style="--dl:.06s">
+        <div class="n-room__ph"><img src="https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?w=560&amp;h=420&amp;fit=crop&amp;q=74&amp;auto=format" alt="თეთრი სააბაზანო მცენარეებით და ჭადრაკული ფილებით" width="560" height="420" loading="lazy" decoding="async"></div>
+        <div class="n-room__b"><h3>სააბაზანო</h3>
+          <ul class="n-checks">
+            <li style="--i:0"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 10.5l4 4 8-9"/></svg>აბაზანა ან შხაპი, უნიტაზი</li>
+            <li style="--i:1"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 10.5l4 4 8-9"/></svg>ნიჟარა, სარკე, ფილები</li>
+            <li style="--i:2"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 10.5l4 4 8-9"/></svg>ქრომი ლაქების გარეშე, იატაკი</li>
+          </ul></div>
+      </li>
+      <li class="n-room n-card n-in" style="--dl:.12s">
+        <div class="n-room__ph"><img src="https://images.unsplash.com/photo-1631510390389-c1e4fb20ff31?w=560&amp;h=420&amp;fit=crop&amp;q=74&amp;auto=format" alt="ნათელი ოთახი დივნით და მცენარით ფანჯარასთან" width="560" height="420" loading="lazy" decoding="async"></div>
+        <div class="n-room__b"><h3>ოთახები</h3>
+          <ul class="n-checks">
+            <li style="--i:0"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 10.5l4 4 8-9"/></svg>მტვერი ყველა ზედაპირიდან</li>
+            <li style="--i:1"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 10.5l4 4 8-9"/></svg>რაფები, კარები, სარკეები</li>
+            <li style="--i:2"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 10.5l4 4 8-9"/></svg>იატაკი, ხალიჩები — მტვერსასრუტით</li>
+          </ul></div>
+      </li>
+      <li class="n-room n-card n-in" style="--dl:.18s">
+        <div class="n-room__ph"><img src="https://images.unsplash.com/photo-1598535746036-87d13382f6a6?w=560&amp;h=420&amp;fit=crop&amp;q=74&amp;auto=format" alt="თეთრი, გასწორებული საწოლი ბალიშებით" width="560" height="420" loading="lazy" decoding="async"></div>
+        <div class="n-room__b"><h3>ყველგან</h3>
+          <ul class="n-checks">
+            <li style="--i:0"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 10.5l4 4 8-9"/></svg>ნაგავი და ახალი პარკი</li>
+            <li style="--i:1"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 10.5l4 4 8-9"/></svg>ვასწორებთ საწოლს</li>
+            <li style="--i:2"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 10.5l4 4 8-9"/></svg>პირსახოცები — მოწესრიგებულად</li>
+          </ul></div>
+      </li>
+    </ul>
+    <div class="n-not n-in"><ul><li>ფანჯრები</li><li>კარადები შიგნიდან</li><li>დაუთოება</li><li>ტექნიკა შიგნიდან</li></ul><span>— ცალკე, ფასები ზემოთაა</span></div>
+  </section>
+
+  <!-- ═════════ как работаем ═════════ -->
+  <section class="n-sec" id="rabota" aria-labelledby="h-r">
+    <div class="n-head n-in"><h2 id="h-r">როგორ ვმუშაობთ</h2></div>
+    <div class="n-how">
+      <figure class="n-how__ph n-in"><img src="https://images.unsplash.com/photo-1691057185806-ea8b5b9a4506?w=640&amp;h=820&amp;fit=crop&amp;q=74&amp;auto=format" alt="კალათა დასალაგებელი ნივთებით: ჯაგრისები, ქაღალდის პირსახოცები, საწმენდი" width="640" height="820" loading="lazy" decoding="async"></figure>
+      <div class="n-step n-card n-in"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 20h12l-1-11H7z"/><path d="M9 9V6a3 3 0 0 1 6 0v3"/></svg><div><b>ყველაფერი თან მოგვაქვს</b><span>მტვერსასრუტი, საშუალებები, ტილოები ზონების მიხედვით: სააბაზანოსა და სამზარეულოსთვის — ყოველთვის სხვადასხვა.</span></div></div>
+      <div class="n-step n-card n-in" style="--dl:.06s"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21c4-2 7-5.5 7-10a7 7 0 0 0-14 0c0 4.5 3 8 7 10z"/><path d="M12 7v8M9 11h6"/></svg><div><b>უსუნო საშუალებები</b><span>სახლში ბავშვია, ალერგია ან კატა — სხვებს მოვიტანთ.</span></div></div>
+      <div class="n-step n-card n-in" style="--dl:.12s"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="9" cy="8" r="3"/><circle cx="17" cy="9" r="2.3"/><path d="M3 19c.8-3 3.2-5 6-5s5.2 2 6 5M15 14.5c2.6-.4 4.8 1.2 5.5 4.5"/></svg><div><b>ბრიგადა: 2–3 ადამიანი</b><span>უფრო სწრაფი და იაფია, ვიდრე ერთი ადამიანი რვა საათით.</span></div></div>
+      <div class="n-step n-card n-in"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="6" width="18" height="12" rx="2"/><path d="M3 10h18"/></svg><div><b>გადახდა დალაგების შემდეგ</b><span>ჯერ თავად ნახეთ, მერე გადაიხადეთ — ბარათით ან ნაღდით.</span></div></div>
+      <div class="n-step n-card n-in" style="--dl:.06s"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="8" cy="15" r="4"/><path d="M11 12l9-9M16 7l3 3"/></svg><div><b>გასაღებები ხელწერილით</b><span>თუ სახლში არ იქნებით.</span></div></div>
+      <div class="n-step n-card n-in" style="--dl:.12s"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l7 3v5c0 4.4-3 8-7 10-4-2-7-5.6-7-10V6z"/><path d="M9 12l2 2 4-4"/></svg><div><b>„სირთულის“ დანამატის გარეშე</b><span>ცხრილის ფასი საბოლოოა.</span></div></div>
+    </div>
+  </section>
+
+  <!-- ═════════ отзывы ═════════ -->
+  <section class="n-sec" id="otzyvy" aria-labelledby="h-o">
+    <div class="n-head n-in"><h2 id="h-o">კლიენტების შეფასებები</h2></div>
+    <div class="n-revs">
+      <article class="n-rev n-card n-in"><span class="n-rev__tag">გენერალური · 58 მ²</span><p>ღუმელი ისე გაწმინდეს, დედამ მკითხა, ახალი ხომ არ არისო.</p><div class="n-rev__who"><i aria-hidden="true">თ</i>თამარი</div></article>
+      <article class="n-rev n-card n-in" style="--dl:.06s"><span class="n-rev__tag">რემონტის შემდეგ · 74 მ²</span><p>მტვერი როზეტებშიც კი იყო. სამნი მოვიდნენ და ერთ დღეში მორჩნენ.</p><div class="n-rev__who"><i aria-hidden="true">გ</i>გიორგი</div></article>
+      <article class="n-rev n-card n-in" style="--dl:.12s"><span class="n-rev__tag">მიმდინარე · 45 მ²</span><p>ორ კვირაში ერთხელ. ვიხდი ბოლოს — ჯერ ყოველთვის ვამოწმებ.</p><div class="n-rev__who"><i aria-hidden="true">ა</i>ანა</div></article>
+      <article class="n-rev n-card n-in" style="--dl:.18s"><span class="n-rev__tag">მიმდინარე · 36 მ²</span><p>გასაღებები ხელწერილით დავტოვე და სამსახურში წავედი. საღამოს — სისუფთავე.</p><div class="n-rev__who"><i aria-hidden="true">ქ</i>ქეთევანი</div></article>
+    </div>
+  </section>
+
+  <!-- ═════════ заявка ═════════ -->
+  <section class="n-sec" id="zayavka" aria-labelledby="h-z">
+    <div class="n-ask">
+      <div class="n-form-wrap n-card n-in">
+        <h2 id="h-z">ბრიგადის გამოძახება</h2>
+        <form class="n-form" id="form" action="#zayavka" method="post" novalidate>
+          <div class="n-f"><label for="f-name">სახელი</label><input class="n-inp" id="f-name" name="name" type="text" autocomplete="name" required></div>
+          <div class="n-f"><label for="f-phone">ტელეფონი</label><input class="n-inp" id="f-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="+995 555 00 00 00" required></div>
+          <div class="n-f"><label for="f-addr">მისამართი</label><input class="n-inp" id="f-addr" name="address" type="text" placeholder="ქუჩა, სახლი, ბინა"></div>
+          <div class="n-f"><label for="f-area">ფართობი</label><input class="n-inp" id="f-area" name="area" type="text" inputmode="numeric" placeholder="მაგ.: 54 მ²"></div>
+          <div class="n-f"><label for="f-type">დალაგების ტიპი</label>
+            <select class="n-inp" id="f-type" name="type"><option>მიმდინარე</option><option>გენერალური</option><option>რემონტის შემდეგ</option><option>არ ვიცი, მირჩიეთ</option></select></div>
+          <div class="n-f"><label for="f-slot">დრო</label><input class="n-inp" id="f-slot" name="slot" type="text" placeholder="აირჩიეთ ზემოთ, დაფაზე"></div>
+          <div class="n-ok"><input type="checkbox" id="f-agree" name="agree" aria-describedby="send-hint"><label for="f-agree">ვეთანხმები&nbsp;<a href="#zayavka" id="policy">პერსონალური მონაცემების დამუშავების პოლიტიკას</a></label></div>
+          <div class="n-go"><button class="n-btn" type="submit" id="send" disabled>განაცხადის გაგზავნა</button><p id="send-hint">ღილაკი ჩაირთვება, როცა თანხმობას მონიშნავთ.</p></div>
+        </form>
+        <div class="n-done" id="done" role="status" tabindex="-1" hidden>
+          <p class="n-done__b">განაცხადი მიღებულია.</p>
+          <p>ნახევარ საათში დაგირეკავთ და დროს დაგიდასტურებთ.</p>
+          <p><button class="n-btn n-btn--line" type="button" id="again">ფორმაზე დაბრუნება</button></p>
+        </div>
+      </div>
+      <dl class="n-side n-in" style="--dl:.08s">
+        <div><dt>მომსახურების ზონა</dt><dd>ბათუმი და მახინჯაური</dd></div>
+        <div><dt>განაცხადები</dt><dd>8:00-დან 21:00-მდე</dd></div>
+        <div><dt>გადახდა</dt><dd>ბარათით ან ნაღდით, დალაგების შემდეგ</dd></div>
+        <div><dt>ხელშეკრულება</dt><dd>ფიზიკურ პირებთან და კომპანიებთან</dd></div>
+      </dl>
+    </div>
+  </section>
+</main>
+
+<footer class="n-foot">
+  <div class="n-foot__in">
+    <a href="#main">სუფთა სახლი</a>
+    <p>დალაგება · ბათუმი და მახინჯაური · განაცხადები 8:00–21:00</p>
+    <p><a href="tel:+995555000000">+995 555 00 00 00</a></p>
+  </div>
+</footer>
+
+<script>
+(function () {
+  'use strict';
+  var reduce = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+
+  /* ---- доска окон выезда: по настоящему времени Батуми ---- */
+  var TIMES = [[9, 0], [11, 30], [14, 0], [16, 30], [19, 0]];
+  var LEAD = 120;   // за сколько минут до выезда окно ещё можно взять — бригаде нужно доехать
+  var MONTH = ['იანვარი','თებერვალი','მარტი','აპრილი','მაისი','ივნისი','ივლისი','აგვისტო','სექტემბერი','ოქტომბერი','ნოემბერი','დეკემბერი'];
+  var WDAY = ['კვირა','ორშაბათი','სამშაბათი','ოთხშაბათი','ხუთშაბათი','პარასკევი','შაბათი'];
+  function batumi() { var d = new Date(); return new Date(d.getTime() + (d.getTimezoneOffset() + 240) * 60000); }
+  function pad(n) { return n < 10 ? '0' + n : '' + n; }
+  /* Занятость не случайная: считаем от даты и номера окна, чтобы доска не «перерисовывалась». */
+  function busy(dayNum, i) { return (dayNum * 7 + i * 13) % 5 < 2; }
+
+  var board = document.getElementById('board');
+  var cap = document.getElementById('boardCap');
+  var pick = document.getElementById('pick');
+  var slotField = document.getElementById('f-slot');
+
+  function build() {
+    var now = batumi(), mins = now.getHours() * 60 + now.getMinutes(), free = 0, near = null;
+    board.innerHTML = '';
+    [0, 1].forEach(function (offset) {
+      var d = new Date(now.getTime() + offset * 86400000), dayNum = d.getDate();
+      var col = document.createElement('div');
+      col.innerHTML = '<p class="n-day__h"><b>' + (offset ? 'ხვალ' : 'დღეს') + '</b><span>' +
+        dayNum + ' ' + MONTH[d.getMonth()] + ', ' + WDAY[d.getDay()] + '</span></p>';
+      var grid = document.createElement('div');
+      grid.className = 'n-slots';
+      TIMES.forEach(function (t, i) {
+        var label = pad(t[0]) + ':' + pad(t[1]), start = t[0] * 60 + t[1], state = 'free';
+        if (!offset && start - mins < LEAD) state = 'past';
+        else if (busy(dayNum, i)) state = 'taken';
+        var b = document.createElement('button');
+        b.type = 'button';
+        b.className = 'n-slot';
+        b.setAttribute('aria-pressed', 'false');
+        b.disabled = state !== 'free';
+        b.innerHTML = '<b>' + label + '</b><span>' + (state === 'free' ? 'თავისუფალია' : state === 'taken' ? 'დაკავებულია' : 'გავიდა') + '</span>';
+        b.setAttribute('aria-label', (offset ? 'ხვალ' : 'დღეს') + ', ' + label + ', ' + (state === 'free' ? 'თავისუფალია' : state === 'taken' ? 'დაკავებულია' : 'გავიდა'));
+        if (state === 'free') {
+          free++;
+          if (!near) near = b;
+          b.addEventListener('click', function () { choose(b, (offset ? 'ხვალ' : 'დღეს') + ', ' + label); });
+        }
+        grid.appendChild(b);
+      });
+      col.appendChild(grid);
+      board.appendChild(col);
+    });
+    if (near) near.classList.add('is-near');   // ближайшее свободное окно слегка пульсирует
+    board.hidden = false;
+    cap.hidden = false;
+    document.getElementById('noJs').hidden = true;
+    cap.textContent = free ? 'დღევანდელი დრო ღიაა, თუ მასამდე ორ საათზე მეტია.'
+      : 'დღეს და ხვალ ყველაფერი დაკავებულია. დატოვეთ განაცხადი — შემოგთავაზებთ უახლოეს თავისუფალ დროს.';
+  }
+
+  function choose(btn, text) {
+    [].forEach.call(board.querySelectorAll('.n-slot'), function (s) { s.setAttribute('aria-pressed', 'false'); });
+    btn.setAttribute('aria-pressed', 'true');
+    if (slotField) slotField.value = text.charAt(0).toUpperCase() + text.slice(1);
+    pick.hidden = false;
+    pick.innerHTML = '<p>არჩეულია: <b>' + text + '</b></p><a class="n-btn" href="#zayavka" id="toForm">განაცხადის დატოვება</a>';
+    document.getElementById('toForm').addEventListener('click', function () {
+      setTimeout(function () { document.getElementById('f-name').focus({ preventScroll: true }); }, reduce ? 0 : 500);
+    });
+  }
+
+  build();
+  setInterval(build, 60000);   // раз в минуту: прошедшие окна гаснут сами
+
+  /* ---- цены: вид уборки подсвечивает свою колонку (на телефоне — показывает её) ---- */
+  var types = [].slice.call(document.querySelectorAll('.n-type'));
+  var cells = [].slice.call(document.querySelectorAll('#ptab [data-col]'));
+  var typeSel = document.getElementById('f-type');
+  function col(c) {
+    types.forEach(function (t) { t.setAttribute('aria-pressed', t.getAttribute('data-col') === c ? 'true' : 'false'); });
+    cells.forEach(function (td) { td.classList.toggle('is-col', td.getAttribute('data-col') === c); });
+  }
+  types.forEach(function (t) {
+    t.addEventListener('click', function () {
+      var c = t.getAttribute('data-col');
+      col(c);
+      if (typeSel) typeSel.selectedIndex = +c;
+    });
+  });
+  col('0');
+
+  /* ---- появление карточек; галочки в «что входит» прорисовываются по очереди ---- */
+  var ins = [].slice.call(document.querySelectorAll('.n-in'));
+  function show(el) { el.classList.add('is-on'); }
+  if (reduce || !('IntersectionObserver' in window)) {
+    ins.forEach(show);
+  } else {
+    var io = new IntersectionObserver(function (es) {
+      es.forEach(function (e) { if (e.isIntersecting) { show(e.target); io.unobserve(e.target); } });
+    }, { threshold: .12, rootMargin: '0px 0px -30px 0px' });
+    ins.forEach(function (el) { io.observe(el); });
+    setTimeout(function () {
+      ins.forEach(function (el) { var r = el.getBoundingClientRect(); if (r.top < window.innerHeight && r.bottom > 0) show(el); });
+    }, 1500);
+  }
+
+  /* ---- форма ---- */
+  var form = document.getElementById('form');
+  var agree = document.getElementById('f-agree');
+  var send = document.getElementById('send');
+  var hint = document.getElementById('send-hint');
+  var done = document.getElementById('done');
+  function sync() {
+    send.disabled = !agree.checked;
+    hint.textContent = agree.checked ? 'ნახევარ საათში დაგირეკავთ.' : 'ღილაკი ჩაირთვება, როცა თანხმობას მონიშნავთ.';
+  }
+  agree.addEventListener('change', sync);
+  sync();
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    if (!agree.checked) return;
+    form.hidden = true; done.hidden = false; done.focus();
+  });
+  document.getElementById('again').addEventListener('click', function () {
+    done.hidden = true; form.hidden = false; document.getElementById('f-name').focus();
+  });
+  document.getElementById('policy').addEventListener('click', function (e) { e.preventDefault(); });
+})();
+</script>
+</body>
+</html>

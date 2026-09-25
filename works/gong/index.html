@@ -1,0 +1,753 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Гонг — зал единоборств в Батуми (демо open-sites.io)</title>
+<meta name="description" content="Демо-сайт студии open-sites.io: зал единоборств «Гонг» на улице Чавчавадзе в Батуми. Расписание недели с живой отметкой «идёт сейчас», бокс, грэпплинг, ММА, детские группы. ">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#000000">
+<link rel="canonical" href="https://open-sites.io/works/gong/">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="ru_RU">
+<meta property="og:site_name" content="open-sites.io">
+<meta property="og:title" content="Гонг — зал единоборств в Батуми">
+<meta property="og:description" content="Приходите тренироваться, а не покупать абонемент. Вся неделя на первом экране: что идёт прямо сейчас и во сколько следующая.">
+<meta property="og:url" content="https://open-sites.io/works/gong/">
+<meta property="og:image" content="https://open-sites.io/works/gong/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23000'/%3E%3Ccircle cx='16' cy='16' r='9' fill='none' stroke='%23fff' stroke-width='2.4'/%3E%3Ccircle cx='16' cy='16' r='3' fill='%23FF2D2D'/%3E%3C/svg%3E">
+<script>document.documentElement.className += ' js';</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://images.unsplash.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@700;800&family=Golos+Text:wght@400;500;600&display=swap">
+<style>
+/* ============ токены (см. DESIGN.md) ============ */
+:root{
+  --black:#000;       /* чистый чёрный: блоки сходятся без швов */
+  --coal:#0D0D0D;     /* плашка расписания и прайса */
+  --white:#fff;
+  --ash:#9A9A9A;      /* второстепенный текст, 6,6:1 */
+  --red:#FF2D2D;      /* только «идёт сейчас» */
+  --line:rgba(255,255,255,.14);
+  --card:#141414;     /* карточка: светлее чистого чёрного */
+  --shadow-sm:0 10px 26px -14px rgba(0,0,0,.9);
+  --shadow:0 20px 44px -18px rgba(0,0,0,1);
+  --r:16px;
+  --disp:"Unbounded","Segoe UI",system-ui,sans-serif;
+  --text:"Golos Text","Segoe UI",system-ui,sans-serif;
+  --gut:40px;
+  --sec:84px;
+}
+@media (max-width:1000px){:root{--gut:24px}}
+@media (max-width:700px){:root{--gut:16px}}
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+@media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
+body{margin:0;background:var(--black);color:var(--white);
+  font:400 17px/1.5 var(--text);-webkit-font-smoothing:antialiased;overflow-x:clip}
+img{display:block;max-width:100%}
+a{color:inherit}
+h1,h2,h3,p,ul,ol,dl,dd,figure{margin:0}
+ul,ol{list-style:none;padding:0}
+button,input,select,textarea{font:inherit;color:inherit}
+[hidden]{display:none!important}
+.nw{white-space:nowrap}
+.sr{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+:focus-visible{outline:2px solid var(--white);outline-offset:3px}
+[id]{scroll-margin-top:76px}
+.skip{position:absolute;left:12px;top:-80px;background:var(--white);color:var(--black);padding:12px 18px;z-index:60}
+.skip:focus{top:12px}
+
+/* ============ кнопки ============ */
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:0 24px;
+  border:1px solid var(--white);border-radius:0;background:var(--white);color:var(--black);
+  font-family:var(--text);font-weight:600;font-size:16px;text-decoration:none;cursor:pointer;
+  transition:background .16s,color .16s}
+.btn:hover{background:transparent;color:var(--white)}
+.btn:disabled{background:transparent;border-color:var(--line);color:var(--ash);cursor:not-allowed}
+.btn--line{background:transparent;color:var(--white)}
+.btn--line:hover{background:var(--white);color:var(--black)}
+.link{color:var(--white);text-underline-offset:4px}
+
+/* ============ закреплённая строка ============ */
+.top{position:sticky;top:0;z-index:50;display:flex;align-items:center;gap:20px;
+  padding:10px var(--gut);background:rgba(0,0,0,.92);border-bottom:1px solid var(--line);
+  backdrop-filter:blur(8px)}
+/* Правка 22.09 (решение Романа): название зала красным. Красный до этого был
+   сигналом «идёт сейчас» и больше нигде не встречался — теперь он ещё и в шапке. */
+.mark{font-family:var(--disp);font-weight:800;font-size:19px;letter-spacing:-.02em;text-decoration:none;
+  color:var(--red);min-height:44px;display:inline-flex;align-items:center;padding:8px 0}
+.nav{display:none;gap:22px;margin-left:auto;font-size:15px;color:var(--ash)}
+.nav a{text-decoration:none}
+.nav a:hover{color:var(--white)}
+.top .btn{margin-left:auto;min-height:44px;padding:0 18px;font-size:15px}
+@media (min-width:1080px){.nav{display:flex}.top .btn{margin-left:0}}
+
+/* ============ секции ============ */
+.sec{border-top:1px solid var(--line)}
+.sec__in{max-width:1360px;margin:0 auto;padding:clamp(40px,6vw,var(--sec)) var(--gut)}
+h2{font-family:var(--disp);font-weight:700;font-size:clamp(24px,3.4vw,46px);line-height:1.05;letter-spacing:-.03em}
+h3{font-family:var(--text);font-weight:600;font-size:18px;line-height:1.3}
+.note{color:var(--ash);font-size:15px;line-height:1.5;max-width:70ch}
+
+/* ============ 1. герой ============ */
+.hero{padding:clamp(26px,4vw,54px) var(--gut) clamp(24px,3vw,36px);max-width:1360px;margin:0 auto}
+/* Правка 21.09: кадр боя на фоне первого экрана, затемнён и уходит в чёрный.
+   Сам заголовок стал чуть меньше — картинка забирает часть внимания. */
+.hero{position:relative;isolation:isolate}
+.hero__bg{position:absolute;inset:0;z-index:-1;overflow:hidden}
+/* Правка 22.09: кадр было почти не разглядеть — поднята яркость и снята часть
+   затемнения. Чёрно-белым оставлен намеренно: это палитра работы по матрице.
+   Затемнение в середине держим сильнее краёв — там лежит белый заголовок. */
+.hero__bg img{width:100%;height:100%;object-fit:cover;object-position:50% 35%;
+  filter:grayscale(1) contrast(1.2) brightness(.86)}
+.hero__bg::after{content:"";position:absolute;inset:0;
+  background:linear-gradient(180deg,rgba(0,0,0,.42) 0%,rgba(0,0,0,.62) 45%,var(--black) 100%)}
+h1{font-family:var(--disp);font-weight:800;font-size:clamp(25.5px,4.8vw,78.2px);line-height:.98;
+  letter-spacing:-.045em;max-width:15ch;text-transform:uppercase}
+.hero__lead{margin-top:20px;font-size:clamp(17px,1.5vw,20px);line-height:1.45;max-width:58ch;color:var(--ash)}
+.hero__lead b{color:var(--white);font-weight:500}
+/* Три цифры рядом: самое важное читается за секунду */
+.trust{display:flex;flex-wrap:wrap;gap:14px 32px;margin-top:22px;padding-top:20px;border-top:1px solid var(--line)}
+.trust div{min-width:120px}
+.trust b{display:block;font-family:var(--disp);font-weight:700;font-size:26px;letter-spacing:-.04em;line-height:1}
+.trust b.is-red{color:var(--red)}
+.trust span{display:block;margin-top:7px;color:var(--ash);font-size:13px;line-height:1.35}
+
+/* Появление блоков: 700 мс, один раз. Без скрипта всё видно сразу. */
+.js .reveal{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease}
+.js .reveal.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){
+  .js .reveal{opacity:1;transform:none;transition:none}
+  .dir:hover,.co:hover{transform:none}
+}
+
+/* живая строка */
+.live{margin-top:clamp(24px,3vw,38px);border-top:1px solid var(--line);padding-top:18px;
+  display:grid;grid-template-columns:1fr;gap:10px}
+@media (min-width:900px){.live{grid-template-columns:auto minmax(0,1fr);gap:28px;align-items:center}}
+.live__t{font-family:var(--disp);font-weight:800;font-size:clamp(34px,6vw,84px);line-height:.9;
+  letter-spacing:-.05em;font-variant-numeric:tabular-nums}
+.live__s{font-size:clamp(16px,1.5vw,20px);line-height:1.4}
+.live__s b{font-weight:500}
+.live__n{margin-top:6px;color:var(--ash);font-size:15px}
+.dot{display:inline-block;width:11px;height:11px;border-radius:50%;background:var(--red);
+  margin-right:9px;vertical-align:middle;animation:pulse 2s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+@media (prefers-reduced-motion:reduce){.dot{animation:none}}
+.live__go{color:var(--red)}
+
+/* ============ 2. расписание ============ */
+.week{border-top:1px solid var(--line);background:var(--coal)}
+.days{display:none}
+.grid7{display:grid;grid-template-columns:repeat(7,minmax(0,1fr))}
+.day{border-right:1px solid var(--line);min-width:0}
+/* Правка 21.09: в таблице много цифр, и она шумит. По умолчанию неделя
+   приглушена, при наведении подсвечивается только нужный день.
+   «Идёт сейчас» не гаснет никогда — это главное, что ищут глазами. */
+.grid7 .day{opacity:.42;transition:opacity .25s ease}
+.grid7:hover .day{opacity:.28}
+.grid7 .day:hover,.grid7 .day:focus-within{opacity:1}
+.grid7 .day:has(.ses.is-now){opacity:1}
+@media (hover:none){.grid7 .day,.grid7:hover .day{opacity:1}}
+@media (prefers-reduced-motion:reduce){.grid7 .day{transition:none}}
+.day:last-child{border-right:0}
+.day__h{padding:14px 12px 10px;border-bottom:1px solid var(--line);
+  font-family:var(--disp);font-weight:700;font-size:14px;letter-spacing:-.02em;text-transform:uppercase}
+.day__h span{display:block;margin-top:3px;font-family:var(--text);font-weight:400;font-size:12px;color:var(--ash);
+  letter-spacing:0;text-transform:none}
+.ses{display:block;padding:13px 12px;border-bottom:1px solid var(--line);min-height:92px}
+.ses__t{font-family:var(--disp);font-weight:700;font-size:15px;letter-spacing:-.02em;
+  font-variant-numeric:tabular-nums}
+.ses__n{margin-top:5px;font-size:14px;font-weight:500;line-height:1.25}
+.ses__c{margin-top:4px;color:var(--ash);font-size:12.5px;line-height:1.3}
+.ses.is-now{background:rgba(255,45,45,.1);box-shadow:inset 0 0 0 1px var(--red)}
+.ses.is-now .ses__t{color:var(--red)}
+.ses__now{display:none;margin-top:6px;color:var(--red);font-size:12px;font-weight:600}
+.ses.is-now .ses__now{display:block}
+.week__cap{padding:16px var(--gut);color:var(--ash);font-size:14px;border-top:1px solid var(--line)}
+.day.is-today .day__h{background:var(--white);color:var(--black)}
+.day.is-today .day__h span{color:#555}
+
+/* телефон: один день + переключатель */
+@media (max-width:860px){
+  .days{display:flex;gap:0;overflow-x:auto;scrollbar-width:none;border-bottom:1px solid var(--line)}
+  .days::-webkit-scrollbar{display:none}
+  .days button{flex:1 0 auto;min-width:52px;min-height:56px;padding:0 6px;background:none;border:0;
+    border-right:1px solid var(--line);color:var(--ash);font-family:var(--disp);font-weight:700;font-size:13px;
+    text-transform:uppercase;cursor:pointer;position:relative}
+  .days button[aria-selected="true"]{background:var(--white);color:var(--black)}
+  .days button .m{position:absolute;top:9px;right:9px;width:7px;height:7px;border-radius:50%;background:var(--red)}
+  .grid7{grid-template-columns:1fr}
+  .day{border-right:0}
+  .js .day[hidden]{display:none}
+  .day__h{display:flex;align-items:baseline;gap:10px;font-size:16px}
+  .day__h span{margin:0}
+  .js .day__h{display:none}
+  .ses{min-height:0;padding:15px var(--gut)}
+  .ses__n{font-size:16px}
+}
+
+/* ============ направления ============ */
+.dirs{display:grid;grid-template-columns:1fr;gap:14px;margin-top:24px}
+@media (min-width:640px){.dirs{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (min-width:1100px){.dirs{grid-template-columns:repeat(4,minmax(0,1fr))}}
+.dir{display:grid;gap:8px;background:var(--card);border:1px solid var(--line);border-radius:var(--r);
+  box-shadow:var(--shadow-sm);padding:20px 18px;transition:transform .3s ease,box-shadow .3s ease,border-color .3s ease}
+.dir:hover{transform:translateY(-6px);box-shadow:var(--shadow);border-color:rgba(255,45,45,.45)}
+.dir p{color:var(--ash);font-size:15px;line-height:1.5}
+
+/* ============ цены ============ */
+.rows{max-width:900px;margin-top:24px;background:var(--card);border:1px solid var(--line);
+  border-radius:var(--r);box-shadow:var(--shadow-sm);overflow:hidden}
+/* Наводишь на строку — соседние гаснут: помогает не потерять нужную глазами */
+.rows:hover .r{opacity:.42}
+.rows .r:hover{opacity:1;background:rgba(255,45,45,.07)}
+@media (hover:none){.rows:hover .r{opacity:1}}
+.r{display:grid;grid-template-columns:minmax(0,1fr) auto;grid-template-areas:"n s" "a s" "b s";
+  column-gap:16px;row-gap:2px;padding:14px 20px;border-bottom:1px solid var(--line);align-items:baseline;
+  transition:opacity .3s ease,background .3s ease}
+.r:last-child{border-bottom:0}
+.r__n{grid-area:n;font-size:17px;font-weight:500;line-height:1.25}
+.r__s{grid-area:s;align-self:center;font-family:var(--disp);font-weight:700;font-size:20px;
+  white-space:nowrap;letter-spacing:-.03em}
+.r__a{grid-area:a}
+.r__b{grid-area:b}
+.r__a,.r__b{color:var(--ash);font-size:13px;line-height:1.35}
+@media (min-width:760px){
+  .r{grid-template-columns:minmax(0,1fr) 230px 150px 120px;grid-template-areas:"n a b s";row-gap:0;padding:14px 22px}
+  .r__a,.r__b{font-size:14px;text-align:left}
+  .r__s{text-align:right;font-size:19px}
+}
+
+/* ============ тренеры ============ */
+.coaches{display:grid;grid-template-columns:1fr;gap:14px;margin-top:24px}
+@media (min-width:620px){.coaches{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (min-width:1100px){.coaches{grid-template-columns:repeat(4,minmax(0,1fr))}}
+/* Правка 21.09: у каждого тренера кадр в круглой рамке, имя под ним.
+   Правка 22.09 (решение Романа): на демо ставим лица. Раньше здесь стоял снаряд
+   вместо лица по регламенту SITE-FACTORY §7.5 — но зал без людей читается холодным,
+   а бизнес тут вымышленный целиком, включая имена. Для живого клиента на это место
+   идут ЕГО фотографии: сток здесь показывает клиенту будущий вид, а не выдаёт
+   чужого человека за сотрудника.
+   Наведение: кадр наливается цветом. На телефоне наведения нет — там цвет сразу. */
+.co__ph{display:block;width:104px;height:104px;border-radius:50%;overflow:hidden;
+  border:1px solid var(--line);margin-bottom:14px}
+.co__ph img{width:100%;height:100%;object-fit:cover;object-position:50% 28%;transform:scale(1.06);
+  filter:grayscale(1) contrast(1.12) brightness(.92);transition:filter .3s ease,transform .3s ease}
+.co:hover .co__ph img{filter:grayscale(0) contrast(1.04) brightness(1.06);transform:scale(1.14)}
+@media (hover:none){.co__ph img{filter:grayscale(0) contrast(1.04) brightness(1.02)}}
+.co{display:grid;background:var(--card);border:1px solid var(--line);border-radius:var(--r);
+  box-shadow:var(--shadow-sm);padding:20px 18px;gap:6px;
+  transition:transform .3s ease,box-shadow .3s ease,border-color .3s ease}
+.co:hover{transform:translateY(-6px);box-shadow:var(--shadow);border-color:rgba(255,255,255,.34)}
+.co__n{font-family:var(--disp);font-weight:700;font-size:clamp(22px,2.6vw,34px);letter-spacing:-.04em;line-height:1}
+.co__d{display:inline-block;margin-top:8px;padding:5px 11px;border-radius:999px;
+  background:rgba(255,255,255,.08);color:var(--white);font-size:13px;white-space:nowrap;justify-self:start}
+.co__s{color:var(--ash);font-size:15px;line-height:1.4}
+
+/* ============ зал ============ */
+.hall{display:grid;grid-template-columns:1fr;gap:26px;margin-top:24px}
+/* Правка 22.09: кадры были разной высоты, а зазор задавался отступом у нижнего —
+   правая колонка выходила длиннее табло. Теперь высоты равны, зазор общий. */
+.hall figure{display:flex;flex-direction:column;gap:14px}
+.hall .ph1 img,.hall .ph2 img{height:clamp(190px,21vw,266px)}
+@media (min-width:900px){
+  /* Правка 21.09: левая колонка тянется на всю высоту кадров, табло занимает
+     остаток — так оно стоит ровно напротив фотографий. */
+  .hall{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:40px;align-items:stretch}
+  .hall > div{display:flex;flex-direction:column}
+  .hall .tablo{flex:1;grid-template-rows:repeat(2,minmax(0,1fr))}
+  .hall .tablo li{display:flex;flex-direction:column;justify-content:center;padding:26px 18px}
+  .hall figure{display:flex;flex-direction:column}
+  .hall .ph1,.hall .ph2{flex:1;display:flex}
+  .hall .ph1 img,.hall .ph2 img{height:100%}
+}
+/* Табло: зал описан цифрами, как счёт на ринге. У «Суппорта» и «Кружка»
+   этот блок решён по-другому — чертежом и строками с маркерами. */
+.tablo{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1px;background:var(--line);
+  border:1px solid var(--line)}
+.tablo li{background:var(--black);padding:20px 18px}
+.tablo b{display:block;font-family:var(--disp);font-weight:800;font-size:clamp(30px,4vw,44px);
+  line-height:1;letter-spacing:-.05em}
+.tablo span{display:block;margin-top:10px;color:var(--ash);font-size:13.5px;line-height:1.35}
+.hall__cap{margin-top:16px;color:var(--ash);font-size:14px}
+.note .accent{color:var(--white);font-weight:600}
+.hall img{width:100%;object-fit:cover;border-radius:var(--r);
+  filter:grayscale(1) contrast(1.05) brightness(1.15)}
+figcaption{margin-top:10px;color:var(--ash);font-size:13px;line-height:1.45}
+
+/* ============ форма ============ */
+.book{display:grid;grid-template-columns:1fr;gap:28px;margin-top:24px}
+@media (min-width:1000px){.book{grid-template-columns:minmax(0,1fr) 290px;gap:48px}}
+.form{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.f{display:flex;flex-direction:column;gap:7px;grid-column:span 2}
+@media (min-width:600px){.f--half{grid-column:span 1}}
+.f label,.f legend{font-size:14px;color:var(--ash)}
+.inp{width:100%;min-height:48px;padding:11px 14px;background:var(--coal);border:1px solid var(--ash);
+  border-radius:0;font-size:16px;color:var(--white)}
+.inp::placeholder{color:#6a6a6a}
+.inp:focus-visible{outline:2px solid var(--white);outline-offset:0;border-color:var(--white)}
+fieldset.f{border:0;padding:0;margin:0}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{position:relative}
+.chip input{position:absolute;opacity:0;width:1px;height:1px}
+.chip span{display:inline-flex;align-items:center;min-height:44px;padding:0 16px;border:1px solid var(--ash);
+  font-size:15px;cursor:pointer}
+.chip input:checked + span{background:var(--white);border-color:var(--white);color:var(--black)}
+.chip input:focus-visible + span{outline:2px solid var(--white);outline-offset:2px}
+.consent{grid-column:1/-1;display:flex;align-items:flex-start;gap:12px}
+.consent input{flex:none;width:24px;height:24px;margin:11px 0 0;accent-color:var(--white);cursor:pointer}
+.consent label{padding:10px 0;font-size:15px;line-height:1.5;cursor:pointer}
+.send{grid-column:1/-1;display:flex;flex-wrap:wrap;align-items:center;gap:14px}
+.send__hint{color:var(--ash);font-size:14px}
+.done{background:var(--card);border:1px solid var(--line);border-radius:var(--r);
+  box-shadow:var(--shadow-sm);padding:28px}
+.done__b{font-family:var(--disp);font-weight:700;font-size:clamp(22px,3vw,32px);letter-spacing:-.03em;line-height:1.1}
+.done p+p{margin-top:12px}
+.noscript{grid-column:1/-1;color:var(--ash);font-size:15px}
+.side dl{display:grid;gap:10px}
+.side div{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+.side dt{color:var(--red);font-size:12px;letter-spacing:.1em;text-transform:uppercase}
+.side dd{margin-top:3px;font-size:16px;line-height:1.4}
+
+/* ============ подвал ============ */
+.foot{border-top:1px solid var(--white)}
+.foot__in{max-width:1360px;margin:0 auto;padding:clamp(32px,4vw,52px) var(--gut);
+  display:grid;grid-template-columns:1fr;gap:18px}
+@media (min-width:900px){.foot__in{grid-template-columns:270px minmax(0,1fr);gap:40px}}
+.plate{border:1px solid var(--line);padding:16px 18px;font-size:15px;line-height:1.5}
+.credits{color:var(--ash);font-size:13px}
+</style>
+</head>
+<body>
+<a class="skip" href="#raspisanie">К расписанию</a>
+
+<header class="top">
+  <a class="mark" href="#top">ГОНГ</a>
+  <nav class="nav" aria-label="Разделы">
+    <a href="#raspisanie">Расписание</a>
+    <a href="#napravleniya">Направления</a>
+    <a href="#tseny">Абонементы</a>
+    <a href="#trenery">Тренеры</a>
+    <a href="#zapis">Контакты</a>
+  </nav>
+  <a class="btn" href="#zapis">Пробная тренировка</a>
+</header>
+
+<main id="top">
+  <!-- ============ 1. герой ============ -->
+  <section class="hero" aria-labelledby="h1">
+    <div class="hero__bg" aria-hidden="true">
+      <img src="https://images.unsplash.com/photo-1591117207239-788bf8de6c3b?auto=format&fit=crop&w=2000&q=70"
+        alt="" width="2000" height="1333" fetchpriority="high" decoding="async">
+    </div>
+    <h1 id="h1">Приходите тренироваться, а не покупать абонемент</h1>
+    <p class="hero__lead"><b>Первое занятие бесплатное.</b> Ниже — вся неделя и что идёт прямо сейчас.</p>
+
+    <div class="trust">
+      <div><b>00:38</b><span>до ближайшей тренировки</span></div>
+      <div><b>150 лари</b><span>восемь занятий в месяц</span></div>
+      <div><b class="is-red">0 лари</b><span>первая тренировка, форма не нужна</span></div>
+    </div>
+
+    <div class="live" id="live" hidden>
+      <p class="live__t" id="liveTime">—</p>
+      <div>
+        <p class="live__s" id="liveNow">—</p>
+        <p class="live__n" id="liveNext"></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 2. расписание ============ -->
+  <section class="week" id="raspisanie" aria-labelledby="h-r">
+    <h2 class="sr" id="h-r">Расписание на неделю</h2>
+    <div class="days" id="days" role="tablist" aria-label="День недели" hidden></div>
+    <div class="grid7" id="week">
+
+      <div class="day" data-d="1">
+        <p class="day__h">Пн <span>понедельник</span></p>
+        <div class="ses" data-s="07:30" data-e="08:30"><p class="ses__t">07:30</p><p class="ses__n">Общая физика</p><p class="ses__c">Нана · любой уровень</p><p class="ses__now">идёт сейчас</p></div>
+        <div class="ses" data-s="17:00" data-e="18:00"><p class="ses__t">17:00</p><p class="ses__n">Дети 7–11</p><p class="ses__c">Георгий</p><p class="ses__now">идёт сейчас</p></div>
+        <div class="ses" data-s="18:15" data-e="19:15"><p class="ses__t">18:15</p><p class="ses__n">Дети 12–15</p><p class="ses__c">Георгий</p><p class="ses__now">идёт сейчас</p></div>
+        <div class="ses" data-s="19:30" data-e="21:00"><p class="ses__t">19:30</p><p class="ses__n">Бокс, взрослые</p><p class="ses__c">Давид · любой уровень</p><p class="ses__now">идёт сейчас</p></div>
+      </div>
+
+      <div class="day" data-d="2">
+        <p class="day__h">Вт <span>вторник</span></p>
+        <div class="ses" data-s="07:30" data-e="08:30"><p class="ses__t">07:30</p><p class="ses__n">Общая физика</p><p class="ses__c">Нана · любой уровень</p><p class="ses__now">идёт сейчас</p></div>
+        <div class="ses" data-s="17:00" data-e="18:00"><p class="ses__t">17:00</p><p class="ses__n">Дети 7–11</p><p class="ses__c">Георгий</p><p class="ses__now">идёт сейчас</p></div>
+        <div class="ses" data-s="18:15" data-e="19:15"><p class="ses__t">18:15</p><p class="ses__n">Женская группа</p><p class="ses__c">Нана</p><p class="ses__now">идёт сейчас</p></div>
+        <div class="ses" data-s="19:30" data-e="21:00"><p class="ses__t">19:30</p><p class="ses__n">Грэпплинг</p><p class="ses__c">Ираклий · можно с нуля</p><p class="ses__now">идёт сейчас</p></div>
+      </div>
+
+      <div class="day" data-d="3">
+        <p class="day__h">Ср <span>среда</span></p>
+        <div class="ses" data-s="07:30" data-e="08:30"><p class="ses__t">07:30</p><p class="ses__n">Общая физика</p><p class="ses__c">Нана · любой уровень</p><p class="ses__now">идёт сейчас</p></div>
+        <div class="ses" data-s="17:00" data-e="18:00"><p class="ses__t">17:00</p><p class="ses__n">Дети 7–11</p><p class="ses__c">Георгий</p><p class="ses__now">идёт сейчас</p></div>
+        <div class="ses" data-s="18:15" data-e="19:15"><p class="ses__t">18:15</p><p class="ses__n">Дети 12–15</p><p class="ses__c">Георгий</p><p class="ses__now">идёт сейчас</p></div>
+        <div class="ses" data-s="19:30" data-e="21:00"><p class="ses__t">19:30</p><p class="ses__n">Бокс, взрослые</p><p class="ses__c">Давид · любой уровень</p><p class="ses__now">идёт сейчас</p></div>
+      </div>
+
+      <div class="day" data-d="4">
+        <p class="day__h">Чт <span>четверг</span></p>
+        <div class="ses" data-s="07:30" data-e="08:30"><p class="ses__t">07:30</p><p class="ses__n">Общая физика</p><p class="ses__c">Нана · любой уровень</p><p class="ses__now">идёт сейчас</p></div>
+        <div class="ses" data-s="17:00" data-e="18:00"><p class="ses__t">17:00</p><p class="ses__n">Дети 7–11</p><p class="ses__c">Георгий</p><p class="ses__now">идёт сейчас</p></div>
+        <div class="ses" data-s="18:15" data-e="19:15"><p class="ses__t">18:15</p><p class="ses__n">Женская группа</p><p class="ses__c">Нана</p><p class="ses__now">идёт сейчас</p></div>
+        <div class="ses" data-s="19:30" data-e="21:00"><p class="ses__t">19:30</p><p class="ses__n">Кикбоксинг</p><p class="ses__c">Давид · с опытом</p><p class="ses__now">идёт сейчас</p></div>
+      </div>
+
+      <div class="day" data-d="5">
+        <p class="day__h">Пт <span>пятница</span></p>
+        <div class="ses" data-s="07:30" data-e="08:30"><p class="ses__t">07:30</p><p class="ses__n">Общая физика</p><p class="ses__c">Нана · любой уровень</p><p class="ses__now">идёт сейчас</p></div>
+        <div class="ses" data-s="17:00" data-e="18:00"><p class="ses__t">17:00</p><p class="ses__n">Дети 7–11</p><p class="ses__c">Георгий</p><p class="ses__now">идёт сейчас</p></div>
+        <div class="ses" data-s="18:15" data-e="19:15"><p class="ses__t">18:15</p><p class="ses__n">Дети 12–15</p><p class="ses__c">Георгий</p><p class="ses__now">идёт сейчас</p></div>
+        <div class="ses" data-s="19:30" data-e="21:00"><p class="ses__t">19:30</p><p class="ses__n">ММА</p><p class="ses__c">Ираклий · с опытом</p><p class="ses__now">идёт сейчас</p></div>
+      </div>
+
+      <div class="day" data-d="6">
+        <p class="day__h">Сб <span>суббота</span></p>
+        <div class="ses" data-s="10:00" data-e="11:00"><p class="ses__t">10:00</p><p class="ses__n">Дети 7–11</p><p class="ses__c">Георгий</p><p class="ses__now">идёт сейчас</p></div>
+        <div class="ses" data-s="11:15" data-e="12:15"><p class="ses__t">11:15</p><p class="ses__n">Дети 12–15</p><p class="ses__c">Георгий</p><p class="ses__now">идёт сейчас</p></div>
+        <div class="ses" data-s="12:30" data-e="14:00"><p class="ses__t">12:30</p><p class="ses__n">Открытый спарринг</p><p class="ses__c">Давид · с опытом</p><p class="ses__now">идёт сейчас</p></div>
+        <div class="ses" data-s="18:00" data-e="19:30"><p class="ses__t">18:00</p><p class="ses__n">Бокс, взрослые</p><p class="ses__c">Давид · любой уровень</p><p class="ses__now">идёт сейчас</p></div>
+      </div>
+
+      <div class="day" data-d="0">
+        <p class="day__h">Вс <span>воскресенье</span></p>
+        <div class="ses" data-s="11:00" data-e="12:00"><p class="ses__t">11:00</p><p class="ses__n">Общая физика</p><p class="ses__c">Нана · любой уровень</p><p class="ses__now">идёт сейчас</p></div>
+        <div class="ses" data-s="12:15" data-e="13:45"><p class="ses__t">12:15</p><p class="ses__n">Грэпплинг</p><p class="ses__c">Ираклий · можно с нуля</p><p class="ses__now">идёт сейчас</p></div>
+        <div class="ses"><p class="ses__t">до 18:00</p><p class="ses__n">Зал открыт</p><p class="ses__c">для самостоятельных, без тренера</p></div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============ 3. направления ============ -->
+  <section class="sec reveal" id="napravleniya" aria-labelledby="h-n">
+    <div class="sec__in">
+      <h2 id="h-n">Направления</h2>
+      <ul class="dirs">
+        <li class="dir"><h3>Бокс, взрослые</h3>
+          <p>90 минут: разминка, лапы, мешки, спарринг по желанию. Берём с нуля.</p></li>
+        <li class="dir"><h3>Кикбоксинг</h3>
+          <p>90 минут, руки и ноги. Нужен месяц бокса или свой опыт.</p></li>
+        <li class="dir"><h3>Грэпплинг</h3>
+          <p>90 минут в партере, без ударов. Самое безопасное, с чего взрослому можно начать.</p></li>
+        <li class="dir"><h3>ММА</h3>
+          <p>90 минут, стойка и партер. Тем, кто занимается год и больше.</p></li>
+        <li class="dir"><h3>Женская группа</h3>
+          <p>60 минут: бокс без спаррингов, много техники и физики. Ведёт Нана.</p></li>
+        <li class="dir"><h3>Дети 7–11 и 12–15</h3>
+          <p>60 минут: половина — физика и координация, половина — техника. Спарринги только в защите.</p></li>
+        <li class="dir"><h3>Общая физика</h3>
+          <p>60 минут утром, без ударов. Для формы, не для соревнований.</p></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ============ 4. цены ============ -->
+  <section class="sec reveal" id="tseny" aria-labelledby="h-t">
+    <div class="sec__in">
+      <h2 id="h-t">Абонементы</h2>
+      <ul class="rows">
+        <li class="r"><span class="r__n">Первая тренировка</span><span class="r__a">знакомство и разминка</span><span class="r__b">любое направление</span><span class="r__s">бесплатно</span></li>
+        <li class="r"><span class="r__n">Разовое занятие</span><span class="r__a">любое направление</span><span class="r__b">без записи</span><span class="r__s">25 лари</span></li>
+        <li class="r"><span class="r__n">Восемь занятий</span><span class="r__a">по 19 лари за занятие</span><span class="r__b">месяц</span><span class="r__s">150 лари</span></li>
+        <li class="r"><span class="r__n">Безлимит</span><span class="r__a">все группы взрослых</span><span class="r__b">месяц</span><span class="r__s">220 лари</span></li>
+        <li class="r"><span class="r__n">Детский абонемент, восемь занятий</span><span class="r__a">группа по возрасту</span><span class="r__b">месяц</span><span class="r__s">120 лари</span></li>
+        <li class="r"><span class="r__n">Персональная тренировка</span><span class="r__a">один на один, 60 минут</span><span class="r__b">по договорённости</span><span class="r__s">80 лари</span></li>
+      </ul>
+      <p class="note" style="margin-top:20px">Заболели или уехали — заморозим абонемент до десяти дней, <b class="accent">бесплатно</b>.</p>
+    </div>
+  </section>
+
+  <!-- ============ 5. тренеры ============ -->
+  <section class="sec reveal" id="trenery" aria-labelledby="h-c">
+    <div class="sec__in">
+      <h2 id="h-c">Тренеры</h2>
+      <ul class="coaches">
+        <li class="co"><span class="co__ph"><img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=600&q=74" alt="Давид" width="600" height="600" loading="lazy" decoding="async"></span><span class="co__n">Давид</span><span class="co__s">бокс, кикбоксинг, открытый спарринг</span><span class="co__d">пн, ср, чт, сб</span></li>
+        <li class="co"><span class="co__ph"><img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=600&q=74" alt="Ираклий" width="600" height="600" loading="lazy" decoding="async"></span><span class="co__n">Ираклий</span><span class="co__s">грэпплинг, ММА</span><span class="co__d">вт, пт, вс</span></li>
+        <li class="co"><span class="co__ph"><img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=600&q=74" alt="Нана" width="600" height="600" loading="lazy" decoding="async"></span><span class="co__n">Нана</span><span class="co__s">женская группа, общая физика</span><span class="co__d">утро пн–пт, вт, чт, вс</span></li>
+        <li class="co"><span class="co__ph"><img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=600&q=74" alt="Георгий" width="600" height="600" loading="lazy" decoding="async"></span><span class="co__n">Георгий</span><span class="co__s">детские группы</span><span class="co__d">пн–сб</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ============ 6. зал ============ -->
+  <section class="sec reveal" id="zal" aria-labelledby="h-z">
+    <div class="sec__in">
+      <div class="hall">
+        <div>
+          <h2 id="h-z">Где тренируемся</h2>
+          <ul class="tablo" style="margin-top:26px">
+            <li><b>5×5</b><span>ринг, метры</span></li>
+            <li><b>100</b><span>татами, м²</span></li>
+            <li><b>6+2</b><span>мешка и груши на пневмоподвесе</span></li>
+            <li><b>2</b><span>раздевалки с душем, детская отдельная</span></li>
+          </ul>
+        </div>
+        <figure>
+          <div class="ph1"><img src="https://images.unsplash.com/photo-1716306886418-f84f6d4c2f3a?auto=format&fit=crop&w=1400&q=74" alt="Ряд боксёрских мешков в зале" width="1400" height="930" loading="lazy" decoding="async"></div>
+          <div class="ph2"><img src="https://images.unsplash.com/photo-1623874514711-0f321325f318?auto=format&fit=crop&w=1400&q=74" alt="Зал под высоким потолком: скамьи и стойки вдоль стены" width="1400" height="930" loading="lazy" decoding="async"></div>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 7. запись ============ -->
+  <section class="sec reveal" id="zapis" aria-labelledby="h-b">
+    <div class="sec__in">
+      <div class="book">
+        <div>
+          <h2 id="h-b">Пробная тренировка</h2>
+          <form class="form" id="form" action="#zapis" method="post" novalidate style="margin-top:24px">
+            <div class="f f--half">
+              <label for="f-name">Имя</label>
+              <input class="inp" id="f-name" name="name" type="text" autocomplete="name" required>
+            </div>
+            <div class="f f--half">
+              <label for="f-phone">Телефон</label>
+              <input class="inp" id="f-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="+995 555 00 00 00" required>
+            </div>
+            <div class="f">
+              <label for="f-dir">Направление</label>
+              <select class="inp" id="f-dir" name="dir">
+                <option value="">Выберите направление</option>
+                <option>Бокс, взрослые</option>
+                <option>Кикбоксинг</option>
+                <option>Грэпплинг</option>
+                <option>ММА</option>
+                <option>Женская группа</option>
+                <option>Дети 7–11</option>
+                <option>Дети 12–15</option>
+                <option>Общая физика</option>
+                <option>Ещё не решил</option>
+              </select>
+            </div>
+            <fieldset class="f">
+              <legend>Кто занимается</legend>
+              <div class="chips">
+                <label class="chip"><input type="radio" name="who" value="adult"><span>Взрослый</span></label>
+                <label class="chip"><input type="radio" name="who" value="kid1"><span>Ребёнок 7–11</span></label>
+                <label class="chip"><input type="radio" name="who" value="kid2"><span>Ребёнок 12–15</span></label>
+              </div>
+            </fieldset>
+            <div class="consent">
+              <input type="checkbox" id="f-agree" name="agree" aria-describedby="send-hint">
+              <label for="f-agree">Соглашаюсь с <a class="link" href="#zapis" id="policy">политикой обработки персональных данных</a></label>
+            </div>
+            <div class="send">
+              <button class="btn" type="submit" id="send" disabled>Записаться на пробную</button>
+              <p class="send__hint" id="send-hint"></p>
+            </div>
+          </form>
+
+          <div class="done" id="done" role="status" tabindex="-1" hidden>
+            <p class="done__b">Записали.</p>
+            <p>Тренер напишет в течение дня и скажет, что взять с собой.</p>
+            <p><button class="btn btn--line" type="button" id="again" style="margin-top:6px">Вернуться к форме</button></p>
+          </div>
+        </div>
+
+        <div class="side">
+          <dl>
+            <div><dt>Адрес</dt><dd>Улица Чавчавадзе, Батуми</dd></div>
+            <div><dt>Часы</dt><dd>Пн–сб 7:00–22:00, вс 11:00–18:00</dd></div>
+            <div><dt>Языки</dt><dd>Грузинский, русский, английский</dd></div>
+            <div><dt>Оплата</dt><dd>Картой или наличными</dd></div>
+          </dl>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <div class="foot__in">
+    <div>
+      <span class="mark">ГОНГ</span>
+      <p class="note" style="margin-top:8px">Зал единоборств.<br>Улица Чавчавадзе, Батуми</p>
+    </div>
+    <div>
+    </div>
+  </div>
+</footer>
+
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"SportsActivityLocation","name":"Гонг","description":"Зал единоборств в Батуми: бокс, кикбоксинг, грэпплинг, ММА, детские и женские группы.","url":"https://open-sites.io/works/gong/","image":"https://open-sites.io/works/gong/og.jpg","priceRange":"25–220 GEL","address":{"@type":"PostalAddress","streetAddress":"улица Чавчавадзе","addressLocality":"Батуми","addressCountry":"GE"},"openingHours":["Mo-Sa 07:00-22:00","Su 11:00-18:00"],"availableLanguage":["ka","ru","en"]}
+</script>
+
+<script>
+(function () {
+  'use strict';
+  var DAYN = ['воскресенье','понедельник','вторник','среда','четверг','пятница','суббота'];
+  var SHORT = ['Вс','Пн','Вт','Ср','Чт','Пт','Сб'];
+  var reduce = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+
+  /* Батумское время (UTC+4, перевода часов в Грузии нет) — чтобы сайт был прав
+     и для посетителя из другого пояса. */
+  function batumi() {
+    var d = new Date();
+    return new Date(d.getTime() + (d.getTimezoneOffset() + 240) * 60000);
+  }
+  function mins(hhmm) { var p = hhmm.split(':'); return +p[0] * 60 + +p[1]; }
+  function pad(n) { return n < 10 ? '0' + n : '' + n; }
+  function human(m) {
+    if (m < 60) return m + ' ' + plural(m, 'минуту', 'минуты', 'минут');
+    var h = Math.floor(m / 60), r = m % 60;
+    return h + ' ' + plural(h, 'час', 'часа', 'часов') + (r ? ' ' + r + ' ' + plural(r, 'минуту', 'минуты', 'минут') : '');
+  }
+  function plural(n, a, b, c) {
+    var n10 = n % 10, n100 = n % 100;
+    if (n10 === 1 && n100 !== 11) return a;
+    if (n10 >= 2 && n10 <= 4 && (n100 < 12 || n100 > 14)) return b;
+    return c;
+  }
+
+  var days = [].slice.call(document.querySelectorAll('.day'));
+  var live = document.getElementById('live');
+  var elTime = document.getElementById('liveTime');
+  var elNow = document.getElementById('liveNow');
+  var elNext = document.getElementById('liveNext');
+  var tabs = document.getElementById('days');
+
+  // собираем занятия по дням из разметки — она же версия без JS
+  var byDay = {};
+  days.forEach(function (d) {
+    var n = +d.getAttribute('data-d');
+    byDay[n] = [].slice.call(d.querySelectorAll('.ses')).filter(function (s) { return s.getAttribute('data-s'); })
+      .map(function (s) {
+        return { el: s, s: mins(s.getAttribute('data-s')), e: mins(s.getAttribute('data-e')),
+                 name: s.querySelector('.ses__n').textContent,
+                 coach: (s.querySelector('.ses__c').textContent.split('·')[0] || '').trim(),
+                 t: s.getAttribute('data-s') };
+      });
+  });
+
+  function refresh() {
+    var now = batumi();
+    var dow = now.getDay(), m = now.getHours() * 60 + now.getMinutes();
+    var cur = null, next = null, nextIn = 0, nextDay = dow;
+
+    (byDay[dow] || []).forEach(function (x) { if (m >= x.s && m < x.e) cur = x; });
+    (byDay[dow] || []).forEach(function (x) { if (!next && x.s > m) { next = x; nextIn = x.s - m; } });
+    if (!next) {
+      for (var i = 1; i <= 7 && !next; i++) {
+        var d2 = (dow + i) % 7;
+        if ((byDay[d2] || []).length) { next = byDay[d2][0]; nextDay = d2; nextIn = (1440 - m) + (i - 1) * 1440 + next.s; }
+      }
+    }
+
+    document.querySelectorAll('.ses.is-now').forEach(function (s) { s.classList.remove('is-now'); });
+    if (cur) cur.el.classList.add('is-now');
+
+    elTime.textContent = pad(now.getHours()) + ':' + pad(now.getMinutes());
+    if (cur) {
+      elNow.innerHTML = '<span class="dot"></span><b>Сейчас идёт: ' + cur.name + '</b>, ведёт ' + cur.coach +
+        '. Заканчивается через ' + human(cur.e - m) + '.';
+    } else {
+      elNow.innerHTML = '<b>' + DAYN[dow][0].toUpperCase() + DAYN[dow].slice(1) + '.</b> Сейчас в зале тихо.';
+    }
+    elNext.textContent = next
+      ? 'Следующая: ' + next.name + ', ' + (nextDay === dow ? 'сегодня' : DAYN[nextDay]) + ' в ' + next.t +
+        ' — через ' + human(nextIn) + '.'
+      : '';
+    live.hidden = false;
+
+    days.forEach(function (d) { d.classList.toggle('is-today', +d.getAttribute('data-d') === dow); });
+    if (tabs) [].forEach.call(tabs.children, function (b) {
+      var has = cur && +b.getAttribute('data-d') === dow;
+      var mark = b.querySelector('.m');
+      if (has && !mark) { var i = document.createElement('i'); i.className = 'm'; b.appendChild(i); }
+      if (!has && mark) mark.remove();
+    });
+    return dow;
+  }
+
+  /* телефон: один день + переключатель */
+  function buildTabs(today) {
+    var order = [1, 2, 3, 4, 5, 6, 0];
+    tabs.innerHTML = '';
+    order.forEach(function (n) {
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.setAttribute('role', 'tab');
+      b.setAttribute('data-d', n);
+      b.textContent = SHORT[n];
+      b.setAttribute('aria-selected', n === today ? 'true' : 'false');
+      b.addEventListener('click', function () { show(n); });
+      tabs.appendChild(b);
+    });
+    tabs.hidden = false;
+  }
+  function show(n) {
+    days.forEach(function (d) { d.hidden = +d.getAttribute('data-d') !== n; });
+    [].forEach.call(tabs.children, function (b) {
+      b.setAttribute('aria-selected', +b.getAttribute('data-d') === n ? 'true' : 'false');
+    });
+  }
+  function showAll() {
+    days.forEach(function (d) { d.hidden = false; });
+    tabs.hidden = true;
+  }
+
+  var narrow = window.matchMedia('(max-width: 860px)');
+  var today = refresh();
+  function layout() {
+    if (narrow.matches) { buildTabs(today); show(today); }
+    else { showAll(); }
+  }
+  layout();
+  if (narrow.addEventListener) narrow.addEventListener('change', layout);
+  setInterval(function () { today = refresh(); }, 30000);
+
+  /* ---- появление блоков при прокрутке ---- */
+  var revs = [].slice.call(document.querySelectorAll('.reveal'));
+  if (reduce || !('IntersectionObserver' in window)) {
+    revs.forEach(function (el) { el.classList.add('in'); });
+  } else {
+    var io = new IntersectionObserver(function (es) {
+      es.forEach(function (e) {
+        if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+      });
+    }, { threshold: .12, rootMargin: '0px 0px -40px 0px' });
+    revs.forEach(function (el) { io.observe(el); });
+    setTimeout(function () { revs.forEach(function (el) { el.classList.add('in'); }); }, 1500);
+  }
+
+  /* ---- форма ---- */
+  var form = document.getElementById('form');
+  var agree = document.getElementById('f-agree');
+  var send = document.getElementById('send');
+  var hint = document.getElementById('send-hint');
+  var done = document.getElementById('done');
+  function sync() {
+    send.disabled = !agree.checked;
+    hint.textContent = agree.checked ? 'Перезвоним в течение дня.' : '';
+  }
+  agree.addEventListener('change', sync);
+  sync();
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    if (!agree.checked) return;
+    form.hidden = true; done.hidden = false; done.focus();
+  });
+  document.getElementById('again').addEventListener('click', function () {
+    done.hidden = true; form.hidden = false; document.getElementById('f-name').focus();
+  });
+  document.getElementById('policy').addEventListener('click', function (e) {
+    e.preventDefault();
+    alert('Это демонстрационный сайт. На настоящем сайте зала здесь открывается страница ' +
+          'с политикой обработки персональных данных — её текст даёт сам владелец.');
+  });
+})();
+</script>
+</body>
+</html>
