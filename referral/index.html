@@ -2,10 +2,15 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
+  <script>window.OS_PAGE_LANG="ru";(function(){try{var s=localStorage.getItem("os_lang");if(s==="en"||s==="ka")location.replace("/"+s+location.pathname.replace(/index\.html$/,"")+location.search+location.hash)}catch(e){}})();</script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Реферальная программа — open-sites.io</title>
   <meta name="description" content="Реферальная программа open-sites.io: приведите бизнес, которому нужен сайт, — получите 30% от суммы проекта, а клиент — скидку 10%.">
   <link rel="canonical" href="https://open-sites.io/referral/">
+  <link rel="alternate" hreflang="ru" href="https://open-sites.io/referral/">
+  <link rel="alternate" hreflang="en" href="https://open-sites.io/en/referral/">
+  <link rel="alternate" hreflang="ka" href="https://open-sites.io/ka/referral/">
+  <link rel="alternate" hreflang="x-default" href="https://open-sites.io/referral/">
   <meta name="robots" content="index, follow, max-image-preview:large">
   <meta name="theme-color" content="#0a0a0d">
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
@@ -1840,7 +1845,7 @@ const I18N = {
 
   en: {
     "meta.title": "open-sites.io — Websites That Sell. Landing Pages in 3–5 Days",
-    "meta.desc": "High-converting websites and Telegram Mini Apps built in days, not months. Fixed price, unlimited revisions until launch, and leads delivered straight to your Telegram.",
+    "meta.desc": "High-converting websites and Telegram Mini Apps built in days, not months. Fixed price, unlimited revisions until handover, and leads delivered straight to your Telegram.",
     "nav.services": "Services",
     "nav.cases": "Projects",
     "nav.process": "Process",
@@ -2088,15 +2093,11 @@ function osApplyLang(lang) {
   const curLabel = document.getElementById("langCurLabel");
   if (curLabel) curLabel.textContent = LANG_LABELS[lang] || lang.toUpperCase();
 
-  try { localStorage.setItem("os_lang", lang); } catch (_) {}
 }
 
 function osInitLang() {
-  let saved = null;
-  try { saved = localStorage.getItem("os_lang"); } catch (_) {}
-  const nav = (navigator.language || "ru").slice(0, 2).toLowerCase();
-  const guess = saved || (["ru", "en", "ka"].includes(nav) ? nav : "ru");
-  osApplyLang(guess);
+
+  osApplyLang(window.OS_PAGE_LANG || "ru");
 
   const dd = document.getElementById("langDd");
   const trigger = document.getElementById("langCurrent");
@@ -2123,7 +2124,7 @@ function osInitLang() {
   document.querySelectorAll(".lang-opt").forEach((b) =>
     b.addEventListener("click", (e) => {
       e.stopPropagation();
-      osApplyLang(b.getAttribute("data-lang"));
+      osGoLang(b.getAttribute("data-lang"));
       if (dd) dd.classList.remove("open");
       if (trigger) trigger.setAttribute("aria-expanded", "false");
     })
@@ -3535,9 +3536,20 @@ if (briefForm) {
 <script>
 
 
+window.osGoLang = function(lang){
+  if(lang !== 'en' && lang !== 'ka') lang = 'ru';
+  try{ localStorage.setItem('os_lang', lang); }catch(e){}
+  if(lang === (window.OS_PAGE_LANG || 'ru')) return;
+  var sub = location.pathname.replace(/index\.html$/, '').replace(/^\/(?:en|ka)(?=\/|$)/, '') || '/';
+  location.href = (lang === 'ru' ? '' : '/' + lang) + sub + location.search + location.hash;
+};
+</script>
+<script>
+
+
 (function(){
   'use strict';
-  var T = {"Реферальная программа":["Referral program","რეფერალური პროგრამა"],"Хотите зарабатывать — помогайте нам":["Want to earn? Help us grow","გსურთ გამომუშავება? დაგვეხმარეთ"],"Рядом с вами наверняка есть бизнес, которому нужен сайт: сосед по офису, клиент, знакомый мастер. Приведите его — и получите 30% от суммы проекта. Ему при этом будет дешевле на 10%. Вложений не требуется, достаточно передать свой код.":["There's surely a business near you that needs a website: an office neighbor, a client, a craftsman you know. Refer them and get 30% of the project cost. They get 10% off. No investment needed, just pass on your code.","თქვენ გვერდით ალბათ არის ბიზნესი, რომელსაც საიტი სჭირდება: ოფისის მეზობელი, კლიენტი, ნაცნობი ოსტატი. მოიყვანეთ ის და მიიღეთ პროექტის თანხის 30%. მას კი 10%‑ით იაფი დაუჯდება. ინვესტიცია არ არის საჭირო — საკმარისია, თქვენი კოდი გადასცეთ."],"Берёте код":["You get a code","იღებთ კოდს"],"Пишете нам в Telegram и получаете личный код.":["Message us on Telegram and receive your personal code.","გვწერთ Telegram‑ში და იღებთ პირად კოდს."],"Передаёте клиенту":["You pass it on","გადასცემთ კლიენტს"],"Он называет код, когда связывается с нами, — и получает скидку 10%.":["The client mentions the code when contacting us and gets 10% off.","კლიენტი კოდს ასახელებს, როცა დაგვიკავშირდება, და 10%‑იან ფასდაკლებას იღებს."],"Получаете 30%":["You get 30%","იღებთ 30%‑ს"],"После того как клиент оплатил проект.":["Once the client has paid for the project.","მას შემდეგ, რაც კლიენტი პროექტის საფასურს გადაიხდის."],"разовое сотрудничество":["one-off partnership","ერთჯერადი თანამშრომლობა"],"Партнёр":["Partner","პარტნიორი"],"от стоимости проекта":["of the project cost","პროექტის ღირებულებიდან"],"Процент с создания сайта или приложения":["Commission on website or app development","პროცენტი საიტის ან აპლიკაციის შექმნის ღირებულებიდან"],"Считается от общей суммы по вашему коду: заказали и сайт, и Mini App — процент со всего":["Calculated on the total ordered with your code: a website plus a Mini App means a share of both","ითვლება თქვენი კოდით შეკვეთილი მთლიანი თანხიდან: თუ შეუკვეთეს საიტიც და Mini App‑იც — პროცენტი ორივედან"],"Сопровождение и абонентские платежи в расчёт не входят":["Support and subscription fees are not included","მხარდაჭერა და სააბონენტო გადასახადები არ ითვლება"],"Клиенту по коду — скидка 10%":["The client gets 10% off with the code","კლიენტს კოდით 10%‑იანი ფასდაკლება აქვს"],"Выплата после оплаты проекта":["Paid out once the project is paid for","ანაზღაურება პროექტის გადახდის შემდეგ"],"Получить код":["Get a code","კოდის მიღება"],"от 5 клиентов в месяц":["5+ clients a month","თვეში 5 კლიენტიდან"],"Постоянный партнёр":["Regular partner","მუდმივი პარტნიორი"],"Индивидуально":["Individual terms","ინდივიდუალურად"],"Для тех, кто приводит клиентов стабильно":["For those who bring clients regularly","მათთვის, ვინც კლიენტებს სტაბილურად მოიყვანს"],"Ставка и порядок выплат обсуждаются лично":["The rate and payout terms are discussed one-on-one","განაკვეთი და ანაზღაურების წესი პირადად განიხილება"],"Отдельный контакт для ваших вопросов":["A dedicated contact for your questions","ცალკე კონტაქტი თქვენი კითხვებისთვის"],"Обсудить условия":["Discuss terms","პირობების განხილვა"],"Кому обычно подходит: маркетологам, таргетологам, дизайнерам, фотографам, бухгалтерам — всем, кто и так общается с малым бизнесом.":["Usually a good fit for marketers, ad specialists, designers, photographers and accountants: anyone who already works with small businesses.","ჩვეულებრივ, ეს ერგებათ მარკეტოლოგებს, სარეკლამო სპეციალისტებს, დიზაინერებს, ფოტოგრაფებს, ბუღალტრებს — ყველას, ვინც ისედაც მცირე ბიზნესთან მუშაობს."],"Ассистент open-sites.io":["open-sites.io assistant","open-sites.io‑ს ასისტენტი"],"Подскажет по услугам, ценам и срокам":["Answers questions about services, prices and timelines","გიპასუხებთ სერვისებზე, ფასებსა და ვადებზე"],"Не определились с выбором?":["Still deciding?","ჯერ ვერ გადაწყვიტეთ?"],"Напишите нам в Telegram. Разберём вашу задачу, подскажем, какой тариф подойдёт, и назовём цену и срок. Это бесплатно и ни к чему не обязывает.":["Message us on Telegram. We'll look at your project, suggest the right plan and name the price and timeline. It's free, with no obligation.","მოგვწერეთ Telegram‑ში. განვიხილავთ თქვენს ამოცანას, გირჩევთ შესაფერის ტარიფს და დაგისახელებთ ფასსა და ვადას. ეს უფასოა და არაფერს გავალდებულებთ."],"Написать в Telegram":["Message on Telegram","მოწერა Telegram‑ში"],"Спросить ассистента":["Ask the assistant","ჰკითხეთ ასისტენტს"],"Смотреть тарифы":["See pricing","ტარიფების ნახვა"],"Язык / Language":["Language","ენა / Language"],"Меню":["Menu","მენიუ"],"Закрыть чат":["Close chat","ჩატის დახურვა"],"Ваш вопрос":["Your question","თქვენი კითხვა"],"Напишите вопрос…":["Type your question…","დაწერეთ კითხვა…"],"Отправить":["Send","გაგზავნა"],"Открыть чат с ассистентом":["Open chat with the assistant","ასისტენტთან ჩატის გახსნა"],"Закрыть":["Close","დახურვა"],"Тариф {n} из {m}":["Plan {n} of {m}","ტარიფი {n}, სულ {m}"],"≈ $19 · 1 500 ₽ в месяц":["≈ $19 · 1 500 ₽ a month","≈ $19 · 1 500 ₽ თვეში"],"≈ 50 ₾ · 1 500 ₽ в месяц":["≈ 50 ₾ · 1 500 ₽ a month","≈ 50 ₾ · 1 500 ₽ თვეში"],"≈ $19 · 50 ₾ в месяц":["≈ $19 · 50 ₾ a month","≈ $19 · 50 ₾ თვეში"]};
+  var T = {"Реферальная программа":["Referral program","რეფერალური პროგრამა"],"Хотите зарабатывать — помогайте нам":["Want to earn? Help us grow","გსურთ გამომუშავება? დაგვეხმარეთ"],"Рядом с вами наверняка есть бизнес, которому нужен сайт: сосед по офису, клиент, знакомый мастер. Приведите его — и получите 30% от суммы проекта. Ему при этом будет дешевле на 10%. Вложений не требуется, достаточно передать свой код.":["There's surely a business near you that needs a website: an office neighbor, a client, a craftsman you know. Refer them and get 30% of the project cost. They get 10% off. No investment needed, just pass on your code.","თქვენ გვერდით ალბათ არის ბიზნესი, რომელსაც საიტი სჭირდება: ოფისის მეზობელი, კლიენტი, ნაცნობი ოსტატი. მოიყვანეთ ის და მიიღეთ პროექტის თანხის 30%. მას კი 10%‑ით იაფი დაუჯდება. ინვესტიცია არ არის საჭირო — საკმარისია, თქვენი კოდი გადასცეთ."],"Берёте код":["You get a code","იღებთ კოდს"],"Пишете нам в Telegram и получаете личный код.":["Message us on Telegram and receive your personal code.","გვწერთ Telegram‑ში და იღებთ პირად კოდს."],"Передаёте клиенту":["You pass it on","გადასცემთ კლიენტს"],"Он называет код, когда связывается с нами, — и получает скидку 10%.":["The client mentions the code when contacting us and gets 10% off.","კლიენტი კოდს ასახელებს, როცა დაგვიკავშირდება, და 10%‑იან ფასდაკლებას იღებს."],"Получаете 30%":["You get 30%","იღებთ 30%‑ს"],"После того как клиент оплатил проект.":["Once the client has paid for the project.","მას შემდეგ, რაც კლიენტი პროექტის საფასურს გადაიხდის."],"разовое сотрудничество":["one-off partnership","ერთჯერადი თანამშრომლობა"],"Партнёр":["Partner","პარტნიორი"],"от стоимости проекта":["of the project cost","პროექტის ღირებულებიდან"],"Процент с создания сайта или приложения":["Commission on website or app development","პროცენტი საიტის ან აპლიკაციის შექმნის ღირებულებიდან"],"Считается от общей суммы по вашему коду: заказали и сайт, и Mini App — процент со всего":["Calculated on the total ordered with your code: a website plus a Mini App means a share of both","ითვლება თქვენი კოდით შეკვეთილი მთლიანი თანხიდან: თუ შეუკვეთეს საიტიც და Mini App‑იც — პროცენტი ორივედან"],"Сопровождение и абонентские платежи в расчёт не входят":["Support and subscription fees are not included","მხარდაჭერა და სააბონენტო გადასახადები არ ითვლება"],"Клиенту по коду — скидка 10%":["The client gets 10% off with the code","კლიენტს კოდით 10%‑იანი ფასდაკლება აქვს"],"Выплата после оплаты проекта":["Paid out once the project is paid for","ანაზღაურება პროექტის გადახდის შემდეგ"],"Получить код":["Get a code","კოდის მიღება"],"от 5 клиентов в месяц":["5+ clients a month","თვეში 5 კლიენტიდან"],"Постоянный партнёр":["Regular partner","მუდმივი პარტნიორი"],"Индивидуально":["Individual terms","ინდივიდუალურად"],"Для тех, кто приводит клиентов стабильно":["For those who bring clients regularly","მათთვის, ვინც კლიენტებს სტაბილურად მოიყვანს"],"Ставка и порядок выплат обсуждаются лично":["The rate and payout terms are discussed one-on-one","განაკვეთი და ანაზღაურების წესი პირადად განიხილება"],"Отдельный контакт для ваших вопросов":["A dedicated contact for your questions","ცალკე კონტაქტი თქვენი კითხვებისთვის"],"Обсудить условия":["Discuss terms","პირობების განხილვა"],"Кому обычно подходит: маркетологам, таргетологам, дизайнерам, фотографам, бухгалтерам — всем, кто и так общается с малым бизнесом.":["Usually a good fit for marketers, ad specialists, designers, photographers and accountants: anyone who already works with small businesses.","ჩვეულებრივ, ეს ერგებათ მარკეტოლოგებს, სარეკლამო სპეციალისტებს, დიზაინერებს, ფოტოგრაფებს, ბუღალტრებს — ყველას, ვინც ისედაც მცირე ბიზნესთან მუშაობს."],"Ассистент open-sites.io":["open-sites.io assistant","open-sites.io‑ს ასისტენტი"],"Подскажет по услугам, ценам и срокам":["Answers questions about services, prices and timelines","გიპასუხებთ სერვისებზე, ფასებსა და ვადებზე"],"Не определились с выбором?":["Still deciding?","ჯერ ვერ გადაწყვიტეთ?"],"Напишите нам в Telegram. Разберём вашу задачу, подскажем, какой тариф подойдёт, и назовём цену и срок. Это бесплатно и ни к чему не обязывает.":["Message us on Telegram. We'll look at your project, suggest the right plan and name the price and timeline. It's free, with no obligation.","მოგვწერეთ Telegram‑ში. განვიხილავთ თქვენს ამოცანას, გირჩევთ შესაფერის ტარიფს და დაგისახელებთ ფასსა და ვადას. ეს უფასოა და არაფერს გავალდებულებთ."],"Написать в Telegram":["Message on Telegram","მოწერა Telegram‑ში"],"Спросить ассистента":["Ask the assistant","ჰკითხეთ ასისტენტს"],"Смотреть тарифы":["See pricing","ტარიფების ნახვა"],"Язык / Language":["Language","ენა / Language"],"Меню":["Menu","მენიუ"],"Закрыть чат":["Close chat","ჩატის დახურვა"],"Ваш вопрос":["Your question","თქვენი კითხვა"],"Напишите вопрос…":["Type your question…","დაწერეთ კითხვა…"],"Отправить":["Send","გაგზავნა"],"Открыть чат с ассистентом":["Open chat with the assistant","ასისტენტთან ჩატის გახსნა"],"Закрыть":["Close","დახურვა"],"Тариф {n} из {m}":["Plan {n} of {m}","ტარიფი {n}, სულ {m}"],"≈ $19 · 1 500 ₽ в месяц":["≈ $19 · 1 500 ₽ a month","≈ $19 · 1 500 ₽ თვეში"],"≈ 50 ₾ · 1 500 ₽ в месяц":["≈ 50 ₾ · 1 500 ₽ a month","≈ 50 ₾ · 1 500 ₽ თვეში"],"≈ $19 · 50 ₾ в месяц":["≈ $19 · 50 ₾ a month","≈ $19 · 50 ₾ თვეში"]};
   var LI = {en: 0, ka: 1};
   var CY = /[А-Яа-яЁё]/;
   var ATTRS = ['aria-label', 'alt', 'title', 'placeholder', 'aria-roledescription'];
@@ -3586,8 +3598,8 @@ if (briefForm) {
     window.osApplyLang = function(lang){ prev(lang); apply((document.documentElement.lang || lang).slice(0, 2)); };
   } else {
 
-    var lg = 'ru';
-    try{ lg = localStorage.getItem('os_lang') || 'ru'; }catch(e){}
+    var lg = window.OS_PAGE_LANG || 'ru';
+    if(!window.OS_PAGE_LANG){ try{ lg = localStorage.getItem('os_lang') || 'ru'; }catch(e){} }
     if(lg in LI){
       document.documentElement.lang = lg;
       var run = function(){ apply(lg); var t = to(document.title, lg); if(t) document.title = t; };
