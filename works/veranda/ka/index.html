@@ -8,10 +8,10 @@
 <meta name="robots" content="noindex">
 <meta name="theme-color" content="#F3EEE4">
 <link rel="canonical" href="https://open-sites.io/works/veranda/ka/">
-<!--hreflang--><link rel="alternate" hreflang="ru" href="https://open-sites.io/works/veranda/">
+<link rel="alternate" hreflang="ru" href="https://open-sites.io/works/veranda/">
 <link rel="alternate" hreflang="en" href="https://open-sites.io/works/veranda/en/">
 <link rel="alternate" hreflang="ka" href="https://open-sites.io/works/veranda/ka/">
-<link rel="alternate" hreflang="x-default" href="https://open-sites.io/works/veranda/"><!--/hreflang-->
+<link rel="alternate" hreflang="x-default" href="https://open-sites.io/works/veranda/">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="ka_GE">
 <meta property="og:site_name" content="open-sites.io">
@@ -30,15 +30,14 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Spectral:wght@400;600&family=Roboto+Flex:opsz,wght@8..144,400;8..144,500;8..144,600;8..144,700&display=swap">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+Georgian:wght@400;700&text=%E1%83%A5%E1%83%90%E1%83%A0%E1%83%97%E1%83%A3%E1%83%9A%E1%83%98&display=swap">
 <style>
-/* Веранда — пересборка 24.09 по заданию Романа: карточки, фото, отзывы, меньше пустоты
-   и голого текста, больше движения. Лицо прежнее: песок, морская волна, Spectral и календарь со счётом. */
+
 :root{
-  --sand:#F3EEE4;    /* фон */
-  --shell:#FBF8F2;   /* карточки */
-  --foam:#E3EFEE;    /* морская пена: подложки, диапазон дат */
+  --sand:#F3EEE4;    
+  --shell:#FBF8F2;   
+  --foam:#E3EFEE;    
   --ink:#1E2A2B;
-  --stone:#596463;   /* 5,3:1 на песке */
-  --sea:#0B6B74;     /* акцент */
+  --stone:#596463;   
+  --sea:#0B6B74;     
   --sea-d:#085158;
   --line:rgba(30,42,43,.14);
   --r:18px;
@@ -65,7 +64,7 @@ button,input{font:inherit;color:inherit}
 .v-skip:focus{top:12px}
 .num{font-variant-numeric:tabular-nums}
 
-/* ───── кнопки ───── */
+
 .v-btn{position:relative;display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:0 24px;border:0;border-radius:999px;
   background:var(--sea);color:#fff;font-weight:600;font-size:16px;text-decoration:none;cursor:pointer;overflow:hidden;isolation:isolate;
   transition:background .2s,transform .2s,box-shadow .2s}
@@ -73,13 +72,13 @@ button,input{font:inherit;color:inherit}
 .v-btn:disabled,.v-btn:disabled:hover{background:#DCD6CB;color:#4B5453;cursor:not-allowed;transform:none;box-shadow:none}
 .v-btn--ghost{background:transparent;color:var(--sea-d);box-shadow:inset 0 0 0 1.5px rgba(11,107,116,.4)}
 .v-btn--ghost:hover{background:var(--foam);color:var(--sea-d);box-shadow:inset 0 0 0 1.5px var(--sea)}
-/* волна пробегает по кнопке дат */
+
 .v-btn--wave::after{content:"";position:absolute;z-index:-1;left:0;right:0;bottom:-2px;height:10px;opacity:.35;
   background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='10'%3E%3Cpath d='M0 6c5-4 10-4 20 0s15 4 20 0v4H0z' fill='white'/%3E%3C/svg%3E") repeat-x 0 0/40px 10px}
 @media (prefers-reduced-motion:no-preference){.v-btn--wave::after{animation:vWave 3.2s linear infinite}}
 @keyframes vWave{to{background-position:40px 0}}
 
-/* ───── шапка ───── */
+
 .v-top{position:sticky;top:0;z-index:50;display:flex;align-items:center;gap:24px;padding:10px var(--gut);
   background:rgba(243,238,228,.9);border-bottom:1px solid var(--line);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
 .v-logo{display:inline-flex;align-items:center;gap:10px;min-height:44px;text-decoration:none}
@@ -96,7 +95,7 @@ button,input{font:inherit;color:inherit}
 @media (min-width:900px){.v-nav{display:flex}.v-top .v-btn{margin-left:0}}
 @media (max-width:420px){.v-logo small{display:none}.v-top .v-btn{padding:0 16px}}
 
-/* ───── общее ───── */
+
 .v-sec{max-width:1280px;margin:0 auto;padding:clamp(44px,5.5vw,76px) var(--gut) 0}
 .v-head{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:8px 40px;margin-bottom:22px}
 .v-head h2{font-family:var(--disp);font-weight:400;font-size:clamp(30px,3.6vw,46px);line-height:1.08}
@@ -106,7 +105,7 @@ button,input{font:inherit;color:inherit}
 .js .v-up.is-on{opacity:1;transform:none}
 @media (prefers-reduced-motion:reduce){.js .v-up{opacity:1;transform:none;transition:none}}
 
-/* ───── первый экран ───── */
+
 .v-hero{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:clamp(20px,3vw,40px);align-items:start;
   max-width:1280px;margin:0 auto;padding:clamp(22px,3vw,44px) var(--gut) 0}
 .v-pill{display:inline-flex;align-items:center;gap:8px;padding:7px 14px;border-radius:999px;background:var(--shell);border:1px solid var(--line);font-size:13.5px;font-weight:500;color:var(--sea-d)}
@@ -124,7 +123,7 @@ button,input{font:inherit;color:inherit}
 @media (prefers-reduced-motion:no-preference){.v-gal figure:first-child img{animation:vDrift 16s ease-in-out infinite alternate}}
 @keyframes vDrift{from{transform:scale(1.02)}to{transform:scale(1.1) translate(-2%,-1%)}}
 
-/* ───── календарь и счёт ───── */
+
 .v-book{padding:clamp(16px,2vw,24px);box-shadow:var(--float);position:sticky;top:80px}
 .v-book__top{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:8px 16px}
 .v-book__price{font-size:15px;color:var(--stone)}
@@ -153,7 +152,7 @@ button,input{font:inherit;color:inherit}
 .v-d--edge{background:var(--sea);color:#fff}
 .v-d--edge:hover:not(:disabled){background:var(--sea-d)}
 .v-d--empty{visibility:hidden}
-/* день выезда — пунктирная рамка: ночь уже не ваша, но утром вы ещё здесь */
+
 .v-d--out{outline:1.5px dashed var(--sea);outline-offset:-4px}
 .v-bill__more{margin-bottom:6px;font-size:13.5px;font-weight:500;color:var(--sea-d)}
 .v-legend{display:flex;flex-wrap:wrap;gap:6px 16px;margin-top:10px;font-size:12.5px;color:var(--stone)}
@@ -179,13 +178,13 @@ button,input{font:inherit;color:inherit}
   .v-gal{order:3;margin-top:0}
 }
 @media (max-width:620px){.v-cal{max-width:none}.v-d{font-size:15.5px}.v-gal{height:300px}}
-/* узкий телефон: календарь во всю ширину экрана, чтобы день оставался целью 44 px */
+
 @media (max-width:420px){
   .v-book{margin:0 calc(var(--gut) * -1);border-radius:0;border-left:0;border-right:0;padding:16px 12px}
   .v-m__w,.v-m__d{gap:1px}
 }
 
-/* ───── квартира ───── */
+
 .v-flat{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:16px;align-items:stretch}
 .v-rooms{position:relative;overflow:hidden;min-height:440px;padding:0}
 .v-rooms__tabs{position:absolute;z-index:2;left:12px;right:12px;top:12px;display:flex;flex-wrap:wrap;gap:6px}
@@ -212,12 +211,10 @@ html:not(.js) .v-rooms__tabs{display:none}
 }
 @media (max-width:420px){.v-amen{gap:8px}.v-amen li{padding:12px;font-size:14px}}
 
-/* ───── до моря ───── */
+
 .v-sea{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px}
 .v-walk{position:relative;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;grid-column:1/-1}
-/* Правка 24.09 (21:20): карточки выше, точка идёт НАД кружками — ровно от «0» до «7»,
-   кружки загораются по пути, над «7» точка встаёт и пульсирует сильнее.
-   Центр первой карточки при зазоре 10 px: (100% − 30px) / 8, последней — (100% − 30px) · 7/8 + 30px. */
+
 .v-walk::before{content:"";position:absolute;z-index:1;top:23px;left:calc((100% - 30px) / 8);right:calc((100% - 30px) / 8);
   border-top:2px dashed rgba(11,107,116,.4)}
 .v-walk__dot{position:absolute;z-index:2;top:16px;left:calc((100% - 30px) / 8 - 8px);width:16px;height:16px;border-radius:50%;
@@ -255,7 +252,7 @@ html:not(.js) .v-rooms__tabs{display:none}
   .v-sea{grid-template-columns:1fr 1fr;gap:10px}
 }
 
-/* ───── цены ───── */
+
 .v-price{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:16px;align-items:stretch}
 .v-chart{padding:20px 18px 14px;display:flex;flex-direction:column}
 .v-chart__bars{flex:1;display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:6px;align-items:end;min-height:180px}
@@ -263,7 +260,7 @@ html:not(.js) .v-rooms__tabs{display:none}
 .v-chart__bars i.is-hi{background:var(--sea)}
 .v-chart__bars i.is-mid{background:#5FA2A6}
 .v-chart__bars i.is-now{outline:2px solid var(--ink);outline-offset:2px}
-/* подпись вместо удалённой строки «столбик в рамке — текущий месяц» */
+
 .v-chart__bars i.is-now::after{content:"ახლა";position:absolute;left:50%;bottom:100%;transform:translate(-50%,-8px);
   padding:2px 7px;border-radius:999px;background:var(--ink);color:#fff;font-size:11px;font-weight:600;white-space:nowrap}
 .js .v-chart:not(.is-on) .v-chart__bars i{transform:scaleY(.04)}
@@ -292,8 +289,8 @@ html:not(.js) .v-rooms__tabs{display:none}
   .v-chart__m{gap:4px}
 }
 
-/* ───── отзывы ───── */
-/* Лента: по три отзыва в окне, листается страницами по три (правка 24.09) */
+
+
 .v-revs{display:grid;grid-auto-flow:column;grid-auto-columns:calc((100% - 28px) / 3);gap:14px;overflow-x:auto;
   scroll-snap-type:x mandatory;scrollbar-width:none;padding:6px 0 14px}
 .v-revs::-webkit-scrollbar{display:none}
@@ -314,7 +311,7 @@ html:not(.js) .v-rooms__tabs{display:none}
 @media (max-width:900px){.v-revs{grid-auto-columns:calc((100% - 14px) / 2)}}
 @media (max-width:600px){.v-revs{grid-auto-columns:86%}}
 
-/* ───── правила ───── */
+
 .v-rules{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
 .v-rule{display:flex;gap:12px;align-items:center;padding:16px;font-size:15px;line-height:1.4;transition:transform .25s,border-color .25s}
 .v-rule:hover{transform:translateY(-3px);border-color:rgba(11,107,116,.35)}
@@ -325,12 +322,12 @@ html:not(.js) .v-rooms__tabs{display:none}
 @media (max-width:1000px){.v-rules{grid-template-columns:1fr 1fr}}
 @media (max-width:560px){.v-rules{grid-template-columns:1fr;gap:8px}.v-rule{padding:12px 14px}.v-rule--wide{grid-column:auto}}
 
-/* ───── заявка ───── */
+
 .v-ask{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:16px;align-items:stretch}
 .v-host{position:relative;overflow:hidden;display:flex;flex-direction:column;gap:14px;padding:clamp(20px,2.6vw,30px) clamp(20px,2.6vw,30px) 92px;
   background:var(--ink);color:#EEF2F1;border-color:var(--ink)}
 .v-host > *{position:relative;z-index:1}
-/* внизу тёмной карточки медленно идут две волны */
+
 .v-host::before,.v-host::after{content:"";position:absolute;left:0;right:0;bottom:0;pointer-events:none;background-repeat:repeat-x;background-position:0 100%}
 .v-host::before{height:74px;background-size:180px 74px;
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 74'%3E%3Cpath d='M0 34Q45 14 90 34T180 34V74H0Z' fill='%230B6B74' fill-opacity='.55'/%3E%3C/svg%3E")}
@@ -367,14 +364,14 @@ html:not(.js) .v-rooms__tabs{display:none}
 @media (max-width:900px){.v-ask{grid-template-columns:1fr}}
 @media (max-width:560px){.v-form{grid-template-columns:1fr}}
 
-/* ───── подвал ───── */
+
 .v-foot{margin-top:clamp(44px,5.5vw,76px);background:var(--shell);border-top:1px solid var(--line)}
 .v-foot__in{max-width:1280px;margin:0 auto;padding:26px var(--gut);display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px 30px;font-size:14.5px;color:var(--stone)}
 .v-foot__in p:first-child{font-family:var(--disp);font-weight:600;font-size:20px;letter-spacing:.04em;color:var(--ink)}
 .v-foot__in ul{display:flex;flex-wrap:wrap;gap:4px 18px}
 .v-foot__in a{color:var(--ink);font-weight:600;text-decoration:none;display:inline-flex;align-items:center;min-height:44px}
 
-/* ───── языки: RU · EN · ქა — отдельные страницы (tools/i18n/make_lang.py) ───── */
+
 .v-lang{position:relative;flex:none}
 .v-lang summary{list-style:none;display:inline-flex;align-items:center;justify-content:center;gap:7px;min-height:44px;min-width:56px;padding:0 12px;
   border-radius:999px;box-shadow:inset 0 0 0 1.5px rgba(11,107,116,.4);color:var(--sea-d);font-weight:600;font-size:14px;cursor:pointer;transition:background .2s,color .2s}
@@ -409,12 +406,12 @@ html:not(.js) .v-rooms__tabs{display:none}
     <span><b>ვერანდა</b><small>აპარტამენტი ზღვასთან</small></span>
   </a>
   <nav class="v-nav" aria-label="განყოფილებები"><a href="#kvartira">ბინა</a><a href="#more">ზღვამდე</a><a href="#tseny">ფასები</a></nav>
-<!--lang--><details class="v-lang"><summary aria-label="ენა">ქა</summary><div><a href="../" hreflang="ru" lang="ru">Русский</a><a href="../en/" hreflang="en" lang="en">English</a><a href="./" hreflang="ka" lang="ka" aria-current="page">ქართული</a></div></details><!--/lang-->
+<details class="v-lang"><summary aria-label="ენა">ქა</summary><div><a href="../" hreflang="ru" lang="ru">Русский</a><a href="../en/" hreflang="en" lang="en">English</a><a href="./" hreflang="ka" lang="ka" aria-current="page">ქართული</a></div></details>
   <a class="v-btn v-btn--wave" href="#daty" aria-label="თარიღების შემოწმება"><span class="v-long">თარიღების შემოწმება</span><span class="v-short" aria-hidden="true">თარიღები</span></a>
 </header>
 
 <main id="main">
-  <!-- ═════════ первый экран: фото + календарь ═════════ -->
+  
   <section class="v-hero" aria-labelledby="h1">
     <div class="v-hero__l">
       <div class="v-hero__t">
@@ -455,7 +452,6 @@ html:not(.js) .v-rooms__tabs{display:none}
     </div>
   </section>
 
-  <!-- ═════════ квартира ═════════ -->
   <section class="v-sec" id="kvartira" aria-labelledby="h-k">
     <div class="v-head v-up"><h2 id="h-k">რა არის ბინაში</h2></div>
     <div class="v-flat">
@@ -486,7 +482,6 @@ html:not(.js) .v-rooms__tabs{display:none}
     </div>
   </section>
 
-  <!-- ═════════ до моря ═════════ -->
   <section class="v-sec" id="more" aria-labelledby="h-m">
     <div class="v-head v-up"><h2 id="h-m">ზღვამდე</h2></div>
     <div class="v-sea">
@@ -506,7 +501,6 @@ html:not(.js) .v-rooms__tabs{display:none}
     <p class="v-honest v-up"><b>გულწრფელად:</b> ქუჩა ცოცხალია, ზაფხულში შუაღამემდე კაფეები ისმის. ფანჯრები ორმაგი მინისაა, მაგრამ ეს მთა არ გეგონოთ.</p>
   </section>
 
-  <!-- ═════════ цены ═════════ -->
   <section class="v-sec" id="tseny" aria-labelledby="h-t">
     <div class="v-head v-up"><h2 id="h-t">ფასები სეზონების მიხედვით</h2></div>
     <div class="v-price">
@@ -536,12 +530,11 @@ html:not(.js) .v-rooms__tabs{display:none}
     </ul>
   </section>
 
-  <!-- ═════════ отзывы ═════════ -->
   <section class="v-sec" id="otzyvy" aria-labelledby="h-o">
     <div class="v-head v-up"><h2 id="h-o">სტუმრების შეფასებები</h2>
       <div class="v-revnav"><button type="button" id="revPrev" aria-label="წინა შეფასებები">‹</button><span id="revPos" aria-live="polite">1–3 / 9</span><button type="button" id="revNext" aria-label="შემდეგი შეფასებები">›</button></div>
     </div>
-    <!-- Правка 24.09 (21:20): отзывов девять, лентой по три, листаются сами -->
+    
     <div class="v-revs v-up" id="revs">
       <article class="v-rev v-card"><div class="v-rev__top"><p class="v-stars" role="img" aria-label="შეფასება: 5 / 5"></p><span class="v-rev__stay">ივლისი · 6 ღამე</span></div>
         <p>დილით ყავა აივანზე და ზღვა ფანჯარაში. პლაჟამდე მართლა შვიდი წუთია.</p><div class="v-rev__who"><i aria-hidden="true">ო</i>ოლღა, თბილისი</div></article>
@@ -564,7 +557,6 @@ html:not(.js) .v-rooms__tabs{display:none}
     </div>
   </section>
 
-  <!-- ═════════ правила ═════════ -->
   <section class="v-sec" id="pravila" aria-labelledby="h-p">
     <div class="v-head v-up"><h2 id="h-p">წესები</h2></div>
     <ul class="v-rules">
@@ -578,7 +570,6 @@ html:not(.js) .v-rooms__tabs{display:none}
     </ul>
   </section>
 
-  <!-- ═════════ заявка ═════════ -->
   <section class="v-sec" id="zayavka" aria-labelledby="h-z">
     <div class="v-ask">
       <div class="v-host v-card v-up">
@@ -627,9 +618,7 @@ html:not(.js) .v-rooms__tabs{display:none}
   var MONR = ['იანვარი','თებერვალი','მარტი','აპრილი','მაისი','ივნისი','ივლისი','აგვისტო','სექტემბერი','ოქტომბერი','ნოემბერი','დეკემბერი'];
   var MONP = ['იანვარში','თებერვალში','მარტში','აპრილში','მაისში','ივნისში','ივლისში','აგვისტოში','სექტემბერში','ოქტომბერში','ნოემბერში','დეკემბერში'];
   var WD = ['ორ','სა','ოთ','ხუ','პა','შა','კვ'];
-  /* Цена ночи — по месяцу этой ночи: переход через границу сезона виден в счёте отдельной строкой.
-     Правка 24.09 (21:20): отмечаются сами ночи — один день = одна ночь, два дня подряд = две ночи,
-     выезд утром следующего дня. Раньше нужно было жать заезд и выезд, и две ночи были «24–26» — путало. */
+
   var PRICE = [90, 90, 90, 140, 140, 200, 260, 260, 200, 140, 90, 90];
   var CLEAN = 60, LONG = 7, LONG_OFF = 0.10, MAX_SHIFT = 10;
 
@@ -651,7 +640,7 @@ html:not(.js) .v-rooms__tabs{display:none}
 
   function key(d) { return d.getFullYear() * 10000 + d.getMonth() * 100 + d.getDate(); }
   function addDays(d, n) { var x = new Date(d.getTime()); x.setDate(x.getDate() + n); return x; }
-  /* Занятость детерминированная: блоки по три дня дважды в месяц, как у настоящей квартиры. */
+
   function taken(d) {
     var day = d.getDate(), s = (d.getMonth() * 5) % 9 + 4;
     return (day >= s && day < s + 3) || (day >= s + 13 && day < s + 16);
@@ -666,7 +655,7 @@ html:not(.js) .v-rooms__tabs{display:none}
   }
   function rangeFree(a, b) { for (var d = new Date(a.getTime()); d <= b; d = addDays(d, 1)) { if (!free(d)) return false; } return true; }
 
-  /* один месяц в окне, стрелки листают (правка 24.09: два месяца рядом сбивали с толку) */
+
   function build() {
     cal.innerHTML = '';
     var base0 = new Date(today.getFullYear(), today.getMonth() + shift, 1);
@@ -679,7 +668,7 @@ html:not(.js) .v-rooms__tabs{display:none}
         WD.map(function (w) { return '<span>' + w + '</span>'; }).join('') + '</div>';
       var grid = document.createElement('div');
       grid.className = 'v-m__d';
-      /* прошедшие недели текущего месяца не рисуем: выбрать их всё равно нельзя */
+
       var from = 1;
       if (base.getFullYear() === today.getFullYear() && base.getMonth() === today.getMonth()) {
         from = Math.max(1, today.getDate() - (today.getDay() + 6) % 7);
@@ -716,8 +705,7 @@ html:not(.js) .v-rooms__tabs{display:none}
   prev.addEventListener('click', function () { if (shift > 0) { shift--; build(); } });
   next.addEventListener('click', function () { if (shift < MAX_SHIFT) { shift++; build(); } });
 
-  /* первый клик — первая ночь (уже считается одна ночь); второй клик — последняя ночь;
-     следующий клик начинает выбор заново. Занятый день внутри — выбор начинается с нажатого дня. */
+
   function choose(d) {
     if (!start || !picking || d < start) { start = d; last = d; picking = true; }
     else if (rangeFree(start, d)) { last = d; picking = false; }
@@ -745,7 +733,7 @@ html:not(.js) .v-rooms__tabs{display:none}
     var from = shownSum, t0 = null;
     shownSum = to;
     function step(ts) {
-      if (id !== rollId) return;            // опоздавший кадр не перетирает итог
+      if (id !== rollId) return;            
       if (!t0) t0 = ts;
       var p = Math.min((ts - t0) / 500, 1);
       el.textContent = money(from + (to - from) * (1 - Math.pow(1 - p, 3)));
@@ -761,7 +749,7 @@ html:not(.js) .v-rooms__tabs{display:none}
       if (field) field.value = '';
       return;
     }
-    var end = addDays(last, 1);   // выезд — утром следующего дня
+    var end = addDays(last, 1);   
     var byMonth = [], nights = 0;
     for (var d = new Date(start.getTime()); d < end; d = addDays(d, 1)) {
       var m = d.getMonth(), tail = byMonth[byMonth.length - 1];
@@ -790,7 +778,7 @@ html:not(.js) .v-rooms__tabs{display:none}
     if (field) field.value = when + ', ' + nights + ' ' + plural(nights, 'ღამე', 'ღამე', 'ღამე') + ', ' + money(total);
   }
 
-  /* быстрые даты: ближайшие свободные ночи нужной длины (выходные — ночи пятницы и субботы) */
+
   quick.forEach(function (q) {
     q.addEventListener('click', function () {
       var n = +q.getAttribute('data-n'), d = addDays(today, 1);
@@ -806,10 +794,10 @@ html:not(.js) .v-rooms__tabs{display:none}
       }
     });
   });
-  /* сразу показываем счёт на ближайшую свободную неделю — любой клик по дню начинает свой выбор */
+
   if (quick[1]) quick[1].click(); else build();
 
-  /* ---- комнаты ---- */
+
   var tabs = [].slice.call(document.querySelectorAll('.v-rooms__tabs button'));
   var rooms = [].slice.call(document.querySelectorAll('.v-room'));
   function room(i) {
@@ -827,7 +815,7 @@ html:not(.js) .v-rooms__tabs{display:none}
     });
   });
 
-  /* ---- отзывы: лента по три, листается сама раз в 6 секунд (правка 24.09) ---- */
+
   var revs = document.getElementById('revs'), revPos = document.getElementById('revPos');
   if (revs && revPos) {
     var items = revs.children, paused = false, rTick = false;
@@ -852,13 +840,13 @@ html:not(.js) .v-rooms__tabs{display:none}
     if (!reduce) setInterval(function () {
       if (paused || document.hidden) return;
       var r = revs.getBoundingClientRect();
-      if (r.bottom < 0 || r.top > window.innerHeight) return;   // листаем, только когда лента на экране
+      if (r.bottom < 0 || r.top > window.innerHeight) return;   
       page(1);
     }, 6000);
     label();
   }
 
-  /* ---- появление, график, дорога до моря ---- */
+
   var ups = [].slice.call(document.querySelectorAll('.v-up, #chart'));
   function show(el) { el.classList.add('is-on'); }
   if (reduce || !('IntersectionObserver' in window)) {
@@ -873,7 +861,7 @@ html:not(.js) .v-rooms__tabs{display:none}
     }, 1500);
   }
 
-  /* ---- форма ---- */
+
   var form = document.getElementById('form');
   var agree = document.getElementById('f-agree');
   var send = document.getElementById('send');

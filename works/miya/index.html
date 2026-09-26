@@ -16,7 +16,7 @@
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<!-- Демонстрационная работа студии open-sites.io. Бизнес вымышленный. Стиль Kit №7 «Нежный бьюти-editorial». -->
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;1,500;1,600&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -60,7 +60,7 @@
   .btn--ghost{background:transparent;color:var(--accent-dk);border-color:var(--accent)}
   .btn--ghost:hover{background:rgba(125,140,92,.12);transform:translateY(-2px)}
 
-  /* ===== Появление: построчные маски + мягкие фейды ===== */
+  
   .msk{display:block;overflow:hidden;padding-bottom:.1em;margin-bottom:-.1em}
   .msk>span{display:block}
   html.js .reveal .msk>span{transform:translateY(118%);transition:transform 1s var(--ease);transition-delay:var(--d,0s)}
@@ -70,7 +70,7 @@
   html.js .reveal .imgr{opacity:0;transition:opacity 1.2s ease-out;transition-delay:var(--d,0s)}
   html.js .reveal.in .imgr{opacity:1}
 
-  /* ===== Шапка ===== */
+  
   header{position:sticky;top:0;z-index:50;background:rgba(244,242,233,.75);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);transition:box-shadow .3s,border-color .3s;border-bottom:1px solid transparent}
   header.scrolled{border-bottom-color:var(--line);box-shadow:0 10px 30px -22px rgba(58,66,40,.5)}
   .nav{display:flex;align-items:center;justify-content:space-between;height:70px}
@@ -80,13 +80,13 @@
   .nav-links a{font-size:.94rem;color:var(--muted);font-weight:500;transition:color .2s}
   .nav-links a:hover{color:var(--ink)}
   .nav-cta{display:none}
-  /* Бургер — две тонкие линии */
+  
   .burger{display:inline-flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;
     width:46px;height:46px;background:none;border:0;cursor:pointer;padding:0}
   .burger span{display:block;width:26px;height:1px;background:var(--ink);transition:transform .7s var(--ease),width .7s var(--ease)}
   .burger:hover span:nth-child(2){width:18px}
 
-  /* Полноэкранное меню-оверлей */
+  
   .mnav{position:fixed;inset:0;z-index:120;
     background:radial-gradient(700px 460px at 82% 8%, rgba(154,169,122,.22), transparent 65%),
       linear-gradient(180deg,var(--cream-2),var(--cream));
@@ -118,7 +118,7 @@
   .mnav-close span:last-child{transform:rotate(-45deg)}
   body.nav-open{overflow:hidden}
 
-  /* ===== Hero: журнальный разворот с наложением ===== */
+  
   .hero{padding:44px 0 56px}
   .hero-ed{display:grid;gap:16px}
   .hero-h{font-size:clamp(2.7rem,10vw,4.9rem);line-height:1.06;position:relative;z-index:2;margin-top:6px;
@@ -136,7 +136,7 @@
   .hero-cta{display:flex;flex-wrap:wrap;gap:14px;margin-top:24px}
   .hero-sign{margin-top:26px;font-size:1.14rem}
 
-  /* ===== Бегущая строка ===== */
+  
   .marquee{overflow:hidden;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:20px 0;background:rgba(250,248,241,.45)}
   .mq{display:flex;width:max-content;animation:mq 40s linear infinite}
   .mq-half{display:flex;flex:none;align-items:baseline}
@@ -151,7 +151,7 @@
   .sec-head h2{font-size:clamp(1.9rem,4.4vw,2.8rem);margin-top:12px}
   .sec-head p{color:var(--muted);margin-top:12px}
 
-  /* ===== Услуги: журнальный список с чередованием ===== */
+  
   .entries{border-bottom:1px solid var(--line)}
   .entry{border-top:1px solid var(--line);padding:38px 0;display:grid;gap:20px}
   .entry-num{font-family:"Playfair Display",Georgia,serif;font-style:italic;font-weight:600;font-size:1.5rem;color:var(--accent-lt);line-height:1}
@@ -168,7 +168,7 @@
   .price{font-family:"Playfair Display",Georgia,serif;font-weight:600;font-size:clamp(1.5rem,2.6vw,2rem);color:var(--accent-dk);white-space:nowrap}
   .entry .btn{padding:11px 24px;font-size:.88rem}
 
-  /* ===== Почему мы: editorial-строки ===== */
+  
   .why-list{max-width:920px;margin:0 auto;border-bottom:1px solid var(--line)}
   .wrow{border-top:1px solid var(--line);padding:32px 0;display:grid;gap:8px}
   .wnum{font-family:"Playfair Display",Georgia,serif;font-style:italic;font-weight:600;font-size:clamp(2.4rem,5vw,3.4rem);color:var(--accent-lt);line-height:1}
@@ -176,7 +176,7 @@
   .wrow p{color:var(--muted);font-size:.96rem;max-width:56ch;margin-top:6px}
   .why-quote{text-align:center;margin-top:44px;font-size:1.15rem}
 
-  /* ===== Отзывы: кавычки и вертикальная линия ===== */
+  
   .rev-note{text-align:center;margin-bottom:18px}
   .rev-note span{display:inline-block;font-size:.8rem;color:var(--ink);letter-spacing:.12em;
     text-transform:uppercase;border:1px solid var(--line);border-radius:50px;padding:6px 16px;
@@ -189,13 +189,13 @@
   .rev b{font-family:"Manrope",sans-serif;font-size:.92rem;color:var(--accent-dk)}
   .stars{color:var(--gold-dk);letter-spacing:2px;font-size:1rem;margin-top:6px}
 
-  /* ===== CTA + форма ===== */
+  
   .cta-card{position:relative}
   .cta-grid{display:grid;gap:34px}
   .cta-side .quote{font-size:1.6rem;line-height:1.3;display:block;margin:12px 0 14px}
   .cta-side p{color:var(--muted)}
 
-  /* Бланк записи: тёплая кремовая карточка, поля — только нижняя линия */
+  
   .sheet{background:linear-gradient(180deg,var(--cream-2),var(--cream));border:1px solid var(--line);
     border-radius:38px;box-shadow:var(--shadow);padding:clamp(26px,5vw,44px)}
   .sheet-cap{font-family:"Playfair Display",Georgia,serif;font-style:italic;color:var(--accent-dk);
@@ -225,8 +225,8 @@
   .demo-note p{color:var(--muted);margin-bottom:18px;max-width:44ch;margin-inline:auto}
   @keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
 
-  /* ===== Подвал ===== */
-  /* ===== Подвал: визитка салона ===== */
+  
+  
   footer{background:var(--footer);color:var(--footer-tx);padding:56px 0 26px;margin-top:26px}
   .foot-card{display:grid;gap:30px}
   .foot-brand{font-family:"Playfair Display",Georgia,serif;font-size:1.7rem;letter-spacing:.14em;color:#fff}
@@ -253,7 +253,7 @@
     text-align:center;color:var(--footer-tx);font-size:.86rem}
   .demo-plate a{text-decoration:underline;color:#fff}
 
-  /* ===== Десктоп ===== */
+  
   @media(min-width:640px){
     .entry{grid-template-columns:56px 1fr;grid-template-areas:"num ph" "num body"}
     .entry-num{grid-area:num}
@@ -293,7 +293,7 @@
     .fld-row{grid-template-columns:1fr 1fr;column-gap:26px}
   }
 
-  /* ===== Reduced motion: всё видно, ничего не движется ===== */
+  
   @media(prefers-reduced-motion:reduce){
     html{scroll-behavior:auto}
     *,*::before,*::after{animation:none!important;transition:none!important}
@@ -305,22 +305,20 @@
     .mq{animation:none!important}
   }
 
-  /* ═══════════ Правки 24.09 (пакет «Указки» 16:09) ═══════════ */
-  /* Картинки брали высоту из атрибута height (1125 и 600 px) и растягивали блоки:
-     отсюда огромное фото в первом экране и пустота в услугах. */
+  
+  
   .arch img,.capfig img{height:auto}
 
-  /* 1. Первый экран: фото примерно вдвое меньше — как у «Веры-дентал». */
+  
   .hero-photo{width:min(78%,320px)}
   @media(min-width:900px){.hero-photo{width:min(100%,380px);padding-top:40px}}
 
-  /* 2. Услуги: четыре карточки в рамке. Наведение — карточка приподнимается,
-     фото приближается, кнопка «Записаться» этой карточки заливается и пульсирует. */
+  
   .entries{display:grid;grid-template-columns:1fr;gap:18px;border-bottom:0;margin-top:30px}
   .entries .entry{position:relative;display:flex;flex-direction:column;gap:0;padding:0;
     border:1px solid var(--line);border-radius:var(--r);background:var(--cream-2);box-shadow:var(--shadow-sm);
     overflow:hidden;align-items:stretch;transition:transform .45s var(--ease),box-shadow .45s var(--ease),border-color .45s}
-  /* старая журнальная раскладка ставила align-items:center — картинка без загрузки сжималась в ноль */
+  
   .entries .entry .capfig{width:100%}
   .entries .entry-num{position:absolute;top:14px;left:14px;z-index:3;margin:0;padding:6px 14px;
     border-radius:30px;background:rgba(250,248,241,.92);font-size:1.05rem;color:var(--accent-dk)}
@@ -344,7 +342,7 @@
     70%{box-shadow:0 0 0 14px rgba(125,140,92,0);scale:1}
     100%{box-shadow:0 0 0 0 rgba(125,140,92,0);scale:1}}
 
-  /* 4. Кнопка «Записаться» в шапке раз в 4,5 секунды делает толчок, кольцо и перелив. */
+  
   .nav-cta{position:relative;overflow:hidden;isolation:isolate}
   @media (prefers-reduced-motion:no-preference){
     .nav-cta{animation:ctaBeat 4.5s cubic-bezier(.3,.7,.4,1) 1.5s infinite}
@@ -361,7 +359,7 @@
     90%{scale:1;box-shadow:0 12px 26px -12px rgba(95,110,69,.7),0 0 0 14px rgba(125,140,92,0)}}
   @keyframes ctaShine{0%,54%{background-position:130% 0}86%,100%{background-position:-30% 0}}
 
-  /* 5. Отзывы лентой: на компьютере по два, на телефоне по одному, листаются сами. */
+  
   .rev-car{max-width:1040px;margin:0 auto}
   .rev-track{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;
     scrollbar-width:none;outline-offset:6px}
@@ -378,8 +376,7 @@
   @media(max-width:899px){.rev-car .rev{padding:58px 14px 6px}.rev-car .rev::before{left:2px}}
   .rev-num{min-width:56px;text-align:center;font-family:"Playfair Display",Georgia,serif;font-style:italic;color:var(--accent-dk)}
 
-  /* 6. «Почему мы» — в рамке; номера переливаются золотом и оливой, строка
-     откликается на наведение. */
+  
   .why-list{max-width:980px;margin:0 auto;border:1px solid var(--line);border-radius:26px;
     background:rgba(250,248,241,.72);box-shadow:var(--shadow-sm);overflow:hidden}
   .why-list .wrow{padding-left:clamp(20px,3.4vw,44px);padding-right:clamp(20px,3.4vw,44px);transition:background .4s var(--ease)}
@@ -415,7 +412,6 @@
   </div>
 </header>
 
-<!-- Полноэкранное меню: пункты выезжают масками по одному -->
 <div class="mnav" id="mmenu" aria-hidden="true">
   <div class="mnav-inner">
     <button class="mnav-close" id="menuClose" aria-label="Закрыть меню"><span></span><span></span></button>
@@ -434,7 +430,6 @@
   </div>
 </div>
 
-<!-- Hero: журнальный разворот — заголовок частично перекрывает фото-арку -->
 <section class="hero" id="top">
   <div class="wrap hero-ed reveal">
     <span class="eyebrow fade">Салон красоты · Москва</span>
@@ -462,7 +457,6 @@
   </div>
 </section>
 
-<!-- Медленная бегущая строка -->
 <div class="marquee" aria-hidden="true">
   <div class="mq">
     <div class="mq-half">
@@ -478,7 +472,6 @@
   </div>
 </div>
 
-<!-- Услуги: журнальная асимметрия -->
 <section class="sec" id="services">
   <div class="wrap">
     <div class="sec-head reveal">
@@ -539,7 +532,6 @@
   </div>
 </section>
 
-<!-- Почему мы: editorial-список строк -->
 <section class="sec" id="why" style="background:linear-gradient(180deg,transparent,rgba(255,255,255,.35),transparent)">
   <div class="wrap">
     <div class="sec-head reveal">
@@ -567,7 +559,6 @@
   </div>
 </section>
 
-<!-- Отзывы: большие кавычки + вертикальная линия -->
 <section class="sec" id="reviews">
   <div class="wrap">
     <div class="sec-head center reveal">
@@ -718,8 +709,7 @@
   var onScroll=function(){hdr.classList.toggle('scrolled',window.scrollY>12)};
   window.addEventListener('scroll',onScroll,{passive:true});onScroll();
 
-  /* Полноэкранное меню-оверлей. В закрытом виде оно не должно ловить фокус:
-     visibility:hidden в CSS + inert (где поддерживается). */
+
   var burger=document.getElementById('burger'),menu=document.getElementById('mmenu'),
       menuClose=document.getElementById('menuClose');
   var setMenu=function(open){
@@ -729,12 +719,11 @@
     document.body.classList.toggle('nav-open',open);
     burger.setAttribute('aria-expanded',open?'true':'false');
     burger.setAttribute('aria-label',open?'Закрыть меню':'Открыть меню');
-    /* Возвращаем фокус на бургер, только если он виден: на десктопе он display:none,
-       и фокус улетел бы в начало документа. */
+
     if(open){menuClose.focus()}
     else if(burger.offsetParent!==null){burger.focus()}
   };
-  /* Замыкаем фокус внутри открытого оверлея — иначе Tab уходит на ссылки под ним. */
+
   menu.addEventListener('keydown',function(e){
     if(e.key!=='Tab'||!menu.classList.contains('open'))return;
     var f=menu.querySelectorAll('a[href],button:not([disabled])');
@@ -750,7 +739,7 @@
   document.addEventListener('keydown',function(e){
     if(e.key==='Escape'&&menu.classList.contains('open'))setMenu(false);
   });
-  // На десктопе оверлей скрыт (display:none) — закрываем, чтобы не блокировать прокрутку.
+
   var wide=window.matchMedia('(min-width:900px)');
   var onWide=function(){if(wide.matches&&menu.classList.contains('open'))setMenu(false)};
   wide.addEventListener?wide.addEventListener('change',onWide):wide.addListener(onWide);
@@ -758,18 +747,17 @@
   var consent=document.getElementById('f-consent'),btn=document.getElementById('submitBtn');
   var syncConsent=function(){btn.disabled=!consent.checked};
   consent.addEventListener('change',syncConsent);
-  // Браузер восстанавливает состояние чекбокса при перезагрузке/«назад» — синхронизируем сразу.
+
   syncConsent();
   window.addEventListener('pageshow',syncConsent);
-  /* Ссылка-заглушка «политика» лежит внутри <label>: без этого клик по ней
-     переключал бы чекбокс согласия и прыгал в начало страницы. */
+
   var pol=document.querySelector('.consent a');
   if(pol)pol.addEventListener('click',function(e){e.preventDefault();e.stopPropagation()});
   document.getElementById('leadForm').addEventListener('submit',function(e){
     e.preventDefault();
     var name=document.getElementById('f-name'),phone=document.getElementById('f-phone');
     if(!name.value.trim()||!phone.value.trim()){(name.value.trim()?phone:name).focus();return}
-    // Демо: заявка никуда не отправляется.
+
     this.style.display='none';
     document.getElementById('demoNote').classList.add('show');
   });
@@ -782,11 +770,7 @@
       if(en.isIntersecting){en.target.classList.add('in');io.unobserve(en.target)}
     })},{threshold:.1,rootMargin:'0px 0px -60px 0px'});
     items.forEach(function(el){io.observe(el)});
-    /* Страховка на случай, когда observer есть, но не обновляется (встречается во
-       встроенных браузерах мессенджеров) — иначе построчные маски текста остались бы
-       скрытыми навсегда. Показываем только то, что уже попало в кадр, но не раскрылось:
-       блоки ниже сгиба сохраняют свою анимацию появления.
-       В фоновой вкладке ничего не трогаем — там анимации приостановлены штатно. */
+
     var rescue=function(){
       if(document.hidden)return;
       for(var i=0;i<items.length;i++){
@@ -807,7 +791,7 @@
     });
   }
 
-  // Мягкий параллакс фото в hero (максимум ±30px)
+
   var par=document.getElementById('heroPar'),heroSec=document.getElementById('top');
   if(par&&heroSec&&!reduce){
     var ticking=false;
@@ -829,7 +813,7 @@
 })();
 </script>
 <script>
-/* Правки 24.09: лента отзывов. Отдельно от основного скрипта сайта. */
+
 (function(){
   'use strict';
   var track = document.getElementById('revTrack');
@@ -852,8 +836,7 @@
   window.addEventListener('resize', sync);
   sync();
 
-  /* Сама листается раз в 6 секунд; стоит, пока человек читает, и выключена,
-     если анимации в системе отключены. */
+
   var calm = window.matchMedia('(prefers-reduced-motion: reduce)'), hold = false;
   ['mouseenter', 'focusin', 'touchstart', 'pointerdown'].forEach(function(ev){
     track.addEventListener(ev, function(){ hold = true; }, {passive: true});

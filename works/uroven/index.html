@@ -25,15 +25,14 @@
 <link rel="preconnect" href="https://images.unsplash.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Commissioner:wght@400;500;600;700;800&display=swap">
 <style>
-/* Уровень — пересборка 24.09 по заданию Романа: карточки, таблицы, отзывы с цифрами,
-   меньше пустоты, больше движения. Лицо прежнее: цемент, кирпич, Commissioner и прикидка сметы. */
+
 :root{
-  --cement:#E8E4DE;   /* фон — свежая штукатурка */
-  --paper:#F6F4F0;    /* карточки */
+  --cement:#E8E4DE;   
+  --paper:#F6F4F0;    
   --white:#FFFDFA;
   --ink:#1C1B19;
-  --dust:#63605A;     /* 5,6:1 на цементе */
-  --brick:#B5432A;    /* единственный акцент: деньги, номера, кнопки */
+  --dust:#63605A;     
+  --brick:#B5432A;    
   --brick-d:#8F3520;
   --brick-l:rgba(181,67,42,.1);
   --line:rgba(28,27,25,.14);
@@ -63,7 +62,7 @@ button,input{font:inherit;color:inherit}
 .u-skip:focus{top:12px}
 .u-lbl{font-weight:600;font-size:12.5px;text-transform:uppercase;letter-spacing:.07em;color:var(--dust)}
 
-/* ───── кнопки ───── */
+
 .u-btn{position:relative;display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:0 22px;
   border:2px solid var(--brick);border-radius:10px;background:var(--brick);color:#fff;font-weight:700;font-size:15.5px;
   text-decoration:none;cursor:pointer;overflow:hidden;isolation:isolate;transition:background .2s,border-color .2s,transform .2s}
@@ -71,13 +70,13 @@ button,input{font:inherit;color:inherit}
 .u-btn--line{background:transparent;color:var(--brick-d);border-color:rgba(181,67,42,.45)}
 .u-btn--line:hover{background:var(--brick-l);color:var(--brick-d)}
 .u-btn:disabled,.u-btn:disabled:hover{background:transparent;border-color:var(--line);color:#57544E;cursor:not-allowed;transform:none}
-/* блик по кнопке замера раз в несколько секунд */
+
 .u-btn--shine::after{content:"";position:absolute;z-index:-1;top:-20%;bottom:-20%;left:-60%;width:40%;
   background:linear-gradient(100deg,transparent,rgba(255,255,255,.45),transparent);transform:skewX(-18deg);opacity:0}
 @media (prefers-reduced-motion:no-preference){.u-btn--shine::after{animation:uShine 5.5s ease-in-out 2s infinite}}
 @keyframes uShine{0%{left:-60%;opacity:0}8%{opacity:1}28%{left:130%;opacity:1}29%,100%{left:130%;opacity:0}}
 
-/* ───── шапка ───── */
+
 .u-top{position:sticky;top:0;z-index:50;display:flex;align-items:center;gap:18px;padding:10px var(--gut);
   background:rgba(232,228,222,.92);border-bottom:1px solid var(--line);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
 .u-logo{display:inline-flex;align-items:center;gap:10px;min-height:44px;text-decoration:none}
@@ -101,7 +100,7 @@ button,input{font:inherit;color:inherit}
 @media (max-width:460px){.u-long{display:none}.u-short{display:inline}}
 @media (max-width:380px){.u-logo b{font-size:17px}.u-top{gap:10px}.u-top__cta{padding:0 12px;font-size:14px}}
 
-/* ───── общее ───── */
+
 .u-sec{max-width:1320px;margin:0 auto;padding:clamp(44px,5.5vw,76px) var(--gut) 0}
 .u-head{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:10px 40px;margin-bottom:22px}
 .u-head h2{font-weight:800;font-size:clamp(28px,3.4vw,44px);line-height:1.04;letter-spacing:-.03em}
@@ -111,7 +110,7 @@ button,input{font:inherit;color:inherit}
 .js .u-rv.is-in{opacity:1;transform:none}
 @media (prefers-reduced-motion:reduce){.js .u-rv{opacity:1;transform:none;transition:none}}
 
-/* ───── первый экран ───── */
+
 .u-hero{display:grid;grid-template-columns:minmax(0,1.08fr) minmax(0,.92fr);gap:clamp(22px,3.6vw,52px);align-items:stretch;
   max-width:1320px;margin:0 auto;padding:clamp(24px,3.4vw,48px) var(--gut) 0}
 .u-pill{display:inline-flex;align-items:center;gap:8px;padding:7px 14px;border-radius:999px;background:var(--paper);border:1px solid var(--line);
@@ -130,7 +129,7 @@ button,input{font:inherit;color:inherit}
 .u-hero__ph{position:relative;min-height:520px}
 .u-hero__img{position:absolute;inset:0;border-radius:18px;overflow:hidden;background:#D9D3CA;box-shadow:var(--lift)}
 .u-hero__img img{width:100%;height:100%;object-fit:cover}
-/* смета на миллиметровке: строки вписываются по одной, потом штамп */
+
 .u-note{position:absolute;left:-26px;bottom:26px;width:min(310px,82%);padding:16px 18px 18px;border-radius:12px;overflow:hidden;
   background-color:#FFFDFA;background-image:linear-gradient(rgba(181,67,42,.07) 1px,transparent 1px),linear-gradient(90deg,rgba(181,67,42,.07) 1px,transparent 1px);
   background-size:12px 12px;border:1px solid var(--line);box-shadow:0 26px 50px -28px rgba(28,27,25,.6);font-size:13.5px}
@@ -167,7 +166,7 @@ button,input{font:inherit;color:inherit}
 }
 @media (max-width:420px){.u-facts{gap:8px}.u-fact{flex-direction:column;gap:8px;padding:12px}.u-fact b{font-size:20px}}
 
-/* ───── прикидка ───── */
+
 .u-calc{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px;align-items:stretch}
 .u-calc__l{display:flex;flex-direction:column;gap:16px}
 .u-calc__ph{position:relative;flex:1;min-height:220px;border-radius:var(--rad);overflow:hidden;background:#D9D3CA}
@@ -178,7 +177,7 @@ button,input{font:inherit;color:inherit}
 .u-q{padding:clamp(18px,2.2vw,26px);display:grid;gap:22px}
 .u-qa__top{display:flex;justify-content:space-between;align-items:baseline;gap:12px}
 .u-qa__hint{font-size:13px;color:var(--dust)}
-/* метраж — поле с кнопками ±5 (ползунок по матрице занят «Штилем») */
+
 .u-area{display:grid;grid-template-columns:56px minmax(0,1fr) 56px;gap:10px;align-items:center;margin-top:10px}
 .u-stepbtn{width:56px;height:56px;border:1px solid rgba(28,27,25,.3);border-radius:12px;background:var(--white);font-size:24px;line-height:1;cursor:pointer;
   transition:border-color .2s,background .2s,transform .15s}
@@ -240,7 +239,7 @@ button,input{font:inherit;color:inherit}
   .u-duo{grid-template-columns:1fr}
 }
 
-/* ───── этапы ───── */
+
 .u-rail{position:relative;height:6px;border-radius:99px;background:rgba(28,27,25,.1);margin-bottom:16px;overflow:hidden}
 .u-rail::before{content:"";position:absolute;inset:0;width:calc(var(--p,0) * 100%);background:var(--brick);border-radius:inherit;transition:width .15s linear}
 .u-steps{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
@@ -258,7 +257,7 @@ button,input{font:inherit;color:inherit}
 .u-stage--wide{grid-column:span 2;flex-direction:row}
 .u-stage--wide .u-stage__ph{flex:1.15;aspect-ratio:auto;min-height:100%}
 .u-stage--wide .u-stage__b{flex:1;display:flex;flex-direction:column;justify-content:center;padding:18px 20px}
-/* Правка 24.09 (21:11): светлый кадр уборки над текстом последнего этапа */
+
 .u-stage__clean{width:100%;height:auto;aspect-ratio:16/9;object-fit:cover;border-radius:10px;margin-bottom:14px;background:#E9E6E0;
   transition:transform .7s ease}
 .u-stage:hover .u-stage__clean{transform:scale(1.03)}
@@ -272,7 +271,7 @@ button,input{font:inherit;color:inherit}
   .u-stage__clean{display:none}
 }
 
-/* ───── прайс ───── */
+
 .u-filter{display:none;flex-wrap:wrap;gap:8px;margin-bottom:12px}
 .js .u-filter{display:flex}
 .u-filter button{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 16px;border:1px solid rgba(28,27,25,.22);border-radius:10px;background:var(--paper);
@@ -287,7 +286,7 @@ button,input{font:inherit;color:inherit}
 .u-ph p + p{display:none}
 .u-ph span:first-child{grid-column:2}
 .u-ph span:last-child{text-align:right}
-/* на широком экране прайс в две колонки: вдвое короче */
+
 @media (min-width:1000px){
   .u-ph{grid-template-columns:1fr 1fr}
   .u-ph p + p{display:grid;border-left:1px solid rgba(255,255,255,.14)}
@@ -320,7 +319,7 @@ button,input{font:inherit;color:inherit}
   .u-filter button{flex:none}
 }
 
-/* ───── договор ───── */
+
 .u-deal{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
 .u-par{position:relative;padding:18px 18px 18px 72px;min-height:100%;transition:transform .25s,box-shadow .25s,border-color .25s}
 .u-par:hover{transform:translateY(-3px);box-shadow:var(--lift);border-color:rgba(181,67,42,.35)}
@@ -337,7 +336,7 @@ button,input{font:inherit;color:inherit}
   .u-par__i{left:12px;top:14px}
 }
 
-/* ───── работы и отзывы ───── */
+
 .u-works{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
 .u-job{display:flex;flex-direction:column;overflow:hidden;transition:transform .3s,box-shadow .3s}
 .u-job:hover{transform:translateY(-4px);box-shadow:var(--lift)}
@@ -362,7 +361,7 @@ button,input{font:inherit;color:inherit}
   .u-job{flex:0 0 min(360px,82%);scroll-snap-align:start}
 }
 
-/* ───── замер ───── */
+
 .u-book{display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);overflow:hidden}
 .u-book__side{padding:clamp(22px,3vw,36px);background:var(--ink);color:#F1EDE7}
 .u-book__side h2{font-weight:800;font-size:clamp(28px,3.4vw,44px);line-height:1.04;letter-spacing:-.03em}
@@ -392,7 +391,7 @@ button,input{font:inherit;color:inherit}
 @media (max-width:900px){.u-book{grid-template-columns:1fr}}
 @media (max-width:560px){.u-form{grid-template-columns:1fr}.u-info{gap:8px}.u-info div{padding:10px 12px}}
 
-/* ───── подвал ───── */
+
 .u-foot{margin-top:clamp(44px,5.5vw,76px);border-top:1px solid var(--line);background:var(--paper)}
 .u-foot__in{max-width:1320px;margin:0 auto;padding:26px var(--gut);display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px 32px;font-size:14.5px;color:var(--dust)}
 .u-foot__in a{text-decoration:none}
@@ -417,7 +416,7 @@ button,input{font:inherit;color:inherit}
 </header>
 
 <main id="main">
-  <!-- ═════════ первый экран ═════════ -->
+  
   <section class="u-hero" aria-labelledby="h1">
     <div>
       <p class="u-pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l9-7 9 7v9H3z"/><path d="M9 20v-6h6v6"/></svg>Ремонт квартир в Батуми и Кобулети</p>
@@ -450,7 +449,6 @@ button,input{font:inherit;color:inherit}
     </figure>
   </section>
 
-  <!-- ═════════ прикидка ═════════ -->
   <section class="u-sec" id="prikidka" aria-labelledby="h-calc">
     <div class="u-head u-rv">
       <h2 id="h-calc">Прикидка сметы</h2>
@@ -509,7 +507,6 @@ button,input{font:inherit;color:inherit}
     </div>
   </section>
 
-  <!-- ═════════ этапы ═════════ -->
   <section class="u-sec" id="etapy" aria-labelledby="h-st">
     <div class="u-head u-rv">
       <h2 id="h-st">Этапы и сроки</h2>
@@ -533,7 +530,6 @@ button,input{font:inherit;color:inherit}
     </ol>
   </section>
 
-  <!-- ═════════ прайс ═════════ -->
   <section class="u-sec" id="prais" aria-labelledby="h-pr">
     <div class="u-head u-rv">
       <h2 id="h-pr">Прайс по работам</h2>
@@ -568,7 +564,6 @@ button,input{font:inherit;color:inherit}
     </div>
   </section>
 
-  <!-- ═════════ договор ═════════ -->
   <section class="u-sec" id="dogovor" aria-labelledby="h-d">
     <div class="u-head u-rv"><h2 id="h-d">Что в договоре</h2></div>
     <ul class="u-deal">
@@ -581,7 +576,6 @@ button,input{font:inherit;color:inherit}
     </ul>
   </section>
 
-  <!-- ═════════ работы и отзывы ═════════ -->
   <section class="u-sec" id="raboty" aria-labelledby="h-w">
     <div class="u-head u-rv"><h2 id="h-w">Работы и отзывы</h2><p>Сумма из сметы и последний платёж — рядом, на каждой работе.</p></div>
     <div class="u-works">
@@ -615,7 +609,6 @@ button,input{font:inherit;color:inherit}
     </div>
   </section>
 
-  <!-- ═════════ замер ═════════ -->
   <section class="u-sec" id="zamer" aria-labelledby="h-z">
     <div class="u-book u-card u-rv">
       <div class="u-book__side">
@@ -660,7 +653,7 @@ button,input{font:inherit;color:inherit}
   'use strict';
   var reduce = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
 
-  /* ---- прикидка: вилка, срок, этапы ---- */
+
   var TYPE = {
     cos: { name: 'косметический', min: 90, max: 130, bath: [900, 1400], speed: 22,
       stages: [['Подготовка и защита', .08], ['Выравнивание стен и потолка', .30],
@@ -676,7 +669,7 @@ button,input{font:inherit;color:inherit}
                ['Материалы: плитка, двери, сантехника', .22], ['Полы, двери, плинтус', .12],
                ['Малярка и обои', .09], ['Уборка и сдача', .03]] }
   };
-  var DEMO = [25, 35];   // демонтаж и вывоз на вторичке, лари за м²
+  var DEMO = [25, 35];   
 
   var area = document.getElementById('area');
   var sum = document.getElementById('sum');
@@ -711,14 +704,14 @@ button,input{font:inherit;color:inherit}
     }
     shown = [lo, hi];
     requestAnimationFrame(step);
-    // страховка: итог ставим таймером и гасим опоздавшие кадры, чтобы они не перетёрли число
+
     setTimeout(function () { if (id === anim) { anim++; put(lo, hi); } }, 700);
   }
 
   function calc(soft) {
     var a = clampArea(area.value), key = val('type'), t = TYPE[key] || TYPE.cap, baths = +val('bath') || 1;
     var old = val('house') === 'old';
-    if (!soft) area.value = a;   // пока человек печатает, число в поле не трогаем
+    if (!soft) area.value = a;   
     var lo = round50(a * t.min + t.bath[0] * baths + (old ? a * DEMO[0] : 0));
     var hi = round50(a * t.max + t.bath[1] * baths + (old ? a * DEMO[1] : 0));
     showSum(lo, hi);
@@ -765,7 +758,7 @@ button,input{font:inherit;color:inherit}
   });
   calc();
 
-  /* ---- прайс: разделы ---- */
+
   var fbtn = [].slice.call(document.querySelectorAll('.u-filter button'));
   var prow = [].slice.call(document.querySelectorAll('#plist .u-row'));
   fbtn.forEach(function (b) {
@@ -781,7 +774,7 @@ button,input{font:inherit;color:inherit}
     });
   });
 
-  /* ---- лента этапов: заполняется по мере прокрутки ---- */
+
   var rail = document.getElementById('rail'), steps = document.querySelector('.u-steps'), ticking = false;
   function railUpdate() {
     ticking = false;
@@ -794,7 +787,7 @@ button,input{font:inherit;color:inherit}
     railUpdate();
   }
 
-  /* ---- появление карточек ---- */
+
   var revs = [].slice.call(document.querySelectorAll('.u-rv'));
   function show(el) { el.classList.add('is-in'); }
   if (reduce || !('IntersectionObserver' in window)) {
@@ -809,7 +802,7 @@ button,input{font:inherit;color:inherit}
     }, 1500);
   }
 
-  /* ---- форма ---- */
+
   var form = document.getElementById('form');
   var agree = document.getElementById('f-agree');
   var send = document.getElementById('send');

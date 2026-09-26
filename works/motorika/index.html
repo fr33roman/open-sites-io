@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>MOTORIKA — автосервис в Москве | диагностика, ТО, ремонт без сюрпризов</title>
 <meta name="description" content="Автосервис MOTORIKA: диагностика, ТО и ремонт. Цену называем до работ и фиксируем в заказ-наряде. Гарантия на работы 12 месяцев.">
-<!-- Демонстрационная работа студии open-sites.io. Бизнес вымышленный. Стиль Kit №10 «Энергичный тёмный» (адаптация под авто, акцент #F26A2E). -->
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -42,10 +42,10 @@
   }
   .btn--pulse{animation:ctaPulse 2.6s ease-in-out infinite}
 
-  /* Hazard-разделители секций */
+  
   .hazard{height:5px;background:repeating-linear-gradient(45deg,rgba(242,106,46,.55) 0 10px,transparent 10px 20px)}
 
-  /* Шапка */
+  
   header{position:sticky;top:0;z-index:50;background:rgba(14,20,32,.88);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid transparent;transition:border-color .3s}
   header.scrolled{border-bottom-color:var(--line)}
   .nav{display:flex;align-items:center;justify-content:space-between;height:70px}
@@ -56,7 +56,7 @@
   .nav-links a{font-size:.92rem;color:var(--muted);font-weight:600;transition:color .2s}
   .nav-links a:hover{color:var(--orange)}
   .nav-cta{display:none}
-  /* Бургер-«решётка»: 4 квадрата, при открытии разворачивается ромбом */
+  
   .burger{display:grid;grid-template-columns:repeat(2,9px);grid-template-rows:repeat(2,9px);gap:4px;
     background:none;border:0;cursor:pointer;padding:9px;transition:transform .32s cubic-bezier(.2,.8,.25,1)}
   .burger span{display:block;width:9px;height:9px;background:var(--txt);transition:background .25s,opacity .25s,transform .32s}
@@ -64,7 +64,7 @@
   .burger.open span{background:var(--orange)}
   .burger.open span:nth-child(1),.burger.open span:nth-child(4){opacity:.22;transform:scale(.6)}
 
-  /* Меню: техпанель со скошенным углом, hazard-разделители, моно-нумерация */
+  
   .mmenu{display:grid;grid-template-rows:0fr;overflow:hidden;background:var(--bg-2);border-bottom:1px solid var(--line);
     visibility:hidden;transition:grid-template-rows .35s,visibility 0s .35s}
   .mmenu.open{grid-template-rows:1fr;visibility:visible;transition:grid-template-rows .35s,visibility 0s}
@@ -79,7 +79,7 @@
   .msep{height:4px;background:repeating-linear-gradient(45deg,rgba(242,106,46,.42) 0 8px,transparent 8px 16px)}
   .mpanel .btn{margin-top:18px;width:100%}
 
-  /* Hero: асимметрия, контурная надпись, линии скорости */
+  
   .hero{position:relative;padding:64px 0 78px;overflow:hidden}
   .hero::before{content:"";position:absolute;inset:0;background:
     radial-gradient(720px 420px at 85% 15%, rgba(242,106,46,.12), transparent 60%)}
@@ -105,7 +105,7 @@
   .hl:nth-child(3){animation:flyIn .45s cubic-bezier(.15,.85,.35,1) .28s both}
   .hero .lead{margin:20px 0 4px;color:var(--muted);font-size:1.06rem;max-width:40ch;animation:flyIn .4s cubic-bezier(.15,.85,.35,1) .4s both}
   .hero-cta{display:flex;flex-wrap:wrap;gap:14px;margin-top:28px;animation:flyIn .4s cubic-bezier(.15,.85,.35,1) .48s both}
-  /* Правка 22.09: на телефоне кадр заметно меньше — он там спорил с заголовком. */
+  
   .hero-photo{position:relative;width:74%;max-width:520px;margin-inline:auto;
     animation:flyInR .45s cubic-bezier(.15,.85,.35,1) .3s both}
   @media (min-width:760px){.hero-photo{width:100%;margin-inline:0}}
@@ -119,12 +119,12 @@
   .sec-head h2{font-size:clamp(1.8rem,4.6vw,2.7rem);margin-top:10px}
   .sec-head p{color:var(--muted);margin-top:12px}
 
-  /* Услуги: скошенный угол, тех-код, скан-полоса */
+  
   .srv-grid{display:grid;gap:20px;grid-template-columns:1fr}
   .srv{background:var(--panel);border:1px solid var(--line);overflow:hidden;display:flex;flex-direction:column;
     clip-path:polygon(0 0,calc(100% - 26px) 0,100% 26px,100% 100%,0 100%);
     transition:transform .35s ease-out,border-color .35s ease-out}
-  /* .srv.reveal.in — чтобы правило reveal (transform:none) не съело ховер-подъём */
+  
   .srv:hover,.srv.reveal.in:hover{transform:translateY(-5px);border-color:var(--orange)}
   .srv-media{position:relative;overflow:hidden}
   .srv-media img{width:100%;aspect-ratio:16/10;object-fit:cover;background:#1f2940}
@@ -141,7 +141,7 @@
   .srv-price{font-family:"Oswald",sans-serif;font-weight:600;font-size:1.3rem;color:var(--orange);white-space:nowrap}
   .srv .btn{padding:10px 16px;font-size:.76rem}
 
-  /* Цифры: строка-«приборка» со счётчиками */
+  
   .nums{display:grid;gap:34px 26px;grid-template-columns:1fr}
   .num{position:relative;padding-top:18px;border-top:2px solid var(--line)}
   .num::before{content:"";position:absolute;top:-2px;left:0;width:54px;height:2px;background:var(--orange)}
@@ -149,7 +149,7 @@
   .num b .cnt{color:var(--orange);font-variant-numeric:tabular-nums;font-size:inherit;display:inline}
   .num > span{color:var(--muted);font-size:.95rem;margin-top:8px;display:block}
 
-  /* Этапы: таймлайн с заливкой по скроллу */
+  
   .tl{position:relative;counter-reset:tstep;margin-top:6px}
   .tl-track{position:absolute;left:9px;top:0;bottom:0;width:2px;background:var(--line)}
   .tl-fill{width:100%;height:0;background:var(--orange);box-shadow:0 0 10px rgba(242,106,46,.5);transition:width .12s linear,height .12s linear}
@@ -165,13 +165,11 @@
   .tl-step h3{font-size:1.02rem;margin-bottom:6px}
   .tl-step p{color:var(--muted);font-size:.9rem}
 
-  /* Отзывы = строки закрытых заказ-нарядов */
+  
   .rev-note{display:inline-block;font-family:var(--mono);font-size:.7rem;color:var(--muted);letter-spacing:.14em;
     text-transform:uppercase;margin-bottom:24px;border:1px dashed rgba(255,255,255,.18);padding:5px 10px}
-  /* Правка 22.09: отзывы едут по два и смахиваются в сторону.
-     Всего десять нарядов; на телефоне видно по одному. */
-  /* Лента прокручивается с прилипанием: пальцем смахивается сама,
-     стрелки листают по странице. Полосу прокрутки прячем. */
+  
+  
   .wo-view{max-width:940px;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;
     scrollbar-width:none;-ms-overflow-style:none;overscroll-behavior-x:contain}
   .wo-view::-webkit-scrollbar{display:none}
@@ -196,14 +194,14 @@
   .wo-quote{font-size:1.02rem;margin-top:14px;padding-left:14px;border-left:2px solid var(--orange)}
   .wo-author{display:block;margin-top:9px;font-family:var(--mono);font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
 
-  /* CTA + форма */
+  
   .cta-card{background:var(--panel);border:1px solid var(--line);padding:clamp(28px,5vw,50px);position:relative;overflow:hidden;
     clip-path:polygon(0 0,calc(100% - 30px) 0,100% 30px,100% 100%,0 100%)}
   .cta-card::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--orange),transparent 70%)}
   .cta-grid{display:grid;gap:32px}
   .cta-side h2{font-size:clamp(1.6rem,4vw,2.3rem);margin-top:10px}
   .cta-side p{color:var(--muted);margin-top:12px}
-  /* Форма-«заказ-наряд»: таблица со скошенным углом */
+  
   .wo-form{background:var(--bg);border:1px solid var(--line);
     clip-path:polygon(0 0,calc(100% - 20px) 0,100% 20px,100% 100%,0 100%)}
   .wo-head{display:flex;flex-wrap:wrap;gap:4px 14px;align-items:baseline;padding:12px 16px;
@@ -238,27 +236,27 @@
   .demo-note p{color:var(--muted);margin-bottom:18px}
   @keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
 
-  /* Подвал */
+  
   footer{background:#0a0f18;padding:50px 0 26px}
   .foot-grid{display:grid;gap:26px;grid-template-columns:1fr}
   .foot-col h4{font-family:"Oswald",sans-serif;font-size:.76rem;letter-spacing:.26em;text-transform:uppercase;color:#8d99ad;margin-bottom:12px}
   .foot-col span,.foot-col a{display:block;color:var(--muted);font-size:.93rem;padding:4px 0}
   .foot-col a:hover{color:var(--orange)}
-  /* Соц-иконки: скошенные шестиугольные жетоны, не круги и не квадраты */
+  
   .socials{display:flex;gap:9px;margin-top:16px}
   .socials a{display:inline-flex;align-items:center;justify-content:center;width:42px;height:38px;border-radius:0;
     background:var(--panel);border:0;font-family:var(--mono);font-size:.68rem;font-weight:600;letter-spacing:.08em;
     color:var(--muted);padding:0;clip-path:polygon(22% 0,78% 0,100% 50%,78% 100%,22% 100%,0 50%);
     transition:background .25s,color .25s}
   .socials a:hover,.socials a:focus-visible{color:#0e1420;background:var(--orange)}
-  /* Схема проезда — рисуем сами, без внешних карт */
+  
   .map{margin-top:4px}
   .map svg{width:100%;height:auto;max-width:340px;display:block;background:#0e1420;border:1px solid var(--line)}
   .map figcaption{font-family:var(--mono);font-size:.66rem;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);margin-top:9px;max-width:340px}
   .demo-plate{border-top:1px solid var(--line);margin-top:32px;padding-top:20px;text-align:center;color:var(--muted);font-size:.82rem}
   .demo-plate a{text-decoration:underline;color:var(--orange)}
 
-  /* Reveal: механический подъём снизу; панели «вырезаются» вместе со скошенным углом */
+  
   .reveal{opacity:0;transform:translateY(30px);
     transition:opacity .5s ease-out,transform .55s cubic-bezier(.16,.86,.28,1),clip-path .6s cubic-bezier(.16,.86,.28,1)}
   .reveal.in{opacity:1;transform:none}
@@ -279,7 +277,7 @@
   }
   @media(min-width:900px){
     .nav-links{display:flex}.nav-cta{display:inline-flex}.burger{display:none}
-    /* на десктопе меню полностью выключено — не должно попадать в порядок табуляции */
+    
     .mmenu{display:none}
     .hero{padding:88px 0 96px}
     .hero-grid{grid-template-columns:1.15fr .85fr;gap:58px;align-items:center}
@@ -657,22 +655,22 @@
         <figure class="map">
           <svg viewBox="0 0 320 180" role="img" aria-label="Схема проезда: съезд с Заводского шоссе на Промышленную улицу, сервис MOTORIKA — второй въезд после АЗС.">
             <rect x="0" y="0" width="320" height="180" fill="#0e1420"/>
-            <!-- шоссе -->
+            
             <path d="M0 46 H320" stroke="#2b3446" stroke-width="16"/>
             <path d="M0 46 H320" stroke="#5c6778" stroke-width="1.5" stroke-dasharray="12 10"/>
-            <!-- улица -->
+            
             <path d="M196 46 V180" stroke="#2b3446" stroke-width="13"/>
             <path d="M196 60 V180" stroke="#5c6778" stroke-width="1.5" stroke-dasharray="10 9"/>
-            <!-- второстепенная -->
+            
             <path d="M64 46 V128 H196" stroke="#212a3c" stroke-width="9"/>
-            <!-- квартал/АЗС -->
+            
             <rect x="120" y="72" width="52" height="34" fill="#1a2334" stroke="#2b3446"/>
             <text x="146" y="93" fill="#94a0b4" font-size="9" font-family="monospace" text-anchor="middle">АЗС</text>
-            <!-- участок сервиса -->
+            
             <rect x="216" y="96" width="74" height="46" fill="#1a2334" stroke="#f26a2e" stroke-width="1.5"/>
             <path d="M216 96 h14 l-14 14 z" fill="#f26a2e"/>
             <text x="253" y="124" fill="#f2f4f8" font-size="11" font-family="monospace" text-anchor="middle">MOTORIKA</text>
-            <!-- маршрут -->
+            
             <path d="M12 46 H196 V119 H216" stroke="#f26a2e" stroke-width="2.5" fill="none" stroke-dasharray="6 5"/>
             <circle cx="12" cy="46" r="4" fill="#f26a2e"/>
             <text x="14" y="34" fill="#94a0b4" font-size="9" font-family="monospace">шоссе</text>
@@ -695,7 +693,7 @@
   window.addEventListener('scroll',onScroll,{passive:true});onScroll();
 
   var burger=document.getElementById('burger'),menu=document.getElementById('mmenu');
-  /* Закрытое меню убираем из порядка табуляции: visibility:hidden в CSS + inert */
+
   var setMenu=function(open){
     menu.classList.toggle('open',open);
     burger.classList.toggle('open',open);
@@ -709,26 +707,24 @@
   });
 
   var consent=document.getElementById('f-consent'),btn=document.getElementById('submitBtn');
-  /* Состояние кнопки синхронизируем не только по change: браузер восстанавливает
-     отмеченный чекбокс при перезагрузке и возврате «назад» — иначе кнопка залипнет. */
+
   var syncConsent=function(){btn.disabled=!consent.checked};
   consent.addEventListener('change',syncConsent);
   window.addEventListener('pageshow',syncConsent);
   syncConsent();
-  /* Ссылка-заглушка «политика» лежит внутри <label>: без этого клик по ней
-     переключал бы чекбокс согласия и прыгал в начало страницы. */
+
   var pol=document.querySelector('.consent a');
   if(pol)pol.addEventListener('click',function(e){e.preventDefault();e.stopPropagation()});
   document.getElementById('leadForm').addEventListener('submit',function(e){
     e.preventDefault();
     var name=document.getElementById('f-name'),phone=document.getElementById('f-phone');
     if(!name.value.trim()||!phone.value.trim()){(name.value.trim()?phone:name).focus();return}
-    // Демо: заявка никуда не отправляется.
+
     this.style.display='none';
     document.getElementById('demoNote').classList.add('show');
   });
 
-  /* Reveal со скосом */
+
   var items=document.querySelectorAll('.reveal');
   if(reduce||!('IntersectionObserver' in window)){items.forEach(function(el){el.classList.add('in')})}
   else{
@@ -736,11 +732,7 @@
       if(en.isIntersecting){en.target.classList.add('in');io.unobserve(en.target)}
     })},{threshold:.12,rootMargin:'0px 0px -40px 0px'});
     items.forEach(function(el){io.observe(el)});
-    /* Страховка на случай, когда observer есть, но не обновляется (встречается во
-       встроенных браузерах мессенджеров) — иначе контент остался бы скрытым навсегда.
-       Показываем только то, что уже попало в кадр, но не раскрылось: блоки ниже сгиба
-       сохраняют свою анимацию появления.
-       В фоновой вкладке ничего не трогаем — там анимации приостановлены штатно. */
+
     var rescue=function(){
       if(document.hidden)return;
       for(var i=0;i<items.length;i++){
@@ -761,7 +753,7 @@
     });
   }
 
-  /* Счётчики: набегание цифр (однократно) */
+
   var fmtN=function(n){return String(n).replace(/\B(?=(\d{3})+(?!\d))/g,' ')};
   var cnts=[].slice.call(document.querySelectorAll('.cnt'));
   var runCnt=function(el){
@@ -782,9 +774,7 @@
       if(en.isIntersecting){runCnt(en.target);cio.unobserve(en.target)}
     })},{threshold:.4});
     cnts.forEach(function(el){el.textContent='0';cio.observe(el)});
-    /* Страховка: если observer не сработал, цифры навсегда остались бы нулями
-       («0 лет опыта») — это ложь о бизнесе. Возвращаем настоящие значения.
-       В фоновой вкладке ждём — там счётчики приостановлены штатно. */
+
     var cntSafety=function(){
       if(document.hidden)return;
       cnts.forEach(function(el){
@@ -797,7 +787,7 @@
     });
   }
 
-  /* Таймлайн: заливка линии по прогрессу скролла */
+
   var tlEl=document.getElementById('tl');
   if(tlEl){
     var tlFill=document.getElementById('tlFill');
@@ -836,8 +826,7 @@
 <script>
 (function () {
   'use strict';
-  /* Правка 22.09: отзывы листаются по два (на телефоне по одному).
-     Сами едут раз в 5 с, останавливаются под курсором и при уходе со вкладки. */
+
   var list = document.getElementById('woList');
   var prev = document.getElementById('woPrev');
   var next = document.getElementById('woNext');
@@ -850,8 +839,7 @@
   var slow = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var pad = function (n) { return (n < 10 ? '0' : '') + n; };
 
-  /* Ширину берём у самой карточки: clientWidth контейнера в скрытой вкладке
-     иногда равен нулю, и тогда пролистывание молча ломалось. */
+
   function step() {
     var w = items[0] ? items[0].getBoundingClientRect().width : 0;
     var perPage = window.matchMedia('(min-width:760px)').matches ? 2 : 1;

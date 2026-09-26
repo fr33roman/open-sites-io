@@ -26,7 +26,7 @@
 <link rel="preconnect" href="https://images.unsplash.com">
 <link rel="preconnect" href="https://images.pexels.com">
 <link href="https://fonts.googleapis.com/css2?family=Finlandica+Text:wght@400..600&amp;family=Sofia+Sans+Extra+Condensed:wght@500..800&amp;display=swap" rel="stylesheet">
-<!-- Грузинский: два слова, ღია («открыто») и ლოცმანი («лоцман»), поэтому шрифт урезан параметром text -->
+
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Georgian:wght@500&amp;text=%E1%83%A6%E1%83%98%E1%83%90%E1%83%9A%E1%83%9D%E1%83%AA%E1%83%9B%E1%83%9C&amp;display=swap" rel="stylesheet">
 <link rel="preload" as="image" media="(min-width: 1024px)" fetchpriority="high"
       imagesrcset="https://images.unsplash.com/photo-1741211699653-5e90542f9cda?rect=0,0,3450,2040&amp;auto=format&amp;q=72&amp;w=1200 1200w, https://images.unsplash.com/photo-1741211699653-5e90542f9cda?rect=0,0,3450,2040&amp;auto=format&amp;q=70&amp;w=1800 1800w, https://images.unsplash.com/photo-1741211699653-5e90542f9cda?rect=0,0,3450,2040&amp;auto=format&amp;q=65&amp;w=2400 2400w"
@@ -36,14 +36,14 @@
       imagesizes="(max-width: 600px) 118vw, 47vw">
 <style>
 :root{
-  --hull:#16233A;      /* корпус судна: фон тёмных секций, текст на бумаге */
-  --flap:#1D2C44;      /* пластина табло, нижняя половина */
-  --flap-top:#23344F;  /* верхняя половина пластины */
-  --housing:#0B1322;   /* корпус табло, подвал */
-  --paper:#E4E4DE;     /* бумага накладной: светлые секции, буквы табло */
-  --steel:#8E9AA6;     /* второстепенный текст на тёмном */
-  --graphite:#434D5E;  /* второстепенный текст на бумаге */
-  --surik:#A8391F;     /* сурик: только заливка секции записи */
+  --hull:#16233A;      
+  --flap:#1D2C44;      
+  --flap-top:#23344F;  
+  --housing:#0B1322;   
+  --paper:#E4E4DE;     
+  --steel:#8E9AA6;     
+  --graphite:#434D5E;  
+  --surik:#A8391F;     
   --rule-d:rgba(228,228,222,.16);
   --rule-l:rgba(22,35,58,.2);
   --gut:clamp(16px,3.9vw,56px);
@@ -65,7 +65,7 @@ p{margin:0}
 .skip{position:absolute;left:16px;top:-80px;z-index:50;background:var(--paper);color:var(--hull);padding:12px 16px;text-decoration:none;font-weight:600}
 .skip:focus{top:12px}
 
-/* ---------- шапка ---------- */
+
 .top{position:absolute;inset:0 0 auto 0;z-index:20;display:flex;align-items:center;gap:36px;height:84px;padding:0 var(--gut)}
 .brand{font:800 34px/1 var(--f-disp);letter-spacing:.01em;text-decoration:none;color:var(--paper);padding:7px 0}
 .nav{display:flex;gap:28px}
@@ -84,9 +84,9 @@ p{margin:0}
 .btn[disabled]{cursor:not-allowed}
 .b-submit[disabled],.b-submit[disabled]:hover{background:transparent;border-color:rgba(228,228,222,.6);color:var(--paper)}
 
-/* ---------- первый экран ---------- */
+
 .hero{position:relative;min-height:860px;min-height:clamp(860px,100svh,1000px);padding:108px var(--gut) 44px;overflow:hidden;isolation:isolate}
-/* кадр 21 обрезан по rect: снизу срезано всё ниже 62,5% высоты (татуировка на шее за краем) */
+
 .hero-photo{position:absolute;top:84px;right:0;width:70vw;aspect-ratio:3450/2040;z-index:-1}
 .hero-photo img{width:100%;height:100%;object-fit:cover}
 .duo{overflow:hidden;isolation:isolate;background:var(--hull)}
@@ -105,7 +105,7 @@ h1 .ln{display:block;white-space:nowrap}
 .clock .colon{display:inline-block;width:.24em;text-align:center;line-height:var(--ch)}
 .lead{max-width:34em;margin:22px 0 0;font-size:19px;line-height:1.5}
 
-/* ---------- ячейки табло (split-flap) ---------- */
+
 .cells{gap:var(--gap)}
 .cell{position:relative;display:inline-block;flex:none;width:var(--cw);height:var(--ch);perspective:calc(var(--ch)*5);
   font:600 calc(var(--ch)*.8)/1 var(--f-disp);color:var(--paper);text-transform:uppercase}
@@ -118,14 +118,14 @@ h1 .ln{display:block;white-space:nowrap}
 .cell .t i,.cell .ft i{top:0}
 .cell .b i,.cell .fb i{bottom:0}
 .cell::after{content:"";position:absolute;left:0;right:0;top:calc(50% - 1px);height:2px;background:var(--housing);z-index:4}
-/* текст табло прячется только под html.js и только когда ячейки построены */
+
 .f .cells,.clock .cells{display:none}
 html.js .f.has-cells .cells{display:flex}
 html.js .f.has-cells .txt{display:none}
 html.js .clock.has-cells .cells{display:inline-flex;vertical-align:-.13em}
 html.js .clock.has-cells .txt{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 
-/* ---------- табло услуг ---------- */
+
 .board{margin-top:30px}
 .board-in{background:var(--housing);padding:12px 18px 16px 34px;border-radius:4px}
 .board-cols,.row-btn{display:grid;grid-template-columns:calc(16*var(--cw) + 15*var(--gap)) calc(3*var(--cw) + 2*var(--gap)) calc(3*var(--cw) + 2*var(--gap));
@@ -153,7 +153,7 @@ html.js .clock.has-cells .txt{position:absolute;width:1px;height:1px;overflow:hi
 .hint-m{display:none}
 html:not(.js) .level,html:not(.js) .hint{display:none}
 
-/* ---------- общие секции ---------- */
+
 .sec{padding:128px var(--gut) 120px}
 .paper{background:var(--paper);color:var(--hull)}
 .g12{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:24px}
@@ -161,7 +161,7 @@ h2{font:700 clamp(44px,5.4vw,84px)/.92 var(--f-disp);margin:0;letter-spacing:-.0
 h2 .ln{display:block}
 .stock{font-size:14px;line-height:1.45}
 
-/* ---------- прайс ---------- */
+
 .price-side{grid-column:1/5;align-self:start;position:sticky;top:96px;padding-right:24px}
 .price-side p{color:var(--graphite);margin-top:18px;max-width:22em}
 .price-side p:first-of-type{margin-top:28px}
@@ -183,7 +183,7 @@ h2 .ln{display:block}
 .price-foot{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:20px 40px;margin-top:32px}
 .price-foot p{max-width:36em;color:var(--graphite);font-size:16px}
 
-/* ---------- визит ---------- */
+
 .visit-head{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:24px;align-items:end}
 .visit h2{grid-column:1/8}
 .visit-head p{grid-column:8/13;color:var(--steel);max-width:30em;margin-bottom:6px}
@@ -202,8 +202,7 @@ h2 .ln{display:block}
 .axis-scale span:last-child{transform:translateX(-100%)}
 .stills{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:24px;align-items:end;margin-top:96px}
 .stills figure{margin:0}
-/* после того как убрали подпись про фотобанк, пара кадров разъехалась по левому краю —
-   раздвигаем её шире, иначе справа остаётся пустая треть экрана */
+
 .st-a{grid-column:1/7}
 .st-b{grid-column:7/11;max-width:320px}
 .ph{position:relative}
@@ -213,7 +212,7 @@ h2 .ln{display:block}
 .stills figcaption{margin-top:12px;font-size:15px;line-height:1.4;color:var(--steel)}
 .stills figcaption b{display:block;font:600 24px/1.1 var(--f-disp);color:var(--paper);margin-bottom:2px}
 
-/* ---------- мастера ---------- */
+
 .m-head{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:24px;align-items:end}
 .m-head h2{grid-column:1/7}
 .m-head p{grid-column:7/13;color:var(--graphite);max-width:34em;margin-bottom:6px}
@@ -225,10 +224,10 @@ h2 .ln{display:block}
 .m-best{grid-column:6/11;font-size:16px;line-height:1.4}
 .m-lang{grid-column:11/13;font-size:14px;color:var(--graphite);text-align:right}
 
-/* ---------- зал ---------- */
+
 .space{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:24px;align-items:center}
 .z-photo{grid-column:1/6;position:relative;aspect-ratio:4/5;margin:0}
-/* кадр 02: окно, колонна, мастер и пар; полосатая накидка, флаконы и корпус отпаривателя за краем */
+
 .z-photo img{position:absolute;max-width:none;width:153.8%;height:auto;left:-43.1%;top:-7.35%}
 .z-text{grid-column:7/13}
 .z-lead{font-size:19px;line-height:1.5;margin-top:28px;max-width:32em}
@@ -237,7 +236,7 @@ h2 .ln{display:block}
 .z-facts dd{margin:0;color:var(--steel);font-size:16px;line-height:1.5}
 .z-text .stock{margin-top:40px;color:var(--steel)}
 
-/* ---------- запись ---------- */
+
 .book{background:var(--surik);color:var(--paper)}
 .book-in{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:24px}
 .b-side{grid-column:1/6;padding-right:24px}
@@ -272,7 +271,7 @@ h2 .ln{display:block}
 .b-done a{font-weight:600;text-underline-offset:4px;display:inline-block;padding:6px 0}
 .b-done:focus{outline:2px solid var(--paper);outline-offset:3px}
 
-/* ---------- адрес ---------- */
+
 .where{position:relative;min-height:760px;display:flex;align-items:flex-end;padding:140px var(--gut) 100px;overflow:hidden;isolation:isolate}
 .w-photo{position:absolute;inset:0;z-index:-1;margin:0}
 .w-photo img{width:100%;height:100%;object-fit:cover;object-position:50% 15%}
@@ -291,14 +290,14 @@ h2 .ln{display:block}
 .w-dl dd a{text-decoration:none;font-weight:600;display:inline-block;padding:9px 0}
 .w-btns{display:flex;flex-wrap:wrap;gap:12px;margin-top:22px}
 
-/* ---------- подвал ---------- */
+
 .foot{background:var(--housing);color:var(--paper);padding:40px var(--gut) 44px;display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:24px;row-gap:16px;align-items:baseline}
 .foot-brand{grid-column:1/3;font:800 30px/1 var(--f-disp)}
 .demo{grid-column:3/9;font-size:16px;line-height:1.5;max-width:40em}
 .credits{grid-column:9/13;font-size:14px;line-height:1.5;color:var(--steel)}
 .credits a{color:var(--paper);text-underline-offset:3px}
 
-/* ---------- панель записи ---------- */
+
 .mbar{position:fixed;left:0;right:0;top:0;z-index:30;display:flex;align-items:center;gap:28px;height:64px;padding:0 var(--gut);
   background:var(--flap);border-bottom:1px solid var(--rule-d);transition:transform .25s ease,visibility 0s linear 0s}
 .mbar.away{transform:translateY(-110%);visibility:hidden;transition:transform .25s ease,visibility 0s linear .25s}
@@ -312,7 +311,7 @@ html:not(.js) .mbar{display:none}
 @media (max-width:1279px){ .nav{display:none} }
 @media (min-width:1024px) and (max-width:1199px){ .hero-photo{width:66vw} }
 
-/* ---------- планшет 601–1023 ---------- */
+
 @media (max-width:1023px){
   .hero{min-height:0;padding-top:104px;padding-bottom:52px}
   .hero-photo{top:0;width:47%;aspect-ratio:auto;height:640px}
@@ -371,7 +370,7 @@ html:not(.js) .mbar{display:none}
   .credits{grid-column:8/13}
 }
 
-/* ---------- телефон ≤600: своя композиция ---------- */
+
 @media (max-width:600px){
   body{font-size:16px}
   .top{height:64px;gap:12px}
@@ -500,10 +499,9 @@ html:not(.js) .mbar{display:none}
 }
 @media (prefers-reduced-motion:reduce){ .mbar,.mbar.away{transition:none} }
 
-/* ═══════════ Правки 24.09 (пакет «Указки» 16:05) ═══════════ */
 
-/* 1. Прайс: вкладки по разделам, строка под мышью подсвечивается.
-   Без скрипта вкладок нет — таблица показывается целиком, как раньше. */
+
+
 .ptabs{display:none}
 .js .ptabs{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 20px}
 .ptab{font:600 15px/1.1 var(--f-text);color:var(--hull);background:transparent;cursor:pointer;
@@ -530,8 +528,7 @@ html:not(.js) .mbar{display:none}
   .plist thead th:last-child,.plist tr:not(.grp) > td:last-child{padding-right:8px}
 }
 
-/* 2. Визит: у каждого шага вся полоска визита — от 18:55 до выхода. Пройденное
-   до шага — светлее, отрезок самого шага — ярко. Наведение подсвечивает шаг. */
+
 .g-track{background-image:none}
 .g-track::before{content:"";position:absolute;left:0;right:0;top:9px;height:4px;border-radius:2px;
   background:rgba(228,228,222,.12)}
@@ -549,8 +546,7 @@ html:not(.js) .mbar{display:none}
   .gantt li:hover .g-done{background:rgba(228,228,222,.45)}
 }
 
-/* 3. Лента работ: восемь кадров вместо двух крупных. В общем дуотоне сайта,
-   при наведении кадр проявляется в цвете. */
+
 .cuts{margin-top:88px}
 .cuts-track{display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;
   scrollbar-width:none;padding-bottom:4px;outline-offset:6px}
@@ -573,8 +569,7 @@ html:not(.js) .mbar{display:none}
 }
 @media(max-width:600px){.cuts{margin-top:56px}.cut{flex-basis:62vw}.cuts-note b{font-size:26px}}
 
-/* 4. Мастера: четыре квадратные карточки с фото. Наведение — карточка приподнимается,
-   по ней проходит блик, фото проявляется в цвете. */
+
 .m-grid{list-style:none;margin:36px 0 0;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:20px}
 .mc{position:relative;display:flex;flex-direction:column;background:#ECECE6;border:1px solid var(--rule-l);
   border-radius:4px;overflow:hidden;transition:transform .35s ease,box-shadow .35s ease,border-color .35s ease}
@@ -599,7 +594,7 @@ html:not(.js) .mbar{display:none}
 @media(max-width:1023px){.m-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}}
 @media(max-width:600px){.mc-b{padding:12px 12px 14px}.mc-name{font-size:30px}.mc-best{font-size:14px}}
 
-/* 5. Зал: у каждого пункта свой значок — тонкая линия, как на табличках порта. */
+
 .z-facts > div{position:relative;padding-left:60px}
 .z-ico{position:absolute;left:0;top:-6px;width:44px;height:44px;border:1px solid var(--rule-d);border-radius:50%;
   display:grid;place-items:center;color:var(--paper)}
@@ -1039,7 +1034,7 @@ html:not(.js) .mbar{display:none}
     });
   }
 
-  /* Поле табло: набор ячеек. align: left (текст) или right (числа) */
+
   function Field(el, width, align, blank){
     this.el = el; this.width = width; this.align = align; this.value = el.getAttribute('data-v');
     this.cells = [];
@@ -1077,7 +1072,7 @@ html:not(.js) .mbar{display:none}
     return Promise.all(jobs);
   };
 
-  /* Часы в заголовке: 4 цифры и статичное двоеточие; текст остаётся для чтения экраном */
+
   function Clock(el){
     this.el = el; this.cells = []; this.txt = el.querySelector('.txt');
     var v = el.getAttribute('data-v'), box = document.createElement('span');
@@ -1098,10 +1093,10 @@ html:not(.js) .mbar{display:none}
     }
   };
 
-  /* ---------- сборка табло ---------- */
+
   var board = document.getElementById('tablo');
   var rows = [].slice.call(board.querySelectorAll('.row-btn'));
-  var armed = CAN; /* с анимацией табло стартует пустым и «прилетает» */
+  var armed = CAN;  
   var started = false;
   var fields = rows.map(function(btn){
     return {
@@ -1133,7 +1128,7 @@ html:not(.js) .mbar{display:none}
   function inView(el){ var r = el.getBoundingClientRect(); return r.top < innerHeight - 40 && r.bottom > 0; }
 
   if (armed) {
-    /* страховка: табло в кадре, а сцена так и не началась — ставим итог без анимации */
+
     setTimeout(function rescue(){
       if (started) return;
       if (document.hidden) {
@@ -1163,7 +1158,7 @@ html:not(.js) .mbar{display:none}
   }
   fields.forEach(label);
 
-  /* ---------- запись: итог выбора ---------- */
+
   var sel = document.getElementById('f-svc'), bSel = document.getElementById('bSel');
   function updateSummary(){
     var o = sel.options[sel.selectedIndex];
@@ -1173,7 +1168,7 @@ html:not(.js) .mbar{display:none}
   }
   sel.addEventListener('change', updateSummary);
 
-  /* ---------- выбор услуги на табло ---------- */
+
   var cta = document.getElementById('cta');
   var mName = document.getElementById('mbarName'), mMeta = document.getElementById('mbarMeta');
   function hhmm(total){ var h = Math.floor(total / 60), m = total % 60; return (h < 10 ? '0' : '') + h + ':' + (m < 10 ? '0' : '') + m; }
@@ -1195,7 +1190,7 @@ html:not(.js) .mbar{display:none}
   }
   rows.forEach(function(btn, i){ btn.addEventListener('click', function(){ if (!started) snap(); select(i); }); });
 
-  /* ---------- уровень мастера: переворачиваются только цены ---------- */
+
   var lvlBtns = [].slice.call(document.querySelectorAll('.level button'));
   lvlBtns.forEach(function(btn){
     btn.addEventListener('click', function(){
@@ -1214,10 +1209,10 @@ html:not(.js) .mbar{display:none}
     });
   });
 
-  /* ---------- панель записи: на телефоне внизу, на планшете и компьютере сверху после первого экрана ---------- */
+
   var mbar = document.getElementById('mbar'), hero = document.querySelector('.hero'), book = document.getElementById('zapis');
   var wide = window.matchMedia ? matchMedia('(min-width: 601px)') : {matches: true};
-  /* считаем по прямоугольникам при прокрутке: не зависит от задержек IntersectionObserver */
+
   function barState(){
     var vh = window.innerHeight || document.documentElement.clientHeight;
     var hr = hero.getBoundingClientRect(), br = book.getBoundingClientRect();
@@ -1229,7 +1224,7 @@ html:not(.js) .mbar{display:none}
   if (wide.addEventListener) wide.addEventListener('change', barState); else if (wide.addListener) wide.addListener(barState);
   barState();
 
-  /* ---------- форма ---------- */
+
   var form = document.getElementById('bookForm'), ok = document.getElementById('f-ok'),
       submit = document.getElementById('bSubmit'), hint = document.getElementById('bHint'), done = document.getElementById('bDone');
   function consent(){ submit.disabled = !ok.checked; if (hint) hint.hidden = ok.checked; }
@@ -1245,15 +1240,14 @@ html:not(.js) .mbar{display:none}
   });
   updateSummary();
   } catch (err) {
-    /* сбой скрипта: возвращаем текстовую версию табло и панели */
+
     document.documentElement.classList.remove('js');
     if (window.console) console.warn('Лоцман: скрипт остановлен, показана текстовая версия', err);
   }
 })();
 </script>
 <script>
-/* Правки 24.09: вкладки прайса и лента работ. Отдельно от основного скрипта:
-   если что-то здесь не сработает, табло и форма продолжат работать. */
+
 (function(){
   'use strict';
   var tabs = [].slice.call(document.querySelectorAll('.ptab'));
@@ -1300,8 +1294,7 @@ html:not(.js) .mbar{display:none}
   window.addEventListener('resize', sync);
   sync();
 
-  /* Тихая прокрутка: раз в 3,5 секунды на кадр вперёд, в конце — к началу.
-     Стоит, пока человек смотрит ленту, и совсем выключена, если анимации в системе отключены. */
+
   var calm = window.matchMedia('(prefers-reduced-motion: reduce)'), hold = false;
   ['mouseenter', 'focusin', 'touchstart', 'pointerdown'].forEach(function(ev){
     track.addEventListener(ev, function(){ hold = true; }, {passive: true});

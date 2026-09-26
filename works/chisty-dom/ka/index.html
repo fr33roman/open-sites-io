@@ -8,10 +8,10 @@
 <meta name="robots" content="noindex">
 <meta name="theme-color" content="#F4F5F5">
 <link rel="canonical" href="https://open-sites.io/works/chisty-dom/ka/">
-<!--hreflang--><link rel="alternate" hreflang="ru" href="https://open-sites.io/works/chisty-dom/">
+<link rel="alternate" hreflang="ru" href="https://open-sites.io/works/chisty-dom/">
 <link rel="alternate" hreflang="en" href="https://open-sites.io/works/chisty-dom/en/">
 <link rel="alternate" hreflang="ka" href="https://open-sites.io/works/chisty-dom/ka/">
-<link rel="alternate" hreflang="x-default" href="https://open-sites.io/works/chisty-dom/"><!--/hreflang-->
+<link rel="alternate" hreflang="x-default" href="https://open-sites.io/works/chisty-dom/">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="ka_GE">
 <meta property="og:site_name" content="open-sites.io">
@@ -30,15 +30,12 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Tenor+Sans&family=Onest:wght@400;500;600;700&display=swap">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+Georgian:wght@400;700&text=%E1%83%A5%E1%83%90%E1%83%A0%E1%83%97%E1%83%A3%E1%83%9A%E1%83%98&display=swap">
 <style>
-/* Чистый дом — пересборка 24.09 по заданию Романа (имя и логотип-домик — с 25.09): вместо сплошного текста — карточки и раздельные
-   блоки, больше фото и движения (образец — «Кружок», «Вера-дентал», наш сайт).
-   Лицо прежнее: белый лист без цветного акцента, цвет только в фотографиях, Tenor Sans + Onest,
-   доска окон выезда по настоящему времени. */
+
 :root{
-  --page:#F4F5F5;   /* светло-серый лист под карточками */
-  --paper:#FFFFFF;  /* карточки */
-  --ink:#101214;    /* текст, кнопки, выбранное */
-  --soft:#5F656A;   /* второстепенный текст, 5.4:1 на белом, 5.0:1 на листе */
+  --page:#F4F5F5;   
+  --paper:#FFFFFF;  
+  --ink:#101214;    
+  --soft:#5F656A;   
   --hair:#E2E4E6;
   --wash:#EEF0F1;
   --r:20px;
@@ -65,7 +62,7 @@ button,input,select{font:inherit;color:inherit}
 .n-skip{position:absolute;left:12px;top:-80px;background:var(--ink);color:#fff;padding:12px 18px;border-radius:999px;z-index:60}
 .n-skip:focus{top:12px}
 
-/* ───── кнопки ───── */
+
 .n-btn{position:relative;display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:0 24px;border:1.5px solid var(--ink);
   border-radius:999px;background:var(--ink);color:#fff;font-weight:600;font-size:15.5px;text-decoration:none;cursor:pointer;overflow:hidden;isolation:isolate;
   transition:background .2s,color .2s,transform .2s}
@@ -73,12 +70,12 @@ button,input,select{font:inherit;color:inherit}
 .n-btn--line{background:transparent;color:var(--ink)}
 .n-btn--line:hover{background:var(--paper)}
 .n-btn:disabled,.n-btn:disabled:hover{background:var(--wash);border-color:var(--hair);color:#50565B;cursor:not-allowed;transform:none}
-/* «скребок»: светлая полоса проходит по кнопке, как по стеклу */
+
 .n-btn--wipe::after{content:"";position:absolute;z-index:-1;top:-30%;bottom:-30%;left:-40%;width:22%;background:rgba(255,255,255,.42);transform:skewX(-20deg);opacity:0}
 @media (prefers-reduced-motion:no-preference){.n-btn--wipe::after{animation:nWipe 5s ease-in-out 1.8s infinite}}
 @keyframes nWipe{0%{left:-40%;opacity:0}6%{opacity:1}26%{left:120%;opacity:1}27%,100%{left:120%;opacity:0}}
 
-/* ───── шапка ───── */
+
 .n-top{position:sticky;top:0;z-index:50;display:flex;align-items:center;gap:22px;padding:10px var(--gut);
   background:rgba(244,245,245,.9);border-bottom:1px solid var(--hair);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
 .n-logo{display:inline-flex;align-items:center;gap:10px;min-height:44px;text-decoration:none}
@@ -91,8 +88,7 @@ button,input,select{font:inherit;color:inherit}
 .n-nav a:hover{color:var(--ink)}
 .n-top .n-btn{margin-left:auto;min-height:44px;padding:0 20px;font-size:15px}
 @media (min-width:1000px){.n-nav{display:flex}.n-top .n-btn{margin-left:0}}
-/* 25.09: «Чистый дом» длиннее «Начисто» — шапка не теснится: пункты и кнопка не переносятся и не сжимаются,
-   грузинскому меню нужна ширина от 1120 px, на узком телефоне знак мельче */
+
 .n-nav a,.n-top .n-btn{white-space:nowrap}
 .n-top .n-btn{flex:none}
 .n-logo{min-width:0}
@@ -101,7 +97,7 @@ html[lang="ka"] .n-logo b{letter-spacing:.03em}
 @media (max-width:380px){.n-logo{gap:8px}.n-logo b{font-size:14px;letter-spacing:.04em}}
 @media (max-width:420px){html[lang="ka"] .n-logo b{font-size:13px;letter-spacing:0}}
 
-/* ───── общее ───── */
+
 .n-sec{max-width:1280px;margin:0 auto;padding:clamp(44px,5.5vw,76px) var(--gut) 0}
 .n-head{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:8px 40px;margin-bottom:22px}
 .n-head h2{font-family:var(--disp);font-weight:400;font-size:clamp(30px,3.6vw,48px);line-height:1.08;letter-spacing:-.01em}
@@ -111,7 +107,7 @@ html[lang="ka"] .n-logo b{letter-spacing:.03em}
 .js .n-in.is-on{opacity:1;transform:none}
 @media (prefers-reduced-motion:reduce){.js .n-in{opacity:1;transform:none;transition:none}}
 
-/* ───── первый экран: доска окон + фото ───── */
+
 .n-hero{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:clamp(20px,3vw,40px);align-items:stretch;
   max-width:1280px;margin:0 auto;padding:clamp(22px,3vw,44px) var(--gut) 0}
 .n-pill{display:inline-flex;align-items:center;gap:8px;padding:7px 14px;border-radius:999px;background:var(--paper);border:1px solid var(--hair);font-size:13.5px;font-weight:500}
@@ -150,7 +146,7 @@ html[lang="ka"] .n-logo b{letter-spacing:.03em}
 .n-nojs{margin-top:12px;font-size:15px;color:var(--soft)}
 .n-hero__ph{position:relative;min-height:520px;border-radius:24px;overflow:hidden;background:#DDE0E2}
 .n-hero__ph img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-/* фото «протирается» слева направо при открытии страницы */
+
 @media (prefers-reduced-motion:no-preference){
   .n-hero__ph img{animation:nReveal 1.3s cubic-bezier(.6,0,.2,1) .2s both}
   .n-hero__ph::before{content:"";position:absolute;z-index:1;top:0;bottom:0;width:18%;left:-20%;
@@ -172,7 +168,7 @@ html[lang="ka"] .n-logo b{letter-spacing:.03em}
 @media (max-width:900px){.n-hero{grid-template-columns:1fr}.n-hero__ph{min-height:0;aspect-ratio:4/3;order:-1}}
 @media (max-width:460px){.n-days{grid-template-columns:1fr}.n-board{padding:14px}}
 
-/* ───── цены: виды уборки плитками + таблица по метражу ───── */
+
 .n-types{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
 .n-type{display:flex;flex-direction:column;overflow:hidden;padding:0;text-align:left;cursor:pointer;transition:transform .3s,box-shadow .3s,border-color .3s}
 .n-type__ph{position:relative;aspect-ratio:16/9;overflow:hidden;background:#DDE0E2}
@@ -210,13 +206,13 @@ html[lang="ka"] .n-logo b{letter-spacing:.03em}
   .n-types::-webkit-scrollbar{display:none}
   .n-type{flex:0 0 72%;scroll-snap-align:start}
   .n-type__b{flex-direction:column;align-items:flex-start;gap:6px}
-  /* на телефоне в таблице одна колонка — выбранный вид уборки */
+  
   .js .n-table [data-col]:not(.is-col){display:none}
   .n-table th,.n-table td{padding:12px 14px}
   .n-extras{grid-template-columns:1fr 1fr;gap:8px}
 }
 
-/* ───── что входит ───── */
+
 .n-rooms{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
 .n-room{display:flex;flex-direction:column;overflow:hidden;transition:transform .3s,box-shadow .3s}
 .n-room:hover{transform:translateY(-4px);box-shadow:var(--lift)}
@@ -239,7 +235,7 @@ html[lang="ka"] .n-logo b{letter-spacing:.03em}
 @media (max-width:1000px){.n-rooms{grid-template-columns:1fr 1fr}}
 @media (max-width:520px){.n-rooms{grid-template-columns:1fr}.n-room{flex-direction:row}.n-room__ph{flex:0 0 38%;aspect-ratio:auto}}
 
-/* ───── как работаем ───── */
+
 .n-how{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));grid-auto-rows:minmax(150px,auto);gap:12px}
 .n-how__ph{grid-row:span 2;position:relative;overflow:hidden;border-radius:var(--r);background:#DDE0E2}
 .n-how__ph img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
@@ -256,7 +252,7 @@ html[lang="ka"] .n-logo b{letter-spacing:.03em}
   .n-step svg{flex:none}
 }
 
-/* ───── отзывы ───── */
+
 .n-revs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
 .n-rev{display:flex;flex-direction:column;gap:12px;padding:20px;transition:transform .3s,box-shadow .3s}
 .n-rev:hover{transform:translateY(-4px);box-shadow:var(--lift)}
@@ -271,7 +267,7 @@ html[lang="ka"] .n-logo b{letter-spacing:.03em}
   .n-rev{flex:0 0 84%;scroll-snap-align:start}
 }
 
-/* ───── заявка ───── */
+
 .n-ask{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,.7fr);gap:12px;align-items:stretch}
 .n-form-wrap{padding:clamp(20px,2.6vw,32px)}
 .n-form-wrap h2{font-family:var(--disp);font-weight:400;font-size:clamp(30px,3.6vw,48px);line-height:1.08}
@@ -298,7 +294,7 @@ html[lang="ka"] .n-logo b{letter-spacing:.03em}
 @media (max-width:900px){.n-ask{grid-template-columns:1fr}.n-side{grid-template-columns:1fr 1fr}}
 @media (max-width:560px){.n-form{grid-template-columns:1fr}.n-side{gap:8px}.n-side div{padding:12px 14px}}
 
-/* ───── подвал ───── */
+
 .n-foot{margin-top:clamp(44px,5.5vw,76px);background:var(--ink);color:#E6E8EA}
 .n-foot__in{max-width:1280px;margin:0 auto;padding:28px var(--gut);display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px 30px;font-size:14.5px}
 .n-foot__in a{text-decoration:none;display:inline-flex;align-items:center;min-height:44px}
@@ -306,7 +302,7 @@ html[lang="ka"] .n-logo b{letter-spacing:.03em}
 .n-foot__in p a{color:#fff;font-weight:600}
 .n-foot__in p{color:#B9BEC2}
 
-/* ───── языки: RU · EN · ქა — отдельные страницы (tools/i18n/make_lang.py) ───── */
+
 .n-lang{position:relative;flex:none}
 .n-lang summary{list-style:none;display:inline-flex;align-items:center;justify-content:center;gap:7px;min-height:44px;min-width:56px;padding:0 12px;
   border:1.5px solid var(--ink);border-radius:999px;font-weight:600;font-size:14px;cursor:pointer;transition:background .2s,color .2s}
@@ -343,12 +339,12 @@ html[lang="ka"] .n-logo b{letter-spacing:.03em}
   <nav class="n-nav" aria-label="განყოფილებები">
     <a href="#okna">თავისუფალი დრო</a><a href="#tseny">ფასები</a><a href="#vhodit">რა შედის</a><a href="#otzyvy">შეფასებები</a>
   </nav>
-<!--lang--><details class="n-lang"><summary aria-label="ენა">ქა</summary><div><a href="../" hreflang="ru" lang="ru">Русский</a><a href="../en/" hreflang="en" lang="en">English</a><a href="./" hreflang="ka" lang="ka" aria-current="page">ქართული</a></div></details><!--/lang-->
+<details class="n-lang"><summary aria-label="ენა">ქა</summary><div><a href="../" hreflang="ru" lang="ru">Русский</a><a href="../en/" hreflang="en" lang="en">English</a><a href="./" hreflang="ka" lang="ka" aria-current="page">ქართული</a></div></details>
   <a class="n-btn n-btn--wipe" href="#zayavka" aria-label="ბრიგადის გამოძახება"><span class="n-long">ბრიგადის გამოძახება</span><span class="n-short" aria-hidden="true">განაცხადი</span></a>
 </header>
 
 <main id="main">
-  <!-- ═════════ первый экран: доска окон выезда ═════════ -->
+  
   <section class="n-hero" aria-labelledby="h1">
     <div>
       <p class="n-pill"><i></i>დალაგება · ბათუმი და მახინჯაური</p>
@@ -376,7 +372,6 @@ html[lang="ka"] .n-logo b{letter-spacing:.03em}
     </figure>
   </section>
 
-  <!-- ═════════ цены ═════════ -->
   <section class="n-sec" id="tseny" aria-labelledby="h-t">
     <div class="n-head n-in"><h2 id="h-t">ფასები ფართობის მიხედვით</h2></div>
     <div class="n-types">
@@ -416,7 +411,6 @@ html[lang="ka"] .n-logo b{letter-spacing:.03em}
     <p class="n-note n-in">არ მოგეწონათ? 24 საათში დავბრუნდებით და უფასოდ გადავაკეთებთ. ეს ხელშეკრულებაშია.</p>
   </section>
 
-  <!-- ═════════ что входит ═════════ -->
   <section class="n-sec" id="vhodit" aria-labelledby="h-v">
     <div class="n-head n-in"><h2 id="h-v">რა შედის დალაგებაში</h2><p>ეს სია მიმდინარე დალაგებისთვისაა. გენერალურს ემატება ფანჯრები და ტექნიკა გარედან.</p></div>
     <ul class="n-rooms">
@@ -460,7 +454,6 @@ html[lang="ka"] .n-logo b{letter-spacing:.03em}
     <div class="n-not n-in"><ul><li>ფანჯრები</li><li>კარადები შიგნიდან</li><li>დაუთოება</li><li>ტექნიკა შიგნიდან</li></ul><span>— ცალკე, ფასები ზემოთაა</span></div>
   </section>
 
-  <!-- ═════════ как работаем ═════════ -->
   <section class="n-sec" id="rabota" aria-labelledby="h-r">
     <div class="n-head n-in"><h2 id="h-r">როგორ ვმუშაობთ</h2></div>
     <div class="n-how">
@@ -474,7 +467,6 @@ html[lang="ka"] .n-logo b{letter-spacing:.03em}
     </div>
   </section>
 
-  <!-- ═════════ отзывы ═════════ -->
   <section class="n-sec" id="otzyvy" aria-labelledby="h-o">
     <div class="n-head n-in"><h2 id="h-o">კლიენტების შეფასებები</h2></div>
     <div class="n-revs">
@@ -485,7 +477,6 @@ html[lang="ka"] .n-logo b{letter-spacing:.03em}
     </div>
   </section>
 
-  <!-- ═════════ заявка ═════════ -->
   <section class="n-sec" id="zayavka" aria-labelledby="h-z">
     <div class="n-ask">
       <div class="n-form-wrap n-card n-in">
@@ -530,14 +521,14 @@ html[lang="ka"] .n-logo b{letter-spacing:.03em}
   'use strict';
   var reduce = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
 
-  /* ---- доска окон выезда: по настоящему времени Батуми ---- */
+
   var TIMES = [[9, 0], [11, 30], [14, 0], [16, 30], [19, 0]];
-  var LEAD = 120;   // за сколько минут до выезда окно ещё можно взять — бригаде нужно доехать
+  var LEAD = 120;   
   var MONTH = ['იანვარი','თებერვალი','მარტი','აპრილი','მაისი','ივნისი','ივლისი','აგვისტო','სექტემბერი','ოქტომბერი','ნოემბერი','დეკემბერი'];
   var WDAY = ['კვირა','ორშაბათი','სამშაბათი','ოთხშაბათი','ხუთშაბათი','პარასკევი','შაბათი'];
   function batumi() { var d = new Date(); return new Date(d.getTime() + (d.getTimezoneOffset() + 240) * 60000); }
   function pad(n) { return n < 10 ? '0' + n : '' + n; }
-  /* Занятость не случайная: считаем от даты и номера окна, чтобы доска не «перерисовывалась». */
+
   function busy(dayNum, i) { return (dayNum * 7 + i * 13) % 5 < 2; }
 
   var board = document.getElementById('board');
@@ -576,7 +567,7 @@ html[lang="ka"] .n-logo b{letter-spacing:.03em}
       col.appendChild(grid);
       board.appendChild(col);
     });
-    if (near) near.classList.add('is-near');   // ближайшее свободное окно слегка пульсирует
+    if (near) near.classList.add('is-near');   
     board.hidden = false;
     cap.hidden = false;
     document.getElementById('noJs').hidden = true;
@@ -596,9 +587,9 @@ html[lang="ka"] .n-logo b{letter-spacing:.03em}
   }
 
   build();
-  setInterval(build, 60000);   // раз в минуту: прошедшие окна гаснут сами
+  setInterval(build, 60000);   
 
-  /* ---- цены: вид уборки подсвечивает свою колонку (на телефоне — показывает её) ---- */
+
   var types = [].slice.call(document.querySelectorAll('.n-type'));
   var cells = [].slice.call(document.querySelectorAll('#ptab [data-col]'));
   var typeSel = document.getElementById('f-type');
@@ -615,7 +606,7 @@ html[lang="ka"] .n-logo b{letter-spacing:.03em}
   });
   col('0');
 
-  /* ---- появление карточек; галочки в «что входит» прорисовываются по очереди ---- */
+
   var ins = [].slice.call(document.querySelectorAll('.n-in'));
   function show(el) { el.classList.add('is-on'); }
   if (reduce || !('IntersectionObserver' in window)) {
@@ -630,7 +621,7 @@ html[lang="ka"] .n-logo b{letter-spacing:.03em}
     }, 1500);
   }
 
-  /* ---- форма ---- */
+
   var form = document.getElementById('form');
   var agree = document.getElementById('f-agree');
   var send = document.getElementById('send');

@@ -33,15 +33,15 @@
   imagesrcset="https://images.unsplash.com/photo-1779350676620-fde279b1d023?auto=format&fit=crop&w=800&q=80 800w, https://images.unsplash.com/photo-1779350676620-fde279b1d023?auto=format&fit=crop&w=1400&q=80 1400w"
   imagesizes="100vw">
 <style>
-/* ============ tokens (см. DESIGN.md) ============ */
+
 :root{
-  --sky:#E3E8E8;      /* «пасмурно» — фон страницы */
-  --salt:#F4F6F5;     /* «соль» — светлые поверхности: блок влажности, запись */
-  --ink:#1B2A2E;      /* «мокрый сланец» — текст, основная кнопка, отрезки на шкале */
-  --pebble:#4C5A5E;   /* «галька» — второстепенный текст */
-  --copper:#8A4B2D;   /* «медь» — только прибор влажности и отметка «подходит» */
-  --mist:#D5DCDC;     /* «туман» — неактивная кнопка, подложка фото */
-  --field:#7A8587;    /* граница полей и чипов (3,5:1 к «соли») */
+  --sky:#E3E8E8;      
+  --salt:#F4F6F5;     
+  --ink:#1B2A2E;      
+  --pebble:#4C5A5E;   
+  --copper:#8A4B2D;   
+  --mist:#D5DCDC;     
+  --field:#7A8587;    
   --line:rgba(27,42,46,.16);
   --serif:"Noto Serif Display","Noto Serif",Georgia,serif;
   --sans:"Finlandica Text","Segoe UI",system-ui,sans-serif;
@@ -68,7 +68,7 @@ p,h2,h3,figure,dl,dd{margin:0}
 .grain::after{content:"";position:absolute;inset:0;pointer-events:none;opacity:.13;mix-blend-mode:overlay;
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
 
-/* ============ buttons & links ============ */
+
 .btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:0 28px;border-radius:14px;
   background:var(--ink);color:var(--salt);font:500 16px/1 var(--sans);text-decoration:none;border:0;cursor:pointer;white-space:nowrap;
   transition:background-color .2s,color .2s}
@@ -79,13 +79,13 @@ p,h2,h3,figure,dl,dd{margin:0}
   text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:6px;white-space:nowrap}
 .link:hover{text-decoration-thickness:2px}
 
-/* ============ shared section grid ============ */
+
 .sec{padding:var(--sec) var(--gut)}
 .grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:var(--gap);max-width:1520px;margin:0 auto}
 .h2{font:300 84px/.95 var(--serif);font-stretch:75%;letter-spacing:-.005em}
 .h3{font:400 32px/1.15 var(--serif);font-stretch:87.5%}
 
-/* ============ header ============ */
+
 .top{position:sticky;top:0;height:72px;padding:0 var(--gut);display:flex;align-items:center;gap:44px;z-index:40;background:rgba(244,246,245,.92);border-bottom:1px solid var(--line);-webkit-backdrop-filter:saturate(1.4) blur(10px);backdrop-filter:saturate(1.4) blur(10px)}
 .logo{display:inline-flex;align-items:center;min-height:44px;text-decoration:none}
 .logo__ka{font:400 23px/1 var(--geo)}
@@ -94,7 +94,7 @@ p,h2,h3,figure,dl,dd{margin:0}
 .nav a:hover{text-decoration:underline;text-underline-offset:6px}
 .top__cta{margin-left:auto}
 
-/* ============ hero ============ */
+
 .hero{position:relative;display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:var(--gap);
   padding:0 var(--gut);height:clamp(680px,calc(100svh - 72px),920px);overflow-x:clip}
 @supports not (overflow:clip){.hero{overflow:hidden}}
@@ -112,7 +112,7 @@ p,h2,h3,figure,dl,dd{margin:0}
 .mark .base{display:inline-block;width:0;height:0;vertical-align:baseline}
 .mark canvas{position:absolute;pointer-events:none}
 
-/* humidity instrument */
+
 .hygro{grid-row:4;min-width:0}
 .hygro__head{display:flex;align-items:baseline;justify-content:space-between;gap:16px}
 .hygro__label{font:500 17px/1.3 var(--sans)}
@@ -141,7 +141,7 @@ p,h2,h3,figure,dl,dd{margin:0}
 html:not(.js) .hygro__live{display:none}
 html.js .hygro__static{display:none}
 
-/* ============ services ============ */
+
 .svc__h{grid-column:1/6;grid-row:1;align-self:end}
 .svc__note{grid-column:6/-1;grid-row:1;align-self:end;max-width:60ch;color:var(--pebble);font-size:17px}
 .photo{position:relative;overflow:hidden;background:var(--mist);border-radius:14px}
@@ -171,7 +171,7 @@ html.js .hygro__static{display:none}
 .row.is-fit .row__fit{display:block}
 .row.is-fit .row__name{text-decoration:underline;text-decoration-color:var(--copper);text-decoration-thickness:1px;text-underline-offset:6px}
 
-/* ============ humidity-aware care ============ */
+
 .hum{background:var(--salt)}
 .hum__h{grid-column:1/9;grid-row:1;max-width:11.5em}
 .hum__lede{grid-column:9/-1;grid-row:1;align-self:end;font-size:17px;line-height:1.55}
@@ -211,7 +211,7 @@ html.js .hygro__static{display:none}
 .hum__note p{font-size:17px}
 .hum__note p+p{margin-top:12px}
 
-/* ============ masters ============ */
+
 .team__h{grid-column:1/4;grid-row:1}
 .team__note{grid-column:1/4;grid-row:2;margin-top:24px;max-width:26ch;color:var(--pebble);font-size:17px}
 .team__list{grid-column:4/-1;grid-row:1/4;list-style:none;margin:0;padding:0;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:0 calc(var(--gap)*2);align-items:start}
@@ -220,7 +220,7 @@ html.js .hygro__static{display:none}
 .m__days{grid-column:2;grid-row:1;justify-self:end;color:var(--pebble);font-size:15px;white-space:nowrap}
 .m__spec{grid-column:1/-1;grid-row:2;max-width:32ch;font-size:16px;line-height:1.45;color:var(--pebble)}
 
-/* ============ atmosphere ============ */
+
 .atm{padding-top:0}
 .atm__big{grid-column:1/7;grid-row:1/3;align-self:start;aspect-ratio:1/1;background:#2B2F30}
 .atm__big img{object-position:50% 92%;filter:none}
@@ -230,7 +230,7 @@ html.js .hygro__static{display:none}
 .atm__small{grid-column:8/11;grid-row:2;align-self:end;aspect-ratio:1/1;margin-top:40px}
 .atm__small img{object-position:50% 60%;transform:scale(1.25);transform-origin:85% 50%;filter:saturate(.8) brightness(.95)}
 
-/* ============ booking ============ */
+
 .book{background:var(--salt)}
 .book__side{grid-column:1/5;grid-row:1}
 .book__note{margin-top:24px;max-width:36ch;font-size:17px;color:var(--pebble)}
@@ -270,7 +270,7 @@ select.inp{-webkit-appearance:none;appearance:none;padding-right:48px;cursor:poi
 .done__text a{font-weight:500;text-underline-offset:8px;white-space:nowrap}
 .done__back{margin-top:22px;font-size:15px}
 
-/* ============ footer ============ */
+
 .foot{padding:64px var(--gut) 56px}
 .foot__in{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:var(--gap);row-gap:28px;max-width:1520px;margin:0 auto;align-items:start}
 .foot__brand{grid-column:1/5}
@@ -281,7 +281,7 @@ select.inp{-webkit-appearance:none;appearance:none;padding-right:48px;cursor:poi
 .credits{grid-column:6/-1;font-size:14px;color:var(--pebble)}
 .mbar{display:none}
 
-/* short laptop screens: keep the instrument inside the first screen */
+
 @media (min-width:1100px) and (max-height:820px){
   .hero__body{padding-top:24px;padding-bottom:28px}
   .hero__word{margin-bottom:26px}
@@ -293,7 +293,7 @@ select.inp{-webkit-appearance:none;appearance:none;padding-right:48px;cursor:poi
   .cols,.row{grid-template-columns:minmax(0,1fr) 100px 150px 92px;column-gap:18px}
 }
 
-/* ============ tablet 601–1099 ============ */
+
 @media (max-width:1099px){
   :root{--gut:32px;--sec:104px}
   .top{height:64px;gap:24px}
@@ -364,7 +364,7 @@ select.inp{-webkit-appearance:none;appearance:none;padding-right:48px;cursor:poi
   .nav{display:none}
 }
 
-/* ============ phone ≤600: own composition ============ */
+
 @media (max-width:600px){
   :root{--gut:16px;--sec:64px}
   body{font-size:17px}
@@ -476,15 +476,14 @@ select.inp{-webkit-appearance:none;appearance:none;padding-right:48px;cursor:poi
   *{transition:none!important;animation:none!important;scroll-behavior:auto!important}
 }
 
-/* ═══════════ Правки 24.09 (пакеты «Указки» 16:22) ═══════════ */
-/* 6. Имя «Шёлк»: по-русски в шапке, по-грузински рядом. */
+
+
 .logo{gap:10px;align-items:baseline}
 .logo__ru{font:400 30px/1 var(--serif);font-stretch:75%;letter-spacing:-.01em;color:var(--ink)}
 .top .logo .logo__ka{font-size:15px;color:var(--pebble)}
 .foot__brand .logo__ru{font-size:44px;margin-right:12px}
 
-/* 1. «Записаться» в шапке: была светлой на светлом — теперь тёмная, раз в 4,5 с
-   делает толчок и по ней пробегает медный перелив. */
+
 .top .top__cta{background:var(--ink);color:var(--salt);position:relative;overflow:hidden;isolation:isolate}
 .top .top__cta:hover{background:#2B3D42}
 @media (prefers-reduced-motion:no-preference){
@@ -499,7 +498,7 @@ select.inp{-webkit-appearance:none;appearance:none;padding-right:48px;cursor:poi
   90%{scale:1;box-shadow:0 0 0 12px rgba(138,75,45,0)}}
 @keyframes ctaShine{0%,54%{background-position:130% 0}86%,100%{background-position:-30% 0}}
 
-/* 2. Услуги: фильтр по разделам и карточки с фото. Наведение выделяет одну карточку. */
+
 .svc2,.hum2,.team2{max-width:1520px;margin:0 auto}
 .svc2__head{display:flex;align-items:flex-end;justify-content:space-between;gap:16px 48px;flex-wrap:wrap}
 .svc2__lede{max-width:46ch;color:var(--pebble);font-size:17px}
@@ -551,7 +550,7 @@ select.inp{-webkit-appearance:none;appearance:none;padding-right:48px;cursor:poi
   .sc__p{font-size:26px}
 }
 
-/* 3. Влажность: четыре карточки в рамках. Подсвечивается только та, на которую навели. */
+
 .hum2__lede{margin-top:18px;color:var(--pebble);font-size:17px;max-width:52ch}
 .hcards{list-style:none;margin:28px 0 0;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
 .hc{display:flex;flex-direction:column;gap:10px;padding:22px 20px;background:var(--salt);border:1px solid var(--line);
@@ -575,7 +574,7 @@ select.inp{-webkit-appearance:none;appearance:none;padding-right:48px;cursor:poi
 @media(max-width:700px){.hum2__tips{grid-template-columns:1fr}}
 @media(max-width:520px){.hcards{grid-template-columns:1fr;gap:10px}.hc{padding:18px 16px}.hc__v{font-size:40px}}
 
-/* 4. Наши мастера: пять карточек с фото. */
+
 .tcards{list-style:none;margin:30px 0 0;padding:0;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:16px}
 .tc{display:flex;flex-direction:column;background:var(--salt);border:1px solid var(--line);border-radius:18px;
   overflow:hidden;transition:transform .3s,border-color .3s,box-shadow .3s}
@@ -592,7 +591,7 @@ select.inp{-webkit-appearance:none;appearance:none;padding-right:48px;cursor:poi
 @media(max-width:1100px){.tcards{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @media(max-width:700px){.tcards{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.tc__n{font-size:26px}.tc__b{padding:12px}}
 
-/* 5. Запись: всё в одной карточке с рамкой, плотнее. */
+
 .book .bookcard{max-width:1240px;background:#fff;border:1px solid var(--line);border-radius:26px;
   padding:clamp(22px,3.4vw,48px);box-shadow:0 24px 60px -34px rgba(27,42,46,.35)}
 .bookcard .contacts{margin-top:28px;grid-template-columns:1fr 1fr;gap:16px 20px}
@@ -604,7 +603,7 @@ select.inp{-webkit-appearance:none;appearance:none;padding-right:48px;cursor:poi
   .sc,.hc,.tc,.sc__ph img,.tc__ph img{transition:none}
 }
 
-/* текст на карточках ужат: подписи — значками, «Записаться» — круглой стрелкой */
+
 .sc__m div{display:flex;align-items:center;gap:7px}
 .sc__m dt{display:flex;color:var(--pebble)}
 .sc__m dt svg{width:16px;height:16px}
@@ -630,7 +629,7 @@ select.inp{-webkit-appearance:none;appearance:none;padding-right:48px;cursor:poi
 </header>
 
 <main id="main">
-  <!-- ============ 1. hero ============ -->
+  
   <section class="hero" aria-labelledby="hero-h">
     <div class="hero__media grain">
       <picture>
@@ -678,7 +677,6 @@ select.inp{-webkit-appearance:none;appearance:none;padding-right:48px;cursor:poi
     </div>
   </section>
 
-  <!-- ============ 2. services & prices ============ -->
   <section class="sec svc" id="uslugi" aria-labelledby="svc-h">
     <div class="svc2">
       <div class="svc2__head">
@@ -822,7 +820,6 @@ select.inp{-webkit-appearance:none;appearance:none;padding-right:48px;cursor:poi
     </div>
   </section>
 
-  <!-- ============ 3. humidity-aware care ============ -->
   <section class="sec hum" id="vlazhnost" aria-labelledby="hum-h">
     <div class="hum2">
       <h2 class="h2" id="hum-h">Что выдерживает батумскую влажность</h2>
@@ -864,7 +861,6 @@ select.inp{-webkit-appearance:none;appearance:none;padding-right:48px;cursor:poi
     </div>
   </section>
 
-  <!-- ============ 4. masters ============ -->
   <section class="sec team" id="mastera" aria-labelledby="team-h">
     <div class="team2">
       <h2 class="h2" id="team-h">Наши мастера</h2>
@@ -893,7 +889,6 @@ select.inp{-webkit-appearance:none;appearance:none;padding-right:48px;cursor:poi
     </div>
   </section>
 
-  <!-- ============ 5. atmosphere ============ -->
   <section class="sec atm" aria-labelledby="atm-h">
     <div class="grid">
       <div class="atm__big photo grain">
@@ -917,7 +912,6 @@ select.inp{-webkit-appearance:none;appearance:none;padding-right:48px;cursor:poi
     </div>
   </section>
 
-  <!-- ============ 6. booking + contacts ============ -->
   <section class="sec book" id="zapis" aria-labelledby="book-h">
     <div class="grid bookcard">
       <div class="book__side">
@@ -998,7 +992,6 @@ select.inp{-webkit-appearance:none;appearance:none;padding-right:48px;cursor:poi
   </section>
 </main>
 
-<!-- ============ 7. footer ============ -->
 <footer class="foot">
   <div class="foot__in">
     <div class="foot__brand">
@@ -1014,9 +1007,7 @@ select.inp{-webkit-appearance:none;appearance:none;padding-right:48px;cursor:poi
   var reduce = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
   var coarse = !!(window.matchMedia && window.matchMedia('(pointer: coarse)').matches);
 
-  /* =====================================================================
-     1. The one wow moment: humidity makes hair strands grow out of «шёлк»
-     ===================================================================== */
+
   var mark = document.getElementById('mark');
   var range = document.getElementById('hum');
   var out = document.getElementById('hum-out');
@@ -1049,7 +1040,7 @@ select.inp{-webkit-appearance:none;appearance:none;padding-right:48px;cursor:poi
     return 'normal';
   }
 
-  /* Fit the word to its column: fill the width, never taller than a third of the screen on desktop. */
+
   function fit() {
     mark.style.fontSize = '';
     var avail = mark.parentNode.clientWidth;
@@ -1061,8 +1052,7 @@ select.inp{-webkit-appearance:none;appearance:none;padding-right:48px;cursor:poi
     mark.style.fontSize = Math.min(fs * (avail * 0.985) / rect.width, cap).toFixed(2) + 'px';
   }
 
-  /* Glyph outline -> hair roots. The word is drawn once into an offscreen canvas with the same font;
-     edge pixels become roots, the outward normal and the tangent give each strand its direction. */
+
   function build() {
     fit();
     var word = mark.getAttribute('data-text');
@@ -1083,7 +1073,7 @@ select.inp{-webkit-appearance:none;appearance:none;padding-right:48px;cursor:poi
     if ('fontStretch' in c) c.fontStretch = stretchKeyword(cs.fontStretch);
     var w = c.measureText(word).width;
     if (Math.abs(w - rect.width) / rect.width > 0.03 && !mark.classList.contains('no-stretch')) {
-      mark.classList.add('no-stretch');          // canvas cannot draw the width axis here: drop it everywhere
+      mark.classList.add('no-stretch');          
       return build();
     }
     c.textBaseline = 'alphabetic';
@@ -1096,7 +1086,7 @@ select.inp{-webkit-appearance:none;appearance:none;padding-right:48px;cursor:poi
     var P = []; for (var j = 0; j < 40; j++) P.push(r());
     function patch(x) { var t = x / cw * 38, i = Math.floor(t), f = t - i; f = f * f * (3 - 2 * f); return P[i] * (1 - f) + P[i + 1] * f; }
 
-    // ink bounds: frizz lives on the upper half of the letters (like on a head) and on the outer ends of the word
+
     var inkTop = -1, inkBottom = -1, inkLeft = cw, inkRight = -1, yy, xx;
     for (yy = 0; yy < chh; yy++) {
       for (xx = 0; xx < cw; xx += 2) {
@@ -1130,19 +1120,19 @@ select.inp{-webkit-appearance:none;appearance:none;padding-right:48px;cursor:poi
       }
     }
 
-    buckets = [[], [], [], [], [], []];                 // 3 widths x (slate | copper): one path per bucket
+    buckets = [[], [], [], [], [], []];                 
     var n = Math.min(Math.round(fs * (coarse ? 4.5 : 6)), pool.length * 3);
     for (var i = 0; i < n && pool.length; i++) {
       var e = pool[(r() * pool.length) | 0];
       var ex = e[0] + (r() - 0.5) * 2, ey = e[1] + (r() - 0.5) * 2, enx = e[2], eny = e[3];
-      var tx = -eny, ty = enx;                         // tangent: prefer the wind (right) and up
+      var tx = -eny, ty = enx;                         
       if (tx - 0.6 * ty < 0) { tx = -tx; ty = -ty; }
       if (r() < 0.2) { tx = -tx; ty = -ty; }
       var topEdge = eny < -0.35;
       var fly = r() < 0.04;
       var len = fs * (0.04 + Math.pow(r(), 1.8) * 0.27) * (topEdge ? 1 : 0.6);
       if (fly) len *= 2.1;
-      // ray test: a strand must not grow into the next stroke
+
       var qx = enx * 0.8 + tx * 0.6, qy = eny * 0.8 + ty * 0.6, ql = Math.sqrt(qx * qx + qy * qy) || 1;
       qx /= ql; qy /= ql;
       for (var d = 5; d < len * 0.8; d += 3) {
@@ -1184,7 +1174,7 @@ select.inp{-webkit-appearance:none;appearance:none;padding-right:48px;cursor:poi
     ctx.clearRect(0, 0, cw, chh);
     if (u <= 0.001) return;
     ctx.lineCap = 'round';
-    var lift = 0.3 + 0.55 * u;                      // the wetter the air, the more strands stand off the surface
+    var lift = 0.3 + 0.55 * u;                      
     for (var pass = 0; pass < 6; pass++) {
       var list = buckets[pass], bi = pass % 3, cu = pass >= 3;
       if (!list.length) continue;
@@ -1252,7 +1242,7 @@ select.inp{-webkit-appearance:none;appearance:none;padding-right:48px;cursor:poi
     else if (!raf) raf = requestAnimationFrame(loop);
   }
 
-  /* on load the air turns humid and the letters frizz (once); reduced motion lands on 80% statically */
+
   function finish() { introDone = true; current = target = 80; range.value = 80; setValue(80); setMeaning(80); draw(80); }
   function intro() {
     if (reduce) { finish(); return; }
@@ -1271,7 +1261,7 @@ select.inp{-webkit-appearance:none;appearance:none;padding-right:48px;cursor:poi
       if (p < 1) requestAnimationFrame(step); else finish();
     }
     setTimeout(function () { if (!introDone) requestAnimationFrame(step); }, 500);
-    // rescue: frames never came (frozen or background tab) -> land on the final state
+
     setTimeout(function () { if (!introDone && !document.hidden) finish(); }, 5200);
     document.addEventListener('visibilitychange', function () { if (!document.hidden && !introDone) finish(); });
   }
@@ -1295,16 +1285,14 @@ select.inp{-webkit-appearance:none;appearance:none;padding-right:48px;cursor:poi
 
     var rt = 0, lastW = window.innerWidth;
     window.addEventListener('resize', function () {
-      if (window.innerWidth === lastW) return;     // phones fire resize when the address bar hides; ignore height-only changes
+      if (window.innerWidth === lastW) return;     
       lastW = window.innerWidth;
       clearTimeout(rt);
       rt = setTimeout(function () { mark.classList.remove('no-stretch'); if (build()) draw(current); }, 160);
     });
   }
 
-  /* =====================================================================
-     2. Booking form stub
-     ===================================================================== */
+
   var form = document.getElementById('form');
   var agree = document.getElementById('f-agree');
   var send = document.getElementById('send');
@@ -1321,7 +1309,7 @@ select.inp{-webkit-appearance:none;appearance:none;padding-right:48px;cursor:poi
   if (form && agree && send) {
     syncSend();
     agree.addEventListener('change', syncSend);
-    // the policy link sits inside the label: a click must neither toggle the box nor jump to the top
+
     policy.addEventListener('click', function (e) { e.preventDefault(); e.stopPropagation(); });
     form.addEventListener('submit', function (e) {
       e.preventDefault();
@@ -1344,7 +1332,7 @@ select.inp{-webkit-appearance:none;appearance:none;padding-right:48px;cursor:poi
       document.getElementById('f-name').focus();
     });
   }
-  // «Записаться» in the humidity block preselects that service in the form
+
   var pre = document.querySelectorAll('[data-service]');
   for (var p = 0; p < pre.length; p++) {
     pre[p].addEventListener('click', function () {
@@ -1353,10 +1341,7 @@ select.inp{-webkit-appearance:none;appearance:none;padding-right:48px;cursor:poi
     });
   }
 
-  /* =====================================================================
-     3. Phone: bottom bar appears once the hero button has scrolled away,
-        hides again over the booking form
-     ===================================================================== */
+
   var bar = document.getElementById('mbar'), cta = document.getElementById('hero-cta'), book = document.getElementById('zapis');
   if (bar && cta && book && 'IntersectionObserver' in window) {
     var past = false, atBook = false;
@@ -1371,7 +1356,7 @@ select.inp{-webkit-appearance:none;appearance:none;padding-right:48px;cursor:poi
 })();
 </script>
 <script>
-/* Правки 24.09: фильтр услуг по разделам. Отдельно от основного скрипта. */
+
 (function(){
   'use strict';
   var tabs = [].slice.call(document.querySelectorAll('.flt__b'));

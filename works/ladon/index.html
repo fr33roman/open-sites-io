@@ -25,14 +25,14 @@
 <link rel="preconnect" href="https://images.unsplash.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Alegreya:wght@400;500&family=Alegreya+Sans:wght@400;500;700&display=swap">
 <style>
-/* ============ токены (см. DESIGN.md) ============ */
+
 :root{
-  --cocoa:#3C332C;    /* какао — средний тон, а не почти-чёрный */
-  --cocoa-d:#2E2721;  /* линейка минут, подвал */
-  --cocoa-l:#4A4038;  /* сегменты, поля формы */
-  --light:#EDE4DA;    /* текст, 9,8:1 */
-  --dust:#B4A596;     /* подписи, 5,1:1 */
-  --clay:#D79B6E;     /* единственный акцент, 5,2:1 */
+  --cocoa:#3C332C;    
+  --cocoa-d:#2E2721;  
+  --cocoa-l:#4A4038;  
+  --light:#EDE4DA;    
+  --dust:#B4A596;     
+  --clay:#D79B6E;     
   --line:rgba(237,228,218,.2);
   --serif:"Alegreya",Georgia,serif;
   --sans:"Alegreya Sans","Segoe UI",system-ui,sans-serif;
@@ -59,7 +59,7 @@ button,input,select,textarea{font:inherit;color:inherit}
 .skip{position:absolute;left:12px;top:-80px;background:var(--light);color:var(--cocoa);padding:12px 18px;border-radius:2px;z-index:60}
 .skip:focus{top:12px}
 
-/* ============ кнопки ============ */
+
 .btn{display:inline-flex;align-items:center;justify-content:center;min-height:50px;padding:0 26px;
   border:1px solid var(--light);border-radius:2px;background:var(--light);color:var(--cocoa);
   font-weight:700;font-size:17px;text-decoration:none;cursor:pointer;transition:background .18s,color .18s}
@@ -69,13 +69,11 @@ button,input,select,textarea{font:inherit;color:inherit}
 .btn--line:hover{background:var(--light);color:var(--cocoa)}
 .link{color:var(--clay);text-underline-offset:4px}
 
-/* ============ закреплённая строка ============ */
+
 .top{position:sticky;top:0;z-index:50;display:flex;align-items:center;gap:20px;
   padding:10px var(--gut);background:rgba(60,51,44,.95);border-bottom:1px solid var(--line);
   backdrop-filter:blur(8px)}
-/* Логотип 22.09: четыре линии ладони и дуга запястья. Линии прорисовываются
-   при загрузке, при наведении расходятся веером — знак «живой», но тихий.
-   При «уменьшить движение» просто стоит на месте. */
+
 .mark{font-family:var(--serif);font-weight:500;font-size:21px;letter-spacing:.06em;text-decoration:none;
   display:inline-flex;align-items:center;gap:10px;min-height:44px;padding:5px 0}
 .mark__ico{display:flex;width:30px;height:30px;flex:none}
@@ -84,9 +82,7 @@ button,input,select,textarea{font:inherit;color:inherit}
 .mark .pl{stroke:var(--light);opacity:.55}
 .mark__txt{line-height:1}
 @media (prefers-reduced-motion:no-preference){
-  /* Логотип 23.09: линии не просто прорисовываются, а продолжают жить —
-     тихо дышат по очереди, будто ладонь дышит вместе с человеком.
-     Наведение по-прежнему разводит их веером. */
+  
   .mark .ln{stroke-dasharray:22;stroke-dashoffset:22;transform-origin:17px 27px;
     animation:drawLine .9s ease forwards, breathLine 4.2s ease-in-out .9s infinite;
     transition:transform .45s ease}
@@ -102,7 +98,7 @@ button,input,select,textarea{font:inherit;color:inherit}
   .mark:hover .ln{animation-play-state:running,paused}
 }
 @keyframes drawLine{to{stroke-dashoffset:0}}
-/* «Дыхание»: линия чуть подрастает и светлеет, потом возвращается. */
+
 @keyframes breathLine{0%,100%{opacity:.75;transform:scaleY(1)}
   50%{opacity:1;transform:scaleY(1.09)}}
 @keyframes glowPalm{0%,100%{opacity:.45}50%{opacity:.8}}
@@ -112,7 +108,7 @@ button,input,select,textarea{font:inherit;color:inherit}
 .top .btn{margin-left:auto;min-height:44px;padding:0 18px;font-size:16px}
 @media (min-width:1040px){.nav{display:flex}.top .btn{margin-left:0}}
 
-/* ============ колонка ============ */
+
 .col{max-width:1080px;margin:0 auto;padding:0 var(--gut)}
 .sec{border-top:1px solid var(--line);padding:clamp(40px,5.5vw,var(--sec)) 0}
 h2{font-family:var(--serif);font-weight:400;font-size:clamp(25px,3.2vw,42px);line-height:1.12}
@@ -120,10 +116,8 @@ h3{font-family:var(--sans);font-weight:700;font-size:18px;line-height:1.35}
 .note{color:var(--dust);font-size:16px;line-height:1.6;max-width:68ch}
 .lbl{font-weight:500;font-size:13px;color:var(--dust)}
 
-/* ============ 1. герой ============ */
-/* Правка 23.09: вместо пустоты справа — тёплый живой слой: тёплые пятна
-   света, три струйки пара и «волокна дерева», которые медленно дышат.
-   Всё нарисовано, без единой фотографии — в духе этой работы. */
+
+
 .hero{position:relative;overflow:hidden;padding:clamp(30px,4.5vw,64px) 0 0}
 .warmth{position:absolute;inset:0;z-index:-1;pointer-events:none;overflow:hidden}
 .warmth .glow{position:absolute;border-radius:50%;filter:blur(60px)}
@@ -154,13 +148,12 @@ h3{font-family:var(--sans);font-weight:700;font-size:18px;line-height:1.35}
 h1{font-family:var(--serif);font-weight:400;font-size:clamp(30px,4.8vw,70px);line-height:1.06;max-width:15ch}
 .hero p{margin-top:20px;font-size:clamp(17px,1.4vw,20px);line-height:1.55;max-width:60ch;color:var(--dust)}
 
-/* выбор */
-/* Правка 23.09: выбор времени, программа и раскладка — в одной скруглённой
-   рамке. Раньше это были три отдельных куска и они распадались взглядом. */
+
+
 .panel{margin-top:clamp(26px,3vw,40px);background:var(--cocoa-l);border:1px solid var(--line);
   border-radius:24px;padding:clamp(18px,2.4vw,28px)}
 .pick{margin-top:0}
-/* Внутри светлой рамки прежние тона давали 4,2:1 — осветляем. */
+
 .panel .lbl{color:#CFC4B6}
 .panel .prog,.panel .min{color:#EDE4DA}
 .panel .prog[aria-pressed="false"],.panel .min[aria-pressed="false"]{color:#DED3C5}
@@ -181,8 +174,8 @@ h1{font-family:var(--serif);font-weight:400;font-size:clamp(30px,4.8vw,70px);lin
 .prog[aria-pressed="true"]{color:var(--cocoa);background:var(--light);border-color:var(--light);font-weight:700}
 .pickNote{margin-top:14px;color:var(--dust);font-size:15px;line-height:1.55;max-width:68ch}
 
-/* ============ линейка минут ============ */
-/* Правка 22.09: линейка скруглена, строки отзываются на наведение. */
+
+
 .ruler{display:grid;grid-template-columns:72px minmax(0,1fr);gap:0;margin-top:22px;
   border-radius:20px;overflow:hidden;
   background:var(--cocoa-d);border:1px solid var(--line);border-radius:2px;overflow:hidden}
@@ -213,7 +206,7 @@ h1{font-family:var(--serif);font-weight:400;font-size:clamp(30px,4.8vw,70px);lin
 .ruler__sum b{font-family:var(--serif);font-weight:500;font-size:clamp(22px,2.4vw,30px);
   font-variant-numeric:tabular-nums}
 .ruler__sum .btn{min-height:46px;font-size:16px;border-radius:999px}
-/* Кнопка записи пульсирует; под курсором замирает. */
+
 @keyframes softPulse{0%,100%{box-shadow:0 0 0 0 rgba(215,155,110,.45)}
   50%{box-shadow:0 0 0 12px rgba(215,155,110,0)}}
 @media (prefers-reduced-motion:no-preference){
@@ -224,10 +217,9 @@ h1{font-family:var(--serif);font-weight:400;font-size:clamp(30px,4.8vw,70px);lin
 .fade.is-out{opacity:0}
 @media (prefers-reduced-motion:reduce){.fade,.min,.prog{transition:none}}
 
-/* без JS линейки нет, но программы читаются списком */
-/* Три цифры рядом: самое важное читается за секунду */
-/* Правка 22.09: три цифры стали панелями — так их видно как отдельные факты,
-   а не как строку через запятую. Решение подсмотрено у «Вера-дентал». */
+
+
+
 .trust{display:grid;grid-template-columns:1fr;gap:12px;margin-top:24px}
 @media (min-width:620px){.trust{grid-template-columns:repeat(3,minmax(0,1fr))}}
 .tr-card{background:var(--cocoa-l);border:1px solid var(--line);border-radius:16px;padding:18px 20px;
@@ -238,7 +230,7 @@ h1{font-family:var(--serif);font-weight:400;font-size:clamp(30px,4.8vw,70px);lin
 .trust b.is-clay{color:var(--clay)}
 .trust span{display:block;margin-top:7px;color:var(--dust);font-size:13.5px;line-height:1.35}
 
-/* Появление блоков: 700 мс, один раз. Без скрипта всё видно сразу. */
+
 .js .reveal{opacity:0;transform:translateY(22px);transition:opacity .7s ease,transform .7s ease}
 .js .reveal.in{opacity:1;transform:none}
 @media (prefers-reduced-motion:reduce){.js .reveal{opacity:1;transform:none;transition:none}
@@ -249,23 +241,22 @@ h1{font-family:var(--serif);font-weight:400;font-size:clamp(30px,4.8vw,70px);lin
 .plain-progs li{padding:16px 0;border-bottom:1px solid var(--line)}
 .plain-progs p{margin-top:5px;color:var(--dust);font-size:16px;line-height:1.55}
 
-/* ============ фото ============ */
+
 .shots{display:grid;grid-template-columns:1fr;gap:12px;margin-top:26px}
 @media (min-width:760px){.shots{grid-template-columns:1.4fr 1fr 1fr}}
 .shots img{width:100%;height:clamp(180px,22vw,280px);object-fit:cover;background:var(--cocoa-l);
   filter:saturate(.92) brightness(.98)}
 figcaption{margin-top:10px;color:var(--dust);font-size:14px;line-height:1.5}
 
-/* ============ списки ============ */
-/* Правка 22.09: прайс стал карточкой, строки подсвечиваются и чуть съезжают. */
+
+
 .rows{margin-top:24px;background:var(--cocoa-l);border:1px solid var(--line);border-radius:20px;
   overflow:hidden}
 .rows .r{padding:16px 20px;transition:background .3s ease,transform .3s ease}
 .rows .r:last-child{border-bottom:0}
 .rows .r:hover{background:rgba(215,155,110,.12);transform:translateX(4px)}
 @media (prefers-reduced-motion:reduce){.rows .r{transition:none}}
-/* Цена лежит на шкале минут: длина полосы = длительность сеанса.
-   Главная мысль сайта — время, и прайс говорит о том же. */
+
 .r__bar{grid-column:1/-1;height:3px;background:var(--clay);border-radius:2px;opacity:.55;
   transform-origin:left;transform:scaleX(var(--w,1));transition:opacity .25s}
 .r:hover .r__bar{opacity:1}
@@ -273,10 +264,7 @@ figcaption{margin-top:10px;color:var(--dust);font-size:14px;line-height:1.5}
   border-bottom:1px solid var(--line);align-items:baseline}
 .r span:last-child{font-family:var(--serif);font-weight:500;font-size:20px;white-space:nowrap;
   font-variant-numeric:tabular-nums}
-/* Правка 22.09: пункты стали окошками. При наведении окно чуть подрастает,
-   подсвечивается и пульсирует рамкой. Фотографий здесь нет намеренно: кадров
-   в стиле работы (лён, дерево, руки) хватило ровно на кабинет, а повторять
-   одни и те же снимки дважды на странице хуже, чем обойтись без них. */
+
 .know{display:grid;grid-template-columns:1fr;gap:14px;margin-top:24px;counter-reset:kn}
 @media (min-width:620px){.know{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media (min-width:1080px){.know{grid-template-columns:repeat(3,minmax(0,1fr))}}
@@ -292,7 +280,7 @@ figcaption{margin-top:10px;color:var(--dust);font-size:14px;line-height:1.5}
 .know p{margin-top:5px;color:var(--dust);font-size:16px;line-height:1.55}
 .masters{margin-top:24px;display:grid;grid-template-columns:1fr;gap:14px}
 @media (min-width:620px){.masters{grid-template-columns:repeat(3,minmax(0,1fr))}}
-/* Правка 22.09: мастера стали карточками с лицами — как в «Кружке» и «Гонге». */
+
 .ms{display:grid;gap:6px;background:var(--cocoa-l);border:1px solid var(--line);border-radius:18px;
   padding:20px 18px;transition:transform .3s ease,border-color .3s ease,box-shadow .3s ease}
 .ms:hover{transform:translateY(-6px);border-color:var(--clay);box-shadow:0 18px 40px -22px rgba(0,0,0,.7)}
@@ -306,8 +294,7 @@ figcaption{margin-top:10px;color:var(--dust);font-size:14px;line-height:1.5}
   background:rgba(215,155,110,.14);color:var(--clay);font-size:13.5px;white-space:nowrap}
 .ms__s{color:var(--dust);font-size:15.5px;line-height:1.45}
 
-/* Правка 22.09: кабинет — шесть кадров в рамках, тезис под каждым.
-   При наведении рамка подрастает, подсвечивается и пульсирует. */
+
 .cab-grid{display:grid;grid-template-columns:1fr;gap:14px;margin-top:24px}
 @media (min-width:620px){.cab-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media (min-width:1000px){.cab-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
@@ -323,8 +310,8 @@ figcaption{margin-top:10px;color:var(--dust);font-size:14px;line-height:1.5}
 .cab-card b{display:block;font-family:var(--serif);font-weight:500;font-size:18px;color:var(--light)}
 .cab-card span{display:block;margin-top:6px;color:var(--dust);font-size:15px;line-height:1.45}
 
-/* ============ форма ============ */
-/* Правка 22.09: форма и контакты в одной рамке — без неё взгляд разбегался. */
+
+
 .book{display:grid;grid-template-columns:1fr;gap:26px;margin-top:24px;background:var(--cocoa-l);
   border:1px solid var(--line);border-radius:22px;padding:clamp(20px,3vw,32px)}
 @media (min-width:1000px){.book{grid-template-columns:minmax(0,1fr) 280px;gap:44px}}
@@ -359,16 +346,15 @@ fieldset.f{border:0;padding:0;margin:0}
 .side dd{margin-top:3px;font-size:17px;line-height:1.4}
 
 
-/* Правка 22.09: внутри светлых карточек текст осветлён — на их фоне
-   прежний тон давал 4,2:1 при норме 4,5. */
+
 .tr-card span,.know li p,.cab-card span,.ms__s{color:#CFC4B6}
-/* Рамка формы тоже светлее фона — подписи полей осветляем вместе с ней. */
+
 .book label,.book legend,.book .side dt,.book .side span{color:#CFC4B6}
 .book .link{color:#E8BE97}
 .book .btn:disabled{color:#CFC4B6;border-color:rgba(207,196,182,.4)}
 .ms__d{background:rgba(226,176,134,.18);color:#E8BE97}
 .trust .tr-card b.is-clay{color:#E8BE97}
-/* ============ подвал ============ */
+
 .foot{border-top:1px solid var(--line);background:var(--cocoa-d)}
 .foot__in{max-width:1080px;margin:0 auto;padding:clamp(32px,4vw,52px) var(--gut);
   display:grid;grid-template-columns:1fr;gap:18px}
@@ -404,7 +390,7 @@ fieldset.f{border:0;padding:0;margin:0}
 </header>
 
 <main id="top">
-  <!-- ============ 1. герой и раскладка ============ -->
+  
   <section class="hero" aria-labelledby="h1">
     <div class="warmth" aria-hidden="true">
       <span class="steam s1"></span><span class="steam s2"></span><span class="steam s3"></span>
@@ -443,7 +429,6 @@ fieldset.f{border:0;padding:0;margin:0}
       <div class="ruler fade" id="ruler" aria-live="polite"></div>
       </div>
 
-      <!-- версия без JavaScript -->
       <ul class="plain-progs">
         <li><h3>Спина и шея — 30, 60 или 90 минут</h3>
           <p>Сидячая работа, ноет между лопаток. Больше всего минут — на спину.</p></li>
@@ -459,7 +444,6 @@ fieldset.f{border:0;padding:0;margin:0}
     </div>
   </section>
 
-  <!-- ============ 2. цены ============ -->
   <section class="sec reveal" id="tseny" aria-labelledby="h-t">
     <div class="col">
       <h2 id="h-t">Сколько стоит сеанс</h2>
@@ -474,7 +458,6 @@ fieldset.f{border:0;padding:0;margin:0}
     </div>
   </section>
 
-  <!-- ============ 3. правила ============ -->
   <section class="sec reveal" id="znat" aria-labelledby="h-z">
     <div class="col">
       <h2 id="h-z">Что нужно знать</h2>
@@ -495,7 +478,6 @@ fieldset.f{border:0;padding:0;margin:0}
     </div>
   </section>
 
-  <!-- ============ 4. мастера ============ -->
   <section class="sec reveal" id="mastera" aria-labelledby="h-m">
     <div class="col">
       <h2 id="h-m">Руки, которые работают</h2>
@@ -507,7 +489,6 @@ fieldset.f{border:0;padding:0;margin:0}
     </div>
   </section>
 
-  <!-- ============ 5. кабинет ============ -->
   <section class="sec reveal" id="kabinet" aria-labelledby="h-k">
     <div class="col">
       <h2 id="h-k">Кабинет</h2>
@@ -540,7 +521,6 @@ fieldset.f{border:0;padding:0;margin:0}
     </div>
   </section>
 
-  <!-- ============ 6. запись ============ -->
   <section class="sec reveal" id="zapis" aria-labelledby="h-b">
     <div class="col">
       <div class="book">
@@ -622,8 +602,7 @@ fieldset.f{border:0;padding:0;margin:0}
   'use strict';
   var MINS = [30, 60, 90, 120];
   var PRICE = { 30: 60, 60: 100, 90: 140, 120: 180 };
-  /* Доли сегментов в сумме дают 100%. Минуты считаются от выбранной длительности,
-     поэтому видно: в 30 минутах спине достаётся 12, а в 90 — 38. */
+
   var PROG = [
     { id:'spina', n:'Спина и шея', mins:[30,60,90],
       note:'Самая частая программа: сидячая работа, ноет между лопаток.',
@@ -703,7 +682,7 @@ fieldset.f{border:0;padding:0;margin:0}
     b.textContent = p.n;
     b.addEventListener('click', function () {
       curProg = p;
-      // если текущая длительность программе не подходит — берём ближайшую доступную
+
       if (p.mins.indexOf(curMin) < 0) curMin = p.mins[0];
       draw();
     });
@@ -739,8 +718,7 @@ fieldset.f{border:0;padding:0;margin:0}
     [].forEach.call(progsBox.children, function (b) {
       b.setAttribute('aria-pressed', b.getAttribute('data-p') === curProg.id ? 'true' : 'false');
     });
-    /* Подпись под выбором убрана правкой 22.09; проверяем наличие элемента,
-       иначе весь скрипт падал и линейка минут не строилась вовсе. */
+
     if (pickNote) {
       var closed = MINS.filter(function (m) { return curProg.mins.indexOf(m) < 0; });
       pickNote.textContent = curProg.note + (closed.length
@@ -749,7 +727,7 @@ fieldset.f{border:0;padding:0;margin:0}
     }
 
     var html = build();
-    // первая отрисовка — без затухания: иначе страница открывается с полупрозрачной линейкой
+
     if (reduce || first) { first = false; ruler.innerHTML = html; after();
       if (field) field.value = curProg.n + ', ' + hm(curMin) + ', ' + PRICE[curMin] + ' лари';
       return; }
@@ -768,7 +746,7 @@ fieldset.f{border:0;padding:0;margin:0}
 
   draw();
 
-  /* ---- появление блоков при прокрутке ---- */
+
   var revs = [].slice.call(document.querySelectorAll('.reveal'));
   if (reduce || !('IntersectionObserver' in window)) {
     revs.forEach(function (el) { el.classList.add('in'); });
@@ -782,7 +760,7 @@ fieldset.f{border:0;padding:0;margin:0}
     setTimeout(function () { revs.forEach(function (el) { el.classList.add('in'); }); }, 1500);
   }
 
-  /* ---- форма ---- */
+
   var form = document.getElementById('form');
   var agree = document.getElementById('f-agree');
   var send = document.getElementById('send');

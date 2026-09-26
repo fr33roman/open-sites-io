@@ -8,10 +8,10 @@
 <meta name="robots" content="noindex">
 <meta name="theme-color" content="#E8B93C">
 <link rel="canonical" href="https://open-sites.io/works/puri/ka/">
-<!--hreflang--><link rel="alternate" hreflang="ru" href="https://open-sites.io/works/puri/">
+<link rel="alternate" hreflang="ru" href="https://open-sites.io/works/puri/">
 <link rel="alternate" hreflang="en" href="https://open-sites.io/works/puri/en/">
 <link rel="alternate" hreflang="ka" href="https://open-sites.io/works/puri/ka/">
-<link rel="alternate" hreflang="x-default" href="https://open-sites.io/works/puri/"><!--/hreflang-->
+<link rel="alternate" hreflang="x-default" href="https://open-sites.io/works/puri/">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="ka_GE">
 <meta property="og:site_name" content="open-sites.io">
@@ -30,13 +30,13 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Wix+Madefor+Text:wght@400;500;600&display=swap">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+Georgian:wght@600&text=%E1%83%9E%E1%83%A3%E1%83%A0%E1%83%98%E1%83%A5%E1%83%90%E1%83%97%E1%83%9A&display=swap">
 <style>
-/* ============ токены (см. DESIGN.md) ============ */
+
 :root{
-  --ochre:#E8B93C;   /* заливка страницы — цвет корки */
-  --crust:#3A2417;   /* текст, коробка, подвал */
-  --bark:#5C3B22;    /* второстепенный текст, 5,3:1 на охре */
-  --cream:#FBF3E2;   /* плитки витрины, поля */
-  --dough:#F2D98A;   /* разделители, неактивное */
+  --ochre:#E8B93C;   
+  --crust:#3A2417;   
+  --bark:#5C3B22;    
+  --cream:#FBF3E2;   
+  --dough:#F2D98A;   
   --line:rgba(58,36,23,.22);
   --disp:"Dela Gothic One","Segoe UI",system-ui,sans-serif;
   --text:"Wix Madefor Text","Segoe UI",system-ui,sans-serif;
@@ -63,7 +63,7 @@ button,input,select,textarea{font:inherit;color:inherit}
 .skip{position:absolute;left:12px;top:-80px;background:var(--crust);color:var(--cream);padding:12px 18px;border-radius:999px;z-index:60}
 .skip:focus{top:12px}
 
-/* ============ кнопки ============ */
+
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:0 24px;
   border:2px solid var(--crust);border-radius:999px;background:var(--crust);color:var(--cream);
   font-family:var(--text);font-weight:600;font-size:16px;text-decoration:none;cursor:pointer;
@@ -76,7 +76,7 @@ button,input,select,textarea{font:inherit;color:inherit}
 .btn--cream:hover{background:transparent;color:var(--cream)}
 .link{color:inherit;text-underline-offset:4px}
 
-/* ============ закреплённая строка ============ */
+
 .top{position:sticky;top:0;z-index:50;display:flex;align-items:center;gap:16px;
   padding:10px var(--gut);background:rgba(232,185,60,.95);border-bottom:2px solid var(--crust);
   backdrop-filter:blur(8px)}
@@ -87,19 +87,18 @@ button,input,select,textarea{font:inherit;color:inherit}
 .top .btn{margin-left:auto;min-height:44px;padding:0 18px;font-size:15px}
 @media (min-width:1080px){.nav{display:flex}.top .btn{margin-left:0}}
 
-/* ============ секции ============ */
+
 .sec__in{max-width:1400px;margin:0 auto;padding:clamp(40px,5vw,var(--sec)) var(--gut)}
 h2{font-family:var(--disp);font-size:clamp(24px,3.2vw,44px);line-height:1.06;letter-spacing:-.02em}
 h3{font-family:var(--text);font-weight:600;font-size:18px;line-height:1.3}
 .note{color:var(--bark);font-size:15px;line-height:1.5;max-width:70ch}
 
-/* ============ 1. герой ============ */
+
 .hero{max-width:1400px;margin:0 auto;padding:clamp(24px,4vw,52px) var(--gut) 0}
 h1{font-family:var(--disp);font-size:clamp(32px,6.2vw,100px);line-height:.94;letter-spacing:-.025em;max-width:14ch}
 .hero__lead{margin-top:20px;font-size:clamp(17px,1.5vw,20px);line-height:1.45;max-width:54ch;color:var(--bark)}
 .hero__lead b{color:var(--crust);font-weight:600}
-/* Ночь пекаря одной лентой: от заказа до двери. Первый экран не повторяет
-   «три цифры рядом» — этот приём уже занят шестью работами. */
+
 .clock{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:26px;
   padding-top:20px;border-top:2px dashed var(--line)}
 @media (min-width:720px){.clock{grid-template-columns:repeat(4,minmax(0,1fr));gap:0}}
@@ -124,7 +123,7 @@ h1{font-family:var(--disp);font-size:clamp(32px,6.2vw,100px);line-height:.94;let
 }
 .credit{margin-top:10px;color:var(--bark);font-size:13px}
 
-/* ============ 2. витрина ============ */
+
 .sets{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}
 .set{display:flex;flex-direction:column;align-items:flex-start;gap:3px;min-height:56px;padding:10px 18px;
   background:transparent;border:2px solid var(--crust);border-radius:999px;cursor:pointer;text-align:left;
@@ -153,7 +152,7 @@ h1{font-family:var(--disp);font-size:clamp(32px,6.2vw,100px);line-height:.94;let
 @media (prefers-reduced-motion:reduce){.add.pop{animation:none}}
 .item__c{font-size:13px;color:var(--bark);min-height:18px}
 
-/* ============ коробка ============ */
+
 .boxwrap{margin-top:clamp(26px,3vw,40px)}
 .box{background:var(--crust);color:var(--cream);border-radius:14px;padding:clamp(18px,2.4vw,28px)}
 .box h3{font-family:var(--disp);font-weight:400;font-size:clamp(20px,2.2vw,28px);letter-spacing:-.02em}
@@ -184,7 +183,7 @@ h1{font-family:var(--disp);font-size:clamp(32px,6.2vw,100px);line-height:.94;let
 .win input:focus-visible + span{outline:2px solid var(--cream);outline-offset:2px}
 .box .btn{margin-top:18px}
 
-/* ============ как печём ============ */
+
 .how{background:var(--cream)}
 .how__grid{display:grid;grid-template-columns:1fr;gap:26px}
 @media (min-width:920px){.how__grid{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:44px;align-items:start}}
@@ -193,8 +192,8 @@ h1{font-family:var(--disp);font-size:clamp(32px,6.2vw,100px);line-height:.94;let
 .how li p{margin-top:5px;color:var(--bark);font-size:15px;line-height:1.5}
 .how img{width:100%;height:auto;border-radius:14px;background:var(--dough)}
 
-/* ============ доставка ============ */
-/* Окна доставки — плитки в духе витрины, без карточек с тенью */
+
+
 .del{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:22px}
 @media (min-width:860px){.del{grid-template-columns:repeat(3,minmax(0,1fr))}}
 .del li{background:var(--cream);border-radius:14px;padding:16px 18px;border-bottom:0;
@@ -202,7 +201,7 @@ h1{font-family:var(--disp);font-size:clamp(32px,6.2vw,100px);line-height:.94;let
 @media (min-width:860px){.del{grid-template-columns:repeat(2,minmax(0,1fr));column-gap:44px}}
 
 
-/* ============ заказ ============ */
+
 .book{display:grid;grid-template-columns:1fr;gap:26px;margin-top:22px}
 @media (min-width:1000px){.book{grid-template-columns:minmax(0,1fr) 280px;gap:44px}}
 .form{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
@@ -226,7 +225,7 @@ h1{font-family:var(--disp);font-size:clamp(32px,6.2vw,100px);line-height:.94;let
 .side dt{color:var(--bark);font-size:13px}
 .side dd{margin-top:3px;font-size:16px;line-height:1.4}
 
-/* ============ подвал ============ */
+
 .foot{background:var(--crust);color:var(--cream)}
 .foot__in{max-width:1400px;margin:0 auto;padding:clamp(32px,4vw,52px) var(--gut);
   display:grid;grid-template-columns:1fr;gap:18px}
@@ -235,8 +234,8 @@ h1{font-family:var(--disp);font-size:clamp(32px,6.2vw,100px);line-height:.94;let
 .plate{border:1px solid rgba(251,243,226,.3);border-radius:10px;padding:16px 18px;font-size:15px;line-height:1.5}
 .credits{color:var(--dough);font-size:13px}
 
-/* ═══════════ Правки 24.09 (пакет «Указки» 16:19) ═══════════ */
-/* 1. Логотип «Пури»: круглое клеймо с буханкой, над ней поднимается пар. */
+
+
 .brand{gap:10px;padding:4px 0}
 .brand__ico{width:38px;height:38px;flex:none;color:var(--crust)}
 .brand__cuts{stroke:var(--ochre)}
@@ -253,7 +252,7 @@ h1{font-family:var(--disp);font-size:clamp(32px,6.2vw,100px);line-height:.94;let
 @keyframes steam{0%,100%{opacity:.25;transform:translateY(1.5px)}50%{opacity:1;transform:translateY(-1px)}}
 @keyframes stamp{40%{transform:rotate(-8deg) scale(1.06)}}
 
-/* 3. Витрина: таблица в рамке. Строка = фото, название с весом, цена и плюс. */
+
 .shelf{grid-template-columns:1fr;gap:0;background:var(--cream);border:1.5px solid var(--crust);
   border-radius:16px;overflow:hidden}
 .shelf > li:nth-child(5n+1){grid-column:auto}
@@ -285,7 +284,7 @@ h1{font-family:var(--disp);font-size:clamp(32px,6.2vw,100px);line-height:.94;let
 }
 @media (prefers-reduced-motion:reduce){.item__img{transition:none}.item:hover .item__img{transform:none}}
 
-/* ═══════════ Языки 24.09: RU · EN · ქა — отдельные страницы (tools/i18n/make_lang.py) ═══════════ */
+
 .p-lang{position:relative;flex:none}
 .p-lang summary{list-style:none;display:inline-flex;align-items:center;justify-content:center;gap:7px;min-height:44px;min-width:56px;padding:0 12px;
   border:2px solid var(--crust);border-radius:999px;font-weight:600;font-size:14px;cursor:pointer;transition:background .16s,color .16s}
@@ -333,12 +332,12 @@ h2{letter-spacing:0;line-height:1.15}
     <a href="#dostavka">მიტანა</a>
     <a href="#zakaz">კონტაქტი</a>
   </nav>
-<!--lang--><details class="p-lang"><summary aria-label="ენა">ქა</summary><div><a href="../" hreflang="ru" lang="ru">Русский</a><a href="../en/" hreflang="en" lang="en">English</a><a href="./" hreflang="ka" lang="ka" aria-current="page">ქართული</a></div></details><!--/lang-->
+<details class="p-lang"><summary aria-label="ენა">ქა</summary><div><a href="../" hreflang="ru" lang="ru">Русский</a><a href="../en/" hreflang="en" lang="en">English</a><a href="./" hreflang="ka" lang="ka" aria-current="page">ქართული</a></div></details>
   <a class="btn" href="#korobka" id="topBtn">ყუთის აწყობა</a>
 </header>
 
 <main id="top">
-  <!-- ============ 1. герой ============ -->
+  
   <section class="hero" aria-labelledby="h1">
     <h1 id="h1">თბილი პური თქვენი საუზმისთვის</h1>
     <p class="hero__lead">დილის შეკვეთას ვიღებთ <b>საღამოს ცხრა საათამდე</b>. შეაგროვეთ ყუთი — დავითვლით წონას და ჯამს.</p>
@@ -356,7 +355,6 @@ h2{letter-spacing:0;line-height:1.15}
     </div>
   </section>
 
-  <!-- ============ 2. витрина ============ -->
   <section class="reveal" id="vitrina" aria-labelledby="h-v">
     <div class="sec__in">
       <h2 id="h-v">ვიტრინა</h2>
@@ -437,7 +435,6 @@ h2{letter-spacing:0;line-height:1.15}
     </div>
   </section>
 
-  <!-- ============ 3. как печём ============ -->
   <section class="how reveal" id="kak" aria-labelledby="h-k">
     <div class="sec__in">
       <div class="how__grid">
@@ -463,7 +460,6 @@ h2{letter-spacing:0;line-height:1.15}
     </div>
   </section>
 
-  <!-- ============ 4. доставка ============ -->
   <section class="reveal" id="dostavka" aria-labelledby="h-d">
     <div class="sec__in">
       <h2 id="h-d">მიტანის დრო</h2>
@@ -478,7 +474,6 @@ h2{letter-spacing:0;line-height:1.15}
     </div>
   </section>
 
-  <!-- ============ 5. заказ ============ -->
   <section class="reveal" id="zakaz" aria-labelledby="h-z">
     <div class="sec__in">
       <div class="book">
@@ -553,7 +548,7 @@ h2{letter-spacing:0;line-height:1.15}
 <script>
 (function () {
   'use strict';
-  /* Деньги — целыми тетри: складывать дробные лари нельзя, в сумме вылезает 38.400000000000006 */
+
   var items = {}, order = [];
   [].forEach.call(document.querySelectorAll('.item'), function (li) {
     var id = li.getAttribute('data-id');
@@ -584,7 +579,7 @@ h2{letter-spacing:0;line-height:1.15}
     return { sum: sum, w: w, n: n };
   }
 
-  /* кнопки «плюс» в витрине — ставим скриптом: без JS коробки нет, и плюсы были бы обманом */
+
   order.forEach(function (id) {
     var b = document.createElement('button');
     b.type = 'button';
@@ -642,7 +637,7 @@ h2{letter-spacing:0;line-height:1.15}
       ? 'მიტანა უფასოა: ყუთში 40 ლარზე მეტია.'
       : 'მიტანა 5 ლარი. უფასო მიტანამდე აკლია ' + money(4000 - t.sum) + '.';
     syncOrderField();
-    // позиции, уже лежащие в коробке, подписываем прямо в витрине
+
     order.forEach(function (id) {
       items[id].el.querySelector('.item__c').textContent = cart[id] ? 'ყუთშია: ' + cart[id] : '';
     });
@@ -659,7 +654,7 @@ h2{letter-spacing:0;line-height:1.15}
     if (t.getAttribute('data-m')) add(t.getAttribute('data-m'), -1);
   });
 
-  /* После 21:00 завтрашнее утро уже не собрать — тесто ставят ночью. Время батумское. */
+
   function batumiHour() {
     var d = new Date();
     return new Date(d.getTime() + (d.getTimezoneOffset() + 240) * 60000).getHours();
@@ -690,7 +685,7 @@ h2{letter-spacing:0;line-height:1.15}
 
   draw();
 
-  /* ---- появление блоков при прокрутке ---- */
+
   var reduceM = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
   var revs = [].slice.call(document.querySelectorAll('.reveal'));
   if (reduceM || !('IntersectionObserver' in window)) {
@@ -705,7 +700,7 @@ h2{letter-spacing:0;line-height:1.15}
     setTimeout(function () { revs.forEach(function (el) { el.classList.add('in'); }); }, 1500);
   }
 
-  /* ---- форма ---- */
+
   var form = document.getElementById('form');
   var agree = document.getElementById('f-agree');
   var send = document.getElementById('send');

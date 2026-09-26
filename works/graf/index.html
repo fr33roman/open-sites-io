@@ -5,21 +5,18 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>GRAF — барбершоп в Москве | мужские стрижки, борода, королевское бритьё</title>
 <meta name="description" content="Барбершоп GRAF: мужские стрижки, борода и бритьё опасной бритвой. Без пафоса — по делу. Запись минута в минуту.">
-<!-- Демонстрационная работа студии open-sites.io. Бизнес вымышленный. Стиль Kit №6 «Брутальный барбершоп». -->
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-<!-- Первой строкой: помечаем документ как «JS работает».
-     Всё, что прячется до анимации, прячется ТОЛЬКО под html.js —
-     без JS страница остаётся полностью читаемой. -->
+
 <script>document.documentElement.classList.add('js');</script>
 <style>
   :root{
     --bg:#1c1c1c; --bg-2:#242424; --panel:#2b2b2b;
     --amber:#f5a623; --amber-dk:#d88f12;
     --light:#f2f2f0; --ink:#1c1c1c;
-    /* --muted-l поднят до AA-контраста на тёмном фоне: обязательный мелкий текст
-       (плашка честности, подписи в подвале) обязан читаться. */
+    
     --txt:#f4f2ee; --muted:#a9a49b; --muted-l:#9a958c;
     --line:rgba(255,255,255,.1); --line-l:rgba(28,28,28,.12);
     --r:8px; --maxw:1140px;
@@ -43,12 +40,12 @@
   .btn--line{background:transparent;color:var(--txt);border-color:rgba(255,255,255,.4)}
   .btn--line:hover{border-color:var(--amber);color:var(--amber);transform:translate(-2px,-2px);box-shadow:5px 5px 0 rgba(0,0,0,.85)}
 
-  /* Плёночное зерно поверх тёмных секций */
+  
   .grain{position:relative}
   .grain::after{content:"";position:absolute;inset:0;z-index:6;pointer-events:none;opacity:.05;
     background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E")}
 
-  /* Шапка */
+  
   header{position:sticky;top:0;z-index:90;background:rgba(28,28,28,.85);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid transparent;transition:border-color .3s}
   header.scrolled{border-bottom-color:var(--line)}
   .nav{display:flex;align-items:center;justify-content:space-between;height:70px}
@@ -59,7 +56,7 @@
   .nav-links a{font-size:.92rem;color:var(--muted);font-weight:600;transition:color .15s}
   .nav-links a:hover{color:var(--amber)}
   .nav-cta{display:none}
-  /* Бургер — три ТОЛСТЫЕ короткие полосы, складываются в жирный X с overshoot */
+  
   .burger{display:none;flex-direction:column;justify-content:center;align-items:center;gap:5px;
     background:none;border:0;cursor:pointer;width:46px;height:46px;padding:0;position:relative;z-index:2}
   html.js .burger{display:inline-flex}
@@ -69,9 +66,7 @@
   .burger.open span:nth-child(2){opacity:0;transform:scaleX(.2)}
   .burger.open span:nth-child(3){transform:translateY(-9px) rotate(-45deg)}
 
-  /* Меню — ШТОРКА: падает сверху на всю ширину, янтарная заливка.
-     Живёт под шапкой по z-index, поэтому бургер всегда доступен.
-     В закрытом состоянии visibility:hidden — ссылки выпадают из порядка табуляции. */
+  
   .mmenu{position:fixed;left:0;right:0;top:0;z-index:70;background:var(--amber);color:var(--ink);
     padding:88px 0 34px;border-bottom:5px solid #141414;box-shadow:0 18px 0 rgba(0,0,0,.28);
     transform:translateY(-101%);visibility:hidden;
@@ -91,14 +86,14 @@
   .mmenu.open nav a:nth-child(4){transition-delay:.23s}
   .mmenu.open nav a:nth-child(5){transition-delay:.29s}
   .mmenu nav a:hover,.mmenu nav a:focus-visible{padding-left:14px}
-  /* CTA-пункт — отдельный «штамп», не .btn: правила шторки не должны перебивать кнопку */
+  
   .mm-cta{margin-top:26px;border-bottom:0!important;background:var(--ink);color:var(--amber)!important;
     text-align:center;padding:18px 16px!important;font-size:clamp(1.15rem,5.4vw,1.6rem)!important;
     box-shadow:6px 6px 0 rgba(0,0,0,.45)}
   .mm-cta:hover,.mm-cta:focus-visible{padding-left:16px!important;transform:translate(-3px,-3px)!important;box-shadow:9px 9px 0 rgba(0,0,0,.45)}
   body.menu-open{overflow:hidden}
 
-  /* Hero — full-bleed постер */
+  
   .hero{position:relative;min-height:100vh;min-height:100svh;display:flex;flex-direction:column;justify-content:flex-end;overflow:hidden;padding-top:96px}
   .hero-bg{position:absolute;inset:0;z-index:0}
   .hero-bg img{width:100%;height:100%;object-fit:cover;object-position:70% 28%}
@@ -117,9 +112,9 @@
   .slam{animation:slam .42s var(--cb) both}
   .d1{animation-delay:.05s}.d2{animation-delay:.13s}.d3{animation-delay:.21s}.d4{animation-delay:.3s}.d5{animation-delay:.4s}
 
-  /* Лента-marquee */
+  
   .ticker{background:var(--amber);color:var(--ink);overflow:hidden;border-top:3px solid #141414;border-bottom:3px solid #141414}
-  /* Правка 21.09: строка медленнее примерно на треть — было 9 с на круг. */
+  
   .ticker-track{display:flex;width:max-content;animation:tick 13s linear infinite}
   .tk{white-space:nowrap;font-family:"Montserrat",sans-serif;font-weight:900;text-transform:uppercase;font-size:clamp(1rem,2.6vw,1.25rem);letter-spacing:.14em;padding:13px 0}
   @keyframes tick{to{transform:translateX(-50%)}}
@@ -129,7 +124,7 @@
   .sec-head h2{font-size:clamp(1.7rem,4.4vw,2.5rem);margin-top:10px}
   .sec-head p{color:var(--muted);margin-top:12px}
 
-  /* Прайс-лист строками */
+  
   .price-list{border-top:2px solid var(--line)}
   .prow{display:block;padding:22px 14px;border-bottom:2px solid var(--line);cursor:pointer;
     transition:opacity .32s var(--cb) var(--d,0s),transform .42s var(--cb) var(--d,0s),background-color .1s linear}
@@ -139,8 +134,7 @@
   .prow h3{font-size:clamp(1.15rem,3.6vw,1.85rem);font-weight:900;transition:color .1s linear}
   .pr-dots{flex:1;min-width:26px;height:0;border-bottom:3px dotted rgba(255,255,255,.22);transition:border-color .1s linear}
   .pr-price{font-family:"Montserrat",sans-serif;font-weight:900;font-size:clamp(1.25rem,3.6vw,2rem);color:var(--amber);white-space:nowrap;transition:color .1s linear}
-  /* На узких экранах описание и «Записаться →» идут в столбик,
-     иначе описание сжимается в 5–6 строк рядом с CTA. */
+  
   .pr-sub{display:flex;flex-direction:column;align-items:flex-start;gap:9px;margin-top:8px;padding-left:34px}
   .pr-sub p{color:var(--muted);font-size:.9rem;max-width:52ch;transition:color .1s linear}
   .pr-cta{font-size:.7rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--muted-l);white-space:nowrap;transition:color .1s linear}
@@ -150,20 +144,18 @@
   .prow:hover .pr-cta{color:var(--ink)}
   .prow:hover .pr-dots{border-color:rgba(28,28,28,.45)}
 
-  /* Фото-лента услуг */
+  
   .strip{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:48px}
   .shot{position:relative;overflow:hidden;border-radius:var(--r);margin:0}
   .shot img{width:100%;height:100%;aspect-ratio:3/4;object-fit:cover;filter:grayscale(1) contrast(1.06);
     transition:filter .28s var(--cb),transform .3s var(--cb)}
-  /* Правка 22.09: вторая карточка не подсвечивалась. Правило теперь ловит
-     и наведение на саму картинку, и фокус с клавиатуры — какой бы элемент
-     ни перехватил курсор, цвет вернётся. На тач-экранах кадры цветные сразу. */
+  
   .shot:hover img,.shot:focus-within img,.shot img:hover{filter:grayscale(0) contrast(1);transform:scale(1.045)}
   @media (hover:none){.shot img{filter:grayscale(0) contrast(1)}}
   .shot figcaption{position:absolute;left:10px;bottom:10px;z-index:2;background:var(--ink);color:var(--amber);
     font-family:"Montserrat",sans-serif;font-weight:800;text-transform:uppercase;font-size:.64rem;letter-spacing:.14em;padding:6px 10px;border-radius:6px}
 
-  /* Почему мы — светлая секция */
+  
   .light-sec{background:var(--light);color:var(--ink)}
   .light-sec .tag{color:var(--amber-dk)}
   .light-sec .sec-head p{color:#57544d}
@@ -174,7 +166,7 @@
   .why h3{font-size:1.05rem;margin:14px 0 8px}
   .why p{color:#57544d;font-size:.92rem}
 
-  /* Часы — жёлтая карточка-наклейка */
+  
   .sticker{background:var(--amber);color:var(--ink);border:3px solid #141414;border-radius:var(--r);padding:clamp(26px,4.5vw,44px);
     display:grid;gap:22px;transform:rotate(-1.5deg);box-shadow:12px 12px 0 #000}
   .sticker h2{font-size:clamp(1.5rem,3.6vw,2.1rem)}
@@ -185,11 +177,11 @@
   .sticker .btn{background:var(--ink);color:var(--amber)}
   .sticker .btn:hover{background:#000;box-shadow:5px 5px 0 rgba(0,0,0,.35)}
 
-  /* Отзывы — одна крупная цитата во всю ширину на янтаре, с перелистыванием */
+  
   .rev-note{display:inline-block;font-family:"Montserrat",sans-serif;font-size:.7rem;font-weight:800;
     color:var(--amber);letter-spacing:.2em;text-transform:uppercase;margin-bottom:22px;
     border:2px solid var(--amber);padding:6px 12px}
-  /* Правка 22.09: после снятой строки блок подтянут выше. */
+  
   #reviews .sec-head{margin-bottom:18px}
   .quotes{margin-top:-14px;background:var(--amber);color:var(--ink);border:3px solid #141414;box-shadow:12px 12px 0 #000;
     padding:clamp(26px,5vw,54px) clamp(22px,5vw,54px)}
@@ -216,13 +208,13 @@
   .q-btn:hover{background:#141414;color:var(--amber);transform:translate(-3px,-3px);box-shadow:6px 6px 0 rgba(0,0,0,.45)}
   .q-count{margin-left:auto;font-family:"Montserrat",sans-serif;font-weight:900;font-size:.92rem;letter-spacing:.16em}
 
-  /* Полосатый разделитель */
+  
   .hazard{height:14px;background:linear-gradient(45deg,var(--amber) 25%,#141414 25%,#141414 50%,var(--amber) 50%,var(--amber) 75%,#141414 75%);
     background-size:40px 40px;animation:hz .7s linear infinite}
   @keyframes hz{to{background-position:40px 0}}
 
-  /* CTA + форма */
-  /* Форма — одна колонка во всю ширину, поля-«штампы»: жёсткая рамка + тень без блюра */
+  
+  
   .cta-card{background:var(--bg-2);border:3px solid #141414;border-radius:0;padding:clamp(26px,5vw,54px);position:relative;overflow:hidden}
   .cta-card::before{content:"";position:absolute;top:-60px;right:-60px;width:240px;height:240px;background:radial-gradient(circle,rgba(245,166,35,.16),transparent 70%)}
   .cta-grid{display:grid;gap:30px;position:relative;grid-template-columns:1fr}
@@ -252,8 +244,8 @@
   .demo-note .btn{border-radius:0;box-shadow:5px 5px 0 rgba(0,0,0,.85)}
   @keyframes noteIn{from{opacity:0;transform:translateX(-32px)}to{opacity:1;transform:translateX(0)}}
 
-  /* Подвал */
-  /* Подвал: широкая янтарная полоса с телефоном во всю ширину */
+  
+  
   .foot-phone{background:var(--amber);color:var(--ink);border-top:4px solid #141414;border-bottom:4px solid #141414}
   .foot-phone a{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:center;gap:4px 20px;
     padding:26px 20px;font-family:"Montserrat",sans-serif;font-weight:900;text-transform:uppercase;
@@ -270,7 +262,7 @@
   .foot-col h4{font-family:"Montserrat",sans-serif;font-size:.74rem;letter-spacing:.24em;text-transform:uppercase;color:var(--amber);margin-bottom:12px}
   .foot-col span,.foot-col a{display:block;color:var(--muted);font-size:.93rem;padding:4px 0}
   .foot-col a:hover{color:var(--amber)}
-  /* Иконки-ромбы вместо квадратных плиток */
+  
   .socials{display:flex;gap:18px;margin-top:16px;padding:6px}
   .socials a{display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;
     border-radius:0;border:2px solid var(--muted-l);color:var(--muted);padding:0;
@@ -280,7 +272,7 @@
   .demo-plate{border-top:2px solid var(--line);margin-top:30px;padding-top:20px;text-align:center;color:var(--muted-l);font-size:.85rem}
   .demo-plate a{text-decoration:underline;color:var(--amber)}
 
-  /* Появление: резкий слайд сбоку с overshoot */
+  
   html.js .rv{opacity:0;transform:translateX(-46px);transition:opacity .32s var(--cb) var(--d,0s),transform .42s var(--cb) var(--d,0s)}
   html.js .rv-r{transform:translateX(46px)}
   html.js .rv.in{opacity:1;transform:translateX(0)}
@@ -606,8 +598,7 @@
   var onScroll=function(){hdr.classList.toggle('scrolled',window.scrollY>12)};
   window.addEventListener('scroll',onScroll,{passive:true});onScroll();
 
-  /* Шторка-меню. В закрытом виде она visibility:hidden — ссылки выпадают
-     из порядка табуляции, дополнительно ничего блокировать не нужно. */
+
   var burger=document.getElementById('burger'),menu=document.getElementById('mmenu');
   var setMenu=function(open){
     menu.classList.toggle('open',open);
@@ -624,7 +615,7 @@
     if(window.innerWidth>=900&&menu.classList.contains('open'))setMenu(false);
   });
 
-  /* Отзывы — одна цитата, перелистывание без библиотек */
+
   var qs=Array.prototype.slice.call(document.querySelectorAll('#qView .q'));
   var qCount=document.getElementById('qCount'),qPrev=document.getElementById('qPrev'),qNext=document.getElementById('qNext');
   if(qs.length&&qCount&&qPrev&&qNext){
@@ -638,9 +629,7 @@
     qNext.addEventListener('click',function(){show(qi+1)});
     show(0);
 
-    /* Правка 21.09: отзывы листаются сами раз в 3,5 с. Пауза, когда на блок
-       навели курсор или ведут с клавиатуры — иначе отзыв уедет на середине
-       чтения. При «уменьшить движение» автолистание не включаем вовсе. */
+
     var slow=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if(!slow){
       var qBox=document.getElementById('quotes'),timer=null;
@@ -661,21 +650,19 @@
   }
 
   var consent=document.getElementById('f-consent'),btn=document.getElementById('submitBtn');
-  /* Синхронизируем не только по change: браузер восстанавливает отмеченный чекбокс
-     при перезагрузке и возврате «назад», иначе кнопка залипала бы в disabled. */
+
   var syncConsent=function(){btn.disabled=!consent.checked};
   consent.addEventListener('change',syncConsent);
   window.addEventListener('pageshow',syncConsent);
   syncConsent();
-  /* Ссылка-заглушка «политика» лежит внутри <label>: без этого клик по ней
-     переключал бы чекбокс согласия и прыгал в начало страницы. */
+
   var pol=document.querySelector('.consent a');
   if(pol)pol.addEventListener('click',function(e){e.preventDefault();e.stopPropagation()});
   document.getElementById('leadForm').addEventListener('submit',function(e){
     e.preventDefault();
     var name=document.getElementById('f-name'),phone=document.getElementById('f-phone');
     if(!name.value.trim()||!phone.value.trim()){(name.value.trim()?phone:name).focus();return}
-    // Демо: заявка никуда не отправляется.
+
     this.style.display='none';
     document.getElementById('demoNote').classList.add('show');
   });
@@ -688,11 +675,7 @@
       if(en.isIntersecting){en.target.classList.add('in');io.unobserve(en.target)}
     })},{threshold:.12,rootMargin:'0px 0px -40px 0px'});
     items.forEach(function(el){io.observe(el)});
-    /* Страховка на случай, когда observer есть, но не обновляется (встречается во
-       встроенных браузерах мессенджеров) — иначе прайс и весь контент ниже героя
-       остались бы скрытыми навсегда. Показываем только то, что уже попало в кадр,
-       но не раскрылось: блоки ниже сгиба сохраняют свою анимацию появления.
-       В фоновой вкладке ничего не трогаем — там анимации приостановлены штатно. */
+
     var rescue=function(){
       if(document.hidden)return;
       for(var i=0;i<items.length;i++){
