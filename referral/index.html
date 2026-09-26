@@ -1140,80 +1140,6 @@ html,body{overflow-x:clip}
   .fstep:hover::after,.rcard:hover::after,.ref-step:hover::after,.acard:hover::after{animation:none}
 }
 
-/* apply_edits: ассистент */
-/* Правка 24.09 (22:12, № 12): значок чата поддержки справа внизу — дизайн будущего ИИ-ассистента. */
-.ai{position:fixed;right:22px;bottom:22px;z-index:70}
-.ai-fab{position:relative;width:60px;height:60px;border-radius:50%;border:0;cursor:pointer;color:#0a0a0d;
-  background:var(--grad);display:grid;place-items:center;
-  box-shadow:0 12px 30px -8px rgba(167,139,250,.6),0 4px 12px rgba(0,0,0,.45);
-  transition:transform .35s cubic-bezier(.2,.8,.2,1),box-shadow .35s}
-.ai-fab:hover{transform:translateY(-2px) scale(1.04);box-shadow:0 16px 36px -8px rgba(167,139,250,.75),0 4px 12px rgba(0,0,0,.45)}
-.ai-fab:focus-visible{outline:2px solid #fff;outline-offset:3px}
-.ai-fab__ico{width:28px;height:28px;transition:opacity .25s,transform .35s}
-.ai-fab__x{position:absolute;width:18px;height:18px;opacity:0;transform:rotate(-90deg) scale(.6);transition:opacity .25s,transform .35s}
-.ai-fab__x::before,.ai-fab__x::after{content:"";position:absolute;left:0;top:8px;width:18px;height:2px;border-radius:2px;
-  background:currentColor;transform:rotate(45deg)}
-.ai-fab__x::after{transform:rotate(-45deg)}
-.ai.is-open .ai-fab__ico{opacity:0;transform:scale(.6)}
-.ai.is-open .ai-fab__x{opacity:1;transform:none}
-.ai-fab__ring{position:absolute;inset:-5px;border-radius:50%;border:1px solid rgba(167,139,250,.6);opacity:0;pointer-events:none}
-@media (prefers-reduced-motion:no-preference){
-  .ai:not(.is-open) .ai-fab__ring{animation:aiRing 4s ease-out 2s infinite}
-}
-@keyframes aiRing{0%{opacity:.85;transform:scale(.92)}70%,100%{opacity:0;transform:scale(1.35)}}
-.ai-panel{position:absolute;right:0;bottom:76px;width:min(372px,calc(100vw - 32px));
-  max-height:min(560px,calc(100vh - 120px));display:flex;flex-direction:column;overflow:hidden;
-  background:rgba(14,14,20,.97);border:1px solid rgba(255,255,255,.1);border-radius:22px;
-  box-shadow:0 30px 70px -20px rgba(0,0,0,.85),0 0 0 1px rgba(167,139,250,.08);
-  transform-origin:100% 100%;animation:aiIn .32s cubic-bezier(.2,.8,.2,1)}
-.ai-panel[hidden]{display:none}
-@keyframes aiIn{from{opacity:0;transform:translateY(10px) scale(.97)}}
-.ai-head{display:flex;align-items:center;gap:12px;padding:16px 14px 14px 16px;
-  border-bottom:1px solid rgba(255,255,255,.07);background:linear-gradient(180deg,rgba(167,139,250,.1),transparent)}
-.ai-ava{width:40px;height:40px;border-radius:12px;flex:none;display:grid;place-items:center;background:var(--grad);color:#0a0a0d}
-.ai-ava svg{width:21px;height:21px}
-.ai-who{min-width:0;flex:1}
-.ai-who b{display:block;font-family:var(--font-head);font-size:15.5px;font-weight:600;letter-spacing:-.2px}
-.ai-who small{display:block;color:var(--muted);font-size:12.5px;margin-top:2px}
-.ai-close{width:40px;height:40px;flex:none;border-radius:10px;border:0;background:rgba(255,255,255,.05);color:var(--silver);
-  cursor:pointer;display:grid;place-items:center;transition:background .2s,color .2s}
-.ai-close:hover{background:rgba(255,255,255,.1);color:#fff}
-.ai-close svg{width:16px;height:16px}
-.ai-log{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:10px;min-height:150px}
-.ai-msg{align-self:flex-start;max-width:88%;padding:11px 14px;border-radius:16px 16px 16px 6px;
-  background:rgba(255,255,255,.06);color:#e9e9f0;font-size:14.5px;line-height:1.5}
-.ai-msg--me{align-self:flex-end;border-radius:16px 16px 6px 16px;color:#fff;
-  background:linear-gradient(135deg,rgba(167,139,250,.38),rgba(167,139,250,.18))}
-.ai-link{display:block;margin-top:8px;color:#c4b5fd;font-weight:500;text-decoration:none}
-.ai-link:hover{color:#fff}
-.ai-msg--typing{display:flex;gap:5px;padding:15px 16px}
-.ai-msg--typing i{width:6px;height:6px;border-radius:50%;background:var(--muted);animation:aiDot 1s ease-in-out infinite}
-.ai-msg--typing i:nth-child(2){animation-delay:.15s}
-.ai-msg--typing i:nth-child(3){animation-delay:.3s}
-@keyframes aiDot{0%,100%{opacity:.3;transform:none}50%{opacity:1;transform:translateY(-3px)}}
-.ai-quick{display:flex;flex-wrap:wrap;gap:8px;padding:0 16px 12px}
-.ai-quick button{min-height:38px;padding:6px 14px;border-radius:100px;border:1px solid rgba(167,139,250,.35);
-  background:rgba(167,139,250,.07);color:#e4dcff;font:inherit;font-size:13.5px;cursor:pointer;
-  transition:background .2s,border-color .2s}
-.ai-quick button:hover{background:rgba(167,139,250,.16);border-color:rgba(167,139,250,.6)}
-.ai-form{display:flex;gap:8px;padding:12px 12px 12px 16px;border-top:1px solid rgba(255,255,255,.07)}
-.ai-form input{flex:1;min-width:0;min-height:44px;border-radius:12px;border:1px solid rgba(255,255,255,.1);
-  background:rgba(255,255,255,.04);color:#fff;font:inherit;font-size:15px;padding:0 14px}
-.ai-form input:focus{outline:none;border-color:rgba(167,139,250,.6)}
-.ai-form button{width:44px;height:44px;flex:none;border-radius:12px;border:0;background:var(--grad);color:#0a0a0d;
-  cursor:pointer;display:grid;place-items:center}
-.ai-form button svg{width:18px;height:18px}
-/* «Заявка» встаёт левее значка чата, по его середине; пока чат открыт — прячется */
-.float-cta{right:94px;bottom:30px}
-body:has(.ai.is-open) .float-cta{opacity:0;pointer-events:none}
-@media(max-width:640px){
-  .ai{right:14px;bottom:14px}
-  .ai-fab{width:54px;height:54px}
-  .ai-panel{position:fixed;left:10px;right:10px;bottom:78px;width:auto;max-height:calc(100vh - 100px);
-    max-height:calc(100dvh - 100px)}
-  .float-cta{right:78px;bottom:20px}
-}
-
 /* apply_edits: значок плашки */
 .hero-badge .hb-ico{width:15px;height:15px;flex:none;color:#c4b5fd}
 
@@ -1228,18 +1154,39 @@ body:has(.ai.is-open) .float-cta{opacity:0;pointer-events:none}
 .about__team{list-style:none;padding:0;margin:22px 0 0;display:flex;flex-wrap:wrap;gap:8px}
 .about__team li{font-size:13.5px;color:var(--silver);border:1px solid var(--border);border-radius:100px;
   padding:7px 14px;background:rgba(255,255,255,.03)}
-.about__grid{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
-@media(max-width:560px){.about__grid{grid-template-columns:1fr}}
-.acard{border-radius:18px;padding:22px 22px 24px;border:1px solid rgba(255,255,255,.1);
+.about__grid{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+@media(max-width:560px){.about__grid{grid-template-columns:1fr;gap:10px}}
+/* 26.09 (правка Романа): карточки компактнее и раскрываются вниз, как плитки «Услуг и сроков» */
+.acard{border-radius:16px;padding:18px;border:1px solid rgba(255,255,255,.1);cursor:pointer;
+  -webkit-tap-highlight-color:transparent;
   background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.01) 55%),var(--surface);
   box-shadow:inset 0 1px 0 rgba(255,255,255,.06),0 18px 36px -24px rgba(0,0,0,.9);
-  transition:transform .45s cubic-bezier(.2,.8,.2,1),border-color .4s}
+  transition:transform .45s cubic-bezier(.2,.8,.2,1),border-color .4s,background-color .4s}
 @media (hover:hover){.acard:hover{transform:translateY(-3px);border-color:rgba(167,139,250,.28)}}
-.acard__ico{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;
+.acard__base{position:relative}
+.acard__ico{width:38px;height:38px;border-radius:11px;display:flex;align-items:center;justify-content:center;
   color:var(--violet);background:rgba(167,139,250,.08);border:1px solid rgba(167,139,250,.22)}
-.acard__ico svg{width:22px;height:22px}
-.acard h3{font-family:var(--font-head);font-size:18px;font-weight:600;letter-spacing:-.3px;margin:16px 0 0}
-.acard p{color:var(--silver);font-size:14.5px;line-height:1.55;margin:8px 0 0}
+.acard__ico svg{width:19px;height:19px}
+.acard h3{font-family:var(--font-head);font-size:17px;font-weight:600;letter-spacing:-.3px;margin:12px 0 0}
+.acard__lead{color:var(--silver);font-size:14.5px;line-height:1.55;margin:6px 0 0}
+.acard__tog{position:absolute;top:4px;right:-6px;width:30px;height:30px;border:0;background:none;color:var(--muted);
+  cursor:pointer;display:grid;place-items:center;transition:color .3s}
+.acard__tog span{display:block;width:9px;height:9px;border-right:1.6px solid currentColor;
+  border-bottom:1.6px solid currentColor;border-radius:1px;transform:translateY(-2px) rotate(45deg);
+  transition:transform .4s cubic-bezier(.2,.8,.2,1)}
+.acard__tog:focus-visible{outline:2px solid var(--violet);outline-offset:2px;border-radius:8px}
+.acard__more{display:grid;grid-template-rows:0fr;opacity:0;visibility:hidden;
+  transition:grid-template-rows .45s cubic-bezier(.2,.8,.2,1),opacity .25s ease,visibility 0s linear .45s}
+.acard__mi{min-height:0;overflow:hidden}
+.acard__w{color:var(--muted);font-size:14px;line-height:1.6;margin:12px 0 0;padding-top:12px;
+  border-top:1px solid rgba(255,255,255,.08)}
+.acard.open{border-color:rgba(167,139,250,.32);background-color:var(--surface-2)}
+.acard.open .acard__more{grid-template-rows:1fr;opacity:1;visibility:visible;
+  transition:grid-template-rows .45s cubic-bezier(.2,.8,.2,1),opacity .35s ease .1s,visibility 0s}
+.acard.open .acard__tog{color:#fff}
+.acard.open .acard__tog span{transform:translateY(2px) rotate(225deg)}
+@media (hover:hover){.acard:hover .acard__tog{color:#fff}}
+@media (prefers-reduced-motion:reduce){.acard__more,.acard__tog span{transition:none}}
 
 /* apply_edits: пункт программы виден всегда */
 @media (min-width:1024px) and (max-width:1260px){
@@ -1370,16 +1317,39 @@ body:has(.ai.is-open) .float-cta{opacity:0;pointer-events:none}
 .tcur__b.on{background:var(--grad);color:#0a0a0d}
 .tcur__b:focus-visible{outline:2px solid var(--violet);outline-offset:2px}
 
-/* ── карточка тарифа (на ~20 % меньше прежней) ── */
+/* ── карточка тарифа ──
+   Правка Романа 25.09 (ночь): карточки объёмнее, как будто в 3D, на 10 % шире и на 5 % ниже.
+   Объём — толщина снизу и сбоку (стопка тонких теней), блик по верхней грани и свет сверху слева.
+   Толщина смотрит туда, куда карточка повёрнута: у правой видна правая грань, у левой — левая
+   (скрипт карусели задаёт --tx). Центральную на компьютере можно чуть наклонить мышью. */
+@property --tx{syntax:"<length>";inherits:false;initial-value:0px}
 .tflow{margin-top:26px}
-.tstage{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}
-.tcard{position:relative;display:flex;flex-direction:column;padding:22px 22px 20px;border-radius:18px;
-  border:1px solid rgba(255,255,255,.1);
-  background:linear-gradient(180deg,rgba(255,255,255,.045),rgba(255,255,255,0) 40%),var(--surface);
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.06),0 18px 40px -26px rgba(0,0,0,.9)}
+.tstage{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px}
+.tcard{--tx:0px;position:relative;display:flex;flex-direction:column;padding:20px 24px 20px;border-radius:18px;
+  border:1px solid rgba(255,255,255,.11);
+  background:radial-gradient(130% 55% at 14% 0%,rgba(255,255,255,.07),rgba(255,255,255,0) 62%),
+    linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,0) 38%),var(--surface);
+  box-shadow:inset 1px 1px 0 rgba(255,255,255,.1),inset 0 1px 0 rgba(255,255,255,.08),inset -1px -1px 0 rgba(0,0,0,.5),
+    calc(var(--tx)*1) 1px 0 #2a2934,calc(var(--tx)*2) 2px 0 #25242e,calc(var(--tx)*3) 3px 0 #201f28,
+    calc(var(--tx)*4) 4px 0 #1c1b23,calc(var(--tx)*5) 5px 0 #18171e,calc(var(--tx)*6) 6px 0 #15141a,
+    calc(var(--tx)*7) 7px 0 #121116,calc(var(--tx)*8) 8px 0 #0f0f13,
+    calc(var(--tx)*9) 9px 0 rgba(255,255,255,.06),
+    calc(var(--tx)*12) 26px 36px -12px rgba(0,0,0,.85),0 50px 90px -46px rgba(0,0,0,.95)}
 .tcard--hot{border-color:rgba(167,139,250,.5);
-  background:linear-gradient(180deg,rgba(167,139,250,.12),rgba(167,139,250,0) 45%),var(--surface-2);
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.08),0 0 0 1px rgba(167,139,250,.18),0 30px 70px -30px rgba(124,92,246,.55)}
+  background:radial-gradient(130% 55% at 14% 0%,rgba(196,181,253,.12),rgba(167,139,250,0) 62%),
+    linear-gradient(180deg,rgba(167,139,250,.1),rgba(167,139,250,0) 45%),var(--surface-2);
+  box-shadow:inset 1px 1px 0 rgba(255,255,255,.12),inset 0 1px 0 rgba(255,255,255,.1),inset -1px -1px 0 rgba(0,0,0,.5),
+    0 0 0 1px rgba(167,139,250,.18),
+    calc(var(--tx)*1) 1px 0 #3a3058,calc(var(--tx)*2) 2px 0 #332a4d,calc(var(--tx)*3) 3px 0 #2c2442,
+    calc(var(--tx)*4) 4px 0 #251f37,calc(var(--tx)*5) 5px 0 #1f1a2d,calc(var(--tx)*6) 6px 0 #1a1625,
+    calc(var(--tx)*7) 7px 0 #15121d,calc(var(--tx)*8) 8px 0 #110f17,
+    calc(var(--tx)*9) 9px 0 rgba(167,139,250,.16),
+    calc(var(--tx)*12) 28px 44px -14px rgba(0,0,0,.8),0 40px 90px -34px rgba(124,92,246,.5)}
+/* блик, который идёт за мышью по наклонённой карточке */
+.tcard::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;opacity:0;
+  background:radial-gradient(360px 260px at var(--mx,50%) var(--my,0%),rgba(255,255,255,.075),transparent 70%);
+  transition:opacity .4s}
+.tcard.is-tilt::after{opacity:1}
 .tcard__badge{align-self:flex-start;font-size:11.5px;font-weight:600;letter-spacing:.02em;color:var(--silver);
   border:1px solid rgba(255,255,255,.14);border-radius:100px;padding:4px 11px}
 .tcard--hot .tcard__badge{background:var(--grad);color:#0a0a0d;border-color:transparent}
@@ -1401,12 +1371,20 @@ body:has(.ai.is-open) .float-cta{opacity:0;pointer-events:none}
 .tcard__bl{display:inline}
 .tcard .btn-ghost{border:1px solid rgba(255,255,255,.2)}
 
-/* ── карусель: включает скрипт, как у «Что мы делаем» ── */
-.tstage.is-carousel{display:block;position:relative;perspective:1800px;transform-style:preserve-3d;
+/* ── карусель: включает скрипт, как у «Что мы делаем» ──
+   Без transform-style:preserve-3d: в общем 3D-пространстве плоскость сцены при наклоне карточки
+   вставала перед ней, и кнопка «Заказать» не нажималась мышью (проверка 25.09). Порядок карточек
+   задаёт z-index, перспектива сцены на каждую карточку действует и так.
+   touch-action: вбок листает карусель, а не «назад» в истории браузера. */
+.tstage.is-carousel{display:block;position:relative;perspective:1800px;touch-action:pan-y pinch-zoom;
   transition:height .4s ease}
-.tstage.is-carousel .tcard{position:absolute;top:0;left:50%;width:min(300px,86vw);
-  transform-origin:50% 30%;backface-visibility:hidden;will-change:transform;cursor:pointer;
-  transition:transform .6s cubic-bezier(.25,.8,.3,1),opacity .5s,filter .5s,border-color .4s}
+/* Карточка стоит по центру сама (left/right/margin), без translateX(-50%). У центральной без наклона
+   transform — none: её текст рисуется как обычный, чётко. Раньше все карточки жили в 3D-слое видеокарты
+   (will-change, backface-visibility) и текст мылился — замечание Романа 26.09. */
+.tstage.is-carousel .tcard{position:absolute;top:0;left:0;right:0;margin-left:auto;margin-right:auto;
+  width:min(330px,100%);transform-origin:50% 30%;cursor:pointer;
+  transition:transform .6s cubic-bezier(.25,.8,.3,1),--tx .6s cubic-bezier(.25,.8,.3,1),opacity .5s,filter .5s,border-color .4s}
+.tstage.is-carousel .tcard.is-tilt{transition:transform .2s ease-out,--tx .2s ease-out,opacity .5s,filter .5s,border-color .4s}
 .tstage.is-carousel .tcard.is-center{cursor:default}
 .tstage.is-carousel .tcard:not(.is-center) .tcard__btn{pointer-events:none}
 .tnav{display:flex;align-items:center;justify-content:center;gap:14px;margin-top:22px}
@@ -1427,11 +1405,104 @@ body:has(.ai.is-open) .float-cta{opacity:0;pointer-events:none}
   .tcard__now--word{font-size:19px}
   /* «Подключить за 1 500 ₽/мес» — одной строкой и на узком телефоне */
   .tcard__btn{font-size:13.5px;padding-left:12px;padding-right:12px}
-  /* плавающие «Заявка» и чат не закрывают стрелки карусели, пока они на экране */
+}
+/* плавающие «Заявка» и чат не закрывают кнопку заказа и стрелки карусели, пока они на экране
+   (до 767 px: на 641–655 px «Заявка» ложилась на край кнопки) */
+@media(max-width:767px){
   body.tnav-near .float-cta,body.tnav-near .ai:not(.is-open){opacity:0;pointer-events:none;transition:opacity .25s}
 }
 @media (prefers-reduced-motion:reduce){
-  .tstage.is-carousel,.tstage.is-carousel .tcard{transition:none}
+  .tstage.is-carousel,.tstage.is-carousel .tcard,.tstage.is-carousel .tcard.is-tilt{transition:none}
+}
+
+/* apply_edits: этапы одной таблицей */
+/* Правка Романа 25.09 (ночь): шесть этапов — строки одной очень тонкой таблицы, разделены волосяной
+   линией. Линия слева темнее и живая: по ней сверху вниз, по кругу, бежит мягкий свет нейтрального
+   цвета, и кружки загораются, когда свет проходит мимо. Высоту линии задаёт скрипт — строго от
+   первого кружка до последнего. */
+.ftable{position:relative;border:1px solid rgba(255,255,255,.075);border-radius:18px;
+  background:linear-gradient(180deg,rgba(255,255,255,.022),rgba(255,255,255,.006));
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.04)}
+.flow .ftable .fstep{margin:0;border:0;border-radius:0;background:transparent;box-shadow:none;transform:none;
+  padding:20px 26px 21px;transition:background .35s}
+.flow .ftable .fstep + .fstep{border-top:1px solid rgba(255,255,255,.06)}
+.flow .ftable .fstep:first-child{border-radius:17px 17px 0 0}
+.flow .ftable .fstep:last-child{border-radius:0 0 17px 17px}
+.flow .ftable .fstep.lit{background:transparent}
+.flow .ftable .fstep::after{content:none}
+@media (hover:hover){
+  .flow .ftable .fstep:hover{transform:none;box-shadow:none;background:rgba(255,255,255,.025)}
+}
+/* кружок стоит на линии: у строки теперь рамка таблицы в 1 px — сдвиг на неё */
+.flow .fstep::before{left:-45px;border-color:rgba(255,255,255,.14);background:var(--bg);
+  transition:border-color .7s ease,box-shadow .7s ease}
+.flow .fstep.lit::before{border-color:rgba(255,255,255,.2);box-shadow:none}
+.flow .fstep.pass::before{border-color:rgba(232,234,246,.9);
+  box-shadow:0 0 0 4px rgba(220,224,245,.06),0 0 14px rgba(214,219,245,.42);transition:border-color .18s,box-shadow .18s}
+/* наведение — только мышью: на телефоне после касания кружок оставался гореть */
+@media (hover:hover){
+  .flow .fstep:hover::before{border-color:rgba(232,234,246,.9);
+    box-shadow:0 0 0 4px rgba(220,224,245,.06),0 0 14px rgba(214,219,245,.42);transition:border-color .18s,box-shadow .18s}
+}
+.flow .fstep__n{transition:color .6s}
+.flow .fstep.pass .fstep__n{color:var(--silver);transition:color .18s}
+@media(max-width:700px){
+  /* строка ниже — кружок выше на столько же, иначе он стоит у нижнего края заголовка */
+  .flow .fstep::before{left:-36px;top:22px}
+  .flow .ftable .fstep{padding:16px 16px 17px}
+}
+/* линия: тёмная основа и бегущий по ней свет */
+.flow .flow__rail{background:rgba(255,255,255,.07);bottom:auto}
+.flow .flow__rail i,.flow.lit .flow__rail i{height:150px;top:0;transform:translateY(-150px);transition:none;
+  background:linear-gradient(180deg,rgba(226,229,242,0) 0%,rgba(226,229,242,.18) 45%,rgba(236,238,248,.78) 88%,rgba(236,238,248,0) 100%)}
+@media (prefers-reduced-motion:reduce){
+  .flow .flow__rail i,.flow.lit .flow__rail i{display:none}
+}
+
+/* apply_edits: волна первого экрана */
+/* Правка Романа 25.09 (ночь): в первом экране — «Точечная волна» с полки эффектов, минималистично.
+   Холст лежит под сценой с ноутбуком и телефоном (превью работ не перекрывает) и под текстом,
+   занимает нижнюю часть экрана и растворяется кверху и книзу. Тёмная «вуаль» сцены слева больше
+   не нужна: она легла бы на волну тёмной полосой — свечение сцены гаснет маской. */
+.hero--scene{position:relative;isolation:isolate}
+.hero--scene > .wrap{position:relative;z-index:1}
+.hero-wave{position:absolute;left:0;bottom:0;width:100%;height:36%;z-index:0;display:block;pointer-events:none;
+  opacity:0;transition:opacity 1.8s ease;
+  -webkit-mask-image:linear-gradient(180deg,transparent 0%,#000 34%,#000 82%,transparent 100%);
+          mask-image:linear-gradient(180deg,transparent 0%,#000 34%,#000 82%,transparent 100%)}
+.hero-wave.on{opacity:1}
+.hero--scene .scene__veil{display:none}
+.hero--scene .scene__glow{-webkit-mask-image:linear-gradient(90deg,transparent 0%,#000 42%);
+          mask-image:linear-gradient(90deg,transparent 0%,#000 42%)}
+
+/* apply_edits: заголовок — уменьшить движение */
+/* Слова не сменяются — видно только первое. Раньше невидимые слова стояли в строке, и видимое
+   уезжало вправо, а точка — за край заголовка. */
+@media(prefers-reduced-motion:reduce){
+  .rot__size,.rot__i:not(.on){display:none}
+  .rot__i.on{position:static}
+}
+
+/* apply_edits: шапка — реферальная тоньше */
+.nav-links a.nav-ref{font-weight:500}
+
+/* apply_edits: телефон — плотнее */
+@media(max-width:640px){
+  .section{padding:52px 0}
+}
+/* «О нас»: значок в одну строку с названием — карточки ниже на всех экранах */
+.acard__base{display:grid;grid-template-columns:36px minmax(0,1fr);column-gap:12px;align-items:center}
+.acard__ico{width:36px;height:36px;border-radius:10px}
+.acard__ico svg{width:18px;height:18px}
+.acard h3{margin:0;padding-right:28px}
+.acard__lead{grid-column:1/-1;margin-top:10px}
+.acard__tog{top:3px;right:-8px}
+@media(max-width:560px){
+  .acard{padding:16px}
+  .acard__base{grid-template-columns:34px minmax(0,1fr)}
+  .acard__ico{width:34px;height:34px}
+  .acard__ico svg{width:17px;height:17px}
+  .acard__tog{top:2px}
 }
 </style>
 <style>
@@ -1467,7 +1538,7 @@ body:has(.ai.is-open) .float-cta{opacity:0;pointer-events:none}
         <a href="../#about" data-i18n="nav.about">О нас</a>
         <a href="../#faq" data-i18n="nav.faq">FAQ</a>
         <a class="nav-ref" href="./" aria-current="page">Реферальная программа</a>
-        <a class="btn btn-primary btn-sm btn-pulse cta-beat" href="../brief/" data-i18n="nav.cta">Оставить заявку</a>
+        <a class="btn btn-primary btn-sm btn-pulse cta-beat" href="https://t.me/opensites_io" target="_blank" rel="noopener" data-i18n="nav.cta">Оставить заявку</a>
       </nav>
       <div class="lang-dd" id="langDd">
         <button type="button" class="lang-current" id="langCurrent" aria-haspopup="listbox" aria-expanded="false" aria-label="Язык / Language">
@@ -1516,7 +1587,7 @@ body:has(.ai.is-open) .float-cta{opacity:0;pointer-events:none}
             <li>Клиенту по коду — скидка 10%</li>
             <li>Выплата после оплаты проекта</li>
           </ul>
-          <div class="rcard__f"><a class="btn btn-primary" href="https://t.me/open_sites" target="_blank" rel="noopener">Получить код</a></div>
+          <div class="rcard__f"><a class="btn btn-primary" href="https://t.me/opensites_io" target="_blank" rel="noopener">Получить код</a></div>
         </article>
 
         <article class="rcard rcard--pro reveal">
@@ -1528,7 +1599,7 @@ body:has(.ai.is-open) .float-cta{opacity:0;pointer-events:none}
             <li>Ставка и порядок выплат обсуждаются лично</li>
             <li>Отдельный контакт для ваших вопросов</li>
           </ul>
-          <div class="rcard__f"><a class="btn btn-ghost" href="https://t.me/open_sites" target="_blank" rel="noopener">Обсудить условия</a></div>
+          <div class="rcard__f"><a class="btn btn-ghost" href="https://t.me/opensites_io" target="_blank" rel="noopener">Обсудить условия</a></div>
         </article>
       </div>
 
@@ -1545,13 +1616,13 @@ body:has(.ai.is-open) .float-cta{opacity:0;pointer-events:none}
       <div class="muted" data-i18n="footer.tagline">Сайты, которые продают. 2026</div>
     </div>
     <div class="muted">
-      Telegram: <a href="https://t.me/open_sites" target="_blank" rel="noopener">@open_sites</a> ·
+      Telegram: <a href="https://t.me/opensites_io" target="_blank" rel="noopener">@opensites_io</a> ·
       <a href="mailto:opensites.io@gmail.com">opensites.io@gmail.com</a>
     </div>
   </div>
 </footer>
 
-<a class="float-cta btn btn-primary btn-sm btn-pulse cta-live" id="floatCta" href="../brief/" data-i18n="float.cta">Заявка</a>
+<a class="float-cta btn btn-primary btn-sm btn-pulse cta-live" id="floatCta" href="https://t.me/opensites_io" target="_blank" rel="noopener" data-i18n="float.cta">Заявка</a>
 
 <script>
 /* ============ open-sites.io — мультиязычность (RU / EN / KA) ============
@@ -1579,6 +1650,9 @@ const I18N = {
     "hero.badge": "Берём проекты на октябрь — осталось 3 места",
     "hero.h1a": "Сайты, которые",
     "hero.h1b": "продают",
+    "hero.rot1": "продают",
+    "hero.rot2": "привлекают",
+    "hero.rot3": "помогают",
     "hero.h1c": "Запуск за 3–5 дней.",
     "hero.lead": "Лендинги, сайты для бизнеса, Telegram Mini Apps и многое другое. Фиксированная цена, безлимитные правки до сдачи, заявки клиентов — сразу попадают к вам.",
     "hero.cta1": "Обсудить проект",
@@ -1681,20 +1755,23 @@ const I18N = {
     "hero.badge": "Booking October projects — 3 spots left",
     "hero.h1a": "Websites that",
     "hero.h1b": "sell",
+    "hero.rot1": "sell",
+    "hero.rot2": "attract",
+    "hero.rot3": "help",
     "hero.h1c": "Live in 3–5 days.",
-    "hero.lead": "Landing pages, business websites, Telegram Mini Apps and more. Fixed price, unlimited revisions until launch, and every lead reaches you straight away.",
+    "hero.lead": "Landing pages, business websites, Telegram Mini Apps and more. Fixed price, unlimited revisions until handover, and every lead reaches you straight away.",
     "hero.cta1": "Discuss your project",
     "hero.cta2": "See our projects",
     "stats.days": "days",
     "stats.l1": "average time to launch",
     "stats.l2": "faster than traditional agencies",
-    "stats.l3": "free revisions before launch",
+    "stats.l3": "free revisions before handover",
     "stats.l4": "leads land in your Telegram",
     "svc.tag": "Services",
     "svc.h2": "What we build",
     "svc.sub": "The price is locked in before we start and never changes. Every project includes mobile-ready design, a lead form and SEO essentials.",
     "svc.1.t": "Landing page",
-    "svc.1.d": "A conversion page for one service or product",
+    "svc.1.d": "A sales page for one service or product",
     "svc.2.t": "Business website",
     "svc.2.d": "A complete multi-page company site, built end to end",
     "svc.3.t": "Telegram Mini App",
@@ -1758,7 +1835,7 @@ const I18N = {
     "faq.q2": "What if I don't like the result?",
     "faq.a2": "You see the hero section concept first. If it's not right, we redo it or refund your deposit. During the build, revisions are unlimited and free until the project ships.",
     "faq.q3": "How much does it cost, and what drives the price?",
-    "faq.a3": "Landing page from {P_LANDING}, business website from {P_BIZ}. For Telegram Mini Apps and phone apps we quote after reviewing the task. The price depends on the number of sections and integrations (CRM, payments, online booking) and is locked in before we start — no surprise add-ons halfway through.",
+    "faq.a3": "Landing page from {P_LANDING}, business website from {P_BIZ}. For Telegram Mini Apps and phone apps, we quote after reviewing your project. The price depends on the number of sections and integrations (CRM, payments, online booking) and is locked in before we start — no surprise add-ons halfway through.",
     "faq.q4": "Do I need to be technical? Domains, hosting…",
     "faq.a4": "No. We'll help you buy a domain (10 minutes, from about {P_DOMAIN}), and hosting is free for most projects. All the logins stay with you — the site is yours, not ours.",
     "faq.q5": "What happens after launch?",
@@ -1770,7 +1847,7 @@ const I18N = {
   },
   ka: {
     "meta.title": "open-sites.io — საიტები, რომლებიც ყიდიან. ლენდინგი 3–5 დღეში",
-    "meta.desc": "ვქმნით გამყიდველ საიტებსა და Telegram Mini App-ებს დღეებში და არა თვეებში. ფიქსირებული ფასი, შეუზღუდავი შესწორებები ჩაბარებამდე, განაცხადები პირდაპირ თქვენს Telegram-ში.",
+    "meta.desc": "ვქმნით გამყიდველ საიტებსა და Telegram Mini App‑ებს დღეებში და არა თვეებში. ფიქსირებული ფასი, შეუზღუდავი შესწორებები ჩაბარებამდე, განაცხადები პირდაპირ თქვენს Telegram‑ში.",
     "nav.services": "სერვისები",
     "nav.cases": "პროექტები",
     "nav.process": "პროცესი",
@@ -1781,15 +1858,18 @@ const I18N = {
     "hero.badge": "ვიღებთ პროექტებს ოქტომბრისთვის — დარჩა 3 ადგილი",
     "hero.h1a": "საიტები, რომლებიც",
     "hero.h1b": "ყიდიან",
+    "hero.rot1": "ყიდიან",
+    "hero.rot2": "იზიდავენ",
+    "hero.rot3": "ეხმარებიან",
     "hero.h1c": "გაშვება 3–5 დღეში.",
-    "hero.lead": "ლენდინგები, ბიზნესსაიტები და Telegram Mini App-ები. ფიქსირებული ფასი, შეუზღუდავი შესწორებები ჩაბარებამდე, კლიენტების განაცხადები — პირდაპირ თქვენს Telegram-ში.",
+    "hero.lead": "ლენდინგები, ბიზნესსაიტები, Telegram Mini App‑ები და სხვა. ფიქსირებული ფასი, შეუზღუდავი შესწორებები ჩაბარებამდე, კლიენტების განაცხადები პირდაპირ თქვენთან მოდის.",
     "hero.cta1": "პროექტის განხილვა",
     "hero.cta2": "პროექტების ნახვა",
     "stats.days": "დღე",
     "stats.l1": "გაშვების საშუალო ვადა",
     "stats.l2": "უფრო სწრაფად, ვიდრე კლასიკური სტუდიები",
     "stats.l3": "შესწორება ჩაბარებამდე უფასოდ",
-    "stats.l4": "განაცხადები პირდაპირ თქვენს Telegram-ში მოდის",
+    "stats.l4": "განაცხადები პირდაპირ თქვენს Telegram‑ში მოდის",
     "svc.tag": "სერვისები",
     "svc.h2": "რას ვაკეთებთ",
     "svc.sub": "ფასი ფიქსირდება სტარტამდე და აღარ იცვლება. ყველა პროექტში შედის მობილურზე ადაპტირებული დიზაინი, განაცხადის ფორმა და საბაზისო SEO.",
@@ -1798,22 +1878,22 @@ const I18N = {
     "svc.2.t": "ბიზნესსაიტი",
     "svc.2.d": "მრავალგვერდიანი კორპორატიული საიტი სრული მომსახურებით",
     "svc.3.t": "Telegram Mini App",
-    "svc.3.d": "აპლიკაცია პირდაპირ Telegram-ის შიგნით",
-    "svc.4.t": "დომენში დახმარება",
+    "svc.3.d": "აპლიკაცია პირდაპირ Telegram‑ის შიგნით",
+    "svc.4.t": "დომენის გამართვა",
     "svc.4.d": "დომენი, ელფოსტა და SSL — ტექნიკური ნაწილი ჩვენზეა",
     "svc.5.t": "ტექნიკური მხარდაჭერა",
     "svc.5.d": "მხარდაჭერა და განვითარება გაშვების შემდეგ",
-    "svc.6.t": "აპლიკაცია iOS-სა და Android-ზე",
-    "svc.6.d": "თქვენი აპლიკაცია App Store-სა და Google Play-ში",
+    "svc.6.t": "აპლიკაცია iOS‑სა და Android‑ზე",
+    "svc.6.d": "თქვენი აპლიკაცია App Store‑სა და Google Play‑ში",
     "tbl.h1": "სერვისი",
     "tbl.h2": "აღწერა",
     "tbl.h3": "ვადები",
     "tbl.h4": "ღირებულება",
     "tbl.1.d": "გამყიდველი გვერდი: შეთავაზება, სარგებელი, ქეისები, გამოხმაურებები, FAQ და განაცხადის ფორმა. რეკლამისა და გაყიდვების სწრაფი სტარტისთვის.",
     "tbl.1.term": "3–5 დღე",
-    "tbl.2.d": "სერვისები, ფასები, პორტფოლიო, გუნდი და კონტაქტები. ონლაინ ჩაწერა, CRM-თან ინტეგრაცია და საბაზისო SEO.",
+    "tbl.2.d": "სერვისები, ფასები, პორტფოლიო, გუნდი და კონტაქტები. ონლაინ ჩაწერა, CRM‑თან ინტეგრაცია და საბაზისო SEO.",
     "tbl.2.term": "1–2 კვირა",
-    "tbl.3.d": "კატალოგი, ჩაწერა, გადახდა და პირადი კაბინეტი პირდაპირ Telegram-ში. კლიენტები სარგებლობენ აპლიკაციის ჩამოტვირთვის გარეშე.",
+    "tbl.3.d": "კატალოგი, ჩაწერა, გადახდა და პირადი კაბინეტი პირდაპირ Telegram‑ში. კლიენტები სარგებლობენ აპლიკაციის ჩამოტვირთვის გარეშე.",
     "tbl.3.term": "1 კვირიდან",
     "tbl.4.d": "დომენის შერჩევა და რეგისტრაცია, ელფოსტა თქვენს დომენზე, SSL და საიტთან მიერთება. მთელ ტექნიკურ ნაწილს ჩვენ ვიღებთ თავზე.",
     "tbl.4.term": "სრული მომსახურება",
@@ -1826,7 +1906,7 @@ const I18N = {
     "cases.1.m": "განაცხადი პირველ თვეში",
     "cases.2.n": "სილამაზის სალონი",
     "cases.2.t": "საიტი ონლაინ ჩაწერით",
-    "cases.2.d": "საიტი, სადაც ჩაწერა ზარის გარეშე ხდება, შეხსენებები კი Telegram-ში მოდის. ადმინისტრატორი განიტვირთა, განრიგში თავისუფალი ფანჯრები შეივსო.",
+    "cases.2.d": "საიტი, სადაც ჩაწერა ზარის გარეშე ხდება, შეხსენებები კი Telegram‑ში მოდის. ადმინისტრატორი განიტვირთა, განრიგში თავისუფალი ფანჯრები შეივსო.",
     "cases.2.m": "შემოსავლის ზრდა ორ თვეში",
     "cases.3.n": "გამათბობელი აღჭურვილობა",
     "cases.3.t": "ვიტრინა პარამეტრებით შერჩევის შესაძლებლობით",
@@ -1834,8 +1914,8 @@ const I18N = {
     "cases.3.m": "საშუალო ჩეკის ზრდა",
     "cases.4.n": "ფიტნეს-სტუდია",
     "cases.4.t": "Telegram Mini App ჩასაწერად",
-    "cases.4.d": "ვარჯიშებზე ჩაწერა პირდაპირ Telegram-ში: განრიგი, აბონემენტები, გადახდა. აპლიკაციის ჩამოტვირთვის გარეშე.",
-    "cases.4.m": "ჩაწერა Mini App-ით კვარტალში",
+    "cases.4.d": "ვარჯიშებზე ჩაწერა პირდაპირ Telegram‑ში: განრიგი, აბონემენტები, გადახდა. აპლიკაციის ჩამოტვირთვის გარეშე.",
+    "cases.4.m": "ჩაწერა Mini App‑ით კვარტალში",
     "proc.tag": "პროცესი",
     "proc.h2a": "განაცხადიდან გაშვებამდე —",
     "proc.h2b": "4 ნაბიჯი",
@@ -1849,7 +1929,7 @@ const I18N = {
     "proc.3.d": "ვქმნით საიტს სრულად. ამ ეტაპზე შესწორებები — შეუზღუდავი და დამატებითი გადახდის გარეშე.",
     "proc.3.time": "2–7 დღე",
     "proc.4.t": "გაშვება",
-    "proc.4.d": "ვაქვეყნებთ თქვენს დომენზე, ვაწყობთ განაცხადების მიღებას თქვენს Telegram-ში, გადმოგცემთ ყველა წვდომას.",
+    "proc.4.d": "ვაქვეყნებთ თქვენს დომენზე, ვაწყობთ განაცხადების მიღებას თქვენს Telegram‑ში, გადმოგცემთ ყველა წვდომას.",
     "proc.4.time": "1 დღე",
     "faq.tag": "FAQ",
     "faq.h2": "ხშირად დასმული კითხვები",
@@ -1858,11 +1938,11 @@ const I18N = {
     "faq.q2": "რა მოხდება, თუ შედეგი არ მომეწონება?",
     "faq.a2": "ჯერ ხედავთ მთავარი ეკრანის კონცეპტს. თუ არ მოგწონთ — გადავაკეთებთ ან ავანსს დაგიბრუნებთ. დამზადების ეტაპზე შესწორებები შეუზღუდავი და უფასოა პროექტის ჩაბარებამდე.",
     "faq.q3": "რა ღირს და რაზეა დამოკიდებული ფასი?",
-    "faq.a3": "ლენდინგი — {P_LANDING}-დან, ბიზნესსაიტი — {P_BIZ}-დან. Telegram Mini App-ისა და მობილური აპლიკაციის ფასს ამოცანის განხილვის შემდეგ ვასახელებთ. ფასი დამოკიდებულია ბლოკებისა და ინტეგრაციების რაოდენობაზე (CRM, გადახდა, ონლაინ ჩაწერა) და ფიქსირდება სტარტამდე — არანაირი „გზადაგზა ამოტივტივებული“ დანამატი.",
+    "faq.a3": "ლენდინგი — {P_LANDING}-დან, ბიზნესსაიტი — {P_BIZ}-დან. Telegram Mini App‑ისა და მობილური აპლიკაციის ფასს ამოცანის განხილვის შემდეგ ვასახელებთ. ფასი დამოკიდებულია ბლოკებისა და ინტეგრაციების რაოდენობაზე (CRM, გადახდა, ონლაინ ჩაწერა) და ფიქსირდება სტარტამდე — არანაირი „გზადაგზა ამოტივტივებული“ დანამატი.",
     "faq.q4": "საჭიროა თუ არა ტექნიკურ საკითხებში გარკვევა? დომენი, ჰოსტინგი…",
-    "faq.a4": "არა. დაგეხმარებით დომენის შეძენაში (ეს 10 წუთია და ~{P_DOMAIN}-დან), ჰოსტინგი კი პროექტების უმეტესობისთვის უფასოა. ყველა წვდომა თქვენთან რჩება — საიტი თქვენია და არა ჩვენი.",
+    "faq.a4": "არა. დაგეხმარებით დომენის შეძენაში (10 წუთის საქმეა, ყველაზე იაფი დომენი დაახლოებით {P_DOMAIN} ღირს), ჰოსტინგი კი პროექტების უმეტესობისთვის უფასოა. ყველა წვდომა თქვენთან რჩება — საიტი თქვენია და არა ჩვენი.",
     "faq.q5": "რა ხდება საიტთან გაშვების შემდეგ?",
-    "faq.a5": "ჩაბარების შემდეგ ერთი თვე უფასო მხარდაჭერაა. შემდეგ — სურვილისამებრ: მხარდაჭერის ტარიფი {P_SUPPORT}-დან (შესწორებები, განახლებები, მონიტორინგი) ან საიტი უბრალოდ თავად მუშაობს — ის თქვენია.",
+    "faq.a5": "ჩაბარების შემდეგ ერთი თვე უფასო მხარდაჭერაა. შემდეგ — სურვილისამებრ: მხარდაჭერის ტარიფი — {P_SUPPORT} (შესწორებები, განახლებები, მონიტორინგი) ან საიტი უბრალოდ თავად მუშაობს — ის თქვენია.",
     "footer.tagline": "საიტები, რომლებიც ყიდიან. 2026",
     "float.cta": "განაცხადი",
     "price.note": "ფასები მითითებულია სავარაუდოდ და გადაანგარიშებულია მიმდინარე კურსით.",
@@ -1968,7 +2048,7 @@ document.addEventListener("DOMContentLoaded", osInitLang);
 const CONFIG = {
   TG_BOT_TOKEN: "",            // токен бота от @BotFather, например "123456:ABC-DEF..."
   TG_CHAT_ID: "",              // ваш chat_id (узнать у @userinfobot)
-  TG_USERNAME: "open_sites",   // ваш ник в Telegram без @ — для кнопки «написать напрямую»
+  TG_USERNAME: "opensites_io",   // ваш ник в Telegram без @ — для кнопки «написать напрямую»
   WA_PHONE: "",                // номер WhatsApp в формате 79000000000 (без + и пробелов); пусто = кнопка скрыта
   IG_USERNAME: "",             // ник в Instagram без @; пусто = ссылка не показывается
 };
@@ -2583,90 +2663,24 @@ if (briefForm) {
   sync();
 })();
 </script>
-<!-- apply_edits: ассистент -->
-<div class="ai" id="ai">
-  <section class="ai-panel" id="aiPanel" aria-label="Ассистент open-sites.io" hidden>
-    <header class="ai-head">
-      <span class="ai-ava" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.5l1.9 5.2 5.2 1.9-5.2 1.9L12 16.7l-1.9-5.2-5.2-1.9 5.2-1.9z"/><path d="M18.5 14.5l.9 2.3 2.3.9-2.3.9-.9 2.3-.9-2.3-2.3-.9 2.3-.9z"/></svg></span>
-      <div class="ai-who"><b>Ассистент open-sites.io</b><small>Подскажет по услугам, ценам и срокам</small></div>
-      <button type="button" class="ai-close" id="aiClose" aria-label="Закрыть чат"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
-    </header>
-    <div class="ai-log" id="aiLog" aria-live="polite">
-      <div class="ai-msg">Здравствуйте! Помогу выбрать решение для вашего бизнеса и сориентирую по цене и срокам. С чего начнём?</div>
-    </div>
-    <div class="ai-quick" id="aiQuick">
-      <button type="button" data-q="price">Сколько стоит сайт?</button>
-      <button type="button" data-q="time">Какие сроки?</button>
-      <button type="button" data-q="start">Как начать?</button>
-    </div>
-    <form class="ai-form" id="aiForm" autocomplete="off">
-      <input type="text" id="aiText" placeholder="Напишите вопрос…" aria-label="Ваш вопрос" maxlength="300">
-      <button type="submit" aria-label="Отправить"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13M13 6l6 6-6 6"/></svg></button>
-    </form>
-  </section>
-  <button type="button" class="ai-fab" id="aiFab" aria-expanded="false" aria-controls="aiPanel" aria-label="Открыть чат с ассистентом">
-    <span class="ai-fab__ring" aria-hidden="true"></span>
-    <svg class="ai-fab__ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.5 11.6a8.4 8.4 0 0 1-12.4 7.4L3.5 20.5l1.6-4.4a8.4 8.4 0 1 1 15.4-4.5z"/><path d="M12 7.4l1 2.6 2.6 1-2.6 1-1 2.6-1-2.6-2.6-1 2.6-1z" fill="currentColor" stroke="none"/></svg>
-    <span class="ai-fab__x" aria-hidden="true"></span>
-  </button>
-</div>
 <script>
-/* Ассистент. Сейчас отвечает на частые вопросы готовыми ответами с цифрами из этой страницы;
-   ИИ подключим сюда же — разметка и поведение окна останутся. */
+/* apply_edits: о нас — раскрытие карточек */
+/* Нажатие на карточку раскрывает её вниз, остальные сворачиваются — как плитки «Услуг и сроков». */
 (function(){
-  var root = document.getElementById('ai'), fab = document.getElementById('aiFab'), panel = document.getElementById('aiPanel');
-  if(!root || !fab || !panel) return;
-  var log = document.getElementById('aiLog'), form = document.getElementById('aiForm'), text = document.getElementById('aiText');
-  var brand = document.getElementById('brand2');
-  var HOME = brand && brand.getAttribute('href') !== '#' ? brand.getAttribute('href') : '';
-  function to(id){ return document.getElementById(id) ? '#' + id : HOME + '#' + id; }
-  var A = {
-    price: ['Сколько стоит сайт?', 'Лендинг — $109, сайт из нескольких страниц — $219, сайт с ИИ-консультантом — $295, магазин или каталог — $369, поддержка — $19 в месяц. Цены в лари и рублях есть в блоке «Тарифы». Mini App и приложение для телефона оцениваем после разбора задачи. Названная цена по ходу работы не меняется.', 'Смотреть тарифы', to('tariffs')],  /* 25.09: цены — в блоке «Тарифы» */
-    time: ['Какие сроки?', 'Лендинг — 3–5 дней, сайт для бизнеса — 1–2 недели, Mini App — от недели. Приложение для iOS и Android — по проекту: срок назовём после разбора задачи.', 'Как идёт работа', to('process')],
-    start: ['Как начать?', 'Заполните бриф — это 7 минут. Мы разберём задачу и позовём на бесплатную консультацию.', 'Заполнить бриф', HOME + 'brief/']
-  };
-  function esc(t){ return t.replace(/[&<>"]/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
-  function add(cls, html){
-    var d = document.createElement('div');
-    d.className = 'ai-msg' + (cls ? ' ' + cls : '');
-    d.innerHTML = html;
-    log.appendChild(d);
-    log.scrollTop = log.scrollHeight;
-    return d;
+  var cards = [].slice.call(document.querySelectorAll('.acard'));
+  if(!cards.length) return;
+  function set(c, open){
+    c.classList.toggle('open', open);
+    var b = c.querySelector('.acard__tog');
+    if(b) b.setAttribute('aria-expanded', open ? 'true' : 'false');
   }
-  function answer(html){
-    var t = add('ai-msg--typing', '<i></i><i></i><i></i>');
-    setTimeout(function(){ t.className = 'ai-msg'; t.innerHTML = html; log.scrollTop = log.scrollHeight; }, 700);
-  }
-  function open(on){
-    root.classList.toggle('is-open', on);
-    panel.hidden = !on;
-    fab.setAttribute('aria-expanded', on ? 'true' : 'false');
-    fab.setAttribute('aria-label', on ? 'Закрыть чат' : 'Открыть чат с ассистентом');
-  }
-  fab.addEventListener('click', function(){ open(panel.hidden); });
-  document.getElementById('aiClose').addEventListener('click', function(){ open(false); fab.focus(); });
-  document.addEventListener('keydown', function(e){ if(e.key === 'Escape' && !panel.hidden){ open(false); fab.focus(); } });
-  document.getElementById('aiQuick').addEventListener('click', function(e){
-    var b = e.target.closest('button[data-q]');
-    if(!b) return;
-    var x = A[b.getAttribute('data-q')];
-    add('ai-msg--me', esc(x[0]));
-    answer(esc(x[1]) + '<a class="ai-link" href="' + x[3] + '">' + esc(x[2]) + ' →</a>');
-  });
-  form.addEventListener('submit', function(e){
-    e.preventDefault();
-    var v = text.value.trim();
-    if(!v) return;
-    add('ai-msg--me', esc(v));
-    text.value = '';
-    answer('Спасибо! Пока я отвечаю на частые вопросы, а с этим лучше поможет команда — напишите нам в Telegram.' +
-      '<a class="ai-link" href="https://t.me/open_sites" target="_blank" rel="noopener">Написать в Telegram →</a>');
-  });
-  /* ссылка на раздел этой же страницы: чат закрывается, страница листается к разделу */
-  log.addEventListener('click', function(e){
-    var a = e.target.closest('a.ai-link');
-    if(a && (a.getAttribute('href') || '').charAt(0) === '#') open(false);
+  cards.forEach(function(c){
+    c.addEventListener('click', function(e){
+      if(e.target.closest && e.target.closest('a')) return;
+      var open = !c.classList.contains('open');
+      cards.forEach(function(o){ if(o !== c) set(o, false); });
+      set(c, open);
+    });
   });
 })();
 </script>
@@ -2719,7 +2733,8 @@ if (briefForm) {
   var vals = [].slice.call(box.querySelectorAll('[data-gel]'));
   function set(cur){
     if(['gel','usd','rub'].indexOf(cur) < 0) cur = 'usd';
-    vals.forEach(function(el){ var v = el.getAttribute('data-' + cur); if(v) el.textContent = v; });
+    /* строка «≈ в других валютах» у поддержки — с «в месяц»: сразу на языке сайта (i18n_concept.py) */
+    vals.forEach(function(el){ var v = el.getAttribute('data-' + cur); if(v) el.textContent = window.osT ? osT(v) : v; });
     btns.forEach(function(b){
       var on = b.getAttribute('data-cur') === cur;
       b.classList.toggle('on', on);
@@ -2747,6 +2762,17 @@ if (briefForm) {
   if(nav) nav.hidden = false;
 
   function rel(i){ var r = i - active; if(r > n / 2) r -= n; if(r <= -n / 2) r += n; return r; }
+  /* Положение карточки: сдвиг, масштаб, поворот и наклон мышью (только у центральной).
+     --tx — куда смотрит толщина карточки: у повёрнутой вправо видна правая грань, влево — левая. */
+  var tilt = null;
+  function pose(c){
+    var p = c._p || {x: 0, sc: 1, ry: 0}, on = tilt && c.classList.contains('is-tilt');
+    var ry = p.ry + (on ? tilt.y : 0), rx = on ? tilt.x : 0;
+    /* центральная без наклона — без transform: иначе текст уходит в слой видеокарты и мылится */
+    c.style.transform = !p.x && p.sc === 1 && !ry && !rx ? 'none' :
+      'translateX(' + p.x + 'px) scale(' + p.sc + ') rotateY(' + ry + 'deg) rotateX(' + rx + 'deg)';
+    c.style.setProperty('--tx', (-ry / 20 * 1.5).toFixed(2) + 'px');
+  }
   /* Все карточки одной высоты — по самой высокой: иначе высота сцены менялась с каждой карточкой,
      стрелки прыгали, и второе нажатие в то же место промахивалось. */
   var live = document.getElementById('tLive');
@@ -2771,14 +2797,19 @@ if (briefForm) {
         /* телефон: одна карточка, соседние ждут за краем */
         if(r !== 0){ x = s * w; sc = 0.9; op = 0; z = 1; }
       } else if(a === 1){
-        x = r * near; sc = 0.86; ry = -r * 20; z = 6; op = 0.9;
-      } else if(a === 2 && roomy){
-        x = s * far; sc = 0.72; ry = -s * 26; z = 3; op = 0.42; blur = 1;
+        /* соседняя непрозрачна: сквозь 0.9 просвечивал текст дальней карточки */
+        x = r * near; sc = 0.86; ry = -r * 20; z = 6; op = 1;
+      } else if(a === 2 && roomy && far - near >= cw * 0.4){
+        /* дальняя — только если из-за соседней видна заметная полоса, а не край в пару десятков px */
+        /* без размытия: Роман 26.09 — текст на тарифах не должен мылиться; глубину дают прозрачность и масштаб */
+        x = s * far; sc = 0.72; ry = -s * 26; z = 3; op = 0.42;
       } else if(a >= 2){
         /* дальняя карточка ждёт позади центральной и сквозь неё не просвечивает */
         sc = 0.6; z = 1; op = 0;
       }
-      c.style.transform = 'translateX(-50%) translateX(' + x + 'px) scale(' + sc + ') rotateY(' + ry + 'deg)';
+      c._p = {x: x, sc: sc, ry: ry};
+      if(r !== 0) c.classList.remove('is-tilt');
+      pose(c);
       c.style.zIndex = z;
       c.style.opacity = op;
       c.style.filter = blur ? 'blur(' + blur + 'px)' : 'none';
@@ -2801,12 +2832,37 @@ if (briefForm) {
       d.setAttribute('aria-current', on ? 'true' : 'false');
     });
   }
+  function untilt(){
+    if(!tilt) return;
+    tilt = null;
+    cards.forEach(function(c){ if(c.classList.contains('is-tilt')){ c.classList.remove('is-tilt'); pose(c); } });
+  }
+  /* компьютер с мышью: центральная карточка чуть наклоняется за курсором, по ней идёт блик */
+  var fine = window.matchMedia('(hover:hover) and (pointer:fine)');
+  var calm = window.matchMedia('(prefers-reduced-motion: reduce)');
+  stage.addEventListener('pointermove', function(e){
+    if(e.pointerType !== 'mouse' || !fine.matches || calm.matches || stage.clientWidth < 560) return;
+    /* границы карточки без наклона: рамка наклонённой на 1–4 px меньше, и у самого края наклон
+       включался и выключался с каждым движением мыши — карточка дрожала */
+    var c = cards[active], sb = stage.getBoundingClientRect(), bw = c.offsetWidth, bh = c.offsetHeight;
+    var bl = sb.left + stage.clientLeft + c.offsetLeft, bt = sb.top + stage.clientTop + c.offsetTop;
+    if(e.clientX < bl || e.clientX > bl + bw || e.clientY < bt || e.clientY > bt + bh){ untilt(); return; }
+    var u = (e.clientX - bl) / bw, v = (e.clientY - bt) / bh;
+    tilt = {x: (0.5 - v) * 6, y: (u - 0.5) * 8};
+    c.classList.add('is-tilt');
+    c.style.setProperty('--mx', (u * 100).toFixed(1) + '%');
+    c.style.setProperty('--my', (v * 100).toFixed(1) + '%');
+    pose(c);
+  });
+  stage.addEventListener('pointerleave', untilt);
   function go(i, keepFocus){
+    untilt();
     active = (i + n) % n;
     layout();
     var c = cards[active];
-    if(live) live.textContent = 'Тариф ' + (active + 1) + ' из ' + n + ': ' + c.getAttribute('aria-label') + ', ' +
-      ((c.querySelector('.tcard__now') || {}).textContent || '');
+    var tr = window.osT || function(x){ return x; };   /* перевод строки на язык сайта (i18n_concept.py) */
+    if(live) live.textContent = tr('Тариф {n} из {m}').replace('{n}', active + 1).replace('{m}', n) + ': ' +
+      c.getAttribute('aria-label') + ', ' + ((c.querySelector('.tcard__now') || {}).textContent || '');
     if(keepFocus){ var b = c.querySelector('.tcard__btn'); if(b) b.focus({preventScroll: true}); }
   }
 
@@ -2833,10 +2889,429 @@ if (briefForm) {
   window.addEventListener('resize', measure);
   if(document.fonts && document.fonts.ready) document.fonts.ready.then(measure);
   measure();
-  if(nav && 'IntersectionObserver' in window){
+  /* пока карточки тарифов или стрелки на экране, плавающие «Заявка» и чат на телефоне прячутся:
+     иначе ложатся на кнопку заказа карточки и на стрелки (стили — до 767 px) */
+  if(flow && 'IntersectionObserver' in window){
     new IntersectionObserver(function(es){
       es.forEach(function(e){ document.body.classList.toggle('tnav-near', e.isIntersecting); });
-    }).observe(nav);
+    }, {rootMargin: '0px 0px -12% 0px'}).observe(flow);
+  }
+})();
+</script>
+<script>
+/* apply_edits: этапы — бегущий свет */
+/* Свет бежит по линии этапов сверху вниз и начинает заново. Кружок строки загорается, когда свет
+   рядом, и медленно гаснет. Работает, только пока блок на экране; при «уменьшить движение» — нет. */
+(function(){
+  'use strict';
+  var flow = document.querySelector('.flow');
+  var table = flow && flow.querySelector('.ftable');
+  var rail = flow && flow.querySelector('.flow__rail');
+  var bead = rail && rail.querySelector('i');
+  if(!flow || !table || !rail || !bead) return;
+  var steps = [].slice.call(table.querySelectorAll('.fstep'));
+  if(steps.length < 2) return;
+  var L = 150, SPEED = 150, GAP = 110;   /* длина света; px/с; пауза */
+  var ys = [], H = 0;
+  /* центр кружка от верха строки — из стилей: на телефоне кружок выше; у строк 2–6 сверху
+     разделитель в 1 px, кружок отсчитывается от него */
+  function dot(st){
+    var c = getComputedStyle(st, '::before');
+    return st.clientTop + parseFloat(c.top) + (parseFloat(c.height) + 2 * parseFloat(c.borderTopWidth)) / 2;
+  }
+  function place(){
+    ys = steps.map(function(st){ return table.offsetTop + table.clientTop + st.offsetTop + dot(st); });
+    H = Math.max(0, ys[ys.length - 1] - ys[0]);
+    rail.style.top = ys[0] + 'px';
+    rail.style.height = H + 'px';
+  }
+  place();
+  if(window.ResizeObserver) new ResizeObserver(place).observe(table);   /* строки меняют высоту — линия следом */
+  else window.addEventListener('resize', place);
+  if(document.fonts && document.fonts.ready) document.fonts.ready.then(place);
+  if(window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  var raf = 0, t0 = 0, run = false;
+  function frame(now){
+    if(!t0) t0 = now;
+    var cycle = H + L + GAP;
+    var head = ((now - t0) / 1000 * SPEED) % cycle;       /* где сейчас яркий край света */
+    bead.style.transform = 'translateY(' + (head - L) + 'px)';
+    for(var i = 0; i < steps.length; i++){
+      var d = head - (ys[i] - ys[0]);
+      steps[i].classList.toggle('pass', d > -14 && d < 70);
+    }
+    if(run) raf = requestAnimationFrame(frame);
+  }
+  function start(){ if(run) return; run = true; raf = requestAnimationFrame(frame); }
+  function stop(){
+    run = false; cancelAnimationFrame(raf);
+    steps.forEach(function(st){ st.classList.remove('pass'); });
+  }
+  if('IntersectionObserver' in window){
+    new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting) start(); else stop(); }); })
+      .observe(flow);
+  } else start();
+})();
+</script>
+<script>
+/* apply_edits: волна первого экрана — скрипт */
+/* Поле из тысяч точек дышит волной, курсор пускает по нему круги (эффект № 14 полки lab/effects,
+   переписан на чистый WebGL). Рисуем, только пока полоса волны видна и вкладка открыта.
+   Нет WebGL — холст убираем, первый экран остаётся как был. «Уменьшить движение» — волна стоит. */
+(function(){
+  'use strict';
+  var hero = document.querySelector('.hero--scene');
+  var cv = document.getElementById('heroWave');
+  if(!hero || !cv) return;
+  var gl = null;
+  try{ gl = cv.getContext('webgl', {alpha: true, antialias: false, premultipliedAlpha: true, depth: false,
+    stencil: false, powerPreference: 'low-power'}); }catch(e){}
+  if(!gl){ cv.parentNode.removeChild(cv); return; }
+
+  /* облегчённая сетка — только на узком экране: на планшете с сенсором она не доставала до краёв
+     широкой полосы, а полную сетку его видеокарта тянет */
+  var small = window.matchMedia('(max-width: 760px)').matches;
+  var still = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  /* Без видеокарты (WebGL рисует процессор) волна не движется: один неподвижный кадр вместо
+     тормозящей страницы. Так же и если кадры в первые секунды идут медленно — см. frame(). */
+  try{
+    var dbg = gl.getExtension('WEBGL_debug_renderer_info');
+    var gpu = String(gl.getParameter(dbg ? dbg.UNMASKED_RENDERER_WEBGL : gl.RENDERER) || '');
+    if(/swiftshader|llvmpipe|softpipe|software|basic render/i.test(gpu)) still = true;
+  }catch(e){}
+  var COLS = small ? 96 : 200, ROWS = small ? 70 : 120, GAP = 0.13;
+  var PRMAX = small ? 1.5 : 1.75, PR = Math.min(window.devicePixelRatio || 1, PRMAX);
+
+  var NOISE = [
+    'vec3 mod289(vec3 x){return x-floor(x*(1.0/289.0))*289.0;}',
+    'vec4 mod289(vec4 x){return x-floor(x*(1.0/289.0))*289.0;}',
+    'vec4 permute(vec4 x){return mod289(((x*34.0)+1.0)*x);}',
+    'vec4 taylorInvSqrt(vec4 r){return 1.79284291400159-0.85373472095314*r;}',
+    'float snoise(vec3 v){',
+    ' const vec2 C=vec2(1.0/6.0,1.0/3.0); const vec4 D=vec4(0.0,0.5,1.0,2.0);',
+    ' vec3 i=floor(v+dot(v,C.yyy)); vec3 x0=v-i+dot(i,C.xxx);',
+    ' vec3 g=step(x0.yzx,x0.xyz); vec3 l=1.0-g; vec3 i1=min(g.xyz,l.zxy); vec3 i2=max(g.xyz,l.zxy);',
+    ' vec3 x1=x0-i1+C.xxx; vec3 x2=x0-i2+C.yyy; vec3 x3=x0-D.yyy;',
+    ' i=mod289(i);',
+    ' vec4 p=permute(permute(permute(i.z+vec4(0.0,i1.z,i2.z,1.0))+i.y+vec4(0.0,i1.y,i2.y,1.0))+i.x+vec4(0.0,i1.x,i2.x,1.0));',
+    ' float n_=0.142857142857; vec3 ns=n_*D.wyz-D.xzx;',
+    ' vec4 j=p-49.0*floor(p*ns.z*ns.z); vec4 x_=floor(j*ns.z); vec4 y_=floor(j-7.0*x_);',
+    ' vec4 x=x_*ns.x+ns.yyyy; vec4 y=y_*ns.x+ns.yyyy; vec4 h=1.0-abs(x)-abs(y);',
+    ' vec4 b0=vec4(x.xy,y.xy); vec4 b1=vec4(x.zw,y.zw);',
+    ' vec4 s0=floor(b0)*2.0+1.0; vec4 s1=floor(b1)*2.0+1.0; vec4 sh=-step(h,vec4(0.0));',
+    ' vec4 a0=b0.xzyw+s0.xzyw*sh.xxyy; vec4 a1=b1.xzyw+s1.xzyw*sh.zzww;',
+    ' vec3 p0=vec3(a0.xy,h.x); vec3 p1=vec3(a0.zw,h.y); vec3 p2=vec3(a1.xy,h.z); vec3 p3=vec3(a1.zw,h.w);',
+    ' vec4 norm=taylorInvSqrt(vec4(dot(p0,p0),dot(p1,p1),dot(p2,p2),dot(p3,p3)));',
+    ' p0*=norm.x; p1*=norm.y; p2*=norm.z; p3*=norm.w;',
+    ' vec4 m=max(0.6-vec4(dot(x0,x0),dot(x1,x1),dot(x2,x2),dot(x3,x3)),0.0); m=m*m;',
+    ' return 42.0*dot(m*m,vec4(dot(p0,x0),dot(p1,x1),dot(p2,x2),dot(p3,x3)));',
+    '}'].join('\n');
+  var VS = ['precision highp float;',
+    'attribute vec2 aP;',
+    'uniform mat4 uProj, uView; uniform float uTime, uPush, uPR, uSize; uniform vec2 uMouse;',
+    'varying float vH; varying float vFade;',
+    NOISE,
+    'void main(){',
+    '  vec3 p = vec3(aP.x, 0.0, aP.y);',
+    '  float w = sin(p.x * 0.45 + uTime * 0.9) * 0.28 + sin(p.z * 0.6 - uTime * 0.7) * 0.22',
+    '          + snoise(vec3(p.xz * 0.16, uTime * 0.12)) * 0.55;',
+    '  float d = distance(p.xz, uMouse);',
+    '  w += sin(d * 3.2 - uTime * 5.5) * 0.45 * exp(-d * 0.55) * uPush;',
+    '  p.y += w; vH = w;',
+    '  vec4 mv = uView * vec4(p, 1.0);',
+    '  vFade = (1.0 - smoothstep(2.5, 19.0, -mv.z)) * smoothstep(2.4, 6.0, -mv.z);',  /* ближние крупные точки тают */
+    '  gl_PointSize = max(1.0, (uSize + w * 1.4) * uPR * (9.0 / -mv.z));',
+    '  gl_Position = uProj * mv;',
+    '}'].join('\n');
+  var FS = ['precision mediump float;',
+    'uniform vec3 uA, uB; uniform float uAlpha;',
+    'varying float vH; varying float vFade;',
+    'void main(){',
+    '  float a = 1.0 - smoothstep(0.15, 0.5, length(gl_PointCoord - 0.5));',
+    '  vec3 col = mix(uA, uB, smoothstep(-0.5, 0.7, vH));',
+    '  col *= 0.8 + 1.2 * smoothstep(-0.4, 0.9, vH);',
+    '  float k = a * vFade;',
+    '  vec3 lin = col * k * 1.25;',
+    /* как у образца на полке: считаем свет в линейном цвете и переводим в sRGB — иначе волна тусклая */
+    '  gl_FragColor = vec4(pow(max(lin, vec3(0.0)), vec3(0.4545)) * uAlpha, k * uAlpha);',
+    '}'].join('\n');
+
+  function sh(type, src){
+    var o = gl.createShader(type); gl.shaderSource(o, src); gl.compileShader(o);
+    return gl.getShaderParameter(o, gl.COMPILE_STATUS) ? o : null;
+  }
+  /* сетка точек на плоскости волны */
+  var pts = new Float32Array(COLS * ROWS * 2), q = 0;
+  for(var r = 0; r < ROWS; r++) for(var c = 0; c < COLS; c++){
+    pts[q++] = (c - COLS / 2) * GAP; pts[q++] = -r * GAP + 3;
+  }
+  /* цвета — фиолетовый сайта у подножия волны, светлая сирень на гребнях (sRGB → линейный) */
+  function lin(hex){ return [0, 2, 4].map(function(i){ return Math.pow(parseInt(hex.substr(i, 2), 16) / 255, 2.2); }); }
+  var cA = lin('7c5cff'), cB = lin('c9d0ff');
+  var U = {};
+  /* Всё, что живёт в видеокарте: программа, точки, цвета. Если видеокарта отберёт контекст (сон
+     ноутбука, сброс драйвера, возврат в Safari из другого приложения) — собирается заново. */
+  function init(){
+    var vs = sh(gl.VERTEX_SHADER, VS), fs = sh(gl.FRAGMENT_SHADER, FS);
+    var prog = vs && fs ? gl.createProgram() : null;
+    if(prog){ gl.attachShader(prog, vs); gl.attachShader(prog, fs); gl.linkProgram(prog); }
+    if(!prog || !gl.getProgramParameter(prog, gl.LINK_STATUS)) return false;
+    gl.useProgram(prog);
+    gl.bindBuffer(gl.ARRAY_BUFFER, gl.createBuffer());
+    gl.bufferData(gl.ARRAY_BUFFER, pts, gl.STATIC_DRAW);
+    var aP = gl.getAttribLocation(prog, 'aP');
+    gl.enableVertexAttribArray(aP);
+    gl.vertexAttribPointer(aP, 2, gl.FLOAT, false, 0, 0);
+    ['uProj', 'uView', 'uTime', 'uPush', 'uPR', 'uSize', 'uMouse', 'uA', 'uB', 'uAlpha'].forEach(function(k){
+      U[k] = gl.getUniformLocation(prog, k);
+    });
+    gl.uniform3f(U.uA, cA[0], cA[1], cA[2]);
+    gl.uniform3f(U.uB, cB[0], cB[1], cB[2]);
+    gl.uniform1f(U.uAlpha, small ? 0.42 : 0.38);
+    gl.uniform1f(U.uSize, small ? 2.6 : 2.4);
+    gl.uniform1f(U.uPR, PR);
+    gl.disable(gl.DEPTH_TEST);
+    gl.enable(gl.BLEND);
+    gl.blendFunc(gl.ONE, gl.ONE);
+    gl.clearColor(0, 0, 0, 0);
+    return true;
+  }
+  if(!init()){ cv.parentNode.removeChild(cv); return; }
+
+  /* камера: как у образца на полке. Полоса под волну широкая и низкая — угол обзора по вертикали
+     сужаем, чтобы по ширине поле заполняло экран, а горизонт сдвигаем на четверть от верха полосы */
+  var FOV = 50 * Math.PI / 180, eye = [0, 2.3, 6.2], target = [0, 0, -4], basis = null, aspect = 1;
+  var vfov = FOV, shiftY = 0, FAR = 3 - ROWS * GAP;
+  function sub(a, b){ return [a[0] - b[0], a[1] - b[1], a[2] - b[2]]; }
+  function norm(a){ var l = Math.hypot(a[0], a[1], a[2]) || 1; return [a[0] / l, a[1] / l, a[2] / l]; }
+  function cross(a, b){ return [a[1] * b[2] - a[2] * b[1], a[2] * b[0] - a[0] * b[2], a[0] * b[1] - a[1] * b[0]]; }
+  function dot(a, b){ return a[0] * b[0] + a[1] * b[1] + a[2] * b[2]; }
+  function setCamera(w, h){
+    aspect = w / h;
+    eye = aspect < 0.8 ? [0, 3.2, 7.5] : [0, 2.3, 6.2];
+    var z = norm(sub(eye, target)), x = norm(cross([0, 1, 0], z)), y = cross(z, x);
+    basis = {x: x, y: y, z: z};
+    gl.uniformMatrix4fv(U.uView, false, new Float32Array([
+      x[0], y[0], z[0], 0, x[1], y[1], z[1], 0, x[2], y[2], z[2], 0,
+      -dot(x, eye), -dot(y, eye), -dot(z, eye), 1]));
+    vfov = aspect > 2.3 ? 2 * Math.atan(Math.tan(FOV / 2) * 2.3 / aspect) : FOV;
+    var f = 1 / Math.tan(vfov / 2), nr = 0.1, fr = 60;
+    /* где на экране дальний край поля — и сдвиг, чтобы он встал на 0.5 (четверть высоты от верха) */
+    var far = sub([0, 0, FAR], eye), vy = dot(y, far), vz = dot(z, far);
+    shiftY = 0.5 - f * vy / -vz;
+    gl.uniformMatrix4fv(U.uProj, false, new Float32Array([
+      f / aspect, 0, 0, 0, 0, f, 0, 0, 0, -shiftY, (fr + nr) / (nr - fr), -1, 0, 0, 2 * fr * nr / (nr - fr), 0]));
+  }
+  /* луч из точки экрана на плоскость волны: там, куда смотрит курсор, расходятся круги */
+  function hit(nx, ny){
+    var t = Math.tan(vfov / 2), dx = nx * t * aspect, dy = (ny - shiftY) * t;
+    var d = [basis.x[0] * dx + basis.y[0] * dy - basis.z[0], basis.x[1] * dx + basis.y[1] * dy - basis.z[1],
+             basis.x[2] * dx + basis.y[2] * dy - basis.z[2]];
+    if(d[1] >= -0.001) return null;
+    var k = -eye[1] / d[1];
+    return [eye[0] + d[0] * k, eye[2] + d[2] * k];
+  }
+
+  /* Волна начинается на 12 px ниже кнопок первого экрана: текст и кнопки чистые на любом мониторе.
+     Если под кнопками меньше MIN (низкие экраны ноутбуков: 1366×657, 1280×600), первый экран
+     удлиняется снизу ровно настолько, чтобы волне хватило места, и она уходит за край экрана.
+     На телефоне под кнопками стоят ноутбук и телефон с превью — волна ложится под них. */
+  var cta = hero.querySelector('.hero-cta'), inner = hero.querySelector('.wrap');
+  var MIN = 150, BELOW = 12;
+  function ctaBottom(){
+    var y = cta.offsetHeight + BELOW;
+    for(var el = cta; el && el !== hero; el = el.offsetParent) y += el.offsetTop;
+    return y;
+  }
+  function band(){
+    var hh, top;
+    if(cta){
+      hero.style.paddingBottom = '';
+      hh = hero.offsetHeight; top = ctaBottom();
+      var need = MIN - (hh - top);
+      if(need > 0 && inner){
+        /* текст стоит по центру первого экрана: пока есть свободное место, добавка снизу поднимает
+           его на половину своей высоты, дальше — удлиняет экран */
+        var cs = getComputedStyle(hero), pb = parseFloat(cs.paddingBottom) || 0;
+        var free = Math.max(0, hh - (parseFloat(cs.paddingTop) || 0) - pb - inner.offsetHeight);
+        var add = need <= free / 2 ? need * 2 : free + need - free / 2;
+        hero.style.paddingBottom = Math.ceil(pb + add) + 'px';
+        hh = hero.offsetHeight; top = ctaBottom();
+      }
+    } else {
+      hh = hero.offsetHeight; top = hh * 0.6;
+    }
+    top = Math.round(Math.max(0, top));
+    cv.style.top = top + 'px';
+    cv.style.height = Math.max(0, hh - top) + 'px';
+  }
+  var W = 0, Hh = 0, lost = false;
+  function resize(){
+    band();
+    var w = Math.max(1, cv.clientWidth), h = Math.max(1, cv.clientHeight);
+    var pr = Math.min(window.devicePixelRatio || 1, PRMAX);   /* окно могли перетащить на другой монитор */
+    if(w === W && h === Hh && pr === PR) return;
+    W = w; Hh = h; PR = pr;
+    if(lost) return;
+    cv.width = Math.round(w * PR); cv.height = Math.round(h * PR);
+    gl.viewport(0, 0, cv.width, cv.height);
+    gl.uniform1f(U.uPR, PR);
+    setCamera(w, h);
+    if(!run) draw(tm);
+  }
+
+  var ptr = {x: 0, y: 0, active: false}, mouse = [0, -4], push = 0.6, tm = 0, last = 0, raf = 0, run = false;
+  hero.addEventListener('pointermove', function(e){
+    var b = cv.getBoundingClientRect();
+    ptr.x = (e.clientX - b.left) / b.width * 2 - 1;
+    ptr.y = 1 - (e.clientY - b.top) / b.height * 2;
+    ptr.active = e.pointerType === 'mouse';
+  }, {passive: true});
+  hero.addEventListener('pointerleave', function(){ ptr.active = false; });
+
+  function draw(t){
+    if(lost) return;
+    gl.uniform1f(U.uTime, t);
+    gl.uniform2f(U.uMouse, mouse[0], mouse[1]);
+    gl.uniform1f(U.uPush, push);
+    gl.clear(gl.COLOR_BUFFER_BIT);
+    gl.drawArrays(gl.POINTS, 0, COLS * ROWS);
+  }
+  function frame(now){
+    var dt = Math.min(0.05, (now - last) / 1000 || 0);
+    last = now;
+    tm += dt;
+    var k = dt || 0.016;
+    var tx = ptr.active ? ptr.x : Math.sin(tm * 0.3) * 0.5, ty = ptr.active ? ptr.y : -0.25 + Math.sin(tm * 0.2) * 0.15;
+    var h = hit(tx, ty);
+    if(h){ var a = 1 - Math.exp(-6 * k); mouse[0] += (h[0] - mouse[0]) * a; mouse[1] += (h[1] - mouse[1]) * a; }
+    push += ((ptr.active ? 1 : 0.6) - push) * (1 - Math.exp(-2 * k));
+    draw(tm);
+    /* первые 90 кадров считаем скорость: реже 25 кадров в секунду — волна замирает */
+    if(probe < 90 && dt > 0){ probe++; slow += dt; if(probe === 90 && slow / 90 > 0.04){ still = true; cv.setAttribute('data-mode', 'slow'); stop(); return; } }
+    if(run) raf = requestAnimationFrame(frame);
+  }
+  var probe = 0, slow = 0;
+  function start(){
+    if(run || still || lost || document.hidden) return;
+    run = true; last = performance.now(); raf = requestAnimationFrame(frame);
+  }
+  function stop(){ run = false; cancelAnimationFrame(raf); }
+
+  var seen = true;
+  /* следим и за текстом первого экрана: на английском и грузинском он другой длины, кнопки сдвигаются */
+  if(window.ResizeObserver){
+    var ro = new ResizeObserver(function(){ resize(); });
+    ro.observe(hero);
+    if(hero.querySelector('.hero-txt')) ro.observe(hero.querySelector('.hero-txt'));
+  }
+  else window.addEventListener('resize', function(){ resize(); });
+  if(document.fonts && document.fonts.ready) document.fonts.ready.then(function(){ resize(); });
+  /* другая плотность пикселей (окно на другом мониторе) — пересчитать холст, иначе волна мылится */
+  (function watchPR(){
+    if(!window.matchMedia) return;
+    var mq = window.matchMedia('(resolution: ' + (window.devicePixelRatio || 1) + 'dppx)');
+    if(!mq.addEventListener) return;
+    mq.addEventListener('change', function once(){ mq.removeEventListener('change', once); resize(); watchPR(); });
+  })();
+  resize();
+  draw(tm);
+  cv.classList.add('on');
+  cv.setAttribute('data-mode', still ? 'still' : 'live');   /* для проверок: движется волна или стоит */
+  /* рисуем, только пока видна сама полоса волны: на телефоне она часто ниже края экрана */
+  if('IntersectionObserver' in window){
+    new IntersectionObserver(function(es){
+      es.forEach(function(e){ seen = e.isIntersecting; if(seen) start(); else stop(); });
+    }).observe(cv);
+  } else start();
+  document.addEventListener('visibilitychange', function(){ if(document.hidden) stop(); else if(seen) start(); });
+  /* видеокарта отобрала контекст — ждём, когда вернёт, и собираем всё заново */
+  cv.addEventListener('webglcontextlost', function(e){ e.preventDefault(); lost = true; stop(); });
+  cv.addEventListener('webglcontextrestored', function(){
+    if(!init()){ cv.classList.remove('on'); return; }
+    lost = false; W = Hh = 0;
+    resize(); draw(tm);
+    if(seen) start();
+  });
+})();
+</script>
+<script>
+/* apply_edits: язык — ширина меняющегося слова */
+/* После смены языка слова в заголовке другой длины: ширину подгоняем сразу, а не при следующей
+   смене слова через 2,6 с (до неё слово обрезалось). Скрипт слова слушает resize. */
+(function(){
+  var apply = window.osApplyLang;
+  if(typeof apply !== 'function') return;
+  window.osApplyLang = function(lang){
+    apply(lang);
+    try{ window.dispatchEvent(new Event('resize')); }catch(e){}
+  };
+})();
+</script>
+<script>
+/* apply_edits: перевод по таблице */
+/* Тексты без data-i18n переводятся по таблице «русский → английский, грузинский» (i18n_concept.py).
+   Срабатывает вместе со сменой языка (osApplyLang) и на странице без переключателя — по os_lang. */
+(function(){
+  'use strict';
+  var T = {"Реферальная программа":["Referral program","რეფერალური პროგრამა"],"Хотите зарабатывать — помогайте нам":["Want to earn? Help us grow","გსურთ გამომუშავება? დაგვეხმარეთ"],"Рядом с вами наверняка есть бизнес, которому нужен сайт: сосед по офису, клиент, знакомый мастер. Приведите его — и получите 30% от суммы проекта. Ему при этом будет дешевле на 10%. Вложений не требуется, достаточно передать свой код.":["There's surely a business near you that needs a website: an office neighbor, a client, a craftsman you know. Refer them and get 30% of the project cost. They get 10% off. No investment needed, just pass on your code.","თქვენ გვერდით ალბათ არის ბიზნესი, რომელსაც საიტი სჭირდება: ოფისის მეზობელი, კლიენტი, ნაცნობი ოსტატი. მოიყვანეთ ის და მიიღეთ პროექტის თანხის 30%. მას კი 10%‑ით იაფი დაუჯდება. ინვესტიცია არ არის საჭირო — საკმარისია, თქვენი კოდი გადასცეთ."],"Берёте код":["You get a code","იღებთ კოდს"],"Пишете нам в Telegram и получаете личный код.":["Message us on Telegram and receive your personal code.","გვწერთ Telegram‑ში და იღებთ პირად კოდს."],"Передаёте клиенту":["You pass it on","გადასცემთ კლიენტს"],"Он называет код, когда связывается с нами, — и получает скидку 10%.":["The client mentions the code when contacting us and gets 10% off.","კლიენტი კოდს ასახელებს, როცა დაგვიკავშირდება, და 10%‑იან ფასდაკლებას იღებს."],"Получаете 30%":["You get 30%","იღებთ 30%‑ს"],"После того как клиент оплатил проект.":["Once the client has paid for the project.","მას შემდეგ, რაც კლიენტი პროექტის საფასურს გადაიხდის."],"разовое сотрудничество":["one-off partnership","ერთჯერადი თანამშრომლობა"],"Партнёр":["Partner","პარტნიორი"],"от стоимости проекта":["of the project cost","პროექტის ღირებულებიდან"],"Процент с создания сайта или приложения":["Commission on website or app development","პროცენტი საიტის ან აპლიკაციის შექმნის ღირებულებიდან"],"Считается от общей суммы по вашему коду: заказали и сайт, и Mini App — процент со всего":["Calculated on the total ordered with your code: a website plus a Mini App means a share of both","ითვლება თქვენი კოდით შეკვეთილი მთლიანი თანხიდან: თუ შეუკვეთეს საიტიც და Mini App‑იც — პროცენტი ორივედან"],"Сопровождение и абонентские платежи в расчёт не входят":["Support and subscription fees are not included","მხარდაჭერა და სააბონენტო გადასახადები არ ითვლება"],"Клиенту по коду — скидка 10%":["The client gets 10% off with the code","კლიენტს კოდით 10%‑იანი ფასდაკლება აქვს"],"Выплата после оплаты проекта":["Paid out once the project is paid for","ანაზღაურება პროექტის გადახდის შემდეგ"],"Получить код":["Get a code","კოდის მიღება"],"от 5 клиентов в месяц":["5+ clients a month","თვეში 5 კლიენტიდან"],"Постоянный партнёр":["Regular partner","მუდმივი პარტნიორი"],"Индивидуально":["Individual terms","ინდივიდუალურად"],"Для тех, кто приводит клиентов стабильно":["For those who bring clients regularly","მათთვის, ვინც კლიენტებს სტაბილურად მოიყვანს"],"Ставка и порядок выплат обсуждаются лично":["The rate and payout terms are discussed one-on-one","განაკვეთი და ანაზღაურების წესი პირადად განიხილება"],"Отдельный контакт для ваших вопросов":["A dedicated contact for your questions","ცალკე კონტაქტი თქვენი კითხვებისთვის"],"Обсудить условия":["Discuss terms","პირობების განხილვა"],"Кому обычно подходит: маркетологам, таргетологам, дизайнерам, фотографам, бухгалтерам — всем, кто и так общается с малым бизнесом.":["Usually a good fit for marketers, ad specialists, designers, photographers and accountants: anyone who already works with small businesses.","ჩვეულებრივ, ეს ერგებათ მარკეტოლოგებს, სარეკლამო სპეციალისტებს, დიზაინერებს, ფოტოგრაფებს, ბუღალტრებს — ყველას, ვინც ისედაც მცირე ბიზნესთან მუშაობს."],"Язык / Language":["Language","ენა / Language"],"Меню":["Menu","მენიუ"],"Тариф {n} из {m}":["Plan {n} of {m}","ტარიფი {n}, სულ {m}"],"≈ $19 · 1 500 ₽ в месяц":["≈ $19 · 1 500 ₽ a month","≈ $19 · 1 500 ₽ თვეში"],"≈ 50 ₾ · 1 500 ₽ в месяц":["≈ 50 ₾ · 1 500 ₽ a month","≈ 50 ₾ · 1 500 ₽ თვეში"],"≈ $19 · 50 ₾ в месяц":["≈ $19 · 50 ₾ a month","≈ $19 · 50 ₾ თვეში"]};
+  var LI = {en: 0, ka: 1};
+  var CY = /[А-Яа-яЁё]/;
+  var ATTRS = ['aria-label', 'alt', 'title', 'placeholder', 'aria-roledescription'];
+  var BACK = {};
+  Object.keys(T).forEach(function(ru){ T[ru].forEach(function(v){ if(v && !(v in BACK)) BACK[v] = ru; }); });
+  function norm(s){ return s.replace(/\s+/g, ' ').trim(); }
+  function to(text, lang){
+    var n = norm(text);
+    if(!n) return null;
+    var ru = CY.test(n) ? n : BACK[n];
+    if(!ru || !T[ru]) return null;
+    return lang === 'ru' ? ru : (T[ru][LI[lang]] || null);
+  }
+  function apply(lang){
+    if(!(lang in LI)) lang = 'ru';
+    var w = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, {acceptNode: function(n){
+      var p = n.parentElement;
+      if(!p || p.closest('script,style,noscript,template,[data-i18n]')) return NodeFilter.FILTER_REJECT;
+      return n.nodeValue.trim() ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_REJECT;
+    }});
+    var list = [], n;
+    while((n = w.nextNode())) list.push(n);
+    list.forEach(function(node){
+      var v = to(node.nodeValue, lang);
+      if(v == null) return;
+      var m = /^(\s*)[\s\S]*?(\s*)$/.exec(node.nodeValue), next = m[1] + v + m[2];
+      if(node.nodeValue !== next) node.nodeValue = next;
+    });
+    [].forEach.call(document.querySelectorAll('[aria-label],[alt],[title],[placeholder],[aria-roledescription]'), function(el){
+      ATTRS.forEach(function(a){
+        var o = el.getAttribute(a);
+        if(!o) return;
+        var v = to(o, lang);
+        if(v != null && v !== o) el.setAttribute(a, v);
+      });
+    });
+  }
+  /* для скриптов страницы: перевести русскую строку на текущий язык */
+  window.osT = function(ru){
+    var lang = (document.documentElement.lang || 'ru').slice(0, 2), k = norm(ru);
+    return lang !== 'ru' && T[k] && T[k][LI[lang]] ? T[k][LI[lang]] : ru;
+  };
+  window.osTranslate = apply;
+  var prev = window.osApplyLang;
+  if(typeof prev === 'function'){
+    window.osApplyLang = function(lang){ prev(lang); apply((document.documentElement.lang || lang).slice(0, 2)); };
+  } else {
+    /* страница без переключателя языков (лента работ): язык — тот, что выбран на сайте */
+    var lg = 'ru';
+    try{ lg = localStorage.getItem('os_lang') || 'ru'; }catch(e){}
+    if(lg in LI){
+      document.documentElement.lang = lg;
+      var run = function(){ apply(lg); var t = to(document.title, lg); if(t) document.title = t; };
+      if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', run);
+      else run();
+    }
   }
 })();
 </script>

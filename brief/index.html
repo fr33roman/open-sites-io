@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
+<meta name="robots" content="noindex">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Бриф — open-sites.io | Заявка на сайт за 7 минут</title>
-  <meta name="description" content="Заполните бриф за 7 минут — получите концепт сайта за 24–48 часов.">
+  <title>Заявка — open-sites.io</title>
+  <meta name="description" content="Напишите open-sites.io в Telegram: расскажите о задаче, и мы назовём цену и срок.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+Georgian:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
 /* ============ open-sites.io ============ */
 :root {
@@ -578,253 +579,1436 @@ select.enhanced { display: none; }
 }
 
 </style>
+<style>
+/* ═══ КОНЦЕПТ: логотип, объёмная сцена, смена тезисов, этапы ═══
+   Подключается после styles.css, поэтому переопределяет нужное. */
+
+/* ── логотип со знаком «Мост», анимация «Сваи» ── */
+.brand2{display:inline-flex;align-items:center;gap:.42em;line-height:1}
+.brand2 .bmark{width:1.85em;height:1.2em;display:block;overflow:visible;flex:none}
+.brand2 .bmark .pl{fill:currentColor}
+.brand2 .bmark .dk{fill:var(--violet)}
+.brand2 .bword{white-space:nowrap;display:inline-flex;align-items:baseline}
+.brand2 .bword .ltr{display:inline-block;white-space:pre;opacity:0}
+.brand2 .bword .t{color:var(--violet)}
+.brand2 .bcar{display:inline-block;width:.07em;height:.9em;background:var(--violet);
+  margin-left:.07em;transform:translateY(.06em);opacity:0}
+.brand2 .pl{opacity:0}
+.go .brand2 .pl-l{animation:pile .5s cubic-bezier(.4,1.6,.5,1) .15s both}
+.go .brand2 .pl-r{animation:pile .5s cubic-bezier(.4,1.6,.5,1) .32s both}
+@keyframes pile{from{opacity:0;transform:translateY(-16px)}to{opacity:1;transform:none}}
+.brand2 .dk{opacity:0;transform-box:view-box}
+.go .brand2 .dk{animation:slidein .6s cubic-bezier(.3,.95,.3,1) .6s both}
+@keyframes slidein{from{opacity:0;transform:translateX(34px)}to{opacity:1;transform:none}}
+.go .brand2 .bword .ltr{animation:ctype .01s linear forwards;animation-delay:calc(1.15s + var(--i)*48ms)}
+@keyframes ctype{to{opacity:1}}
+.go .brand2 .bcar{animation:ccar .01s linear 1.15s forwards,cblink 1.05s steps(1,end) 1.15s infinite}
+@keyframes ccar{to{opacity:1}}
+@keyframes cblink{0%,50%{opacity:1}50.01%,100%{opacity:0}}
+
+/* ── первый экран со сценой ── */
+.hero--scene .wrap{position:relative}
+.hero--scene .hero-txt{position:relative;z-index:3;max-width:760px}
+/* заголовок мельче боевого: иначе подсвеченное слово уезжает на свою строку */
+.hero--scene h1{font-size:clamp(30px,3.6vw,50px)}
+@media(max-width:1180px){.hero--scene .hero-txt{max-width:640px}}
+.hero--scene .btn-ghost{background:rgba(10,10,13,.45)}
+
+/* смена тезисов: ширина подстраивается под слово */
+.rot{position:relative;display:inline-block;vertical-align:bottom;overflow:hidden;
+  transition:width .5s cubic-bezier(.25,.9,.25,1)}
+.rot__size{visibility:hidden;white-space:nowrap}
+.rot__i{position:absolute;left:0;top:0;white-space:nowrap;
+  background:var(--grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+  opacity:0;transform:translateY(.85em);transition:opacity .5s ease,transform .5s cubic-bezier(.25,.9,.25,1)}
+.rot__i.on{opacity:1;transform:none}
+.rot__i.out{opacity:0;transform:translateY(-.85em)}
+
+/* ── объёмная сцена ── */
+.scene{position:absolute;z-index:1;right:-28%;top:50%;transform:translateY(-50%);
+  width:56vw;max-width:940px;aspect-ratio:16/11;perspective:2000px;pointer-events:none;
+  filter:brightness(.84) saturate(.94)}
+.scene__glow{position:absolute;left:4%;top:0;width:90%;height:96%;border-radius:50%;
+  background:radial-gradient(circle at 46% 46%,rgba(167,139,250,.3),rgba(244,114,182,.12) 46%,transparent 72%);
+  filter:blur(46px);animation:cpulse 8s ease-in-out infinite}
+@keyframes cpulse{0%,100%{transform:scale(1);opacity:.68}50%{transform:scale(1.07);opacity:.92}}
+.scene__veil{position:absolute;left:-22%;top:-12%;bottom:-12%;width:36%;z-index:4;pointer-events:none;
+  background:linear-gradient(90deg,#0a0a0d 0%,rgba(10,10,13,.96) 38%,rgba(10,10,13,.55) 72%,transparent 100%)}
+.dev{position:absolute;transform-style:preserve-3d}
+.dev__in{transform-style:preserve-3d}
+.shot{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top center;
+  opacity:0;transition:opacity 1s ease}
+.shot.on{opacity:1}
+.lap{left:14%;top:3%;width:86%;animation:cfloatA 10s ease-in-out infinite;z-index:2}
+.lap .dev__in{transform:rotateX(10deg) rotateY(-21deg) rotateZ(-2deg)}
+.lap__scr{position:relative;width:100%;aspect-ratio:16/10;border-radius:16px;overflow:hidden;
+  background:#05050a;border:1px solid rgba(255,255,255,.16);
+  box-shadow:0 70px 130px rgba(0,0,0,.72),0 16px 40px rgba(0,0,0,.5)}
+.lap__glare{position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(112deg,rgba(255,255,255,.12) 0 16%,rgba(255,255,255,.02) 30%,transparent 52%)}
+.lap__base{position:relative;height:20px;width:104%;left:-2%;border-radius:0 0 14px 14px;
+  background:linear-gradient(180deg,#2c2c36,#16161c 55%,#0d0d12);
+  box-shadow:0 34px 56px rgba(0,0,0,.6);transform:rotateX(74deg);transform-origin:top center}
+.lap__base::after{content:"";position:absolute;left:50%;top:3px;width:15%;height:3px;border-radius:3px;
+  background:rgba(255,255,255,.15);transform:translateX(-50%)}
+.ph{left:27%;bottom:-6%;width:16.5%;animation:cfloatB 8s ease-in-out infinite;z-index:3}
+.ph .dev__in{transform:rotateX(4deg) rotateY(-25deg) rotateZ(6.5deg)}
+.ph__scr{position:relative;width:100%;aspect-ratio:390/844;border-radius:26px;overflow:hidden;
+  background:#05050a;border:3px solid #24242d;
+  box-shadow:0 46px 84px rgba(0,0,0,.66),0 10px 24px rgba(0,0,0,.5)}
+.ph__bar{position:absolute;left:0;right:0;top:0;height:5.4%;background:#0a0a0f;z-index:3}
+.ph__bar::after{content:"";position:absolute;left:50%;top:30%;width:30%;height:40%;border-radius:99px;
+  background:#000;transform:translateX(-50%)}
+.ph__view{position:absolute;left:0;right:0;top:5.4%;bottom:0;overflow:hidden}
+.ph__glare{position:absolute;inset:0;pointer-events:none;z-index:2;
+  background:linear-gradient(120deg,rgba(255,255,255,.1) 0 15%,transparent 42%)}
+@keyframes cfloatA{0%,100%{transform:translateY(0)}50%{transform:translateY(-18px)}}
+@keyframes cfloatB{0%,100%{transform:translateY(0)}50%{transform:translateY(13px)}}
+@media(max-width:1040px){
+  .scene{right:-34%;top:56%;width:120vw;max-width:none;opacity:.5}
+  .scene__veil{background:linear-gradient(170deg,rgba(10,10,13,.94) 0%,rgba(10,10,13,.7) 45%,rgba(10,10,13,.5) 100%)}
+  .hero--scene .hero-txt{max-width:100%}
+}
+@media(max-width:640px){.scene{opacity:.32;right:-46%;top:62%}}
+
+/* ── этапы ── */
+.flow{position:relative;margin-top:36px;padding-left:64px}
+@media(max-width:700px){.flow{padding-left:46px}}
+.flow__rail{position:absolute;left:26px;top:22px;bottom:22px;width:2px;border-radius:2px;
+  background:rgba(255,255,255,.08);overflow:hidden}
+@media(max-width:700px){.flow__rail{left:17px}}
+.flow__rail i{position:absolute;left:0;right:0;top:0;height:0;border-radius:2px;
+  background:linear-gradient(180deg,#f472b6,#a78bfa 55%,rgba(167,139,250,0));transition:height 2.1s cubic-bezier(.4,0,.2,1)}
+.flow.lit .flow__rail i{height:100%}
+.fstep{position:relative;display:block;background:var(--surface);border:1px solid var(--border);
+  border-radius:var(--radius);padding:20px 24px;margin-bottom:12px;transition:border-color .4s,background .4s}
+.fstep::before{content:"";position:absolute;left:-44px;top:26px;width:12px;height:12px;border-radius:50%;
+  background:var(--bg);border:2px solid rgba(255,255,255,.16);transition:border-color .4s,box-shadow .4s}
+@media(max-width:700px){.fstep::before{left:-35px}}
+.fstep.lit{border-color:rgba(167,139,250,.45);background:var(--surface-2)}
+.fstep.lit::before{border-color:var(--violet);box-shadow:0 0 12px rgba(167,139,250,.6)}
+.fstep__n{font-family:var(--font-head);font-size:13px;color:var(--muted);margin-right:12px}
+.fstep__t{font-family:var(--font-head);font-size:19px;font-weight:600;letter-spacing:-.4px}
+.fstep__d{display:block;color:var(--silver);font-size:15px;margin-top:8px}
+
+@media(prefers-reduced-motion:reduce){
+  .rot__i{position:static;opacity:0}.rot__i.on{opacity:1}
+  .brand2 .bword .ltr,.brand2 .bcar,.brand2 .pl,.brand2 .dk{opacity:1}
+  .flow .flow__rail i{height:100%}
+}
+
+/* ── пункт «Реферальная программа» в шапке ── */
+.nav-links{gap:22px}
+.nav-links a.nav-ref{color:#fff;font-weight:700}
+.nav-links a.nav-ref::before{content:"";display:inline-block;vertical-align:middle;
+  width:6px;height:6px;border-radius:50%;background:var(--violet);margin-right:8px}
+@media(max-width:1260px){.nav-links a.nav-ref{display:none}}
+
+/* ── услуги: широкая таблица из карточек ── */
+.cur{display:flex;align-items:center;gap:10px;margin-top:22px;flex-wrap:wrap}
+.cur__l{font-size:13.5px;color:var(--muted)}
+.cur__b{border:1px solid var(--border);background:transparent;color:var(--silver);border-radius:100px;
+  padding:9px 17px;font:inherit;font-size:13.5px;font-weight:600;cursor:pointer;min-height:44px;transition:.2s}
+.cur__b:hover{color:#fff;border-color:rgba(255,255,255,.2)}
+.cur__b.on{background:var(--grad);color:#0a0a0d;border-color:transparent}
+
+.ptab{margin-top:24px;border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;
+  display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border)}
+@media(max-width:860px){.ptab{grid-template-columns:1fr}}
+.pcard{background:var(--surface);padding:30px 28px;display:flex;flex-direction:column;transition:background .3s}
+.pcard:hover{background:var(--surface-2)}
+.pcard--wide{grid-column:1/-1}
+.pcard__ico{width:42px;height:42px;border-radius:12px;border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;color:var(--violet);margin-bottom:16px}
+.pcard__ico svg{width:21px;height:21px}
+.pcard h3{font-family:var(--font-head);font-size:21px;font-weight:600;letter-spacing:-.4px;margin:0}
+.pcard__d{color:var(--silver);font-size:15px;margin-top:10px;line-height:1.6}
+.pcard__w{color:var(--muted);font-size:14.5px;margin-top:10px;line-height:1.6}
+.pcard__l{list-style:none;padding:0;margin:18px 0 0;display:flex;flex-wrap:wrap;gap:8px}
+.pcard__l li{border:1px solid var(--border);border-radius:100px;padding:6px 13px;font-size:12.5px;color:var(--muted)}
+.pcard__f{margin-top:auto;padding-top:24px;display:flex;align-items:flex-end;gap:16px;flex-wrap:wrap}
+.pcard__pl{display:block;font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.price{display:block;font-family:var(--font-head);font-size:24px;font-weight:600;letter-spacing:-.5px;
+  margin-top:6px;color:#fff;white-space:nowrap}
+.pcard__t{margin-left:auto;font-size:13px;color:var(--muted);border:1px solid var(--border);
+  border-radius:100px;padding:6px 13px;white-space:nowrap}
+.ptab-note{margin-top:18px;font-size:13.5px;color:var(--muted);max-width:70ch}
+
+/* ── реферальная программа ── */
+.ref-steps{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:34px}
+@media(max-width:860px){.ref-steps{grid-template-columns:1fr}}
+.ref-step{position:relative;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
+  padding:22px 22px 22px 66px}
+.ref-step b{position:absolute;left:20px;top:20px;width:32px;height:32px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;font-family:var(--font-head);font-size:14px;
+  color:#0a0a0d;background:var(--grad)}
+.ref-step h3{font-family:var(--font-head);font-size:17px;font-weight:600;margin:0}
+.ref-step p{color:var(--silver);font-size:14.5px;margin:6px 0 0;line-height:1.55}
+
+.ref-cards{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:22px}
+@media(max-width:860px){.ref-cards{grid-template-columns:1fr}}
+.rcard{position:relative;background:var(--surface);border:1px solid var(--border);border-radius:20px;
+  padding:32px 30px;display:flex;flex-direction:column}
+.rcard--pro{background:linear-gradient(180deg,rgba(167,139,250,.09),rgba(244,114,182,.03) 60%,transparent),var(--surface);
+  border-color:rgba(167,139,250,.38)}
+.rcard__tag{align-self:flex-start;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);
+  border:1px solid var(--border);border-radius:100px;padding:6px 13px}
+.rcard--pro .rcard__tag{color:#d7c9ff;border-color:rgba(167,139,250,.4)}
+.rcard h3{font-family:var(--font-head);font-size:23px;font-weight:600;letter-spacing:-.4px;margin:18px 0 0}
+.rcard__big{font-family:var(--font-head);font-weight:600;letter-spacing:-1.5px;line-height:1;margin-top:14px;
+  font-size:clamp(40px,5vw,58px);background:var(--grad);-webkit-background-clip:text;background-clip:text;
+  -webkit-text-fill-color:transparent}
+.rcard__big small{font-size:.32em;letter-spacing:0;-webkit-text-fill-color:var(--muted);margin-left:8px}
+.rcard__big--word{font-size:clamp(30px,3.4vw,40px);letter-spacing:-.8px}
+.rcard ul{list-style:none;padding:0;margin:22px 0 0;display:flex;flex-direction:column;gap:11px}
+.rcard li{position:relative;padding-left:22px;color:var(--silver);font-size:15px;line-height:1.55}
+.rcard li::before{content:"";position:absolute;left:0;top:.62em;width:7px;height:7px;border-radius:50%;background:var(--violet)}
+.rcard .btn{margin-top:auto;align-self:flex-start}
+.rcard__f{margin-top:26px}
+.ref-note{margin-top:18px;color:var(--muted);font-size:14px;max-width:72ch}
+
+
+/* apply_edits: галерея работ */
+/* Правка 24.09: галерея работ вместо карусели с выдуманными цифрами. */
+.works{margin-top:26px}
+.works-grid{display:grid;grid-template-columns:1fr;gap:16px}
+@media (min-width:640px){.works-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (min-width:1040px){.works-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.wcard{position:relative;display:flex;flex-direction:column;background:var(--surface);
+  border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;text-decoration:none;
+  color:inherit;transition:transform .35s,border-color .35s,background .35s}
+.wcard:hover{transform:translateY(-6px);background:var(--surface-2);border-color:rgba(255,255,255,.18)}
+.wcard__sh{display:block;overflow:hidden;background:#0d0d12}
+.wcard__sh img{width:100%;height:auto;display:block;transition:transform .5s ease;
+  filter:saturate(.92) brightness(.9)}
+.wcard:hover .wcard__sh img{transform:scale(1.04);filter:none}
+.wcard__b{display:flex;flex-direction:column;gap:6px;padding:18px 18px 20px}
+.wcard__n{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.wcard__b strong{font-family:var(--font-head);font-size:19px;font-weight:600;letter-spacing:-.3px}
+.wcard__d{color:var(--muted);font-size:14.5px;line-height:1.55}
+.works-all{display:flex;flex-direction:column;align-items:center;gap:10px;margin-top:28px;text-align:center}
+.works-all__n{font-size:13px;color:var(--muted);max-width:52ch}
+@media (max-width:520px){
+  .wcard__b{padding:14px 14px 16px}
+  .wcard__d{font-size:14px}
+}
+
+/* apply_edits: телефон */
+/* ═══════════ ТЕЛЕФОН ═══════════
+   Задача Романа: на телефоне смотрится не хуже, чем на компьютере. */
+
+/* Ничто не выпирает за край: декоративная сцена и пятна света обрезаются. */
+html,body{overflow-x:clip}
+.hero{overflow:hidden}
+.nb{white-space:nowrap}
+
+@media(max-width:900px){
+  /* Сцена с ноутбуком и телефоном встаёт под текстом целиком, а не бледным пятном за ним. */
+  .hero--scene .wrap{display:flex;flex-direction:column}
+  .hero--scene .hero-txt{order:1;max-width:100%}
+  .hero--scene h1{font-size:clamp(28px,8.4vw,40px);line-height:1.12}
+  .scene{order:2;position:relative;right:auto;top:auto;transform:none;
+    width:100%;max-width:none;margin:28px 0 4px;aspect-ratio:16/12;opacity:1;filter:none}
+  .scene__veil{display:none}
+  .scene__glow{left:0;width:100%;filter:blur(34px)}
+  .lap{left:2%;top:4%;width:74%}
+  .lap .dev__in{transform:rotateX(8deg) rotateY(-16deg) rotateZ(-1.5deg)}
+  .ph{left:62%;bottom:0;width:26%}
+  .ph .dev__in{transform:rotateX(3deg) rotateY(-18deg) rotateZ(5deg)}
+  .lap__scr{border-radius:10px}
+  .ph__scr{border-radius:18px;border-width:2px}
+}
+
+@media(max-width:640px){
+  /* Услуги: пять карточек плиткой — всё видно сразу, ничего не уезжает. */
+  .svc-coverflow{margin-top:26px}
+  .svc-stage{height:auto;perspective:none;transform-style:flat;
+    display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .svc-card{position:static;width:auto;transform:none!important;opacity:1!important;
+    filter:none!important;padding:18px 14px;border-radius:16px;box-shadow:none;
+    transition:border-color .3s,background .3s}
+  .svc-card:last-child{grid-column:1/-1}
+  .svc-ico{width:42px;height:42px;border-radius:12px;margin:0 auto 12px}
+  .svc-ico svg{width:22px;height:22px}
+  .svc-card h3{font-size:16px;margin-bottom:6px;letter-spacing:-.2px}
+  .svc-card p{font-size:13px;line-height:1.45}
+
+  /* Работы: восемнадцать карточек в столбик — семь метров прокрутки. Шесть + кнопка. */
+  .works-grid.collapsed .wcard:nth-child(n+7){display:none}
+  .works-more{display:inline-flex;align-items:center;justify-content:center;width:100%;
+    min-height:48px;margin-top:16px;border:1px solid var(--border);border-radius:100px;
+    background:var(--surface);color:#fff;font:inherit;font-size:15px;font-weight:600;cursor:pointer}
+  .works-more:active{background:var(--surface-2)}
+  .works-more[hidden]{display:none}
+  .works-all{margin-top:18px}
+  /* белая заливка на телефоне остаётся только у главного действия */
+  .works-all .btn{background:none;border:1px solid transparent;color:var(--text);width:auto;
+    text-decoration:underline;text-underline-offset:5px;min-height:auto;padding:10px 4px;
+    font-size:15px;box-shadow:none}
+  .works-all .btn::after{content:" →"}
+  .works-all__n{font-size:12.5px}
+
+  /* Меню: сплошная подложка (сквозь 0,97 просвечивал заголовок), крупные строки. */
+  .nav-links{background:#0a0a0d;box-shadow:0 26px 46px rgba(0,0,0,.55);
+    padding:6px 0 18px;max-height:calc(100vh - 70px);overflow-y:auto}
+  .nav.scrolled .nav-links{background:#0a0a0d}
+  .nav-links a{padding:15px 6vw;font-size:16px;color:var(--text)}
+  .nav-links a + a{border-top:1px solid rgba(255,255,255,.06)}
+  .nav-links a.nav-ref{display:block}
+  .nav-links a.btn-primary{margin:14px 6vw 2px;width:calc(100% - 12vw);padding:15px 20px;border-top:0}
+  .burger{position:relative;width:38px;height:38px;justify-content:center}
+  .burger span{transition:transform .3s,opacity .2s}
+  .burger.is-open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+  .burger.is-open span:nth-child(2){opacity:0}
+  .burger.is-open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+
+  /* Подвал не прячется под плавающей кнопкой «Заявка». */
+  .footer{padding:36px 0 96px}
+  .footer-inner{gap:14px}
+  .float-cta{right:16px;bottom:16px}
+
+  /* Грузинская «ქა» в списке языков обрезалась по высоте строки. */
+  .lang-opt{line-height:1.6;min-height:42px;display:flex;align-items:center;font-size:14px}
+  .lang-menu{min-width:104px;padding:7px}
+  .lang-current{min-height:40px}
+}
+@media(max-width:400px){
+  .svc-card h3{font-size:15px}
+  .stat b{font-size:26px}
+}
+
+/* apply_edits: прайс-плитки */
+/* Правка 24.09 (15:56): прайс — шесть отдельных плиток. Сначала компактно: значок,
+   название, цена, срок. Наведение (на телефоне — нажатие) раскрывает пояснение и
+   зажигает бегущий по кругу ободок. Валюта выбирается списком, как язык. */
+.phead{display:flex;align-items:flex-end;justify-content:space-between;gap:16px 28px;flex-wrap:wrap}
+.phint{color:var(--muted);font-size:14.5px;margin-top:12px}
+.phint__h{display:none}
+
+/* выбор валюты */
+.cur-dd{position:relative;flex:none}
+.cur-dd::after{content:"";position:absolute;top:100%;left:0;right:0;height:12px}
+.cur-btn{display:inline-flex;align-items:center;gap:10px;min-height:46px;padding:6px 14px 6px 16px;
+  background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.12);border-radius:100px;
+  color:var(--silver);font:inherit;font-size:14px;font-weight:500;cursor:pointer;
+  transition:color .2s,border-color .2s,background .2s}
+.cur-btn__s{width:32px;height:32px;border-radius:50%;display:grid;place-items:center;
+  background:var(--grad);color:#0a0a0d;font-size:16px;font-weight:700;line-height:1}
+.cur-btn .chev{width:10px;height:7px;transition:transform .25s}
+.cur-btn:hover,.cur-dd.open .cur-btn{color:#fff;border-color:rgba(167,139,250,.55);background:rgba(255,255,255,.08)}
+.cur-menu{position:absolute;right:0;top:calc(100% + 10px);z-index:40;display:flex;flex-direction:column;gap:2px;
+  min-width:176px;padding:6px;background:rgba(16,16,22,.98);border:1px solid rgba(255,255,255,.1);
+  border-radius:14px;box-shadow:0 20px 44px rgba(0,0,0,.55);opacity:0;visibility:hidden;
+  transform:translateY(-8px);transition:opacity .22s,transform .22s,visibility .22s}
+.cur-dd.open .cur-menu{opacity:1;visibility:visible;transform:none}
+.cur-dd.open .chev{transform:rotate(180deg)}
+@media (hover:hover){
+  .cur-dd:hover .cur-menu{opacity:1;visibility:visible;transform:none}
+  .cur-dd:hover .chev{transform:rotate(180deg)}
+  .cur-dd.shut .cur-menu{opacity:0;visibility:hidden;transform:translateY(-8px)}
+}
+.cur-opt{display:flex;align-items:center;gap:12px;min-height:42px;padding:8px 12px;border:0;border-radius:9px;
+  background:none;color:var(--silver);font:inherit;font-size:14.5px;text-align:left;cursor:pointer;
+  transition:background .18s,color .18s}
+.cur-opt b{width:20px;text-align:center;font-size:17px;color:#fff}
+.cur-opt:hover{background:rgba(255,255,255,.07);color:#fff}
+.cur-opt.on{background:var(--grad);color:#08080b;font-weight:600}
+.cur-opt.on b{color:#08080b}
+
+/* плитки */
+@property --pa{syntax:"<angle>";inherits:false;initial-value:0deg}
+.plist{margin-top:22px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+@media(max-width:1040px){.plist{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.ptile{position:relative;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.ptile__in{position:relative;border-radius:18px;border:1px solid rgba(255,255,255,.1);
+  background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,0) 42%),var(--surface);
+  box-shadow:0 10px 24px -16px rgba(0,0,0,.8);
+  transition:transform .35s cubic-bezier(.2,.8,.2,1),border-color .35s,background-color .35s,box-shadow .35s}
+.ptile__in::before{content:"";position:absolute;inset:-1px;padding:1px;border-radius:19px;opacity:0;pointer-events:none;
+  background:conic-gradient(from var(--pa),transparent 0 60%,rgba(228,222,252,.9) 75%,rgba(167,139,250,1) 84%,transparent 96%);
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;
+  mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);mask-composite:exclude;
+  transition:opacity .3s}
+.ptile__base{position:relative;padding:20px 20px 22px}
+.ptile__top{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.ptile__ico{width:42px;height:42px;flex:none;border-radius:12px;border:1px solid rgba(255,255,255,.1);
+  background:rgba(167,139,250,.07);display:flex;align-items:center;justify-content:center;color:var(--violet)}
+.ptile__ico svg{width:21px;height:21px}
+.ptile__t{font-size:12.5px;color:var(--muted);border:1px solid rgba(255,255,255,.1);border-radius:100px;
+  padding:5px 12px;white-space:nowrap}
+.ptile h3{font-family:var(--font-head);font-size:20px;font-weight:600;letter-spacing:-.4px;
+  margin-top:16px;padding-right:40px}
+.ptile__p{display:block;margin-top:6px;font-family:var(--font-head);font-size:24px;font-weight:600;
+  letter-spacing:-.5px;color:#fff;white-space:nowrap;padding-right:40px}
+.ptile__tog{position:absolute;right:16px;bottom:20px;width:32px;height:32px;border-radius:50%;
+  border:1px solid rgba(255,255,255,.16);background:transparent;color:var(--silver);cursor:pointer;
+  display:grid;place-items:center;transition:background .3s,border-color .3s,color .3s}
+.ptile__tog span,.ptile__tog span::after{display:block;width:12px;height:1.6px;border-radius:2px;background:currentColor}
+.ptile__tog span{position:relative}
+.ptile__tog span::after{content:"";position:absolute;left:0;top:0;transform:rotate(90deg);transition:transform .35s}
+.ptile__more{display:grid;grid-template-rows:0fr;opacity:0;visibility:hidden;
+  transition:grid-template-rows .45s cubic-bezier(.2,.8,.2,1),opacity .25s ease,visibility 0s linear .45s}
+.ptile__mi{min-height:0;overflow:hidden}
+.ptile__d{color:var(--silver);font-size:15px;line-height:1.55;padding:0 20px}
+.ptile__w{color:var(--muted);font-size:14.5px;line-height:1.6;margin:14px 20px 0;padding:14px 0 22px;
+  border-top:1px solid rgba(255,255,255,.08)}
+
+/* раскрытая плитка (телефон и планшет — по нажатию) */
+.ptile.open .ptile__more{grid-template-rows:1fr;opacity:1;visibility:visible;
+  transition:grid-template-rows .45s cubic-bezier(.2,.8,.2,1),opacity .35s ease .1s,visibility 0s}
+.ptile.open .ptile__in{background-color:var(--surface-2);border-color:rgba(167,139,250,.32);
+  box-shadow:0 26px 54px -18px rgba(0,0,0,.75)}
+.ptile.open .ptile__in::before{opacity:1;animation:pRing 2.4s linear infinite}
+.ptile.open .ptile__tog{background:rgba(167,139,250,.16);border-color:rgba(167,139,250,.55);color:#fff}
+.ptile.open .ptile__tog span::after{transform:rotate(0deg)}
+@keyframes pRing{to{--pa:360deg}}
+
+/* компьютер с мышью: плитка раскрывается наведением ПОВЕРХ соседей — страница не прыгает */
+@media (hover:hover) and (pointer:fine) and (min-width:641px){
+  .plist{grid-auto-rows:var(--prow,196px)}
+  .ptile{cursor:default}
+  .ptile__in{position:absolute;left:0;right:0;top:0;min-height:100%}
+  .ptile__tog{pointer-events:none}
+  .ptile:hover,.ptile:focus-within{z-index:8}
+  .ptile:hover .ptile__more,.ptile:focus-within .ptile__more{grid-template-rows:1fr;opacity:1;visibility:visible;
+    transition:grid-template-rows .45s cubic-bezier(.2,.8,.2,1),opacity .35s ease .1s,visibility 0s}
+  .ptile:hover .ptile__in,.ptile:focus-within .ptile__in{transform:translateY(-4px);background-color:var(--surface-2);
+    border-color:rgba(167,139,250,.32);box-shadow:0 34px 64px -20px rgba(0,0,0,.85)}
+  .ptile:hover .ptile__in::before,.ptile:focus-within .ptile__in::before{opacity:1;animation:pRing 2.4s linear infinite}
+  .ptile:hover .ptile__tog,.ptile:focus-within .ptile__tog{background:rgba(167,139,250,.16);
+    border-color:rgba(167,139,250,.55);color:#fff}
+  .ptile:hover .ptile__tog span::after,.ptile:focus-within .ptile__tog span::after{transform:rotate(0deg)}
+  .phint__h{display:inline}
+  .phint__t{display:none}
+}
+@media (prefers-reduced-motion:reduce){
+  .ptile__in,.ptile__more{transition:none}
+  .ptile.open .ptile__in::before,.ptile:hover .ptile__in::before,.ptile:focus-within .ptile__in::before{animation:none}
+}
+
+/* телефон: плитки превращаются в строки списка — значок, название, цена со сроком */
+@media(max-width:640px){
+  .phead{align-items:flex-start}
+  .plist{grid-template-columns:1fr;gap:10px;margin-top:18px}
+  .ptile__in{border-radius:16px}
+  .ptile__in::before{border-radius:17px}
+  .ptile__base{display:grid;grid-template-columns:40px auto minmax(0,1fr) 32px;
+    grid-template-areas:"ico name name tog" "ico price term tog";column-gap:12px;row-gap:3px;
+    align-items:center;padding:14px}
+  .ptile__top{display:contents}
+  .ptile__ico{grid-area:ico;width:40px;height:40px}
+  .ptile__ico svg{width:20px;height:20px}
+  .ptile h3{grid-area:name;margin:0;padding:0;font-size:16.5px;letter-spacing:-.2px}
+  .ptile__p{grid-area:price;margin:0;padding:0;font-size:16px;letter-spacing:-.2px}
+  .ptile__t{grid-area:term;justify-self:start;border:0;padding:0;font-size:12.5px}
+  .ptile__t::before{content:"·";margin-right:8px;color:rgba(255,255,255,.28)}
+  .ptile__tog{grid-area:tog;position:static}
+  .ptile__d{padding:0 14px;font-size:14.5px}
+  .ptile__w{margin:12px 14px 0;padding:12px 0 16px;font-size:14px}
+}
+
+/* apply_edits: правки 15:56 */
+/* Правка 24.09 (15:56): линия этапов — строго через центры кружков. Кружок стоит
+   в 28 px от края блока (на телефоне — в 19 px), линия шириной 2 px, значит её левый
+   край — 27 px (18 px). Начинается линия от центра первого кружка, а первые 110 px
+   плавно сужается к началу. */
+.flow__rail{left:27px;top:34px;
+  clip-path:polygon(35% 0,65% 0,100% 110px,100% 100%,0 100%,0 110px)}
+@media(max-width:700px){.flow__rail{left:18px}}
+
+/* Правка 24.09 (15:56): кнопки заявки оживают раз в 4,5 секунды. Плавающая —
+   толчок, расходящееся кольцо и перелив по кнопке; в шапке — только толчок и кольцо.
+   Толчок — через свойство scale, чтобы не спорить с transform появления и наведения. */
+.cta-live,.cta-beat{isolation:isolate;outline:2px solid transparent;outline-offset:0}
+@media (prefers-reduced-motion:no-preference){
+  .float-cta.cta-live{animation:ctaBeat 4.5s cubic-bezier(.3,.7,.4,1) 1.2s infinite}
+  .nav-links a.cta-beat{animation:ctaBeat 4.5s cubic-bezier(.3,.7,.4,1) 3.4s infinite}
+  .cta-live::before{content:"";position:absolute;inset:0;z-index:-1;border-radius:inherit;pointer-events:none;
+    background:linear-gradient(105deg,transparent 28%,rgba(244,114,182,.42) 40%,rgba(167,139,250,.62) 50%,
+      rgba(170,184,212,.5) 60%,transparent 72%);
+    background-size:260% 100%;background-repeat:no-repeat;background-position:130% 0;
+    animation:ctaShine 4.5s ease-in-out 1.2s infinite}
+}
+.cta-live:focus-visible,.cta-beat:focus-visible{animation:none;outline:2px solid var(--violet);outline-offset:3px}
+@keyframes ctaBeat{
+  0%,62%,100%{scale:1;outline-color:rgba(167,139,250,0);outline-offset:0}
+  68%{scale:1.07;outline-color:rgba(167,139,250,.65);outline-offset:0}
+  76%{scale:.98}
+  84%{scale:1.03}
+  90%{scale:1;outline-color:rgba(167,139,250,0);outline-offset:14px}}
+@keyframes ctaShine{0%,54%{background-position:130% 0}86%,100%{background-position:-30% 0}}
+
+/* apply_edits: карточки работ v2 */
+/* 25.09: карточка — статья со ссылкой на работу. Работа открывается в этой же вкладке,
+   на нашем сайте. Строки языков на карточке нет (правка Романа 25.09). */
+.wcard__main{display:flex;flex-direction:column;flex:1;color:inherit;text-decoration:none;border-radius:inherit}
+.wcard__main:focus-visible{outline:2px solid var(--violet);outline-offset:-3px}
+
+/* apply_edits: прайс v2 */
+/* Правка 24.09 (22:12, № 1): плитки крупнее и почти квадратные. На компьютере плитка раскрывается
+   внутри себя — название и цена плавно поднимаются, под ними появляется пояснение; соседнюю
+   плитку ничего не закрывает. Вместо плюса в кружке — тонкая стрелка вниз, раскрыта — вверх. */
+.ptile__tog{width:30px;height:30px;border:0;background:none;color:var(--muted);right:16px;bottom:22px}
+.ptile__tog span{width:9px;height:9px;background:none;border-right:1.6px solid currentColor;
+  border-bottom:1.6px solid currentColor;border-radius:1px;transform:translateY(-2px) rotate(45deg);
+  transition:transform .4s cubic-bezier(.2,.8,.2,1)}
+.ptile__tog span::after{display:none}
+.ptile.open .ptile__tog{background:none;border:0;color:#fff}
+.ptile.open .ptile__tog span{transform:translateY(2px) rotate(225deg)}
+@media (min-width:641px){
+  .plist{gap:18px}
+  .ptile__base{padding:26px 26px 24px}
+  .ptile__ico{width:50px;height:50px;border-radius:14px}
+  .ptile__ico svg{width:24px;height:24px}
+  .ptile__t{font-size:13px;padding:6px 13px}
+  .ptile h3{font-size:24px;margin-top:20px}
+  .ptile__p{font-size:29px;margin-top:8px}
+  .ptile__d{padding:0 26px;font-size:15.5px}
+  .ptile__w{margin:14px 26px 0;padding:14px 0 26px;font-size:14.5px}
+}
+@media (hover:hover) and (pointer:fine) and (min-width:641px){
+  .plist{grid-auto-rows:var(--prow,340px)}
+  .ptile__in{position:relative;left:auto;right:auto;top:auto;height:100%;min-height:0;
+    display:flex;flex-direction:column}
+  .ptile__base{flex:1 1 auto;display:flex;flex-direction:column;min-height:0}
+  .ptile__base h3{margin-top:auto;padding-top:20px;transition:padding .45s cubic-bezier(.2,.8,.2,1)}
+  .ptile__more{flex:none}
+  .ptile__d{font-size:15px}
+  .ptile__w{margin:12px 26px 0;padding:12px 0 24px;font-size:14px}
+  /* раскрыта: значок и срок уезжают вверх — место отдаётся пояснению, плитка остаётся квадратной */
+  .ptile__top{max-height:64px;overflow:hidden;transition:max-height .45s cubic-bezier(.2,.8,.2,1),opacity .3s ease}
+  .ptile:hover .ptile__top,.ptile:focus-within .ptile__top{max-height:0;opacity:0}
+  .ptile:hover .ptile__base h3,.ptile:focus-within .ptile__base h3{padding-top:0}
+  .ptile:hover .ptile__tog,.ptile:focus-within .ptile__tog{background:none;border:0;color:#fff}
+  .ptile:hover .ptile__tog span,.ptile:focus-within .ptile__tog span{transform:translateY(2px) rotate(225deg)}
+  /* замер высоты ряда: на один кадр все плитки раскрыты (на экран это не попадает) */
+  .plist.no-anim,.plist.no-anim *{transition:none!important}
+  .plist.is-measure{grid-auto-rows:auto}
+  .plist.is-measure .ptile__in{height:auto}
+  .plist.is-measure .ptile__base{flex:none}
+  .plist.is-measure .ptile__top{max-height:0}
+  .plist.is-measure .ptile__base h3{padding-top:0}
+  .plist.is-measure .ptile__more{grid-template-rows:1fr;transition:none}
+}
+
+/* apply_edits: услуги шире */
+/* Правка 24.09 (22:12, № 3): карточки «Что мы делаем» шире на ~18 % (330 → 390 px). */
+.svc-card{width:min(390px,84vw);padding:36px 34px}
+@media(max-width:640px){
+  .svc-card{width:auto;padding:18px 14px}
+  .svc-card:last-child{grid-column:auto}   /* карточек шесть — ровно три ряда по две */
+}
+
+/* apply_edits: кнопка в шапке дышит */
+/* Правка 24.09 (22:12, № 4): кнопка «Оставить заявку» пульсирует постоянно, плавно и мягко —
+   вместо толчка раз в 4,5 секунды. */
+@media (prefers-reduced-motion:no-preference){
+  .nav-links a.cta-beat{animation:ctaSoft 2.8s ease-in-out infinite}
+}
+@keyframes ctaSoft{
+  0%,100%{box-shadow:0 0 0 0 rgba(167,139,250,.3),0 0 14px -4px rgba(167,139,250,.35);scale:1}
+  50%{box-shadow:0 0 0 7px rgba(167,139,250,0),0 0 26px -2px rgba(167,139,250,.6);scale:1.03}
+}
+
+/* apply_edits: этапы объёмнее */
+/* Правка 24.09 (22:12, № 6): карточки этапов объёмнее — свет сверху, тень снизу, подъём при наведении. */
+.fstep{border-color:rgba(255,255,255,.1);
+  background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.012) 60%),var(--surface);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.08),inset 0 -1px 0 rgba(0,0,0,.35),
+    0 2px 4px -2px rgba(0,0,0,.6),0 16px 34px -20px rgba(0,0,0,.95);
+  transition:transform .45s cubic-bezier(.2,.8,.2,1),border-color .4s,background .4s,box-shadow .45s}
+.fstep.lit{background:linear-gradient(180deg,rgba(167,139,250,.09),rgba(255,255,255,.015) 60%),var(--surface-2)}
+@media (hover:hover){
+  .fstep:hover{transform:translateY(-3px);box-shadow:inset 0 1px 0 rgba(255,255,255,.1),inset 0 -1px 0 rgba(0,0,0,.35),
+    0 4px 8px -4px rgba(0,0,0,.6),0 26px 48px -24px rgba(0,0,0,.95)}
+}
+
+/* apply_edits: мягкий обод по кругу */
+/* Правки 24.09 (22:12, № 5 и 10): при наведении карточку обводит тонкий светящийся обод, который
+   плавно бежит по кругу, — как у плиток прайса, только тише и медленнее. */
+.ref-step,.rcard,.acard{position:relative}
+.fstep::after,.rcard::after,.ref-step::after,.acard::after{content:"";position:absolute;inset:-1px;padding:1px;
+  border-radius:inherit;pointer-events:none;opacity:0;
+  background:conic-gradient(from var(--pa),transparent 0 64%,rgba(228,222,252,.5) 78%,rgba(167,139,250,.72) 86%,transparent 96%);
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;
+  mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);mask-composite:exclude;
+  transition:opacity .6s ease}
+@media (hover:hover){
+  .fstep:hover::after,.rcard:hover::after,.ref-step:hover::after,.acard:hover::after{opacity:1;
+    animation:pRing 3.4s linear infinite}
+}
+@media (prefers-reduced-motion:reduce){
+  .fstep:hover::after,.rcard:hover::after,.ref-step:hover::after,.acard:hover::after{animation:none}
+}
+
+/* apply_edits: значок плашки */
+.hero-badge .hb-ico{width:15px;height:15px;flex:none;color:#c4b5fd}
+
+/* apply_edits: о нас */
+/* Правка 24.09 (22:12, № 16): раздел «О нас» — кто мы и что делаем, тезисы со значками. */
+.about{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:clamp(24px,4vw,56px);align-items:start}
+@media(max-width:900px){.about{grid-template-columns:1fr}}
+.about__head h2{margin-bottom:0}
+.about__head .sec-sub{margin-top:18px;max-width:54ch}
+/* карточки справа длиннее левой колонки — заголовок с абзацем едут вместе со страницей, пустоты нет */
+@media(min-width:901px){.about__head{position:sticky;top:100px}}
+.about__team{list-style:none;padding:0;margin:22px 0 0;display:flex;flex-wrap:wrap;gap:8px}
+.about__team li{font-size:13.5px;color:var(--silver);border:1px solid var(--border);border-radius:100px;
+  padding:7px 14px;background:rgba(255,255,255,.03)}
+.about__grid{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+@media(max-width:560px){.about__grid{grid-template-columns:1fr;gap:10px}}
+/* 26.09 (правка Романа): карточки компактнее и раскрываются вниз, как плитки «Услуг и сроков» */
+.acard{border-radius:16px;padding:18px;border:1px solid rgba(255,255,255,.1);cursor:pointer;
+  -webkit-tap-highlight-color:transparent;
+  background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.01) 55%),var(--surface);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.06),0 18px 36px -24px rgba(0,0,0,.9);
+  transition:transform .45s cubic-bezier(.2,.8,.2,1),border-color .4s,background-color .4s}
+@media (hover:hover){.acard:hover{transform:translateY(-3px);border-color:rgba(167,139,250,.28)}}
+.acard__base{position:relative}
+.acard__ico{width:38px;height:38px;border-radius:11px;display:flex;align-items:center;justify-content:center;
+  color:var(--violet);background:rgba(167,139,250,.08);border:1px solid rgba(167,139,250,.22)}
+.acard__ico svg{width:19px;height:19px}
+.acard h3{font-family:var(--font-head);font-size:17px;font-weight:600;letter-spacing:-.3px;margin:12px 0 0}
+.acard__lead{color:var(--silver);font-size:14.5px;line-height:1.55;margin:6px 0 0}
+.acard__tog{position:absolute;top:4px;right:-6px;width:30px;height:30px;border:0;background:none;color:var(--muted);
+  cursor:pointer;display:grid;place-items:center;transition:color .3s}
+.acard__tog span{display:block;width:9px;height:9px;border-right:1.6px solid currentColor;
+  border-bottom:1.6px solid currentColor;border-radius:1px;transform:translateY(-2px) rotate(45deg);
+  transition:transform .4s cubic-bezier(.2,.8,.2,1)}
+.acard__tog:focus-visible{outline:2px solid var(--violet);outline-offset:2px;border-radius:8px}
+.acard__more{display:grid;grid-template-rows:0fr;opacity:0;visibility:hidden;
+  transition:grid-template-rows .45s cubic-bezier(.2,.8,.2,1),opacity .25s ease,visibility 0s linear .45s}
+.acard__mi{min-height:0;overflow:hidden}
+.acard__w{color:var(--muted);font-size:14px;line-height:1.6;margin:12px 0 0;padding-top:12px;
+  border-top:1px solid rgba(255,255,255,.08)}
+.acard.open{border-color:rgba(167,139,250,.32);background-color:var(--surface-2)}
+.acard.open .acard__more{grid-template-rows:1fr;opacity:1;visibility:visible;
+  transition:grid-template-rows .45s cubic-bezier(.2,.8,.2,1),opacity .35s ease .1s,visibility 0s}
+.acard.open .acard__tog{color:#fff}
+.acard.open .acard__tog span{transform:translateY(2px) rotate(225deg)}
+@media (hover:hover){.acard:hover .acard__tog{color:#fff}}
+@media (prefers-reduced-motion:reduce){.acard__more,.acard__tog span{transition:none}}
+
+/* apply_edits: пункт программы виден всегда */
+@media (min-width:1024px) and (max-width:1260px){
+  .nav-links{gap:15px}
+  .nav-links a{font-size:14px}
+  .nav-links a.nav-ref{display:inline-block}
+}
+/* 641–1023 px: всё меню — под кнопкой, как на телефоне */
+@media (min-width:641px) and (max-width:1023px){
+  .nav-links{position:fixed;inset:70px 0 auto 0;display:none;flex-direction:column;align-items:stretch;gap:0;
+    background:#0a0a0d;border-bottom:1px solid var(--border);box-shadow:0 26px 46px rgba(0,0,0,.55);
+    padding:6px 0 18px;max-height:calc(100vh - 70px);overflow-y:auto}
+  .nav-links.open{display:flex}
+  .nav-links a{padding:15px 6vw;width:100%;font-size:16px;color:var(--text)}
+  .nav-links a + a{border-top:1px solid rgba(255,255,255,.06)}
+  .nav-links a.nav-ref{display:block}
+  .nav-links a.btn-primary{margin:14px 6vw 2px;width:calc(100% - 12vw);padding:15px 20px;border-top:0;text-align:center}
+  .burger{display:flex;position:relative;width:38px;height:38px;justify-content:center}
+  .burger span{transition:transform .3s,opacity .2s}
+  .burger.is-open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+  .burger.is-open span:nth-child(2){opacity:0}
+  .burger.is-open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+}
+
+/* apply_edits: услуги выше */
+/* Правка Романа 25.09: карточки «Что мы делаем» выше примерно на 60 px — содержимое по центру. */
+@media (min-width:641px){
+  .svc-stage{height:350px}
+  .svc-card{min-height:270px;display:flex;flex-direction:column;align-items:center;justify-content:center;
+    padding:40px 34px}
+  .svc-ico{width:64px;height:64px;border-radius:18px;margin-bottom:24px}
+  .svc-ico svg{width:32px;height:32px}
+  .svc-card h3{font-size:22px;margin-bottom:10px}
+  .svc-card p{font-size:15px;line-height:1.55;text-wrap:balance}  /* без одинокого слова на второй строке */
+}
+
+/* apply_edits: валюта символами */
+/* Правка Романа 25.09: в списке валют без слов «лари / доллары / рубли» — только символ. */
+.cur-menu{min-width:0;width:max-content}
+.cur-opt{justify-content:center;min-width:48px;padding:8px 14px}
+.cur-opt b{width:auto;font-size:18px}
+
+/* apply_edits: плитки без цен */
+/* Правка Романа 25.09: цен на плитках нет — под названием короткое описание, что это и что
+   делаем. Наведение (на телефоне — нажатие) по-прежнему раскрывает «зачем это вам». */
+.ptile__lead{margin-top:8px;color:var(--silver);font-size:15px;line-height:1.55;padding-right:40px}
+.ptile__w{border-top:0;padding-top:0}
+@media (min-width:641px){
+  .ptile__lead{font-size:15.5px;margin-top:10px}
+}
+/* Правка Романа 25.09 (второй пакет): заголовки плиток в одном ряду начинаются на одной линии.
+   Раньше текст прижимался к низу плитки, и двухстрочное «Приложение iOS и Android» стартовало
+   выше соседей. Теперь название стоит сразу под значком — на одной высоте у всех. */
+@media (hover:hover) and (pointer:fine) and (min-width:641px){
+  .ptile__base h3{margin-top:0}
+}
+/* планшет без мыши: обе плитки в ряду заканчиваются на одной линии */
+@media (min-width:641px) and (hover:none),(min-width:641px) and (pointer:coarse){
+  .ptile__in{height:100%}
+}
+@media (hover:hover) and (pointer:fine) and (min-width:641px){
+  .ptile__w{margin-top:14px}
+}
+@media (max-width:640px){
+  .ptile__base{grid-template-columns:40px minmax(0,1fr) 32px;
+    grid-template-areas:"ico name tog" "ico term tog" "lead lead lead";row-gap:2px}
+  .ptile__t::before{content:none}
+  .ptile__lead{grid-area:lead;margin:10px 0 0;padding:0;font-size:14.5px}
+  .ptile__w{margin:0 14px;padding:0 0 16px}
+}
+
+/* apply_edits: раздел проектов */
+/* Правка Романа 25.09: у раздела работ только подпись «Проекты», большого заголовка нет.
+   Заголовок остаётся в разметке невидимым — по нему читалка и поиск понимают, что это за раздел. */
+.vh{position:absolute!important;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;
+  clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;border:0}
+#cases .works{margin-top:6px}
+/* Карточек на главной шесть, остальные — на странице works/. На телефоне кнопка к ним —
+   заметная обводка во всю ширину, а не строчная ссылка: другого пути к остальным работам нет. */
+@media (max-width:640px){
+  .works-all .btn{width:100%;min-height:48px;padding:12px 20px;border:1px solid rgba(255,255,255,.22);
+    border-radius:100px;background:var(--surface);text-decoration:none;font-weight:600}
+  .works-all .btn::after{content:none}
+  .works-all .btn:active{background:var(--surface-2)}
+}
+
+/* apply_edits: тарифы */
+/* Правка Романа 25.09: блок «Тарифы» по образцу; вечером — каруселью, как «Что мы делаем». */
+/* С пунктом «Тарифы» шапка стала длиннее: на 1024–1060 px (RU) и в грузинской версии пункты
+   переносились на две строки. Пункты не переносятся, промежутки и кегль — по ширине. */
+@media(min-width:1024px){
+  .nav-links a{white-space:nowrap}
+  html[lang="ka"] .nav-links{gap:14px}
+  html[lang="ka"] .nav-links a{font-size:13px}
+}
+@media(min-width:1024px) and (max-width:1260px){
+  .nav-links{gap:12px}
+  .nav-links a{font-size:13.5px}
+}
+/* Грузинские пункты длиннее: на 1024–1180 px с «Тарифами» они не помещаются, и выбор языка
+   уезжал за край. Здесь грузинское меню — под кнопкой, как на планшете. */
+@media(min-width:1024px) and (max-width:1180px){
+  html[lang="ka"] .nav-links{position:fixed;inset:70px 0 auto 0;display:none;flex-direction:column;align-items:stretch;gap:0;
+    background:#0a0a0d;border-bottom:1px solid var(--border);box-shadow:0 26px 46px rgba(0,0,0,.55);
+    padding:6px 0 18px;max-height:calc(100vh - 70px);overflow-y:auto}
+  html[lang="ka"] .nav-links.open{display:flex}
+  html[lang="ka"] .nav-links a{padding:15px 6vw;width:100%;font-size:16px;color:var(--text)}
+  html[lang="ka"] .nav-links a + a{border-top:1px solid rgba(255,255,255,.06)}
+  html[lang="ka"] .nav-links a.nav-ref{display:block}
+  html[lang="ka"] .nav-links a.btn-primary{margin:14px 6vw 2px;width:calc(100% - 12vw);padding:15px 20px;border-top:0;text-align:center}
+  html[lang="ka"] .burger{display:flex;position:relative;width:38px;height:38px;justify-content:center}
+  html[lang="ka"] .burger span{transition:transform .3s,opacity .2s}
+  html[lang="ka"] .burger.is-open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+  html[lang="ka"] .burger.is-open span:nth-child(2){opacity:0}
+  html[lang="ka"] .burger.is-open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+}
+.thead{display:flex;align-items:flex-end;justify-content:space-between;gap:12px 28px;flex-wrap:wrap}
+/* выбор валюты — вдвое меньше прежнего (правка Романа 25.09, вечер); кнопки маленькие, но нажимаются
+   по невидимой области 40 px */
+.tcur{display:inline-flex;align-items:center;gap:2px;padding:3px 3px 3px 12px;border-radius:100px;
+  border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.04)}
+.tcur__l{font-size:12.5px;color:var(--silver);margin-right:4px}
+.tcur__b{position:relative;width:26px;height:26px;border-radius:50%;border:0;background:none;color:var(--silver);
+  font:inherit;font-size:13px;font-weight:600;cursor:pointer;display:grid;place-items:center;
+  transition:background .2s,color .2s}
+.tcur__b::after{content:"";position:absolute;inset:-7px -2px}
+.tcur__b:hover{background:rgba(255,255,255,.08);color:#fff}
+.tcur__b.on{background:var(--grad);color:#0a0a0d}
+.tcur__b:focus-visible{outline:2px solid var(--violet);outline-offset:2px}
+
+/* ── карточка тарифа ──
+   Правка Романа 25.09 (ночь): карточки объёмнее, как будто в 3D, на 10 % шире и на 5 % ниже.
+   Объём — толщина снизу и сбоку (стопка тонких теней), блик по верхней грани и свет сверху слева.
+   Толщина смотрит туда, куда карточка повёрнута: у правой видна правая грань, у левой — левая
+   (скрипт карусели задаёт --tx). Центральную на компьютере можно чуть наклонить мышью. */
+@property --tx{syntax:"<length>";inherits:false;initial-value:0px}
+.tflow{margin-top:26px}
+.tstage{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px}
+.tcard{--tx:0px;position:relative;display:flex;flex-direction:column;padding:20px 24px 20px;border-radius:18px;
+  border:1px solid rgba(255,255,255,.11);
+  background:radial-gradient(130% 55% at 14% 0%,rgba(255,255,255,.07),rgba(255,255,255,0) 62%),
+    linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,0) 38%),var(--surface);
+  box-shadow:inset 1px 1px 0 rgba(255,255,255,.1),inset 0 1px 0 rgba(255,255,255,.08),inset -1px -1px 0 rgba(0,0,0,.5),
+    calc(var(--tx)*1) 1px 0 #2a2934,calc(var(--tx)*2) 2px 0 #25242e,calc(var(--tx)*3) 3px 0 #201f28,
+    calc(var(--tx)*4) 4px 0 #1c1b23,calc(var(--tx)*5) 5px 0 #18171e,calc(var(--tx)*6) 6px 0 #15141a,
+    calc(var(--tx)*7) 7px 0 #121116,calc(var(--tx)*8) 8px 0 #0f0f13,
+    calc(var(--tx)*9) 9px 0 rgba(255,255,255,.06),
+    calc(var(--tx)*12) 26px 36px -12px rgba(0,0,0,.85),0 50px 90px -46px rgba(0,0,0,.95)}
+.tcard--hot{border-color:rgba(167,139,250,.5);
+  background:radial-gradient(130% 55% at 14% 0%,rgba(196,181,253,.12),rgba(167,139,250,0) 62%),
+    linear-gradient(180deg,rgba(167,139,250,.1),rgba(167,139,250,0) 45%),var(--surface-2);
+  box-shadow:inset 1px 1px 0 rgba(255,255,255,.12),inset 0 1px 0 rgba(255,255,255,.1),inset -1px -1px 0 rgba(0,0,0,.5),
+    0 0 0 1px rgba(167,139,250,.18),
+    calc(var(--tx)*1) 1px 0 #3a3058,calc(var(--tx)*2) 2px 0 #332a4d,calc(var(--tx)*3) 3px 0 #2c2442,
+    calc(var(--tx)*4) 4px 0 #251f37,calc(var(--tx)*5) 5px 0 #1f1a2d,calc(var(--tx)*6) 6px 0 #1a1625,
+    calc(var(--tx)*7) 7px 0 #15121d,calc(var(--tx)*8) 8px 0 #110f17,
+    calc(var(--tx)*9) 9px 0 rgba(167,139,250,.16),
+    calc(var(--tx)*12) 28px 44px -14px rgba(0,0,0,.8),0 40px 90px -34px rgba(124,92,246,.5)}
+/* блик, который идёт за мышью по наклонённой карточке */
+.tcard::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;opacity:0;
+  background:radial-gradient(360px 260px at var(--mx,50%) var(--my,0%),rgba(255,255,255,.075),transparent 70%);
+  transition:opacity .4s}
+.tcard.is-tilt::after{opacity:1}
+.tcard__badge{align-self:flex-start;font-size:11.5px;font-weight:600;letter-spacing:.02em;color:var(--silver);
+  border:1px solid rgba(255,255,255,.14);border-radius:100px;padding:4px 11px}
+.tcard--hot .tcard__badge{background:var(--grad);color:#0a0a0d;border-color:transparent}
+.tcard__name{font-family:var(--font-head);font-size:19px;font-weight:600;letter-spacing:-.3px;margin:14px 0 0}
+.tcard__for{color:var(--muted);font-size:13px;line-height:1.45;margin:6px 0 0}
+.tcard__price{display:flex;align-items:baseline;flex-wrap:nowrap;gap:8px;margin-top:16px;min-height:36px}
+/* цифра цены — на 20 % меньше прежней */
+.tcard__now{font-family:var(--font-head);font-size:30px;font-weight:600;letter-spacing:-.8px;line-height:1;color:#fff;
+  white-space:nowrap}
+.tcard__now--word{font-size:21px;letter-spacing:-.3px;white-space:normal;line-height:1.2}
+.tcard__per{color:var(--silver);font-size:14px}
+.tcard__alt{color:var(--muted);font-size:12.5px;margin:6px 0 0}
+.tcard__list{list-style:none;padding:12px 0 0;margin:12px 0 18px;border-top:1px solid rgba(255,255,255,.08);
+  display:flex;flex-direction:column;gap:6px}
+.tcard__list li{display:flex;gap:9px;align-items:flex-start;color:var(--silver);font-size:13px;line-height:1.4}
+.tcard__nw{white-space:nowrap}
+.tcard__list svg{flex:none;width:15px;height:15px;margin-top:2px;color:var(--violet)}
+.tcard__btn{margin-top:auto;width:100%;min-height:46px;justify-content:center;text-align:center;font-size:14.5px}
+.tcard__bl{display:inline}
+.tcard .btn-ghost{border:1px solid rgba(255,255,255,.2)}
+
+/* ── карусель: включает скрипт, как у «Что мы делаем» ──
+   Без transform-style:preserve-3d: в общем 3D-пространстве плоскость сцены при наклоне карточки
+   вставала перед ней, и кнопка «Заказать» не нажималась мышью (проверка 25.09). Порядок карточек
+   задаёт z-index, перспектива сцены на каждую карточку действует и так.
+   touch-action: вбок листает карусель, а не «назад» в истории браузера. */
+.tstage.is-carousel{display:block;position:relative;perspective:1800px;touch-action:pan-y pinch-zoom;
+  transition:height .4s ease}
+/* Карточка стоит по центру сама (left/right/margin), без translateX(-50%). У центральной без наклона
+   transform — none: её текст рисуется как обычный, чётко. Раньше все карточки жили в 3D-слое видеокарты
+   (will-change, backface-visibility) и текст мылился — замечание Романа 26.09. */
+.tstage.is-carousel .tcard{position:absolute;top:0;left:0;right:0;margin-left:auto;margin-right:auto;
+  width:min(330px,100%);transform-origin:50% 30%;cursor:pointer;
+  transition:transform .6s cubic-bezier(.25,.8,.3,1),--tx .6s cubic-bezier(.25,.8,.3,1),opacity .5s,filter .5s,border-color .4s}
+.tstage.is-carousel .tcard.is-tilt{transition:transform .2s ease-out,--tx .2s ease-out,opacity .5s,filter .5s,border-color .4s}
+.tstage.is-carousel .tcard.is-center{cursor:default}
+.tstage.is-carousel .tcard:not(.is-center) .tcard__btn{pointer-events:none}
+.tnav{display:flex;align-items:center;justify-content:center;gap:14px;margin-top:22px}
+.tnav[hidden]{display:none}
+.tnav__b{width:44px;height:44px;border-radius:50%;border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.04);
+  color:var(--silver);display:grid;place-items:center;cursor:pointer;transition:background .2s,color .2s,border-color .2s}
+.tnav__b svg{width:18px;height:18px}
+.tnav__b:hover{background:rgba(255,255,255,.08);color:#fff;border-color:rgba(167,139,250,.5)}
+.tnav__b:focus-visible,.tnav__d:focus-visible{outline:2px solid var(--violet);outline-offset:3px}
+.tnav__dots{display:flex;gap:4px}
+.tnav__d{position:relative;width:24px;height:24px;border:0;background:none;cursor:pointer;display:grid;place-items:center}
+.tnav__d::before{content:"";width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.22);transition:background .2s,width .3s}
+.tnav__d.on::before{width:20px;border-radius:4px;background:var(--violet)}
+@media(max-width:640px){
+  .tcur{padding-left:10px}
+  .tcard{padding:20px 18px 18px}
+  .tcard__now:not(.tcard__now--word){font-size:24px}
+  .tcard__now--word{font-size:19px}
+  /* «Подключить за 1 500 ₽/мес» — одной строкой и на узком телефоне */
+  .tcard__btn{font-size:13.5px;padding-left:12px;padding-right:12px}
+}
+/* плавающие «Заявка» и чат не закрывают кнопку заказа и стрелки карусели, пока они на экране
+   (до 767 px: на 641–655 px «Заявка» ложилась на край кнопки) */
+@media(max-width:767px){
+  body.tnav-near .float-cta,body.tnav-near .ai:not(.is-open){opacity:0;pointer-events:none;transition:opacity .25s}
+}
+@media (prefers-reduced-motion:reduce){
+  .tstage.is-carousel,.tstage.is-carousel .tcard,.tstage.is-carousel .tcard.is-tilt{transition:none}
+}
+
+/* apply_edits: этапы одной таблицей */
+/* Правка Романа 25.09 (ночь): шесть этапов — строки одной очень тонкой таблицы, разделены волосяной
+   линией. Линия слева темнее и живая: по ней сверху вниз, по кругу, бежит мягкий свет нейтрального
+   цвета, и кружки загораются, когда свет проходит мимо. Высоту линии задаёт скрипт — строго от
+   первого кружка до последнего. */
+.ftable{position:relative;border:1px solid rgba(255,255,255,.075);border-radius:18px;
+  background:linear-gradient(180deg,rgba(255,255,255,.022),rgba(255,255,255,.006));
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.04)}
+.flow .ftable .fstep{margin:0;border:0;border-radius:0;background:transparent;box-shadow:none;transform:none;
+  padding:20px 26px 21px;transition:background .35s}
+.flow .ftable .fstep + .fstep{border-top:1px solid rgba(255,255,255,.06)}
+.flow .ftable .fstep:first-child{border-radius:17px 17px 0 0}
+.flow .ftable .fstep:last-child{border-radius:0 0 17px 17px}
+.flow .ftable .fstep.lit{background:transparent}
+.flow .ftable .fstep::after{content:none}
+@media (hover:hover){
+  .flow .ftable .fstep:hover{transform:none;box-shadow:none;background:rgba(255,255,255,.025)}
+}
+/* кружок стоит на линии: у строки теперь рамка таблицы в 1 px — сдвиг на неё */
+.flow .fstep::before{left:-45px;border-color:rgba(255,255,255,.14);background:var(--bg);
+  transition:border-color .7s ease,box-shadow .7s ease}
+.flow .fstep.lit::before{border-color:rgba(255,255,255,.2);box-shadow:none}
+.flow .fstep.pass::before{border-color:rgba(232,234,246,.9);
+  box-shadow:0 0 0 4px rgba(220,224,245,.06),0 0 14px rgba(214,219,245,.42);transition:border-color .18s,box-shadow .18s}
+/* наведение — только мышью: на телефоне после касания кружок оставался гореть */
+@media (hover:hover){
+  .flow .fstep:hover::before{border-color:rgba(232,234,246,.9);
+    box-shadow:0 0 0 4px rgba(220,224,245,.06),0 0 14px rgba(214,219,245,.42);transition:border-color .18s,box-shadow .18s}
+}
+.flow .fstep__n{transition:color .6s}
+.flow .fstep.pass .fstep__n{color:var(--silver);transition:color .18s}
+@media(max-width:700px){
+  /* строка ниже — кружок выше на столько же, иначе он стоит у нижнего края заголовка */
+  .flow .fstep::before{left:-36px;top:22px}
+  .flow .ftable .fstep{padding:16px 16px 17px}
+}
+/* линия: тёмная основа и бегущий по ней свет */
+.flow .flow__rail{background:rgba(255,255,255,.07);bottom:auto}
+.flow .flow__rail i,.flow.lit .flow__rail i{height:150px;top:0;transform:translateY(-150px);transition:none;
+  background:linear-gradient(180deg,rgba(226,229,242,0) 0%,rgba(226,229,242,.18) 45%,rgba(236,238,248,.78) 88%,rgba(236,238,248,0) 100%)}
+@media (prefers-reduced-motion:reduce){
+  .flow .flow__rail i,.flow.lit .flow__rail i{display:none}
+}
+
+/* apply_edits: волна первого экрана */
+/* Правка Романа 25.09 (ночь): в первом экране — «Точечная волна» с полки эффектов, минималистично.
+   Холст лежит под сценой с ноутбуком и телефоном (превью работ не перекрывает) и под текстом,
+   занимает нижнюю часть экрана и растворяется кверху и книзу. Тёмная «вуаль» сцены слева больше
+   не нужна: она легла бы на волну тёмной полосой — свечение сцены гаснет маской. */
+.hero--scene{position:relative;isolation:isolate}
+.hero--scene > .wrap{position:relative;z-index:1}
+.hero-wave{position:absolute;left:0;bottom:0;width:100%;height:36%;z-index:0;display:block;pointer-events:none;
+  opacity:0;transition:opacity 1.8s ease;
+  -webkit-mask-image:linear-gradient(180deg,transparent 0%,#000 34%,#000 82%,transparent 100%);
+          mask-image:linear-gradient(180deg,transparent 0%,#000 34%,#000 82%,transparent 100%)}
+.hero-wave.on{opacity:1}
+.hero--scene .scene__veil{display:none}
+.hero--scene .scene__glow{-webkit-mask-image:linear-gradient(90deg,transparent 0%,#000 42%);
+          mask-image:linear-gradient(90deg,transparent 0%,#000 42%)}
+
+/* apply_edits: заголовок — уменьшить движение */
+/* Слова не сменяются — видно только первое. Раньше невидимые слова стояли в строке, и видимое
+   уезжало вправо, а точка — за край заголовка. */
+@media(prefers-reduced-motion:reduce){
+  .rot__size,.rot__i:not(.on){display:none}
+  .rot__i.on{position:static}
+}
+
+/* apply_edits: шапка — реферальная тоньше */
+.nav-links a.nav-ref{font-weight:500}
+
+/* apply_edits: телефон — плотнее */
+@media(max-width:640px){
+  .section{padding:52px 0}
+}
+/* «О нас»: значок в одну строку с названием — карточки ниже на всех экранах */
+.acard__base{display:grid;grid-template-columns:36px minmax(0,1fr);column-gap:12px;align-items:center}
+.acard__ico{width:36px;height:36px;border-radius:10px}
+.acard__ico svg{width:18px;height:18px}
+.acard h3{margin:0;padding-right:28px}
+.acard__lead{grid-column:1/-1;margin-top:10px}
+.acard__tog{top:3px;right:-8px}
+@media(max-width:560px){
+  .acard{padding:16px}
+  .acard__base{grid-template-columns:34px minmax(0,1fr)}
+  .acard__ico{width:34px;height:34px}
+  .acard__ico svg{width:17px;height:17px}
+  .acard__tog{top:2px}
+}
+</style>
+<style>
+/* заглушка вместо брифа: первый блок сразу под шапкой, крупный заголовок, две кнопки */
+.stub-page{padding-top:clamp(120px,14vw,160px);min-height:72vh}
+.stub{max-width:680px}
+.stub-h1{font-size:clamp(30px,4.6vw,52px);letter-spacing:-1px;line-height:1.1;margin-top:18px}
+.stub .sec-sub{margin-top:18px}
+.stub-cta{display:flex;flex-wrap:wrap;gap:14px;margin-top:30px}
+.stub-nick{margin-top:18px;color:var(--muted);font-size:14.5px}
+@media(max-width:560px){.stub-cta .btn{width:100%;justify-content:center}}
+</style>
 </head>
 <body>
 
 <div class="blobs" aria-hidden="true">
   <div class="blob blob-1"></div>
   <div class="blob blob-2"></div>
+  <div class="blob blob-3"></div>
   <div class="blob blob-4"></div>
 </div>
 
-<header class="nav scrolled">
+<header class="nav" id="nav">
   <div class="wrap nav-inner">
-    <a class="logo" href="../">open-sites<span class="dot">.io</span></a>
-    <nav class="nav-links">
-      <a href="../#tariffs">Тарифы</a>
-      <a href="../#cases">Проекты</a>
-      <a href="../#faq">FAQ</a>
-    </nav>
+    <a class="logo brand2" id="brand2" href="../" aria-label="open-sites.io">
+        <svg class="bmark" viewBox="4 22 56 36" aria-hidden="true">
+          <rect class="pl pl-l" x="11" y="34" width="7" height="21" rx="2"/>
+          <rect class="pl pl-r" x="46" y="34" width="7" height="21" rx="2"/>
+          <rect class="dk" x="6" y="26" width="52" height="8" rx="4"/>
+        </svg><span class="bword" id="bword"></span>
+      </a>
+    <div class="nav-right">
+      <nav class="nav-links" id="navLinks">
+        <a href="../#services" data-i18n="nav.services">Услуги</a>
+        <a href="../#process" data-i18n="nav.process">Процесс</a>
+        <a href="../#tariffs" data-i18n="nav.tariffs">Тарифы</a>
+        <a href="../#cases" data-i18n="nav.cases">Проекты</a>
+        <a href="../#about" data-i18n="nav.about">О нас</a>
+        <a href="../#faq" data-i18n="nav.faq">FAQ</a>
+        <a class="nav-ref" href="../referral/">Реферальная программа</a>
+        <a class="btn btn-primary btn-sm btn-pulse cta-beat" href="https://t.me/opensites_io" target="_blank" rel="noopener" data-i18n="nav.cta">Оставить заявку</a>
+      </nav>
+      <div class="lang-dd" id="langDd">
+        <button type="button" class="lang-current" id="langCurrent" aria-haspopup="listbox" aria-expanded="false" aria-label="Язык / Language">
+          <span id="langCurLabel">RU</span>
+          <svg class="chev" viewBox="0 0 12 8" aria-hidden="true"><path d="M1 1.5 6 6.5 11 1.5" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="lang-menu" id="langMenu" role="listbox">
+          <button type="button" class="lang-opt on" data-lang="ru" role="option">RU</button>
+          <button type="button" class="lang-opt" data-lang="en" role="option">EN</button>
+          <button type="button" class="lang-opt" data-lang="ka" role="option">ქა</button>
+        </div>
+      </div>
+      <button class="burger" id="burger" aria-label="Меню"><span></span><span></span><span></span></button>
+    </div>
   </div>
 </header>
 
-<main class="brief-page">
-  <div class="wrap">
-    <div class="brief-head">
-      <h2>Бриф за <span class="grad-text">7 минут</span></h2>
-      <p>Никаких сочинений — галочки и списки. Чем точнее бриф, тем быстрее вы увидите концепт.</p>
-    </div>
-
-    <div class="brief-card" id="briefCard">
-      <div class="progress"><div id="progressBar" style="width: 20%"></div></div>
-      <div class="step-label" id="stepLabel">Шаг 1 из 5</div>
-
-      <form id="briefForm" onsubmit="return false;">
-
-        <!-- ШАГ 1: О проекте -->
-        <section class="fstep on">
-          <h3>О проекте</h3>
-          <div class="f-group" data-need-one="Выберите тип сайта.">
-            <label class="f-label">Какой сайт нужен? <span class="req">*</span></label>
-            <div class="opt-grid">
-              <label class="opt"><input type="radio" name="site_type" value="Лендинг"><span class="opt-box"><b>Лендинг</b><small>одна продающая страница</small></span></label>
-              <label class="opt"><input type="radio" name="site_type" value="Сайт для бизнеса"><span class="opt-box"><b>Сайт для бизнеса</b><small>несколько страниц</small></span></label>
-              <label class="opt"><input type="radio" name="site_type" value="Интернет-витрина / каталог"><span class="opt-box"><b>Витрина / каталог</b><small>товары и цены</small></span></label>
-              <label class="opt"><input type="radio" name="site_type" value="Telegram Mini App"><span class="opt-box"><b>Telegram Mini App</b><small>приложение в Telegram</small></span></label>
-              <label class="opt"><input type="radio" name="site_type" value="Приложение iOS / Android"><span class="opt-box"><b>Приложение</b><small>для iOS и Android</small></span></label>
-              <label class="opt"><input type="radio" name="site_type" value="Поддержка готового сайта"><span class="opt-box"><b>Поддержка</b><small>для готового сайта</small></span></label>
-              <label class="opt"><input type="radio" name="site_type" value="Не знаю, нужна консультация"><span class="opt-box"><b>Не знаю</b><small>подскажете на консультации</small></span></label>
-            </div>
-          </div>
-          <div class="f-group">
-            <label class="f-label" for="niche">Чем занимается ваш бизнес? <span class="req">*</span></label>
-            <input type="text" id="niche" name="niche" required data-err="Напишите пару слов о вашем бизнесе." placeholder="Например: студия маникюра в Казани, продажа котлов оптом…">
-          </div>
-          <div class="f-group">
-            <label class="f-label" for="has_site">Есть ли сайт сейчас?</label>
-            <select id="has_site" name="has_site">
-              <option value="Сайта нет">Сайта нет — делаем с нуля</option>
-              <option value="Есть, нужен новый">Есть, но нужен новый</option>
-              <option value="Есть, нужна доработка">Есть, нужна доработка</option>
-            </select>
-          </div>
-        </section>
-
-        <!-- ШАГ 2: Наполнение -->
-        <section class="fstep">
-          <h3>Что будет на сайте</h3>
-          <div class="f-group" data-need-one="Отметьте хотя бы один блок.">
-            <label class="f-label">Какие блоки нужны? <small>можно несколько</small></label>
-            <div class="opt-grid">
-              <label class="opt"><input type="checkbox" name="blocks" value="О компании"><span class="opt-box">О компании</span></label>
-              <label class="opt"><input type="checkbox" name="blocks" value="Услуги и цены"><span class="opt-box">Услуги и цены</span></label>
-              <label class="opt"><input type="checkbox" name="blocks" value="Портфолио / галерея"><span class="opt-box">Портфолио / галерея</span></label>
-              <label class="opt"><input type="checkbox" name="blocks" value="Отзывы"><span class="opt-box">Отзывы</span></label>
-              <label class="opt"><input type="checkbox" name="blocks" value="Форма заявки / записи"><span class="opt-box">Форма заявки / записи</span></label>
-              <label class="opt"><input type="checkbox" name="blocks" value="Калькулятор / квиз"><span class="opt-box">Калькулятор / квиз</span></label>
-              <label class="opt"><input type="checkbox" name="blocks" value="Карта и контакты"><span class="opt-box">Карта и контакты</span></label>
-              <label class="opt"><input type="checkbox" name="blocks" value="FAQ"><span class="opt-box">FAQ</span></label>
-              <label class="opt"><input type="checkbox" name="blocks" value="Решите за меня"><span class="opt-box">Решите за меня 🤝</span></label>
-            </div>
-          </div>
-          <div class="f-group">
-            <label class="f-label" for="texts">Тексты для сайта</label>
-            <select id="texts" name="texts">
-              <option value="Напишите за меня">Напишите за меня (входит в цену)</option>
-              <option value="Есть готовые">Есть готовые</option>
-              <option value="Есть черновики, нужна доработка">Есть черновики, нужна доработка</option>
-            </select>
-          </div>
-          <div class="f-group">
-            <label class="f-label" for="photos">Фотографии</label>
-            <select id="photos" name="photos">
-              <option value="Подберите стоковые">Подберите подходящие (бесплатные стоки)</option>
-              <option value="Есть свои">Есть свои фото</option>
-              <option value="Часть своих + стоки">Часть своих + дополните стоками</option>
-            </select>
-          </div>
-        </section>
-
-        <!-- ШАГ 3: Стиль -->
-        <section class="fstep">
-          <h3>Внешний вид</h3>
-          <div class="f-group" data-need-one="Выберите направление стиля.">
-            <label class="f-label">Какой стиль ближе? <span class="req">*</span></label>
-            <div class="opt-grid">
-              <label class="opt"><input type="radio" name="style" value="Тёмный с ярким акцентом"><span class="opt-box"><b>Тёмный + акцент</b><span class="palette-row"><i style="background:#0a0a0f"></i><i style="background:#c3c8d4"></i><i style="background:linear-gradient(135deg,#8b5cf6,#22d3ee)"></i></span></span></label>
-              <label class="opt"><input type="radio" name="style" value="Светлый минимализм"><span class="opt-box"><b>Светлый минимализм</b><span class="palette-row"><i style="background:#f8fafc"></i><i style="background:#0f172a"></i><i style="background:#3b82f6"></i></span></span></label>
-              <label class="opt"><input type="radio" name="style" value="Яркий, смелый"><span class="opt-box"><b>Яркий, смелый</b><span class="palette-row"><i style="background:#f59e0b"></i><i style="background:#ec4899"></i><i style="background:#8b5cf6"></i></span></span></label>
-              <label class="opt"><input type="radio" name="style" value="Строгий корпоративный"><span class="opt-box"><b>Строгий корпоративный</b><span class="palette-row"><i style="background:#1e3a8a"></i><i style="background:#e2e8f0"></i><i style="background:#475569"></i></span></span></label>
-              <label class="opt"><input type="radio" name="style" value="Полностью по референсу"><span class="opt-box"><b>Как на референсе</b><small>сделаем по примеру ниже</small></span></label>
-            </div>
-          </div>
-          <div class="f-group">
-            <label class="f-label">Настроение сайта <small>можно несколько</small></label>
-            <div class="opt-grid">
-              <label class="opt"><input type="checkbox" name="mood" value="Премиальный"><span class="opt-box">Премиальный</span></label>
-              <label class="opt"><input type="checkbox" name="mood" value="Технологичный"><span class="opt-box">Технологичный</span></label>
-              <label class="opt"><input type="checkbox" name="mood" value="Дружелюбный"><span class="opt-box">Дружелюбный</span></label>
-              <label class="opt"><input type="checkbox" name="mood" value="Строгий, деловой"><span class="opt-box">Строгий, деловой</span></label>
-              <label class="opt"><input type="checkbox" name="mood" value="Игривый"><span class="opt-box">Игривый</span></label>
-            </div>
-          </div>
-          <div class="f-group">
-            <label class="f-label" for="refs">Референсы — сайты, которые вам нравятся <span class="req">*</span>
-              <small>Вставьте 1–3 ссылки (можно конкурентов или просто «красивые сайты»). Если ссылок нет — опишите словами, что нравится. Это самый важный пункт брифа.</small>
-            </label>
-            <textarea id="refs" name="refs" required data-err="Добавьте хотя бы одну ссылку или опишите желаемый вид словами — без этого мы будем угадывать." placeholder="https://example.com — нравится первый экран&#10;https://another.com — нравятся цвета"></textarea>
-          </div>
-        </section>
-
-        <!-- ШАГ 4: Техника и бюджет -->
-        <section class="fstep">
-          <h3>Технические детали</h3>
-          <div class="f-group">
-            <label class="f-label">Что подключить? <small>можно несколько</small></label>
-            <div class="opt-grid">
-              <label class="opt"><input type="checkbox" name="integrations" value="Заявки в Telegram"><span class="opt-box">Заявки в Telegram</span></label>
-              <label class="opt"><input type="checkbox" name="integrations" value="Онлайн-запись"><span class="opt-box">Онлайн-запись</span></label>
-              <label class="opt"><input type="checkbox" name="integrations" value="Онлайн-оплата"><span class="opt-box">Онлайн-оплата</span></label>
-              <label class="opt"><input type="checkbox" name="integrations" value="CRM"><span class="opt-box">CRM</span></label>
-              <label class="opt"><input type="checkbox" name="integrations" value="Ничего / не знаю"><span class="opt-box">Ничего / не знаю</span></label>
-            </div>
-          </div>
-          <div class="f-group">
-            <label class="f-label" for="domain">Домен (адрес сайта)</label>
-            <select id="domain" name="domain">
-              <option value="Нужна помощь с покупкой">Нет — помогите купить</option>
-              <option value="Есть свой">Есть свой</option>
-            </select>
-          </div>
-          <div class="f-group">
-            <label class="f-label" for="budget">Ориентир по бюджету</label>
-            <select id="budget" name="budget">
-              <option value="">Выберите пакет</option>
-              <option value="Лендинг — $109">Лендинг — $109</option>
-              <option value="Сайт из нескольких страниц — $219">Сайт из нескольких страниц — $219</option>
-              <option value="Сайт с ИИ-консультантом — $295">Сайт с ИИ-консультантом — $295</option>
-              <option value="Магазин или каталог — $369">Магазин или каталог — $369</option>
-              <option value="Приложение или Telegram Mini App — после обсуждения">Приложение или Telegram Mini App — после обсуждения</option>
-              <option value="Поддержка сайта — $19 в месяц">Поддержка сайта — $19 в месяц</option>
-              <option value="Подскажите по брифу">Не знаю — подскажите по брифу</option>
-            </select>
-          </div>
-          <div class="f-group">
-            <label class="f-label" for="deadline">Когда нужен сайт?</label>
-            <select id="deadline" name="deadline">
-              <option value="Как можно скорее">Как можно скорее</option>
-              <option value="В течение 2 недель">В течение 2 недель</option>
-              <option value="В течение месяца">В течение месяца</option>
-              <option value="Не горит">Не горит, важно качество</option>
-            </select>
-          </div>
-        </section>
-
-        <!-- ШАГ 5: Контакты -->
-        <section class="fstep">
-          <h3>Как с вами связаться</h3>
-          <div class="f-group">
-            <label class="f-label" for="name">Как вас зовут? <span class="req">*</span></label>
-            <input type="text" id="name" name="name" required data-err="Подскажите, как к вам обращаться." placeholder="Имя">
-          </div>
-          <div class="f-group" data-need-one="Выберите хотя бы один способ связи.">
-            <label class="f-label">Где вам удобнее общаться? <small>можно несколько</small></label>
-            <div class="opt-grid">
-              <label class="opt"><input type="checkbox" name="channel" value="Telegram" checked><span class="opt-box">Telegram</span></label>
-              <label class="opt"><input type="checkbox" name="channel" value="WhatsApp"><span class="opt-box">WhatsApp</span></label>
-              <label class="opt"><input type="checkbox" name="channel" value="Instagram"><span class="opt-box">Instagram</span></label>
-              <label class="opt"><input type="checkbox" name="channel" value="Звонок / SMS"><span class="opt-box">Звонок / SMS</span></label>
-              <label class="opt"><input type="checkbox" name="channel" value="Email"><span class="opt-box">Email</span></label>
-            </div>
-          </div>
-          <div class="f-group">
-            <label class="f-label" for="contact">Контакт для связи <span class="req">*</span>
-              <small>Ник в Telegram/Instagram, номер WhatsApp или телефон — куда вам ответить. Для номера укажите код страны, например +7 900 000-00-00 или +1 202 555-0100.</small>
-            </label>
-            <input type="text" id="contact" name="contact" required data-err="Оставьте контакт, иначе мы не сможем ответить." placeholder="@username, +7 900 000-00-00, instagram.com/…">
-          </div>
-          <div class="f-group">
-            <label class="f-label" for="comment">Комментарий <small>всё, что не уместилось в галочки</small></label>
-            <textarea id="comment" name="comment" placeholder="Особые пожелания, вопросы, ссылка на ваш текущий сайт…"></textarea>
-          </div>
-        </section>
-
-        <p class="f-error" id="fError"></p>
-        <div class="f-nav">
-          <button type="button" class="btn btn-ghost" id="btnPrev" style="visibility:hidden">← Назад</button>
-          <button type="button" class="btn btn-primary btn-pulse" id="btnNext">Дальше →</button>
+<main>
+  <!-- ЗАЯВКА: брифа пока нет — пишем в Telegram (решение Романа 26.09) -->
+  <section class="section stub-page" id="brief">
+    <div class="wrap">
+      <div class="stub">
+        <span class="sec-tag">Заявка</span>
+        <h1 class="stub-h1">Напишите нам в Telegram</h1>
+        <p class="sec-sub">Расскажите, чем занимается ваш бизнес и какой сайт нужен. Ответим в течение пары часов и назовём цену и срок.</p>
+        <div class="stub-cta">
+          <a class="btn btn-primary" href="https://t.me/opensites_io" target="_blank" rel="noopener">Написать в Telegram</a>
+          <a class="btn btn-ghost" href="../#tariffs">Смотреть тарифы</a>
         </div>
-      </form>
-    </div>
-
-    <!-- экран после отправки -->
-    <div class="brief-card brief-done" id="briefDone">
-      <div class="rocket-scene">
-        <svg class="rocket" viewBox="0 0 72 48" fill="none" aria-hidden="true">
-          <defs>
-            <linearGradient id="rg" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0" stop-color="#8b5cf6"/><stop offset="1" stop-color="#22d3ee"/>
-            </linearGradient>
-          </defs>
-          <path d="M18 17 L7 8 L15 20 Z" fill="#7c3aed"/>
-          <path d="M18 31 L7 40 L15 28 Z" fill="#7c3aed"/>
-          <path d="M14 24 C26 11, 46 11, 62 24 C46 37, 26 37, 14 24 Z" fill="url(#rg)"/>
-          <circle cx="46" cy="24" r="5.2" fill="#0a0a12"/><circle cx="46" cy="24" r="2.4" fill="#67e8f9"/>
-          <path d="M14 19 L1 24 L14 29 C9.5 24 9.5 24 14 19 Z" fill="#f472b6"/>
-        </svg>
-      </div>
-      <h3 id="doneTitle" style="font-family:var(--font-head); margin-bottom:12px;">Бриф отправлен!</h3>
-      <p id="doneText" style="color:var(--silver); max-width:480px; margin:0 auto;"></p>
-      <div class="done-contacts" id="doneContacts">
-        <p class="done-hint" id="doneHint">Хотите ускорить? Напишите нам напрямую:</p>
-        <div style="display:flex; gap:12px; justify-content:center; flex-wrap:wrap;">
-          <a class="btn btn-ghost btn-sm" id="dcTg" target="_blank" rel="noopener">Telegram</a>
-          <a class="btn btn-ghost btn-sm" id="dcWa" target="_blank" rel="noopener">WhatsApp</a>
-          <button class="btn btn-ghost btn-sm" id="dcCopy">Скопировать бриф</button>
-        </div>
+        <p class="stub-nick">@opensites_io</p>
       </div>
     </div>
-
-  </div>
+  </section>
 </main>
 
 <footer class="footer">
   <div class="wrap footer-inner">
-    <div class="muted">open-sites.io · 2026</div>
-    <div class="muted">Telegram: <a href="https://t.me/open_sites" target="_blank" rel="noopener">@open_sites</a></div>
+    <div>
+      <div class="logo">open-sites<span class="dot">.io</span></div>
+      <div class="muted" data-i18n="footer.tagline">Сайты, которые продают. 2026</div>
+    </div>
+    <div class="muted">
+      Telegram: <a href="https://t.me/opensites_io" target="_blank" rel="noopener">@opensites_io</a> ·
+      <a href="mailto:opensites.io@gmail.com">opensites.io@gmail.com</a>
+    </div>
   </div>
 </footer>
 
+<a class="float-cta btn btn-primary btn-sm btn-pulse cta-live" id="floatCta" href="https://t.me/opensites_io" target="_blank" rel="noopener" data-i18n="float.cta">Заявка</a>
+
+<script>
+/* ============ open-sites.io — мультиязычность (RU / EN / KA) ============
+   Тексты хранятся здесь. Чтобы поправить формулировку — правим значение по ключу.
+   Цены подставляются через плейсхолдеры {P_...} — чтобы курс правился в одном месте. */
+
+/* Курс на 2026-07-21: 1 $ ≈ 78,5 ₽ · 1 ₾ ≈ 30 ₽ */
+const PRICES = {
+  ru: { P_LANDING: "8 900 ₽", P_BIZ: "17 900 ₽", P_TMA: "", P_SUPPORT: "1 500 ₽/мес", P_DOMAIN: "300 ₽/год" },
+  en: { P_LANDING: "$109", P_BIZ: "$219", P_TMA: "", P_SUPPORT: "$19/mo", P_DOMAIN: "$4/year" },
+  ka: { P_LANDING: "290 ₾", P_BIZ: "590 ₾", P_TMA: "", P_SUPPORT: "50 ₾/თვე", P_DOMAIN: "10 ₾/წელი" },
+};
+
+const I18N = {
+  ru: {
+    "meta.title": "open-sites.io — сайты, которые продают. Лендинг за 3–5 дней",
+    "meta.desc": "Создаём продающие сайты и Telegram Mini Apps за дни, а не месяцы. Фиксированная цена, безлимитные правки до сдачи, заявки прямо в ваш Telegram.",
+    "nav.services": "Услуги",
+    "nav.cases": "Проекты",
+    "nav.process": "Процесс",
+    "nav.about": "О нас",
+    "nav.tariffs": "Тарифы",
+    "nav.faq": "FAQ",
+    "nav.cta": "Оставить заявку",
+    "hero.badge": "Берём проекты на октябрь — осталось 3 места",
+    "hero.h1a": "Сайты, которые",
+    "hero.h1b": "продают",
+    "hero.rot1": "продают",
+    "hero.rot2": "привлекают",
+    "hero.rot3": "помогают",
+    "hero.h1c": "Запуск за 3–5 дней.",
+    "hero.lead": "Лендинги, сайты для бизнеса, Telegram Mini Apps и многое другое. Фиксированная цена, безлимитные правки до сдачи, заявки клиентов — сразу попадают к вам.",
+    "hero.cta1": "Обсудить проект",
+    "hero.cta2": "Смотреть проекты",
+    "stats.days": "дня",
+    "stats.l1": "средний срок запуска",
+    "stats.l2": "быстрее классических студий",
+    "stats.l3": "правок до сдачи бесплатно",
+    "stats.l4": "заявки падают в ваш Telegram",
+    "svc.tag": "Услуги",
+    "svc.h2": "Что мы делаем",
+    "svc.sub": "Цена фиксируется до старта и не меняется. В каждый проект входят адаптив под телефоны, форма заявки и базовое SEO.",
+    "svc.1.t": "Лендинг",
+    "svc.1.d": "Продающая страница под одну услугу или товар",
+    "svc.2.t": "Сайт для бизнеса",
+    "svc.2.d": "Многостраничный сайт компании под ключ",
+    "svc.3.t": "Telegram Mini App",
+    "svc.3.d": "Приложение прямо внутри Telegram",
+    "svc.4.t": "Помощь с доменом",
+    "svc.4.d": "Домен, почта и SSL — техчасть на нас",
+    "svc.5.t": "Сопровождение",
+    "svc.5.d": "Поддержка и развитие после запуска",
+    "svc.6.t": "Приложение iOS и Android",
+    "svc.6.d": "Своё приложение в App Store и Google Play",
+    "tbl.h1": "Услуга",
+    "tbl.h2": "Описание",
+    "tbl.h3": "Сроки",
+    "tbl.h4": "Стоимость",
+    "tbl.1.d": "Продающая страница: оффер, выгоды, кейсы, отзывы, FAQ и форма заявки. Для рекламы и быстрого старта продаж.",
+    "tbl.1.term": "3–5 дней",
+    "tbl.2.d": "Услуги, прайс, портфолио, команда и контакты. Онлайн-запись, интеграция с CRM и базовое SEO.",
+    "tbl.2.term": "1–2 недели",
+    "tbl.3.d": "Каталог, запись, оплата и личный кабинет прямо в Telegram. Клиенты пользуются без скачивания приложений.",
+    "tbl.3.term": "от 1 недели",
+    "tbl.4.d": "Подбор и регистрация домена, почта на вашем адресе, SSL и подключение к сайту. Всю техчасть берём на себя.",
+    "tbl.4.term": "под ключ",
+    "tbl.5.d": "Обновления, правки контента, бэкапы, мониторинг доступности и скорости. Сайт всегда онлайн и актуален.",
+    "tbl.5.term": "ежемесячно",
+    "cases.tag": "Проекты",
+    "cases.1.n": "Ремонт и отделка",
+    "cases.1.t": "Лендинг для студии ремонта",
+    "cases.1.d": "Заменили устаревший сайт-визитку на лендинг с калькулятором сметы и квиз-формой. Запуск за 4 дня.",
+    "cases.1.m": "заявок в первый месяц",
+    "cases.2.n": "Салон красоты",
+    "cases.2.t": "Сайт с онлайн-записью",
+    "cases.2.d": "Сайт с записью без звонков и напоминаниями в Telegram. Администратор разгружен, окна в расписании заполнены.",
+    "cases.2.m": "выручки за два месяца",
+    "cases.3.n": "Отопительное оборудование",
+    "cases.3.t": "Витрина с подбором по параметрам",
+    "cases.3.d": "Каталог котлов с фильтром-подборщиком: клиент сам собирает комплект, менеджер получает готовую заявку.",
+    "cases.3.m": "к среднему чеку",
+    "cases.4.n": "Фитнес-студия",
+    "cases.4.t": "Telegram Mini App для записи",
+    "cases.4.d": "Запись на тренировки прямо в Telegram: расписание, абонементы, оплата. Без скачивания приложений.",
+    "cases.4.m": "записей через мини-апп за квартал",
+    "proc.tag": "Процесс",
+    "proc.h2a": "От заявки до запуска —",
+    "proc.h2b": "4 шага",
+    "proc.1.t": "Бриф",
+    "proc.1.d": "Заполняете короткую анкету: галочки и выпадающие списки, никаких сочинений. Прикладываете референсы — сайты, которые нравятся.",
+    "proc.1.time": "≈ 7 минут",
+    "proc.2.t": "Концепт",
+    "proc.2.d": "Показываем дизайн главного экрана. Не понравится — переделаем или вернём предоплату.",
+    "proc.2.time": "24–48 часов",
+    "proc.3.t": "Сборка",
+    "proc.3.d": "Собираем сайт целиком. Правки на этом этапе — без ограничений и доплат.",
+    "proc.3.time": "2–7 дней",
+    "proc.4.t": "Запуск",
+    "proc.4.d": "Публикуем на вашем домене, настраиваем заявки в ваш Telegram, передаём все доступы.",
+    "proc.4.time": "1 день",
+    "faq.tag": "FAQ",
+    "faq.h2": "Частые вопросы",
+    "faq.q1": "Почему так быстро? В студиях это занимает месяцы.",
+    "faq.a1": "Мы используем собственную систему шаблонов и ИИ-инструменты разработки: типовые блоки уже отлажены, поэтому время уходит на ваш дизайн и тексты, а не на рутину. Скорость не означает шаблонность — внешний вид собирается под ваш референс.",
+    "faq.q2": "Что если мне не понравится результат?",
+    "faq.a2": "Сначала вы видите концепт главного экрана. Не нравится — переделываем или возвращаем предоплату. На этапе сборки правки безлимитные и бесплатные до сдачи проекта.",
+    "faq.q3": "Сколько это стоит и от чего зависит цена?",
+    "faq.a3": "Лендинг — от {P_LANDING}, сайт для бизнеса — от {P_BIZ}. Цену Telegram Mini App и приложения для телефона называем после разбора задачи. Цена зависит от количества блоков и интеграций (CRM, оплата, онлайн-запись) и фиксируется до старта — никаких «вылезло по ходу».",
+    "faq.q4": "Нужно ли мне разбираться в технике? Домен, хостинг…",
+    "faq.a4": "Нет. Поможем купить домен (это 10 минут и от ~{P_DOMAIN}), хостинг для большинства проектов бесплатный. Все доступы остаются у вас — сайт принадлежит вам, а не нам.",
+    "faq.q5": "Что происходит с сайтом после запуска?",
+    "faq.a5": "Месяц бесплатной поддержки после сдачи. Дальше — по желанию: тариф поддержки от {P_SUPPORT} (правки, обновления, мониторинг) или сайт просто работает сам, он ваш.",
+    "footer.tagline": "Сайты, которые продают. 2026",
+    "float.cta": "Заявка",
+    "price.note": "Цены указаны ориентировочно и пересчитаны по текущему курсу.",
+    "cost.permonth": "/мес",
+  },
+
+  /* EN и KA подставляются ниже (переведены и проверены отдельно) */
+  en: {
+    "meta.title": "open-sites.io — Websites That Sell. Landing Pages in 3–5 Days",
+    "meta.desc": "High-converting websites and Telegram Mini Apps built in days, not months. Fixed price, unlimited revisions until launch, and leads delivered straight to your Telegram.",
+    "nav.services": "Services",
+    "nav.cases": "Projects",
+    "nav.process": "Process",
+    "nav.about": "About",
+    "nav.tariffs": "Pricing",
+    "nav.faq": "FAQ",
+    "nav.cta": "Get a quote",
+    "hero.badge": "Booking October projects — 3 spots left",
+    "hero.h1a": "Websites that",
+    "hero.h1b": "sell",
+    "hero.rot1": "sell",
+    "hero.rot2": "attract",
+    "hero.rot3": "help",
+    "hero.h1c": "Live in 3–5 days.",
+    "hero.lead": "Landing pages, business websites, Telegram Mini Apps and more. Fixed price, unlimited revisions until handover, and every lead reaches you straight away.",
+    "hero.cta1": "Discuss your project",
+    "hero.cta2": "See our projects",
+    "stats.days": "days",
+    "stats.l1": "average time to launch",
+    "stats.l2": "faster than traditional agencies",
+    "stats.l3": "free revisions before handover",
+    "stats.l4": "leads land in your Telegram",
+    "svc.tag": "Services",
+    "svc.h2": "What we build",
+    "svc.sub": "The price is locked in before we start and never changes. Every project includes mobile-ready design, a lead form and SEO essentials.",
+    "svc.1.t": "Landing page",
+    "svc.1.d": "A sales page for one service or product",
+    "svc.2.t": "Business website",
+    "svc.2.d": "A complete multi-page company site, built end to end",
+    "svc.3.t": "Telegram Mini App",
+    "svc.3.d": "An app that lives right inside Telegram",
+    "svc.4.t": "Domain setup",
+    "svc.4.d": "Domain, email and SSL — we handle the tech",
+    "svc.5.t": "Ongoing support",
+    "svc.5.d": "Maintenance and growth after launch",
+    "svc.6.t": "iOS & Android app",
+    "svc.6.d": "Your own app in the App Store and Google Play",
+    "tbl.h1": "Service",
+    "tbl.h2": "What you get",
+    "tbl.h3": "Timeline",
+    "tbl.h4": "Price",
+    "tbl.1.d": "A conversion page: offer, benefits, case studies, reviews, FAQ and a lead form. Built for ad traffic and fast sales.",
+    "tbl.1.term": "3–5 days",
+    "tbl.2.d": "Services, pricing, portfolio, team and contacts. Online booking, CRM integration and SEO essentials.",
+    "tbl.2.term": "1–2 weeks",
+    "tbl.3.d": "Catalog, booking, payments and user accounts right inside Telegram. No app downloads for your customers.",
+    "tbl.3.term": "from 1 week",
+    "tbl.4.d": "Domain selection and registration, email at your own domain, SSL and connection to your site. We handle all the technical work.",
+    "tbl.4.term": "turnkey",
+    "tbl.5.d": "Updates, content edits, backups, uptime and speed monitoring. Your site stays online and current.",
+    "tbl.5.term": "monthly",
+    "cases.tag": "Projects",
+    "cases.1.n": "Renovation & interiors",
+    "cases.1.t": "Landing page for a renovation studio",
+    "cases.1.d": "Replaced a dated brochure site with a landing page featuring a cost calculator and a quiz form. Launched in 4 days.",
+    "cases.1.m": "leads in the first month",
+    "cases.2.n": "Beauty salon",
+    "cases.2.t": "Website with online booking",
+    "cases.2.d": "Booking without phone calls, plus reminders in Telegram. Less work for the front desk, and the gaps in the schedule get filled.",
+    "cases.2.m": "revenue growth in two months",
+    "cases.3.n": "Heating equipment",
+    "cases.3.t": "Catalog with a product finder",
+    "cases.3.d": "A boiler catalog with a spec-based product finder: customers build their own package and the sales rep gets a complete request.",
+    "cases.3.m": "higher average order value",
+    "cases.4.n": "Fitness studio",
+    "cases.4.t": "Telegram Mini App for bookings",
+    "cases.4.d": "Class booking right inside Telegram: schedule, memberships, payments. No app downloads required.",
+    "cases.4.m": "mini-app bookings in one quarter",
+    "proc.tag": "Process",
+    "proc.h2a": "From inquiry to launch —",
+    "proc.h2b": "4 steps",
+    "proc.1.t": "Brief",
+    "proc.1.d": "You fill out a short form — checkboxes and dropdowns, no essays. Add references: sites you like.",
+    "proc.1.time": "≈ 7 minutes",
+    "proc.2.t": "Concept",
+    "proc.2.d": "We show you a design concept for your hero section. Don't like it? We redo it or refund your deposit.",
+    "proc.2.time": "24–48 hours",
+    "proc.3.t": "Build",
+    "proc.3.d": "We build the full site. Revisions at this stage are unlimited and cost nothing extra.",
+    "proc.3.time": "2–7 days",
+    "proc.4.t": "Launch",
+    "proc.4.d": "We publish on your domain, route leads into your Telegram and hand over all the logins.",
+    "proc.4.time": "1 day",
+    "faq.tag": "FAQ",
+    "faq.h2": "Frequently asked questions",
+    "faq.q1": "Why so fast? Agencies take months.",
+    "faq.a1": "We use our own template system and AI development tools: the standard building blocks are already battle-tested, so our time goes into your design and copy instead of busywork. Fast doesn't mean cookie-cutter — the look is built around your references.",
+    "faq.q2": "What if I don't like the result?",
+    "faq.a2": "You see the hero section concept first. If it's not right, we redo it or refund your deposit. During the build, revisions are unlimited and free until the project ships.",
+    "faq.q3": "How much does it cost, and what drives the price?",
+    "faq.a3": "Landing page from {P_LANDING}, business website from {P_BIZ}. For Telegram Mini Apps and phone apps, we quote after reviewing your project. The price depends on the number of sections and integrations (CRM, payments, online booking) and is locked in before we start — no surprise add-ons halfway through.",
+    "faq.q4": "Do I need to be technical? Domains, hosting…",
+    "faq.a4": "No. We'll help you buy a domain (10 minutes, from about {P_DOMAIN}), and hosting is free for most projects. All the logins stay with you — the site is yours, not ours.",
+    "faq.q5": "What happens after launch?",
+    "faq.a5": "A free month of support after handover. After that it's your call: a support plan from {P_SUPPORT} (edits, updates, monitoring), or the site simply keeps running on its own — it's yours.",
+    "footer.tagline": "Websites that sell. 2026",
+    "float.cta": "Get in touch",
+    "price.note": "Prices are indicative and converted at the current exchange rate.",
+    "cost.permonth": "/mo",
+  },
+  ka: {
+    "meta.title": "open-sites.io — საიტები, რომლებიც ყიდიან. ლენდინგი 3–5 დღეში",
+    "meta.desc": "ვქმნით გამყიდველ საიტებსა და Telegram Mini App‑ებს დღეებში და არა თვეებში. ფიქსირებული ფასი, შეუზღუდავი შესწორებები ჩაბარებამდე, განაცხადები პირდაპირ თქვენს Telegram‑ში.",
+    "nav.services": "სერვისები",
+    "nav.cases": "პროექტები",
+    "nav.process": "პროცესი",
+    "nav.about": "ჩვენ შესახებ",
+    "nav.tariffs": "ტარიფები",
+    "nav.faq": "FAQ",
+    "nav.cta": "განაცხადის გაგზავნა",
+    "hero.badge": "ვიღებთ პროექტებს ოქტომბრისთვის — დარჩა 3 ადგილი",
+    "hero.h1a": "საიტები, რომლებიც",
+    "hero.h1b": "ყიდიან",
+    "hero.rot1": "ყიდიან",
+    "hero.rot2": "იზიდავენ",
+    "hero.rot3": "ეხმარებიან",
+    "hero.h1c": "გაშვება 3–5 დღეში.",
+    "hero.lead": "ლენდინგები, ბიზნესსაიტები, Telegram Mini App‑ები და სხვა. ფიქსირებული ფასი, შეუზღუდავი შესწორებები ჩაბარებამდე, კლიენტების განაცხადები პირდაპირ თქვენთან მოდის.",
+    "hero.cta1": "პროექტის განხილვა",
+    "hero.cta2": "პროექტების ნახვა",
+    "stats.days": "დღე",
+    "stats.l1": "გაშვების საშუალო ვადა",
+    "stats.l2": "უფრო სწრაფად, ვიდრე კლასიკური სტუდიები",
+    "stats.l3": "შესწორება ჩაბარებამდე უფასოდ",
+    "stats.l4": "განაცხადები პირდაპირ თქვენს Telegram‑ში მოდის",
+    "svc.tag": "სერვისები",
+    "svc.h2": "რას ვაკეთებთ",
+    "svc.sub": "ფასი ფიქსირდება სტარტამდე და აღარ იცვლება. ყველა პროექტში შედის მობილურზე ადაპტირებული დიზაინი, განაცხადის ფორმა და საბაზისო SEO.",
+    "svc.1.t": "ლენდინგი",
+    "svc.1.d": "გამყიდველი გვერდი ერთი სერვისის ან პროდუქტისთვის",
+    "svc.2.t": "ბიზნესსაიტი",
+    "svc.2.d": "მრავალგვერდიანი კორპორატიული საიტი სრული მომსახურებით",
+    "svc.3.t": "Telegram Mini App",
+    "svc.3.d": "აპლიკაცია პირდაპირ Telegram‑ის შიგნით",
+    "svc.4.t": "დომენის გამართვა",
+    "svc.4.d": "დომენი, ელფოსტა და SSL — ტექნიკური ნაწილი ჩვენზეა",
+    "svc.5.t": "ტექნიკური მხარდაჭერა",
+    "svc.5.d": "მხარდაჭერა და განვითარება გაშვების შემდეგ",
+    "svc.6.t": "აპლიკაცია iOS‑სა და Android‑ზე",
+    "svc.6.d": "თქვენი აპლიკაცია App Store‑სა და Google Play‑ში",
+    "tbl.h1": "სერვისი",
+    "tbl.h2": "აღწერა",
+    "tbl.h3": "ვადები",
+    "tbl.h4": "ღირებულება",
+    "tbl.1.d": "გამყიდველი გვერდი: შეთავაზება, სარგებელი, ქეისები, გამოხმაურებები, FAQ და განაცხადის ფორმა. რეკლამისა და გაყიდვების სწრაფი სტარტისთვის.",
+    "tbl.1.term": "3–5 დღე",
+    "tbl.2.d": "სერვისები, ფასები, პორტფოლიო, გუნდი და კონტაქტები. ონლაინ ჩაწერა, CRM‑თან ინტეგრაცია და საბაზისო SEO.",
+    "tbl.2.term": "1–2 კვირა",
+    "tbl.3.d": "კატალოგი, ჩაწერა, გადახდა და პირადი კაბინეტი პირდაპირ Telegram‑ში. კლიენტები სარგებლობენ აპლიკაციის ჩამოტვირთვის გარეშე.",
+    "tbl.3.term": "1 კვირიდან",
+    "tbl.4.d": "დომენის შერჩევა და რეგისტრაცია, ელფოსტა თქვენს დომენზე, SSL და საიტთან მიერთება. მთელ ტექნიკურ ნაწილს ჩვენ ვიღებთ თავზე.",
+    "tbl.4.term": "სრული მომსახურება",
+    "tbl.5.d": "განახლებები, კონტენტის შესწორება, სარეზერვო ასლები, ხელმისაწვდომობისა და სიჩქარის მონიტორინგი. საიტი ყოველთვის ონლაინ და აქტუალურია.",
+    "tbl.5.term": "ყოველთვიურად",
+    "cases.tag": "პროექტები",
+    "cases.1.n": "რემონტი და მოპირკეთება",
+    "cases.1.t": "ლენდინგი სარემონტო სტუდიისთვის",
+    "cases.1.d": "მოძველებული სავიზიტო საიტი ჩავანაცვლეთ ლენდინგით, სადაც არის ხარჯთაღრიცხვის კალკულატორი და ქვიზ-ფორმა. გაშვება 4 დღეში.",
+    "cases.1.m": "განაცხადი პირველ თვეში",
+    "cases.2.n": "სილამაზის სალონი",
+    "cases.2.t": "საიტი ონლაინ ჩაწერით",
+    "cases.2.d": "საიტი, სადაც ჩაწერა ზარის გარეშე ხდება, შეხსენებები კი Telegram‑ში მოდის. ადმინისტრატორი განიტვირთა, განრიგში თავისუფალი ფანჯრები შეივსო.",
+    "cases.2.m": "შემოსავლის ზრდა ორ თვეში",
+    "cases.3.n": "გამათბობელი აღჭურვილობა",
+    "cases.3.t": "ვიტრინა პარამეტრებით შერჩევის შესაძლებლობით",
+    "cases.3.d": "გამათბობელი ქვაბების კატალოგი შერჩევის ფილტრით: კლიენტი თავად აწყობს კომპლექტს, მენეჯერი კი მზა განაცხადს იღებს.",
+    "cases.3.m": "საშუალო ჩეკის ზრდა",
+    "cases.4.n": "ფიტნეს-სტუდია",
+    "cases.4.t": "Telegram Mini App ჩასაწერად",
+    "cases.4.d": "ვარჯიშებზე ჩაწერა პირდაპირ Telegram‑ში: განრიგი, აბონემენტები, გადახდა. აპლიკაციის ჩამოტვირთვის გარეშე.",
+    "cases.4.m": "ჩაწერა Mini App‑ით კვარტალში",
+    "proc.tag": "პროცესი",
+    "proc.h2a": "განაცხადიდან გაშვებამდე —",
+    "proc.h2b": "4 ნაბიჯი",
+    "proc.1.t": "ბრიფი",
+    "proc.1.d": "ავსებთ მოკლე კითხვარს: მონიშვნები და ჩამოსაშლელი სიები, არანაირი თხზულება. ურთავთ რეფერენსებს — საიტებს, რომლებიც მოგწონთ.",
+    "proc.1.time": "≈ 7 წუთი",
+    "proc.2.t": "კონცეპტი",
+    "proc.2.d": "გაჩვენებთ მთავარი ეკრანის დიზაინს. თუ არ მოგეწონებათ — გადავაკეთებთ ან ავანსს დაგიბრუნებთ.",
+    "proc.2.time": "24–48 საათი",
+    "proc.3.t": "დამზადება",
+    "proc.3.d": "ვქმნით საიტს სრულად. ამ ეტაპზე შესწორებები — შეუზღუდავი და დამატებითი გადახდის გარეშე.",
+    "proc.3.time": "2–7 დღე",
+    "proc.4.t": "გაშვება",
+    "proc.4.d": "ვაქვეყნებთ თქვენს დომენზე, ვაწყობთ განაცხადების მიღებას თქვენს Telegram‑ში, გადმოგცემთ ყველა წვდომას.",
+    "proc.4.time": "1 დღე",
+    "faq.tag": "FAQ",
+    "faq.h2": "ხშირად დასმული კითხვები",
+    "faq.q1": "რატომ ასე სწრაფად? სტუდიებში ამას თვეები სჭირდება.",
+    "faq.a1": "ვიყენებთ შაბლონების საკუთარ სისტემას და ხელოვნური ინტელექტის სადეველოპერო ინსტრუმენტებს: ტიპური ბლოკები უკვე გამართულია, ამიტომ დრო თქვენს დიზაინსა და ტექსტებზე იხარჯება და არა რუტინაზე. სისწრაფე შაბლონურობას არ ნიშნავს — ვიზუალი თქვენს რეფერენსზე იწყობა.",
+    "faq.q2": "რა მოხდება, თუ შედეგი არ მომეწონება?",
+    "faq.a2": "ჯერ ხედავთ მთავარი ეკრანის კონცეპტს. თუ არ მოგწონთ — გადავაკეთებთ ან ავანსს დაგიბრუნებთ. დამზადების ეტაპზე შესწორებები შეუზღუდავი და უფასოა პროექტის ჩაბარებამდე.",
+    "faq.q3": "რა ღირს და რაზეა დამოკიდებული ფასი?",
+    "faq.a3": "ლენდინგი — {P_LANDING}-დან, ბიზნესსაიტი — {P_BIZ}-დან. Telegram Mini App‑ისა და მობილური აპლიკაციის ფასს ამოცანის განხილვის შემდეგ ვასახელებთ. ფასი დამოკიდებულია ბლოკებისა და ინტეგრაციების რაოდენობაზე (CRM, გადახდა, ონლაინ ჩაწერა) და ფიქსირდება სტარტამდე — არანაირი „გზადაგზა ამოტივტივებული“ დანამატი.",
+    "faq.q4": "საჭიროა თუ არა ტექნიკურ საკითხებში გარკვევა? დომენი, ჰოსტინგი…",
+    "faq.a4": "არა. დაგეხმარებით დომენის შეძენაში (10 წუთის საქმეა, ყველაზე იაფი დომენი დაახლოებით {P_DOMAIN} ღირს), ჰოსტინგი კი პროექტების უმეტესობისთვის უფასოა. ყველა წვდომა თქვენთან რჩება — საიტი თქვენია და არა ჩვენი.",
+    "faq.q5": "რა ხდება საიტთან გაშვების შემდეგ?",
+    "faq.a5": "ჩაბარების შემდეგ ერთი თვე უფასო მხარდაჭერაა. შემდეგ — სურვილისამებრ: მხარდაჭერის ტარიფი — {P_SUPPORT} (შესწორებები, განახლებები, მონიტორინგი) ან საიტი უბრალოდ თავად მუშაობს — ის თქვენია.",
+    "footer.tagline": "საიტები, რომლებიც ყიდიან. 2026",
+    "float.cta": "განაცხადი",
+    "price.note": "ფასები მითითებულია სავარაუდოდ და გადაანგარიშებულია მიმდინარე კურსით.",
+    "cost.permonth": "/თვე",
+  },
+};
+
+/* ---------- движок ---------- */
+const LANG_LABELS = { ru: "RU", en: "EN", ka: "ქა" };
+
+function osSubstPrices(text, lang) {
+  const p = PRICES[lang] || PRICES.ru;
+  return text.replace(/\{(P_[A-Z_]+)\}/g, (m, k) => (k in p ? p[k] : m));
+}
+
+function osApplyLang(lang) {
+  if (!I18N[lang] || !Object.keys(I18N[lang]).length) lang = "ru";
+  const dict = I18N[lang];
+
+  document.documentElement.lang = lang;
+
+  document.querySelectorAll("[data-i18n]").forEach((el) => {
+    const val = dict[el.getAttribute("data-i18n")];
+    if (val == null) return;
+    const text = osSubstPrices(val, lang);
+    if (/<[a-z][\s\S]*>/i.test(text)) el.innerHTML = text;
+    else el.textContent = text;
+  });
+
+  /* подписи для мобильной таблицы (псевдоэлементы читают data-label) */
+  document.querySelectorAll("[data-i18n-label]").forEach((el) => {
+    const val = dict[el.getAttribute("data-i18n-label")];
+    if (val) el.setAttribute("data-label", val);
+  });
+
+  if (dict["meta.title"]) document.title = dict["meta.title"];
+  const md = document.querySelector('meta[name="description"]');
+  if (md && dict["meta.desc"]) md.setAttribute("content", dict["meta.desc"]);
+
+  /* примечание о пересчёте цен — только для валют, отличных от рубля */
+  const note = document.getElementById("priceNote");
+  if (note) note.hidden = lang === "ru";
+
+  document.querySelectorAll(".lang-opt").forEach((b) =>
+    b.classList.toggle("on", b.getAttribute("data-lang") === lang)
+  );
+  const curLabel = document.getElementById("langCurLabel");
+  if (curLabel) curLabel.textContent = LANG_LABELS[lang] || lang.toUpperCase();
+
+  try { localStorage.setItem("os_lang", lang); } catch (_) {}
+}
+
+function osInitLang() {
+  let saved = null;
+  try { saved = localStorage.getItem("os_lang"); } catch (_) {}
+  const nav = (navigator.language || "ru").slice(0, 2).toLowerCase();
+  const guess = saved || (["ru", "en", "ka"].includes(nav) ? nav : "ru");
+  osApplyLang(guess);
+
+  const dd = document.getElementById("langDd");
+  const trigger = document.getElementById("langCurrent");
+
+  /* на десктопе список открывается наведением (CSS),
+     на тач-устройствах — нажатием на кнопку */
+  if (dd && trigger) {
+    trigger.addEventListener("click", (e) => {
+      e.stopPropagation();
+      const open = dd.classList.toggle("open");
+      trigger.setAttribute("aria-expanded", open ? "true" : "false");
+    });
+    document.addEventListener("click", () => {
+      dd.classList.remove("open");
+      trigger.setAttribute("aria-expanded", "false");
+    });
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") {
+        dd.classList.remove("open");
+        trigger.setAttribute("aria-expanded", "false");
+      }
+    });
+  }
+
+  document.querySelectorAll(".lang-opt").forEach((b) =>
+    b.addEventListener("click", (e) => {
+      e.stopPropagation();
+      osApplyLang(b.getAttribute("data-lang"));
+      if (dd) dd.classList.remove("open");
+      if (trigger) trigger.setAttribute("aria-expanded", "false");
+    })
+  );
+}
+
+document.addEventListener("DOMContentLoaded", osInitLang);
+
+</script>
 <script>
 /* ============ open-sites.io — общий скрипт ============ */
 
@@ -835,7 +2019,7 @@ select.enhanced { display: none; }
 const CONFIG = {
   TG_BOT_TOKEN: "",            // токен бота от @BotFather, например "123456:ABC-DEF..."
   TG_CHAT_ID: "",              // ваш chat_id (узнать у @userinfobot)
-  TG_USERNAME: "open_sites",   // ваш ник в Telegram без @ — для кнопки «написать напрямую»
+  TG_USERNAME: "opensites_io",   // ваш ник в Telegram без @ — для кнопки «написать напрямую»
   WA_PHONE: "",                // номер WhatsApp в формате 79000000000 (без + и пробелов); пусто = кнопка скрыта
   IG_USERNAME: "",             // ник в Instagram без @; пусто = ссылка не показывается
 };
@@ -850,9 +2034,17 @@ if (nav) {
 const burger = document.getElementById("burger");
 const navLinks = document.getElementById("navLinks");
 if (burger && navLinks) {
-  burger.addEventListener("click", () => navLinks.classList.toggle("open"));
+  burger.addEventListener("click", () => {
+    const open = navLinks.classList.toggle("open");
+    burger.classList.toggle("is-open", open);
+    burger.setAttribute("aria-expanded", open ? "true" : "false");
+  });
   navLinks.querySelectorAll("a").forEach((a) =>
-    a.addEventListener("click", () => navLinks.classList.remove("open"))
+    a.addEventListener("click", () => {
+      navLinks.classList.remove("open");
+      burger.classList.remove("is-open");
+      burger.setAttribute("aria-expanded", "false");
+    })
   );
 }
 
@@ -937,11 +2129,22 @@ if (svcStage) {
   let active = 0;
   let autoS;
 
+  const phone = window.matchMedia("(max-width:640px)");
+
   function layout() {
     const w = svcStage.clientWidth;
+    /* На телефоне карточки разложены плиткой средствами CSS — трогать их не нужно,
+       иначе инлайновые transform/opacity перебьют раскладку. */
+    if (phone.matches) {
+      cards.forEach((c) => {
+        c.style.transform = ""; c.style.zIndex = ""; c.style.opacity = ""; c.style.filter = "";
+        c.classList.remove("is-center");
+      });
+      return;
+    }
     const mobile = w < 640;
-    const near = Math.min(255, w * 0.34);
-    const far = near * 1.7;
+    const near = Math.min(290, w * 0.3);
+    const far = Math.min(near * 1.62, w * 0.5 - 40);
     cards.forEach((c, i) => {
       let rel = i - active;
       if (rel > n / 2) rel -= n;
@@ -953,8 +2156,11 @@ if (svcStage) {
         if (rel !== 0) { x = Math.sign(rel) * w * 0.9; scale = 0.9; op = 0; z = 1; }
       } else if (a === 1) {
         x = rel * near; scale = 0.84; ry = rel * -26; z = 6; op = 0.78;
-      } else if (a >= 2) {
+      } else if (a === 2) {
         x = Math.sign(rel) * far; scale = 0.66; ry = Math.sign(rel) * -32; z = 3; op = 0.32; blur = 2;
+      } else if (a >= 3) {
+        /* шестая карточка ждёт позади второй и сквозь неё не просвечивает */
+        x = Math.sign(rel) * far; scale = 0.6; ry = Math.sign(rel) * -34; z = 2; op = 0; blur = 2;
       }
       c.style.transform = `translate(-50%, -50%) translateX(${x}px) scale(${scale}) rotateY(${ry}deg)`;
       c.style.zIndex = z;
@@ -966,7 +2172,28 @@ if (svcStage) {
 
   window.addEventListener("resize", layout);
   layout();
-  autoS = setInterval(() => { active = (active + 1) % n; layout(); }, 3200);
+  autoS = setInterval(() => {
+    if (phone.matches) return;
+    active = (active + 1) % n; layout();
+  }, 3200);
+}
+
+/* ---------- работы: на телефоне показываем шесть, остальные по кнопке ---------- */
+{
+  const worksGrid = document.querySelector(".works-grid");
+  const worksMore = document.getElementById("worksMore");
+  if (worksGrid && worksMore) {
+    const phoneW = window.matchMedia("(max-width:640px)");
+    worksMore.textContent = "Показать все " + worksGrid.children.length + " работ";
+    const sync = () => {
+      const fold = phoneW.matches && !worksGrid.dataset.open;
+      worksGrid.classList.toggle("collapsed", fold);
+      worksMore.hidden = !fold;
+    };
+    worksMore.addEventListener("click", () => { worksGrid.dataset.open = "1"; sync(); });
+    if (phoneW.addEventListener) phoneW.addEventListener("change", sync);
+    sync();
+  }
 }
 
 /* ---------- плавающая кнопка заявки ---------- */
@@ -1183,6 +2410,889 @@ if (briefForm) {
   show(saved && Number.isInteger(saved.__step) ? saved.__step : 0, false);
 }
 
+</script>
+<script>
+/* Концепт: логотип «Сваи», смена тезисов, листание работ, подсветка этапов.
+   Работает поверх основного script.js, ничего в нём не трогает. */
+(function(){
+  'use strict';
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* логотип: собираем надпись по буквам и запускаем «Сваи» */
+  var PARTS = [{t:'open',c:'w1'},{t:'-',c:'dash'},{t:'sites',c:'w2'},{t:'.io',c:'t'}];
+  var bw = document.getElementById('bword');
+  if(bw){
+    var i = 0, html = '';
+    PARTS.forEach(function(p){
+      html += '<span class="' + p.c + '">';
+      for(var k = 0; k < p.t.length; k++) html += '<span class="ltr" style="--i:' + (i++) + '">' + p.t[k] + '</span>';
+      html += '</span>';
+    });
+    bw.innerHTML = html + '<span class="bcar"></span>';
+    requestAnimationFrame(function(){ document.body.classList.add('go'); });
+  }
+
+  /* смена тезисов в заголовке */
+  var rot = document.getElementById('rot');
+  if(rot && !reduce){
+    var items = [].slice.call(rot.querySelectorAll('.rot__i')), r = 0;
+    var fit = function(el){ rot.style.width = Math.ceil(el.getBoundingClientRect().width) + 'px'; };
+    var start = function(){
+      fit(items[0]);
+      setInterval(function(){
+        var cur = items[r], nxt = items[r = (r + 1) % items.length];
+        cur.classList.remove('on'); cur.classList.add('out');
+        nxt.classList.remove('out'); nxt.classList.add('on');
+        fit(nxt);
+        setTimeout(function(){ cur.classList.remove('out'); }, 520);
+      }, 2600);
+    };
+    if(document.fonts && document.fonts.ready) document.fonts.ready.then(start); else window.addEventListener('load', start);
+    window.addEventListener('resize', function(){ fit(items[r]); });
+  }
+
+  /* листаем работы в ноутбуке и телефоне */
+  var desk = [].slice.call(document.querySelectorAll('.lap__scr .shot'));
+  var phone = [].slice.call(document.querySelectorAll('.ph__view .shot'));
+  if(desk.length > 1 && !reduce){
+    var k = 0;
+    setInterval(function(){
+      desk[k].classList.remove('on'); if(phone[k]) phone[k].classList.remove('on');
+      k = (k + 1) % desk.length;
+      desk[k].classList.add('on'); if(phone[k]) phone[k].classList.add('on');
+    }, 4600);
+  }
+
+  /* этапы: линия прочерчивается, карточки загораются по очереди */
+  var flow = document.querySelector('.flow');
+  if(flow){
+    var light = function(){
+      flow.classList.add('lit');
+      var steps = flow.querySelectorAll('.fstep');
+      steps.forEach(function(s, n){
+        setTimeout(function(){ s.classList.add('lit'); }, 200 + n * (2100 / steps.length));
+      });
+    };
+    if(!('IntersectionObserver' in window) || reduce){ light(); }
+    else {
+      var io = new IntersectionObserver(function(es){
+        es.forEach(function(e){ if(e.isIntersecting){ light(); io.unobserve(e.target); } });
+      }, {threshold:.2});
+      io.observe(flow);
+    }
+  }
+})();
+
+/* переключатель валюты в таблице услуг */
+(function(){
+  'use strict';
+  var btns = [].slice.call(document.querySelectorAll('.cur__b'));
+  if(!btns.length) return;
+  var prices = [].slice.call(document.querySelectorAll('.price'));
+  function set(cur){
+    prices.forEach(function(p){ if(p.dataset[cur]) p.textContent = p.dataset[cur]; });
+    btns.forEach(function(b){ b.classList.toggle('on', b.dataset.cur === cur); });
+    try{ localStorage.setItem('os_cur', cur); }catch(e){}
+  }
+  btns.forEach(function(b){ b.addEventListener('click', function(){ set(b.dataset.cur); }); });
+  var saved = null;
+  try{ saved = localStorage.getItem('os_cur'); }catch(e){}
+  set(saved === 'usd' ? 'usd' : 'gel');
+})();
+
+</script>
+<script>
+/* apply_edits: валюта и плитки */
+(function(){
+  'use strict';
+
+  /* --- выбор валюты: выпадающий список, как у языков --- */
+  var dd = document.getElementById('curDd');
+  var btn = document.getElementById('curBtn');
+  var sym = document.getElementById('curSym');
+  var SYM = {gel:'₾', usd:'$', rub:'₽'};
+  var prices = [].slice.call(document.querySelectorAll('.ptile__p'));
+
+  function setCur(cur){
+    if(!SYM[cur]) cur = 'gel';
+    prices.forEach(function(p){ var v = p.getAttribute('data-' + cur); if(v) p.textContent = v; });
+    if(sym) sym.textContent = SYM[cur];
+    if(dd) [].forEach.call(dd.querySelectorAll('.cur-opt'), function(o){
+      var on = o.getAttribute('data-cur') === cur;
+      o.classList.toggle('on', on);
+      o.setAttribute('aria-selected', on ? 'true' : 'false');
+    });
+    try{ localStorage.setItem('os_cur', cur); }catch(e){}
+  }
+
+  if(dd && btn){
+    var close = function(){ dd.classList.remove('open'); btn.setAttribute('aria-expanded', 'false'); };
+    btn.addEventListener('click', function(e){
+      e.stopPropagation();
+      dd.classList.remove('shut');
+      var open = dd.classList.toggle('open');
+      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+    [].forEach.call(dd.querySelectorAll('.cur-opt'), function(o){
+      o.addEventListener('click', function(e){
+        e.stopPropagation();
+        setCur(o.getAttribute('data-cur'));
+        close();
+        dd.classList.add('shut');   /* на компьютере список держится наведением — прячем до ухода мыши */
+      });
+    });
+    dd.addEventListener('mouseleave', function(){ dd.classList.remove('shut'); });
+    document.addEventListener('click', close);
+    document.addEventListener('keydown', function(e){ if(e.key === 'Escape') close(); });
+  }
+  var saved = null;
+  try{ saved = localStorage.getItem('os_cur'); }catch(e){}
+  setCur(saved || 'gel');
+
+  /* --- плитки прайса --- */
+  var list = document.getElementById('plist');
+  if(!list) return;
+  var tiles = [].slice.call(list.querySelectorAll('.ptile'));
+  var hoverMode = window.matchMedia('(hover:hover) and (pointer:fine) and (min-width:641px)');
+
+  /* Правка 24.09 (22:12): плитка раскрывается ВНУТРИ себя и соседей не закрывает. Высоту ряда
+     задаём по самой высокой РАСКРЫТОЙ плитке, но не ниже 0,92 ширины — плитки почти квадратные.
+     Замер идёт в один кадр и без анимаций: иначе браузер отдаёт размер начала перехода,
+     а после замера плитки «доезжают» на глазах. */
+  function sizeRows(){
+    if(!hoverMode.matches){ list.style.removeProperty('--prow'); return; }
+    list.classList.add('no-anim', 'is-measure');
+    var h = 0, w = 0;
+    tiles.forEach(function(t){
+      var inn = t.querySelector('.ptile__in');
+      if(inn){ h = Math.max(h, inn.offsetHeight); w = Math.max(w, inn.offsetWidth); }
+    });
+    list.classList.remove('is-measure');
+    void list.offsetHeight;
+    list.classList.remove('no-anim');
+    /* 25.09: не выше раскрытой плитки + 80 px — на двух колонках квадрат оставлял полплитки пустыми */
+    if(h) list.style.setProperty('--prow', Math.ceil(Math.max(h + 2, Math.min(w * 0.92, h + 80))) + 'px');
+  }
+  function setOpen(t, open){
+    t.classList.toggle('open', open);
+    var b = t.querySelector('.ptile__tog');
+    if(b) b.setAttribute('aria-expanded', open ? 'true' : 'false');
+  }
+  function mark(t, open){
+    var b = t.querySelector('.ptile__tog');
+    if(b && hoverMode.matches) b.setAttribute('aria-expanded', open ? 'true' : 'false');
+  }
+  tiles.forEach(function(t){
+    /* телефон и планшет: нажатие раскрывает плитку, остальные сворачиваются */
+    t.addEventListener('click', function(){
+      if(hoverMode.matches) return;
+      var open = !t.classList.contains('open');
+      tiles.forEach(function(o){ if(o !== t) setOpen(o, false); });
+      setOpen(t, open);
+    });
+    /* компьютер: для читалок экрана «раскрыто» = мышь или фокус на плитке */
+    t.addEventListener('mouseenter', function(){ mark(t, true); });
+    t.addEventListener('focusin', function(){ mark(t, true); });
+    t.addEventListener('mouseleave', function(){ if(!t.contains(document.activeElement)) mark(t, false); });
+    t.addEventListener('focusout', function(){ if(!t.matches(':hover')) mark(t, false); });
+  });
+  function onMode(){
+    if(hoverMode.matches) tiles.forEach(function(t){ setOpen(t, false); });
+    sizeRows();
+  }
+  if(hoverMode.addEventListener) hoverMode.addEventListener('change', onMode);
+  window.addEventListener('resize', sizeRows);
+  if(document.fonts && document.fonts.ready) document.fonts.ready.then(sizeRows);
+  sizeRows();
+})();
+</script>
+<script>
+/* apply_edits: работы на языке сайта */
+/* Сайт переключили на English или ქართული — у переведённых работ карточка показывает
+   превью на этом языке и ведёт на эту версию. На русском сайте карточка показывает свой
+   язык по умолчанию (data-show): часть превью нарочно английские и грузинские. */
+(function(){
+  var cards = [].slice.call(document.querySelectorAll('.wcard[data-langs]'));
+  if(!cards.length) return;
+  function sync(){
+    var lg = (document.documentElement.lang || 'ru').slice(0, 2);
+    cards.forEach(function(c){
+      var has = (' ' + c.getAttribute('data-langs') + ' ').indexOf(' ' + lg + ' ') >= 0;
+      var use = (lg !== 'ru' && has) ? lg : (c.getAttribute('data-show') || 'ru');
+      var a = c.querySelector('.wcard__main');
+      var img = c.querySelector('.wcard__sh img');
+      if(a){
+        a.setAttribute('href', c.getAttribute('data-href-' + use));
+        /* у живого сайта клиента (data-ext) нет отдельного адреса на язык — hreflang не ставим */
+        if(use === 'ru' || c.hasAttribute('data-ext')) a.removeAttribute('hreflang');
+        else a.setAttribute('hreflang', use);
+      }
+      if(img) img.setAttribute('src', c.getAttribute('data-img-' + use));
+    });
+  }
+  new MutationObserver(sync).observe(document.documentElement, {attributes: true, attributeFilter: ['lang']});
+  sync();
+})();
+</script>
+<script>
+/* apply_edits: о нас — раскрытие карточек */
+/* Нажатие на карточку раскрывает её вниз, остальные сворачиваются — как плитки «Услуг и сроков». */
+(function(){
+  var cards = [].slice.call(document.querySelectorAll('.acard'));
+  if(!cards.length) return;
+  function set(c, open){
+    c.classList.toggle('open', open);
+    var b = c.querySelector('.acard__tog');
+    if(b) b.setAttribute('aria-expanded', open ? 'true' : 'false');
+  }
+  cards.forEach(function(c){
+    c.addEventListener('click', function(e){
+      if(e.target.closest && e.target.closest('a')) return;
+      var open = !c.classList.contains('open');
+      cards.forEach(function(o){ if(o !== c) set(o, false); });
+      set(c, open);
+    });
+  });
+})();
+</script>
+<script>
+/* apply_edits: адрес без #якорей */
+(function(){
+  function clean(){
+    var p = location.pathname.replace(/index\.html$/, '');
+    if(location.hash || p !== location.pathname){ try{ history.replaceState(null, '', p + location.search); }catch(e){} }
+  }
+  document.addEventListener('click', function(e){
+    if(e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+    var a = e.target.closest && e.target.closest('a[href^="#"]');
+    if(!a) return;
+    var id = a.getAttribute('href').slice(1);
+    var el = id ? document.getElementById(id) : null;
+    if(id && !el) return;
+    e.preventDefault();
+    if(el) el.scrollIntoView({block: 'start'}); else window.scrollTo({top: 0});
+    clean();
+  });
+  /* пришли по ссылке с якорем (с брифа: «../#cases») — сразу к разделу, как обычная ссылка */
+  if(location.hash){
+    var el = document.getElementById(decodeURIComponent(location.hash.slice(1)));
+    if(el) window.addEventListener('load', function(){
+      var r = document.documentElement, was = r.style.scrollBehavior;
+      r.style.scrollBehavior = 'auto';
+      el.scrollIntoView({block: 'start'});
+      r.style.scrollBehavior = was;
+      clean();
+    });
+    else clean();
+  } else clean();
+})();
+</script>
+<script>
+/* apply_edits: тарифы — валюта */
+/* Выбор $ / ₾ / ₽ в «Тарифах» — цены, строка «≈ в других валютах», кнопки.
+   По умолчанию доллары (просьба Романа 25.09). Выбор помнится под своим ключом os_tcur.
+   Карусель тарифов (правка Романа 25.09, вечер) — как «Что мы делаем»: в центре выбранный тариф,
+   соседние чуть позади, дальние — полупрозрачные. Листается стрелками, точками, свайпом, клавишами
+   ← → и нажатием на боковую карточку. Скрипт не сработал — карточки остаются сеткой. */
+(function(){
+  'use strict';
+  var box = document.getElementById('tariffs');
+  if(!box) return;
+
+  /* --- валюта --- */
+  var btns = [].slice.call(box.querySelectorAll('.tcur__b'));
+  var vals = [].slice.call(box.querySelectorAll('[data-gel]'));
+  function set(cur){
+    if(['gel','usd','rub'].indexOf(cur) < 0) cur = 'usd';
+    /* строка «≈ в других валютах» у поддержки — с «в месяц»: сразу на языке сайта (i18n_concept.py) */
+    vals.forEach(function(el){ var v = el.getAttribute('data-' + cur); if(v) el.textContent = window.osT ? osT(v) : v; });
+    btns.forEach(function(b){
+      var on = b.getAttribute('data-cur') === cur;
+      b.classList.toggle('on', on);
+      b.setAttribute('aria-pressed', on ? 'true' : 'false');
+    });
+    try{ localStorage.setItem('os_tcur', cur); }catch(e){}
+  }
+  btns.forEach(function(b){ b.addEventListener('click', function(){ set(b.getAttribute('data-cur')); measure(); }); });
+  var saved = null;
+  try{ saved = localStorage.getItem('os_tcur'); }catch(e){}
+  set(saved || 'usd');
+
+  /* --- карусель --- */
+  var stage = document.getElementById('tStage');
+  var flow = box.querySelector('.tflow');
+  var cards = stage ? [].slice.call(stage.querySelectorAll('.tcard')) : [];
+  var n = cards.length;
+  if(n < 2) return;
+  var nav = box.querySelector('.tnav');
+  var dots = [].slice.call(box.querySelectorAll('.tnav__d'));
+  var prev = document.getElementById('tPrev'), next = document.getElementById('tNext');
+  var active = 0;
+  cards.forEach(function(c, i){ if(c.getAttribute('data-key') === stage.getAttribute('data-start')) active = i; });
+  stage.classList.add('is-carousel');
+  if(nav) nav.hidden = false;
+
+  function rel(i){ var r = i - active; if(r > n / 2) r -= n; if(r <= -n / 2) r += n; return r; }
+  /* Положение карточки: сдвиг, масштаб, поворот и наклон мышью (только у центральной).
+     --tx — куда смотрит толщина карточки: у повёрнутой вправо видна правая грань, влево — левая. */
+  var tilt = null;
+  function pose(c){
+    var p = c._p || {x: 0, sc: 1, ry: 0}, on = tilt && c.classList.contains('is-tilt');
+    var ry = p.ry + (on ? tilt.y : 0), rx = on ? tilt.x : 0;
+    /* центральная без наклона — без transform: иначе текст уходит в слой видеокарты и мылится */
+    c.style.transform = !p.x && p.sc === 1 && !ry && !rx ? 'none' :
+      'translateX(' + p.x + 'px) scale(' + p.sc + ') rotateY(' + ry + 'deg) rotateX(' + rx + 'deg)';
+    c.style.setProperty('--tx', (-ry / 20 * 1.5).toFixed(2) + 'px');
+  }
+  /* Все карточки одной высоты — по самой высокой: иначе высота сцены менялась с каждой карточкой,
+     стрелки прыгали, и второе нажатие в то же место промахивалось. */
+  var live = document.getElementById('tLive');
+  function measure(){
+    var hm = 0;
+    cards.forEach(function(c){ c.style.minHeight = ''; });
+    cards.forEach(function(c){ hm = Math.max(hm, c.offsetHeight); });
+    cards.forEach(function(c){ c.style.minHeight = hm + 'px'; });
+    layout();
+  }
+  function layout(){
+    if(!stage || !stage.classList.contains('is-carousel')) return;
+    var w = stage.clientWidth, phone = w < 560, roomy = w >= 760;
+    var cw = cards[active].offsetWidth || 300;
+    var near = Math.min(cw * 0.8, w * 0.28);
+    var far = Math.min(cw * 1.45, w * 0.5 - cw * 0.42);
+    var h = 0;
+    cards.forEach(function(c, i){
+      var r = rel(i), a = Math.abs(r), s = r < 0 ? -1 : 1;
+      var x = 0, sc = 1, ry = 0, z = 10, op = 1, blur = 0;
+      if(phone){
+        /* телефон: одна карточка, соседние ждут за краем */
+        if(r !== 0){ x = s * w; sc = 0.9; op = 0; z = 1; }
+      } else if(a === 1){
+        /* соседняя непрозрачна: сквозь 0.9 просвечивал текст дальней карточки */
+        x = r * near; sc = 0.86; ry = -r * 20; z = 6; op = 1;
+      } else if(a === 2 && roomy && far - near >= cw * 0.4){
+        /* дальняя — только если из-за соседней видна заметная полоса, а не край в пару десятков px */
+        /* без размытия: Роман 26.09 — текст на тарифах не должен мылиться; глубину дают прозрачность и масштаб */
+        x = s * far; sc = 0.72; ry = -s * 26; z = 3; op = 0.42;
+      } else if(a >= 2){
+        /* дальняя карточка ждёт позади центральной и сквозь неё не просвечивает */
+        sc = 0.6; z = 1; op = 0;
+      }
+      c._p = {x: x, sc: sc, ry: ry};
+      if(r !== 0) c.classList.remove('is-tilt');
+      pose(c);
+      c.style.zIndex = z;
+      c.style.opacity = op;
+      c.style.filter = blur ? 'blur(' + blur + 'px)' : 'none';
+      c.classList.toggle('is-center', r === 0);
+      var hidden = op === 0;
+      c.setAttribute('aria-hidden', hidden ? 'true' : 'false');
+      if('inert' in c) c.inert = hidden;
+      /* высота сцены — по нижнему краю видимых карточек с учётом уменьшения (точка масштаба — 30 % сверху):
+         иначе под короткой центральной карточкой оставалась пустота до стрелок */
+      if(r === 0 || !phone) h = Math.max(h, c.offsetHeight);
+      /* кнопка заказа доступна с клавиатуры только у центральной карточки — остальные листаются ← → */
+      [].forEach.call(c.querySelectorAll('a,button'), function(el){
+        if(r === 0) el.removeAttribute('tabindex'); else el.setAttribute('tabindex', '-1');
+      });
+    });
+    stage.style.height = (h + 10) + 'px';
+    dots.forEach(function(d, i){
+      var on = i === active;
+      d.classList.toggle('on', on);
+      d.setAttribute('aria-current', on ? 'true' : 'false');
+    });
+  }
+  function untilt(){
+    if(!tilt) return;
+    tilt = null;
+    cards.forEach(function(c){ if(c.classList.contains('is-tilt')){ c.classList.remove('is-tilt'); pose(c); } });
+  }
+  /* компьютер с мышью: центральная карточка чуть наклоняется за курсором, по ней идёт блик */
+  var fine = window.matchMedia('(hover:hover) and (pointer:fine)');
+  var calm = window.matchMedia('(prefers-reduced-motion: reduce)');
+  stage.addEventListener('pointermove', function(e){
+    if(e.pointerType !== 'mouse' || !fine.matches || calm.matches || stage.clientWidth < 560) return;
+    /* границы карточки без наклона: рамка наклонённой на 1–4 px меньше, и у самого края наклон
+       включался и выключался с каждым движением мыши — карточка дрожала */
+    var c = cards[active], sb = stage.getBoundingClientRect(), bw = c.offsetWidth, bh = c.offsetHeight;
+    var bl = sb.left + stage.clientLeft + c.offsetLeft, bt = sb.top + stage.clientTop + c.offsetTop;
+    if(e.clientX < bl || e.clientX > bl + bw || e.clientY < bt || e.clientY > bt + bh){ untilt(); return; }
+    var u = (e.clientX - bl) / bw, v = (e.clientY - bt) / bh;
+    tilt = {x: (0.5 - v) * 6, y: (u - 0.5) * 8};
+    c.classList.add('is-tilt');
+    c.style.setProperty('--mx', (u * 100).toFixed(1) + '%');
+    c.style.setProperty('--my', (v * 100).toFixed(1) + '%');
+    pose(c);
+  });
+  stage.addEventListener('pointerleave', untilt);
+  function go(i, keepFocus){
+    untilt();
+    active = (i + n) % n;
+    layout();
+    var c = cards[active];
+    var tr = window.osT || function(x){ return x; };   /* перевод строки на язык сайта (i18n_concept.py) */
+    if(live) live.textContent = tr('Тариф {n} из {m}').replace('{n}', active + 1).replace('{m}', n) + ': ' +
+      c.getAttribute('aria-label') + ', ' + ((c.querySelector('.tcard__now') || {}).textContent || '');
+    if(keepFocus){ var b = c.querySelector('.tcard__btn'); if(b) b.focus({preventScroll: true}); }
+  }
+
+  if(prev) prev.addEventListener('click', function(){ go(active - 1); });
+  if(next) next.addEventListener('click', function(){ go(active + 1); });
+  dots.forEach(function(d, i){ d.addEventListener('click', function(){ go(i); }); });
+  cards.forEach(function(c, i){
+    /* боковая карточка по нажатию встаёт в центр; кнопка заказа работает только у центральной */
+    c.addEventListener('click', function(e){ if(i !== active){ e.preventDefault(); go(i); } });
+  });
+  if(flow) flow.addEventListener('keydown', function(e){
+    var onCard = e.target.closest && e.target.closest('.tcard');
+    if(e.key === 'ArrowLeft'){ e.preventDefault(); go(active - 1, !!onCard); }
+    else if(e.key === 'ArrowRight'){ e.preventDefault(); go(active + 1, !!onCard); }
+  });
+  var x0 = null, y0 = 0;
+  stage.addEventListener('touchstart', function(e){ var t = e.touches[0]; x0 = t.clientX; y0 = t.clientY; }, {passive: true});
+  stage.addEventListener('touchend', function(e){
+    if(x0 === null) return;
+    var t = e.changedTouches[0], dx = t.clientX - x0, dy = t.clientY - y0;
+    x0 = null;
+    if(Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy)) go(active + (dx < 0 ? 1 : -1));
+  }, {passive: true});
+  window.addEventListener('resize', measure);
+  if(document.fonts && document.fonts.ready) document.fonts.ready.then(measure);
+  measure();
+  /* пока карточки тарифов или стрелки на экране, плавающие «Заявка» и чат на телефоне прячутся:
+     иначе ложатся на кнопку заказа карточки и на стрелки (стили — до 767 px) */
+  if(flow && 'IntersectionObserver' in window){
+    new IntersectionObserver(function(es){
+      es.forEach(function(e){ document.body.classList.toggle('tnav-near', e.isIntersecting); });
+    }, {rootMargin: '0px 0px -12% 0px'}).observe(flow);
+  }
+})();
+</script>
+<script>
+/* apply_edits: этапы — бегущий свет */
+/* Свет бежит по линии этапов сверху вниз и начинает заново. Кружок строки загорается, когда свет
+   рядом, и медленно гаснет. Работает, только пока блок на экране; при «уменьшить движение» — нет. */
+(function(){
+  'use strict';
+  var flow = document.querySelector('.flow');
+  var table = flow && flow.querySelector('.ftable');
+  var rail = flow && flow.querySelector('.flow__rail');
+  var bead = rail && rail.querySelector('i');
+  if(!flow || !table || !rail || !bead) return;
+  var steps = [].slice.call(table.querySelectorAll('.fstep'));
+  if(steps.length < 2) return;
+  var L = 150, SPEED = 150, GAP = 110;   /* длина света; px/с; пауза */
+  var ys = [], H = 0;
+  /* центр кружка от верха строки — из стилей: на телефоне кружок выше; у строк 2–6 сверху
+     разделитель в 1 px, кружок отсчитывается от него */
+  function dot(st){
+    var c = getComputedStyle(st, '::before');
+    return st.clientTop + parseFloat(c.top) + (parseFloat(c.height) + 2 * parseFloat(c.borderTopWidth)) / 2;
+  }
+  function place(){
+    ys = steps.map(function(st){ return table.offsetTop + table.clientTop + st.offsetTop + dot(st); });
+    H = Math.max(0, ys[ys.length - 1] - ys[0]);
+    rail.style.top = ys[0] + 'px';
+    rail.style.height = H + 'px';
+  }
+  place();
+  if(window.ResizeObserver) new ResizeObserver(place).observe(table);   /* строки меняют высоту — линия следом */
+  else window.addEventListener('resize', place);
+  if(document.fonts && document.fonts.ready) document.fonts.ready.then(place);
+  if(window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  var raf = 0, t0 = 0, run = false;
+  function frame(now){
+    if(!t0) t0 = now;
+    var cycle = H + L + GAP;
+    var head = ((now - t0) / 1000 * SPEED) % cycle;       /* где сейчас яркий край света */
+    bead.style.transform = 'translateY(' + (head - L) + 'px)';
+    for(var i = 0; i < steps.length; i++){
+      var d = head - (ys[i] - ys[0]);
+      steps[i].classList.toggle('pass', d > -14 && d < 70);
+    }
+    if(run) raf = requestAnimationFrame(frame);
+  }
+  function start(){ if(run) return; run = true; raf = requestAnimationFrame(frame); }
+  function stop(){
+    run = false; cancelAnimationFrame(raf);
+    steps.forEach(function(st){ st.classList.remove('pass'); });
+  }
+  if('IntersectionObserver' in window){
+    new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting) start(); else stop(); }); })
+      .observe(flow);
+  } else start();
+})();
+</script>
+<script>
+/* apply_edits: волна первого экрана — скрипт */
+/* Поле из тысяч точек дышит волной, курсор пускает по нему круги (эффект № 14 полки lab/effects,
+   переписан на чистый WebGL). Рисуем, только пока полоса волны видна и вкладка открыта.
+   Нет WebGL — холст убираем, первый экран остаётся как был. «Уменьшить движение» — волна стоит. */
+(function(){
+  'use strict';
+  var hero = document.querySelector('.hero--scene');
+  var cv = document.getElementById('heroWave');
+  if(!hero || !cv) return;
+  var gl = null;
+  try{ gl = cv.getContext('webgl', {alpha: true, antialias: false, premultipliedAlpha: true, depth: false,
+    stencil: false, powerPreference: 'low-power'}); }catch(e){}
+  if(!gl){ cv.parentNode.removeChild(cv); return; }
+
+  /* облегчённая сетка — только на узком экране: на планшете с сенсором она не доставала до краёв
+     широкой полосы, а полную сетку его видеокарта тянет */
+  var small = window.matchMedia('(max-width: 760px)').matches;
+  var still = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  /* Без видеокарты (WebGL рисует процессор) волна не движется: один неподвижный кадр вместо
+     тормозящей страницы. Так же и если кадры в первые секунды идут медленно — см. frame(). */
+  try{
+    var dbg = gl.getExtension('WEBGL_debug_renderer_info');
+    var gpu = String(gl.getParameter(dbg ? dbg.UNMASKED_RENDERER_WEBGL : gl.RENDERER) || '');
+    if(/swiftshader|llvmpipe|softpipe|software|basic render/i.test(gpu)) still = true;
+  }catch(e){}
+  var COLS = small ? 96 : 200, ROWS = small ? 70 : 120, GAP = 0.13;
+  var PRMAX = small ? 1.5 : 1.75, PR = Math.min(window.devicePixelRatio || 1, PRMAX);
+
+  var NOISE = [
+    'vec3 mod289(vec3 x){return x-floor(x*(1.0/289.0))*289.0;}',
+    'vec4 mod289(vec4 x){return x-floor(x*(1.0/289.0))*289.0;}',
+    'vec4 permute(vec4 x){return mod289(((x*34.0)+1.0)*x);}',
+    'vec4 taylorInvSqrt(vec4 r){return 1.79284291400159-0.85373472095314*r;}',
+    'float snoise(vec3 v){',
+    ' const vec2 C=vec2(1.0/6.0,1.0/3.0); const vec4 D=vec4(0.0,0.5,1.0,2.0);',
+    ' vec3 i=floor(v+dot(v,C.yyy)); vec3 x0=v-i+dot(i,C.xxx);',
+    ' vec3 g=step(x0.yzx,x0.xyz); vec3 l=1.0-g; vec3 i1=min(g.xyz,l.zxy); vec3 i2=max(g.xyz,l.zxy);',
+    ' vec3 x1=x0-i1+C.xxx; vec3 x2=x0-i2+C.yyy; vec3 x3=x0-D.yyy;',
+    ' i=mod289(i);',
+    ' vec4 p=permute(permute(permute(i.z+vec4(0.0,i1.z,i2.z,1.0))+i.y+vec4(0.0,i1.y,i2.y,1.0))+i.x+vec4(0.0,i1.x,i2.x,1.0));',
+    ' float n_=0.142857142857; vec3 ns=n_*D.wyz-D.xzx;',
+    ' vec4 j=p-49.0*floor(p*ns.z*ns.z); vec4 x_=floor(j*ns.z); vec4 y_=floor(j-7.0*x_);',
+    ' vec4 x=x_*ns.x+ns.yyyy; vec4 y=y_*ns.x+ns.yyyy; vec4 h=1.0-abs(x)-abs(y);',
+    ' vec4 b0=vec4(x.xy,y.xy); vec4 b1=vec4(x.zw,y.zw);',
+    ' vec4 s0=floor(b0)*2.0+1.0; vec4 s1=floor(b1)*2.0+1.0; vec4 sh=-step(h,vec4(0.0));',
+    ' vec4 a0=b0.xzyw+s0.xzyw*sh.xxyy; vec4 a1=b1.xzyw+s1.xzyw*sh.zzww;',
+    ' vec3 p0=vec3(a0.xy,h.x); vec3 p1=vec3(a0.zw,h.y); vec3 p2=vec3(a1.xy,h.z); vec3 p3=vec3(a1.zw,h.w);',
+    ' vec4 norm=taylorInvSqrt(vec4(dot(p0,p0),dot(p1,p1),dot(p2,p2),dot(p3,p3)));',
+    ' p0*=norm.x; p1*=norm.y; p2*=norm.z; p3*=norm.w;',
+    ' vec4 m=max(0.6-vec4(dot(x0,x0),dot(x1,x1),dot(x2,x2),dot(x3,x3)),0.0); m=m*m;',
+    ' return 42.0*dot(m*m,vec4(dot(p0,x0),dot(p1,x1),dot(p2,x2),dot(p3,x3)));',
+    '}'].join('\n');
+  var VS = ['precision highp float;',
+    'attribute vec2 aP;',
+    'uniform mat4 uProj, uView; uniform float uTime, uPush, uPR, uSize; uniform vec2 uMouse;',
+    'varying float vH; varying float vFade;',
+    NOISE,
+    'void main(){',
+    '  vec3 p = vec3(aP.x, 0.0, aP.y);',
+    '  float w = sin(p.x * 0.45 + uTime * 0.9) * 0.28 + sin(p.z * 0.6 - uTime * 0.7) * 0.22',
+    '          + snoise(vec3(p.xz * 0.16, uTime * 0.12)) * 0.55;',
+    '  float d = distance(p.xz, uMouse);',
+    '  w += sin(d * 3.2 - uTime * 5.5) * 0.45 * exp(-d * 0.55) * uPush;',
+    '  p.y += w; vH = w;',
+    '  vec4 mv = uView * vec4(p, 1.0);',
+    '  vFade = (1.0 - smoothstep(2.5, 19.0, -mv.z)) * smoothstep(2.4, 6.0, -mv.z);',  /* ближние крупные точки тают */
+    '  gl_PointSize = max(1.0, (uSize + w * 1.4) * uPR * (9.0 / -mv.z));',
+    '  gl_Position = uProj * mv;',
+    '}'].join('\n');
+  var FS = ['precision mediump float;',
+    'uniform vec3 uA, uB; uniform float uAlpha;',
+    'varying float vH; varying float vFade;',
+    'void main(){',
+    '  float a = 1.0 - smoothstep(0.15, 0.5, length(gl_PointCoord - 0.5));',
+    '  vec3 col = mix(uA, uB, smoothstep(-0.5, 0.7, vH));',
+    '  col *= 0.8 + 1.2 * smoothstep(-0.4, 0.9, vH);',
+    '  float k = a * vFade;',
+    '  vec3 lin = col * k * 1.25;',
+    /* как у образца на полке: считаем свет в линейном цвете и переводим в sRGB — иначе волна тусклая */
+    '  gl_FragColor = vec4(pow(max(lin, vec3(0.0)), vec3(0.4545)) * uAlpha, k * uAlpha);',
+    '}'].join('\n');
+
+  function sh(type, src){
+    var o = gl.createShader(type); gl.shaderSource(o, src); gl.compileShader(o);
+    return gl.getShaderParameter(o, gl.COMPILE_STATUS) ? o : null;
+  }
+  /* сетка точек на плоскости волны */
+  var pts = new Float32Array(COLS * ROWS * 2), q = 0;
+  for(var r = 0; r < ROWS; r++) for(var c = 0; c < COLS; c++){
+    pts[q++] = (c - COLS / 2) * GAP; pts[q++] = -r * GAP + 3;
+  }
+  /* цвета — фиолетовый сайта у подножия волны, светлая сирень на гребнях (sRGB → линейный) */
+  function lin(hex){ return [0, 2, 4].map(function(i){ return Math.pow(parseInt(hex.substr(i, 2), 16) / 255, 2.2); }); }
+  var cA = lin('7c5cff'), cB = lin('c9d0ff');
+  var U = {};
+  /* Всё, что живёт в видеокарте: программа, точки, цвета. Если видеокарта отберёт контекст (сон
+     ноутбука, сброс драйвера, возврат в Safari из другого приложения) — собирается заново. */
+  function init(){
+    var vs = sh(gl.VERTEX_SHADER, VS), fs = sh(gl.FRAGMENT_SHADER, FS);
+    var prog = vs && fs ? gl.createProgram() : null;
+    if(prog){ gl.attachShader(prog, vs); gl.attachShader(prog, fs); gl.linkProgram(prog); }
+    if(!prog || !gl.getProgramParameter(prog, gl.LINK_STATUS)) return false;
+    gl.useProgram(prog);
+    gl.bindBuffer(gl.ARRAY_BUFFER, gl.createBuffer());
+    gl.bufferData(gl.ARRAY_BUFFER, pts, gl.STATIC_DRAW);
+    var aP = gl.getAttribLocation(prog, 'aP');
+    gl.enableVertexAttribArray(aP);
+    gl.vertexAttribPointer(aP, 2, gl.FLOAT, false, 0, 0);
+    ['uProj', 'uView', 'uTime', 'uPush', 'uPR', 'uSize', 'uMouse', 'uA', 'uB', 'uAlpha'].forEach(function(k){
+      U[k] = gl.getUniformLocation(prog, k);
+    });
+    gl.uniform3f(U.uA, cA[0], cA[1], cA[2]);
+    gl.uniform3f(U.uB, cB[0], cB[1], cB[2]);
+    gl.uniform1f(U.uAlpha, small ? 0.42 : 0.38);
+    gl.uniform1f(U.uSize, small ? 2.6 : 2.4);
+    gl.uniform1f(U.uPR, PR);
+    gl.disable(gl.DEPTH_TEST);
+    gl.enable(gl.BLEND);
+    gl.blendFunc(gl.ONE, gl.ONE);
+    gl.clearColor(0, 0, 0, 0);
+    return true;
+  }
+  if(!init()){ cv.parentNode.removeChild(cv); return; }
+
+  /* камера: как у образца на полке. Полоса под волну широкая и низкая — угол обзора по вертикали
+     сужаем, чтобы по ширине поле заполняло экран, а горизонт сдвигаем на четверть от верха полосы */
+  var FOV = 50 * Math.PI / 180, eye = [0, 2.3, 6.2], target = [0, 0, -4], basis = null, aspect = 1;
+  var vfov = FOV, shiftY = 0, FAR = 3 - ROWS * GAP;
+  function sub(a, b){ return [a[0] - b[0], a[1] - b[1], a[2] - b[2]]; }
+  function norm(a){ var l = Math.hypot(a[0], a[1], a[2]) || 1; return [a[0] / l, a[1] / l, a[2] / l]; }
+  function cross(a, b){ return [a[1] * b[2] - a[2] * b[1], a[2] * b[0] - a[0] * b[2], a[0] * b[1] - a[1] * b[0]]; }
+  function dot(a, b){ return a[0] * b[0] + a[1] * b[1] + a[2] * b[2]; }
+  function setCamera(w, h){
+    aspect = w / h;
+    eye = aspect < 0.8 ? [0, 3.2, 7.5] : [0, 2.3, 6.2];
+    var z = norm(sub(eye, target)), x = norm(cross([0, 1, 0], z)), y = cross(z, x);
+    basis = {x: x, y: y, z: z};
+    gl.uniformMatrix4fv(U.uView, false, new Float32Array([
+      x[0], y[0], z[0], 0, x[1], y[1], z[1], 0, x[2], y[2], z[2], 0,
+      -dot(x, eye), -dot(y, eye), -dot(z, eye), 1]));
+    vfov = aspect > 2.3 ? 2 * Math.atan(Math.tan(FOV / 2) * 2.3 / aspect) : FOV;
+    var f = 1 / Math.tan(vfov / 2), nr = 0.1, fr = 60;
+    /* где на экране дальний край поля — и сдвиг, чтобы он встал на 0.5 (четверть высоты от верха) */
+    var far = sub([0, 0, FAR], eye), vy = dot(y, far), vz = dot(z, far);
+    shiftY = 0.5 - f * vy / -vz;
+    gl.uniformMatrix4fv(U.uProj, false, new Float32Array([
+      f / aspect, 0, 0, 0, 0, f, 0, 0, 0, -shiftY, (fr + nr) / (nr - fr), -1, 0, 0, 2 * fr * nr / (nr - fr), 0]));
+  }
+  /* луч из точки экрана на плоскость волны: там, куда смотрит курсор, расходятся круги */
+  function hit(nx, ny){
+    var t = Math.tan(vfov / 2), dx = nx * t * aspect, dy = (ny - shiftY) * t;
+    var d = [basis.x[0] * dx + basis.y[0] * dy - basis.z[0], basis.x[1] * dx + basis.y[1] * dy - basis.z[1],
+             basis.x[2] * dx + basis.y[2] * dy - basis.z[2]];
+    if(d[1] >= -0.001) return null;
+    var k = -eye[1] / d[1];
+    return [eye[0] + d[0] * k, eye[2] + d[2] * k];
+  }
+
+  /* Волна начинается на 12 px ниже кнопок первого экрана: текст и кнопки чистые на любом мониторе.
+     Если под кнопками меньше MIN (низкие экраны ноутбуков: 1366×657, 1280×600), первый экран
+     удлиняется снизу ровно настолько, чтобы волне хватило места, и она уходит за край экрана.
+     На телефоне под кнопками стоят ноутбук и телефон с превью — волна ложится под них. */
+  var cta = hero.querySelector('.hero-cta'), inner = hero.querySelector('.wrap');
+  var MIN = 150, BELOW = 12;
+  function ctaBottom(){
+    var y = cta.offsetHeight + BELOW;
+    for(var el = cta; el && el !== hero; el = el.offsetParent) y += el.offsetTop;
+    return y;
+  }
+  function band(){
+    var hh, top;
+    if(cta){
+      hero.style.paddingBottom = '';
+      hh = hero.offsetHeight; top = ctaBottom();
+      var need = MIN - (hh - top);
+      if(need > 0 && inner){
+        /* текст стоит по центру первого экрана: пока есть свободное место, добавка снизу поднимает
+           его на половину своей высоты, дальше — удлиняет экран */
+        var cs = getComputedStyle(hero), pb = parseFloat(cs.paddingBottom) || 0;
+        var free = Math.max(0, hh - (parseFloat(cs.paddingTop) || 0) - pb - inner.offsetHeight);
+        var add = need <= free / 2 ? need * 2 : free + need - free / 2;
+        hero.style.paddingBottom = Math.ceil(pb + add) + 'px';
+        hh = hero.offsetHeight; top = ctaBottom();
+      }
+    } else {
+      hh = hero.offsetHeight; top = hh * 0.6;
+    }
+    top = Math.round(Math.max(0, top));
+    cv.style.top = top + 'px';
+    cv.style.height = Math.max(0, hh - top) + 'px';
+  }
+  var W = 0, Hh = 0, lost = false;
+  function resize(){
+    band();
+    var w = Math.max(1, cv.clientWidth), h = Math.max(1, cv.clientHeight);
+    var pr = Math.min(window.devicePixelRatio || 1, PRMAX);   /* окно могли перетащить на другой монитор */
+    if(w === W && h === Hh && pr === PR) return;
+    W = w; Hh = h; PR = pr;
+    if(lost) return;
+    cv.width = Math.round(w * PR); cv.height = Math.round(h * PR);
+    gl.viewport(0, 0, cv.width, cv.height);
+    gl.uniform1f(U.uPR, PR);
+    setCamera(w, h);
+    if(!run) draw(tm);
+  }
+
+  var ptr = {x: 0, y: 0, active: false}, mouse = [0, -4], push = 0.6, tm = 0, last = 0, raf = 0, run = false;
+  hero.addEventListener('pointermove', function(e){
+    var b = cv.getBoundingClientRect();
+    ptr.x = (e.clientX - b.left) / b.width * 2 - 1;
+    ptr.y = 1 - (e.clientY - b.top) / b.height * 2;
+    ptr.active = e.pointerType === 'mouse';
+  }, {passive: true});
+  hero.addEventListener('pointerleave', function(){ ptr.active = false; });
+
+  function draw(t){
+    if(lost) return;
+    gl.uniform1f(U.uTime, t);
+    gl.uniform2f(U.uMouse, mouse[0], mouse[1]);
+    gl.uniform1f(U.uPush, push);
+    gl.clear(gl.COLOR_BUFFER_BIT);
+    gl.drawArrays(gl.POINTS, 0, COLS * ROWS);
+  }
+  function frame(now){
+    var dt = Math.min(0.05, (now - last) / 1000 || 0);
+    last = now;
+    tm += dt;
+    var k = dt || 0.016;
+    var tx = ptr.active ? ptr.x : Math.sin(tm * 0.3) * 0.5, ty = ptr.active ? ptr.y : -0.25 + Math.sin(tm * 0.2) * 0.15;
+    var h = hit(tx, ty);
+    if(h){ var a = 1 - Math.exp(-6 * k); mouse[0] += (h[0] - mouse[0]) * a; mouse[1] += (h[1] - mouse[1]) * a; }
+    push += ((ptr.active ? 1 : 0.6) - push) * (1 - Math.exp(-2 * k));
+    draw(tm);
+    /* первые 90 кадров считаем скорость: реже 25 кадров в секунду — волна замирает */
+    if(probe < 90 && dt > 0){ probe++; slow += dt; if(probe === 90 && slow / 90 > 0.04){ still = true; cv.setAttribute('data-mode', 'slow'); stop(); return; } }
+    if(run) raf = requestAnimationFrame(frame);
+  }
+  var probe = 0, slow = 0;
+  function start(){
+    if(run || still || lost || document.hidden) return;
+    run = true; last = performance.now(); raf = requestAnimationFrame(frame);
+  }
+  function stop(){ run = false; cancelAnimationFrame(raf); }
+
+  var seen = true;
+  /* следим и за текстом первого экрана: на английском и грузинском он другой длины, кнопки сдвигаются */
+  if(window.ResizeObserver){
+    var ro = new ResizeObserver(function(){ resize(); });
+    ro.observe(hero);
+    if(hero.querySelector('.hero-txt')) ro.observe(hero.querySelector('.hero-txt'));
+  }
+  else window.addEventListener('resize', function(){ resize(); });
+  if(document.fonts && document.fonts.ready) document.fonts.ready.then(function(){ resize(); });
+  /* другая плотность пикселей (окно на другом мониторе) — пересчитать холст, иначе волна мылится */
+  (function watchPR(){
+    if(!window.matchMedia) return;
+    var mq = window.matchMedia('(resolution: ' + (window.devicePixelRatio || 1) + 'dppx)');
+    if(!mq.addEventListener) return;
+    mq.addEventListener('change', function once(){ mq.removeEventListener('change', once); resize(); watchPR(); });
+  })();
+  resize();
+  draw(tm);
+  cv.classList.add('on');
+  cv.setAttribute('data-mode', still ? 'still' : 'live');   /* для проверок: движется волна или стоит */
+  /* рисуем, только пока видна сама полоса волны: на телефоне она часто ниже края экрана */
+  if('IntersectionObserver' in window){
+    new IntersectionObserver(function(es){
+      es.forEach(function(e){ seen = e.isIntersecting; if(seen) start(); else stop(); });
+    }).observe(cv);
+  } else start();
+  document.addEventListener('visibilitychange', function(){ if(document.hidden) stop(); else if(seen) start(); });
+  /* видеокарта отобрала контекст — ждём, когда вернёт, и собираем всё заново */
+  cv.addEventListener('webglcontextlost', function(e){ e.preventDefault(); lost = true; stop(); });
+  cv.addEventListener('webglcontextrestored', function(){
+    if(!init()){ cv.classList.remove('on'); return; }
+    lost = false; W = Hh = 0;
+    resize(); draw(tm);
+    if(seen) start();
+  });
+})();
+</script>
+<script>
+/* apply_edits: язык — ширина меняющегося слова */
+/* После смены языка слова в заголовке другой длины: ширину подгоняем сразу, а не при следующей
+   смене слова через 2,6 с (до неё слово обрезалось). Скрипт слова слушает resize. */
+(function(){
+  var apply = window.osApplyLang;
+  if(typeof apply !== 'function') return;
+  window.osApplyLang = function(lang){
+    apply(lang);
+    try{ window.dispatchEvent(new Event('resize')); }catch(e){}
+  };
+})();
+</script>
+<script>
+/* apply_edits: перевод по таблице */
+/* Тексты без data-i18n переводятся по таблице «русский → английский, грузинский» (i18n_concept.py).
+   Срабатывает вместе со сменой языка (osApplyLang) и на странице без переключателя — по os_lang. */
+(function(){
+  'use strict';
+  var T = {"Реферальная программа":["Referral program","რეფერალური პროგრამა"],"Заявка":["Get in touch","განაცხადი"],"Напишите нам в Telegram":["Message us on Telegram","მოგვწერეთ Telegram‑ში"],"Расскажите, чем занимается ваш бизнес и какой сайт нужен. Ответим в течение пары часов и назовём цену и срок.":["Tell us what your business does and what kind of site you need. We'll reply within a couple of hours with a price and timeline.","მოგვიყევით, რით არის დაკავებული თქვენი ბიზნესი და როგორი საიტი გჭირდებათ. ორიოდე საათში გიპასუხებთ და ფასსა და ვადას დაგისახელებთ."],"Написать в Telegram":["Message on Telegram","მოწერა Telegram‑ში"],"Смотреть тарифы":["See pricing","ტარიფების ნახვა"],"Язык / Language":["Language","ენა / Language"],"Меню":["Menu","მენიუ"],"Тариф {n} из {m}":["Plan {n} of {m}","ტარიფი {n}, სულ {m}"],"≈ $19 · 1 500 ₽ в месяц":["≈ $19 · 1 500 ₽ a month","≈ $19 · 1 500 ₽ თვეში"],"≈ 50 ₾ · 1 500 ₽ в месяц":["≈ 50 ₾ · 1 500 ₽ a month","≈ 50 ₾ · 1 500 ₽ თვეში"],"≈ $19 · 50 ₾ в месяц":["≈ $19 · 50 ₾ a month","≈ $19 · 50 ₾ თვეში"]};
+  var LI = {en: 0, ka: 1};
+  var CY = /[А-Яа-яЁё]/;
+  var ATTRS = ['aria-label', 'alt', 'title', 'placeholder', 'aria-roledescription'];
+  var BACK = {};
+  Object.keys(T).forEach(function(ru){ T[ru].forEach(function(v){ if(v && !(v in BACK)) BACK[v] = ru; }); });
+  function norm(s){ return s.replace(/\s+/g, ' ').trim(); }
+  function to(text, lang){
+    var n = norm(text);
+    if(!n) return null;
+    var ru = CY.test(n) ? n : BACK[n];
+    if(!ru || !T[ru]) return null;
+    return lang === 'ru' ? ru : (T[ru][LI[lang]] || null);
+  }
+  function apply(lang){
+    if(!(lang in LI)) lang = 'ru';
+    var w = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, {acceptNode: function(n){
+      var p = n.parentElement;
+      if(!p || p.closest('script,style,noscript,template,[data-i18n]')) return NodeFilter.FILTER_REJECT;
+      return n.nodeValue.trim() ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_REJECT;
+    }});
+    var list = [], n;
+    while((n = w.nextNode())) list.push(n);
+    list.forEach(function(node){
+      var v = to(node.nodeValue, lang);
+      if(v == null) return;
+      var m = /^(\s*)[\s\S]*?(\s*)$/.exec(node.nodeValue), next = m[1] + v + m[2];
+      if(node.nodeValue !== next) node.nodeValue = next;
+    });
+    [].forEach.call(document.querySelectorAll('[aria-label],[alt],[title],[placeholder],[aria-roledescription]'), function(el){
+      ATTRS.forEach(function(a){
+        var o = el.getAttribute(a);
+        if(!o) return;
+        var v = to(o, lang);
+        if(v != null && v !== o) el.setAttribute(a, v);
+      });
+    });
+  }
+  /* для скриптов страницы: перевести русскую строку на текущий язык */
+  window.osT = function(ru){
+    var lang = (document.documentElement.lang || 'ru').slice(0, 2), k = norm(ru);
+    return lang !== 'ru' && T[k] && T[k][LI[lang]] ? T[k][LI[lang]] : ru;
+  };
+  window.osTranslate = apply;
+  var prev = window.osApplyLang;
+  if(typeof prev === 'function'){
+    window.osApplyLang = function(lang){ prev(lang); apply((document.documentElement.lang || lang).slice(0, 2)); };
+  } else {
+    /* страница без переключателя языков (лента работ): язык — тот, что выбран на сайте */
+    var lg = 'ru';
+    try{ lg = localStorage.getItem('os_lang') || 'ru'; }catch(e){}
+    if(lg in LI){
+      document.documentElement.lang = lg;
+      var run = function(){ apply(lg); var t = to(document.title, lg); if(t) document.title = t; };
+      if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', run);
+      else run();
+    }
+  }
+})();
+</script>
+<script>
+(function(){
+  var T = {"ru": "Заявка — open-sites.io", "en": "Get in touch — open-sites.io", "ka": "დაგვიკავშირდით — open-sites.io"};
+  function set(){ var lg = (document.documentElement.lang || 'ru').slice(0, 2); document.title = T[lg] || T.ru; }
+  new MutationObserver(set).observe(document.documentElement, {attributes: true, attributeFilter: ['lang']});
+  set();
+})();
 </script>
 </body>
 </html>
