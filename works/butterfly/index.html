@@ -72,7 +72,7 @@ section[id]{scroll-margin-top:72px}
 .hdr__in{display:flex;align-items:center;gap:14px;height:64px}
 .logo{display:flex;align-items:center;gap:10px;min-height:44px;text-decoration:none;color:var(--wine);margin-right:auto}
 .logo svg{width:34px;height:28px;overflow:visible}
-.logo svg path{fill:var(--wine)}
+.logo svg{fill:var(--wine)}
 .logo .wing{transform-box:view-box;transform-origin:20px 16px;animation:flap 4.2s ease-in-out infinite}
 @keyframes flap{0%,64%,100%{transform:scaleX(1)}72%{transform:scaleX(.45)}80%{transform:scaleX(1)}86%{transform:scaleX(.62)}92%{transform:scaleX(1)}}
 .logo b{font:400 26px/1 var(--ser);letter-spacing:.01em;color:var(--ink)}
@@ -121,13 +121,16 @@ section[id]{scroll-margin-top:72px}
 .hero__arch img{position:absolute;inset:0}
 .hero__arch .fx__gl{position:absolute;inset:0;width:100%;height:100%;display:block;z-index:1;opacity:0;transition:opacity 1.4s var(--e)}
 .hero__arch.is-live .fx__gl{opacity:1}
+.hero__back{position:absolute;inset:14px 10px -14px -10px;border-radius:50% 50% 30px 30px / 40% 40% 30px 30px;
+  background:linear-gradient(165deg,#F1DDD9 0%,#E6C4BE 52%,#D5A69F 100%);box-shadow:0 44px 70px -40px rgba(111,29,50,.6)}
+.hero__arch{outline:1px solid rgba(255,255,255,.6);outline-offset:-12px}
 .hero__outline{position:absolute;inset:-12px -12px 12px 12px;border:1px solid rgba(111,29,50,.28);border-radius:50% 50% 30px 30px / 40% 40% 30px 30px;pointer-events:none}
 .seal{position:absolute;right:-6px;bottom:-26px;width:112px;height:112px;z-index:3;display:grid;place-items:center;overflow:hidden;
   background:var(--milk);border-radius:50%;box-shadow:0 18px 40px -22px rgba(111,29,50,.6)}
 .seal svg.txt{position:absolute;inset:0;width:100%;height:100%;animation:spin 28s linear infinite}
 .seal svg.txt text{font:500 9.6px var(--sans);letter-spacing:.12em;text-transform:uppercase;fill:var(--wine)}
 .seal .logo-m{width:34px;height:28px}
-.seal .logo-m path{fill:var(--wine)}
+.seal .logo-m{fill:var(--wine)}
 @keyframes spin{to{transform:rotate(360deg)}}
 
 
@@ -141,6 +144,19 @@ section[id]{scroll-margin-top:72px}
 .ico svg{width:20px;height:20px;fill:none;stroke:var(--wine);stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
 
 
+.motto{padding:6px 0 0}
+.motto__in{text-align:center;padding:42px 20px 38px;border-radius:34px;border:1px solid var(--line);
+  background:radial-gradient(120% 90% at 50% 0%,rgba(255,255,255,.75),rgba(235,211,207,.35))}
+.motto__bf{display:block;width:48px;height:38px;margin:0 auto 18px;fill:var(--wine);overflow:visible}
+.motto__bf .wing{transform-box:view-box;transform-origin:20px 16px;animation:flap 4.2s ease-in-out .8s infinite}
+.motto__t{font:400 clamp(30px,6.8vw,56px)/1.1 var(--ser);color:var(--ink);max-width:21ch;margin:0 auto;text-wrap:balance}
+.motto__t em{font-style:normal;color:var(--wine)}
+.motto__go{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin:26px 0 0}
+.motto__go a{display:inline-flex;align-items:center;min-height:44px;padding:0 20px;border-radius:999px;border:1px solid rgba(111,29,50,.28);
+  background:rgba(255,255,255,.55);color:var(--wine);font-weight:500;text-decoration:none;transition:background .3s,border-color .3s}
+.motto__go a:hover{background:#fff;border-color:var(--wine)}
+
+
 .slots__grid{display:grid;gap:16px}
 .group__t{display:flex;align-items:center;gap:12px;font-size:28px;margin-bottom:6px}
 .slot-list{list-style:none;margin:0;padding:0}
@@ -152,11 +168,27 @@ section[id]{scroll-margin-top:72px}
   font:500 15px/1 var(--sans);min-height:44px;min-width:66px;padding:0 14px;border-radius:999px;cursor:pointer;
   transition:background .3s var(--e),color .3s,border-color .3s,transform .3s var(--e)}
 .chip:hover{border-color:var(--wine);color:var(--wine)}
+.day{display:grid;gap:3px;justify-items:center;align-content:center;min-width:86px;min-height:58px;padding:8px 14px;text-align:center;flex:none}
+.day small{font-size:12px;font-weight:400;opacity:.7}
+.day svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.6}
+.day-cal{position:relative;display:inline-flex;flex:none}
+.day-cal input{position:absolute;left:0;bottom:0;width:100%;height:1px;opacity:0;pointer-events:none;border:0;padding:0}
 .chip[aria-pressed="true"]{background:var(--wine);border-color:var(--wine);color:#fff;animation:pop .45s var(--e)}
 @keyframes pop{0%{transform:scale(.9)}60%{transform:scale(1.06)}100%{transform:scale(1)}}
 .slot__t span{display:inline-grid;place-items:center;min-height:36px;padding:0 12px;border-radius:999px;border:1px solid var(--line);font-size:14px}
-.slot.is-picked{background:linear-gradient(90deg,rgba(235,211,207,.55),rgba(235,211,207,0))}
-.slots__side{display:grid;gap:16px;align-content:start}
+.slot{margin:0 -12px;padding-left:12px;padding-right:12px;border-radius:16px}
+.slot.is-picked{background:rgba(235,211,207,.7)}
+.slot.is-picked,.slot.is-picked+.slot{border-top-color:transparent}
+.slot[hidden]{display:none}
+.slot-empty{padding:18px 0;color:var(--muted);font-size:15px}
+.slots__main,.slots__side{display:grid;gap:16px;align-content:start}
+.js #slotsDateNoJs{display:none}
+.slots__bar{display:grid;gap:12px;margin:-8px 0 20px}
+.days{position:relative;display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;margin:0 -16px;padding:2px 16px 4px}
+.days::-webkit-scrollbar{display:none}
+.tabs--slots{margin:0 -16px;padding:2px 16px}
+.slots__ph img{transition:opacity .45s var(--e)}
+.slots__ph img.is-swap{opacity:0}
 .slots__ph{aspect-ratio:4/5;--arc:40%;display:none}
 .slots__ask{margin:0;font-size:16px;padding:18px 20px;border-radius:var(--r);border:1px dashed rgba(111,29,50,.35)}
 .slots__ask a{color:var(--wine);font-weight:500;display:inline-block;padding:10px 0;margin:-10px 0}
@@ -202,9 +234,9 @@ section[id]{scroll-margin-top:72px}
 .ig{display:inline-flex;align-items:center;gap:10px;min-height:44px;text-decoration:none;font-weight:500;color:var(--wine)}
 .ig svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.6}
 .ig u{text-decoration:none;border-bottom:1px solid rgba(111,29,50,.35);padding-bottom:1px}
-.gal{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;margin:0 -16px;padding:4px 16px 18px;scrollbar-width:none}
-.gal::-webkit-scrollbar{display:none}
-.gal__i{flex:0 0 72%;margin:0;scroll-snap-align:center;aspect-ratio:3/4;--arc:37.5%}
+.gal__i{flex:none;width:clamp(210px,58vw,290px);margin:0;aspect-ratio:3/4;--arc:37.5%}
+.marquee--works{margin-top:6px}
+.marquee--works .marquee__track{animation-duration:60s;padding:6px 0 14px}
 .gal__i img{height:100%;transition:transform 1.4s var(--e)}
 .gal__i:hover img{transform:scale(1.06)}
 
@@ -253,21 +285,40 @@ section[id]{scroll-margin-top:72px}
 .book input:focus,.book select:focus{border-color:var(--rose);background:rgba(255,255,255,.1);outline:0}
 .book [aria-invalid="true"]{border-color:#F08A9B}
 .row2{display:grid;gap:0 14px}
+.sel{position:relative}
+.sel__btn{width:100%;height:52px;border-radius:14px;border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.06);color:#fff;
+  padding:0 46px 0 16px;font:400 16px var(--sans);text-align:left;cursor:pointer;display:flex;align-items:center;position:relative;
+  transition:border-color .3s,background .3s}
+.sel__btn::after{content:"";position:absolute;right:16px;top:50%;width:12px;height:8px;margin-top:-4px;transition:transform .3s var(--e);
+  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8'%3E%3Cpath d='M1 1.5l5 5 5-5' fill='none' stroke='%23EBD3CF' stroke-width='1.6'/%3E%3C/svg%3E") center/12px 8px no-repeat}
+.sel__btn:hover,.sel.is-open .sel__btn{border-color:var(--rose);background:rgba(255,255,255,.1)}
+.sel.is-open .sel__btn::after{transform:rotate(180deg)}
+.sel__pop{position:absolute;left:0;right:0;top:calc(100% + 8px);z-index:30;max-height:340px;overflow-y:auto;overscroll-behavior:contain;
+  background:var(--milk);color:var(--ink);border-radius:22px;padding:6px 8px 8px;border:1px solid rgba(111,29,50,.12);
+  box-shadow:0 34px 70px -24px rgba(0,0,0,.6);animation:selIn .28s var(--e)}
+@keyframes selIn{from{opacity:0;transform:translateY(-8px) scale(.98)}to{opacity:1;transform:none}}
+.sel__g{position:sticky;top:-6px;z-index:1;background:var(--milk);font:500 11px/1 var(--sans);letter-spacing:.16em;text-transform:uppercase;
+  color:var(--muted);padding:14px 12px 8px}
+.sel__o{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:44px;padding:10px 12px;border-radius:14px;
+  cursor:pointer;font-size:15.5px;line-height:1.3;transition:background .2s}
+.sel__o:hover,.sel__o.is-active{background:var(--rose)}
+.sel__o[aria-selected="true"]{color:var(--wine);font-weight:500}
+.sel__o[aria-selected="true"]::after{content:"";flex:none;width:16px;height:16px;
+  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M3 8.5l3.2 3L13 4.5' fill='none' stroke='%236F1D32' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/16px no-repeat}
 .scroller{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;margin:0 -20px;padding:2px 20px 4px}
 .scroller::-webkit-scrollbar{display:none}
 .book .chip{background:transparent;color:#F3E4E1;border-color:rgba(255,255,255,.22);flex:none}
 .book .chip:hover{border-color:var(--rose);color:#fff}
 .book .chip[aria-pressed="true"]{background:var(--rose);border-color:var(--rose);color:var(--deep)}
 .book .chip:disabled{opacity:.3;cursor:not-allowed}
-.day{display:grid;gap:3px;min-width:78px;min-height:56px;padding:8px 12px;text-align:center}
-.day small{font-size:12px;font-weight:400;opacity:.75}
+.book .day small{opacity:.75}
 .agree{display:flex;align-items:center;gap:12px;min-height:44px;margin:0 0 14px;font-size:14px;color:#E6CCC8;cursor:pointer}
 .agree input{width:22px;height:22px;flex:none;accent-color:var(--rose);margin:0}
 .btn:disabled{opacity:.45;cursor:not-allowed;animation:none}
 .btn:disabled::before{animation:none}
 .ok{margin:14px 0 0;padding:14px 16px;border-radius:14px;background:rgba(235,211,207,.12);color:#fff;font-size:15px}
 .info{display:grid;gap:14px;align-content:start}
-.map{border-radius:var(--r);overflow:hidden;aspect-ratio:4/3;border:1px solid rgba(255,255,255,.12);background:#3a1a24}
+.map{position:relative;border-radius:var(--r);overflow:hidden;aspect-ratio:4/3;border:1px solid rgba(255,255,255,.12);background:#3a1a24}
 .map iframe{width:100%;height:100%;border:0;display:block;filter:grayscale(.3) sepia(.18) saturate(.9)}
 .contacts{list-style:none;margin:0;padding:0;display:grid;gap:0;background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.1);border-radius:var(--r)}
 .contacts li{display:flex;gap:14px;align-items:center;padding:14px 18px;border-top:1px solid rgba(255,255,255,.08)}
@@ -281,13 +332,15 @@ section[id]{scroll-margin-top:72px}
   border:1px solid rgba(255,255,255,.1);text-decoration:none;font-size:14px;font-weight:500;transition:background .3s,transform .35s var(--e)}
 .msg a:hover{background:rgba(255,255,255,.12);transform:translateY(-3px)}
 .msg svg{width:22px;height:22px;fill:none;stroke:var(--rose);stroke-width:1.6}
-.route{display:inline-flex;align-items:center;gap:8px;min-height:44px;color:var(--rose);font-weight:500;text-decoration:none;justify-self:start}
+.map__cta{position:absolute;left:0;right:0;bottom:44px;display:flex;justify-content:center;pointer-events:none}
+.map__cta .btn{pointer-events:auto;min-height:46px;padding:0 22px;font-size:15px;box-shadow:0 12px 30px -10px rgba(111,29,50,.9),0 0 0 4px rgba(255,255,255,.55)}
+.map__cta .btn svg{width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linejoin:round}
 
 .ftr{background:#1E0A11;color:#CFAFAA;padding:34px 0 40px;font-size:14px}
 .ftr__in{display:grid;gap:16px}
 .ftr .logo b{color:#fff}
 .ftr .logo small{color:#B08E89}
-.ftr .logo svg path{fill:var(--rose)}
+.ftr .logo svg{fill:var(--rose)}
 .ftr p{margin:0}
 .ftr a{text-decoration:none;color:#F3E4E1;display:inline-block;padding:12px 0}
 
@@ -305,13 +358,16 @@ section[id]{scroll-margin-top:72px}
   .slot{gap:10px 18px}
   .slot__t{justify-content:flex-end;margin-left:auto}
   .tabs{margin:0 0 26px;padding:2px 0}
+  .slots__bar{grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:18px;margin-bottom:26px}
+  .days{margin:0;padding:2px 0 4px}
+  .tabs--slots{margin:0;padding:2px 0}
+  .motto__in{padding:64px 40px 56px}
+  .hero__back{inset:22px 22px -22px -22px}
   .panel{grid-template-columns:5fr 7fr;gap:26px;align-items:start}
   .panel__ph{aspect-ratio:4/5;--arc:40%;border-radius:50% 50% 24px 24px / 40% 40% 24px 24px;position:sticky;top:96px}
   .plist{padding:8px 28px 14px}
   .plist__head,.prow{grid-template-columns:minmax(0,1fr) 96px 120px 18px;gap:14px}
   .prow__p{font-size:26px}
-  .gal{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px;overflow:visible;margin:0;padding:0 0 48px}
-  .gal__i:nth-child(3n+2){margin-top:56px}
   .row2{grid-template-columns:1fr 1fr}
   .form{padding:30px}
   .scroller{margin:0 -30px;padding:2px 30px 4px}
@@ -355,7 +411,7 @@ section[id]{scroll-margin-top:72px}
 }
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
-  .btn--pulse,.btn--pulse::before,.logo .wing,.seal svg.txt,.dot::after,.chip[aria-pressed="true"]{animation:none}
+  .btn--pulse,.btn--pulse::before,.logo .wing,.motto__bf .wing,.seal svg.txt,.dot::after,.chip[aria-pressed="true"]{animation:none}
   .marquee{-webkit-mask-image:none;mask-image:none;overflow-x:auto}
   .marquee__track{animation:none}
   .js .rv{opacity:1;transform:none;transition:none}
@@ -385,7 +441,7 @@ section[id]{scroll-margin-top:72px}
 <header class="hdr" id="hdr">
   <div class="wrap hdr__in">
     <a class="logo" href="#top" aria-label="Butterfly — наверх">
-      <svg viewBox="0 0 40 32" aria-hidden="true"><use href="#bf"/></svg>
+      <svg viewBox="0 0 40 32" aria-hidden="true"><g class="wing"><path d="M20 16C14 4 3 2 3 10c0 6 9 7 17 6z"/><path d="M20 17c-7 1-14 5-12 10 2 4 9-1 12-10z"/></g><g class="wing"><path d="M20 16c6-12 17-14 17-6 0 6-9 7-17 6z"/><path d="M20 17c7 1 14 5 12 10-2 4-9-1-12-10z"/></g></svg>
       <span><b>Butterfly</b><small>family beauty salon</small></span>
     </a>
     <nav class="nav" aria-label="Разделы">
@@ -416,6 +472,7 @@ section[id]{scroll-margin-top:72px}
       </ul>
     </div>
     <div class="hero__media rv" style="--d:.12s">
+      <div class="hero__back" aria-hidden="true"></div>
       <div class="hero__outline" aria-hidden="true"></div>
       <div class="arch hero__arch" id="heroFx" data-photo="1605980766335-d3a41c7332a1">
         <img src="https://images.unsplash.com/photo-1605980766335-d3a41c7332a1?auto=format&fit=crop&w=900&q=75"
@@ -431,16 +488,34 @@ section[id]{scroll-margin-top:72px}
   </div>
 </section>
 
+<section class="motto" aria-label="Butterfly для всей семьи">
+  <div class="wrap">
+    <div class="motto__in rv">
+      <svg class="motto__bf" viewBox="0 0 40 32" aria-hidden="true"><g class="wing"><path d="M20 16C14 4 3 2 3 10c0 6 9 7 17 6z"/><path d="M20 17c-7 1-14 5-12 10 2 4 9-1 12-10z"/></g><g class="wing"><path d="M20 16c6-12 17-14 17-6 0 6-9 7-17 6z"/><path d="M20 17c7 1 14 5 12 10-2 4-9-1-12-10z"/></g></svg>
+      <p class="motto__t">Приходите <em>всей семьёй</em>. Пока вы на маникюре, ребёнку заплетут косы</p>
+      <p class="motto__go"><a href="#slots">Свободные окошки ↓</a><a href="#prices">Прайс ↓</a></p>
+    </div>
+  </div>
+</section>
+
 <section class="sec slots" id="slots">
   <div class="wrap">
     <header class="sec__head rv">
       <h2>Свободные окошки</h2>
-      <p class="pill"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-cal"/></svg>на 28 сентября</p>
+      <p class="pill" id="slotsDateNoJs"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-cal"/></svg>на 28 сентября</p>
     </header>
+    <div class="slots__bar rv">
+      <div class="days" id="slotDays" role="group" aria-label="День"></div>
+      <div class="tabs tabs--slots" role="tablist" aria-label="Услуги">
+        <button class="tab" type="button" role="tab" id="st-hair" aria-controls="sg-hair" aria-selected="true">Волосы</button>
+        <button class="tab" type="button" role="tab" id="st-hands" aria-controls="sg-hands" aria-selected="false">Руки и ноги</button>
+      </div>
+    </div>
     <div class="slots__grid" data-date="2026-09-28">
-      <div class="card rv">
-        <h3 class="group__t"><span class="ico"><svg aria-hidden="true"><use href="#i-scis"/></svg></span>Волосы</h3>
-        <ul class="slot-list">
+      <div class="slots__main">
+        <div class="card rv" id="sg-hair" role="tabpanel" aria-labelledby="st-hair">
+          <h3 class="group__t"><span class="ico"><svg aria-hidden="true"><use href="#i-scis"/></svg></span>Волосы</h3>
+          <ul class="slot-list">
           <li class="slot" data-svc="Стрижка мужская"><span class="slot__n">Стрижка мужская</span><span class="slot__t"><span>14:00</span><span>16:00</span><span>18:00</span><span>19:00</span></span></li>
           <li class="slot" data-svc="Стрижка женская"><span class="slot__n">Стрижка женская</span><span class="slot__t"><span>14:00</span><span>16:00</span><span>18:00</span><span>19:00</span></span></li>
           <li class="slot" data-svc="Стрижка детская"><span class="slot__n">Стрижка детская</span><span class="slot__t"><span>14:30</span><span>16:30</span><span>18:30</span><span>19:00</span><span>19:30</span></span></li>
@@ -451,18 +526,23 @@ section[id]{scroll-margin-top:72px}
           <li class="slot" data-svc="Восстановление Viart"><span class="slot__n">Восстановление Viart</span><span class="slot__t"><span>18:00</span></span></li>
           <li class="slot" data-svc="Восстановление Versaty Pro"><span class="slot__n">Восстановление Versaty Pro</span><span class="slot__t"><span>18:00</span></span></li>
           <li class="slot" data-svc="Восстановление Tokio Inkarami"><span class="slot__n">Восстановление Tokio Inkarami</span><span class="slot__t"><span>18:00</span></span></li>
-        </ul>
-      </div>
-      <div class="slots__side">
-        <div class="card rv" style="--d:.08s">
-          <h3 class="group__t"><span class="ico"><svg aria-hidden="true"><use href="#i-hand"/></svg></span>Руки и ноги</h3>
-          <ul class="slot-list">
-            <li class="slot" data-svc="Маникюр или педикюр с покрытием"><span class="slot__n">Маникюр или педикюр с покрытием</span><span class="slot__t"><span>12:30</span><span>13:00</span><span>16:00</span><span>17:00</span></span></li>
-            <li class="slot" data-svc="Маникюр или педикюр без покрытия"><span class="slot__n">Маникюр или педикюр без покрытия</span><span class="slot__t"><span>12:30</span><span>13:00</span><span>16:00</span><span>17:00</span></span></li>
+            <li class="slot-empty" hidden>На этот день всё занято. Посмотрите соседние дни.</li>
           </ul>
         </div>
+        <div class="card rv" id="sg-hands" role="tabpanel" aria-labelledby="st-hands">
+          <h3 class="group__t"><span class="ico"><svg aria-hidden="true"><use href="#i-hand"/></svg></span>Руки и ноги</h3>
+          <ul class="slot-list">
+          <li class="slot" data-svc="Маникюр или педикюр с покрытием"><span class="slot__n">Маникюр или педикюр с покрытием</span><span class="slot__t"><span>12:30</span><span>13:00</span><span>16:00</span><span>17:00</span></span></li>
+          <li class="slot" data-svc="Маникюр или педикюр без покрытия"><span class="slot__n">Маникюр или педикюр без покрытия</span><span class="slot__t"><span>12:30</span><span>13:00</span><span>16:00</span><span>17:00</span></span></li>
+            <li class="slot-empty" hidden>На этот день всё занято. Посмотрите соседние дни.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="slots__side">
         <figure class="arch slots__ph rv" style="--d:.16s;margin:0">
-          <img src="https://images.unsplash.com/photo-1610992015762-45dca7fa3a85?auto=format&fit=crop&w=700&h=875&q=75" alt="Нюдовый маникюр" loading="lazy" width="700" height="875">
+          <img id="slotsPh" src="https://images.unsplash.com/photo-1560869713-7d0a29430803?auto=format&fit=crop&w=700&h=875&q=75" alt="Локоны на плойке" loading="lazy" width="700" height="875"
+            data-hair="https://images.unsplash.com/photo-1560869713-7d0a29430803?auto=format&fit=crop&w=700&h=875&q=75" data-hair-alt="Локоны на плойке"
+            data-hands="https://images.unsplash.com/photo-1610992015762-45dca7fa3a85?auto=format&fit=crop&w=700&h=875&q=75" data-hands-alt="Нюдовый маникюр">
         </figure>
         <p class="slots__ask rv" style="--d:.2s">Нет удобного времени? <a href="https://wa.me/995557478855" target="_blank" rel="noopener">Напишите</a>, подберём другое.</p>
       </div>
@@ -501,7 +581,7 @@ section[id]{scroll-margin-top:72px}
     </div>
 
     <div class="panel" id="p-pedi" role="tabpanel" aria-labelledby="t-pedi">
-      <figure class="arch panel__ph" style="margin:0"><img src="https://images.unsplash.com/photo-1707725238063-0c54fb6963d1?auto=format&fit=crop&w=800&h=1000&q=75" alt="Педикюр с красным лаком" loading="lazy" width="800" height="1000"></figure>
+      <figure class="arch panel__ph" style="margin:0"><img src="https://images.unsplash.com/photo-1779943745366-f3ec706dba95?auto=format&fit=crop&w=800&h=1000&q=75" alt="Педикюр, ноги в воде" loading="lazy" width="800" height="1000" style="object-position:50% 62%"></figure>
       <div class="plist">
         <div class="plist__head" aria-hidden="true"><span>Услуга</span><span>Было</span><span data-now>До 30 сентября</span><span></span></div>
         <button class="prow" type="button" data-svc="Педикюр с гель-лаком"><span class="prow__n">Педикюр с гель-лаком</span><s class="prow__o">95 ₾</s><b class="prow__p" data-old="95 ₾">75 ₾</b><span class="prow__go" aria-hidden="true">→</span></button>
@@ -537,16 +617,19 @@ section[id]{scroll-margin-top:72px}
       <h2>Работы</h2>
       <a class="ig" href="https://www.instagram.com/butterfly_salon_batumi/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-ig"/></svg><u>Больше работ в Instagram @butterfly_salon_batumi</u></a>
     </header>
-    <div class="gal">
-      <figure class="gal__i arch rv"><img src="https://images.unsplash.com/photo-1610992015762-45dca7fa3a85?auto=format&fit=crop&w=720&h=960&q=75" alt="Нюдовый маникюр" loading="lazy" width="720" height="960"></figure>
-      <figure class="gal__i arch rv" style="--d:.08s"><img src="https://images.unsplash.com/photo-1629397685944-7073f5589754?auto=format&fit=crop&w=720&h=960&q=75" alt="Локоны после укладки" loading="lazy" width="720" height="960"></figure>
-      <figure class="gal__i arch rv" style="--d:.16s"><img src="https://images.unsplash.com/photo-1746607242420-12fc2604775d?auto=format&fit=crop&w=720&h=960&q=75" alt="Омбре на ногтях" loading="lazy" width="720" height="960"></figure>
-      <figure class="gal__i arch rv"><img src="https://images.unsplash.com/photo-1707979577466-2d6109c68a45?auto=format&fit=crop&w=720&h=960&q=75" alt="Окрашивание волос" loading="lazy" width="720" height="960"></figure>
-      <figure class="gal__i arch rv" style="--d:.08s"><img src="https://images.unsplash.com/photo-1560264641-1b5191cc63e2?auto=format&fit=crop&w=720&h=960&q=75" alt="Медные локоны" loading="lazy" width="720" height="960"></figure>
-      <figure class="gal__i arch rv" style="--d:.16s"><img src="https://images.unsplash.com/photo-1707725238063-0c54fb6963d1?auto=format&fit=crop&w=720&h=960&q=75" alt="Педикюр с красным лаком" loading="lazy" width="720" height="960"></figure>
-    </div>
-    <div class="cta-row rv"><a class="btn btn--wine btn--pulse" href="#book" data-book>Записаться</a></div>
   </div>
+  <div class="marquee marquee--works rv" aria-label="Работы салона">
+    <div class="marquee__track">
+      <figure class="gal__i arch"><img src="https://images.unsplash.com/photo-1610992015762-45dca7fa3a85?auto=format&fit=crop&w=600&h=800&q=75" alt="Нюдовый маникюр" loading="lazy" width="600" height="800"></figure>
+      <figure class="gal__i arch"><img src="https://images.unsplash.com/photo-1629397685944-7073f5589754?auto=format&fit=crop&w=600&h=800&q=75" alt="Локоны после укладки" loading="lazy" width="600" height="800"></figure>
+      <figure class="gal__i arch"><img src="https://images.unsplash.com/photo-1746607242420-12fc2604775d?auto=format&fit=crop&w=600&h=800&q=75" alt="Омбре на ногтях" loading="lazy" width="600" height="800"></figure>
+      <figure class="gal__i arch"><img src="https://images.unsplash.com/photo-1707979577466-2d6109c68a45?auto=format&fit=crop&w=600&h=800&q=75" alt="Окрашивание волос" loading="lazy" width="600" height="800"></figure>
+      <figure class="gal__i arch"><img src="https://images.unsplash.com/photo-1779943745366-f3ec706dba95?auto=format&fit=crop&w=600&h=800&q=75" alt="Педикюр" loading="lazy" width="600" height="800"></figure>
+      <figure class="gal__i arch"><img src="https://images.unsplash.com/photo-1560264641-1b5191cc63e2?auto=format&fit=crop&w=600&h=800&q=75" alt="Медные локоны" loading="lazy" width="600" height="800"></figure>
+      <figure class="gal__i arch"><img src="https://images.unsplash.com/photo-1630843599725-32ead7671867?auto=format&fit=crop&w=600&h=800&q=75" alt="Светлый маникюр" loading="lazy" width="600" height="800"></figure>
+    </div>
+  </div>
+  <div class="wrap cta-row rv"><a class="btn btn--wine btn--pulse" href="#book" data-book>Записаться</a></div>
 </section>
 
 <section class="sec reviews" id="reviews">
@@ -579,8 +662,8 @@ section[id]{scroll-margin-top:72px}
       <h2>Записаться</h2>
       <p class="book__lead">Администратор подтвердит время в WhatsApp.</p>
       <form class="form" id="form" novalidate>
-        <label class="f"><span>Услуга</span>
-          <select id="fSvc" name="svc" required>
+        <div class="f"><span id="fSvcL">Услуга</span>
+          <select id="fSvc" name="svc" required aria-labelledby="fSvcL">
             <optgroup label="Волосы">
               <option>Стрижка мужская</option><option selected>Стрижка женская</option><option>Стрижка детская</option>
               <option>Окрашивание в один тон</option><option>Плетение из своих волос</option><option>Причёска детская</option>
@@ -597,7 +680,7 @@ section[id]{scroll-margin-top:72px}
               <option>Педикюр с гель-лаком</option><option>Гигиенический педикюр</option><option>Экспресс-педикюр</option>
             </optgroup>
           </select>
-        </label>
+        </div>
         <fieldset class="f"><legend>День</legend>
           <div class="scroller" id="fDays"><input type="date" id="fDateNoJs" name="day" aria-label="День"></div>
         </fieldset>
@@ -614,7 +697,9 @@ section[id]{scroll-margin-top:72px}
       </form>
     </div>
     <aside class="info rv" style="--d:.1s" aria-label="Контакты">
-      <div class="map"><iframe src="https://www.google.com/maps?q=41.6444154,41.6300068&amp;z=17&amp;output=embed" title="Butterfly на карте" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div>
+      <div class="map"><iframe src="https://www.google.com/maps?q=41.6444154,41.6300068&amp;z=17&amp;output=embed" title="Butterfly на карте" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        <div class="map__cta"><a class="btn btn--wine btn--pulse" href="https://www.google.com/maps/dir/?api=1&amp;destination=41.6444154,41.6300068" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-route"/></svg>Проложить маршрут</a></div>
+      </div>
       <ul class="contacts">
         <li><span class="ico"><svg aria-hidden="true"><use href="#i-pin"/></svg></span><span><small>Адрес</small>улица Абашидзе, 20, Батуми</span></li>
         <li><span class="ico"><svg aria-hidden="true"><use href="#i-clock"/></svg></span><span><small>Часы</small>каждый день 11:00–20:00</span></li>
@@ -625,7 +710,6 @@ section[id]{scroll-margin-top:72px}
         <a href="tel:+995557478855"><svg aria-hidden="true"><use href="#i-phone"/></svg>Позвонить</a>
         <a href="https://www.instagram.com/butterfly_salon_batumi/" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#i-ig"/></svg>Instagram</a>
       </div>
-      <a class="route" href="https://www.google.com/maps/dir/?api=1&amp;destination=41.6444154,41.6300068" target="_blank" rel="noopener"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><use href="#i-route"/></svg>Проложить маршрут</a>
     </aside>
   </div>
 </section>
@@ -646,6 +730,13 @@ section[id]{scroll-margin-top:72px}
   root.classList.add('js');
   var REDUCED = matchMedia('(prefers-reduced-motion: reduce)').matches;
   var WA = '995557478855';
+  var MON = ['января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря'];
+  var today = new Date(); today.setHours(0, 0, 0, 0);
+  function iso(d) { return d.getFullYear() + '-' + ('0' + (d.getMonth() + 1)).slice(-2) + '-' + ('0' + d.getDate()).slice(-2); }
+  function addDays(d, n) { var x = new Date(d); x.setDate(x.getDate() + n); return x; }
+  function human(key) { var p = key.split('-'); return +p[2] + ' ' + MON[+p[1] - 1]; }
+  function minutes(t) { var p = t.split(':'); return +p[0] * 60 + +p[1]; }
+  function nowMin() { var n = new Date(); return n.getHours() * 60 + n.getMinutes(); }
 
 
   var hdr = document.getElementById('hdr'), burger = document.getElementById('burger');
@@ -703,27 +794,80 @@ section[id]{scroll-margin-top:72px}
   }
 
 
-  var tabs = [].slice.call(document.querySelectorAll('.tab'));
-  function showTab(tab, focus) {
-    tabs.forEach(function (t) {
-      var on = t === tab;
-      t.setAttribute('aria-selected', on ? 'true' : 'false');
-      t.tabIndex = on ? 0 : -1;
-      var p = document.getElementById(t.getAttribute('aria-controls'));
-      p.hidden = !on;
+  function tabsInit(tabs, onShow) {
+    function show(tab, focus) {
+      tabs.forEach(function (t) {
+        var on = t === tab;
+        t.setAttribute('aria-selected', on ? 'true' : 'false');
+        t.tabIndex = on ? 0 : -1;
+        document.getElementById(t.getAttribute('aria-controls')).hidden = !on;
+      });
+      if (focus) tab.focus();
+      if (onShow) onShow(tab);
+    }
+    tabs.forEach(function (t, i) {
+      t.addEventListener('click', function () { show(t); });
+      t.addEventListener('keydown', function (e) {
+        if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
+          e.preventDefault();
+          show(tabs[(i + (e.key === 'ArrowRight' ? 1 : tabs.length - 1)) % tabs.length], true);
+        }
+      });
     });
-    if (focus) tab.focus();
+    show(tabs[0]);
   }
-  tabs.forEach(function (t, i) {
-    t.addEventListener('click', function () { showTab(t); });
-    t.addEventListener('keydown', function (e) {
-      if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
-        e.preventDefault();
-        showTab(tabs[(i + (e.key === 'ArrowRight' ? 1 : tabs.length - 1)) % tabs.length], true);
-      }
+  tabsInit([].slice.call(document.querySelectorAll('.prices .tab')));
+
+
+  function reveal(box, item, center) {
+    if (box.scrollWidth <= box.clientWidth) return;
+    var br = box.getBoundingClientRect(), ir = item.getBoundingClientRect();
+    var dx = center ? (ir.left + ir.width / 2) - (br.left + br.width / 2)
+      : ir.left < br.left ? ir.left - br.left - 16 : ir.right > br.right ? ir.right - br.right + 16 : 0;
+    if (dx) box.scrollBy({ left: dx, behavior: REDUCED ? 'auto' : 'smooth' });
+  }
+
+
+  function dayPicker(box, onPick) {
+    box.innerHTML = '';
+    ['Сегодня', 'Завтра', 'Послезавтра'].forEach(function (name, i) {
+      var d = addDays(today, i), b = document.createElement('button');
+      b.type = 'button'; b.className = 'chip day'; b.dataset.day = iso(d); b.setAttribute('aria-pressed', 'false');
+      b.innerHTML = name + '<small>' + d.getDate() + ' ' + MON[d.getMonth()].slice(0, 3) + '</small>';
+      box.appendChild(b);
     });
-  });
-  showTab(tabs[0]);
+    var wrap = document.createElement('span'); wrap.className = 'day-cal';
+    var cal = document.createElement('button');
+    cal.type = 'button'; cal.className = 'chip day'; cal.setAttribute('aria-pressed', 'false');
+    cal.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-cal"/></svg><small>Другая дата</small>';
+    var inp = document.createElement('input');
+    inp.type = 'date'; inp.tabIndex = -1; inp.setAttribute('aria-hidden', 'true');
+    inp.min = iso(today); inp.max = iso(addDays(today, 90));
+    wrap.appendChild(cal); wrap.appendChild(inp); box.appendChild(wrap);
+    cal.addEventListener('click', function () {
+      try { inp.showPicker(); } catch (x) { inp.focus(); inp.click(); }
+    });
+    inp.addEventListener('change', function () { if (inp.value && inp.value >= inp.min) { set(inp.value); onPick(inp.value); } });
+    box.addEventListener('click', function (e) {
+      var c = e.target.closest('.chip');
+      if (!c || c === cal) return;
+      set(c.dataset.day); onPick(c.dataset.day);
+    });
+    function set(v) {
+      var found = false;
+      box.querySelectorAll('.chip[data-day]').forEach(function (c) {
+        var on = c.dataset.day === v;
+        if (on) found = true;
+        c.setAttribute('aria-pressed', on ? 'true' : 'false');
+      });
+      cal.setAttribute('aria-pressed', found ? 'false' : 'true');
+      cal.querySelector('small').textContent = found ? 'Другая дата' : human(v);
+      if (!found) inp.value = v;
+      var on = box.querySelector('[aria-pressed="true"]');
+      if (on) reveal(box, on.parentElement === box ? on : on.parentElement, false);
+    }
+    return { set: set };
+  }
 
 
   var form = document.getElementById('form');
@@ -732,21 +876,8 @@ section[id]{scroll-margin-top:72px}
   var fAgree = document.getElementById('fAgree'), fSubmit = document.getElementById('fSubmit');
   fAgree.addEventListener('change', function () { fSubmit.disabled = !fAgree.checked; });
   fSubmit.disabled = !fAgree.checked;
-  var WD = ['вс', 'пн', 'вт', 'ср', 'чт', 'пт', 'сб'];
-  var MON = ['января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря'];
   var state = { day: null, time: null };
-  function iso(d) { return d.getFullYear() + '-' + ('0' + (d.getMonth() + 1)).slice(-2) + '-' + ('0' + d.getDate()).slice(-2); }
-  function human(key) { var p = key.split('-'); return +p[2] + ' ' + MON[+p[1] - 1]; }
-  var today = new Date(); today.setHours(0, 0, 0, 0);
-  fDays.innerHTML = ''; fTimes.innerHTML = '';
-  for (var i = 0; i < 10; i++) {
-    var d = new Date(today); d.setDate(today.getDate() + i);
-    var b = document.createElement('button');
-    b.type = 'button'; b.className = 'chip day'; b.setAttribute('aria-pressed', 'false'); b.dataset.day = iso(d);
-    b.innerHTML = (i === 0 ? 'Сегодня' : i === 1 ? 'Завтра' : WD[d.getDay()].replace(/^./, function (c) { return c.toUpperCase(); })) +
-      '<small>' + d.getDate() + ' ' + MON[d.getMonth()].slice(0, 3) + '</small>';
-    fDays.appendChild(b);
-  }
+  fTimes.innerHTML = '';
   for (var h = 11; h < 20; h++) {
     ['00', '30'].forEach(function (m) {
       var t = document.createElement('button');
@@ -755,57 +886,148 @@ section[id]{scroll-margin-top:72px}
       fTimes.appendChild(t);
     });
   }
-  function press(box, attr, val) {
-    box.querySelectorAll('.chip').forEach(function (c) {
-      var on = c.dataset[attr] === val;
-      c.setAttribute('aria-pressed', on ? 'true' : 'false');
-      if (on && box.scrollWidth > box.clientWidth) box.scrollTo({ left: c.offsetLeft - box.clientWidth / 2 + c.offsetWidth / 2, behavior: REDUCED ? 'auto' : 'smooth' });
-    });
-  }
   function lockPast() {
-    var isToday = state.day === iso(today), mins = new Date().getHours() * 60 + new Date().getMinutes() + 60;
+    var isToday = state.day === iso(today), cut = nowMin() + 60;
     fTimes.querySelectorAll('.chip').forEach(function (c) {
-      var p = c.dataset.time.split(':'), past = isToday && (+p[0] * 60 + +p[1]) < mins;
+      var past = isToday && minutes(c.dataset.time) < cut;
       c.disabled = past;
       if (past && state.time === c.dataset.time) { state.time = null; c.setAttribute('aria-pressed', 'false'); }
     });
   }
-  function setDay(v) { state.day = v; press(fDays, 'day', v); lockPast(); }
-  function setTime(v) { state.time = v; press(fTimes, 'time', v); }
-  fDays.addEventListener('click', function (e) { var c = e.target.closest('.chip'); if (c) setDay(c.dataset.day); });
+  var formDays = dayPicker(fDays, function (v) { state.day = v; lockPast(); });
+  function setDay(v) { state.day = v; formDays.set(v); lockPast(); }
+  function setTime(v) {
+    state.time = v;
+    fTimes.querySelectorAll('.chip').forEach(function (c) {
+      var on = c.dataset.time === v;
+      c.setAttribute('aria-pressed', on ? 'true' : 'false');
+      if (on) reveal(fTimes, c, true);
+    });
+  }
   fTimes.addEventListener('click', function (e) { var c = e.target.closest('.chip'); if (c && !c.disabled) setTime(c.dataset.time); });
-  setDay(iso(new Date().getHours() >= 19 ? new Date(today.getTime() + 864e5) : today));
+  setDay(iso(new Date().getHours() >= 19 ? addDays(today, 1) : today));
+
+
+  function makeSelect(sel) {
+    var wrap = document.createElement('div'), btn = document.createElement('button'), val = document.createElement('span');
+    var pop = document.createElement('div'), opts = [], active = -1;
+    wrap.className = 'sel';
+    btn.type = 'button'; btn.className = 'sel__btn'; btn.setAttribute('aria-haspopup', 'listbox'); btn.setAttribute('aria-expanded', 'false');
+    btn.setAttribute('aria-controls', sel.id + 'Pop'); btn.appendChild(val);
+    btn.id = sel.id + 'Btn'; btn.setAttribute('aria-labelledby', (sel.getAttribute('aria-labelledby') || '') + ' ' + btn.id);
+    pop.className = 'sel__pop'; pop.id = sel.id + 'Pop'; pop.setAttribute('role', 'listbox'); pop.hidden = true;
+    [].forEach.call(sel.children, function (g) {
+      var gl = document.createElement('div');
+      gl.className = 'sel__g'; gl.setAttribute('role', 'presentation'); gl.textContent = g.label;
+      pop.appendChild(gl);
+      [].forEach.call(g.children, function (o) {
+        var d = document.createElement('div');
+        d.className = 'sel__o'; d.setAttribute('role', 'option'); d.id = sel.id + 'O' + opts.length; d.textContent = o.text;
+        pop.appendChild(d); opts.push(d);
+      });
+    });
+    wrap.appendChild(btn); wrap.appendChild(pop);
+    sel.parentNode.insertBefore(wrap, sel);
+    sel.hidden = true; sel.tabIndex = -1;
+    function sync() {
+      var t = sel.options[sel.selectedIndex].text;
+      val.textContent = t;
+      opts.forEach(function (d) { d.setAttribute('aria-selected', d.textContent === t ? 'true' : 'false'); });
+    }
+    function setActive(i) {
+      active = Math.max(0, Math.min(opts.length - 1, i));
+      opts.forEach(function (d, k) { d.classList.toggle('is-active', k === active); });
+      btn.setAttribute('aria-activedescendant', opts[active].id);
+      opts[active].scrollIntoView({ block: 'nearest' });
+    }
+    function open() { pop.hidden = false; wrap.classList.add('is-open'); btn.setAttribute('aria-expanded', 'true'); setActive(sel.selectedIndex); }
+    function close() { pop.hidden = true; wrap.classList.remove('is-open'); btn.setAttribute('aria-expanded', 'false'); btn.removeAttribute('aria-activedescendant'); }
+    function choose(i) { sel.selectedIndex = i; sync(); close(); btn.focus(); }
+    btn.addEventListener('click', function (e) { e.preventDefault(); if (pop.hidden) open(); else close(); });
+    pop.addEventListener('click', function (e) { var d = e.target.closest('.sel__o'); if (d) choose(opts.indexOf(d)); });
+    btn.addEventListener('keydown', function (e) {
+      if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+        e.preventDefault();
+        if (pop.hidden) open(); else setActive(active + (e.key === 'ArrowDown' ? 1 : -1));
+      } else if ((e.key === 'Enter' || e.key === ' ') && !pop.hidden) { e.preventDefault(); choose(active); }
+      else if (e.key === 'Escape' && !pop.hidden) { e.preventDefault(); close(); }
+    });
+    document.addEventListener('click', function (e) { if (!wrap.contains(e.target)) close(); });
+    sync();
+    return { sync: sync };
+  }
+  var svcSel = makeSelect(fSvc);
   function setSvc(name) {
-    for (var k = 0; k < fSvc.options.length; k++) if (fSvc.options[k].text === name) { fSvc.selectedIndex = k; return; }
+    for (var k = 0; k < fSvc.options.length; k++) if (fSvc.options[k].text === name) { fSvc.selectedIndex = k; svcSel.sync(); return; }
   }
 
 
-  var slotsGrid = document.querySelector('.slots__grid'), slotDay = slotsGrid.getAttribute('data-date');
+  var slotsGrid = document.querySelector('.slots__grid'), BASE = slotsGrid.getAttribute('data-date');
   var pick = document.getElementById('pick'), pickTxt = document.getElementById('pickTxt'), pickBtn = document.getElementById('pickBtn');
-  var picked = null;
+  var slotDay = BASE >= iso(today) ? BASE : iso(today), picked = null;
+  var TPL = {};
   document.querySelectorAll('.slot').forEach(function (row) {
-    row.querySelectorAll('.slot__t span').forEach(function (s) {
-      var c = document.createElement('button');
-      c.type = 'button'; c.className = 'chip'; c.textContent = s.textContent; c.setAttribute('aria-pressed', 'false');
-      c.setAttribute('aria-label', row.getAttribute('data-svc') + ', ' + s.textContent);
-      s.replaceWith(c);
+    TPL[row.getAttribute('data-svc')] = [].map.call(row.querySelectorAll('.slot__t span'), function (s) { return s.textContent; });
+  });
+
+  function free(day, svc, t) {
+    if (day === BASE) return true;
+    var s = day + '|' + svc + '|' + t, x = 2166136261;
+    for (var i = 0; i < s.length; i++) { x ^= s.charCodeAt(i); x = Math.imul(x, 16777619) >>> 0; }
+    return x % 10 < 7;
+  }
+  function resetPick() {
+    picked = null;
+    document.querySelectorAll('.slot.is-picked').forEach(function (x) { x.classList.remove('is-picked'); });
+    pick.classList.remove('has');
+    pickTxt.textContent = '';
+    pickBtn.textContent = 'Записаться';
+  }
+  function renderSlots() {
+    var isToday = slotDay === iso(today), cut = nowMin() + 60;
+    document.querySelectorAll('.slot').forEach(function (row) {
+      var svc = row.getAttribute('data-svc'), box = row.querySelector('.slot__t');
+      var times = TPL[svc].filter(function (t) { return free(slotDay, svc, t) && (!isToday || minutes(t) >= cut); });
+      box.innerHTML = '';
+      times.forEach(function (t) {
+        var c = document.createElement('button');
+        c.type = 'button'; c.className = 'chip'; c.textContent = t; c.setAttribute('aria-pressed', 'false');
+        c.setAttribute('aria-label', svc + ', ' + human(slotDay) + ', ' + t);
+        box.appendChild(c);
+      });
+      row.hidden = !times.length;
     });
+    document.querySelectorAll('.slot-list').forEach(function (ul) {
+      ul.querySelector('.slot-empty').hidden = !!ul.querySelector('.slot:not([hidden])');
+    });
+    resetPick();
+  }
+  var slotDays = dayPicker(document.getElementById('slotDays'), function (v) { slotDay = v; renderSlots(); });
+  slotDays.set(slotDay);
+  renderSlots();
+  var ph = document.getElementById('slotsPh');
+  tabsInit([].slice.call(document.querySelectorAll('.tabs--slots .tab')), function (tab) {
+    resetPick();
+    var g = tab.id === 'st-hands' ? 'hands' : 'hair', src = ph.getAttribute('data-' + g);
+    if (ph.getAttribute('src') === src) return;
+    ph.classList.add('is-swap');
+    setTimeout(function () { ph.src = src; ph.alt = ph.getAttribute('data-' + g + '-alt'); ph.classList.remove('is-swap'); }, REDUCED ? 0 : 280);
   });
   slotsGrid.addEventListener('click', function (e) {
-    var c = e.target.closest('.chip'); if (!c) return;
+    var c = e.target.closest('.slot .chip'); if (!c) return;
     var row = c.closest('.slot');
     document.querySelectorAll('.slot .chip[aria-pressed="true"]').forEach(function (x) { x.setAttribute('aria-pressed', 'false'); });
     document.querySelectorAll('.slot.is-picked').forEach(function (x) { x.classList.remove('is-picked'); });
     c.setAttribute('aria-pressed', 'true'); row.classList.add('is-picked');
-    picked = { svc: row.getAttribute('data-svc'), time: c.textContent };
-    pickTxt.textContent = picked.svc + ' · ' + human(slotDay) + ' · ' + picked.time;
+    picked = { svc: row.getAttribute('data-svc'), time: c.textContent, day: slotDay };
+    pickTxt.textContent = picked.svc + ' · ' + human(picked.day) + ' · ' + picked.time;
     pickBtn.textContent = 'Записаться на ' + picked.time;
     pick.classList.add('has');
   });
   pickBtn.addEventListener('click', function () {
     if (!picked) return;
     setSvc(picked.svc);
-    if (fDays.querySelector('[data-day="' + slotDay + '"]')) setDay(slotDay);
+    setDay(picked.day);
     setTime(picked.time);
   });
 
@@ -839,14 +1061,15 @@ section[id]{scroll-margin-top:72px}
   });
 
 
-  var mq = document.getElementById('marquee'), track = mq.querySelector('.marquee__track');
-  if (!REDUCED) {
+  document.querySelectorAll('.marquee').forEach(function (mq) {
+    if (REDUCED) return;
+    var track = mq.querySelector('.marquee__track');
     [].slice.call(track.children).forEach(function (n) {
       var c = n.cloneNode(true); c.setAttribute('aria-hidden', 'true'); track.appendChild(c);
     });
     mq.addEventListener('touchstart', function () { mq.classList.add('is-held'); }, { passive: true });
     mq.addEventListener('touchend', function () { mq.classList.remove('is-held'); });
-  }
+  });
 })();
 </script>
 
