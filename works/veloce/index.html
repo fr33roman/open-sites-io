@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>VELOCE — прокат Porsche, G 63 и Urus в Батуми</title>
+<meta name="description" content="Прокат автомобилей VELOCE в Батуми: G 63, Porsche 911 GT3, Urus, M5, S 580, Range Rover. От 650 ₾ в сутки, подача в аэропорт за 30 минут.">
+<meta name="robots" content="noindex">
+<link rel="canonical" href="https://open-sites.io/works/veloce/">
+<meta name="theme-color" content="#0D0F12">
+<meta property="og:type" content="website">
+<meta property="og:title" content="VELOCE — прокат Porsche, G 63 и Urus в Батуми">
+<meta property="og:description" content="Шесть машин от 650 ₾ в сутки. Подача в аэропорт за 30 минут.">
+<meta property="og:image" content="https://open-sites.io/works/veloce/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"AutoRental","name":"VELOCE","telephone":"+995555000000","priceRange":"650–1600 GEL","address":{"@type":"PostalAddress","streetAddress":"пр. Царицы Тамар, 24","addressLocality":"Батуми","addressCountry":"GE"},"openingHours":"Mo-Su 09:00-21:00"}</script>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230D0F12'/%3E%3Cpath d='M7 9l9 16 9-16' fill='none' stroke='%239DE6FF' stroke-width='3' stroke-linejoin='round'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://images.unsplash.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;500;600;700;800&family=Nunito+Sans:opsz,wght@6..12,400;6..12,600;6..12,700&display=swap" rel="stylesheet">
+<link rel="preload" as="image" href="https://images.unsplash.com/photo-1648413653877-ade5eefd2f1b?auto=format&fit=crop&w=1200&q=74" media="(max-width: 999px)">
+<link rel="preload" as="image" href="https://images.unsplash.com/photo-1648413653877-ade5eefd2f1b?auto=format&fit=crop&w=2000&q=72" media="(min-width: 1000px)">
+<script type="importmap">{ "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js" } }</script>
+<style>
+@property --vc-a{syntax:'<angle>';inherits:false;initial-value:0deg}
+:root{
+  --bg:#0D0F12; --win:#14171C; --txt:#E9EEF2; --mute:#8E99A4; --ice:#9DE6FF; --line:rgba(214,228,240,.1);
+  --chrome:linear-gradient(180deg,#FFFFFF 0%,#E3E9EE 36%,#8E9AA6 52%,#F2F6F8 70%,#B4BFC9 100%);
+  --disp:"Exo 2",system-ui,sans-serif; --text:"Nunito Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --ease:cubic-bezier(.2,.7,.2,1); --r:18px;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--txt);font:400 16px/1.6 var(--text);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img{display:block;max-width:100%}
+a{color:inherit}
+button,input,select{font:inherit;color:inherit}
+h1,h2,h3{font-family:var(--disp);margin:0;line-height:1.04}
+h1,h2{font-weight:700;text-transform:uppercase;letter-spacing:.015em}
+h3{font-weight:600}
+.vc-metal,h1,h2{background:var(--chrome);-webkit-background-clip:text;background-clip:text;color:transparent}
+h1,h2{background-size:100% 1.04em}   
+.vc-shell{max-width:1240px;margin:0 auto;padding:0 16px}
+section[id]{scroll-margin-top:66px}
+:focus-visible{outline:2px solid var(--ice);outline-offset:3px;border-radius:6px}
+.vc-kick{display:flex;align-items:center;gap:12px;margin:0 0 14px;font:500 12px/1 var(--disp);letter-spacing:.32em;text-transform:uppercase;color:var(--ice)}
+.vc-kick::before{content:"";width:34px;height:1px;background:linear-gradient(90deg,transparent,var(--ice))}
+
+
+.vc-btn{position:relative;display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:52px;padding:0 26px;border-radius:12px;border:1px solid transparent;
+  font:600 13.5px/1.15 var(--disp);letter-spacing:.14em;text-transform:uppercase;text-decoration:none;text-align:center;cursor:pointer;transition:background .3s,color .3s,box-shadow .3s,border-color .3s}
+.vc-btn--ice{background:linear-gradient(180deg,#D4F5FF 0%,#9DE6FF 55%,#7FD6F7 100%);color:#061019;box-shadow:0 10px 30px -12px rgba(120,210,255,.8),inset 0 1px 0 rgba(255,255,255,.7)}
+.vc-btn--ice:hover{box-shadow:0 14px 40px -10px rgba(140,220,255,.95),inset 0 1px 0 rgba(255,255,255,.85)}
+.vc-btn--line{border-color:rgba(220,232,242,.3);background:rgba(255,255,255,.02)}
+.vc-btn--line:hover{border-color:#fff;background:#fff;color:#0d0f12}
+.vc-btn--line[aria-pressed="true"]{border-color:var(--ice);color:var(--ice);background:rgba(157,230,255,.08)}
+.vc-btn--sm{min-height:46px;padding:0 18px;font-size:12px}
+.vc-btn--pulse{animation:vcRing 2.6s var(--ease) infinite}
+@keyframes vcRing{0%{box-shadow:0 0 0 0 rgba(157,230,255,.55),0 10px 30px -12px rgba(120,210,255,.8)}70%,100%{box-shadow:0 0 0 16px rgba(157,230,255,0),0 10px 30px -12px rgba(120,210,255,.8)}}
+.vc-btn:disabled{opacity:.4;cursor:not-allowed;animation:none}
+.vc-btn svg{width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:2;stroke-linejoin:round}
+
+
+.vc-glass{position:relative;border-radius:var(--r);background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.012)),var(--win);box-shadow:0 30px 60px -40px rgba(0,0,0,.9);isolation:isolate}
+.vc-glass::before{content:"";position:absolute;inset:0;border-radius:inherit;padding:1px;pointer-events:none;z-index:4;
+  background:conic-gradient(from var(--vc-a),rgba(255,255,255,.1) 0deg,rgba(255,255,255,.1) 200deg,rgba(157,230,255,.9) 248deg,#fff 268deg,rgba(157,230,255,.85) 288deg,rgba(255,255,255,.1) 340deg);
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;
+  animation:vcSweep 7s linear infinite;animation-play-state:paused}
+.vc-glass.vc-on::before{animation-play-state:running}
+.vc-glass::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;z-index:3;opacity:0;transition:opacity .4s;
+  background:radial-gradient(340px circle at var(--x,50%) var(--y,0%),rgba(157,230,255,.13),transparent 60%)}
+.vc-glass:hover::after,.vc-glass.vc-touch::after{opacity:1}
+@keyframes vcSweep{to{--vc-a:360deg}}
+
+
+.vc-top{position:fixed;inset:0 0 auto;z-index:60;transition:background .35s,box-shadow .35s}
+.vc-top.vc-solid{background:rgba(13,15,18,.84);-webkit-backdrop-filter:blur(14px) saturate(1.2);backdrop-filter:blur(14px) saturate(1.2);box-shadow:0 1px 0 var(--line)}
+.vc-top__row{display:flex;align-items:center;gap:10px;height:64px}
+.vc-logo{position:relative;display:inline-flex;align-items:center;min-height:44px;margin-right:auto;padding-top:5px;text-decoration:none;font:700 18px/1 var(--disp);letter-spacing:.26em}
+.vc-logo::before{content:"";position:absolute;left:-3px;top:8px;width:54px;height:12px;border-top:1.5px solid var(--ice);border-radius:50% 50% 0 0/100% 100% 0 0;opacity:.85;filter:drop-shadow(0 0 6px rgba(157,230,255,.7))}
+.vc-nav{display:none}
+.vc-nav a{position:relative;text-decoration:none;font:500 12.5px/1 var(--disp);letter-spacing:.2em;text-transform:uppercase;color:#cfd8df;padding:14px 0}
+.vc-nav a::after{content:"";position:absolute;left:0;right:0;bottom:6px;height:1px;background:var(--ice);transform:scaleX(0);transition:transform .35s var(--ease)}
+.vc-nav a:hover::after{transform:none}
+.vc-top .vc-btn{min-height:44px;padding:0 13px;font-size:11px;letter-spacing:.1em}
+.vc-burger{flex:none;width:44px;height:44px;display:grid;place-items:center;border-radius:12px;border:1px solid rgba(220,232,242,.25);background:rgba(13,15,18,.45);color:#fff;cursor:pointer}
+.vc-burger svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round}
+.vc-menu{position:fixed;inset:64px 0 auto;padding:6px 16px 22px;background:rgba(13,15,18,.97);display:grid;border-bottom:1px solid var(--line);
+  opacity:0;visibility:hidden;transform:translateY(-8px);transition:opacity .3s,transform .3s,visibility 0s .3s}
+.vc-top.vc-open .vc-menu{opacity:1;visibility:visible;transform:none;transition:opacity .3s,transform .3s}
+.vc-menu a{min-height:54px;display:flex;align-items:center;text-decoration:none;font:600 19px/1 var(--disp);letter-spacing:.14em;text-transform:uppercase;border-bottom:1px solid var(--line)}
+
+
+.vc-hero{position:relative;background:var(--bg)}
+.vc-stage{position:relative;height:calc(64px + 64vw);overflow:hidden;background:#07080a;touch-action:pan-y}
+.vc-stage__img{position:absolute;inset:0;z-index:0;background:#07080a url("https://images.unsplash.com/photo-1648413653877-ade5eefd2f1b?auto=format&fit=crop&w=1200&q=74") 45% 60%/cover no-repeat}
+.vc-stage .fx__gl{position:absolute;inset:0;z-index:1;width:100%!important;height:100%!important;opacity:0;transition:opacity .9s}
+.vc-stage.is-live .fx__gl{opacity:1}
+.vc-stage__shade{position:absolute;inset:0;z-index:2;pointer-events:none;
+  background:linear-gradient(180deg,rgba(8,10,12,.75) 0%,rgba(8,10,12,0) 32%),linear-gradient(0deg,var(--bg) 0%,rgba(13,15,18,0) 30%)}
+.vc-stage .ss-room{top:auto;bottom:16px;left:16px;right:auto;z-index:3;padding:9px 14px;border-radius:10px;background:rgba(13,15,18,.55);
+  -webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.12);font:600 13px/1 var(--disp);letter-spacing:.14em;text-transform:uppercase;text-shadow:none}
+.vc-stage .ss-ui{top:auto;bottom:10px;right:16px;left:auto;z-index:3;font-family:var(--disp)}
+.vc-stage .ss-ui button{width:44px;height:44px;border-color:rgba(157,230,255,.35)}
+.vc-stage .ss-count{display:none}
+.vc-hero__in{position:relative;z-index:2;padding-top:18px;padding-bottom:40px}
+.vc-hero h1{font-size:clamp(34px,9.4vw,76px);max-width:11em;margin:0 0 14px;filter:drop-shadow(0 2px 14px rgba(0,0,0,.55))}
+.vc-hero__lead{font-size:17px;max-width:31em;margin:0 0 22px;color:#d5dde3}
+.vc-hero__acts{display:grid;gap:10px;margin-bottom:24px}
+.vc-facts{list-style:none;margin:0;padding:16px 0 0;display:grid;grid-template-columns:repeat(3,auto);justify-content:space-between;gap:8px 28px;border-top:1px solid var(--line)}
+.vc-facts li{display:grid;gap:5px;font-size:13px;color:var(--mute)}
+.vc-facts b{font:600 21px/1 var(--disp);color:#fff;letter-spacing:.02em}
+
+
+.vc-sec{padding:80px 0}
+.vc-head{margin-bottom:24px}
+.vc-head h2{font-size:clamp(32px,8.4vw,64px)}
+.vc-lead{margin:12px 0 0;max-width:34em;color:#c3ccd4}
+
+
+.vc-filter{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 20px}
+.vc-filter button{flex:none;min-height:44px;padding:0 18px;border-radius:999px;border:1px solid rgba(220,232,242,.2);background:transparent;cursor:pointer;
+  font:500 12.5px/1 var(--disp);letter-spacing:.14em;text-transform:uppercase;color:#cfd8df;transition:background .3s,color .3s,border-color .3s}
+.vc-filter button[aria-pressed="true"]{background:#fff;color:#0d0f12;border-color:#fff}
+.vc-cars{display:grid;gap:16px}
+.vc-car{display:flex;flex-direction:column}
+.vc-car.vc-hide{display:none}
+.vc-car__ph{position:relative;aspect-ratio:16/10;overflow:hidden;border-radius:var(--r) var(--r) 0 0;background:#0a0b0d}
+.vc-car__ph img{width:100%;height:100%;object-fit:cover;transition:transform 1.2s var(--ease)}
+.vc-car:hover .vc-car__ph img{transform:scale(1.05)}
+.vc-car__ph::after{content:"";position:absolute;inset:auto 0 0;height:38%;background:linear-gradient(0deg,rgba(20,23,28,.95),transparent);pointer-events:none}
+.vc-car__cls{position:absolute;left:14px;top:14px;z-index:1;padding:7px 12px;border-radius:999px;background:rgba(13,15,18,.62);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);
+  font:500 10.5px/1 var(--disp);letter-spacing:.2em;text-transform:uppercase}
+.vc-car__b{padding:4px 18px 20px;display:flex;flex-direction:column;gap:14px;flex:1}
+.vc-car h3{font-size:21px;text-transform:uppercase;letter-spacing:.05em}
+.vc-spec{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.vc-spec li{padding:12px 0;display:grid;gap:4px;font-size:12.5px;color:var(--mute)}
+.vc-spec li+li{padding-left:12px;border-left:1px solid var(--line)}
+.vc-spec b{font:600 19px/1 var(--disp);color:#fff}
+.vc-car__foot{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;margin-top:auto}
+.vc-price{margin:0;font-size:13px;color:var(--mute)}
+.vc-price b{display:block;margin-bottom:5px;font:700 26px/1 var(--disp);letter-spacing:.02em;background:var(--chrome);-webkit-background-clip:text;background-clip:text;color:transparent}
+.vc-car .vc-btn--ice{width:100%}
+
+
+.vc-duel{padding:18px}
+.vc-duel__cars{display:grid;grid-template-columns:1fr auto 1fr;align-items:end;gap:10px}
+.vc-side{display:grid;gap:10px;min-width:0}
+.vc-sel{position:relative;display:block}
+.vc-sel select{width:100%;min-height:46px;-webkit-appearance:none;appearance:none;border-radius:12px;border:1px solid rgba(220,232,242,.2);background:#0f1216;
+  padding:0 32px 0 12px;font:600 12px/1.2 var(--disp);letter-spacing:.06em;text-transform:uppercase;color:#fff;cursor:pointer;text-overflow:ellipsis}
+.vc-sel::after{content:"";position:absolute;right:13px;top:50%;width:7px;height:7px;border-right:1.5px solid var(--ice);border-bottom:1.5px solid var(--ice);transform:translateY(-70%) rotate(45deg);pointer-events:none}
+.vc-side__ph{aspect-ratio:16/10;border-radius:12px;overflow:hidden;background:#0a0b0d}
+.vc-side__ph img{width:100%;height:100%;object-fit:cover;transition:opacity .3s}
+.vc-side__ph img.vc-fade{opacity:0}
+.vc-vs{align-self:center;margin-top:56px;width:40px;height:40px;border-radius:50%;display:grid;place-items:center;border:1px solid rgba(157,230,255,.5);
+  font:800 13px/1 var(--disp);letter-spacing:.08em;color:var(--ice);box-shadow:0 0 24px rgba(157,230,255,.25)}
+.vc-rows{margin:20px 0 0;display:grid;gap:14px}
+.vc-r{display:grid;gap:8px}
+.vc-r__k{text-align:center;font:500 11px/1.2 var(--disp);letter-spacing:.2em;text-transform:uppercase;color:var(--mute)}
+.vc-r__bars{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.vc-bar{display:flex;align-items:center;gap:10px;min-width:0}
+.vc-bar--a{justify-content:flex-end}
+.vc-bar b{flex:none;min-width:46px;font:600 16px/1 var(--disp);color:#dfe6ec;transition:color .3s}
+.vc-bar--a b{text-align:right}
+.vc-bar i{flex:none;height:8px;border-radius:4px;width:0;background:#343c45;transition:width .9s var(--ease),background .3s,box-shadow .3s}
+.vc-rows.vc-go .vc-bar i{width:calc(var(--w,0) * (100% - 58px))}
+.vc-bar--a.vc-win i{background:linear-gradient(270deg,#7FD6F7,#D4F5FF);box-shadow:0 0 14px rgba(157,230,255,.45)}
+.vc-bar--b.vc-win i{background:linear-gradient(90deg,#7FD6F7,#D4F5FF);box-shadow:0 0 14px rgba(157,230,255,.45)}
+.vc-win b{color:var(--ice)}
+.vc-duel__go{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:22px}
+.vc-duel__go .vc-btn{padding:8px 10px;font-size:11px;letter-spacing:.08em}
+
+
+.vc-occ{display:grid;gap:16px}
+.vc-garage{position:relative;border-radius:var(--r);overflow:hidden;background:#07080a}
+.vc-garage__stage{position:relative;height:320px;overflow:hidden;background:#050506}
+.vc-garage__img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:72% 60%;filter:brightness(.6)}
+.vc-garage .sp{z-index:1}
+.vc-garage .sp__img{background-position:72% 60%}
+.vc-garage .sp__dark{filter:grayscale(1) brightness(.3) contrast(1.1)}
+.vc-garage .sp__secret b{text-transform:uppercase;letter-spacing:.06em;font-weight:700}
+.vc-garage__txt{position:relative;z-index:7;padding:18px 18px 22px}
+.vc-garage__txt h3{font-size:23px;text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px}
+.vc-garage__txt p{margin:0 0 16px;color:#cfd8df;max-width:30em}
+.vc-gift{padding:18px;display:grid;gap:18px}
+.vc-gift__stage{position:relative;height:240px;border-radius:14px;overflow:hidden}
+.vc-gift h3{font-size:23px;text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px}
+.vc-gift p{margin:0 0 16px;color:#cfd8df}
+.holo{position:absolute;inset:0;display:grid;place-items:center;perspective:1000px;background:radial-gradient(60% 60% at 50% 45%,#1d232b 0%,#0b0d10 75%)}
+.holo__card{position:relative;width:min(360px,84%);aspect-ratio:1.586;border-radius:18px;transform-style:preserve-3d;will-change:transform;
+  box-shadow:0 40px 80px rgba(0,0,0,.6),0 0 0 1px rgba(255,255,255,.1)}
+.holo__card>div{position:absolute;inset:0;border-radius:18px;overflow:hidden}
+.holo__base{background:radial-gradient(120% 90% at 0% 0%,#2a3139 0%,#12151a 60%),repeating-linear-gradient(135deg,rgba(255,255,255,.035) 0 2px,transparent 2px 9px)}
+.holo__foil{mix-blend-mode:color-dodge;opacity:.5;
+  background:repeating-linear-gradient(115deg,#9de6ff 0%,#e8f6ff 7%,#b9a8ff 14%,#8fe3ff 21%,#ffffff 28%,#9de6ff 35%);background-size:220% 220%;background-position:var(--pos,50%) var(--pos,50%);
+  -webkit-mask-image:radial-gradient(90% 90% at var(--mx,50%) var(--my,50%),#000 0%,rgba(0,0,0,.35) 55%,transparent 80%);
+          mask-image:radial-gradient(90% 90% at var(--mx,50%) var(--my,50%),#000 0%,rgba(0,0,0,.35) 55%,transparent 80%)}
+.holo__glare{mix-blend-mode:overlay;background:radial-gradient(60% 60% at var(--mx,50%) var(--my,50%),rgba(255,255,255,.7) 0%,rgba(255,255,255,0) 60%)}
+.holo__content{padding:18px 20px;display:grid;grid-template-rows:auto auto 1fr auto;transform:translateZ(36px);color:#eef4f8}
+.holo__top{display:flex;align-items:center;gap:10px;font:700 11.5px/1 var(--disp);letter-spacing:.3em}
+.holo__mark{width:24px;height:24px;border-radius:50%;background:conic-gradient(from 90deg,#e6edf2,#7d8a96,#ffffff,#7d8a96,#e6edf2);box-shadow:inset 0 0 0 5px rgba(18,21,26,.85)}
+.holo__kind{margin-top:14px;font:500 10px/1 var(--disp);letter-spacing:.24em;text-transform:uppercase;color:var(--ice)}
+.holo__value{align-self:center;font:700 clamp(30px,8vw,44px)/1 var(--disp);letter-spacing:.03em;background:var(--chrome);-webkit-background-clip:text;background-clip:text;color:transparent}
+.holo__bottom{display:flex;justify-content:space-between;gap:10px;font:500 10.5px/1 var(--disp);letter-spacing:.12em;text-transform:uppercase;color:#b9c4cd}
+
+
+.vc-terms{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.vc-terms li{padding:18px 16px}
+.vc-terms__v{display:block;margin-bottom:10px;font:700 clamp(23px,5.6vw,34px)/1 var(--disp);letter-spacing:.01em;background:var(--chrome);-webkit-background-clip:text;background-clip:text;color:transparent}
+.vc-terms p{margin:0;font-size:14.5px;line-height:1.45;color:#c3ccd4}
+.vc-after{margin-top:26px}
+
+
+.vc-revs{display:grid;gap:12px}
+.vc-rev{margin:0;padding:22px}
+.vc-rev__stars{margin:0;color:var(--ice);letter-spacing:.24em;font-size:12px}
+.vc-rev blockquote{margin:12px 0 16px;font:500 19px/1.35 var(--disp)}
+.vc-rev cite{font-style:normal;font-size:14px;color:var(--mute)}
+.vc-rev cite b{color:#fff}
+
+
+.vc-book{display:grid;gap:16px}
+.vc-form{padding:20px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px 12px}
+.vc-f{display:grid;gap:8px;margin:0;padding:0;border:0;min-width:0;grid-column:1/-1}
+.vc-f--half{grid-column:auto}
+.vc-f>span,.vc-f legend{padding:0;font:500 11px/1 var(--disp);letter-spacing:.22em;text-transform:uppercase;color:var(--mute)}
+.vc-f legend{margin-bottom:8px}
+.vc-form input:not([type=checkbox]),.vc-form select{width:100%;min-height:50px;border-radius:12px;border:1px solid rgba(220,232,242,.18);background:#0f1216;padding:0 14px;font:500 16px var(--text);color:#fff}
+.vc-form select{-webkit-appearance:none;appearance:none;padding-right:36px;background-image:linear-gradient(45deg,transparent 50%,var(--ice) 50%),linear-gradient(135deg,var(--ice) 50%,transparent 50%);
+  background-position:calc(100% - 20px) 50%,calc(100% - 15px) 50%;background-size:5px 5px;background-repeat:no-repeat}
+.vc-form input[type=date]{min-width:0;padding:0 10px}
+.vc-form input:focus,.vc-form select:focus{outline:0;border-color:var(--ice);box-shadow:0 0 0 3px rgba(157,230,255,.22)}
+.vc-form [aria-invalid="true"]{border-color:#ff7a7a}
+.vc-chips{display:flex;flex-wrap:wrap;gap:8px}
+.vc-chips button{min-height:44px;padding:0 16px;border-radius:999px;border:1px solid rgba(220,232,242,.2);background:transparent;cursor:pointer;
+  font:500 12.5px/1 var(--disp);letter-spacing:.1em;text-transform:uppercase;color:#cfd8df}
+.vc-chips button[aria-pressed="true"]{border-color:var(--ice);background:var(--ice);color:#061019}
+.vc-total{grid-column:1/-1;padding:14px 16px;border-radius:12px;background:rgba(157,230,255,.07);border:1px solid rgba(157,230,255,.2);font-size:14.5px;color:#cfe9f5}
+.vc-total b{display:block;margin-bottom:6px;font:700 24px/1 var(--disp);color:#fff}
+.vc-agree{grid-column:1/-1;display:flex;align-items:center;gap:12px;min-height:44px;font-size:14.5px;cursor:pointer}
+.vc-agree input{width:22px;height:22px;flex:none;margin:0;accent-color:var(--ice)}
+.vc-form .vc-btn{grid-column:1/-1}
+.vc-done{padding:34px 22px;text-align:center}
+.vc-done h3{font-size:34px;text-transform:uppercase;letter-spacing:.04em;margin-bottom:10px}
+.vc-done p{margin:0 0 20px;color:#cfd8df}
+.vc-info{display:block;margin:0;padding:6px 18px;font-style:normal}
+.vc-info p{display:flex;justify-content:space-between;align-items:baseline;gap:16px;margin:0;padding:15px 0;border-top:1px solid var(--line)}
+.vc-info p:first-child{border-top:0}
+.vc-info i{flex:none;font:500 11px/1.6 var(--disp);font-style:normal;letter-spacing:.22em;text-transform:uppercase;color:var(--mute)}
+.vc-info span,.vc-info a{text-align:right;font-weight:600;text-decoration:none}
+.vc-info a{display:inline-flex;align-items:center;min-height:44px;margin:-10px 0}
+.vc-map{position:relative;margin-top:12px;border-radius:var(--r);overflow:hidden;aspect-ratio:4/3;border:1px solid var(--line)}
+.vc-map iframe{width:100%;height:100%;border:0;display:block;filter:invert(.92) hue-rotate(180deg) saturate(.45) brightness(.92)}
+.vc-map__go{position:absolute;left:0;right:0;bottom:44px;display:flex;justify-content:center;pointer-events:none}
+.vc-map__go .vc-btn{pointer-events:auto;min-height:48px}
+
+.vc-foot{padding:40px 0 48px;border-top:1px solid var(--line)}
+.vc-foot__row{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px 20px}
+.vc-foot nav{display:flex;flex-wrap:wrap;gap:0 18px}
+.vc-foot nav a{display:inline-flex;align-items:center;min-height:44px;text-decoration:none;font:500 12px/1 var(--disp);letter-spacing:.2em;text-transform:uppercase;color:#cfd8df}
+.vc-foot nav a:hover{color:var(--ice)}
+.vc-foot small{display:block;margin-top:12px;color:var(--mute);font-size:13px}
+
+.vc-js .vc-up{opacity:0;transform:translateY(24px);transition:opacity .9s var(--ease) var(--d,0s),transform .9s var(--ease) var(--d,0s)}
+.vc-js .vc-up.vc-in{opacity:1;transform:none}
+
+@media (min-width:640px){
+  .vc-hero__acts{display:flex;flex-wrap:wrap}
+  .vc-cars,.vc-revs{grid-template-columns:1fr 1fr}
+  .vc-terms{grid-template-columns:repeat(3,1fr)}
+  .vc-f--np{grid-column:auto}
+  .vc-stage{height:calc(64px + 52vw)}
+}
+@media (min-width:760px){
+  .vc-shell{padding:0 32px}
+  .vc-sec{padding:116px 0}
+  .vc-filter{margin:0 0 26px}
+  .vc-duel{padding:28px}
+  .vc-duel__go .vc-btn{font-size:12px;letter-spacing:.12em}
+  .vc-form{padding:28px}
+  .vc-garage{height:520px}
+  .vc-garage__stage{position:absolute;inset:0;height:auto}
+  .vc-garage__txt{position:absolute;left:0;right:0;bottom:0;padding:90px 30px 28px;background:linear-gradient(0deg,rgba(5,5,6,.94) 20%,rgba(5,5,6,0))}
+  .vc-gift{padding:24px}
+  .vc-gift__stage{height:270px}
+  .vc-terms li{padding:24px 22px}
+  .vc-stage .ss-room{left:32px;bottom:22px;font-size:14px}
+  .vc-stage .ss-ui{right:32px;bottom:16px}
+}
+@media (min-width:1000px){
+  .vc-top__row{height:78px}
+  .vc-logo{font-size:20px;letter-spacing:.34em}
+  .vc-logo::before{width:64px}
+  .vc-nav{display:flex;gap:30px;margin-right:22px}
+  .vc-burger,.vc-menu{display:none}
+  .vc-top .vc-btn{min-height:46px;padding:0 20px;font-size:12px;letter-spacing:.14em}
+  .vc-hero{min-height:100svh;min-height:max(100svh,640px);display:flex;align-items:flex-end;overflow:hidden}
+  .vc-stage{position:absolute;inset:0;height:auto}
+  .vc-stage__img{background-image:url("https://images.unsplash.com/photo-1648413653877-ade5eefd2f1b?auto=format&fit=crop&w=2000&q=72")}
+  .vc-stage__shade{background:linear-gradient(90deg,rgba(8,10,12,.94) 0%,rgba(8,10,12,.72) 34%,rgba(8,10,12,.2) 60%,rgba(8,10,12,0) 74%),
+    linear-gradient(0deg,rgba(8,10,12,.94) 0%,rgba(8,10,12,0) 46%),linear-gradient(180deg,rgba(8,10,12,.6) 0%,rgba(8,10,12,0) 22%)}
+  .vc-stage .ss-room{top:108px;bottom:auto;right:32px;left:auto;padding:12px 18px;font-size:17px}
+  .vc-stage .ss-ui{bottom:52px;right:32px}
+  .vc-stage .ss-count{display:inline;font:600 14px/1 var(--disp);letter-spacing:.1em}
+  .vc-hero__in{width:100%;padding-top:140px;padding-bottom:52px;pointer-events:none}
+  .vc-hero__in>*{pointer-events:auto}
+  .vc-facts{max-width:560px;justify-content:start;gap:8px 44px}
+  .vc-cars{grid-template-columns:repeat(3,1fr)}
+  .vc-duel__cars{gap:26px}
+  .vc-rows{max-width:860px;margin-left:auto;margin-right:auto}
+  .vc-duel__go{max-width:860px;margin-left:auto;margin-right:auto}
+  .vc-occ{grid-template-columns:1.45fr 1fr;align-items:stretch}
+  .vc-gift{align-content:space-between}
+  .vc-book{grid-template-columns:1.15fr 1fr;align-items:start}
+  section[id]{scroll-margin-top:80px}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .vc-btn--pulse,.vc-glass::before{animation:none}
+  .vc-js .vc-up{opacity:1;transform:none;transition:none}
+  .vc-bar i{transition:none}
+}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="vc-i-route" viewBox="0 0 24 24"><path d="M5 19l14-7L5 5l3 7z"/></symbol>
+</svg>
+
+<header class="vc-top" id="vcTop">
+  <div class="vc-shell vc-top__row">
+    <a class="vc-logo" href="#top" aria-label="VELOCE — наверх"><span class="vc-metal">VELOCE</span></a>
+    <nav class="vc-nav" aria-label="Разделы"><a href="#fleet">Автопарк</a><a href="#compare">Сравнить</a><a href="#terms">Условия</a><a href="#book">Контакты</a></nav>
+    <a class="vc-btn vc-btn--ice vc-btn--pulse" href="#book">Забронировать</a>
+    <button class="vc-burger" type="button" id="vcBurger" aria-label="Меню" aria-expanded="false" aria-controls="vcMenu"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8h16M8 16h12"/></svg></button>
+  </div>
+  <div class="vc-menu" id="vcMenu"><a href="#fleet">Автопарк</a><a href="#compare">Сравнить</a><a href="#terms">Условия</a><a href="#book">Контакты</a></div>
+</header>
+
+<main>
+<section class="vc-hero" id="top">
+  <div class="vc-stage" id="vcStage">
+    <div class="vc-stage__img" role="img" aria-label="Чёрный Mercedes-AMG G&nbsp;63 на фоне заснеженной горы"></div>
+    <div class="vc-stage__shade"></div>
+  </div>
+  <div class="vc-shell vc-hero__in">
+    <p class="vc-kick vc-up">Прокат · Батуми</p>
+    <h1 class="vc-up" style="--d:.06s">Прокат Porsche, G&nbsp;63 и Urus в Батуми</h1>
+    <p class="vc-hero__lead vc-up" style="--d:.12s">Шесть машин от 650 ₾ в сутки. Подача в аэропорт за 30 минут, залог блокируем на карте.</p>
+    <div class="vc-hero__acts vc-up" style="--d:.18s">
+      <a class="vc-btn vc-btn--ice vc-btn--pulse" href="#fleet">Выбрать машину</a>
+      <a class="vc-btn vc-btn--line" href="#terms">Условия аренды</a>
+    </div>
+    <ul class="vc-facts vc-up" style="--d:.24s"><li><b>6</b>машин</li><li><b>от 650 ₾</b>в сутки</li><li><b>30 мин</b>подача</li></ul>
+  </div>
+</section>
+
+<section class="vc-sec" id="fleet">
+  <div class="vc-shell">
+    <div class="vc-head vc-up"><p class="vc-kick">6 машин</p><h2>Автопарк</h2></div>
+    <div class="vc-filter vc-up" role="group" aria-label="Класс машины">
+      <button type="button" aria-pressed="true" data-f="all">Все</button><button type="button" aria-pressed="false" data-f="suv">Внедорожники</button><button type="button" aria-pressed="false" data-f="sedan">Седаны</button><button type="button" aria-pressed="false" data-f="sport">Спорткар</button>
+    </div>
+    <div class="vc-cars">
+      <article class="vc-car vc-glass vc-up" data-cls="suv">
+        <div class="vc-car__ph"><img src="https://images.unsplash.com/photo-1648413653877-ade5eefd2f1b?auto=format&fit=crop&w=900&h=560&q=72" alt="Mercedes-AMG G&nbsp;63 у горы" width="900" height="560" loading="lazy"><span class="vc-car__cls">Внедорожник</span></div>
+        <div class="vc-car__b">
+          <h3>Mercedes-AMG G&nbsp;63</h3>
+          <ul class="vc-spec"><li><b>585</b>л.с.</li><li><b>4,5 с</b>до сотни</li><li><b>5</b>мест</li></ul>
+          <div class="vc-car__foot"><p class="vc-price"><b>1 100 ₾</b>в сутки</p><button class="vc-btn vc-btn--line vc-btn--sm" type="button" data-cmp="g63" aria-pressed="false">Сравнить</button></div>
+          <a class="vc-btn vc-btn--ice vc-btn--sm" href="#book" data-book="g63">Забронировать</a>
+        </div>
+      </article>
+      <article class="vc-car vc-glass vc-up" data-cls="sport" style="--d:.06s">
+        <div class="vc-car__ph"><img src="https://images.unsplash.com/photo-1614162692292-7ac56d7f7f1e?auto=format&fit=crop&w=900&h=560&q=72" alt="Белый Porsche 911 GT3 на снежной дороге" width="900" height="560" loading="lazy"><span class="vc-car__cls">Спорткар</span></div>
+        <div class="vc-car__b">
+          <h3>Porsche 911 GT3</h3>
+          <ul class="vc-spec"><li><b>510</b>л.с.</li><li><b>3,4 с</b>до сотни</li><li><b>2</b>места</li></ul>
+          <div class="vc-car__foot"><p class="vc-price"><b>1 400 ₾</b>в сутки</p><button class="vc-btn vc-btn--line vc-btn--sm" type="button" data-cmp="gt3" aria-pressed="false">Сравнить</button></div>
+          <a class="vc-btn vc-btn--ice vc-btn--sm" href="#book" data-book="gt3">Забронировать</a>
+        </div>
+      </article>
+      <article class="vc-car vc-glass vc-up" data-cls="suv" style="--d:.12s">
+        <div class="vc-car__ph"><img src="https://images.unsplash.com/photo-1575650681837-c0ca3b1e7275?auto=format&fit=crop&w=900&h=560&q=72" alt="Чёрный Lamborghini Urus среди пальм" width="900" height="560" loading="lazy"><span class="vc-car__cls">Внедорожник</span></div>
+        <div class="vc-car__b">
+          <h3>Lamborghini Urus</h3>
+          <ul class="vc-spec"><li><b>650</b>л.с.</li><li><b>3,6 с</b>до сотни</li><li><b>5</b>мест</li></ul>
+          <div class="vc-car__foot"><p class="vc-price"><b>1 600 ₾</b>в сутки</p><button class="vc-btn vc-btn--line vc-btn--sm" type="button" data-cmp="urus" aria-pressed="false">Сравнить</button></div>
+          <a class="vc-btn vc-btn--ice vc-btn--sm" href="#book" data-book="urus">Забронировать</a>
+        </div>
+      </article>
+      <article class="vc-car vc-glass vc-up" data-cls="sedan">
+        <div class="vc-car__ph"><img src="https://images.unsplash.com/photo-1555215695-3004980ad54e?auto=format&fit=crop&w=900&h=560&q=72" alt="Белый BMW M5 Competition на дороге с пальмами" width="900" height="560" loading="lazy"><span class="vc-car__cls">Седан</span></div>
+        <div class="vc-car__b">
+          <h3>BMW M5 Competition</h3>
+          <ul class="vc-spec"><li><b>625</b>л.с.</li><li><b>3,3 с</b>до сотни</li><li><b>5</b>мест</li></ul>
+          <div class="vc-car__foot"><p class="vc-price"><b>850 ₾</b>в сутки</p><button class="vc-btn vc-btn--line vc-btn--sm" type="button" data-cmp="m5" aria-pressed="false">Сравнить</button></div>
+          <a class="vc-btn vc-btn--ice vc-btn--sm" href="#book" data-book="m5">Забронировать</a>
+        </div>
+      </article>
+      <article class="vc-car vc-glass vc-up" data-cls="sedan" style="--d:.06s">
+        <div class="vc-car__ph"><img src="https://images.unsplash.com/photo-1680446983373-853872fb667a?auto=format&fit=crop&w=900&h=560&q=72" alt="Mercedes-Benz S&nbsp;580 в шоуруме" width="900" height="560" loading="lazy"><span class="vc-car__cls">Седан</span></div>
+        <div class="vc-car__b">
+          <h3>Mercedes-Benz S&nbsp;580</h3>
+          <ul class="vc-spec"><li><b>503</b>л.с.</li><li><b>4,4 с</b>до сотни</li><li><b>5</b>мест</li></ul>
+          <div class="vc-car__foot"><p class="vc-price"><b>900 ₾</b>в сутки</p><button class="vc-btn vc-btn--line vc-btn--sm" type="button" data-cmp="s580" aria-pressed="false">Сравнить</button></div>
+          <a class="vc-btn vc-btn--ice vc-btn--sm" href="#book" data-book="s580">Забронировать</a>
+        </div>
+      </article>
+      <article class="vc-car vc-glass vc-up" data-cls="suv" style="--d:.12s">
+        <div class="vc-car__ph"><img src="https://images.unsplash.com/photo-1563458563737-e60b1f1b345f?auto=format&fit=crop&crop=focalpoint&fp-x=.5&fp-y=.6&fp-z=1.9&w=900&h=560&q=72" alt="Range Rover едет по пляжу на фоне гор" width="900" height="560" loading="lazy"><span class="vc-car__cls">Внедорожник</span></div>
+        <div class="vc-car__b">
+          <h3>Range Rover</h3>
+          <ul class="vc-spec"><li><b>400</b>л.с.</li><li><b>5,9 с</b>до сотни</li><li><b>5</b>мест</li></ul>
+          <div class="vc-car__foot"><p class="vc-price"><b>650 ₾</b>в сутки</p><button class="vc-btn vc-btn--line vc-btn--sm" type="button" data-cmp="rr" aria-pressed="false">Сравнить</button></div>
+          <a class="vc-btn vc-btn--ice vc-btn--sm" href="#book" data-book="rr">Забронировать</a>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="vc-sec" id="compare">
+  <div class="vc-shell">
+    <div class="vc-head vc-up"><h2>Сравнить две машины</h2></div>
+    <div class="vc-duel vc-glass vc-up" id="vcDuel">
+      <div class="vc-duel__cars">
+        <div class="vc-side">
+          <label class="vc-sel"><span style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">Первая машина</span><select id="vcA"></select></label>
+          <div class="vc-side__ph"><img id="vcAImg" src="https://images.unsplash.com/photo-1648413653877-ade5eefd2f1b?auto=format&fit=crop&w=640&h=400&q=70" alt="Mercedes-AMG G&nbsp;63" width="640" height="400" loading="lazy"></div>
+        </div>
+        <span class="vc-vs" aria-hidden="true">VS</span>
+        <div class="vc-side">
+          <label class="vc-sel"><span style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">Вторая машина</span><select id="vcB"></select></label>
+          <div class="vc-side__ph"><img id="vcBImg" src="https://images.unsplash.com/photo-1575650681837-c0ca3b1e7275?auto=format&fit=crop&w=640&h=400&q=70" alt="Lamborghini Urus" width="640" height="400" loading="lazy"></div>
+        </div>
+      </div>
+      <div class="vc-rows" id="vcRows">
+        <div class="vc-r"><span class="vc-r__k">Мощность, л.с.</span><div class="vc-r__bars"><div class="vc-bar vc-bar--a"><b>585</b><i style="--w:.9"></i></div><div class="vc-bar vc-bar--b vc-win"><i style="--w:1"></i><b>650</b></div></div></div>
+        <div class="vc-r"><span class="vc-r__k">Разгон до сотни, с</span><div class="vc-r__bars"><div class="vc-bar vc-bar--a"><b>4,5</b><i style="--w:.733"></i></div><div class="vc-bar vc-bar--b vc-win"><i style="--w:.917"></i><b>3,6</b></div></div></div>
+        <div class="vc-r"><span class="vc-r__k">Мест</span><div class="vc-r__bars"><div class="vc-bar vc-bar--a"><b>5</b><i style="--w:1"></i></div><div class="vc-bar vc-bar--b"><i style="--w:1"></i><b>5</b></div></div></div>
+        <div class="vc-r"><span class="vc-r__k">Сутки, ₾</span><div class="vc-r__bars"><div class="vc-bar vc-bar--a vc-win"><b>1 100</b><i style="--w:.591"></i></div><div class="vc-bar vc-bar--b"><i style="--w:.406"></i><b>1 600</b></div></div></div>
+        <div class="vc-r"><span class="vc-r__k">Залог, ₾</span><div class="vc-r__bars"><div class="vc-bar vc-bar--a vc-win"><b>4 000</b><i style="--w:.5"></i></div><div class="vc-bar vc-bar--b"><i style="--w:.333"></i><b>6 000</b></div></div></div>
+      </div>
+      <div class="vc-duel__go"><a class="vc-btn vc-btn--ice vc-btn--pulse" href="#book" data-side="a">Забронировать эту</a><a class="vc-btn vc-btn--ice vc-btn--pulse" href="#book" data-side="b">Забронировать эту</a></div>
+    </div>
+  </div>
+</section>
+
+<section class="vc-sec" id="occasion">
+  <div class="vc-shell">
+    <div class="vc-head vc-up"><h2>Для особого случая</h2></div>
+    <div class="vc-occ">
+      <div class="vc-garage vc-up">
+        <div class="vc-garage__stage" id="vcGarage"><img class="vc-garage__img" src="https://images.unsplash.com/photo-1671572123703-9ba651605729?auto=format&fit=crop&w=1400&q=72" alt="Решётка радиатора Rolls-Royce в сумерках" width="1400" height="933" loading="lazy"></div>
+        <div class="vc-garage__txt">
+          <h3>Rolls-Royce Ghost с водителем</h3>
+          <p>Свадьба, встреча в аэропорту, вечер в городе. 450 ₾ в час, от трёх часов.</p>
+          <a class="vc-btn vc-btn--ice vc-btn--sm" href="#book" data-book="ghost">Заказать Ghost</a>
+        </div>
+      </div>
+      <div class="vc-gift vc-glass vc-up" style="--d:.08s">
+        <div class="vc-gift__stage" id="vcGift">
+          <div class="holo">
+            <div class="holo__card">
+              <div class="holo__base"></div>
+              <div class="holo__foil"></div>
+              <div class="holo__content">
+                <div class="holo__top"><span class="holo__mark"></span><span>VELOCE</span></div>
+                <div class="holo__kind">Подарочный сертификат</div>
+                <div class="holo__value">24 часа</div>
+                <div class="holo__bottom"><span>Porsche 911 GT3</span><span>№ 0911</span></div>
+              </div>
+              <div class="holo__glare"></div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <h3>Сертификат на сутки</h3>
+          <p>Porsche 911 GT3 на 24 часа, конверт с ключом.</p>
+          <a class="vc-btn vc-btn--line vc-btn--sm" href="#book" data-book="gift">Заказать сертификат</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="vc-sec" id="terms">
+  <div class="vc-shell">
+    <div class="vc-head vc-up"><h2>Условия аренды</h2></div>
+    <ul class="vc-terms">
+      <li class="vc-glass vc-up"><span class="vc-terms__v">25 лет</span><p>Возраст водителя, стаж от трёх лет</p></li>
+      <li class="vc-glass vc-up" style="--d:.05s"><span class="vc-terms__v">от 2 000 ₾</span><p>Залог блокируем на карте, снимаем блок в день возврата</p></li>
+      <li class="vc-glass vc-up" style="--d:.1s"><span class="vc-terms__v">КАСКО</span><p>Включено в цену, франшиза 500 ₾</p></li>
+      <li class="vc-glass vc-up"><span class="vc-terms__v">300 км</span><p>В сутки, дальше 2 ₾ за километр</p></li>
+      <li class="vc-glass vc-up" style="--d:.05s"><span class="vc-terms__v">0 ₾</span><p>Подача по Батуми и в аэропорт</p></li>
+      <li class="vc-glass vc-up" style="--d:.1s"><span class="vc-terms__v">Полный бак</span><p>Отдаём и принимаем с полным</p></li>
+    </ul>
+    <div class="vc-after vc-up"><a class="vc-btn vc-btn--ice vc-btn--pulse" href="#book">Забронировать</a></div>
+  </div>
+</section>
+
+<section class="vc-sec" id="reviews">
+  <div class="vc-shell">
+    <div class="vc-head vc-up"><h2>Отзывы</h2></div>
+    <div class="vc-revs">
+      <figure class="vc-rev vc-glass vc-up"><p class="vc-rev__stars" aria-label="5 из 5">★★★★★</p><blockquote>Прилетел в 23:40, машина ждала у выхода.</blockquote><cite><b>Арчил</b> · G&nbsp;63</cite></figure>
+      <figure class="vc-rev vc-glass vc-up" style="--d:.06s"><p class="vc-rev__stars" aria-label="5 из 5">★★★★★</p><blockquote>Блок залога сняли через час после возврата.</blockquote><cite><b>Марина</b> · S&nbsp;580</cite></figure>
+      <figure class="vc-rev vc-glass vc-up"><p class="vc-rev__stars" aria-label="5 из 5">★★★★★</p><blockquote>Три дня по серпантину до Гоми, машина как с завода.</blockquote><cite><b>Олег</b> · 911 GT3</cite></figure>
+      <figure class="vc-rev vc-glass vc-up" style="--d:.06s"><p class="vc-rev__stars" aria-label="5 из 5">★★★★★</p><blockquote>Водитель в костюме, приехал за 20 минут до выхода невесты.</blockquote><cite><b>Нана</b> · Ghost</cite></figure>
+    </div>
+  </div>
+</section>
+
+<section class="vc-sec" id="book">
+  <div class="vc-shell">
+    <div class="vc-head vc-up"><h2>Бронирование</h2><p class="vc-lead">Подтвердим за 10 минут, договор пришлём до подачи.</p></div>
+    <div class="vc-book">
+      <div class="vc-glass vc-up">
+        <form class="vc-form" id="vcForm" novalidate>
+          <label class="vc-f"><span>Машина</span><select id="vcCar"></select></label>
+          <label class="vc-f vc-f--half"><span>Получение</span><input type="date" id="vcFrom"></label>
+          <label class="vc-f vc-f--half"><span>Возврат</span><input type="date" id="vcTo"></label>
+          <fieldset class="vc-f"><legend>Где забрать</legend><div class="vc-chips" id="vcWhere"><button type="button" aria-pressed="true">Аэропорт</button><button type="button" aria-pressed="false">Отель</button><button type="button" aria-pressed="false">Офис</button></div></fieldset>
+          <label class="vc-f vc-f--np"><span>Имя</span><input id="vcName" autocomplete="name"></label>
+          <label class="vc-f vc-f--np"><span>Телефон</span><input id="vcPhone" type="tel" inputmode="tel" autocomplete="tel" placeholder="+995"></label>
+          <div class="vc-total" id="vcTotal" aria-live="polite"><b>3 300 ₾</b>3 суток × 1 100 ₾ · залог 4 000 ₾ блокируем на карте</div>
+          <label class="vc-agree"><input type="checkbox" id="vcAgree"><span>Соглашаюсь на обработку данных для брони</span></label>
+          <button class="vc-btn vc-btn--ice vc-btn--pulse" type="submit" id="vcSubmit" disabled>Забронировать</button>
+        </form>
+        <div class="vc-done" id="vcDone" hidden tabindex="-1"><h3>Бронь принята</h3><p>Перезвоним за 10 минут и пришлём договор.</p><button class="vc-btn vc-btn--line" type="button" id="vcAgain">Ещё одна бронь</button></div>
+      </div>
+      <div class="vc-up" style="--d:.08s">
+        <address class="vc-info vc-glass">
+          <p><i>Адрес</i><span>пр. Царицы Тамар, 24, Батуми</span></p>
+          <p><i>Офис</i><span>9:00–21:00, подача круглосуточно</span></p>
+          <p><i>Телефон</i><a href="tel:+995555000000">+995 555 00 00 00</a></p>
+        </address>
+        <div class="vc-map"><iframe src="https://www.google.com/maps?q=Queen+Tamar+Ave+24,+Batumi&amp;z=15&amp;output=embed" title="VELOCE на карте" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+          <div class="vc-map__go"><a class="vc-btn vc-btn--ice vc-btn--pulse" href="https://www.google.com/maps/dir/?api=1&amp;destination=Queen+Tamar+Ave+24,+Batumi" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#vc-i-route"/></svg>Проложить маршрут</a></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="vc-foot">
+  <div class="vc-shell">
+    <div class="vc-foot__row">
+      <a class="vc-logo" href="#top" aria-label="VELOCE — наверх"><span class="vc-metal">VELOCE</span></a>
+      <nav aria-label="Разделы внизу"><a href="#fleet">Автопарк</a><a href="#compare">Сравнить</a><a href="#occasion">С водителем</a><a href="#terms">Условия</a><a href="#book">Бронь</a></nav>
+    </div>
+    <small>пр. Царицы Тамар, 24, Батуми · подача круглосуточно</small>
+  </div>
+</footer>
+
+<script>
+(function () {
+  'use strict';
+  document.documentElement.classList.add('vc-js');
+  var REDUCED = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var PH = 'https://images.unsplash.com/photo-';
+  var CARS = {
+    g63: { short: 'G 63', name: 'Mercedes-AMG G 63', hp: 585, acc: 4.5, seats: 5, day: 1100, dep: 4000, img: '1648413653877-ade5eefd2f1b' },
+    gt3: { short: '911 GT3', name: 'Porsche 911 GT3', hp: 510, acc: 3.4, seats: 2, day: 1400, dep: 6000, img: '1614162692292-7ac56d7f7f1e' },
+    urus: { short: 'Urus', name: 'Lamborghini Urus', hp: 650, acc: 3.6, seats: 5, day: 1600, dep: 6000, img: '1575650681837-c0ca3b1e7275' },
+    m5: { short: 'M5', name: 'BMW M5 Competition', hp: 625, acc: 3.3, seats: 5, day: 850, dep: 3000, img: '1555215695-3004980ad54e' },
+    s580: { short: 'S 580', name: 'Mercedes-Benz S 580', hp: 503, acc: 4.4, seats: 5, day: 900, dep: 3000, img: '1680446983373-853872fb667a' },
+    rr: { short: 'Range Rover', name: 'Range Rover', hp: 400, acc: 5.9, seats: 5, day: 650, dep: 2000, img: '1563458563737-e60b1f1b345f', crop: '&crop=focalpoint&fp-x=.5&fp-y=.6&fp-z=1.9' }
+  };
+  var ORDER = ['g63', 'gt3', 'urus', 'm5', 's580', 'rr'];
+  function num(n) { return String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ' '); }
+  function money(n) { return num(n) + ' ₾'; }
+
+
+  var top = document.getElementById('vcTop'), burger = document.getElementById('vcBurger');
+  function onScroll() { top.classList.toggle('vc-solid', scrollY > 20); }
+  addEventListener('scroll', onScroll, { passive: true }); onScroll();
+  burger.addEventListener('click', function () { var o = top.classList.toggle('vc-open'); burger.setAttribute('aria-expanded', o ? 'true' : 'false'); });
+  document.querySelectorAll('.vc-menu a, .vc-top .vc-btn').forEach(function (a) { a.addEventListener('click', function () { top.classList.remove('vc-open'); burger.setAttribute('aria-expanded', 'false'); }); });
+
+
+  var rows = document.getElementById('vcRows');
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('vc-in'); io.unobserve(e.target); } }); }, { rootMargin: '0px 0px -8% 0px', threshold: .06 });
+    document.querySelectorAll('.vc-up').forEach(function (el) { io.observe(el); });
+    var glow = new IntersectionObserver(function (es) { es.forEach(function (e) { e.target.classList.toggle('vc-on', e.isIntersecting); }); }, { rootMargin: '40px' });
+    document.querySelectorAll('.vc-glass').forEach(function (el) { glow.observe(el); });
+    var bars = new IntersectionObserver(function (es) { if (es[0].isIntersecting) { rows.classList.add('vc-go'); bars.disconnect(); } }, { threshold: .3 });
+    bars.observe(rows);
+  } else { document.querySelectorAll('.vc-up').forEach(function (el) { el.classList.add('vc-in'); }); rows.classList.add('vc-go'); }
+  function light(e) {
+    var g = e.target.closest && e.target.closest('.vc-glass'); if (!g) return;
+    var r = g.getBoundingClientRect(), p = e.touches ? e.touches[0] : e;
+    g.style.setProperty('--x', (p.clientX - r.left) + 'px'); g.style.setProperty('--y', (p.clientY - r.top) + 'px');
+  }
+  document.addEventListener('pointermove', light, { passive: true });
+  document.addEventListener('touchstart', function (e) { light(e); var g = e.target.closest && e.target.closest('.vc-glass'); if (!g) return; g.classList.add('vc-touch'); setTimeout(function () { g.classList.remove('vc-touch'); }, 900); }, { passive: true });
+
+
+  var fbtn = document.querySelectorAll('.vc-filter button');
+  fbtn.forEach(function (b) {
+    b.addEventListener('click', function () {
+      fbtn.forEach(function (x) { x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
+      var f = b.getAttribute('data-f');
+      document.querySelectorAll('.vc-car').forEach(function (c) { c.classList.toggle('vc-hide', f !== 'all' && c.getAttribute('data-cls') !== f); });
+    });
+  });
+
+
+  var selA = document.getElementById('vcA'), selB = document.getElementById('vcB');
+  var imgA = document.getElementById('vcAImg'), imgB = document.getElementById('vcBImg');
+  var METRICS = [['hp', 1], ['acc', -1], ['seats', 1], ['day', -1], ['dep', -1]];
+  ORDER.forEach(function (id) { [selA, selB].forEach(function (s) { var o = document.createElement('option'); o.value = id; o.textContent = CARS[id].short; s.appendChild(o); }); });
+  selA.value = 'g63'; selB.value = 'urus';
+  function show(val) { return val % 1 ? String(val).replace('.', ',') : num(val); }
+  function photo(img, id) {
+    var c = CARS[id], src = PH + c.img + '?auto=format&fit=crop&w=640&h=400&q=70' + (c.crop || '');
+    if (img.getAttribute('src') === src) return;
+    img.classList.add('vc-fade');
+    setTimeout(function () { img.onload = function () { img.classList.remove('vc-fade'); }; img.src = src; img.alt = c.name; }, 200);
+  }
+  function duel() {
+    var a = CARS[selA.value], b = CARS[selB.value];
+    [].forEach.call(rows.children, function (row, k) {
+      var key = METRICS[k][0], dir = METRICS[k][1], va = a[key], vb = b[key];
+      var all = ORDER.map(function (id) { return CARS[id][key]; }), mx = Math.max.apply(0, all), mn = Math.min.apply(0, all);
+      var wa = dir > 0 ? va / mx : mn / va, wb = dir > 0 ? vb / mx : mn / vb;
+      var win = va === vb ? '' : ((dir > 0 ? va > vb : va < vb) ? 'a' : 'b');
+      var ba = row.querySelector('.vc-bar--a'), bb = row.querySelector('.vc-bar--b');
+      ba.querySelector('b').textContent = show(va); bb.querySelector('b').textContent = show(vb);
+      ba.querySelector('i').style.setProperty('--w', wa.toFixed(3)); bb.querySelector('i').style.setProperty('--w', wb.toFixed(3));
+      ba.classList.toggle('vc-win', win === 'a'); bb.classList.toggle('vc-win', win === 'b');
+    });
+    photo(imgA, selA.value); photo(imgB, selB.value);
+    document.querySelectorAll('[data-cmp]').forEach(function (btn) { var id = btn.getAttribute('data-cmp'); btn.setAttribute('aria-pressed', id === selA.value || id === selB.value ? 'true' : 'false'); });
+  }
+  function other(id) { return ORDER[(ORDER.indexOf(id) + 1) % ORDER.length]; }
+  selA.addEventListener('change', function () { if (selA.value === selB.value) selB.value = other(selA.value); duel(); });
+  selB.addEventListener('change', function () { if (selB.value === selA.value) selA.value = other(selB.value); duel(); });
+  document.querySelectorAll('[data-cmp]').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var id = btn.getAttribute('data-cmp');
+      if (selA.value !== id && selB.value !== id) { selA.value = selB.value; selB.value = id; }
+      duel();
+      document.getElementById('compare').scrollIntoView({ behavior: REDUCED ? 'auto' : 'smooth' });
+    });
+  });
+  duel();
+
+
+  var car = document.getElementById('vcCar'), from = document.getElementById('vcFrom'), to = document.getElementById('vcTo'), total = document.getElementById('vcTotal');
+  ORDER.forEach(function (id) { var o = document.createElement('option'); o.value = id; o.textContent = CARS[id].name + ' · ' + num(CARS[id].day) + ' ₾'; car.appendChild(o); });
+  [['ghost', 'Rolls-Royce Ghost с водителем'], ['gift', 'Сертификат на сутки 911 GT3']].forEach(function (x) { var o = document.createElement('option'); o.value = x[0]; o.textContent = x[1]; car.appendChild(o); });
+  function iso(d) { return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0'); }
+  function plus(s, n) { var d = new Date(s + 'T12:00:00'); d.setDate(d.getDate() + n); return iso(d); }
+  var today = iso(new Date());
+  from.min = today; from.value = plus(today, 1); to.min = plus(from.value, 1); to.value = plus(today, 4);
+  function sutki(n) { var a = n % 10, b = n % 100; return a === 1 && b !== 11 ? 'сутки' : 'суток'; }
+  function calc() {
+    var id = car.value;
+    if (id === 'ghost') { total.innerHTML = '<b>450 ₾ в час</b>От трёх часов, машина с водителем, залога нет'; return; }
+    if (id === 'gift') { total.innerHTML = '<b>1 400 ₾</b>Сертификат на сутки Porsche 911 GT3, конверт с ключом'; return; }
+    var c = CARS[id], days = Math.max(1, Math.round((new Date(to.value + 'T12:00:00') - new Date(from.value + 'T12:00:00')) / 864e5) || 1);
+    total.innerHTML = '<b>' + money(days * c.day) + '</b>' + days + ' ' + sutki(days) + ' × ' + money(c.day) + ' · залог ' + money(c.dep) + ' блокируем на карте';
+  }
+  from.addEventListener('change', function () { if (!from.value) return; to.min = plus(from.value, 1); if (!to.value || to.value <= from.value) to.value = plus(from.value, 1); calc(); });
+  to.addEventListener('change', calc);
+  car.addEventListener('change', calc);
+  document.querySelectorAll('[data-book]').forEach(function (a) { a.addEventListener('click', function () { car.value = a.getAttribute('data-book'); calc(); }); });
+  document.querySelectorAll('[data-side]').forEach(function (a) { a.addEventListener('click', function () { car.value = a.getAttribute('data-side') === 'a' ? selA.value : selB.value; calc(); }); });
+  car.value = 'g63'; calc();
+  var where = document.getElementById('vcWhere');
+  where.addEventListener('click', function (e) { var b = e.target.closest('button'); if (!b) return; where.querySelectorAll('button').forEach(function (x) { x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); }); });
+
+  var form = document.getElementById('vcForm'), done = document.getElementById('vcDone'), agree = document.getElementById('vcAgree'), submit = document.getElementById('vcSubmit');
+  var nm = document.getElementById('vcName'), ph = document.getElementById('vcPhone');
+  agree.addEventListener('change', function () { submit.disabled = !agree.checked; });
+  [nm, ph].forEach(function (el) { el.addEventListener('input', function () { el.removeAttribute('aria-invalid'); }); });
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var bad = null;
+    [[nm, 2], [ph, 8]].forEach(function (p) { var v = p[0] === ph ? p[0].value.replace(/\D/g, '') : p[0].value.trim(), no = v.length < p[1]; p[0].setAttribute('aria-invalid', no ? 'true' : 'false'); if (no && !bad) bad = p[0]; });
+    if (bad) { bad.focus(); return; }
+    form.hidden = true; done.hidden = false; done.focus();
+  });
+  document.getElementById('vcAgain').addEventListener('click', function () { done.hidden = true; form.hidden = false; nm.focus(); });
+})();
+</script>
+<script type="module">
+
+const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const webgl = (() => { try { const c = document.createElement('canvas'); return !!(c.getContext('webgl2') || c.getContext('webgl')); } catch (e) { return false; } })();
+
+function lazy(el, make, margin = '150px') {
+  let fx = null, on = false, wait = null;
+  new IntersectionObserver(async ([e]) => {
+    if (e.isIntersecting && !fx) { wait = wait || make().catch(() => null); fx = await wait; }
+    if (!fx) return;
+    if (e.isIntersecting && !on) { fx.start(); on = true; } else if (!e.isIntersecting && on) { fx.stop(); on = false; }
+  }, { rootMargin: margin }).observe(el);
+}
+
+const stage = document.getElementById('vcStage');
+if (stage && webgl && !reduced) {
+  import('./fx/slideshow.js').then(({ mount }) => {
+    const fx = mount(stage, {});
+    const cv = stage.querySelector('canvas');
+    const gl = cv && (cv.getContext('webgl2') || cv.getContext('webgl'));
+    const px = new Uint8Array(4);
+    let on = false, shown = false, gone = false, tries = 0;
+    if (cv) cv.addEventListener('webglcontextlost', () => { gone = true; on = false; stage.classList.remove('is-live'); });
+    const check = () => {
+      if (shown || gone || !on) return;
+      if (gl && !gl.isContextLost()) {
+        gl.readPixels(gl.drawingBufferWidth >> 1, gl.drawingBufferHeight >> 1, 1, 1, gl.RGBA, gl.UNSIGNED_BYTE, px);
+        if (px[0] + px[1] + px[2] > 30) { shown = true; stage.classList.add('is-live'); return; }
+      }
+      if (++tries < 300) requestAnimationFrame(check);
+      else { gone = true; on = false; fx.destroy(); }
+    };
+    new IntersectionObserver(([e]) => {
+      if (gone) return;
+      if (e.isIntersecting && !on) { fx.start(); on = true; requestAnimationFrame(check); }
+      else if (!e.isIntersecting && on) { fx.stop(); on = false; }
+    }).observe(stage);
+  }).catch(() => {});
+}
+
+const garage = document.getElementById('vcGarage');
+if (garage && !reduced) {
+  lazy(garage, async () => {
+    const { mount } = await import('./fx/spotlight.js');
+    const w = innerWidth < 760 ? 1000 : 1800;
+    return mount(garage, { photo: `https://images.unsplash.com/photo-1671572123703-9ba651605729?auto=format&fit=crop&w=${w}&q=75`, secret: 'Ghost', hint: '450 ₾ в час' });
+  });
+}
+
+const gift = document.getElementById('vcGift');
+if (gift && !reduced) {
+  lazy(gift, async () => { const { mount } = await import('./fx/holo-card.js'); return mount(gift, {}); });
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>FORMA — фитнес-клуб на Новом бульваре, Батуми</title>
+<meta name="description" content="Фитнес-клуб FORMA в Батуми: зал 1200 м², бокс, сайкл, йога. С 7:00 до 23:00, первая тренировка с тренером бесплатно.">
+<meta name="robots" content="noindex">
+<link rel="canonical" href="https://open-sites.io/works/forma/">
+<meta name="theme-color" content="#EDEFEA">
+<meta property="og:type" content="website">
+<meta property="og:title" content="FORMA — фитнес-клуб на Новом бульваре">
+<meta property="og:description" content="Зал 1200 м², с 7:00 до 23:00, первая тренировка бесплатно.">
+<meta property="og:image" content="https://open-sites.io/works/forma/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"ExerciseGym","name":"FORMA","telephone":"+995555000000","address":{"@type":"PostalAddress","streetAddress":"ул. Химшиашвили, 5","addressLocality":"Батуми","addressCountry":"GE"},"openingHours":"Mo-Su 07:00-23:00"}</script>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23101412'/%3E%3Ccircle cx='16' cy='16' r='8' fill='none' stroke='%23D7FF3F' stroke-width='3'/%3E%3Ccircle cx='16' cy='16' r='2.5' fill='%23D7FF3F'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://images.unsplash.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Alumni+Sans:ital,wght@0,700;0,800;0,900;1,800&family=Rubik:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="preload" as="image" href="https://images.unsplash.com/photo-1541534741688-6078c6bfb5c5?auto=format&fit=crop&w=900&h=1100&q=74">
+<style>
+@property --fo-a{syntax:'<angle>';inherits:false;initial-value:0deg}
+:root{
+  --chalk:#EDEFEA; --paper:#F8F9F6; --ink:#101412; --volt:#D7FF3F; --mint:#8FE3C0; --steel:#66706B; --line:rgba(16,20,18,.12);
+  --ease:cubic-bezier(.2,.7,.2,1); --rad:22px;
+  --disp:"Alumni Sans","Arial Narrow",Impact,sans-serif; --text:"Rubik",system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--chalk);color:var(--ink);font:400 16px/1.55 var(--text);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img{display:block;max-width:100%}
+a{color:inherit}
+button{font:inherit;color:inherit}
+h1,h2,h3{font-family:var(--disp);font-weight:900;margin:0;line-height:.9;letter-spacing:-.005em;text-transform:uppercase}
+.fo-shell{max-width:1220px;margin:0 auto;padding:0 16px}
+section[id]{scroll-margin-top:70px}
+:focus-visible{outline:3px solid var(--ink);outline-offset:3px;border-radius:8px}
+
+
+.fo-cta{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:54px;padding:0 26px;border-radius:14px;border:2px solid transparent;
+  font:600 16px/1 var(--text);text-decoration:none;cursor:pointer;transition:transform .25s var(--ease),box-shadow .3s,background .3s}
+.fo-cta--volt{background:var(--volt);color:var(--ink);box-shadow:0 10px 26px -12px rgba(120,160,0,.9)}
+.fo-cta--volt:hover{box-shadow:0 0 0 2px var(--ink),0 14px 30px -12px rgba(120,160,0,.9)}
+.fo-cta--ink{background:var(--ink);color:var(--volt)}
+.fo-cta--line{border-color:var(--ink);background:transparent}
+.fo-cta--line:hover{background:var(--ink);color:var(--volt)}
+.fo-cta--small{min-height:44px;padding:0 16px;font-size:15px;border-radius:12px}
+.fo-cta--wide{width:100%}
+.fo-cta--beat{position:relative;isolation:isolate;animation:foBeat 2.4s ease-in-out infinite}
+.fo-cta--beat::after{content:"";position:absolute;inset:0;border-radius:inherit;z-index:-1;pointer-events:none;animation:foRing 2.4s var(--ease) infinite}
+@keyframes foBeat{0%,100%{transform:scale(1)}50%{transform:scale(1.035)}}
+@keyframes foRing{0%{box-shadow:0 0 0 0 rgba(170,210,20,.75)}75%,100%{box-shadow:0 0 0 14px rgba(170,210,20,0)}}
+.fo-cta:disabled{opacity:.4;cursor:not-allowed;animation:none}
+.fo-cta:disabled::after{animation:none}
+
+
+.fo-tile{position:relative;background:var(--paper);border-radius:var(--rad);box-shadow:0 1px 0 rgba(255,255,255,.8) inset,0 18px 40px -28px rgba(16,20,18,.45);isolation:isolate}
+.fo-tile::before{content:"";position:absolute;inset:0;border-radius:inherit;padding:1.5px;pointer-events:none;z-index:3;
+  background:conic-gradient(from var(--fo-a),rgba(215,255,63,0) 0deg,rgba(190,240,40,1) 60deg,rgba(143,227,192,.95) 130deg,rgba(120,190,255,.7) 185deg,rgba(215,255,63,0) 240deg,rgba(16,20,18,.08) 360deg);
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;
+  animation:foSpin 6s linear infinite;animation-play-state:paused}
+.fo-tile.fo-on::before{animation-play-state:running}
+.fo-tile::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;z-index:2;opacity:0;transition:opacity .4s;
+  background:radial-gradient(300px circle at var(--x,50%) var(--y,0%),rgba(215,255,63,.35),rgba(143,227,192,.15) 45%,transparent 65%);mix-blend-mode:multiply}
+.fo-tile:hover::after,.fo-tile.fo-touch::after{opacity:1}
+@keyframes foSpin{to{--fo-a:360deg}}
+
+
+.fo-top{position:fixed;top:0;left:0;right:0;z-index:50;transition:background .35s,box-shadow .35s}
+.fo-top.fo-scrolled{background:rgba(237,239,234,.9);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);box-shadow:0 1px 0 var(--line)}
+.fo-top__row{display:flex;align-items:center;gap:12px;height:64px}
+.fo-logo{display:flex;align-items:center;min-height:44px;margin-right:auto;text-decoration:none;font:900 34px/1 var(--disp);letter-spacing:.02em}
+.fo-logo i{display:inline-block;width:.62em;height:.62em;border-radius:50%;border:.13em solid var(--ink);margin:0 .02em;position:relative;top:.02em;box-shadow:inset 0 0 0 .1em var(--volt)}
+.fo-links{display:none}
+.fo-links a{text-decoration:none;font-weight:500;font-size:15px;padding:10px 2px;border-bottom:2px solid transparent;transition:border-color .3s}
+.fo-links a:hover{border-color:var(--volt)}
+.fo-burger{display:grid;place-items:center;width:44px;height:44px;flex:none;border:0;background:var(--ink);color:var(--volt);border-radius:12px;cursor:pointer}
+.fo-burger svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round}
+.fo-top .fo-cta--small{padding:0 14px;font-size:14px}
+.fo-drop{position:fixed;inset:64px 0 auto;background:var(--chalk);padding:8px 16px 20px;display:grid;box-shadow:0 20px 30px -20px rgba(0,0,0,.3);
+  opacity:0;visibility:hidden;transform:translateY(-8px);transition:opacity .3s var(--ease),transform .3s var(--ease),visibility 0s .3s}
+.fo-top.fo-open .fo-drop{opacity:1;visibility:visible;transform:none;transition:opacity .3s var(--ease),transform .3s var(--ease)}
+.fo-drop a{min-height:56px;display:flex;align-items:center;justify-content:space-between;text-decoration:none;font:800 30px/1 var(--disp);text-transform:uppercase;border-bottom:1px solid var(--line)}
+.fo-drop a::after{content:"";width:12px;height:12px;border-radius:50%;background:var(--volt);box-shadow:0 0 0 2px var(--ink)}
+
+
+.fo-hero{position:relative;padding:86px 0 40px;overflow:hidden}
+.fo-hero__word{position:absolute;left:-2vw;top:58px;font:900 clamp(150px,40vw,560px)/.8 var(--disp);letter-spacing:-.02em;color:transparent;
+  -webkit-text-stroke:1.5px rgba(16,20,18,.09);pointer-events:none;user-select:none;white-space:nowrap}
+.fo-hero__grid{position:relative;display:grid;gap:26px}
+.fo-tag{display:inline-flex;align-items:center;gap:10px;margin:8px 0 0;font-weight:600;font-size:13px;letter-spacing:.16em;text-transform:uppercase}
+.fo-tag::before{content:"";width:28px;height:10px;border-radius:999px;background:var(--volt);box-shadow:0 0 0 1.5px var(--ink)}
+.fo-hero h1{font-size:clamp(58px,17vw,120px);margin:14px 0 16px}
+.fo-hero h1 mark{background:linear-gradient(transparent 58%,var(--volt) 58%,var(--volt) 92%,transparent 92%);color:inherit;padding:0 .04em}
+.fo-hero__lead{font-size:18px;max-width:29em;margin:0 0 24px;color:#2a312d}
+.fo-hero__acts{display:grid;gap:10px}
+.fo-hero__ph{position:relative;margin:0 0 0 12px;border-radius:28px;overflow:hidden;aspect-ratio:4/5;background:#1a1f1c;rotate:1.2deg;box-shadow:-12px 12px 0 var(--volt),-12px 12px 0 2px var(--ink)}
+.fo-hero__ph img{width:100%;height:100%;object-fit:cover;filter:contrast(1.05) saturate(.95)}
+.fo-stats{position:absolute;left:12px;right:12px;bottom:12px;z-index:2;display:grid;grid-template-columns:repeat(3,1fr);gap:6px;padding:12px;border-radius:18px;
+  background:rgba(16,20,18,.72);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);color:#fff}
+.fo-stats span{display:grid;gap:2px;font-size:12.5px;color:#cfd6d2}
+.fo-stats b{font:900 34px/.9 var(--disp);color:var(--volt)}
+
+
+.fo-sec{padding:72px 0}
+.fo-sec__top{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:12px 24px;margin-bottom:24px}
+.fo-sec h2{font-size:clamp(56px,15vw,112px)}
+.fo-sec h2 span{display:inline-block;background:var(--volt);padding:0 .12em;margin-left:.08em;transform:skewX(-8deg)}
+.fo-kicker{margin:0;max-width:26em;font-size:16px;color:#3a423d}
+
+
+.fo-arena{position:relative;height:420px;border-radius:28px;overflow:hidden;background:#0f1411;color:#fff}
+.fo-arena__list{list-style:none;margin:0;padding:22px;display:flex;flex-wrap:wrap;gap:8px;align-content:flex-end;height:100%}
+.fo-arena__list li{padding:10px 16px;border-radius:999px;background:#2A322D;font-weight:500}
+.fo-arena__list li:nth-child(3n+1){background:var(--volt);color:var(--ink)}
+.fo-arena__list li:nth-child(3n+2){background:var(--mint);color:var(--ink)}
+.fo-arena.fo-live .fo-arena__list{display:none}
+.fo-arena__hint{position:absolute;left:18px;top:16px;z-index:3;font:800 22px/1 var(--disp);letter-spacing:.04em;text-transform:uppercase;color:var(--volt);pointer-events:none}
+.fo-zones{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding-inline:16px;margin:14px -16px 0;padding:6px 16px 16px;scrollbar-width:none}
+.fo-zones::-webkit-scrollbar{display:none}
+.fo-zone{flex:0 0 78%;scroll-snap-align:start;overflow:hidden}
+.fo-zone__ph{aspect-ratio:4/3;overflow:hidden;border-radius:var(--rad) var(--rad) 0 0}
+.fo-zone__ph img{width:100%;height:100%;object-fit:cover;transition:transform 1.1s var(--ease)}
+.fo-zone:hover .fo-zone__ph img{transform:scale(1.06)}
+.fo-zone__b{padding:14px 16px 16px}
+.fo-zone h3{font-size:30px}
+.fo-zone p{margin:4px 0 0;color:#3a423d}
+
+
+.fo-quiz{padding:18px}
+.fo-q{margin:0 0 14px;padding:0;border:0}
+.fo-q legend{font:800 22px/1 var(--disp);text-transform:uppercase;margin-bottom:10px;padding:0}
+.fo-seg{display:flex;flex-wrap:wrap;gap:8px}
+.fo-seg button{min-height:46px;padding:0 18px;border-radius:12px;border:2px solid var(--ink);background:transparent;font-weight:600;cursor:pointer;transition:background .25s,color .25s}
+.fo-seg button[aria-pressed="true"]{background:var(--ink);color:var(--volt)}
+.fo-result{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;margin-top:6px;padding:16px;border-radius:16px;background:var(--volt);min-height:74px}
+.fo-result p{margin:0;font-weight:500}
+.fo-result b{display:block;font:900 32px/1 var(--disp);text-transform:uppercase}
+.fo-result[hidden]{display:none}
+.fo-plans{margin-top:16px;padding:6px 16px}
+.fo-plans__dl{margin:0}
+.fo-plans__dl>div{display:flex;align-items:center;justify-content:space-between;gap:10px 14px;padding:16px 0;border-top:1px solid var(--line);cursor:pointer;border-radius:4px}
+.fo-plans__dl>div:first-child{border-top:0}
+.fo-plans__dl dt{font-weight:500;font-size:17px}
+.fo-plans__dl dd{margin:0;text-align:right;white-space:nowrap;font:900 30px/1 var(--disp);transition:color .3s}
+.fo-plans__dl dd i{font:500 .72em var(--text);font-style:normal;margin-left:.06em}
+.fo-plans__dl dd small{font:500 14px var(--text);color:var(--steel)}
+.fo-plans__dl .fo-pick dt::before{content:"Подходит вам";display:block;width:max-content;margin-bottom:6px;padding:4px 10px;border-radius:999px;background:var(--ink);color:var(--volt);font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase}
+.fo-plans__dl .fo-pick dd{color:#4d6600}
+.fo-freeze{margin:12px 0 0;font-size:15px;color:#3a423d}
+
+
+.fo-coaches{list-style:none;margin:0;padding:0;display:grid;gap:12px}
+.fo-coach{overflow:hidden}
+.fo-coach__ph{position:relative;aspect-ratio:16/10;overflow:hidden;border-radius:var(--rad) var(--rad) 0 0}
+.fo-coach__ph img{width:100%;height:100%;object-fit:cover;filter:grayscale(.2) contrast(1.05)}
+.fo-coach__yr{position:absolute;right:12px;top:12px;padding:6px 12px;border-radius:999px;background:var(--volt);font:800 20px/1 var(--disp);text-transform:uppercase}
+.fo-coach__b{padding:14px 16px 18px;display:flex;flex-direction:column;gap:6px;align-items:flex-start}
+.fo-coach h3{font-size:36px}
+.fo-coach p{margin:0 0 8px;color:#3a423d}
+
+
+.fo-revs{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding-inline:16px;margin:0 -16px;padding:6px 16px 14px;scrollbar-width:none;scroll-behavior:smooth}
+.fo-revs::-webkit-scrollbar{display:none}
+.fo-rev{flex:0 0 84%;scroll-snap-align:start;padding:22px;display:flex;flex-direction:column;gap:14px}
+.fo-rev q{font:800 26px/1.05 var(--disp);text-transform:uppercase;quotes:"«" "»"}
+.fo-rev__who{display:flex;align-items:center;gap:10px;font-size:14.5px;color:#3a423d;margin-top:auto}
+.fo-rev__who b{color:var(--ink)}
+.fo-rev__ini{width:40px;height:40px;border-radius:12px;background:var(--ink);color:var(--volt);display:grid;place-items:center;font:900 22px/1 var(--disp)}
+.fo-revnav{display:flex;align-items:center;gap:10px;margin-top:8px}
+.fo-revnav button{width:46px;height:46px;border-radius:12px;border:2px solid var(--ink);background:transparent;cursor:pointer;display:grid;place-items:center}
+.fo-revnav button svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round}
+.fo-dots{display:flex;gap:6px;margin-left:auto}
+.fo-dots i{width:22px;height:6px;border-radius:999px;background:rgba(16,20,18,.15);overflow:hidden;position:relative}
+.fo-dots i.fo-cur::after{content:"";position:absolute;inset:0;background:var(--ink);transform-origin:left;animation:foFill 5s linear forwards}
+.fo-revs.fo-hold+.fo-revnav .fo-dots i.fo-cur::after,.fo-revs.fo-off+.fo-revnav .fo-dots i.fo-cur::after{animation-play-state:paused}
+@keyframes foFill{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+
+
+.fo-trial{display:grid;gap:14px}
+.fo-form{padding:20px}
+.fo-f{display:grid;gap:8px;margin:0 0 16px;padding:0;border:0;min-width:0}
+.fo-f>span,.fo-f legend{font-size:12.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--steel);padding:0}
+.fo-form input:not([type=checkbox]){width:100%;min-height:52px;border-radius:12px;border:2px solid rgba(16,20,18,.16);background:#fff;padding:12px 14px;font:400 17px var(--text);color:var(--ink)}
+.fo-form input:focus{outline:0;border-color:var(--ink);box-shadow:0 0 0 4px rgba(215,255,63,.8)}
+.fo-form [aria-invalid="true"]{border-color:#d9412b}
+.fo-chosen{display:flex;flex-wrap:wrap;gap:8px}
+.fo-chosen:empty{display:none}
+.fo-chosen span{display:inline-flex;align-items:center;gap:8px;min-height:40px;padding:0 6px 0 14px;border-radius:999px;background:var(--volt);font-weight:600;font-size:15px}
+.fo-chosen button{width:32px;height:32px;border-radius:50%;border:0;background:var(--ink);color:var(--volt);cursor:pointer;font-size:16px;line-height:1}
+.fo-twin{display:grid;gap:0 12px}
+.fo-agree{display:flex;align-items:center;gap:12px;min-height:44px;margin:0 0 14px;font-size:15px;cursor:pointer}
+.fo-agree input{width:22px;height:22px;flex:none;accent-color:var(--ink);margin:0}
+.fo-thanks{padding:30px 22px;text-align:center}
+.fo-thanks h3{font-size:48px;margin-bottom:10px}
+.fo-thanks p{margin:0 0 18px}
+.fo-where{padding:6px 18px;margin:0}
+.fo-where>div{display:grid;grid-template-columns:44px 1fr;column-gap:14px;align-items:center;padding:14px 0;border-top:1px solid var(--line)}
+.fo-where>div:first-child{border-top:0}
+.fo-where dt{font-size:12px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--steel)}
+.fo-where dd{margin:0;font-weight:500}
+.fo-where a{text-decoration:none}
+.fo-where>div::before{content:"";grid-row:span 2;width:44px;height:44px;border-radius:12px;background:var(--ink) center/22px no-repeat}
+.fo-where>.fo-w-pin::before{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23D7FF3F' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z'/%3E%3Ccircle cx='12' cy='9.5' r='2.5'/%3E%3C/svg%3E")}
+.fo-where>.fo-w-time::before{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23D7FF3F' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='8.5'/%3E%3Cpath d='M12 7.5V12l3 2'/%3E%3C/svg%3E")}
+.fo-where>.fo-w-tel::before{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23D7FF3F' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6.5 3.5h3l1.5 4-2 1.3a11 11 0 0 0 6.2 6.2l1.3-2 4 1.5v3a2 2 0 0 1-2.2 2A17 17 0 0 1 4.5 5.7a2 2 0 0 1 2-2.2z'/%3E%3C/svg%3E")}
+.fo-map{position:relative;border-radius:var(--rad);overflow:hidden;aspect-ratio:4/3;box-shadow:0 0 0 2px var(--ink)}
+.fo-map iframe{width:100%;height:100%;border:0;display:block;filter:grayscale(1) contrast(1.05)}
+.fo-map__go{position:absolute;left:0;right:0;bottom:44px;display:flex;justify-content:center;pointer-events:none}
+.fo-map__go .fo-cta{pointer-events:auto;min-height:48px;box-shadow:0 0 0 2px var(--ink),0 12px 30px -8px rgba(120,160,0,.9)}
+.fo-map__go svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2;stroke-linejoin:round}
+
+.fo-end{background:var(--ink);color:#cfd6d2;padding:44px 0 50px;overflow:hidden}
+.fo-end__word{font:900 clamp(96px,30vw,360px)/.8 var(--disp);color:transparent;-webkit-text-stroke:1.5px rgba(215,255,63,.5);letter-spacing:-.02em}
+.fo-end__nav{display:flex;flex-wrap:wrap;gap:4px 20px;margin:18px 0}
+.fo-end__nav a{display:inline-flex;align-items:center;justify-content:center;min-height:44px;min-width:44px;text-decoration:none;color:#fff;font:800 22px/1 var(--disp);text-transform:uppercase}
+.fo-end__nav a:hover{color:var(--volt)}
+.fo-end small{font-size:14px}
+
+
+.fo-js .fo-up{opacity:0;transform:translateY(28px);transition:opacity .8s var(--ease) var(--d,0s),transform .8s var(--ease) var(--d,0s)}
+.fo-js .fo-up.fo-shown{opacity:1;transform:none}
+
+@media (min-width:640px){
+  .fo-hero__acts{display:flex;flex-wrap:wrap}
+  .fo-zone{flex-basis:44%}
+  .fo-rev{flex-basis:48%}
+  .fo-twin{grid-template-columns:1fr 1fr}
+}
+@media (min-width:900px){.fo-coaches{grid-template-columns:repeat(3,1fr)}}
+@media (min-width:760px){
+  .fo-shell{padding:0 32px}
+  .fo-sec{padding:108px 0}
+  .fo-arena{height:420px}
+  .fo-zones{margin:16px 0 0;padding:6px 0 16px;scroll-padding-inline:0}
+  .fo-quiz{padding:26px}
+  .fo-plans{padding:8px 26px}
+  .fo-form{padding:28px}
+  .fo-revs{margin:0;padding:6px 0 14px;scroll-padding-inline:0}
+}
+@media (min-width:1000px){
+  .fo-top__row{height:76px}
+  .fo-links{display:flex;gap:26px;margin-right:18px}
+  .fo-burger,.fo-drop{display:none}
+  .fo-top .fo-cta--small{padding:0 18px;font-size:15px}
+  .fo-hero{padding:112px 0 70px}
+  .fo-hero__grid{grid-template-columns:1.15fr .85fr;align-items:center;gap:56px}
+  .fo-hero__ph{aspect-ratio:4/5;max-height:calc(100svh - 150px);justify-self:end;width:calc(100% - 12px)}
+  .fo-zones{display:grid;grid-template-columns:repeat(5,1fr);overflow:visible}
+  .fo-zone{flex:none}
+  .fo-plans-grid{display:grid;grid-template-columns:5fr 7fr;gap:18px;align-items:start}
+  .fo-plans{margin-top:0}
+  .fo-rev{flex-basis:32%}
+  .fo-trial{grid-template-columns:7fr 5fr;gap:20px;align-items:start}
+  section[id]{scroll-margin-top:84px}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .fo-cta--beat,.fo-cta--beat::after,.fo-dots i.fo-cur::after{animation:none}
+  .fo-tile::before{animation:none}
+  .fo-js .fo-up{opacity:1;transform:none;transition:none}
+}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="fo-i-route" viewBox="0 0 24 24"><path d="M5 19l14-7L5 5l3 7z"/></symbol>
+  <symbol id="fo-i-l" viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></symbol>
+  <symbol id="fo-i-r" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></symbol>
+</svg>
+
+<header class="fo-top" id="foTop">
+  <div class="fo-shell fo-top__row">
+    <a class="fo-logo" href="#top" aria-label="FORMA — наверх">F<i></i>RMA</a>
+    <nav class="fo-links" aria-label="Разделы"><a href="#gym">Зал</a><a href="#plans">Абонементы</a><a href="#coaches">Тренеры</a><a href="#trial">Контакты</a></nav>
+    <a class="fo-cta fo-cta--volt fo-cta--small fo-cta--beat" href="#trial">Пробная бесплатно</a>
+    <button class="fo-burger" type="button" id="foBurger" aria-label="Меню" aria-expanded="false" aria-controls="foDrop"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8h16M4 16h10"/></svg></button>
+  </div>
+  <div class="fo-drop" id="foDrop"><a href="#gym">Зал</a><a href="#plans">Абонементы</a><a href="#coaches">Тренеры</a><a href="#trial">Пробная тренировка</a></div>
+</header>
+
+<main>
+<section class="fo-hero" id="top">
+  <div class="fo-hero__word" aria-hidden="true">FORMA</div>
+  <div class="fo-shell fo-hero__grid">
+    <div>
+      <p class="fo-tag fo-up">Фитнес-клуб · Новый бульвар</p>
+      <h1 class="fo-up" style="--d:.06s">Фитнес-клуб на <mark>Новом бульваре</mark></h1>
+      <p class="fo-hero__lead fo-up" style="--d:.12s">Зал 1200 м², бокс и групповые. С 7:00 до 23:00, первая тренировка бесплатно.</p>
+      <div class="fo-hero__acts fo-up" style="--d:.18s">
+        <a class="fo-cta fo-cta--volt fo-cta--beat" href="#trial">Записаться на пробную</a>
+        <a class="fo-cta fo-cta--line" href="#plans">Подобрать абонемент</a>
+      </div>
+    </div>
+    <figure class="fo-hero__ph fo-up" style="--d:.1s">
+      <img src="https://images.unsplash.com/photo-1541534741688-6078c6bfb5c5?auto=format&fit=crop&w=900&h=1100&q=74"
+        srcset="https://images.unsplash.com/photo-1541534741688-6078c6bfb5c5?auto=format&fit=crop&w=600&h=750&q=74 600w, https://images.unsplash.com/photo-1541534741688-6078c6bfb5c5?auto=format&fit=crop&w=900&h=1100&q=74 900w, https://images.unsplash.com/photo-1541534741688-6078c6bfb5c5?auto=format&fit=crop&w=1300&h=1600&q=72 1300w"
+        sizes="(min-width:1000px) 40vw, 92vw" alt="Спортсменка со штангой в силовой раме" width="900" height="1100" fetchpriority="high">
+      <div class="fo-stats"><span><b data-n="1200">1200</b>м² зала</span><span><b>7–23</b>каждый день</span><span><b data-n="12">12</b>тренеров</span></div>
+    </figure>
+  </div>
+</section>
+
+<section class="fo-sec" id="gym">
+  <div class="fo-shell">
+    <header class="fo-sec__top fo-up"><h2>Зал</h2></header>
+    <div class="fo-arena fo-up" id="foArena" aria-label="Направления клуба">
+      <span class="fo-arena__hint" aria-hidden="true">12 направлений</span>
+      <ul class="fo-arena__list"><li>Силовые</li><li>Кроссфит</li><li>Бокс</li><li>Сайкл</li><li>Йога</li><li>Пилатес</li><li>Стретчинг</li><li>TRX</li><li>Функционал</li><li>Кардио</li><li>Персональные</li><li>Сауна</li></ul>
+    </div>
+    <div class="fo-zones">
+      <article class="fo-zone fo-tile fo-up">
+        <div class="fo-zone__ph"><img src="https://images.unsplash.com/photo-1778828494354-9b717d36dc99?auto=format&fit=crop&w=720&h=540&q=72" alt="Ряды тренажёров в тёмном зале" width="720" height="540" loading="lazy"></div>
+        <div class="fo-zone__b"><h3>Тренажёрный зал</h3><p>60 тренажёров Life Fitness</p></div>
+      </article>
+      <article class="fo-zone fo-tile fo-up" style="--d:.06s">
+        <div class="fo-zone__ph"><img src="https://images.unsplash.com/photo-1623874514711-0f321325f318?auto=format&fit=crop&w=720&h=540&q=72" alt="Функциональная зона со штангами и скамьями" width="720" height="540" loading="lazy"></div>
+        <div class="fo-zone__b"><h3>Функциональная зона</h3><p>Штанги, гири, канаты</p></div>
+      </article>
+      <article class="fo-zone fo-tile fo-up" style="--d:.12s">
+        <div class="fo-zone__ph"><img src="https://images.unsplash.com/photo-1716306886418-f84f6d4c2f3a?auto=format&fit=crop&w=720&h=540&q=72" alt="Боксёрские мешки в ряд" width="720" height="540" loading="lazy"></div>
+        <div class="fo-zone__b"><h3>Бокс</h3><p>Ринг и 12 мешков</p></div>
+      </article>
+      <article class="fo-zone fo-tile fo-up" style="--d:.18s">
+        <div class="fo-zone__ph"><img src="https://images.unsplash.com/photo-1760031670160-4da44e9596d0?auto=format&fit=crop&w=720&h=540&q=72" alt="Красные велотренажёры в зале сайкла" width="720" height="540" loading="lazy"></div>
+        <div class="fo-zone__b"><h3>Сайкл</h3><p>24 велотренажёра</p></div>
+      </article>
+      <article class="fo-zone fo-tile fo-up" style="--d:.24s">
+        <div class="fo-zone__ph"><img src="https://images.unsplash.com/photo-1677741447985-da1d90c00742?auto=format&fit=crop&w=720&h=540&q=72" alt="Группа на занятии йогой" width="720" height="540" loading="lazy"></div>
+        <div class="fo-zone__b"><h3>Йога</h3><p>Зал с тёплым полом</p></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="fo-sec" id="plans">
+  <div class="fo-shell">
+    <header class="fo-sec__top fo-up"><h2>Абонементы</h2></header>
+    <div class="fo-plans-grid">
+      <div class="fo-quiz fo-tile fo-up" id="foQuiz">
+        <fieldset class="fo-q"><legend>Цель</legend><div class="fo-seg" data-q="goal"><button type="button" aria-pressed="false" data-v="lose">Похудеть</button><button type="button" aria-pressed="false" data-v="power">Сила</button><button type="button" aria-pressed="false" data-v="health">Здоровье</button></div></fieldset>
+        <fieldset class="fo-q"><legend>Сколько раз в неделю</legend><div class="fo-seg" data-q="freq"><button type="button" aria-pressed="false" data-v="2">2</button><button type="button" aria-pressed="false" data-v="3">3</button><button type="button" aria-pressed="false" data-v="5">5</button></div></fieldset>
+        <fieldset class="fo-q"><legend>Когда</legend><div class="fo-seg" data-q="when"><button type="button" aria-pressed="false" data-v="am">Утром</button><button type="button" aria-pressed="false" data-v="day">Днём</button><button type="button" aria-pressed="false" data-v="pm">Вечером</button></div></fieldset>
+        <div class="fo-result" id="foResult" hidden aria-live="polite"><p><b id="foPlanName"></b><span id="foPlanWhy"></span></p><a class="fo-cta fo-cta--ink fo-cta--small" href="#trial" id="foPlanGo">Пробная с этим абонементом</a></div>
+      </div>
+      <div>
+        <div class="fo-plans fo-tile fo-up" style="--d:.08s">
+          <dl class="fo-plans__dl">
+            <div data-plan="Разовое посещение" tabindex="0"><dt>Разовое посещение</dt><dd>25 <i>₾</i></dd></div>
+            <div data-plan="Утренний" tabindex="0"><dt>Утренний, до 16:00</dt><dd>99 <i>₾</i><small> в месяц</small></dd></div>
+            <div data-plan="Безлимит" tabindex="0"><dt>Безлимит</dt><dd>149 <i>₾</i><small> в месяц</small></dd></div>
+            <div data-plan="Полгода" tabindex="0"><dt>Полгода</dt><dd>690 <i>₾</i></dd></div>
+            <div data-plan="Год" tabindex="0"><dt>Год</dt><dd>1190 <i>₾</i></dd></div>
+            <div data-plan="Персональная тренировка" tabindex="0"><dt>Персональная тренировка</dt><dd>60 <i>₾</i></dd></div>
+          </dl>
+        </div>
+        <p class="fo-freeze fo-up">Полугодовой и годовой замораживаются на 30 дней.</p>
+        <a class="fo-cta fo-cta--volt fo-cta--beat fo-up" href="#trial" style="margin-top:18px">Записаться на пробную</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="fo-sec" id="coaches">
+  <div class="fo-shell">
+    <header class="fo-sec__top fo-up"><h2>Тренеры</h2></header>
+    <ul class="fo-coaches">
+      <li class="fo-coach fo-tile fo-up">
+        <div class="fo-coach__ph"><img src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&w=800&h=550&q=72" alt="Становая тяга со штангой" width="800" height="550" loading="lazy"><span class="fo-coach__yr">8 лет</span></div>
+        <div class="fo-coach__b"><h3>Гиорги</h3><p>Силовые и пауэрлифтинг</p><a class="fo-cta fo-cta--line fo-cta--small" href="#trial" data-coach="Гиорги">Тренировка с Гиорги</a></div>
+      </li>
+      <li class="fo-coach fo-tile fo-up" style="--d:.08s">
+        <div class="fo-coach__ph"><img src="https://images.unsplash.com/photo-1722925541142-5db2668ca492?auto=format&fit=crop&w=800&h=550&q=72" alt="Хват грифа перед подъёмом" width="800" height="550" loading="lazy"><span class="fo-coach__yr">6 лет</span></div>
+        <div class="fo-coach__b"><h3>Нино</h3><p>Функционал и TRX</p><a class="fo-cta fo-cta--line fo-cta--small" href="#trial" data-coach="Нино">Тренировка с Нино</a></div>
+      </li>
+      <li class="fo-coach fo-tile fo-up" style="--d:.16s">
+        <div class="fo-coach__ph"><img src="https://images.unsplash.com/photo-1784819482828-841bd302cbb5?auto=format&fit=crop&w=800&h=550&q=72" alt="Тренировка в полутёмном зале" width="800" height="550" loading="lazy" style="object-position:50% 30%"><span class="fo-coach__yr">5 лет</span></div>
+        <div class="fo-coach__b"><h3>Мари</h3><p>Сайкл и кардио</p><a class="fo-cta fo-cta--line fo-cta--small" href="#trial" data-coach="Мари">Тренировка с Мари</a></div>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<section class="fo-sec" id="reviews">
+  <div class="fo-shell">
+    <header class="fo-sec__top fo-up"><h2>Отзывы</h2></header>
+    <div class="fo-revs" id="foRevs" aria-label="Отзывы">
+      <article class="fo-rev fo-tile"><q>Хожу к семи утра, зал пустой, тренажёры свободны.</q><div class="fo-rev__who"><span class="fo-rev__ini" aria-hidden="true">С</span><span><b>Саба</b> · безлимит</span></div></article>
+      <article class="fo-rev fo-tile"><q>За два месяца минус шесть килограммов, Мари держит темп.</q><div class="fo-rev__who"><span class="fo-rev__ini" aria-hidden="true">Л</span><span><b>Лена</b> · сайкл</span></div></article>
+      <article class="fo-rev fo-tile"><q>Пришёл с нуля, через полгода первый спарринг.</q><div class="fo-rev__who"><span class="fo-rev__ini" aria-hidden="true">Д</span><span><b>Давид</b> · бокс</span></div></article>
+      <article class="fo-rev fo-tile"><q>Утренний абонемент окупился за три недели.</q><div class="fo-rev__who"><span class="fo-rev__ini" aria-hidden="true">А</span><span><b>Анна</b> · утренний</span></div></article>
+      <article class="fo-rev fo-tile"><q>Гиорги поставил технику становой за четыре тренировки.</q><div class="fo-rev__who"><span class="fo-rev__ini" aria-hidden="true">Г</span><span><b>Георгий</b> · персональные</span></div></article>
+      <article class="fo-rev fo-tile"><q>Тёплый пол и никакой спешки после работы.</q><div class="fo-rev__who"><span class="fo-rev__ini" aria-hidden="true">Т</span><span><b>Тамар</b> · йога</span></div></article>
+    </div>
+    <div class="fo-revnav"><button type="button" id="foPrev" aria-label="Предыдущий отзыв"><svg aria-hidden="true"><use href="#fo-i-l"/></svg></button><button type="button" id="foNext" aria-label="Следующий отзыв"><svg aria-hidden="true"><use href="#fo-i-r"/></svg></button><span class="fo-dots" id="foDots" aria-hidden="true"></span></div>
+  </div>
+</section>
+
+<section class="fo-sec" id="trial">
+  <div class="fo-shell">
+    <header class="fo-sec__top fo-up"><h2>Пробная <span>тренировка</span></h2><p class="fo-kicker">Первая тренировка с тренером бесплатно, перезвоним за 15 минут.</p></header>
+    <div class="fo-trial">
+      <div class="fo-tile fo-up" id="foFormBox">
+        <form class="fo-form" id="foForm" novalidate>
+          <div class="fo-f"><span>Выбрано</span><div class="fo-chosen" id="foChosen"></div></div>
+          <div class="fo-twin">
+            <label class="fo-f"><span>Имя</span><input id="foName" autocomplete="given-name"></label>
+            <label class="fo-f"><span>Телефон</span><input id="foPhone" type="tel" inputmode="tel" autocomplete="tel" placeholder="+995"></label>
+          </div>
+          <fieldset class="fo-f"><legend>Когда удобно</legend><div class="fo-seg" data-q="slot"><button type="button" aria-pressed="false">Утром</button><button type="button" aria-pressed="true">Днём</button><button type="button" aria-pressed="false">Вечером</button></div></fieldset>
+          <label class="fo-agree"><input type="checkbox" id="foAgree"><span>Соглашаюсь на обработку данных для записи</span></label>
+          <button class="fo-cta fo-cta--volt fo-cta--wide fo-cta--beat" type="submit" id="foSubmit" disabled>Записаться на пробную</button>
+        </form>
+        <div class="fo-thanks" id="foThanks" hidden tabindex="-1"><h3>Ждём в зале</h3><p>Перезвоним за 15 минут и назначим время тренировки.</p><button class="fo-cta fo-cta--line" type="button" id="foAgain">Ещё одна заявка</button></div>
+      </div>
+      <div class="fo-up" style="--d:.08s">
+        <dl class="fo-where fo-tile">
+          <div class="fo-w-pin"><dt>Адрес</dt><dd>ул. Химшиашвили, 5, Батуми</dd></div>
+          <div class="fo-w-time"><dt>Часы</dt><dd>каждый день 7:00–23:00</dd></div>
+          <div class="fo-w-tel"><dt>Телефон</dt><dd><a href="tel:+995555000000">+995 555 00 00 00</a></dd></div>
+        </dl>
+        <div class="fo-map" style="margin-top:12px"><iframe src="https://www.google.com/maps?q=Khimshiashvili+St+5,+Batumi&amp;z=16&amp;output=embed" title="FORMA на карте" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+          <div class="fo-map__go"><a class="fo-cta fo-cta--volt fo-cta--beat" href="https://www.google.com/maps/dir/?api=1&amp;destination=Khimshiashvili+St+5,+Batumi" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#fo-i-route"/></svg>Проложить маршрут</a></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="fo-end">
+  <div class="fo-shell">
+    <div class="fo-end__word" aria-hidden="true">FORMA</div>
+    <nav class="fo-end__nav" aria-label="Разделы внизу"><a href="#gym">Зал</a><a href="#plans">Абонементы</a><a href="#coaches">Тренеры</a><a href="#reviews">Отзывы</a><a href="#trial">Пробная</a></nav>
+    <small>ул. Химшиашвили, 5, Батуми · <span style="white-space:nowrap">каждый день 7:00–23:00</span></small>
+  </div>
+</footer>
+
+<script>
+(function () {
+  'use strict';
+  var doc = document.documentElement;
+  doc.classList.add('fo-js');
+  var REDUCED = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  var top = document.getElementById('foTop'), burger = document.getElementById('foBurger');
+  function onScroll() { top.classList.toggle('fo-scrolled', scrollY > 10); }
+  addEventListener('scroll', onScroll, { passive: true }); onScroll();
+  burger.addEventListener('click', function () { var o = top.classList.toggle('fo-open'); burger.setAttribute('aria-expanded', o ? 'true' : 'false'); });
+  document.querySelectorAll('#foDrop a, a[href="#trial"]').forEach(function (a) { a.addEventListener('click', function () { top.classList.remove('fo-open'); burger.setAttribute('aria-expanded', 'false'); }); });
+
+
+  function count(el) {
+    var to = +el.getAttribute('data-n'); if (REDUCED || !to) return;
+    var t0 = performance.now();
+    (function tick(now) { var k = Math.min(1, (now - t0) / 1400); el.textContent = Math.round(to * (1 - Math.pow(1 - k, 3))); if (k < 1) requestAnimationFrame(tick); })(t0);
+  }
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (es) {
+      es.forEach(function (e) { if (!e.isIntersecting) return; e.target.classList.add('fo-shown'); e.target.querySelectorAll('[data-n]').forEach(count); io.unobserve(e.target); });
+    }, { rootMargin: '0px 0px -8% 0px', threshold: .06 });
+    document.querySelectorAll('.fo-up').forEach(function (el) { io.observe(el); });
+    var glow = new IntersectionObserver(function (es) { es.forEach(function (e) { e.target.classList.toggle('fo-on', e.isIntersecting); }); }, { rootMargin: '40px' });
+    document.querySelectorAll('.fo-tile').forEach(function (el) { glow.observe(el); });
+  } else { document.querySelectorAll('.fo-up').forEach(function (el) { el.classList.add('fo-shown'); }); }
+  function light(e) {
+    var t = e.target.closest && e.target.closest('.fo-tile'); if (!t) return;
+    var r = t.getBoundingClientRect(), p = e.touches ? e.touches[0] : e;
+    t.style.setProperty('--x', (p.clientX - r.left) + 'px'); t.style.setProperty('--y', (p.clientY - r.top) + 'px');
+  }
+  document.addEventListener('pointermove', light, { passive: true });
+  document.addEventListener('touchstart', function (e) { light(e); var t = e.target.closest && e.target.closest('.fo-tile'); if (!t) return; t.classList.add('fo-touch'); setTimeout(function () { t.classList.remove('fo-touch'); }, 900); }, { passive: true });
+
+
+  var ans = {}, chosen = { plan: null, coach: null };
+  var result = document.getElementById('foResult'), planName = document.getElementById('foPlanName'), planWhy = document.getElementById('foPlanWhy');
+  function pick() {
+    if (!ans.freq || !ans.when) return;
+    var plan, why;
+    if (ans.when === 'am') { plan = 'Утренний'; why = '99 ₾ в месяц, зал до 16:00 без очередей'; }
+    else if (ans.freq === '5') { plan = 'Год'; why = '1190 ₾, выходит 99 ₾ в месяц и 30 дней заморозки'; }
+    else { plan = 'Безлимит'; why = '149 ₾ в месяц, любое время с 7:00 до 23:00'; }
+    if (ans.goal === 'power' && ans.freq === '2') why += '. Добавьте персональную: технику ставим с тренером';
+    planName.textContent = plan; planWhy.textContent = why; result.hidden = false;
+    document.querySelectorAll('.fo-plans [data-plan]').forEach(function (r) { r.classList.toggle('fo-pick', r.getAttribute('data-plan') === plan); });
+    chosen.plan = plan; renderChosen();
+  }
+  document.querySelectorAll('.fo-seg').forEach(function (g) {
+    g.addEventListener('click', function (e) {
+      var b = e.target.closest('button'); if (!b) return;
+      g.querySelectorAll('button').forEach(function (x) { x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
+      var q = g.getAttribute('data-q'); if (q && q !== 'slot') { ans[q] = b.getAttribute('data-v'); pick(); }
+    });
+  });
+  document.querySelectorAll('.fo-plans [data-plan]').forEach(function (r) {
+    function take() {
+      document.querySelectorAll('.fo-plans [data-plan]').forEach(function (x) { x.classList.toggle('fo-pick', x === r); });
+      chosen.plan = r.getAttribute('data-plan'); renderChosen();
+    }
+    r.addEventListener('click', take);
+    r.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); take(); } });
+  });
+  document.querySelectorAll('[data-coach]').forEach(function (a) { a.addEventListener('click', function () { chosen.coach = a.getAttribute('data-coach'); renderChosen(); }); });
+  var chosenBox = document.getElementById('foChosen');
+  function renderChosen() {
+    chosenBox.innerHTML = '';
+    [['plan', 'Абонемент: '], ['coach', 'Тренер: ']].forEach(function (k) {
+      if (!chosen[k[0]]) return;
+      var s = document.createElement('span'); s.textContent = k[1] + chosen[k[0]];
+      var x = document.createElement('button'); x.type = 'button'; x.textContent = '×'; x.setAttribute('aria-label', 'Убрать: ' + chosen[k[0]]);
+      x.addEventListener('click', function () { chosen[k[0]] = null; renderChosen(); });
+      s.appendChild(x); chosenBox.appendChild(s);
+    });
+    chosenBox.parentNode.hidden = !chosenBox.children.length;
+  }
+  renderChosen();
+
+
+  var revs = document.getElementById('foRevs'), cards = [].slice.call(revs.children), dots = document.getElementById('foDots'), cur = 0;
+  function step() { return cards[1].offsetLeft - cards[0].offsetLeft; }
+  function last() { return Math.max(0, Math.round((revs.scrollWidth - revs.clientWidth) / step())); }
+  function paint() {
+    var n = last() + 1;
+    while (dots.children.length < n) dots.appendChild(document.createElement('i'));
+    while (dots.children.length > n) dots.removeChild(dots.lastChild);
+    [].forEach.call(dots.children, function (d, k) { d.classList.remove('fo-cur'); if (k === cur) { void d.offsetWidth; d.classList.add('fo-cur'); } });
+  }
+  function show(i) {
+    var m = last(); cur = i > m ? 0 : i < 0 ? m : i;
+    revs.scrollTo({ left: cur * step(), behavior: REDUCED ? 'auto' : 'smooth' });
+    paint();
+  }
+  dots.addEventListener('animationend', function () { show(cur + 1); });
+  document.getElementById('foPrev').addEventListener('click', function () { show(cur - 1); });
+  document.getElementById('foNext').addEventListener('click', function () { show(cur + 1); });
+  var sT;
+  revs.addEventListener('scroll', function () {
+    clearTimeout(sT);
+    sT = setTimeout(function () { var k = Math.min(last(), Math.round(revs.scrollLeft / step())); if (k !== cur) { cur = k; paint(); } }, 140);
+  }, { passive: true });
+  ['pointerenter', 'touchstart'].forEach(function (ev) { revs.addEventListener(ev, function () { revs.classList.add('fo-hold'); }, { passive: true }); });
+  ['pointerleave', 'touchend', 'touchcancel'].forEach(function (ev) { revs.addEventListener(ev, function () { revs.classList.remove('fo-hold'); }, { passive: true }); });
+  if ('IntersectionObserver' in window) new IntersectionObserver(function (es) { revs.classList.toggle('fo-off', !es[0].isIntersecting); }).observe(revs);
+  addEventListener('resize', function () { cur = Math.min(cur, last()); paint(); });
+  paint();
+
+
+  var form = document.getElementById('foForm'), thanks = document.getElementById('foThanks'), agree = document.getElementById('foAgree'), submit = document.getElementById('foSubmit');
+  var nm = document.getElementById('foName'), ph = document.getElementById('foPhone');
+  agree.addEventListener('change', function () { submit.disabled = !agree.checked; });
+  [nm, ph].forEach(function (el) { el.addEventListener('input', function () { el.removeAttribute('aria-invalid'); }); });
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var bad = null;
+    [[nm, 2], [ph, 8]].forEach(function (p) { var v = p[0] === ph ? p[0].value.replace(/\D/g, '') : p[0].value.trim(), no = v.length < p[1]; p[0].setAttribute('aria-invalid', no ? 'true' : 'false'); if (no && !bad) bad = p[0]; });
+    if (bad) { bad.focus(); return; }
+    form.hidden = true; thanks.hidden = false; thanks.focus();
+  });
+  document.getElementById('foAgain').addEventListener('click', function () { thanks.hidden = true; form.hidden = false; nm.focus(); });
+})();
+</script>
+<script type="module">
+
+const stage = document.getElementById('foArena');
+if (stage && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  let fx = null, on = false;
+  new IntersectionObserver(async ([e]) => {
+    if (e.isIntersecting && !fx) {
+      try {
+        const { mount } = await import('./fx/physics.js');
+        fx = mount(stage, {});
+        stage.style.background = 'radial-gradient(80% 70% at 50% 85%, #1d2620 0%, #0c0f0d 78%)';
+        stage.classList.add('fo-live');
+      } catch (err) { return; }
+    }
+    if (!fx) return;
+    if (e.isIntersecting && !on) { fx.start(); on = true; } else if (!e.isIntersecting && on) { fx.stop(); on = false; }
+  }, { rootMargin: '120px' }).observe(stage);
+}
+</script>
+</body>
+</html>
