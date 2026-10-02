@@ -1625,6 +1625,120 @@ body:has(.ai.is-open) .float-cta{opacity:0;pointer-events:none}
   border-top:1px solid var(--border);font-size:13.5px}
 .footer-links a{color:var(--muted);min-height:32px;display:inline-flex;align-items:center;transition:color .25s}
 .footer-links a:hover{color:#fff}
+
+
+:root{--ckbar:44px}
+body{padding-top:var(--ckbar)}
+.nav-check{display:flex;align-items:center;justify-content:center;height:var(--ckbar);overflow:hidden;
+  background:linear-gradient(90deg,rgba(167,139,250,0) 0%,rgba(167,139,250,.17) 50%,rgba(167,139,250,0) 100%);
+  border-bottom:1px solid rgba(255,255,255,.06);
+  transition:height .3s ease,opacity .3s ease,border-color .3s ease,visibility 0s linear 0s}
+.nav-check__b{position:relative;display:inline-flex;align-items:center;gap:8px;height:30px;padding:0 13px 0 12px;
+  border-radius:100px;font-family:var(--font-body);font-size:13.5px;font-weight:600;line-height:1;color:#0a0a0d;
+  white-space:nowrap;background:linear-gradient(100deg,#f3efff 0%,#c4b5fd 55%,#a78bfa 100%);overflow:hidden;isolation:isolate}
+.nav-check__b i{flex:none;width:7px;height:7px;border-radius:50%;background:#6d28d9}
+.nav-check__b svg{flex:none;width:14px;height:14px;transition:transform .25s}
+.nav-check:hover .nav-check__b svg{transform:translateX(3px)}
+.nav-check:focus-visible{outline:0}
+.nav-check:focus-visible .nav-check__b{outline:2px solid #fff;outline-offset:3px}
+@media (prefers-reduced-motion:no-preference){
+  .nav-check__b{animation:ckbarGlow 2.2s ease-in-out infinite}
+  .nav-check__b i{animation:ckbarDot 1.1s steps(1,end) infinite}
+  .nav-check__b::after{content:"";position:absolute;inset:0;z-index:-1;border-radius:inherit;
+    background:linear-gradient(105deg,rgba(255,255,255,0) 36%,rgba(255,255,255,.9) 50%,rgba(255,255,255,0) 64%);
+    transform:translateX(-120%);animation:ckbarShine 2.2s ease-in-out infinite}
+}
+@keyframes ckbarGlow{0%,100%{box-shadow:0 0 0 0 rgba(167,139,250,.65)}60%{box-shadow:0 0 0 9px rgba(167,139,250,0)}}
+@keyframes ckbarDot{0%,49%{opacity:1}50%,100%{opacity:.2}}
+@keyframes ckbarShine{0%,40%{transform:translateX(-120%)}85%,100%{transform:translateX(120%)}}
+.nav-check[aria-current="page"] .nav-check__b,.nav-check[aria-current="page"] .nav-check__b i,
+.nav-check[aria-current="page"] .nav-check__b::after{animation:none}
+.nav .nav-right .nav-links{top:calc(70px + var(--ckbar))}
+.section{scroll-margin-top:calc(88px + var(--ckbar))}
+
+.nav-links a.nav-ck{display:none}
+@media (max-width:1023px){
+  .nav.scrolled .nav-check{height:0;opacity:0;border-bottom-width:0;visibility:hidden;pointer-events:none;
+    transition:height .3s ease,opacity .3s ease,visibility 0s linear .3s}
+  .nav.scrolled .nav-right .nav-links{top:70px}
+  .section{scroll-margin-top:88px}
+  .nav-links a.nav-ck{display:block;color:#c4b5fd;font-weight:600}
+}
+@media (min-width:1024px) and (max-width:1180px){
+  html[lang="ka"] .nav-links a.nav-ck{display:block;color:#c4b5fd;font-weight:600}
+  
+  html[lang="ka"] .nav-links a.btn-primary{color:#0a0a0d}
+}
+
+
+.nav-links a.nav-gd[aria-current="page"]{color:#fff}
+.lead-sec{padding-top:40px}
+.leadbox{max-width:620px;margin:0 auto;padding:clamp(26px,4vw,40px);border-radius:24px;text-align:center;
+  border:1px solid rgba(167,139,250,.35);
+  background:radial-gradient(120% 90% at 50% 0%,rgba(167,139,250,.16),rgba(167,139,250,0) 62%),var(--surface-2)}
+.leadbox h2{font-size:clamp(24px,3.4vw,34px);letter-spacing:-.6px;line-height:1.15}
+.leadbox__p{color:var(--muted);font-size:16px;line-height:1.55;margin:14px auto 0;max-width:480px}
+.leadf{display:flex;flex-direction:column;gap:10px;margin-top:22px;text-align:left}
+.leadf__l{display:flex;flex-direction:column;gap:7px;font-size:13.5px;color:var(--silver)}
+.leadf__in{width:100%;min-height:50px;padding:0 16px;border-radius:14px;border:1px solid rgba(255,255,255,.14);
+  background:rgba(255,255,255,.04);color:#fff;font:inherit;font-size:16px;transition:border-color .25s,background .25s}
+.leadf__in::placeholder{color:rgba(255,255,255,.34)}
+.leadf__in:focus{outline:0;border-color:var(--violet);background:rgba(167,139,250,.07)}
+.leadf__q{margin-top:8px;font-size:13.5px;color:var(--silver)}
+.leadf__msg{position:relative}
+.leadf__ta{display:block;width:100%;min-height:104px;padding:14px 16px 52px;border-radius:14px;resize:vertical;
+  border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.04);color:#fff;font:inherit;font-size:16px;line-height:1.45;
+  transition:border-color .25s,background .25s}
+.leadf__ta:focus{outline:0;border-color:var(--violet);background:rgba(167,139,250,.07)}
+.leadf__cp{position:absolute;right:8px;bottom:8px;min-height:36px;padding:0 14px;border-radius:10px;cursor:pointer;
+  border:1px solid rgba(167,139,250,.45);background:rgba(167,139,250,.16);color:#e4defc;font:inherit;font-size:13.5px;font-weight:600;
+  transition:background .25s,color .25s,border-color .25s}
+.leadf__cp::before{content:"";position:absolute;inset:-5px}
+.leadf__cp:hover{background:rgba(167,139,250,.3);color:#fff}
+.leadf__cp.is-done{background:linear-gradient(140deg,#e4defc,#a78bfa);color:#0a0a0d;border-color:transparent}
+.leadf__cp:focus-visible{outline:2px solid #fff;outline-offset:2px}
+.leadf__cp [hidden]{display:none}
+.leadf__ch{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.leadf__b{display:flex;align-items:center;justify-content:center;gap:9px;min-height:52px;padding:0 10px;border-radius:14px;
+  border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.04);color:#fff;font:inherit;font-size:15px;font-weight:600;
+  cursor:pointer;transition:transform .25s cubic-bezier(.2,.7,.2,1),border-color .25s,background .25s,box-shadow .25s}
+.leadf__b svg{flex:none;width:20px;height:20px}
+.leadf__b:hover{transform:translateY(-2px)}
+
+.leadf__b:hover,.leadf__b:focus-visible{border-color:rgba(167,139,250,.6);background:rgba(167,139,250,.1);
+  box-shadow:0 16px 34px -18px rgba(124,92,246,.9)}
+.leadf__b:focus-visible{outline:2px solid #fff;outline-offset:2px}
+.leadf__b svg,.soc svg{box-sizing:content-box;padding:7px;border-radius:10px;color:#c4b5fd;
+  background:linear-gradient(140deg,rgba(167,139,250,.24),rgba(244,114,182,.12));border:1px solid rgba(167,139,250,.32);
+  transition:color .25s,background .25s,transform .25s}
+.leadf__b:hover svg,.soc:hover svg{color:#0a0a0d;background:linear-gradient(140deg,#e4defc,#a78bfa);transform:scale(1.06)}
+.footer-soc{display:flex;gap:10px;flex-basis:100%;padding-top:14px}
+.soc{display:inline-flex;min-width:44px;min-height:44px;align-items:center;justify-content:center;border-radius:12px}
+.soc svg{width:20px;height:20px}
+.soc:focus-visible{outline:2px solid #fff;outline-offset:2px}
+@media (min-width:1024px) and (max-width:1260px){
+  .nav-links{gap:13px}
+  .nav-links a{font-size:13.5px}
+}
+@media (min-width:1024px) and (max-width:1120px){.nav-links{gap:9px}}
+.leadm .leadf__ch{grid-template-columns:1fr}
+.leadm .leadf__b{justify-content:flex-start;padding:0 14px}
+.leadf__note{margin:4px 0 0;font-size:14px;color:#c4b5fd;text-align:center}
+.leadf__note[hidden]{display:none}
+.leadm{position:fixed;inset:0;z-index:120;display:grid;place-items:center;padding:16px}
+.leadm[hidden]{display:none}
+.leadm__bg{position:absolute;inset:0;background:rgba(5,5,8,.72);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+.leadm__card{position:relative;width:min(460px,100%);padding:30px 26px 26px;border-radius:22px;background:#111117;
+  border:1px solid rgba(167,139,250,.4);box-shadow:0 40px 90px -30px rgba(124,92,246,.7);animation:leadIn .28s cubic-bezier(.2,.7,.2,1)}
+@keyframes leadIn{from{opacity:0;transform:translateY(14px) scale(.97)}to{opacity:1;transform:none}}
+.leadm__card h3{font-size:24px;letter-spacing:-.4px;padding-right:36px}
+.leadm__p{color:var(--muted);font-size:15px;line-height:1.5;margin-top:8px}
+.leadm__x{position:absolute;top:12px;right:12px;width:44px;height:44px;border:0;border-radius:50%;background:transparent;
+  color:var(--muted);cursor:pointer;display:grid;place-items:center;transition:color .2s,background .2s}
+.leadm__x:hover{color:#fff;background:rgba(255,255,255,.07)}
+.leadm__x svg{width:18px;height:18px}
+@media(max-width:480px){.leadf__ch{grid-template-columns:1fr}.leadf__b{justify-content:flex-start;padding:0 18px}}
+@media(prefers-reduced-motion:reduce){.leadm__card{animation:none}.leadf__b{transition:none}}
 </style>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","@id":"https://open-sites.io/skolko-stoit-sait/#faq","mainEntity":[{"@type":"Question","name":"How much does a website cost in Georgia?","acceptedAnswer":{"@type":"Answer","text":"At the open-sites.io studio a landing page costs 290 ₾, a multi-page website 590 ₾, a website with an AI assistant 790 ₾ and an online store 990 ₾. An app is priced after we go through the task."}},{"@type":"Question","name":"How long does a website take?","acceptedAnswer":{"@type":"Answer","text":"A landing page takes 2–3 days, a multi-page website 3–7 days, an online store from 2 weeks."}},{"@type":"Question","name":"Do I need a domain and hosting?","acceptedAnswer":{"@type":"Answer","text":"You need a domain. It costs from about 10 ₾ a year and is bought in your name. Hosting for a static site is free."}},{"@type":"Question","name":"Is there a monthly fee?","acceptedAnswer":{"@type":"Answer","text":"No, you pay for the site once. Support is optional and costs 60 ₾ a month."}},{"@type":"Question","name":"Can the price grow during the work?","acceptedAnswer":{"@type":"Answer","text":"No, the price is fixed before we start."}}]}</script>
 <style>
@@ -1677,6 +1791,17 @@ body:has(.ai.is-open) .float-cta{opacity:0;pointer-events:none}
 .gd-work__n{display:block;font-size:12.5px;color:var(--violet);padding:0 4px}
 .gd-work b{display:block;font-family:var(--font-head);font-weight:600;font-size:18px;color:#fff;margin-top:4px;padding:0 4px}
 .gd-work p{font-size:14px;line-height:1.5;color:var(--muted);margin-top:6px;padding:0 4px;max-width:none}
+.gd-cards{display:grid;gap:14px}
+@media(min-width:720px){.gd-cards{grid-template-columns:repeat(3,1fr)}}
+.gd-card{display:flex;flex-direction:column;padding:22px 20px 18px;border-radius:18px;border:1px solid rgba(255,255,255,.09);
+  background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,0) 60%),var(--surface);
+  transition:transform .35s cubic-bezier(.2,.7,.2,1),border-color .35s,box-shadow .35s}
+.gd-card:hover{transform:translateY(-5px);border-color:rgba(167,139,250,.55);box-shadow:0 26px 54px -28px rgba(124,92,246,.65)}
+.gd-card b{font-family:var(--font-head);font-weight:600;font-size:19px;line-height:1.25;color:#fff}
+.gd-card p{font-size:14.5px;line-height:1.5;color:var(--muted);margin:10px 0 18px}
+.gd-card__go{margin-top:auto;display:inline-flex;align-items:center;gap:8px;min-height:32px;color:var(--violet);font-size:14.5px;font-weight:500}
+.gd-card__go svg{width:16px;height:16px;transition:transform .25s}
+.gd-card:hover .gd-card__go svg{transform:translateX(4px)}
 .gd-faq{display:grid;gap:10px;margin-top:22px}
 .gd-q{border-radius:14px;border:1px solid rgba(255,255,255,.09);background:var(--surface);transition:border-color .3s}
 .gd-q[open],.gd-q:hover{border-color:rgba(167,139,250,.45)}
@@ -1728,6 +1853,7 @@ body:has(.ai.is-open) .float-cta{opacity:0;pointer-events:none}
 </div>
 
 <header class="nav" id="nav">
+  <a class="nav-check" href="../check/"><span class="nav-check__b"><i aria-hidden="true"></i><span>Check your website</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
   <div class="wrap nav-inner">
     <a class="logo brand2" id="brand2" href="../" aria-label="open-sites.io">
         <svg class="bmark" viewBox="4 22 56 36" aria-hidden="true">
@@ -1738,12 +1864,14 @@ body:has(.ai.is-open) .float-cta{opacity:0;pointer-events:none}
       </a>
     <div class="nav-right">
       <nav class="nav-links" id="navLinks">
+        <a class="nav-ck" href="../check/">Check your website</a>
         <a href="../#services" data-i18n="nav.services">Services</a>
         <a href="../#process" data-i18n="nav.process">Process</a>
         <a href="../#tariffs" data-i18n="nav.tariffs">Pricing</a>
         <a href="../#cases" data-i18n="nav.cases">Projects</a>
         <a href="../#about" data-i18n="nav.about">About</a>
         <a href="../#faq" data-i18n="nav.faq">FAQ</a>
+        <a class="nav-gd" href="../poleznoe/">Guides</a>
         <a class="nav-ref" href="../referral/">Referral program</a>
         <a class="btn btn-primary btn-sm btn-pulse cta-beat" href="https://t.me/opensites_io" target="_blank" rel="noopener" data-i18n="nav.cta">Get a quote</a>
       </nav>
@@ -1904,6 +2032,11 @@ body:has(.ai.is-open) .float-cta{opacity:0;pointer-events:none}
       Telegram: <a href="https://t.me/opensites_io" target="_blank" rel="noopener">@opensites_io</a> ·
       <a href="mailto:opensites.io@gmail.com">opensites.io@gmail.com</a> ·
       <span>Batumi, Georgia</span>
+    </div>
+    <div class="footer-soc">
+      <a class="soc" href="https://t.me/opensites_io" target="_blank" rel="noopener" aria-label="Telegram"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M21.9 4.3 18.7 19.4c-.2 1.1-.9 1.3-1.8.8l-4.9-3.6-2.4 2.3c-.3.3-.5.5-1 .5l.4-5 9.1-8.2c.4-.4-.1-.5-.6-.2L6.2 13.1 1.4 11.6c-1-.3-1.1-1 .2-1.5L20.5 2.8c.9-.3 1.7.2 1.4 1.5z"/></svg></a>
+      <a class="soc" href="https://wa.me/995511477708" target="_blank" rel="noopener" aria-label="WhatsApp"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round" d="M12 3a9 9 0 0 0-7.7 13.6L3 21l4.5-1.2A9 9 0 1 0 12 3z"/><path fill="currentColor" d="M9.3 8.1c-.4 1.1.3 2.8 1.7 4.2s3.1 2.1 4.2 1.7l.7-1.4-1.7-1.1-.9.8c-.7-.4-1.5-1.2-1.9-1.900l.8-.9-1.1-1.7z"/></svg></a>
+      <a class="soc" href="https://www.instagram.com/opensites.io/" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.2" y="3.2" width="17.6" height="17.6" rx="5" fill="none" stroke="currentColor" stroke-width="1.9"/><circle cx="12" cy="12" r="4.1" fill="none" stroke="currentColor" stroke-width="1.9"/><circle cx="17.3" cy="6.7" r="1.2" fill="currentColor"/></svg></a>
     </div>
     <nav class="footer-links" aria-label="Guides">
       <a href="../sait-dlya-salona/">A salon website: what it needs</a>
@@ -3731,12 +3864,132 @@ window.osGoLang = function(lang){
 };
 </script>
 <script src="https://crm.18.185.108.90.sslip.io/s.js" data-site="open-sites" defer></script>
+<div class="leadm" id="leadM" hidden>
+  <div class="leadm__bg" data-lclose></div>
+  <div class="leadm__card" role="dialog" aria-modal="true" aria-labelledby="leadMT">
+    <button type="button" class="leadm__x" data-lclose aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+    <h3 id="leadMT">Send a request</h3>
+    <p class="leadm__p">Enter your name and choose where it is convenient for you to talk.</p>
+        <div class="leadf" data-leadf data-ctx="site">
+          <label class="leadf__l"><span>Your name</span><input type="text" class="leadf__in" placeholder="First name" autocomplete="given-name" maxlength="60"></label>
+          <span class="leadf__q" id="leadq-site">Message</span>
+          <div class="leadf__msg"><textarea class="leadf__ta" rows="3" aria-labelledby="leadq-site"></textarea><button type="button" class="leadf__cp"><span class="leadf__cp-a">Copy</span><span class="leadf__cp-b" hidden>Copied</span></button></div>
+          <span class="leadf__q">Where would you like to continue</span>
+          <div class="leadf__ch"><button type="button" class="leadf__b leadf__b--tg" data-ch="tg"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M21.9 4.3 18.7 19.4c-.2 1.1-.9 1.3-1.8.8l-4.9-3.6-2.4 2.3c-.3.3-.5.5-1 .5l.4-5 9.1-8.2c.4-.4-.1-.5-.6-.2L6.2 13.1 1.4 11.6c-1-.3-1.1-1 .2-1.5L20.5 2.8c.9-.3 1.7.2 1.4 1.5z"/></svg><span>Telegram</span></button><button type="button" class="leadf__b leadf__b--wa" data-ch="wa"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round" d="M12 3a9 9 0 0 0-7.7 13.6L3 21l4.5-1.2A9 9 0 1 0 12 3z"/><path fill="currentColor" d="M9.3 8.1c-.4 1.1.3 2.8 1.7 4.2s3.1 2.1 4.2 1.7l.7-1.4-1.7-1.1-.9.8c-.7-.4-1.5-1.2-1.9-1.900l.8-.9-1.1-1.7z"/></svg><span>WhatsApp</span></button><button type="button" class="leadf__b leadf__b--ig" data-ch="ig"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.2" y="3.2" width="17.6" height="17.6" rx="5" fill="none" stroke="currentColor" stroke-width="1.9"/><circle cx="12" cy="12" r="4.1" fill="none" stroke="currentColor" stroke-width="1.9"/><circle cx="17.3" cy="6.7" r="1.2" fill="currentColor"/></svg><span>Instagram</span></button></div>
+          <p class="leadf__note" hidden>The message text is copied. Paste it into Instagram.</p>
+        </div>
+  </div>
+</div>
+<script>
+
+(function(){
+  var TGN = "opensites_io", WA = "995511477708", IG = "opensites.io";
+  var L = {
+    ru: {hi: "Здравствуйте!", name: "Меня зовут {n}.", site: "Хочу заказать сайт или узнать подробности.",
+         ex: "Хочу получить бесплатный пример сайта.", tariff: "Интересует {t}."},
+    en: {hi: "Hello!", name: "My name is {n}.", site: "I would like to order a website or learn more.",
+         ex: "I would like to get a free example of a website.", tariff: "I am interested in {t}."},
+    ka: {hi: "გამარჯობა!", name: "მე მქვია {n}.", site: "მინდა საიტის შეკვეთა ან დეტალების გაგება.",
+         ex: "მინდა საიტის უფასო ნიმუშის მიღება.", tariff: "მაინტერესებს {t}."}
+  };
+  function lang(){ var l = (document.documentElement.lang || "ru").slice(0, 2); return L[l] ? l : "ru"; }
+  function squash(t){ return String(t || "").split(/[ \t\n\r\u00a0]+/).join(" ").trim(); }
+  function message(form){
+    var t = L[lang()], ctx = form.getAttribute("data-ctx") || "site";
+    var name = squash(form.querySelector(".leadf__in").value);
+    var parts = [t.hi];
+    if(name) parts.push(t.name.replace("{n}", name));
+    if(ctx.indexOf("tariff:") === 0) parts.push(t.tariff.replace("{t}", ctx.slice(7)));
+    else parts.push(ctx === "ex" ? t.ex : t.site);
+    return parts.join(" ");
+  }
+  function copy(text){
+    try{
+      var ta = document.createElement("textarea");
+      ta.value = text; ta.setAttribute("readonly", ""); ta.style.cssText = "position:fixed;left:-9999px;top:0";
+      document.body.appendChild(ta); ta.select(); ta.setSelectionRange(0, text.length);
+      var ok = document.execCommand("copy"); document.body.removeChild(ta);
+      if(!ok && navigator.clipboard) navigator.clipboard.writeText(text).catch(function(){});
+    }catch(e){ try{ navigator.clipboard.writeText(text).catch(function(){}); }catch(e2){} }
+  }
+
+  function fill(form, reset){
+    var ta = form.querySelector(".leadf__ta");
+    if(!ta) return;
+    if(reset) ta.removeAttribute("data-edited");
+    if(!ta.hasAttribute("data-edited")) ta.value = message(form);
+  }
+  function current(form){
+    var ta = form.querySelector(".leadf__ta");
+    return (ta && squash(ta.value)) || message(form);
+  }
+  [].forEach.call(document.querySelectorAll("[data-leadf]"), function(f){ fill(f, true); });
+  document.addEventListener("input", function(e){
+    var el = e.target, form = el.closest && el.closest("[data-leadf]");
+    if(!form) return;
+    if(el.classList.contains("leadf__ta")) el.setAttribute("data-edited", "1");
+    else if(el.classList.contains("leadf__in")) fill(form);
+  });
+  document.addEventListener("click", function(e){
+    var c = e.target.closest && e.target.closest(".leadf__cp");
+    if(!c) return;
+    copy(current(c.closest("[data-leadf]")));
+    var a = c.querySelector(".leadf__cp-a"), b = c.querySelector(".leadf__cp-b");
+    a.hidden = true; b.hidden = false; c.classList.add("is-done");
+    setTimeout(function(){ a.hidden = false; b.hidden = true; c.classList.remove("is-done"); }, 1800);
+  });
+  document.addEventListener("click", function(e){
+    var b = e.target.closest && e.target.closest(".leadf__b");
+    if(!b) return;
+    var form = b.closest("[data-leadf]"), text = current(form), ch = b.getAttribute("data-ch"), url;
+    var note = form.querySelector(".leadf__note");
+    if(ch === "tg") url = "https://t.me/" + TGN + "?text=" + encodeURIComponent(text);
+    else if(ch === "wa") url = "https://wa.me/" + WA + "?text=" + encodeURIComponent(text);
+    else { copy(text); url = "https://ig.me/m/" + IG; }
+    if(note) note.hidden = ch !== "ig";
+    window.open(url, "_blank", "noopener");
+  });
+
+  var modal = document.getElementById("leadM");
+  if(!modal) return;
+  var mform = modal.querySelector("[data-leadf]"), last = null;
+  function open(ctx, from){
+    last = from || null;
+    mform.setAttribute("data-ctx", ctx);
+    fill(mform, true);
+    var n = mform.querySelector(".leadf__note"); if(n) n.hidden = true;
+    modal.hidden = false;
+    document.documentElement.style.overflow = "hidden";
+    setTimeout(function(){ try{ mform.querySelector(".leadf__in").focus(); }catch(e){} }, 60);
+  }
+  function close(){
+    modal.hidden = true;
+    document.documentElement.style.overflow = "";
+    if(last){ try{ last.focus(); }catch(e){} }
+  }
+  modal.addEventListener("click", function(e){ if(e.target.closest("[data-lclose]")) close(); });
+  document.addEventListener("keydown", function(e){ if(e.key === "Escape" && !modal.hidden) close(); });
+
+  document.addEventListener("click", function(e){
+    var a = e.target.closest && e.target.closest('a.btn[href="https://t.me/' + TGN + '"]');
+    if(!a || a.closest(".leadm, .xpop, .footer, .ai-panel") || e.defaultPrevented) return;
+    if(e.metaKey || e.ctrlKey || e.shiftKey || e.button) return;
+    var ctx = "site", card = a.closest(".tcard");
+    if(card){
+      var h = card.querySelector(".tcard__name");
+      if(h) ctx = "tariff:" + squash(h.textContent);
+    } else if(a.closest(".gd-cta")) ctx = "ex";
+    e.preventDefault();
+    open(ctx, a);
+  });
+})();
+</script>
 <script>
 
 
 (function(){
   'use strict';
-  var T = {"Реферальная программа":["Referral program","რეფერალური პროგრამა"],"Полезное":["Guides","სასარგებლო"],"Сколько стоит сайт в Грузии":["How much a website costs in Georgia","რა ღირს საიტი საქართველოში"],"Цена сайта зависит от числа страниц и от того, должен ли он записывать клиентов, отвечать им или принимать заказы. Ниже цены студии open-sites.io, что в них входит и сколько стоят домен и поддержка.":["The price of a website depends on the number of pages and on whether it has to take bookings, answer clients or accept orders. Below are the prices of the open-sites.io studio, what they include and what a domain and support cost.","საიტის ფასი დამოკიდებულია გვერდების რაოდენობაზე და იმაზე, უნდა თუ არა მან კლიენტების ჩაწერა, მათთვის პასუხის გაცემა ან შეკვეთების მიღება. ქვემოთ მოცემულია სტუდია open-sites.io‑ს ფასები, რა შედის მათში და რა ღირს დომენი და მხარდაჭერა."],"Из чего складывается цена":["What the price is made of","რისგან შედგება ფასი"],"На цену влияют четыре вещи.":["Four things affect the price.","ფასზე ოთხი რამ მოქმედებს."],"Одна страница или несколько, по странице на услугу":["One page or several, with a page per service","ერთი გვერდი თუ რამდენიმე, თითო გვერდი თითო მომსახურებაზე"],"Онлайн-запись или заявка с любой страницы":["Online booking or a request from any page","ონლაინ ჩაწერა ან განაცხადი ნებისმიერი გვერდიდან"],"ИИ-консультант, который отвечает посетителям круглосуточно":["An AI assistant that answers visitors around the clock","AI‑კონსულტანტი, რომელიც ვიზიტორებს სადღეღამისოდ პასუხობს"],"Каталог с корзиной и заказом":["A catalogue with a cart and checkout","კატალოგი კალათითა და შეკვეთით"],"Цену называем до начала работы, по ходу она не меняется.":["We name the price before work starts, and it does not change along the way.","ფასს მუშაობის დაწყებამდე ვასახელებთ და პროცესში ის არ იცვლება."],"Цены":["Prices","ღირებულება"],"Решение":["Solution","გადაწყვეტა"],"Срок":["Timeline","ვადა"],"Лендинг «Первые заявки»":["Landing page “First Leads”","ლენდინგი „პირველი განაცხადები“"],"2–3 дня":["2–3 days","2–3 დღე"],"Сайт «Мост к клиенту»":["Website “Bridge to Clients”","საიტი „ხიდი კლიენტთან“"],"3–7 дней":["3–7 days","3–7 დღე"],"Сайт + ИИ «Всегда на связи»":["Site + AI “Always On”","საიტი + AI „მუდამ კავშირზე“"],"Магазин «Своя витрина»":["Store “Your Own Storefront”","მაღაზია „საკუთარი ვიტრინა“"],"от 2 недель":["from 2 weeks","2 კვირიდან"],"Приложение «В кармане клиента»":["App “In the Client's Pocket”","აპლიკაცია „კლიენტის ჯიბეში“"],"от 1 недели":["from 1 week","1 კვირიდან"],"Поддержка «Под присмотром»":["Support “In Good Hands”","მხარდაჭერა „მეთვალყურეობით“"],"в месяц":["a month","თვეში"],"Приложение для iOS и Android или Telegram Mini App считаем после разбора задачи.":["An iOS and Android app or a Telegram Mini App is priced after we go through the task with you.","iOS‑ისა და Android‑ის აპლიკაციის ან Telegram Mini App‑ის ფასს ამოცანის განხილვის შემდეგ ვითვლით."],"Корзину и заказ на сайте можно посмотреть в работе Saffron.":["You can see a cart and checkout on a website in our Saffron project.","კალათა და შეკვეთა საიტზე შეგიძლიათ ნახოთ ნამუშევარში Saffron."],"Ресторан с доставкой":["Restaurant with delivery","რესტორანი მიტანით"],"Меню с корзиной и полоской «до бесплатной доставки» — гости заказывают с сайта и добирают блюда до порога.":["A menu with a cart and a “free delivery” progress bar: guests order on the site and add dishes to reach the threshold.","მენიუ კალათით და „უფასო მიტანამდე“ ზოლით — სტუმრები საიტიდან უკვეთავენ და კერძებს ზღვრამდე ამატებენ."],"Что входит в цену":["What the price includes","რა შედის ფასში"],"Дизайн, нарисованный под ваш бизнес":["A design drawn for your business","თქვენი ბიზნესისთვის დახატული დიზაინი"],"Версия для телефона":["A mobile version","ტელეფონის ვერსია"],"Форма заявок, которая присылает их в Telegram":["A request form that sends requests to your Telegram","განაცხადის ფორმა, რომელიც მათ Telegram‑ში გიგზავნით"],"Базовая настройка для поиска":["Basic search engine setup","საძიებო სისტემებისთვის საბაზისო გამართვა"],"Запуск на вашем домене":["Launch on your domain","გაშვება თქვენს დომენზე"],"Правки до сдачи, сколько попросите":["As many revisions as you ask for before handover","შესწორებები ჩაბარებამდე, რამდენსაც მოითხოვთ"],"Все доступы и исходники передаём вам":["All access and source files are handed over to you","ყველა წვდომასა და საწყის ფაილს თქვენ გადმოგცემთ"],"Если главный экран не понравится, переделаем его или вернём предоплату.":["If you do not like the first screen, we redo it or refund the prepayment.","თუ მთავარი ეკრანი არ მოგეწონებათ, გადავაკეთებთ ან წინასწარ გადახდილ თანხას დაგიბრუნებთ."],"Платите один раз, абонентской платы за сайт нет. Половина стоимости вперёд, половина после запуска.":["You pay once, there is no monthly fee for the site. Half up front, half after launch.","იხდით ერთხელ, საიტისთვის სააბონენტო გადასახადი არ არის. ღირებულების ნახევარი წინასწარ, ნახევარი გაშვების შემდეგ."],"Апартаменты":["Apartments","აპარტამენტები"],"Веранда":["Veranda","ვერანდა"],"Календарь считает ночи по сезонным ценам — гость видит итог сразу и бронирует без переписки.":["The calendar prices each night by season, so guests see the total at once and book without back-and-forth messages.","კალენდარი ღამეებს სეზონური ფასებით ითვლის — სტუმარი ჯამს მაშინვე ხედავს და მიმოწერის გარეშე ჯავშნის."],"Стоматология":["Dental clinic","სტომატოლოგია"],"Тридцать два":["Thirty-Two","ოცდათორმეტი"],"Карта зубов отвечает на «сколько это будет стоить» до звонка — в клинику приходят уже решившиеся.":["A tooth chart answers “how much will it cost?” before the call, so patients arrive with their minds made up.","კბილების რუკა ზარამდე პასუხობს კითხვას „რა დაჯდება?“ — პაციენტები კლინიკაში უკვე მიღებული გადაწყვეტილებით მოდიან."],"Домен, хостинг и поддержка":["Domain, hosting and support","დომენი, ჰოსტინგი და მხარდაჭერა"],"Что":["Item","რა"],"Сколько":["Cost","რამდენი"],"Домен":["Domain","დომენი"],"примерно от 10 ₾ (300 ₽) в год":["from about 10 ₾ (300 ₽) a year","დაახლოებით 10 ₾-დან (300 ₽) წელიწადში"],"Хостинг статичного сайта":["Hosting for a static site","სტატიკური საიტის ჰოსტინგი"],"бесплатно":["free","უფასოა"],"Поддержка, по желанию":["Support, optional","მხარდაჭერა, სურვილისამებრ"],"60 ₾ ($22, 1 800 ₽) в месяц, на первый месяц скидка −50%":["60 ₾ ($22, 1,800 ₽) a month, with 50% off the first month","60 ₾ ($22, 1 800 ₽) თვეში, პირველ თვეზე ფასდაკლება −50%"],"Домен вы покупаете на своё имя. Мы помогаем подобрать адрес, купить его и подключить сайт и почту.":["You buy the domain in your own name. We help you choose the address, buy it and connect the site and email.","დომენს თქვენს სახელზე ყიდულობთ. ჩვენ გეხმარებით მისამართის შერჩევაში, ყიდვაში და საიტისა და ფოსტის მიერთებაში."],"В поддержку входят правки текстов, цен и фото, обновления, резервные копии и присмотр за тем, чтобы сайт открывался.":["Support covers edits to text, prices and photos, updates, backups and making sure the site stays online.","მხარდაჭერაში შედის ტექსტების, ფასებისა და ფოტოების შესწორება, განახლებები, სარეზერვო ასლები და ზედამხედველობა, რომ საიტი იხსნებოდეს."],"Сроки и порядок работы":["Timeline and steps","ვადები და მუშაობის წესი"],"Мы делаем бесплатный пример сайта для вашей компании.":["We make a free example of a site for your company.","ვამზადებთ თქვენი კომპანიის საიტის უფასო ნიმუშს."],"Вы отвечаете на вопросы о бизнесе, это пять минут голосом.":["You answer a few questions about the business, five minutes by voice.","პასუხობთ კითხვებს ბიზნესის შესახებ, ეს ხმოვანი შეტყობინებით ხუთი წუთია."],"Вы вносите половину оплаты.":["You pay the first half.","იხდით თანხის ნახევარს."],"Мы делаем сайт за 2–3 дня, если это лендинг, и за 3–7 дней, если страниц несколько.":["We build the site in 2–3 days for a landing page and in 3–7 days for several pages.","საიტს ვაკეთებთ 2–3 დღეში, თუ ეს ლენდინგია, და 3–7 დღეში, თუ გვერდი რამდენიმეა."],"Запускаем сайт на вашем домене, вы вносите вторую половину.":["We launch the site on your domain and you pay the second half.","საიტს თქვენს დომენზე ვუშვებთ, თქვენ იხდით მეორე ნახევარს."],"Точный срок называем до старта.":["We give you the exact timeline before we start.","ზუსტ ვადას დაწყებამდე გეუბნებით."],"Частые вопросы":["Common questions","ხშირი კითხვები"],"Сколько стоит сайт в Грузии?":["How much does a website cost in Georgia?","რა ღირს საიტი საქართველოში?"],"В студии open-sites.io лендинг стоит 290 ₾, сайт из нескольких страниц 590 ₾, сайт с ИИ-консультантом 790 ₾, магазин 990 ₾. Цену приложения называем после разбора задачи.":["At the open-sites.io studio a landing page costs 290 ₾, a multi-page website 590 ₾, a website with an AI assistant 790 ₾ and an online store 990 ₾. An app is priced after we go through the task.","სტუდია open-sites.io‑ში ლენდინგი ღირს 290 ₾, რამდენიმეგვერდიანი საიტი 590 ₾, საიტი AI‑კონსულტანტით 790 ₾, მაღაზია 990 ₾. აპლიკაციის ფასს ამოცანის განხილვის შემდეგ ვასახელებთ."],"За сколько делается сайт?":["How long does a website take?","რა დროში კეთდება საიტი?"],"Лендинг за 2–3 дня, сайт из нескольких страниц за 3–7 дней, магазин от 2 недель.":["A landing page takes 2–3 days, a multi-page website 3–7 days, an online store from 2 weeks.","ლენდინგი 2–3 დღეში, რამდენიმეგვერდიანი საიტი 3–7 დღეში, მაღაზია 2 კვირიდან."],"Нужны ли домен и хостинг?":["Do I need a domain and hosting?","საჭიროა თუ არა დომენი და ჰოსტინგი?"],"Домен нужен, он стоит примерно от 10 ₾ в год и покупается на ваше имя. Хостинг статичного сайта бесплатный.":["You need a domain. It costs from about 10 ₾ a year and is bought in your name. Hosting for a static site is free.","დომენი საჭიროა, ის ღირს დაახლოებით 10 ₾-დან წელიწადში და თქვენს სახელზე იყიდება. სტატიკური საიტის ჰოსტინგი უფასოა."],"Есть ли абонентская плата?":["Is there a monthly fee?","არის თუ არა სააბონენტო გადასახადი?"],"Нет, за сайт вы платите один раз. Поддержка по желанию, 60 ₾ в месяц.":["No, you pay for the site once. Support is optional and costs 60 ₾ a month.","არა, საიტისთვის ერთხელ იხდით. მხარდაჭერა სურვილისამებრ, 60 ₾ თვეში."],"Может ли цена вырасти по ходу работы?":["Can the price grow during the work?","შეიძლება თუ არა ფასი მუშაობისას გაიზარდოს?"],"Нет, цену фиксируем до старта.":["No, the price is fixed before we start.","არა, ფასს დაწყებამდე ვაფიქსირებთ."],"Сайт для салона: что должно быть":["A salon website: what it needs","საიტი სალონისთვის: რა უნდა იყოს"],"Бесплатный пример сайта и цена под вашу задачу":["A free example of your site and a price for your task","საიტის უფასო ნიმუში და ფასი თქვენი ამოცანისთვის"],"Покажем, как выглядел бы ваш сайт, и назовём цену до начала работы. Пример соберём за день, его можно открыть с телефона и пощупать. Он бесплатный и ни к чему вас не обязывает.":["We will show how your site could look and name the price before work starts. The example takes a day, and you can open it on your phone and try it out. It is free and you are under no obligation.","გაჩვენებთ, როგორ გამოიყურებოდა თქვენი საიტი, და ფასს მუშაობის დაწყებამდე დაგისახელებთ. ნიმუშს ერთ დღეში ავაწყობთ, მისი გახსნა ტელეფონით და გასინჯვა შეგიძლიათ. ის უფასოა და არაფერს გავალდებულებთ."],"Получить бесплатный пример":["Get a free example","მიიღეთ უფასო ნიმუში"],"Батуми, Грузия":["Batumi, Georgia","ბათუმი, საქართველო"],"Сайт или только Instagram":["A website or Instagram only","საიტი თუ მხოლოდ Instagram"],"Ассистент open-sites.io":["open-sites.io assistant","open-sites.io‑ს ასისტენტი"],"Подскажет по услугам, ценам и срокам":["Answers questions about services, prices and timelines","გიპასუხებთ სერვისებზე, ფასებსა და ვადებზე"],"Не определились с выбором?":["Still deciding?","ჯერ ვერ გადაწყვიტეთ?"],"Напишите нам в Telegram. Разберём вашу задачу, подскажем, какой тариф подойдёт, и назовём цену и срок. Это бесплатно и ни к чему не обязывает.":["Message us on Telegram. We'll look at your project, suggest the right plan and name the price and timeline. It's free, with no obligation.","მოგვწერეთ Telegram‑ში. განვიხილავთ თქვენს ამოცანას, გირჩევთ შესაფერის ტარიფს და დაგისახელებთ ფასსა და ვადას. ეს უფასოა და არაფერს გავალდებულებთ."],"Написать в Telegram":["Message on Telegram","მოწერა Telegram‑ში"],"Спросить ассистента":["Ask the assistant","ჰკითხეთ ასისტენტს"],"Смотреть тарифы":["See pricing","ტარიფების ნახვა"],"Язык / Language":["Language","ენა / Language"],"Меню":["Menu","მენიუ"],"Закрыть чат":["Close chat","ჩატის დახურვა"],"Ваш вопрос":["Your question","თქვენი კითხვა"],"Напишите вопрос…":["Type your question…","დაწერეთ კითხვა…"],"Отправить":["Send","გაგზავნა"],"Открыть чат с ассистентом":["Open chat with the assistant","ასისტენტთან ჩატის გახსნა"],"Закрыть":["Close","დახურვა"],"Тариф {n} из {m}":["Plan {n} of {m}","ტარიფი {n}, სულ {m}"],"≈ $22 · 1 800 ₽ в месяц":["≈ $22 · 1 800 ₽ a month","≈ $22 · 1 800 ₽ თვეში"],"≈ 60 ₾ · 1 800 ₽ в месяц":["≈ 60 ₾ · 1 800 ₽ a month","≈ 60 ₾ · 1 800 ₽ თვეში"],"≈ $22 · 60 ₾ в месяц":["≈ $22 · 60 ₾ a month","≈ $22 · 60 ₾ თვეში"]};
+  var T = {"Проверьте свой сайт":["Check your website","შეამოწმეთ თქვენი საიტი"],"Полезное":["Guides","სასარგებლო"],"Реферальная программа":["Referral program","რეფერალური პროგრამა"],"Сколько стоит сайт в Грузии":["How much a website costs in Georgia","რა ღირს საიტი საქართველოში"],"Цена сайта зависит от числа страниц и от того, должен ли он записывать клиентов, отвечать им или принимать заказы. Ниже цены студии open-sites.io, что в них входит и сколько стоят домен и поддержка.":["The price of a website depends on the number of pages and on whether it has to take bookings, answer clients or accept orders. Below are the prices of the open-sites.io studio, what they include and what a domain and support cost.","საიტის ფასი დამოკიდებულია გვერდების რაოდენობაზე და იმაზე, უნდა თუ არა მან კლიენტების ჩაწერა, მათთვის პასუხის გაცემა ან შეკვეთების მიღება. ქვემოთ მოცემულია სტუდია open-sites.io‑ს ფასები, რა შედის მათში და რა ღირს დომენი და მხარდაჭერა."],"Из чего складывается цена":["What the price is made of","რისგან შედგება ფასი"],"На цену влияют четыре вещи.":["Four things affect the price.","ფასზე ოთხი რამ მოქმედებს."],"Одна страница или несколько, по странице на услугу":["One page or several, with a page per service","ერთი გვერდი თუ რამდენიმე, თითო გვერდი თითო მომსახურებაზე"],"Онлайн-запись или заявка с любой страницы":["Online booking or a request from any page","ონლაინ ჩაწერა ან განაცხადი ნებისმიერი გვერდიდან"],"ИИ-консультант, который отвечает посетителям круглосуточно":["An AI assistant that answers visitors around the clock","AI‑კონსულტანტი, რომელიც ვიზიტორებს სადღეღამისოდ პასუხობს"],"Каталог с корзиной и заказом":["A catalogue with a cart and checkout","კატალოგი კალათითა და შეკვეთით"],"Цену называем до начала работы, по ходу она не меняется.":["We name the price before work starts, and it does not change along the way.","ფასს მუშაობის დაწყებამდე ვასახელებთ და პროცესში ის არ იცვლება."],"Цены":["Prices","ღირებულება"],"Решение":["Solution","გადაწყვეტა"],"Срок":["Timeline","ვადა"],"Лендинг «Первые заявки»":["Landing page “First Leads”","ლენდინგი „პირველი განაცხადები“"],"2–3 дня":["2–3 days","2–3 დღე"],"Сайт «Мост к клиенту»":["Website “Bridge to Clients”","საიტი „ხიდი კლიენტთან“"],"3–7 дней":["3–7 days","3–7 დღე"],"Сайт + ИИ «Всегда на связи»":["Site + AI “Always On”","საიტი + AI „მუდამ კავშირზე“"],"Магазин «Своя витрина»":["Store “Your Own Storefront”","მაღაზია „საკუთარი ვიტრინა“"],"от 2 недель":["from 2 weeks","2 კვირიდან"],"Приложение «В кармане клиента»":["App “In the Client's Pocket”","აპლიკაცია „კლიენტის ჯიბეში“"],"от 1 недели":["from 1 week","1 კვირიდან"],"Поддержка «Под присмотром»":["Support “In Good Hands”","მხარდაჭერა „მეთვალყურეობით“"],"в месяц":["a month","თვეში"],"Приложение для iOS и Android или Telegram Mini App считаем после разбора задачи.":["An iOS and Android app or a Telegram Mini App is priced after we go through the task with you.","iOS‑ისა და Android‑ის აპლიკაციის ან Telegram Mini App‑ის ფასს ამოცანის განხილვის შემდეგ ვითვლით."],"Корзину и заказ на сайте можно посмотреть в работе Saffron.":["You can see a cart and checkout on a website in our Saffron project.","კალათა და შეკვეთა საიტზე შეგიძლიათ ნახოთ ნამუშევარში Saffron."],"Ресторан с доставкой":["Restaurant with delivery","რესტორანი მიტანით"],"Меню с корзиной и полоской «до бесплатной доставки» — гости заказывают с сайта и добирают блюда до порога.":["A menu with a cart and a “free delivery” progress bar: guests order on the site and add dishes to reach the threshold.","მენიუ კალათით და „უფასო მიტანამდე“ ზოლით — სტუმრები საიტიდან უკვეთავენ და კერძებს ზღვრამდე ამატებენ."],"Что входит в цену":["What the price includes","რა შედის ფასში"],"Дизайн, нарисованный под ваш бизнес":["A design drawn for your business","თქვენი ბიზნესისთვის დახატული დიზაინი"],"Версия для телефона":["A mobile version","ტელეფონის ვერსია"],"Форма заявок, которая присылает их в Telegram":["A request form that sends requests to your Telegram","განაცხადის ფორმა, რომელიც მათ Telegram‑ში გიგზავნით"],"Базовая настройка для поиска":["Basic search engine setup","საძიებო სისტემებისთვის საბაზისო გამართვა"],"Запуск на вашем домене":["Launch on your domain","გაშვება თქვენს დომენზე"],"Правки до сдачи, сколько попросите":["As many revisions as you ask for before handover","შესწორებები ჩაბარებამდე, რამდენსაც მოითხოვთ"],"Все доступы и исходники передаём вам":["All access and source files are handed over to you","ყველა წვდომასა და საწყის ფაილს თქვენ გადმოგცემთ"],"Если главный экран не понравится, переделаем его или вернём предоплату.":["If you do not like the first screen, we redo it or refund the prepayment.","თუ მთავარი ეკრანი არ მოგეწონებათ, გადავაკეთებთ ან წინასწარ გადახდილ თანხას დაგიბრუნებთ."],"Платите один раз, абонентской платы за сайт нет. Половина стоимости вперёд, половина после запуска.":["You pay once, there is no monthly fee for the site. Half up front, half after launch.","იხდით ერთხელ, საიტისთვის სააბონენტო გადასახადი არ არის. ღირებულების ნახევარი წინასწარ, ნახევარი გაშვების შემდეგ."],"Апартаменты":["Apartments","აპარტამენტები"],"Веранда":["Veranda","ვერანდა"],"Календарь считает ночи по сезонным ценам — гость видит итог сразу и бронирует без переписки.":["The calendar prices each night by season, so guests see the total at once and book without back-and-forth messages.","კალენდარი ღამეებს სეზონური ფასებით ითვლის — სტუმარი ჯამს მაშინვე ხედავს და მიმოწერის გარეშე ჯავშნის."],"Стоматология":["Dental clinic","სტომატოლოგია"],"Тридцать два":["Thirty-Two","ოცდათორმეტი"],"Карта зубов отвечает на «сколько это будет стоить» до звонка — в клинику приходят уже решившиеся.":["A tooth chart answers “how much will it cost?” before the call, so patients arrive with their minds made up.","კბილების რუკა ზარამდე პასუხობს კითხვას „რა დაჯდება?“ — პაციენტები კლინიკაში უკვე მიღებული გადაწყვეტილებით მოდიან."],"Домен, хостинг и поддержка":["Domain, hosting and support","დომენი, ჰოსტინგი და მხარდაჭერა"],"Что":["Item","რა"],"Сколько":["Cost","რამდენი"],"Домен":["Domain","დომენი"],"примерно от 10 ₾ (300 ₽) в год":["from about 10 ₾ (300 ₽) a year","დაახლოებით 10 ₾-დან (300 ₽) წელიწადში"],"Хостинг статичного сайта":["Hosting for a static site","სტატიკური საიტის ჰოსტინგი"],"бесплатно":["free","უფასოა"],"Поддержка, по желанию":["Support, optional","მხარდაჭერა, სურვილისამებრ"],"60 ₾ ($22, 1 800 ₽) в месяц, на первый месяц скидка −50%":["60 ₾ ($22, 1,800 ₽) a month, with 50% off the first month","60 ₾ ($22, 1 800 ₽) თვეში, პირველ თვეზე ფასდაკლება −50%"],"Домен вы покупаете на своё имя. Мы помогаем подобрать адрес, купить его и подключить сайт и почту.":["You buy the domain in your own name. We help you choose the address, buy it and connect the site and email.","დომენს თქვენს სახელზე ყიდულობთ. ჩვენ გეხმარებით მისამართის შერჩევაში, ყიდვაში და საიტისა და ფოსტის მიერთებაში."],"В поддержку входят правки текстов, цен и фото, обновления, резервные копии и присмотр за тем, чтобы сайт открывался.":["Support covers edits to text, prices and photos, updates, backups and making sure the site stays online.","მხარდაჭერაში შედის ტექსტების, ფასებისა და ფოტოების შესწორება, განახლებები, სარეზერვო ასლები და ზედამხედველობა, რომ საიტი იხსნებოდეს."],"Сроки и порядок работы":["Timeline and steps","ვადები და მუშაობის წესი"],"Мы делаем бесплатный пример сайта для вашей компании.":["We make a free example of a site for your company.","ვამზადებთ თქვენი კომპანიის საიტის უფასო ნიმუშს."],"Вы отвечаете на вопросы о бизнесе, это пять минут голосом.":["You answer a few questions about the business, five minutes by voice.","პასუხობთ კითხვებს ბიზნესის შესახებ, ეს ხმოვანი შეტყობინებით ხუთი წუთია."],"Вы вносите половину оплаты.":["You pay the first half.","იხდით თანხის ნახევარს."],"Мы делаем сайт за 2–3 дня, если это лендинг, и за 3–7 дней, если страниц несколько.":["We build the site in 2–3 days for a landing page and in 3–7 days for several pages.","საიტს ვაკეთებთ 2–3 დღეში, თუ ეს ლენდინგია, და 3–7 დღეში, თუ გვერდი რამდენიმეა."],"Запускаем сайт на вашем домене, вы вносите вторую половину.":["We launch the site on your domain and you pay the second half.","საიტს თქვენს დომენზე ვუშვებთ, თქვენ იხდით მეორე ნახევარს."],"Точный срок называем до старта.":["We give you the exact timeline before we start.","ზუსტ ვადას დაწყებამდე გეუბნებით."],"Частые вопросы":["Common questions","ხშირი კითხვები"],"Сколько стоит сайт в Грузии?":["How much does a website cost in Georgia?","რა ღირს საიტი საქართველოში?"],"В студии open-sites.io лендинг стоит 290 ₾, сайт из нескольких страниц 590 ₾, сайт с ИИ-консультантом 790 ₾, магазин 990 ₾. Цену приложения называем после разбора задачи.":["At the open-sites.io studio a landing page costs 290 ₾, a multi-page website 590 ₾, a website with an AI assistant 790 ₾ and an online store 990 ₾. An app is priced after we go through the task.","სტუდია open-sites.io‑ში ლენდინგი ღირს 290 ₾, რამდენიმეგვერდიანი საიტი 590 ₾, საიტი AI‑კონსულტანტით 790 ₾, მაღაზია 990 ₾. აპლიკაციის ფასს ამოცანის განხილვის შემდეგ ვასახელებთ."],"За сколько делается сайт?":["How long does a website take?","რა დროში კეთდება საიტი?"],"Лендинг за 2–3 дня, сайт из нескольких страниц за 3–7 дней, магазин от 2 недель.":["A landing page takes 2–3 days, a multi-page website 3–7 days, an online store from 2 weeks.","ლენდინგი 2–3 დღეში, რამდენიმეგვერდიანი საიტი 3–7 დღეში, მაღაზია 2 კვირიდან."],"Нужны ли домен и хостинг?":["Do I need a domain and hosting?","საჭიროა თუ არა დომენი და ჰოსტინგი?"],"Домен нужен, он стоит примерно от 10 ₾ в год и покупается на ваше имя. Хостинг статичного сайта бесплатный.":["You need a domain. It costs from about 10 ₾ a year and is bought in your name. Hosting for a static site is free.","დომენი საჭიროა, ის ღირს დაახლოებით 10 ₾-დან წელიწადში და თქვენს სახელზე იყიდება. სტატიკური საიტის ჰოსტინგი უფასოა."],"Есть ли абонентская плата?":["Is there a monthly fee?","არის თუ არა სააბონენტო გადასახადი?"],"Нет, за сайт вы платите один раз. Поддержка по желанию, 60 ₾ в месяц.":["No, you pay for the site once. Support is optional and costs 60 ₾ a month.","არა, საიტისთვის ერთხელ იხდით. მხარდაჭერა სურვილისამებრ, 60 ₾ თვეში."],"Может ли цена вырасти по ходу работы?":["Can the price grow during the work?","შეიძლება თუ არა ფასი მუშაობისას გაიზარდოს?"],"Нет, цену фиксируем до старта.":["No, the price is fixed before we start.","არა, ფასს დაწყებამდე ვაფიქსირებთ."],"Сайт для салона: что должно быть":["A salon website: what it needs","საიტი სალონისთვის: რა უნდა იყოს"],"Бесплатный пример сайта и цена под вашу задачу":["A free example of your site and a price for your task","საიტის უფასო ნიმუში და ფასი თქვენი ამოცანისთვის"],"Покажем, как выглядел бы ваш сайт, и назовём цену до начала работы. Пример соберём за день, его можно открыть с телефона и пощупать. Он бесплатный и ни к чему вас не обязывает.":["We will show how your site could look and name the price before work starts. The example takes a day, and you can open it on your phone and try it out. It is free and you are under no obligation.","გაჩვენებთ, როგორ გამოიყურებოდა თქვენი საიტი, და ფასს მუშაობის დაწყებამდე დაგისახელებთ. ნიმუშს ერთ დღეში ავაწყობთ, მისი გახსნა ტელეფონით და გასინჯვა შეგიძლიათ. ის უფასოა და არაფერს გავალდებულებთ."],"Получить бесплатный пример":["Get a free example","მიიღეთ უფასო ნიმუში"],"Батуми, Грузия":["Batumi, Georgia","ბათუმი, საქართველო"],"Сайт или только Instagram":["A website or Instagram only","საიტი თუ მხოლოდ Instagram"],"Ассистент open-sites.io":["open-sites.io assistant","open-sites.io‑ს ასისტენტი"],"Подскажет по услугам, ценам и срокам":["Answers questions about services, prices and timelines","გიპასუხებთ სერვისებზე, ფასებსა და ვადებზე"],"Не определились с выбором?":["Still deciding?","ჯერ ვერ გადაწყვიტეთ?"],"Напишите нам в Telegram. Разберём вашу задачу, подскажем, какой тариф подойдёт, и назовём цену и срок. Это бесплатно и ни к чему не обязывает.":["Message us on Telegram. We'll look at your project, suggest the right plan and name the price and timeline. It's free, with no obligation.","მოგვწერეთ Telegram‑ში. განვიხილავთ თქვენს ამოცანას, გირჩევთ შესაფერის ტარიფს და დაგისახელებთ ფასსა და ვადას. ეს უფასოა და არაფერს გავალდებულებთ."],"Написать в Telegram":["Message on Telegram","მოწერა Telegram‑ში"],"Спросить ассистента":["Ask the assistant","ჰკითხეთ ასისტენტს"],"Смотреть тарифы":["See pricing","ტარიფების ნახვა"],"Оставить заявку":["Send a request","განაცხადის დატოვება"],"Напишите имя и выберите, где вам удобно общаться.":["Enter your name and choose where it is convenient for you to talk.","დაწერეთ სახელი და აირჩიეთ, სად გირჩევნიათ ურთიერთობა."],"Как вас зовут":["Your name","რა გქვიათ"],"Сообщение":["Message","შეტყობინება"],"Скопировать":["Copy","კოპირება"],"Скопировано":["Copied","დაკოპირდა"],"Где вам удобно продолжить":["Where would you like to continue","სად გირჩევნიათ გაგრძელება"],"Текст сообщения скопирован. Вставьте его в Instagram.":["The message text is copied. Paste it into Instagram.","შეტყობინების ტექსტი დაკოპირებულია. ჩასვით Instagram‑ში."],"Язык / Language":["Language","ენა / Language"],"Меню":["Menu","მენიუ"],"Закрыть чат":["Close chat","ჩატის დახურვა"],"Ваш вопрос":["Your question","თქვენი კითხვა"],"Напишите вопрос…":["Type your question…","დაწერეთ კითხვა…"],"Отправить":["Send","გაგზავნა"],"Открыть чат с ассистентом":["Open chat with the assistant","ასისტენტთან ჩატის გახსნა"],"Закрыть":["Close","დახურვა"],"Ваше имя":["First name","თქვენი სახელი"],"Тариф {n} из {m}":["Plan {n} of {m}","ტარიფი {n}, სულ {m}"],"≈ $22 · 1 800 ₽ в месяц":["≈ $22 · 1 800 ₽ a month","≈ $22 · 1 800 ₽ თვეში"],"≈ 60 ₾ · 1 800 ₽ в месяц":["≈ 60 ₾ · 1 800 ₽ a month","≈ 60 ₾ · 1 800 ₽ თვეში"],"≈ $22 · 60 ₾ в месяц":["≈ $22 · 60 ₾ a month","≈ $22 · 60 ₾ თვეში"]};
   var LI = {en: 0, ka: 1};
   var CY = /[А-Яа-яЁё]/;
   var ATTRS = ['aria-label', 'alt', 'title', 'placeholder', 'aria-roledescription'];

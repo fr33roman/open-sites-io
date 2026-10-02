@@ -21,6 +21,8 @@ The client buys the domain in their own name; we help choose, buy and connect it
 - [Home, English](https://open-sites.io/en/)
 - [Home, Georgian](https://open-sites.io/ka/)
 - [Our work](https://open-sites.io/works/): websites for a barbershop, beauty salon, dental clinic, restaurant, car rental and more
+- [Free website check](https://open-sites.io/check/): paste a site address and see what stops clients from calling or messaging
+- [Guides](https://open-sites.io/poleznoe/): articles about websites for small businesses
 - [What a salon or barbershop website needs](https://open-sites.io/sait-dlya-salona/)
 - [How much a website costs in Georgia](https://open-sites.io/skolko-stoit-sait/)
 - [Website or Instagram only](https://open-sites.io/sait-ili-instagram/)

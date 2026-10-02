@@ -1625,6 +1625,120 @@ body:has(.ai.is-open) .float-cta{opacity:0;pointer-events:none}
   border-top:1px solid var(--border);font-size:13.5px}
 .footer-links a{color:var(--muted);min-height:32px;display:inline-flex;align-items:center;transition:color .25s}
 .footer-links a:hover{color:#fff}
+
+
+:root{--ckbar:44px}
+body{padding-top:var(--ckbar)}
+.nav-check{display:flex;align-items:center;justify-content:center;height:var(--ckbar);overflow:hidden;
+  background:linear-gradient(90deg,rgba(167,139,250,0) 0%,rgba(167,139,250,.17) 50%,rgba(167,139,250,0) 100%);
+  border-bottom:1px solid rgba(255,255,255,.06);
+  transition:height .3s ease,opacity .3s ease,border-color .3s ease,visibility 0s linear 0s}
+.nav-check__b{position:relative;display:inline-flex;align-items:center;gap:8px;height:30px;padding:0 13px 0 12px;
+  border-radius:100px;font-family:var(--font-body);font-size:13.5px;font-weight:600;line-height:1;color:#0a0a0d;
+  white-space:nowrap;background:linear-gradient(100deg,#f3efff 0%,#c4b5fd 55%,#a78bfa 100%);overflow:hidden;isolation:isolate}
+.nav-check__b i{flex:none;width:7px;height:7px;border-radius:50%;background:#6d28d9}
+.nav-check__b svg{flex:none;width:14px;height:14px;transition:transform .25s}
+.nav-check:hover .nav-check__b svg{transform:translateX(3px)}
+.nav-check:focus-visible{outline:0}
+.nav-check:focus-visible .nav-check__b{outline:2px solid #fff;outline-offset:3px}
+@media (prefers-reduced-motion:no-preference){
+  .nav-check__b{animation:ckbarGlow 2.2s ease-in-out infinite}
+  .nav-check__b i{animation:ckbarDot 1.1s steps(1,end) infinite}
+  .nav-check__b::after{content:"";position:absolute;inset:0;z-index:-1;border-radius:inherit;
+    background:linear-gradient(105deg,rgba(255,255,255,0) 36%,rgba(255,255,255,.9) 50%,rgba(255,255,255,0) 64%);
+    transform:translateX(-120%);animation:ckbarShine 2.2s ease-in-out infinite}
+}
+@keyframes ckbarGlow{0%,100%{box-shadow:0 0 0 0 rgba(167,139,250,.65)}60%{box-shadow:0 0 0 9px rgba(167,139,250,0)}}
+@keyframes ckbarDot{0%,49%{opacity:1}50%,100%{opacity:.2}}
+@keyframes ckbarShine{0%,40%{transform:translateX(-120%)}85%,100%{transform:translateX(120%)}}
+.nav-check[aria-current="page"] .nav-check__b,.nav-check[aria-current="page"] .nav-check__b i,
+.nav-check[aria-current="page"] .nav-check__b::after{animation:none}
+.nav .nav-right .nav-links{top:calc(70px + var(--ckbar))}
+.section{scroll-margin-top:calc(88px + var(--ckbar))}
+
+.nav-links a.nav-ck{display:none}
+@media (max-width:1023px){
+  .nav.scrolled .nav-check{height:0;opacity:0;border-bottom-width:0;visibility:hidden;pointer-events:none;
+    transition:height .3s ease,opacity .3s ease,visibility 0s linear .3s}
+  .nav.scrolled .nav-right .nav-links{top:70px}
+  .section{scroll-margin-top:88px}
+  .nav-links a.nav-ck{display:block;color:#c4b5fd;font-weight:600}
+}
+@media (min-width:1024px) and (max-width:1180px){
+  html[lang="ka"] .nav-links a.nav-ck{display:block;color:#c4b5fd;font-weight:600}
+  
+  html[lang="ka"] .nav-links a.btn-primary{color:#0a0a0d}
+}
+
+
+.nav-links a.nav-gd[aria-current="page"]{color:#fff}
+.lead-sec{padding-top:40px}
+.leadbox{max-width:620px;margin:0 auto;padding:clamp(26px,4vw,40px);border-radius:24px;text-align:center;
+  border:1px solid rgba(167,139,250,.35);
+  background:radial-gradient(120% 90% at 50% 0%,rgba(167,139,250,.16),rgba(167,139,250,0) 62%),var(--surface-2)}
+.leadbox h2{font-size:clamp(24px,3.4vw,34px);letter-spacing:-.6px;line-height:1.15}
+.leadbox__p{color:var(--muted);font-size:16px;line-height:1.55;margin:14px auto 0;max-width:480px}
+.leadf{display:flex;flex-direction:column;gap:10px;margin-top:22px;text-align:left}
+.leadf__l{display:flex;flex-direction:column;gap:7px;font-size:13.5px;color:var(--silver)}
+.leadf__in{width:100%;min-height:50px;padding:0 16px;border-radius:14px;border:1px solid rgba(255,255,255,.14);
+  background:rgba(255,255,255,.04);color:#fff;font:inherit;font-size:16px;transition:border-color .25s,background .25s}
+.leadf__in::placeholder{color:rgba(255,255,255,.34)}
+.leadf__in:focus{outline:0;border-color:var(--violet);background:rgba(167,139,250,.07)}
+.leadf__q{margin-top:8px;font-size:13.5px;color:var(--silver)}
+.leadf__msg{position:relative}
+.leadf__ta{display:block;width:100%;min-height:104px;padding:14px 16px 52px;border-radius:14px;resize:vertical;
+  border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.04);color:#fff;font:inherit;font-size:16px;line-height:1.45;
+  transition:border-color .25s,background .25s}
+.leadf__ta:focus{outline:0;border-color:var(--violet);background:rgba(167,139,250,.07)}
+.leadf__cp{position:absolute;right:8px;bottom:8px;min-height:36px;padding:0 14px;border-radius:10px;cursor:pointer;
+  border:1px solid rgba(167,139,250,.45);background:rgba(167,139,250,.16);color:#e4defc;font:inherit;font-size:13.5px;font-weight:600;
+  transition:background .25s,color .25s,border-color .25s}
+.leadf__cp::before{content:"";position:absolute;inset:-5px}
+.leadf__cp:hover{background:rgba(167,139,250,.3);color:#fff}
+.leadf__cp.is-done{background:linear-gradient(140deg,#e4defc,#a78bfa);color:#0a0a0d;border-color:transparent}
+.leadf__cp:focus-visible{outline:2px solid #fff;outline-offset:2px}
+.leadf__cp [hidden]{display:none}
+.leadf__ch{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.leadf__b{display:flex;align-items:center;justify-content:center;gap:9px;min-height:52px;padding:0 10px;border-radius:14px;
+  border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.04);color:#fff;font:inherit;font-size:15px;font-weight:600;
+  cursor:pointer;transition:transform .25s cubic-bezier(.2,.7,.2,1),border-color .25s,background .25s,box-shadow .25s}
+.leadf__b svg{flex:none;width:20px;height:20px}
+.leadf__b:hover{transform:translateY(-2px)}
+
+.leadf__b:hover,.leadf__b:focus-visible{border-color:rgba(167,139,250,.6);background:rgba(167,139,250,.1);
+  box-shadow:0 16px 34px -18px rgba(124,92,246,.9)}
+.leadf__b:focus-visible{outline:2px solid #fff;outline-offset:2px}
+.leadf__b svg,.soc svg{box-sizing:content-box;padding:7px;border-radius:10px;color:#c4b5fd;
+  background:linear-gradient(140deg,rgba(167,139,250,.24),rgba(244,114,182,.12));border:1px solid rgba(167,139,250,.32);
+  transition:color .25s,background .25s,transform .25s}
+.leadf__b:hover svg,.soc:hover svg{color:#0a0a0d;background:linear-gradient(140deg,#e4defc,#a78bfa);transform:scale(1.06)}
+.footer-soc{display:flex;gap:10px;flex-basis:100%;padding-top:14px}
+.soc{display:inline-flex;min-width:44px;min-height:44px;align-items:center;justify-content:center;border-radius:12px}
+.soc svg{width:20px;height:20px}
+.soc:focus-visible{outline:2px solid #fff;outline-offset:2px}
+@media (min-width:1024px) and (max-width:1260px){
+  .nav-links{gap:13px}
+  .nav-links a{font-size:13.5px}
+}
+@media (min-width:1024px) and (max-width:1120px){.nav-links{gap:9px}}
+.leadm .leadf__ch{grid-template-columns:1fr}
+.leadm .leadf__b{justify-content:flex-start;padding:0 14px}
+.leadf__note{margin:4px 0 0;font-size:14px;color:#c4b5fd;text-align:center}
+.leadf__note[hidden]{display:none}
+.leadm{position:fixed;inset:0;z-index:120;display:grid;place-items:center;padding:16px}
+.leadm[hidden]{display:none}
+.leadm__bg{position:absolute;inset:0;background:rgba(5,5,8,.72);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+.leadm__card{position:relative;width:min(460px,100%);padding:30px 26px 26px;border-radius:22px;background:#111117;
+  border:1px solid rgba(167,139,250,.4);box-shadow:0 40px 90px -30px rgba(124,92,246,.7);animation:leadIn .28s cubic-bezier(.2,.7,.2,1)}
+@keyframes leadIn{from{opacity:0;transform:translateY(14px) scale(.97)}to{opacity:1;transform:none}}
+.leadm__card h3{font-size:24px;letter-spacing:-.4px;padding-right:36px}
+.leadm__p{color:var(--muted);font-size:15px;line-height:1.5;margin-top:8px}
+.leadm__x{position:absolute;top:12px;right:12px;width:44px;height:44px;border:0;border-radius:50%;background:transparent;
+  color:var(--muted);cursor:pointer;display:grid;place-items:center;transition:color .2s,background .2s}
+.leadm__x:hover{color:#fff;background:rgba(255,255,255,.07)}
+.leadm__x svg{width:18px;height:18px}
+@media(max-width:480px){.leadf__ch{grid-template-columns:1fr}.leadf__b{justify-content:flex-start;padding:0 18px}}
+@media(prefers-reduced-motion:reduce){.leadm__card{animation:none}.leadf__b{transition:none}}
 </style>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","@id":"https://open-sites.io/sait-dlya-salona/#faq","mainEntity":[{"@type":"Question","name":"სჭირდება თუ არა სალონს საიტი, თუ Instagram აქვს?","acceptedAnswer":{"@type":"Answer","text":"სჭირდება, თუ გსურთ, რომ Google‑ში გპოულობდნენ. Instagram რჩება ნამუშევრების საჩვენებლად, საიტი კი ფასებს, ჩაწერასა და მისამართს ერთ ადგილას აგროვებს."}},{"@type":"Question","name":"რა ღირს საიტი სალონისთვის?","acceptedAnswer":{"@type":"Answer","text":"ლენდინგი მომსახურებით, ფასებითა და ჩაწერით ღირს 290 ₾ და მზადაა 2–3 დღეში. რამდენიმეგვერდიანი საიტი ღირს 590 ₾ და კეთდება 3–7 დღეში."}},{"@type":"Question","name":"შეიძლება თუ არა ჩაწერის დატოვება Altegio‑ში ან DIKIDI‑ში?","acceptedAnswer":{"@type":"Answer","text":"დიახ. საიტი კლიენტებს თქვენს ჩაწერის სისტემაში აგზავნის, მისი შეცვლა საჭირო არ არის."}},{"@type":"Question","name":"რამდენი გვერდი სჭირდება სალონს?","acceptedAnswer":{"@type":"Answer","text":"ერთი გვერდი საკმარისია, თუ მომსახურება ცოტაა. თუ თითოეულ მომსახურებას ან ოსტატს თავისი გვერდი აქვს, რამდენიმეგვერდიან საიტს ირჩევენ."}}]}</script>
 <style>
@@ -1677,6 +1791,17 @@ body:has(.ai.is-open) .float-cta{opacity:0;pointer-events:none}
 .gd-work__n{display:block;font-size:12.5px;color:var(--violet);padding:0 4px}
 .gd-work b{display:block;font-family:var(--font-head);font-weight:600;font-size:18px;color:#fff;margin-top:4px;padding:0 4px}
 .gd-work p{font-size:14px;line-height:1.5;color:var(--muted);margin-top:6px;padding:0 4px;max-width:none}
+.gd-cards{display:grid;gap:14px}
+@media(min-width:720px){.gd-cards{grid-template-columns:repeat(3,1fr)}}
+.gd-card{display:flex;flex-direction:column;padding:22px 20px 18px;border-radius:18px;border:1px solid rgba(255,255,255,.09);
+  background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,0) 60%),var(--surface);
+  transition:transform .35s cubic-bezier(.2,.7,.2,1),border-color .35s,box-shadow .35s}
+.gd-card:hover{transform:translateY(-5px);border-color:rgba(167,139,250,.55);box-shadow:0 26px 54px -28px rgba(124,92,246,.65)}
+.gd-card b{font-family:var(--font-head);font-weight:600;font-size:19px;line-height:1.25;color:#fff}
+.gd-card p{font-size:14.5px;line-height:1.5;color:var(--muted);margin:10px 0 18px}
+.gd-card__go{margin-top:auto;display:inline-flex;align-items:center;gap:8px;min-height:32px;color:var(--violet);font-size:14.5px;font-weight:500}
+.gd-card__go svg{width:16px;height:16px;transition:transform .25s}
+.gd-card:hover .gd-card__go svg{transform:translateX(4px)}
 .gd-faq{display:grid;gap:10px;margin-top:22px}
 .gd-q{border-radius:14px;border:1px solid rgba(255,255,255,.09);background:var(--surface);transition:border-color .3s}
 .gd-q[open],.gd-q:hover{border-color:rgba(167,139,250,.45)}
@@ -1728,6 +1853,7 @@ body:has(.ai.is-open) .float-cta{opacity:0;pointer-events:none}
 </div>
 
 <header class="nav" id="nav">
+  <a class="nav-check" href="../check/"><span class="nav-check__b"><i aria-hidden="true"></i><span>შეამოწმეთ თქვენი საიტი</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
   <div class="wrap nav-inner">
     <a class="logo brand2" id="brand2" href="../" aria-label="open-sites.io">
         <svg class="bmark" viewBox="4 22 56 36" aria-hidden="true">
@@ -1738,12 +1864,14 @@ body:has(.ai.is-open) .float-cta{opacity:0;pointer-events:none}
       </a>
     <div class="nav-right">
       <nav class="nav-links" id="navLinks">
+        <a class="nav-ck" href="../check/">შეამოწმეთ თქვენი საიტი</a>
         <a href="../#services" data-i18n="nav.services">სერვისები</a>
         <a href="../#process" data-i18n="nav.process">პროცესი</a>
         <a href="../#tariffs" data-i18n="nav.tariffs">ტარიფები</a>
         <a href="../#cases" data-i18n="nav.cases">პროექტები</a>
         <a href="../#about" data-i18n="nav.about">ჩვენ შესახებ</a>
         <a href="../#faq" data-i18n="nav.faq">FAQ</a>
+        <a class="nav-gd" href="../poleznoe/">სასარგებლო</a>
         <a class="nav-ref" href="../referral/">რეფერალური პროგრამა</a>
         <a class="btn btn-primary btn-sm btn-pulse cta-beat" href="https://t.me/opensites_io" target="_blank" rel="noopener" data-i18n="nav.cta">განაცხადის გაგზავნა</a>
       </nav>
@@ -1885,6 +2013,11 @@ body:has(.ai.is-open) .float-cta{opacity:0;pointer-events:none}
       Telegram: <a href="https://t.me/opensites_io" target="_blank" rel="noopener">@opensites_io</a> ·
       <a href="mailto:opensites.io@gmail.com">opensites.io@gmail.com</a> ·
       <span>ბათუმი, საქართველო</span>
+    </div>
+    <div class="footer-soc">
+      <a class="soc" href="https://t.me/opensites_io" target="_blank" rel="noopener" aria-label="Telegram"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M21.9 4.3 18.7 19.4c-.2 1.1-.9 1.3-1.8.8l-4.9-3.6-2.4 2.3c-.3.3-.5.5-1 .5l.4-5 9.1-8.2c.4-.4-.1-.5-.6-.2L6.2 13.1 1.4 11.6c-1-.3-1.1-1 .2-1.5L20.5 2.8c.9-.3 1.7.2 1.4 1.5z"/></svg></a>
+      <a class="soc" href="https://wa.me/995511477708" target="_blank" rel="noopener" aria-label="WhatsApp"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round" d="M12 3a9 9 0 0 0-7.7 13.6L3 21l4.5-1.2A9 9 0 1 0 12 3z"/><path fill="currentColor" d="M9.3 8.1c-.4 1.1.3 2.8 1.7 4.2s3.1 2.1 4.2 1.7l.7-1.4-1.7-1.1-.9.8c-.7-.4-1.5-1.2-1.9-1.900l.8-.9-1.1-1.7z"/></svg></a>
+      <a class="soc" href="https://www.instagram.com/opensites.io/" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.2" y="3.2" width="17.6" height="17.6" rx="5" fill="none" stroke="currentColor" stroke-width="1.9"/><circle cx="12" cy="12" r="4.1" fill="none" stroke="currentColor" stroke-width="1.9"/><circle cx="17.3" cy="6.7" r="1.2" fill="currentColor"/></svg></a>
     </div>
     <nav class="footer-links" aria-label="სასარგებლო">
       <a href="../sait-dlya-salona/">საიტი სალონისთვის: რა უნდა იყოს</a>
@@ -3712,12 +3845,132 @@ window.osGoLang = function(lang){
 };
 </script>
 <script src="https://crm.18.185.108.90.sslip.io/s.js" data-site="open-sites" defer></script>
+<div class="leadm" id="leadM" hidden>
+  <div class="leadm__bg" data-lclose></div>
+  <div class="leadm__card" role="dialog" aria-modal="true" aria-labelledby="leadMT">
+    <button type="button" class="leadm__x" data-lclose aria-label="დახურვა"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+    <h3 id="leadMT">განაცხადის დატოვება</h3>
+    <p class="leadm__p">დაწერეთ სახელი და აირჩიეთ, სად გირჩევნიათ ურთიერთობა.</p>
+        <div class="leadf" data-leadf data-ctx="site">
+          <label class="leadf__l"><span>რა გქვიათ</span><input type="text" class="leadf__in" placeholder="თქვენი სახელი" autocomplete="given-name" maxlength="60"></label>
+          <span class="leadf__q" id="leadq-site">შეტყობინება</span>
+          <div class="leadf__msg"><textarea class="leadf__ta" rows="3" aria-labelledby="leadq-site"></textarea><button type="button" class="leadf__cp"><span class="leadf__cp-a">კოპირება</span><span class="leadf__cp-b" hidden>დაკოპირდა</span></button></div>
+          <span class="leadf__q">სად გირჩევნიათ გაგრძელება</span>
+          <div class="leadf__ch"><button type="button" class="leadf__b leadf__b--tg" data-ch="tg"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M21.9 4.3 18.7 19.4c-.2 1.1-.9 1.3-1.8.8l-4.9-3.6-2.4 2.3c-.3.3-.5.5-1 .5l.4-5 9.1-8.2c.4-.4-.1-.5-.6-.2L6.2 13.1 1.4 11.6c-1-.3-1.1-1 .2-1.5L20.5 2.8c.9-.3 1.7.2 1.4 1.5z"/></svg><span>Telegram</span></button><button type="button" class="leadf__b leadf__b--wa" data-ch="wa"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round" d="M12 3a9 9 0 0 0-7.7 13.6L3 21l4.5-1.2A9 9 0 1 0 12 3z"/><path fill="currentColor" d="M9.3 8.1c-.4 1.1.3 2.8 1.7 4.2s3.1 2.1 4.2 1.7l.7-1.4-1.7-1.1-.9.8c-.7-.4-1.5-1.2-1.9-1.900l.8-.9-1.1-1.7z"/></svg><span>WhatsApp</span></button><button type="button" class="leadf__b leadf__b--ig" data-ch="ig"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.2" y="3.2" width="17.6" height="17.6" rx="5" fill="none" stroke="currentColor" stroke-width="1.9"/><circle cx="12" cy="12" r="4.1" fill="none" stroke="currentColor" stroke-width="1.9"/><circle cx="17.3" cy="6.7" r="1.2" fill="currentColor"/></svg><span>Instagram</span></button></div>
+          <p class="leadf__note" hidden>შეტყობინების ტექსტი დაკოპირებულია. ჩასვით Instagram‑ში.</p>
+        </div>
+  </div>
+</div>
+<script>
+
+(function(){
+  var TGN = "opensites_io", WA = "995511477708", IG = "opensites.io";
+  var L = {
+    ru: {hi: "Здравствуйте!", name: "Меня зовут {n}.", site: "Хочу заказать сайт или узнать подробности.",
+         ex: "Хочу получить бесплатный пример сайта.", tariff: "Интересует {t}."},
+    en: {hi: "Hello!", name: "My name is {n}.", site: "I would like to order a website or learn more.",
+         ex: "I would like to get a free example of a website.", tariff: "I am interested in {t}."},
+    ka: {hi: "გამარჯობა!", name: "მე მქვია {n}.", site: "მინდა საიტის შეკვეთა ან დეტალების გაგება.",
+         ex: "მინდა საიტის უფასო ნიმუშის მიღება.", tariff: "მაინტერესებს {t}."}
+  };
+  function lang(){ var l = (document.documentElement.lang || "ru").slice(0, 2); return L[l] ? l : "ru"; }
+  function squash(t){ return String(t || "").split(/[ \t\n\r\u00a0]+/).join(" ").trim(); }
+  function message(form){
+    var t = L[lang()], ctx = form.getAttribute("data-ctx") || "site";
+    var name = squash(form.querySelector(".leadf__in").value);
+    var parts = [t.hi];
+    if(name) parts.push(t.name.replace("{n}", name));
+    if(ctx.indexOf("tariff:") === 0) parts.push(t.tariff.replace("{t}", ctx.slice(7)));
+    else parts.push(ctx === "ex" ? t.ex : t.site);
+    return parts.join(" ");
+  }
+  function copy(text){
+    try{
+      var ta = document.createElement("textarea");
+      ta.value = text; ta.setAttribute("readonly", ""); ta.style.cssText = "position:fixed;left:-9999px;top:0";
+      document.body.appendChild(ta); ta.select(); ta.setSelectionRange(0, text.length);
+      var ok = document.execCommand("copy"); document.body.removeChild(ta);
+      if(!ok && navigator.clipboard) navigator.clipboard.writeText(text).catch(function(){});
+    }catch(e){ try{ navigator.clipboard.writeText(text).catch(function(){}); }catch(e2){} }
+  }
+
+  function fill(form, reset){
+    var ta = form.querySelector(".leadf__ta");
+    if(!ta) return;
+    if(reset) ta.removeAttribute("data-edited");
+    if(!ta.hasAttribute("data-edited")) ta.value = message(form);
+  }
+  function current(form){
+    var ta = form.querySelector(".leadf__ta");
+    return (ta && squash(ta.value)) || message(form);
+  }
+  [].forEach.call(document.querySelectorAll("[data-leadf]"), function(f){ fill(f, true); });
+  document.addEventListener("input", function(e){
+    var el = e.target, form = el.closest && el.closest("[data-leadf]");
+    if(!form) return;
+    if(el.classList.contains("leadf__ta")) el.setAttribute("data-edited", "1");
+    else if(el.classList.contains("leadf__in")) fill(form);
+  });
+  document.addEventListener("click", function(e){
+    var c = e.target.closest && e.target.closest(".leadf__cp");
+    if(!c) return;
+    copy(current(c.closest("[data-leadf]")));
+    var a = c.querySelector(".leadf__cp-a"), b = c.querySelector(".leadf__cp-b");
+    a.hidden = true; b.hidden = false; c.classList.add("is-done");
+    setTimeout(function(){ a.hidden = false; b.hidden = true; c.classList.remove("is-done"); }, 1800);
+  });
+  document.addEventListener("click", function(e){
+    var b = e.target.closest && e.target.closest(".leadf__b");
+    if(!b) return;
+    var form = b.closest("[data-leadf]"), text = current(form), ch = b.getAttribute("data-ch"), url;
+    var note = form.querySelector(".leadf__note");
+    if(ch === "tg") url = "https://t.me/" + TGN + "?text=" + encodeURIComponent(text);
+    else if(ch === "wa") url = "https://wa.me/" + WA + "?text=" + encodeURIComponent(text);
+    else { copy(text); url = "https://ig.me/m/" + IG; }
+    if(note) note.hidden = ch !== "ig";
+    window.open(url, "_blank", "noopener");
+  });
+
+  var modal = document.getElementById("leadM");
+  if(!modal) return;
+  var mform = modal.querySelector("[data-leadf]"), last = null;
+  function open(ctx, from){
+    last = from || null;
+    mform.setAttribute("data-ctx", ctx);
+    fill(mform, true);
+    var n = mform.querySelector(".leadf__note"); if(n) n.hidden = true;
+    modal.hidden = false;
+    document.documentElement.style.overflow = "hidden";
+    setTimeout(function(){ try{ mform.querySelector(".leadf__in").focus(); }catch(e){} }, 60);
+  }
+  function close(){
+    modal.hidden = true;
+    document.documentElement.style.overflow = "";
+    if(last){ try{ last.focus(); }catch(e){} }
+  }
+  modal.addEventListener("click", function(e){ if(e.target.closest("[data-lclose]")) close(); });
+  document.addEventListener("keydown", function(e){ if(e.key === "Escape" && !modal.hidden) close(); });
+
+  document.addEventListener("click", function(e){
+    var a = e.target.closest && e.target.closest('a.btn[href="https://t.me/' + TGN + '"]');
+    if(!a || a.closest(".leadm, .xpop, .footer, .ai-panel") || e.defaultPrevented) return;
+    if(e.metaKey || e.ctrlKey || e.shiftKey || e.button) return;
+    var ctx = "site", card = a.closest(".tcard");
+    if(card){
+      var h = card.querySelector(".tcard__name");
+      if(h) ctx = "tariff:" + squash(h.textContent);
+    } else if(a.closest(".gd-cta")) ctx = "ex";
+    e.preventDefault();
+    open(ctx, a);
+  });
+})();
+</script>
 <script>
 
 
 (function(){
   'use strict';
-  var T = {"Реферальная программа":["Referral program","რეფერალური პროგრამა"],"Полезное":["Guides","სასარგებლო"],"Сайт для салона: что должно быть":["A salon website: what it needs","საიტი სალონისთვის: რა უნდა იყოს"],"Клиент ищет салон с телефона, часто вечером, и сравнивает цену, время, место, мастеров и отзывы. Вот что должно быть на сайте, чтобы он записался у вас.":["People look for a salon on their phone, often in the evening, and compare price, time, location, the team and reviews. Here is what your site needs so that they book with you.","კლიენტი სალონს ტელეფონით ეძებს, ხშირად საღამოს, და ადარებს ფასს, დროს, ადგილს, ოსტატებსა და შეფასებებს. აი, რა უნდა იყოს საიტზე, რომ სწორედ თქვენთან ჩაეწეროს."],"Цены":["Prices","ღირებულება"],"Цены стоят на сайте таблицей, по группам услуг. У каждой строки есть время и цена, которую человек заплатит на кассе.":["Prices sit in a table, grouped by service. Each row shows the duration and the price the client will actually pay.","ფასები საიტზე ცხრილის სახითაა, მომსახურების ჯგუფების მიხედვით. თითოეულ სტრიქონში ჩანს დრო და ფასი, რომელსაც კლიენტი რეალურად გადაიხდის."],"Услуга":["Service","მომსახურება"],"Время":["Duration","დრო"],"Цена":["Price","ფასი"],"Мужская стрижка":["Men's haircut","მამაკაცის თმის შეჭრა"],"45 мин":["45 min","45 წთ"],"Женская стрижка":["Women's haircut","ქალის თმის შეჭრა"],"60 мин":["60 min","60 წთ"],"Окрашивание корней":["Root colouring","ძირების შეღებვა"],"90 мин":["90 min","90 წთ"],"от 120 ₾":["from 120 ₾","120 ₾-დან"],"Маникюр с гель-лаком":["Gel polish manicure","მანიკური გელ-ლაქით"],"Если цена зависит от длины волос, это написано в самой строке, как «от 120 ₾» у окрашивания. Клиент видит итог до записи.":["If the price depends on hair length, the row says so, like “from 120 ₾” for colouring. The client sees the total before booking.","თუ ფასი თმის სიგრძეზეა დამოკიდებული, ეს თავად სტრიქონში წერია, მაგალითად „120 ₾-დან“ შეღებვისთვის. კლიენტი ჯამს ჩაწერამდე ხედავს."],"Когда услуг много, их собирают в несколько направлений вместо длинного списка. Так сделан сайт MIYA.":["When there are many services, they are grouped into a few directions in place of one long list. The MIYA site is built this way.","როცა მომსახურება ბევრია, გრძელი სიის ნაცვლად ისინი რამდენიმე მიმართულებად ჯგუფდება. ასეა აწყობილი MIYA‑ს საიტი."],"Салон красоты":["Beauty salon","სილამაზის სალონი"],"Четыре направления заботы вместо длинного прайса — клиент быстрее находит своё и записывается.":["Four care categories instead of a long price list, so clients find what suits them faster and book.","მოვლის ოთხი მიმართულება ფასების გრძელი სიის ნაცვლად — კლიენტი თავისას უფრო სწრაფად პოულობს და ეწერება."],"Запись":["Booking","ჩაწერა"],"Кнопка записи стоит на первом экране, в шапке и в конце страницы. Называется она одинаково на всём сайте, например «Записаться на стрижку».":["The booking button sits on the first screen, in the header and at the end of the page. It has the same label everywhere, for example “Book a haircut”.","ჩაწერის ღილაკი დგას პირველ ეკრანზე, ზედა ზოლში და გვერდის ბოლოს. მთელ საიტზე მას ერთი და იგივე სახელი აქვს, მაგალითად „ჩაწერა თმის შეჭრაზე“."],"Рядом с формой стоит кнопка мессенджера, потому что часть людей формы не заполняет.":["A messenger button sits next to the form, because some people never fill in forms.","ფორმის გვერდით მესენჯერის ღილაკი დგას, რადგან ადამიანების ნაწილი ფორმებს არ ავსებს."],"Свободное время видно сразу. В нашей работе «Лоцман» это табло, где выбираешь стрижку и видишь, когда освободишься.":["Free slots are visible straight away. In our Lotsman project it is a departure board: pick a haircut and see when you will be done.","თავისუფალი დრო მაშინვე ჩანს. ჩვენს ნამუშევარში „ლოცმანი“ ეს არის ტაბლო, სადაც ირჩევთ თმის შეჭრას და ხედავთ, როდის გათავისუფლდებით."],"Барбершоп":["Barbershop","ბარბერშოპი"],"Лоцман":["Lotsman","ლოცმანი"],"Табло с минутами снимает главный вопрос «сколько я просижу» — и человек записывается, не звоня.":["A board with the minutes answers the main question, “how long will I be in the chair?”, so people book without calling.","წუთების დაფა პასუხობს მთავარ კითხვას — „რამდენ ხანს მომიწევს ჯდომა?“ — და ადამიანი ზარის გარეშე ეწერება."],"Если запись у вас уже идёт через Altegio или DIKIDI, её оставляют. Клиенты из поиска приходят на сайт и записываются в той же системе.":["If you already take bookings through Altegio or DIKIDI, that stays. People come to the site from search and book in the same system.","თუ ჩაწერა უკვე Altegio‑თი ან DIKIDI‑ით მიმდინარეობს, ის რჩება. ძიებიდან მოსული კლიენტები საიტზე შემოდიან და იმავე სისტემაში ეწერებიან."],"Мастера и работы":["The team and their work","ოსტატები და ნამუშევრები"],"У каждого мастера своя карточка с фото, именем и специализацией. В Батуми стоит указать и языки мастера, гость хочет знать, что его поймут.":["Every specialist has a card with a photo, name and speciality. In Batumi it is worth listing the languages they speak too, because a guest wants to be understood.","ყველა ოსტატს აქვს თავისი ბარათი ფოტოთი, სახელითა და სპეციალიზაციით. ბათუმში ღირს ოსტატის ენების მითითებაც, სტუმარს სურს იცოდეს, რომ გაუგებენ."],"Фото работ берут свои, с телефона мастера. Свои кадры убеждают сильнее чужих.":["Use your own photos of your work, taken on the specialist's phone. Your own shots convince better than stock ones.","ნამუშევრების ფოტოები საკუთარი უნდა იყოს, ოსტატის ტელეფონით გადაღებული. საკუთარი კადრები უფრო დამაჯერებელია, ვიდრე სხვისი."],"Тем, кто боится, что подстригут не так, помогает строка о том, что вы делаете, если результат не устроил.":["For those who fear a bad haircut, one line about what you do when the result is not right helps a lot.","ვისაც ეშინია, რომ ისე არ შეჭრიან, როგორც სურს, ეხმარება ერთი სტრიქონი იმაზე, რას აკეთებთ, თუ შედეგი არ მოეწონა."],"Шёлк":["Silk","აბრეშუმი"],"Ползунок влажности объясняет, почему укладка держится по-разному, — клиент приходит подготовленным.":["A humidity slider explains why a hairstyle holds differently from day to day, so clients arrive prepared.","ტენიანობის სლაიდერი ხსნის, რატომ ძლებს ვარცხნილობა სხვადასხვანაირად, — კლიენტი მომზადებული მოდის."],"Жёсткая подача под мужскую аудиторию: человек запоминает студию с первого экрана.":["A bold look for a male audience: people remember the studio from the first screen.","მკაცრი სტილი მამაკაცი აუდიტორიისთვის: სტუდია პირველივე ეკრანიდან ამახსოვრდებათ."],"Отзывы":["Reviews","შეფასებები"],"Хороший отзыв состоит из имени, услуги и одной фразы о результате.":["A good review has a name, the service and one sentence about the result.","კარგი შეფასება შედგება სახელისგან, მომსახურებისგან და შედეგზე ერთი ფრაზისგან."],"На сайт ставят шесть-девять настоящих отзывов лентой, лучше всего из Google Карт.":["Six to nine real reviews go on the site as a slider, ideally taken from Google Maps.","საიტზე ლენტად იდება ექვსი-ცხრა ნამდვილი შეფასება, საუკეთესოა Google Maps‑იდან."],"Адрес и телефон":["Address and phone","მისამართი და ტელეფონი"],"Адрес, часы работы и карта собраны в одном блоке, телефон нажимается.":["Address, opening hours and a map sit in one block, and the phone number can be tapped.","მისამართი, სამუშაო საათები და რუკა ერთ ბლოკშია, ტელეფონის ნომერზე დაჭერა შესაძლებელია."],"На карте стоит кнопка «Проложить маршрут». Она открывает Google Карты с готовым маршрутом до вашей двери.":["The map has a “Get directions” button. It opens Google Maps with a ready route to your door.","რუკაზე დგას ღილაკი „მარშრუტის აგება“. ის ხსნის Google Maps‑ს მზა მარშრუტით თქვენს კარამდე."],"Название, адрес и телефон на сайте совпадают с карточкой в Google Картах. Так вас проще находить и в поиске, и в ответах нейросетей.":["The name, address and phone on the site match your Google Maps listing. That makes you easier to find in search and in AI answers.","სახელი, მისამართი და ტელეფონი საიტზე ემთხვევა Google Maps‑ის ბარათს. ასე უფრო ადვილად გპოულობენ როგორც ძიებაში, ისე ნეიროქსელების პასუხებში."],"Частые вопросы":["Common questions","ხშირი კითხვები"],"Нужен ли салону сайт, если есть Instagram?":["Does a salon need a website if it has Instagram?","სჭირდება თუ არა სალონს საიტი, თუ Instagram აქვს?"],"Нужен, если хотите, чтобы вас находили в Google. Instagram остаётся для показа работ, а сайт собирает цены, запись и адрес в одном месте.":["Yes, if you want to be found on Google. Instagram stays the place to show your work, and the site keeps prices, booking and the address in one place.","სჭირდება, თუ გსურთ, რომ Google‑ში გპოულობდნენ. Instagram რჩება ნამუშევრების საჩვენებლად, საიტი კი ფასებს, ჩაწერასა და მისამართს ერთ ადგილას აგროვებს."],"Сколько стоит сайт для салона?":["How much does a salon website cost?","რა ღირს საიტი სალონისთვის?"],"Лендинг с услугами, ценами и записью стоит 290 ₾ и готов за 2–3 дня. Сайт из нескольких страниц стоит 590 ₾ и делается 3–7 дней.":["A landing page with services, prices and booking costs 290 ₾ and is ready in 2–3 days. A multi-page website costs 590 ₾ and takes 3–7 days.","ლენდინგი მომსახურებით, ფასებითა და ჩაწერით ღირს 290 ₾ და მზადაა 2–3 დღეში. რამდენიმეგვერდიანი საიტი ღირს 590 ₾ და კეთდება 3–7 დღეში."],"Можно ли оставить запись через Altegio или DIKIDI?":["Can I keep booking through Altegio or DIKIDI?","შეიძლება თუ არა ჩაწერის დატოვება Altegio‑ში ან DIKIDI‑ში?"],"Да. Сайт ведёт клиентов в вашу систему записи, менять её не нужно.":["Yes. The site sends clients to your booking system, so nothing has to change.","დიახ. საიტი კლიენტებს თქვენს ჩაწერის სისტემაში აგზავნის, მისი შეცვლა საჭირო არ არის."],"Сколько страниц нужно салону?":["How many pages does a salon need?","რამდენი გვერდი სჭირდება სალონს?"],"Одной страницы хватает, если услуг немного. Если у каждой услуги или мастера своя страница, берут сайт из нескольких страниц.":["One page is enough when there are only a few services. If every service or specialist gets its own page, a multi-page site is the choice.","ერთი გვერდი საკმარისია, თუ მომსახურება ცოტაა. თუ თითოეულ მომსახურებას ან ოსტატს თავისი გვერდი აქვს, რამდენიმეგვერდიან საიტს ირჩევენ."],"Сайт или только Instagram":["A website or Instagram only","საიტი თუ მხოლოდ Instagram"],"Бесплатный пример сайта для вашего салона":["A free example of a website for your salon","თქვენი სალონის საიტის უფასო ნიმუში"],"Соберём его за день на примере вашего салона. Вы откроете пример с телефона, полистаете и увидите свой салон глазами клиента. Это бесплатно и ни к чему вас не обязывает.":["We will build it in a day using your salon as the example. You open it on your phone, scroll through it and see your salon the way a client does. It is free and you are under no obligation.","ერთ დღეში ავაწყობთ თქვენი სალონის მაგალითზე. ნიმუშს ტელეფონით გახსნით, გადაფურცლავთ და თქვენს სალონს კლიენტის თვალით დაინახავთ. ეს უფასოა და არაფერს გავალდებულებთ."],"Получить бесплатный пример":["Get a free example","მიიღეთ უფასო ნიმუში"],"Батуми, Грузия":["Batumi, Georgia","ბათუმი, საქართველო"],"Сколько стоит сайт в Грузии":["How much a website costs in Georgia","რა ღირს საიტი საქართველოში"],"Ассистент open-sites.io":["open-sites.io assistant","open-sites.io‑ს ასისტენტი"],"Подскажет по услугам, ценам и срокам":["Answers questions about services, prices and timelines","გიპასუხებთ სერვისებზე, ფასებსა და ვადებზე"],"Не определились с выбором?":["Still deciding?","ჯერ ვერ გადაწყვიტეთ?"],"Напишите нам в Telegram. Разберём вашу задачу, подскажем, какой тариф подойдёт, и назовём цену и срок. Это бесплатно и ни к чему не обязывает.":["Message us on Telegram. We'll look at your project, suggest the right plan and name the price and timeline. It's free, with no obligation.","მოგვწერეთ Telegram‑ში. განვიხილავთ თქვენს ამოცანას, გირჩევთ შესაფერის ტარიფს და დაგისახელებთ ფასსა და ვადას. ეს უფასოა და არაფერს გავალდებულებთ."],"Написать в Telegram":["Message on Telegram","მოწერა Telegram‑ში"],"Спросить ассистента":["Ask the assistant","ჰკითხეთ ასისტენტს"],"Смотреть тарифы":["See pricing","ტარიფების ნახვა"],"Язык / Language":["Language","ენა / Language"],"Меню":["Menu","მენიუ"],"Закрыть чат":["Close chat","ჩატის დახურვა"],"Ваш вопрос":["Your question","თქვენი კითხვა"],"Напишите вопрос…":["Type your question…","დაწერეთ კითხვა…"],"Отправить":["Send","გაგზავნა"],"Открыть чат с ассистентом":["Open chat with the assistant","ასისტენტთან ჩატის გახსნა"],"Закрыть":["Close","დახურვა"],"Тариф {n} из {m}":["Plan {n} of {m}","ტარიფი {n}, სულ {m}"],"≈ $22 · 1 800 ₽ в месяц":["≈ $22 · 1 800 ₽ a month","≈ $22 · 1 800 ₽ თვეში"],"≈ 60 ₾ · 1 800 ₽ в месяц":["≈ 60 ₾ · 1 800 ₽ a month","≈ 60 ₾ · 1 800 ₽ თვეში"],"≈ $22 · 60 ₾ в месяц":["≈ $22 · 60 ₾ a month","≈ $22 · 60 ₾ თვეში"]};
+  var T = {"Проверьте свой сайт":["Check your website","შეამოწმეთ თქვენი საიტი"],"Полезное":["Guides","სასარგებლო"],"Реферальная программа":["Referral program","რეფერალური პროგრამა"],"Сайт для салона: что должно быть":["A salon website: what it needs","საიტი სალონისთვის: რა უნდა იყოს"],"Клиент ищет салон с телефона, часто вечером, и сравнивает цену, время, место, мастеров и отзывы. Вот что должно быть на сайте, чтобы он записался у вас.":["People look for a salon on their phone, often in the evening, and compare price, time, location, the team and reviews. Here is what your site needs so that they book with you.","კლიენტი სალონს ტელეფონით ეძებს, ხშირად საღამოს, და ადარებს ფასს, დროს, ადგილს, ოსტატებსა და შეფასებებს. აი, რა უნდა იყოს საიტზე, რომ სწორედ თქვენთან ჩაეწეროს."],"Цены":["Prices","ღირებულება"],"Цены стоят на сайте таблицей, по группам услуг. У каждой строки есть время и цена, которую человек заплатит на кассе.":["Prices sit in a table, grouped by service. Each row shows the duration and the price the client will actually pay.","ფასები საიტზე ცხრილის სახითაა, მომსახურების ჯგუფების მიხედვით. თითოეულ სტრიქონში ჩანს დრო და ფასი, რომელსაც კლიენტი რეალურად გადაიხდის."],"Услуга":["Service","მომსახურება"],"Время":["Duration","დრო"],"Цена":["Price","ფასი"],"Мужская стрижка":["Men's haircut","მამაკაცის თმის შეჭრა"],"45 мин":["45 min","45 წთ"],"Женская стрижка":["Women's haircut","ქალის თმის შეჭრა"],"60 мин":["60 min","60 წთ"],"Окрашивание корней":["Root colouring","ძირების შეღებვა"],"90 мин":["90 min","90 წთ"],"от 120 ₾":["from 120 ₾","120 ₾-დან"],"Маникюр с гель-лаком":["Gel polish manicure","მანიკური გელ-ლაქით"],"Если цена зависит от длины волос, это написано в самой строке, как «от 120 ₾» у окрашивания. Клиент видит итог до записи.":["If the price depends on hair length, the row says so, like “from 120 ₾” for colouring. The client sees the total before booking.","თუ ფასი თმის სიგრძეზეა დამოკიდებული, ეს თავად სტრიქონში წერია, მაგალითად „120 ₾-დან“ შეღებვისთვის. კლიენტი ჯამს ჩაწერამდე ხედავს."],"Когда услуг много, их собирают в несколько направлений вместо длинного списка. Так сделан сайт MIYA.":["When there are many services, they are grouped into a few directions in place of one long list. The MIYA site is built this way.","როცა მომსახურება ბევრია, გრძელი სიის ნაცვლად ისინი რამდენიმე მიმართულებად ჯგუფდება. ასეა აწყობილი MIYA‑ს საიტი."],"Салон красоты":["Beauty salon","სილამაზის სალონი"],"Четыре направления заботы вместо длинного прайса — клиент быстрее находит своё и записывается.":["Four care categories instead of a long price list, so clients find what suits them faster and book.","მოვლის ოთხი მიმართულება ფასების გრძელი სიის ნაცვლად — კლიენტი თავისას უფრო სწრაფად პოულობს და ეწერება."],"Запись":["Booking","ჩაწერა"],"Кнопка записи стоит на первом экране, в шапке и в конце страницы. Называется она одинаково на всём сайте, например «Записаться на стрижку».":["The booking button sits on the first screen, in the header and at the end of the page. It has the same label everywhere, for example “Book a haircut”.","ჩაწერის ღილაკი დგას პირველ ეკრანზე, ზედა ზოლში და გვერდის ბოლოს. მთელ საიტზე მას ერთი და იგივე სახელი აქვს, მაგალითად „ჩაწერა თმის შეჭრაზე“."],"Рядом с формой стоит кнопка мессенджера, потому что часть людей формы не заполняет.":["A messenger button sits next to the form, because some people never fill in forms.","ფორმის გვერდით მესენჯერის ღილაკი დგას, რადგან ადამიანების ნაწილი ფორმებს არ ავსებს."],"Свободное время видно сразу. В нашей работе «Лоцман» это табло, где выбираешь стрижку и видишь, когда освободишься.":["Free slots are visible straight away. In our Lotsman project it is a departure board: pick a haircut and see when you will be done.","თავისუფალი დრო მაშინვე ჩანს. ჩვენს ნამუშევარში „ლოცმანი“ ეს არის ტაბლო, სადაც ირჩევთ თმის შეჭრას და ხედავთ, როდის გათავისუფლდებით."],"Барбершоп":["Barbershop","ბარბერშოპი"],"Лоцман":["Lotsman","ლოცმანი"],"Табло с минутами снимает главный вопрос «сколько я просижу» — и человек записывается, не звоня.":["A board with the minutes answers the main question, “how long will I be in the chair?”, so people book without calling.","წუთების დაფა პასუხობს მთავარ კითხვას — „რამდენ ხანს მომიწევს ჯდომა?“ — და ადამიანი ზარის გარეშე ეწერება."],"Если запись у вас уже идёт через Altegio или DIKIDI, её оставляют. Клиенты из поиска приходят на сайт и записываются в той же системе.":["If you already take bookings through Altegio or DIKIDI, that stays. People come to the site from search and book in the same system.","თუ ჩაწერა უკვე Altegio‑თი ან DIKIDI‑ით მიმდინარეობს, ის რჩება. ძიებიდან მოსული კლიენტები საიტზე შემოდიან და იმავე სისტემაში ეწერებიან."],"Мастера и работы":["The team and their work","ოსტატები და ნამუშევრები"],"У каждого мастера своя карточка с фото, именем и специализацией. В Батуми стоит указать и языки мастера, гость хочет знать, что его поймут.":["Every specialist has a card with a photo, name and speciality. In Batumi it is worth listing the languages they speak too, because a guest wants to be understood.","ყველა ოსტატს აქვს თავისი ბარათი ფოტოთი, სახელითა და სპეციალიზაციით. ბათუმში ღირს ოსტატის ენების მითითებაც, სტუმარს სურს იცოდეს, რომ გაუგებენ."],"Фото работ берут свои, с телефона мастера. Свои кадры убеждают сильнее чужих.":["Use your own photos of your work, taken on the specialist's phone. Your own shots convince better than stock ones.","ნამუშევრების ფოტოები საკუთარი უნდა იყოს, ოსტატის ტელეფონით გადაღებული. საკუთარი კადრები უფრო დამაჯერებელია, ვიდრე სხვისი."],"Тем, кто боится, что подстригут не так, помогает строка о том, что вы делаете, если результат не устроил.":["For those who fear a bad haircut, one line about what you do when the result is not right helps a lot.","ვისაც ეშინია, რომ ისე არ შეჭრიან, როგორც სურს, ეხმარება ერთი სტრიქონი იმაზე, რას აკეთებთ, თუ შედეგი არ მოეწონა."],"Шёлк":["Silk","აბრეშუმი"],"Ползунок влажности объясняет, почему укладка держится по-разному, — клиент приходит подготовленным.":["A humidity slider explains why a hairstyle holds differently from day to day, so clients arrive prepared.","ტენიანობის სლაიდერი ხსნის, რატომ ძლებს ვარცხნილობა სხვადასხვანაირად, — კლიენტი მომზადებული მოდის."],"Жёсткая подача под мужскую аудиторию: человек запоминает студию с первого экрана.":["A bold look for a male audience: people remember the studio from the first screen.","მკაცრი სტილი მამაკაცი აუდიტორიისთვის: სტუდია პირველივე ეკრანიდან ამახსოვრდებათ."],"Отзывы":["Reviews","შეფასებები"],"Хороший отзыв состоит из имени, услуги и одной фразы о результате.":["A good review has a name, the service and one sentence about the result.","კარგი შეფასება შედგება სახელისგან, მომსახურებისგან და შედეგზე ერთი ფრაზისგან."],"На сайт ставят шесть-девять настоящих отзывов лентой, лучше всего из Google Карт.":["Six to nine real reviews go on the site as a slider, ideally taken from Google Maps.","საიტზე ლენტად იდება ექვსი-ცხრა ნამდვილი შეფასება, საუკეთესოა Google Maps‑იდან."],"Адрес и телефон":["Address and phone","მისამართი და ტელეფონი"],"Адрес, часы работы и карта собраны в одном блоке, телефон нажимается.":["Address, opening hours and a map sit in one block, and the phone number can be tapped.","მისამართი, სამუშაო საათები და რუკა ერთ ბლოკშია, ტელეფონის ნომერზე დაჭერა შესაძლებელია."],"На карте стоит кнопка «Проложить маршрут». Она открывает Google Карты с готовым маршрутом до вашей двери.":["The map has a “Get directions” button. It opens Google Maps with a ready route to your door.","რუკაზე დგას ღილაკი „მარშრუტის აგება“. ის ხსნის Google Maps‑ს მზა მარშრუტით თქვენს კარამდე."],"Название, адрес и телефон на сайте совпадают с карточкой в Google Картах. Так вас проще находить и в поиске, и в ответах нейросетей.":["The name, address and phone on the site match your Google Maps listing. That makes you easier to find in search and in AI answers.","სახელი, მისამართი და ტელეფონი საიტზე ემთხვევა Google Maps‑ის ბარათს. ასე უფრო ადვილად გპოულობენ როგორც ძიებაში, ისე ნეიროქსელების პასუხებში."],"Частые вопросы":["Common questions","ხშირი კითხვები"],"Нужен ли салону сайт, если есть Instagram?":["Does a salon need a website if it has Instagram?","სჭირდება თუ არა სალონს საიტი, თუ Instagram აქვს?"],"Нужен, если хотите, чтобы вас находили в Google. Instagram остаётся для показа работ, а сайт собирает цены, запись и адрес в одном месте.":["Yes, if you want to be found on Google. Instagram stays the place to show your work, and the site keeps prices, booking and the address in one place.","სჭირდება, თუ გსურთ, რომ Google‑ში გპოულობდნენ. Instagram რჩება ნამუშევრების საჩვენებლად, საიტი კი ფასებს, ჩაწერასა და მისამართს ერთ ადგილას აგროვებს."],"Сколько стоит сайт для салона?":["How much does a salon website cost?","რა ღირს საიტი სალონისთვის?"],"Лендинг с услугами, ценами и записью стоит 290 ₾ и готов за 2–3 дня. Сайт из нескольких страниц стоит 590 ₾ и делается 3–7 дней.":["A landing page with services, prices and booking costs 290 ₾ and is ready in 2–3 days. A multi-page website costs 590 ₾ and takes 3–7 days.","ლენდინგი მომსახურებით, ფასებითა და ჩაწერით ღირს 290 ₾ და მზადაა 2–3 დღეში. რამდენიმეგვერდიანი საიტი ღირს 590 ₾ და კეთდება 3–7 დღეში."],"Можно ли оставить запись через Altegio или DIKIDI?":["Can I keep booking through Altegio or DIKIDI?","შეიძლება თუ არა ჩაწერის დატოვება Altegio‑ში ან DIKIDI‑ში?"],"Да. Сайт ведёт клиентов в вашу систему записи, менять её не нужно.":["Yes. The site sends clients to your booking system, so nothing has to change.","დიახ. საიტი კლიენტებს თქვენს ჩაწერის სისტემაში აგზავნის, მისი შეცვლა საჭირო არ არის."],"Сколько страниц нужно салону?":["How many pages does a salon need?","რამდენი გვერდი სჭირდება სალონს?"],"Одной страницы хватает, если услуг немного. Если у каждой услуги или мастера своя страница, берут сайт из нескольких страниц.":["One page is enough when there are only a few services. If every service or specialist gets its own page, a multi-page site is the choice.","ერთი გვერდი საკმარისია, თუ მომსახურება ცოტაა. თუ თითოეულ მომსახურებას ან ოსტატს თავისი გვერდი აქვს, რამდენიმეგვერდიან საიტს ირჩევენ."],"Сайт или только Instagram":["A website or Instagram only","საიტი თუ მხოლოდ Instagram"],"Бесплатный пример сайта для вашего салона":["A free example of a website for your salon","თქვენი სალონის საიტის უფასო ნიმუში"],"Соберём его за день на примере вашего салона. Вы откроете пример с телефона, полистаете и увидите свой салон глазами клиента. Это бесплатно и ни к чему вас не обязывает.":["We will build it in a day using your salon as the example. You open it on your phone, scroll through it and see your salon the way a client does. It is free and you are under no obligation.","ერთ დღეში ავაწყობთ თქვენი სალონის მაგალითზე. ნიმუშს ტელეფონით გახსნით, გადაფურცლავთ და თქვენს სალონს კლიენტის თვალით დაინახავთ. ეს უფასოა და არაფერს გავალდებულებთ."],"Получить бесплатный пример":["Get a free example","მიიღეთ უფასო ნიმუში"],"Батуми, Грузия":["Batumi, Georgia","ბათუმი, საქართველო"],"Сколько стоит сайт в Грузии":["How much a website costs in Georgia","რა ღირს საიტი საქართველოში"],"Ассистент open-sites.io":["open-sites.io assistant","open-sites.io‑ს ასისტენტი"],"Подскажет по услугам, ценам и срокам":["Answers questions about services, prices and timelines","გიპასუხებთ სერვისებზე, ფასებსა და ვადებზე"],"Не определились с выбором?":["Still deciding?","ჯერ ვერ გადაწყვიტეთ?"],"Напишите нам в Telegram. Разберём вашу задачу, подскажем, какой тариф подойдёт, и назовём цену и срок. Это бесплатно и ни к чему не обязывает.":["Message us on Telegram. We'll look at your project, suggest the right plan and name the price and timeline. It's free, with no obligation.","მოგვწერეთ Telegram‑ში. განვიხილავთ თქვენს ამოცანას, გირჩევთ შესაფერის ტარიფს და დაგისახელებთ ფასსა და ვადას. ეს უფასოა და არაფერს გავალდებულებთ."],"Написать в Telegram":["Message on Telegram","მოწერა Telegram‑ში"],"Спросить ассистента":["Ask the assistant","ჰკითხეთ ასისტენტს"],"Смотреть тарифы":["See pricing","ტარიფების ნახვა"],"Оставить заявку":["Send a request","განაცხადის დატოვება"],"Напишите имя и выберите, где вам удобно общаться.":["Enter your name and choose where it is convenient for you to talk.","დაწერეთ სახელი და აირჩიეთ, სად გირჩევნიათ ურთიერთობა."],"Как вас зовут":["Your name","რა გქვიათ"],"Сообщение":["Message","შეტყობინება"],"Скопировать":["Copy","კოპირება"],"Скопировано":["Copied","დაკოპირდა"],"Где вам удобно продолжить":["Where would you like to continue","სად გირჩევნიათ გაგრძელება"],"Текст сообщения скопирован. Вставьте его в Instagram.":["The message text is copied. Paste it into Instagram.","შეტყობინების ტექსტი დაკოპირებულია. ჩასვით Instagram‑ში."],"Язык / Language":["Language","ენა / Language"],"Меню":["Menu","მენიუ"],"Закрыть чат":["Close chat","ჩატის დახურვა"],"Ваш вопрос":["Your question","თქვენი კითხვა"],"Напишите вопрос…":["Type your question…","დაწერეთ კითხვა…"],"Отправить":["Send","გაგზავნა"],"Открыть чат с ассистентом":["Open chat with the assistant","ასისტენტთან ჩატის გახსნა"],"Закрыть":["Close","დახურვა"],"Ваше имя":["First name","თქვენი სახელი"],"Тариф {n} из {m}":["Plan {n} of {m}","ტარიფი {n}, სულ {m}"],"≈ $22 · 1 800 ₽ в месяц":["≈ $22 · 1 800 ₽ a month","≈ $22 · 1 800 ₽ თვეში"],"≈ 60 ₾ · 1 800 ₽ в месяц":["≈ 60 ₾ · 1 800 ₽ a month","≈ 60 ₾ · 1 800 ₽ თვეში"],"≈ $22 · 60 ₾ в месяц":["≈ $22 · 60 ₾ a month","≈ $22 · 60 ₾ თვეში"]};
   var LI = {en: 0, ka: 1};
   var CY = /[А-Яа-яЁё]/;
   var ATTRS = ['aria-label', 'alt', 'title', 'placeholder', 'aria-roledescription'];
