@@ -1,0 +1,35 @@
+# open-sites.io
+
+> Web studio based in Batumi, Georgia. We design and build landing pages, multi-page business websites,
+> online stores, websites with an AI assistant and Telegram Mini Apps for small businesses.
+> Fixed price agreed before work starts, 50% prepayment. Site languages: Russian, English, Georgian.
+
+## Services and prices
+
+- Store “Your Own Storefront”: For businesses with dozens of products or services, where customers prefer to choose on their own first and then order. Price: 990 GEL / 369 USD / 29900 RUB.
+- Landing page “First Leads”: For launching a service, an offer or a new line of business when you need leads by next week. Price: 290 GEL / 109 USD / 8900 RUB.
+- Website “Bridge to Clients”: For businesses with several services, where customers want to look everything over calmly before booking. Price: 590 GEL / 219 USD / 17900 RUB.
+- Site + AI “Always On”: For businesses that lose leads in the evenings and on weekends because nobody is there to reply. Price: 790 GEL / 295 USD / 23900 RUB.
+- App “In the Client's Pocket”: For businesses with regular customers who like to book, order and collect loyalty points right on their phone. Price is quoted after a short call.
+- Support “In Good Hands”: For those who don't want to look after the site themselves or keep a developer on the payroll. Price: 60 GEL / 22 USD / 1800 RUB per month.
+
+The client buys the domain in their own name; we help choose, buy and connect it. Hosting of a static site is free.
+
+## Pages
+
+- [Home, Russian](https://open-sites.io/): services, prices, process, FAQ
+- [Home, English](https://open-sites.io/en/)
+- [Home, Georgian](https://open-sites.io/ka/)
+- [Our work](https://open-sites.io/works/): websites for a barbershop, beauty salon, dental clinic, restaurant, car rental and more
+- [What a salon or barbershop website needs](https://open-sites.io/sait-dlya-salona/)
+- [How much a website costs in Georgia](https://open-sites.io/skolko-stoit-sait/)
+- [Website or Instagram only](https://open-sites.io/sait-ili-instagram/)
+- [Services after launch](https://open-sites.io/after-launch/): Google Maps listing, reviews, online booking, AI assistant
+- [Referral program](https://open-sites.io/referral/)
+
+## Contact
+
+- Telegram: https://t.me/opensites_io
+- Email: opensites.io@gmail.com
+- Instagram: https://www.instagram.com/opensites.io/
+- A free example of a website for your business is made on request before any payment.
