@@ -1739,6 +1739,55 @@ body{padding-top:var(--ckbar)}
 .leadm__x svg{width:18px;height:18px}
 @media(max-width:480px){.leadf__ch{grid-template-columns:1fr}.leadf__b{justify-content:flex-start;padding:0 18px}}
 @media(prefers-reduced-motion:reduce){.leadm__card{animation:none}.leadf__b{transition:none}}
+
+
+:root{--ckbar:0px}
+.ai .nav-check{position:absolute;right:calc(100% + 10px);bottom:12px;display:block;height:auto;overflow:visible;
+  background:none;border:0;white-space:nowrap;transform-origin:100% 50%;opacity:0;transform:translateX(46px) scale(.5);
+  pointer-events:none;transition:opacity .3s,transform .3s}
+.ai .nav-check__b{height:36px;padding:0 14px 0 13px;box-shadow:0 10px 26px -10px rgba(124,92,246,.9)}
+.ai.ck-on .nav-check{opacity:1;transform:none;pointer-events:auto;
+  transition:opacity .45s ease,transform .6s cubic-bezier(.2,1.25,.3,1)}
+.ai.is-open .nav-check,.ai .nav-check[aria-current="page"]{opacity:0;transform:translateX(46px) scale(.5);pointer-events:none;
+  transition:opacity .2s,transform .25s}
+.ai .nav-check[aria-current="page"]{display:none}
+@media (max-width:1023px){.section{scroll-margin-top:88px}}
+@media (max-width:380px){.ai .nav-check__b{height:34px;font-size:13px;padding:0 11px}}
+@media (prefers-reduced-motion:reduce){.ai .nav-check,.ai.ck-on .nav-check{transition:opacity .2s;transform:none}}
+
+
+@media (min-width:901px){
+  #services{padding-bottom:60px}
+  #process{padding-top:60px}
+  #process .sec-tag{margin-bottom:12px}
+  #process h2{font-size:36px;line-height:1.15}
+  #process .sec-sub{max-width:none;margin-top:10px}
+  #process .flow{margin-top:22px}
+  #process .fstep{padding-top:11px;padding-bottom:11px}
+  #process .fstep__t{line-height:1.3}
+  #process .fstep__d{margin-top:4px;line-height:1.5}
+}
+
+
+.svc-dots{display:none}
+@media (max-width:640px){
+  .svc-coverflow{margin:26px calc(50% - 50vw) 0}
+  .svc-stage{position:relative;display:flex;grid-template-columns:none;gap:12px;overflow-x:auto;overscroll-behavior-x:contain;
+    scroll-snap-type:x mandatory;padding:8px 11vw 16px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+  .svc-stage::-webkit-scrollbar{display:none}
+  .svc-card{flex:0 0 78vw;scroll-snap-align:center;min-height:212px;padding:28px 22px;display:flex;flex-direction:column;
+    align-items:center;justify-content:center;text-align:center;border-radius:20px;
+    transition:border-color .35s,box-shadow .35s,background .35s}
+  .svc-card:last-child{grid-column:auto}
+  .svc-card.is-snap{border-color:rgba(167,139,250,.55);box-shadow:0 22px 46px -26px rgba(124,92,246,.85)}
+  .svc-ico{width:58px;height:58px;border-radius:16px;margin:0 auto 18px}
+  .svc-ico svg{width:28px;height:28px}
+  .svc-card h3{font-size:20px;margin-bottom:8px}
+  .svc-card p{font-size:14.5px;line-height:1.5}
+  .svc-dots{display:flex;justify-content:center;gap:7px;margin-top:2px}
+  .svc-dots i{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.22);transition:width .3s,background .3s}
+  .svc-dots i.on{width:22px;border-radius:100px;background:var(--violet)}
+}
 </style>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","@id":"https://open-sites.io/skolko-stoit-sait/#faq","mainEntity":[{"@type":"Question","name":"How much does a website cost in Georgia?","acceptedAnswer":{"@type":"Answer","text":"At the open-sites.io studio a landing page costs 290 ₾, a multi-page website 590 ₾, a website with an AI assistant 790 ₾ and an online store 990 ₾. An app is priced after we go through the task."}},{"@type":"Question","name":"How long does a website take?","acceptedAnswer":{"@type":"Answer","text":"A landing page takes 2–3 days, a multi-page website 3–7 days, an online store from 2 weeks."}},{"@type":"Question","name":"Do I need a domain and hosting?","acceptedAnswer":{"@type":"Answer","text":"You need a domain. It costs from about 10 ₾ a year and is bought in your name. Hosting for a static site is free."}},{"@type":"Question","name":"Is there a monthly fee?","acceptedAnswer":{"@type":"Answer","text":"No, you pay for the site once. Support is optional and costs 60 ₾ a month."}},{"@type":"Question","name":"Can the price grow during the work?","acceptedAnswer":{"@type":"Answer","text":"No, the price is fixed before we start."}}]}</script>
 <style>
@@ -1853,7 +1902,6 @@ body{padding-top:var(--ckbar)}
 </div>
 
 <header class="nav" id="nav">
-  <a class="nav-check" href="../check/"><span class="nav-check__b"><i aria-hidden="true"></i><span>Check your website</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
   <div class="wrap nav-inner">
     <a class="logo brand2" id="brand2" href="../" aria-label="open-sites.io">
         <svg class="bmark" viewBox="4 22 56 36" aria-hidden="true">
@@ -3068,6 +3116,7 @@ if (briefForm) {
 </script>
 
 <div class="ai" id="ai">
+  <a class="nav-check" href="../check/"><span class="nav-check__b"><i aria-hidden="true"></i><span>Check your website</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
   <section class="ai-panel" id="aiPanel" aria-label="open-sites.io assistant" hidden>
     <header class="ai-head">
       <span class="ai-ava" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.5l1.9 5.2 5.2 1.9-5.2 1.9L12 16.7l-1.9-5.2-5.2-1.9 5.2-1.9z"/><path d="M18.5 14.5l.9 2.3 2.3.9-2.3.9-.9 2.3-.9-2.3-2.3-.9 2.3-.9z"/></svg></span>
@@ -3982,6 +4031,52 @@ window.osGoLang = function(lang){
     e.preventDefault();
     open(ctx, a);
   });
+})();
+</script>
+<script>
+
+(function(){
+  var ai = document.getElementById("ai");
+  if(ai && ai.querySelector(".nav-check")) setTimeout(function(){ ai.classList.add("ck-on"); }, 1400);
+
+  var st = document.getElementById("svcStage");
+  if(!st) return;
+  var cards = [].slice.call(st.querySelectorAll(".svc-card"));
+  if(!cards.length) return;
+  var dots = document.createElement("div");
+  dots.className = "svc-dots";
+  dots.setAttribute("aria-hidden", "true");
+  cards.forEach(function(){ dots.appendChild(document.createElement("i")); });
+  st.parentNode.appendChild(dots);
+  var mq = window.matchMedia("(max-width:640px)");
+  var calm = window.matchMedia("(prefers-reduced-motion:reduce)");
+  var cur = 0, touched = 0, seen = false, tick = 0;
+  function left(i){ return cards[i].offsetLeft - (st.clientWidth - cards[i].offsetWidth) / 2; }
+  function mark(){
+    tick = 0;
+    var mid = st.scrollLeft + st.clientWidth / 2, best = 0, bd = 1e9;
+    cards.forEach(function(c, i){
+      var d = Math.abs(c.offsetLeft + c.offsetWidth / 2 - mid);
+      if(d < bd){ bd = d; best = i; }
+    });
+    cur = best;
+    cards.forEach(function(c, i){ c.classList.toggle("is-snap", i === best); });
+    [].forEach.call(dots.children, function(d, i){ d.classList.toggle("on", i === best); });
+  }
+  st.addEventListener("scroll", function(){ if(!tick) tick = requestAnimationFrame(mark); }, {passive: true});
+  ["touchstart", "pointerdown", "wheel"].forEach(function(ev){
+    st.addEventListener(ev, function(){ touched = Date.now(); }, {passive: true});
+  });
+  if("IntersectionObserver" in window){
+    new IntersectionObserver(function(en){ seen = en[0].isIntersecting; }, {threshold: .5}).observe(st);
+  }
+  function start(){ if(mq.matches){ st.scrollLeft = left(0); mark(); } }
+  start();
+  if(mq.addEventListener) mq.addEventListener("change", start);
+  setInterval(function(){
+    if(!mq.matches || calm.matches || document.hidden || !seen || Date.now() - touched < 9000) return;
+    st.scrollTo({left: left((cur + 1) % cards.length), behavior: "smooth"});
+  }, 3400);
 })();
 </script>
 <script>
