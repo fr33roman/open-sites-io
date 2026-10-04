@@ -48,13 +48,15 @@ section[id]{scroll-margin-top:84px}
 .bt-tex{position:relative;isolation:isolate;overflow:clip;color:var(--cream);border-radius:var(--r);margin:0 0 var(--gap);
   background-color:#4A5826;background-image:var(--noise),radial-gradient(circle at 18% 14%,rgba(255,255,255,.07),transparent 30%),radial-gradient(circle at 80% 38%,rgba(255,255,255,.05),transparent 26%);
   background-size:200px 200px,auto,auto;background-blend-mode:screen,normal,normal}
-.bt-tex::before{content:"";position:absolute;inset:-30% -20%;z-index:-2;pointer-events:none;
-  background:radial-gradient(38% 30% at 20% 26%,rgba(233,225,182,.34),transparent 70%),radial-gradient(36% 32% at 80% 64%,rgba(166,184,86,.36),transparent 70%),radial-gradient(30% 26% at 56% 8%,rgba(255,247,210,.2),transparent 70%);
+.bt-tex::before{content:"";position:absolute;inset:calc(-1*max(16%,72px)) calc(-1*max(14%,84px));z-index:-2;pointer-events:none;
+  background:radial-gradient(41.6% 36.4% at 17.2% 20.9%,rgba(233,225,182,.34),transparent 70%),radial-gradient(39.4% 38.8% at 82.8% 67%,rgba(166,184,86,.36),transparent 70%),radial-gradient(32.8% 31.5% at 56.6% -.9%,rgba(255,247,210,.2),transparent 70%);
   animation:btFlow 26s ease-in-out infinite alternate;will-change:transform}
-.bt-tex::after{content:"";position:absolute;inset:-10%;z-index:-1;pointer-events:none;background:var(--topo) 0 0/760px auto;animation:btTopo 90s linear infinite}
+
+.bt-tex::after{content:"";position:absolute;left:0;right:0;bottom:0;top:-760px;z-index:-1;pointer-events:none;background:var(--topo) 0 0/760px 760px;
+  animation:btTopo 100s linear infinite;will-change:transform}
 .bt-tex.is-off::before,.bt-tex.is-off::after{animation-play-state:paused}
-@keyframes btFlow{0%{transform:translate3d(-7%,-4%,0) rotate(0deg) scale(1)}50%{transform:translate3d(8%,5%,0) rotate(7deg) scale(1.12)}100%{transform:translate3d(-3%,9%,0) rotate(-5deg) scale(1.04)}}
-@keyframes btTopo{to{background-position:760px 380px}}
+@keyframes btFlow{0%{transform:translate3d(-5%,-3%,0) rotate(0deg) scale(1)}50%{transform:translate3d(5%,3.5%,0) rotate(3deg) scale(1.08)}100%{transform:translate3d(-2%,5%,0) rotate(-3deg) scale(1.03)}}
+@keyframes btTopo{from{transform:translate3d(0,0,0)}to{transform:translate3d(0,760px,0)}}
 .bt-paper{background-color:var(--cream);background-image:var(--grain);background-size:200px 200px;background-blend-mode:multiply}
 
 
@@ -558,6 +560,7 @@ body.bt-lock{overflow:hidden}
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
   *,*::before,*::after{animation:none!important;transition:none!important}
+  .bt-tex::before,.bt-tex::after{will-change:auto}
   .bt-js .bt-up,.bt-js .bt-check .bt-row{opacity:1;transform:none}
   .bt-js .bt-check .bt-sum{opacity:1}
   .bt-fd__i,.bt-route__ph{transform:none}
