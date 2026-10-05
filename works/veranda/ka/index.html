@@ -908,6 +908,57 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
   document.getElementById('policy').addEventListener('click', function (e) { e.preventDefault(); });
 })();
 </script>
+<script data-ekonom="7a82f5fe">
+
+(function () {
+  var D = document, W = window;
+  if (W.__ekonom || !D.getAnimations || !W.IntersectionObserver) return;
+  W.__ekonom = 1;
+  var vis = new WeakMap(), seen = new WeakSet(), held = new WeakSet(), asleep = new WeakSet(), L = [], timer = 0;
+  var on = function (e) { return vis.get(e) !== false; };
+  var io = new IntersectionObserver(function (es) {
+    es.forEach(function (e) {
+      var t = e.target, sleep = !e.isIntersecting;
+      if (vis.get(t) === !sleep) return;
+      vis.set(t, !sleep);
+      if (t.tagName === 'CANVAS' && sleep !== asleep.has(t)) {
+        sleep ? asleep.add(t) : asleep['delete'](t);
+        sleep ? t.setAttribute('data-sleep', '') : t.removeAttribute('data-sleep');
+        t.dispatchEvent(new Event(sleep ? 'ekonom:sleep' : 'ekonom:wake'));
+      }
+    });
+    apply();
+  }, { rootMargin: '200px' });
+  var watch = function (e) { if (e && !seen.has(e)) { seen.add(e); io.observe(e); } };
+  function apply() {
+    L.forEach(function (x) {
+      var a = x[0], run = !D.hidden && (on(x[1]) || on(x[2]));
+      if (run) {
+        if (!held.has(a)) return;
+        held['delete'](a);
+        if (a.playState === 'paused' && /running/.test(getComputedStyle(x[1], a.effect.pseudoElement).animationPlayState)) a.play();
+      } else if (a.playState === 'running') { held.add(a); a.pause(); }
+    });
+  }
+  function scan() {
+    timer = 0;
+    L = [];
+    D.getAnimations().forEach(function (a) {
+      var f = a.effect, t = f && f.target, p = t && t.parentElement;
+      if (!p || p === D.body || p === D.documentElement || !f.getTiming || f.getTiming().iterations !== Infinity) return;
+      L.push([a, t, p]);
+      watch(t); watch(p);
+    });
+    apply();
+  }
+  D.addEventListener('animationstart', function () { if (!timer) timer = setTimeout(scan, 100); }, true);
+  D.addEventListener('visibilitychange', apply);
+  [].forEach.call(D.querySelectorAll('canvas'), watch);
+  var P = W.HTMLCanvasElement && HTMLCanvasElement.prototype, gc = P && P.getContext;
+  if (gc) P.getContext = function () { watch(this); return gc.apply(this, arguments); };
+  scan();
+})();
+</script>
 <a class="osb-bot" href="https://t.me/opensites_io?text=Hello%21%20I%20saw%20your%20work%20%C2%AB%D0%92%D0%B5%D1%80%D0%B0%D0%BD%D0%B4%D0%B0%C2%BB%20on%20open-sites.io%20%E2%80%94%20I%27d%20like%20a%20website%20like%20this" target="_blank" rel="noopener"><span class="osb-in"><span>Made by <span class="osb-mark"><span class="osb-dot"></span>open-sites.io</span></span><span class="osb-cta">Message us →</span></span></a>
 </body>
 </html>
