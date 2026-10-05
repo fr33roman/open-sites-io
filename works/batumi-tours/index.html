@@ -60,19 +60,28 @@ section[id]{scroll-margin-top:84px}
 .bt-paper{background-color:var(--cream);background-image:var(--grain);background-size:200px 200px;background-blend-mode:multiply}
 
 
-.bt-go{position:relative;overflow:hidden;isolation:isolate;display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:52px;padding:0 26px;border-radius:999px;border:2px solid var(--yellow);
+.bt-go{position:relative;isolation:isolate;display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:52px;padding:0 26px;border-radius:999px;border:2px solid var(--yellow);
   background:var(--yellow);color:var(--ink);font:700 16px/1.1 var(--text);text-decoration:none;text-align:center;cursor:pointer;
   transition:background .3s,color .3s,border-color .3s,transform .3s var(--ease),box-shadow .3s}
-.bt-go::after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(105deg,transparent 38%,rgba(255,255,255,.6) 50%,transparent 62%);transform:translateX(-130%);transition:transform .8s var(--ease)}
+
+.bt-go::after{content:"";position:absolute;inset:0;z-index:-1;border-radius:inherit;pointer-events:none;background:linear-gradient(105deg,transparent 46%,rgba(255,255,255,.6) 50%,transparent 54%) 115% 0/300% 100% no-repeat;transition:background-position .8s var(--ease)}
 .bt-go:hover{background:var(--yellow2);border-color:var(--yellow2);transform:translateY(-2px);box-shadow:0 12px 24px -12px rgba(239,184,13,.9)}
-.bt-go:hover::after{transform:translateX(130%)}
+.bt-go:hover::after{background-position:-15% 0}
 .bt-go:active{transform:scale(.96)}
 .bt-go--ghost{background:transparent;color:var(--ink);border-color:var(--ink)}
 .bt-go--ghost:hover{background:var(--ink);border-color:var(--ink);color:var(--cream)}
 .bt-go--sm{min-height:44px;padding:0 18px;font-size:15px}
-.bt-go--pulse{animation:btPulse 2.6s var(--ease) infinite}
-@keyframes btPulse{0%{box-shadow:0 0 0 0 rgba(239,184,13,.62)}70%,100%{box-shadow:0 0 0 15px rgba(239,184,13,0)}}
+
+.bt-go--pulse::before{content:"";position:absolute;inset:-2px;z-index:-1;border-radius:inherit;pointer-events:none;background:var(--yellow);opacity:0;animation:btPulse 2.6s var(--ease) infinite}
+.bt-go--pulse.bt-go--sm::before{animation-name:btPulseS}
+.bt-go.bt-go--pulse,.bt-go.bt-go--pulse:hover,.bt-map__go .bt-go.bt-go--pulse{box-shadow:none}
+.bt-go--pulse:hover::before,.bt-go--pulse:active::before{animation:none!important}
+.bt-route__cta .bt-go--pulse::before{animation:none}
+.bt-route.is-end .bt-route__cta .bt-go--pulse::before{animation:btPulse 2.6s var(--ease) infinite}
+@keyframes btPulse{0%{transform:scale(1);opacity:.62}70%,100%{transform:scale(1.12,1.6);opacity:0}}
+@keyframes btPulseS{0%{transform:scale(1);opacity:.62}70%,100%{transform:scale(1.26,1.68);opacity:0}}
 .bt-go:disabled{opacity:.45;cursor:not-allowed;animation:none;transform:none;box-shadow:none}
+.bt-go:disabled::before{display:none}
 .bt-s{fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 .bt-f{fill:currentColor;stroke:none}
 .bt-go svg{flex:none;width:19px;height:19px}
@@ -94,8 +103,9 @@ section[id]{scroll-margin-top:84px}
 .bt-top{position:fixed;z-index:60;inset:0 10px auto;padding-top:10px;pointer-events:none}
 .bt-top__in{pointer-events:auto;max-width:1180px;margin:0 auto;display:flex;align-items:center;gap:8px;min-height:60px;padding:6px 6px 6px 16px;border-radius:999px;color:var(--cream);
   background:rgba(54,66,26,.56);-webkit-backdrop-filter:blur(14px) saturate(1.2);backdrop-filter:blur(14px) saturate(1.2);box-shadow:inset 0 0 0 1px rgba(243,239,223,.2),0 14px 32px -16px rgba(0,0,0,.6);
-  transition:background .35s,box-shadow .35s}
-.bt-top.bt-solid .bt-top__in{background:rgba(35,46,11,.93)}
+  transition:background .35s,box-shadow .35s,-webkit-backdrop-filter .35s,backdrop-filter .35s}
+
+.bt-top.bt-solid .bt-top__in{background:rgba(35,46,11,.93);-webkit-backdrop-filter:none;backdrop-filter:none}
 .bt-logo{display:inline-flex;align-items:center;min-height:44px;margin-right:auto;text-decoration:none}
 .bt-logo img{width:min(150px,34vw)}
 .bt-links{display:none}
@@ -133,15 +143,18 @@ section[id]{scroll-margin-top:84px}
 
 .bt-collage{position:relative;width:min(100%,500px);margin:6px auto 0;aspect-ratio:1/1.06;--px:0;--py:0}
 .bt-collage__path{position:absolute;inset:0;width:100%;height:100%;overflow:visible;pointer-events:none;z-index:0}
-.bt-collage__path path{fill:none;stroke:var(--yellow);stroke-width:3;stroke-linecap:round;stroke-dasharray:2 11;animation:btDash 2.4s linear infinite}
-@keyframes btDash{to{stroke-dashoffset:-26}}
+.bt-collage__path path{fill:none;stroke:var(--yellow);stroke-width:3;stroke-linecap:round;stroke-dasharray:2 11}
 .bt-fr{position:absolute;z-index:1;border:6px solid var(--paper);background:var(--paper);box-shadow:0 28px 40px -22px rgba(0,0,0,.65);transition:transform .6s var(--ease)}
 .bt-fr>.bt-sl,.bt-fr>.bt-fd{border-radius:inherit;overflow:hidden;width:100%;height:100%}
 .bt-fr--a{left:0;top:7%;width:62%;border-radius:32px;rotate:-3deg;animation:btFloat 8s ease-in-out infinite alternate;transform:translate(calc(var(--px)*-6px),calc(var(--py)*-5px));z-index:2}
 .bt-fr--a>.bt-sl{aspect-ratio:4/5;height:auto}
 .bt-fr--b{right:0;top:0;width:45%;aspect-ratio:4/3;border-radius:26px;rotate:4deg;animation:btFloat 7s ease-in-out -2s infinite alternate;transform:translate(calc(var(--px)*8px),calc(var(--py)*6px))}
 .bt-fr--c{right:4%;bottom:1%;width:41%;aspect-ratio:1;border-radius:50%;animation:btFloat 9s ease-in-out -4s infinite alternate;transform:translate(calc(var(--px)*10px),calc(var(--py)*10px));z-index:3}
-.bt-fr--c::before{content:"";position:absolute;inset:-17px;border-radius:50%;border:2px dashed var(--yellow);animation:btRing 24s linear infinite;pointer-events:none}
+
+.bt-fr-ring{position:absolute;z-index:3;right:calc(4% - 11px);bottom:calc(1% - 11px);width:calc(41% + 22px);aspect-ratio:1;pointer-events:none;
+  transform:translate(calc(var(--px)*10px),calc(var(--py)*10px));transition:transform .6s var(--ease)}
+.bt-fr-ring i{display:block;width:100%;height:100%;border-radius:50%;border:2px dashed var(--yellow);animation:btFloat 9s ease-in-out -4s infinite alternate,btSpinR 24s linear infinite}
+@keyframes btSpinR{to{rotate:360deg}}
 @keyframes btFloat{from{translate:0 0}to{translate:0 -11px}}
 @keyframes btRing{to{transform:rotate(360deg)}}
 .bt-fd{position:relative;background:#aab589;cursor:pointer;touch-action:pan-y}
@@ -158,11 +171,19 @@ section[id]{scroll-margin-top:84px}
 .bt-sl__dots button{position:relative;flex:1;min-width:44px;height:44px;border:0;background:none;cursor:pointer;padding:0}
 .bt-sl__dots button::before,.bt-sl__dots button::after{content:"";position:absolute;left:0;bottom:12px;height:4px;border-radius:2px}
 .bt-sl__dots button::before{right:0;background:rgba(255,253,244,.55);box-shadow:0 1px 5px rgba(0,0,0,.3)}
-.bt-sl__dots button::after{width:0;background:var(--yellow);transition:width .4s var(--ease)}
-.bt-sl__dots button.is-act::after{width:100%}
-.bt-sl.is-auto .bt-sl__dots button.is-act::after{width:0;animation:btFill var(--dur,5s) linear forwards}
+.bt-sl__dots button::after{width:100%;background:var(--yellow);transform:scaleX(0);transform-origin:0 50%;transition:transform .4s var(--ease)}
+.bt-sl__dots button.is-act::after{transform:none}
+.bt-sl.is-auto .bt-sl__dots button.is-act::after{transform:scaleX(0);animation:btFill var(--dur,5s) linear forwards}
 .bt-sl.is-hold .bt-sl__dots button.is-act::after{animation-play-state:paused}
-@keyframes btFill{to{width:100%}}
+@keyframes btFill{to{transform:none}}
+
+@supports (scale:0 1){
+  .bt-sl__dots button::after{transform:none;scale:0 1;transition:scale .4s var(--ease)}
+  .bt-sl__dots button.is-act::after{scale:1 1}
+  .bt-sl.is-auto .bt-sl__dots button.is-act::after{transform:none;scale:0 1;transition:none;animation:btFillS var(--dur,5s) linear forwards}
+  .bt-sl.is-hold .bt-sl__dots button.is-act::after{animation-play-state:paused}
+  @keyframes btFillS{to{scale:1 1}}
+}
 .bt-sl__nav{position:absolute;z-index:3;top:50%;width:44px;height:44px;margin-top:-22px;border:0;border-radius:50%;display:grid;place-items:center;background:rgba(255,253,244,.94);color:var(--ink);cursor:pointer;
   box-shadow:0 8px 18px -8px rgba(0,0,0,.55);opacity:0;transition:opacity .3s,transform .3s var(--ease),background .3s}
 .bt-sl__nav svg{width:22px;height:22px}
@@ -192,9 +213,11 @@ section[id]{scroll-margin-top:84px}
 .bt-tk__main>span:last-child{font-size:15px;color:var(--mute)}
 .bt-tk__stub{height:var(--seam);display:grid;grid-template-columns:1fr auto;grid-template-areas:"s b" "p b";align-items:center;column-gap:12px;padding:0 20px;border-top:2px dashed rgba(35,46,11,.24)}
 .bt-tk__stub .bt-seats{grid-area:s;align-self:end}
-.bt-seats{display:inline-flex;align-items:center;gap:7px;font-size:14px;font-weight:600;color:var(--olive);line-height:1.2}
-.bt-seats::before{content:"";width:8px;height:8px;flex:none;border-radius:50%;background:#4f9d3a;box-shadow:0 0 0 0 rgba(79,157,58,.6);animation:btDot 2.2s ease-out infinite}
-@keyframes btDot{70%,100%{box-shadow:0 0 0 9px rgba(79,157,58,0)}}
+.bt-seats{position:relative;display:inline-flex;align-items:center;gap:7px;font-size:14px;font-weight:600;color:var(--olive);line-height:1.2}
+.bt-seats::before{content:"";width:8px;height:8px;flex:none;border-radius:50%;background:#4f9d3a}
+
+.bt-seats::after{content:"";position:absolute;left:0;top:50%;width:8px;height:8px;margin-top:-4px;border-radius:50%;background:#4f9d3a;pointer-events:none;opacity:.6;animation:btDot 2.2s ease-out infinite}
+@keyframes btDot{0%{transform:scale(1);opacity:.6}70%,100%{transform:scale(3.25);opacity:0}}
 .bt-tk__stub>b{grid-area:p;align-self:start;margin-top:2px;font:800 38px/1 var(--disp)}
 .bt-tk__stub .bt-go{grid-area:b}
 
@@ -261,8 +284,11 @@ section[id]{scroll-margin-top:84px}
 .bt-st{position:relative;z-index:1;width:44px;height:44px;padding:0;border-radius:50%;border:3px solid rgba(86,100,43,.32);background:var(--paper);color:var(--olive);font:800 21px/1 var(--disp);cursor:pointer;display:grid;place-items:center;
   transition:background .35s,border-color .35s,color .35s,transform .4s var(--ease)}
 .bt-st:hover{border-color:var(--olive);transform:scale(1.08)}
+.bt-st::before{content:"";position:absolute;inset:-3px;z-index:-1;border-radius:50%;pointer-events:none;background:var(--yellow);opacity:0}
 .bt-stop.is-done .bt-st{background:var(--olive);border-color:var(--olive);color:var(--cream)}
-.bt-stop.is-cur .bt-st{background:var(--yellow);border-color:var(--yellow);color:var(--ink);transform:scale(1.14);animation:btPulse 2s var(--ease) infinite}
+.bt-stop.is-cur .bt-st{background:var(--yellow);border-color:var(--yellow);color:var(--ink);transform:scale(1.14)}
+.bt-stop.is-cur .bt-st::before{animation:btPulseC 2s var(--ease) infinite}
+@keyframes btPulseC{0%{transform:scale(1);opacity:.62}70%,100%{transform:scale(1.68);opacity:0}}
 .bt-stops__t{grid-column:1/-1;display:grid;gap:2px;justify-self:stretch;color:var(--mute);font-size:15px;line-height:1.35}
 .bt-stops__t b{font:700 19px/1.2 var(--text);color:var(--ink)}
 .bt-js .bt-st{grid-row:1}
@@ -356,7 +382,7 @@ section[id]{scroll-margin-top:84px}
 .bt-facts{list-style:none;margin:0;padding:0;display:grid;gap:10px}
 .bt-facts li{display:flex;align-items:center;gap:11px;font-weight:600;font-size:16px;line-height:1.3}
 .bt-facts svg{flex:none;width:36px;height:36px;padding:8px;border-radius:50%;background:rgba(239,184,13,.22);color:var(--ink)}
-.bt-pp--co{background:rgba(35,46,11,.82);color:var(--cream);box-shadow:0 24px 40px -26px rgba(0,0,0,.8),inset 0 0 0 1px rgba(243,239,223,.22);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+.bt-pp--co{background:rgba(35,46,11,.82);color:var(--cream);box-shadow:0 24px 40px -26px rgba(0,0,0,.8),inset 0 0 0 1px rgba(243,239,223,.22)}
 .bt-pp--co .bt-pp__b{padding:26px 24px 26px;gap:16px}
 .bt-pp--co h3{color:var(--cream)}
 .bt-pp--co .bt-facts li{font-size:17px}
@@ -672,7 +698,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
             <img class="bt-sl__s" src="img/h1-800.jpg" srcset="img/h1-800.jpg 800w, img/h1-1350.jpg 1350w" sizes="(min-width:1000px) 330px, 260px" width="800" height="1000" alt="Девушка сидит на камне над слиянием двух рек, вокруг зелёные горы" fetchpriority="high" decoding="async">
             <img class="bt-sl__s" data-src="img/h2-800.jpg" width="800" height="1000" alt="Закат над морем облаков, человек сидит на склоне в Гомисмте" decoding="async">
             <img class="bt-sl__s" data-src="img/h3-800.jpg" width="800" height="1000" alt="Водопад в ущелье Мачахела" decoding="async">
-            <img class="bt-sl__s" data-src="img/h4-800.jpg" width="800" height="1000" alt="Каменный арочный мост царицы Тамары над горной рекой" decoding="async">
+            <img class="bt-sl__s" data-src="img/h4-800.jpg" width="800" height="1000" alt="Каменный арочный мост царицы Тамары над горной рекой" loading="lazy" decoding="async">
           </div>
           <div class="bt-sl__dots" role="group" aria-label="Кадры"><button type="button" aria-label="Кадр 1"></button><button type="button" aria-label="Кадр 2"></button><button type="button" aria-label="Кадр 3"></button><button type="button" aria-label="Кадр 4"></button></div>
         </div>
@@ -684,11 +710,12 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
           <img class="bt-fd__i" data-src="img/b3-640.jpg" width="640" height="480" alt="" decoding="async">
         </div>
       </div>
+      <div class="bt-fr-ring" aria-hidden="true"><i></i></div>
       <div class="bt-fr bt-fr--c">
         <div class="bt-fd" data-fd data-auto="4900" aria-hidden="true">
-          <img class="bt-fd__i is-on" src="img/c1-480.jpg" width="480" height="480" alt="" decoding="async">
-          <img class="bt-fd__i" data-src="img/c2-480.jpg" width="480" height="480" alt="" decoding="async">
-          <img class="bt-fd__i" data-src="img/c3-480.jpg" width="480" height="480" alt="" decoding="async">
+          <img class="bt-fd__i is-on" src="img/c1-480.jpg" width="480" height="480" alt="" loading="lazy" decoding="async">
+          <img class="bt-fd__i" data-src="img/c2-480.jpg" width="480" height="480" alt="" loading="lazy" decoding="async">
+          <img class="bt-fd__i" data-src="img/c3-480.jpg" width="480" height="480" alt="" loading="lazy" decoding="async">
         </div>
       </div>
     </div>
@@ -739,9 +766,9 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
         <div class="bt-sl bt-sl--card" data-sl data-auto="5200" role="group" aria-roledescription="карусель" aria-label="Фотографии тура Мачахела">
           <div class="bt-sl__track">
             <img class="bt-sl__s" src="img/mc1-640.jpg" srcset="img/mc1-640.jpg 640w, img/mc1-1000.jpg 1000w" sizes="(min-width:1000px) 720px, (min-width:640px) 48vw, 92vw" width="1000" height="800" alt="Каменный арочный мост над горной рекой в Мачахельском ущелье" loading="lazy" decoding="async">
-            <img class="bt-sl__s" data-src="img/mc2-640.jpg" data-srcset="img/mc2-640.jpg 640w, img/mc2-1000.jpg 1000w" sizes="(min-width:1000px) 720px, (min-width:640px) 48vw, 92vw" width="1000" height="800" alt="Высокий водопад, у подножия гости тура" decoding="async">
-            <img class="bt-sl__s" data-src="img/mc3-640.jpg" data-srcset="img/mc3-640.jpg 640w, img/mc3-1000.jpg 1000w" sizes="(min-width:1000px) 720px, (min-width:640px) 48vw, 92vw" width="1000" height="800" alt="Стол с шашлыком, хачапури и вином" decoding="async">
-            <img class="bt-sl__s" data-src="img/mc4-640.jpg" data-srcset="img/mc4-640.jpg 640w, img/mc4-1000.jpg 1000w" sizes="(min-width:1000px) 720px, (min-width:640px) 48vw, 92vw" width="1000" height="800" alt="Деревянные качели-полумесяц над рекой" decoding="async">
+            <img class="bt-sl__s" data-src="img/mc2-640.jpg" data-srcset="img/mc2-640.jpg 640w, img/mc2-1000.jpg 1000w" sizes="(min-width:1000px) 720px, (min-width:640px) 48vw, 92vw" width="1000" height="800" alt="Высокий водопад, у подножия гости тура" loading="lazy" decoding="async">
+            <img class="bt-sl__s" data-src="img/mc3-640.jpg" data-srcset="img/mc3-640.jpg 640w, img/mc3-1000.jpg 1000w" sizes="(min-width:1000px) 720px, (min-width:640px) 48vw, 92vw" width="1000" height="800" alt="Стол с шашлыком, хачапури и вином" loading="lazy" decoding="async">
+            <img class="bt-sl__s" data-src="img/mc4-640.jpg" data-srcset="img/mc4-640.jpg 640w, img/mc4-1000.jpg 1000w" sizes="(min-width:1000px) 720px, (min-width:640px) 48vw, 92vw" width="1000" height="800" alt="Деревянные качели-полумесяц над рекой" loading="lazy" decoding="async">
           </div>
           <span class="bt-chip bt-chip--len"><svg class="bt-s" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-clock"/></svg>1 день</span>
           <span class="bt-chip bt-chip--hit">Выбирают чаще всего</span>
@@ -757,9 +784,9 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
         <div class="bt-sl bt-sl--card" data-sl data-auto="5800" role="group" aria-roledescription="карусель" aria-label="Фотографии тура Гомисмта">
           <div class="bt-sl__track">
             <img class="bt-sl__s" src="img/gc1-640.jpg" srcset="img/gc1-640.jpg 640w, img/gc1-1000.jpg 1000w" sizes="(min-width:1000px) 360px, (min-width:640px) 48vw, 92vw" width="1000" height="800" alt="Закат над облаками на курорте Гомисмта" loading="lazy" decoding="async">
-            <img class="bt-sl__s" data-src="img/gc2-640.jpg" data-srcset="img/gc2-640.jpg 640w, img/gc2-1000.jpg 1000w" sizes="(min-width:1000px) 360px, (min-width:640px) 48vw, 92vw" width="1000" height="800" alt="Горный луг с коровами под облаками" decoding="async">
-            <img class="bt-sl__s" data-src="img/gc3-640.jpg" data-srcset="img/gc3-640.jpg 640w, img/gc3-1000.jpg 1000w" sizes="(min-width:1000px) 360px, (min-width:640px) 48vw, 92vw" width="1000" height="800" alt="Девушка с поднятыми руками на склоне, рядом корова" decoding="async">
-            <img class="bt-sl__s" data-src="img/gc4-640.jpg" data-srcset="img/gc4-640.jpg 640w, img/gc4-1000.jpg 1000w" sizes="(min-width:1000px) 360px, (min-width:640px) 48vw, 92vw" width="1000" height="800" alt="Гости тура на пикнике на вершине" decoding="async">
+            <img class="bt-sl__s" data-src="img/gc2-640.jpg" data-srcset="img/gc2-640.jpg 640w, img/gc2-1000.jpg 1000w" sizes="(min-width:1000px) 360px, (min-width:640px) 48vw, 92vw" width="1000" height="800" alt="Горный луг с коровами под облаками" loading="lazy" decoding="async">
+            <img class="bt-sl__s" data-src="img/gc3-640.jpg" data-srcset="img/gc3-640.jpg 640w, img/gc3-1000.jpg 1000w" sizes="(min-width:1000px) 360px, (min-width:640px) 48vw, 92vw" width="1000" height="800" alt="Девушка с поднятыми руками на склоне, рядом корова" loading="lazy" decoding="async">
+            <img class="bt-sl__s" data-src="img/gc4-640.jpg" data-srcset="img/gc4-640.jpg 640w, img/gc4-1000.jpg 1000w" sizes="(min-width:1000px) 360px, (min-width:640px) 48vw, 92vw" width="1000" height="800" alt="Гости тура на пикнике на вершине" loading="lazy" decoding="async">
           </div>
           <span class="bt-chip bt-chip--len"><svg class="bt-s" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-clock"/></svg>1 день</span>
           <button class="bt-sl__nav bt-sl__nav--l" type="button" data-prev aria-label="Назад"><svg class="bt-s" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-arr"/></svg></button>
@@ -774,9 +801,9 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
         <div class="bt-sl bt-sl--card" data-sl data-auto="6200" role="group" aria-roledescription="карусель" aria-label="Фотографии тура Мтирала">
           <div class="bt-sl__track">
             <img class="bt-sl__s" src="img/tc1-640.jpg" srcset="img/tc1-640.jpg 640w, img/tc1-1000.jpg 1000w" sizes="(min-width:1000px) 360px, (min-width:640px) 48vw, 92vw" width="1000" height="800" alt="Путешественница с палками идёт по лесу в национальном парке Мтирала" loading="lazy" decoding="async">
-            <img class="bt-sl__s" data-src="img/tc2-640.jpg" data-srcset="img/tc2-640.jpg 640w, img/tc2-1000.jpg 1000w" sizes="(min-width:1000px) 360px, (min-width:640px) 48vw, 92vw" width="1000" height="800" alt="Квадроциклы на фоне гор" decoding="async">
-            <img class="bt-sl__s" data-src="img/tc3-640.jpg" data-srcset="img/tc3-640.jpg 640w, img/tc3-1000.jpg 1000w" sizes="(min-width:1000px) 360px, (min-width:640px) 48vw, 92vw" width="1000" height="800" alt="Каменная часовня в зелени" decoding="async">
-            <img class="bt-sl__s" data-src="img/tc4-640.jpg" data-srcset="img/tc4-640.jpg 640w, img/tc4-1000.jpg 1000w" sizes="(min-width:1000px) 360px, (min-width:640px) 48vw, 92vw" width="1000" height="800" alt="Зелёные горы над долиной" decoding="async">
+            <img class="bt-sl__s" data-src="img/tc2-640.jpg" data-srcset="img/tc2-640.jpg 640w, img/tc2-1000.jpg 1000w" sizes="(min-width:1000px) 360px, (min-width:640px) 48vw, 92vw" width="1000" height="800" alt="Квадроциклы на фоне гор" loading="lazy" decoding="async">
+            <img class="bt-sl__s" data-src="img/tc3-640.jpg" data-srcset="img/tc3-640.jpg 640w, img/tc3-1000.jpg 1000w" sizes="(min-width:1000px) 360px, (min-width:640px) 48vw, 92vw" width="1000" height="800" alt="Каменная часовня в зелени" loading="lazy" decoding="async">
+            <img class="bt-sl__s" data-src="img/tc4-640.jpg" data-srcset="img/tc4-640.jpg 640w, img/tc4-1000.jpg 1000w" sizes="(min-width:1000px) 360px, (min-width:640px) 48vw, 92vw" width="1000" height="800" alt="Зелёные горы над долиной" loading="lazy" decoding="async">
           </div>
           <span class="bt-chip bt-chip--len"><svg class="bt-s" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-clock"/></svg>8 часов</span>
           <button class="bt-sl__nav bt-sl__nav--l" type="button" data-prev aria-label="Назад"><svg class="bt-s" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-arr"/></svg></button>
@@ -791,9 +818,9 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
         <div class="bt-sl bt-sl--card" data-sl data-auto="5400" role="group" aria-roledescription="карусель" aria-label="Фотографии тура Шуахеви">
           <div class="bt-sl__track">
             <img class="bt-sl__s" src="img/sc1-640.jpg" srcset="img/sc1-640.jpg 640w, img/sc1-1000.jpg 1000w" sizes="(min-width:1000px) 360px, (min-width:640px) 48vw, 92vw" width="1000" height="800" alt="Заснеженные горы Шуахеви над облаками" loading="lazy" decoding="async">
-            <img class="bt-sl__s" data-src="img/sc2-640.jpg" data-srcset="img/sc2-640.jpg 640w, img/sc2-1000.jpg 1000w" sizes="(min-width:1000px) 360px, (min-width:640px) 48vw, 92vw" width="1000" height="800" alt="Заснеженная дорога в лесу" decoding="async">
-            <img class="bt-sl__s" data-src="img/sc3-640.jpg" data-srcset="img/sc3-640.jpg 640w, img/sc3-1000.jpg 1000w" sizes="(min-width:1000px) 360px, (min-width:640px) 48vw, 92vw" width="1000" height="800" alt="Пара стоит спиной к камере и смотрит на облака над горами" decoding="async">
-            <img class="bt-sl__s" data-src="img/sc4-640.jpg" data-srcset="img/sc4-640.jpg 640w, img/sc4-1000.jpg 1000w" sizes="(min-width:1000px) 360px, (min-width:640px) 48vw, 92vw" width="1000" height="800" alt="Прыжок в снегу на фоне гор" decoding="async">
+            <img class="bt-sl__s" data-src="img/sc2-640.jpg" data-srcset="img/sc2-640.jpg 640w, img/sc2-1000.jpg 1000w" sizes="(min-width:1000px) 360px, (min-width:640px) 48vw, 92vw" width="1000" height="800" alt="Заснеженная дорога в лесу" loading="lazy" decoding="async">
+            <img class="bt-sl__s" data-src="img/sc3-640.jpg" data-srcset="img/sc3-640.jpg 640w, img/sc3-1000.jpg 1000w" sizes="(min-width:1000px) 360px, (min-width:640px) 48vw, 92vw" width="1000" height="800" alt="Пара стоит спиной к камере и смотрит на облака над горами" loading="lazy" decoding="async">
+            <img class="bt-sl__s" data-src="img/sc4-640.jpg" data-srcset="img/sc4-640.jpg 640w, img/sc4-1000.jpg 1000w" sizes="(min-width:1000px) 360px, (min-width:640px) 48vw, 92vw" width="1000" height="800" alt="Прыжок в снегу на фоне гор" loading="lazy" decoding="async">
           </div>
           <span class="bt-chip bt-chip--len"><svg class="bt-s" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-clock"/></svg>8 часов</span>
           <button class="bt-sl__nav bt-sl__nav--l" type="button" data-prev aria-label="Назад"><svg class="bt-s" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-arr"/></svg></button>
@@ -808,9 +835,9 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
         <div class="bt-sl bt-sl--card" data-sl data-auto="5000" role="group" aria-roledescription="карусель" aria-label="Фотографии тура Горная Аджария">
           <div class="bt-sl__track">
             <img class="bt-sl__s" src="img/ac1-640.jpg" srcset="img/ac1-640.jpg 640w, img/ac1-1000.jpg 1000w" sizes="(min-width:1000px) 360px, (min-width:640px) 48vw, 92vw" width="1000" height="800" alt="Водопад в ущелье Горной Аджарии" loading="lazy" decoding="async">
-            <img class="bt-sl__s" data-src="img/ac2-640.jpg" data-srcset="img/ac2-640.jpg 640w, img/ac2-1000.jpg 1000w" sizes="(min-width:1000px) 360px, (min-width:640px) 48vw, 92vw" width="1000" height="800" alt="Гостья раскинула руки над долиной в горах Аджарии" decoding="async">
-            <img class="bt-sl__s" data-src="img/ac3-640.jpg" data-srcset="img/ac3-640.jpg 640w, img/ac3-1000.jpg 1000w" sizes="(min-width:1000px) 360px, (min-width:640px) 48vw, 92vw" width="1000" height="800" alt="Терраса над рекой в горной долине" decoding="async">
-            <img class="bt-sl__s" data-src="img/ac4-640.jpg" data-srcset="img/ac4-640.jpg 640w, img/ac4-1000.jpg 1000w" sizes="(min-width:1000px) 360px, (min-width:640px) 48vw, 92vw" width="1000" height="800" alt="Изгиб реки между зелёными склонами" decoding="async">
+            <img class="bt-sl__s" data-src="img/ac2-640.jpg" data-srcset="img/ac2-640.jpg 640w, img/ac2-1000.jpg 1000w" sizes="(min-width:1000px) 360px, (min-width:640px) 48vw, 92vw" width="1000" height="800" alt="Гостья раскинула руки над долиной в горах Аджарии" loading="lazy" decoding="async">
+            <img class="bt-sl__s" data-src="img/ac3-640.jpg" data-srcset="img/ac3-640.jpg 640w, img/ac3-1000.jpg 1000w" sizes="(min-width:1000px) 360px, (min-width:640px) 48vw, 92vw" width="1000" height="800" alt="Терраса над рекой в горной долине" loading="lazy" decoding="async">
+            <img class="bt-sl__s" data-src="img/ac4-640.jpg" data-srcset="img/ac4-640.jpg 640w, img/ac4-1000.jpg 1000w" sizes="(min-width:1000px) 360px, (min-width:640px) 48vw, 92vw" width="1000" height="800" alt="Изгиб реки между зелёными склонами" loading="lazy" decoding="async">
           </div>
           <span class="bt-chip bt-chip--len"><svg class="bt-s" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-clock"/></svg>6 часов</span>
           <button class="bt-sl__nav bt-sl__nav--l" type="button" data-prev aria-label="Назад"><svg class="bt-s" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-arr"/></svg></button>
@@ -825,7 +852,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
         <div class="bt-sl bt-sl--card" data-sl data-auto="5600" role="group" aria-roledescription="карусель" aria-label="Фотографии мандаринового тура">
           <div class="bt-sl__track">
             <img class="bt-sl__s" src="img/nc1-640.jpg" srcset="img/nc1-640.jpg 640w, img/nc1-1000.jpg 1000w" sizes="(min-width:1000px) 360px, (min-width:640px) 48vw, 92vw" width="930" height="743" alt="Мандарины на ветках в саду под Батуми" loading="lazy" decoding="async">
-            <img class="bt-sl__s" data-src="img/nc2-640.jpg" data-srcset="img/nc2-640.jpg 640w, img/nc2-1000.jpg 1000w" sizes="(min-width:1000px) 360px, (min-width:640px) 48vw, 92vw" width="1000" height="800" alt="Гостья срывает мандарины в саду" decoding="async">
+            <img class="bt-sl__s" data-src="img/nc2-640.jpg" data-srcset="img/nc2-640.jpg 640w, img/nc2-1000.jpg 1000w" sizes="(min-width:1000px) 360px, (min-width:640px) 48vw, 92vw" width="1000" height="800" alt="Гостья срывает мандарины в саду" loading="lazy" decoding="async">
           </div>
           <span class="bt-chip bt-chip--len"><svg class="bt-s" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-clock"/></svg>ноябрь и декабрь</span>
           <button class="bt-sl__nav bt-sl__nav--l" type="button" data-prev aria-label="Назад"><svg class="bt-s" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-arr"/></svg></button>
@@ -849,9 +876,9 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
   <div class="bt-route__stage" id="btRoute">
     <div class="bt-route__bg">
       <img class="bt-route__ph is-on" data-i="0" src="img/r1-1350.jpg" srcset="img/r1-900.jpg 900w, img/r1-1350.jpg 1350w, img/r1-1800.jpg 1800w" sizes="100vw" width="1800" height="1012" alt="Плотина и водохранилище между зелёными горами Аджарии, вид с высоты" loading="lazy" decoding="async">
-      <img class="bt-route__ph" data-i="1" data-src="img/g11-1350.jpg" style="--op:50% 80%" width="1350" height="1800" alt="Девушка сидит на камне над слиянием двух рек" decoding="async">
-      <img class="bt-route__ph" data-i="2" data-src="img/g3-1350.jpg" style="--op:50% 74%" width="1350" height="1800" alt="Каменный арочный мост царицы Тамары под снегом" decoding="async">
-      <img class="bt-route__ph" data-i="3" data-src="img/g8-1350.jpg" style="--op:50% 56%" width="1350" height="1800" alt="Стол с шашлыком, хачапури и вином" decoding="async">
+      <img class="bt-route__ph" data-i="1" data-src="img/g11-1350.jpg" style="--op:50% 80%" width="1350" height="1800" alt="Девушка сидит на камне над слиянием двух рек" loading="lazy" decoding="async">
+      <img class="bt-route__ph" data-i="2" data-src="img/g3-1350.jpg" style="--op:50% 74%" width="1350" height="1800" alt="Каменный арочный мост царицы Тамары под снегом" loading="lazy" decoding="async">
+      <img class="bt-route__ph" data-i="3" data-src="img/g8-1350.jpg" style="--op:50% 56%" width="1350" height="1800" alt="Стол с шашлыком, хачапури и вином" loading="lazy" decoding="async">
     </div>
     <div class="bt-route__shade" aria-hidden="true"></div>
     <div class="bt-route__head">
@@ -1091,7 +1118,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
 <footer class="bt-foot bt-tex">
   <div class="bt-shell bt-foot__in">
     <div class="bt-foot__brand">
-      <a class="bt-logo" href="#top" aria-label="Batumi Tours Georgia, наверх"><img src="img/logo.svg" alt="Batumi Tours Georgia" width="204" height="32" loading="lazy"></a>
+      <a class="bt-logo" href="#top" aria-label="Batumi Tours Georgia, наверх"><img src="img/logo.svg" alt="Batumi Tours Georgia" width="204" height="32" loading="lazy" decoding="async"></a>
       <p>Туры в Грузию на любой вкус</p>
     </div>
     <nav class="bt-foot__nav" aria-label="Разделы внизу"><a href="#tours">Туры</a><a href="#route">Маршрут</a><a href="#team">Команда</a><a href="#reviews">Отзывы</a><a href="#faq">Вопросы</a></nav>
@@ -1109,7 +1136,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
 
 <div class="bt-lb" id="btLb" role="dialog" aria-modal="true" aria-label="Фотография крупно" hidden>
   <div class="bt-lb__bg" data-close></div>
-  <figure class="bt-lb__fig"><img id="btLbImg" alt="" decoding="async"></figure>
+  <figure class="bt-lb__fig"><img id="btLbImg" alt="" loading="lazy" decoding="async"></figure>
   <button class="bt-lb__x" type="button" data-close aria-label="Закрыть"><svg class="bt-s" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-close"/></svg></button>
   <button class="bt-lb__n bt-lb__n--l" type="button" id="btLbPrev" aria-label="Назад"><svg class="bt-s bt-flip" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-arr"/></svg></button>
   <button class="bt-lb__n bt-lb__n--r" type="button" id="btLbNext" aria-label="Дальше"><svg class="bt-s" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-arr"/></svg></button>
@@ -1248,6 +1275,19 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
     fd.addEventListener('pointerup', function (e) { var dx = e.clientX - x0; show(i + (Math.abs(dx) > 24 && dx > 0 ? -1 : 1)); until = Date.now() + 6000; });
     addEventListener('load', function () { setTimeout(function () { hyd(im[1]); }, 2500); });
   });
+
+  var dash = $('.bt-collage__path path');
+  if (dash && !REDUCED) {
+    var dashTimer = 0, dashSee = false;
+    var dashTick = function () { dash.style.strokeDashoffset = (-(performance.now() * 0.0108 % 13)).toFixed(2); };
+    var dashSync = function () {
+      var run = dashSee && !D.hidden;
+      if (run && !dashTimer) { dashTick(); dashTimer = setInterval(dashTick, 100); }
+      else if (!run && dashTimer) { clearInterval(dashTimer); dashTimer = 0; }
+    };
+    watch([$('#btCollage')], function (el, on) { dashSee = on; dashSync(); }, { threshold: 0 });
+    D.addEventListener('visibilitychange', dashSync);
+  }
   var collage = $('#btCollage');
   if (collage && matchMedia('(hover:hover)').matches && !REDUCED) {
     var hero = $('#top');
@@ -1361,16 +1401,21 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
   prog.addEventListener('scroll', progMove, { passive: true }); addEventListener('resize', progMove); progMove();
   function stopDrift() { driftOn = false; }
   ['pointerdown', 'wheel', 'touchstart', 'keydown'].forEach(function (ev) { prog.addEventListener(ev, stopDrift, { passive: true }); });
-  if (!REDUCED) watch([prog], function () {
-    driftOn = true; var last = performance.now(), pos = prog.scrollLeft;
-    (function step(now) {
-      if (!driftOn) return;
-      var max = prog.scrollWidth - prog.clientWidth; pos += (now - last) * 0.05; last = now;
-      if (Math.abs(prog.scrollLeft - pos) > 6 && pos > 30) { driftOn = false; return; }    
-      prog.scrollLeft = pos;
-      if (pos < max) requestAnimationFrame(step); else driftOn = false;
-    })(last);
-  }, { threshold: .6 }, true);
+
+  var dVis = false, dRaf = 0, dLast = 0, dPos = 0;
+  function dStep(now) {
+    dRaf = 0;
+    if (!driftOn || !dVis) return;
+    var max = prog.scrollWidth - prog.clientWidth; dPos += (now - dLast) * 0.05; dLast = now;
+    if (Math.abs(prog.scrollLeft - dPos) > 6 && dPos > 30) { driftOn = false; return; }    
+    prog.scrollLeft = dPos;
+    if (dPos < max) dRaf = requestAnimationFrame(dStep); else driftOn = false;
+  }
+  function dGo() { if (driftOn && dVis && !dRaf) { dLast = performance.now(); dRaf = requestAnimationFrame(dStep); } }
+  if (!REDUCED) {
+    watch([prog], function (el, on) { dVis = on; dGo(); }, { threshold: 0 });
+    watch([prog], function (el, on) { if (on) { driftOn = true; dPos = prog.scrollLeft; dGo(); } }, { threshold: .6 }, true);
+  }
   $('#btProgPrev').addEventListener('click', function () { stopDrift(); prog.scrollBy({ left: -prog.clientWidth * .7, behavior: REDUCED ? 'auto' : 'smooth' }); });
   $('#btProgNext').addEventListener('click', function () { stopDrift(); prog.scrollBy({ left: prog.clientWidth * .7, behavior: REDUCED ? 'auto' : 'smooth' }); });
 
@@ -2390,24 +2435,87 @@ function mount(stage, opts = {}) {
       if (tries < 300) requestAnimationFrame(() => check(gl, tries + 1));
       else { gone = true; on = false; fx.destroy(); window.btRouteFx = null; giveUp(); }
     };
-    new IntersectionObserver(async ([e]) => {
+
+    let vis = false;
+    const sync = () => {
+      if (!fx || gone) return;
+      const want = vis && !document.hidden;
+      if (want && !on) { fx.start(); on = true; requestAnimationFrame(() => check(fx.__gl)); }
+      else if (!want && on) { fx.stop(); on = false; }
+    };
+    document.addEventListener('visibilitychange', sync);
+    new IntersectionObserver(async (entries) => {
+      vis = entries[entries.length - 1].isIntersecting;
       if (gone) return;
-      if (e.isIntersecting && !fx) {
+      if (vis && !fx) {
         loading = loading || loadTour().then(({ mount }) => mount(stage, {})).catch(() => null);
-        fx = await loading;
-        if (!fx) { gone = true; giveUp(); return; }
-        window.btRouteFx = fx;
-        const cv = stage.querySelector('canvas');
-        if (cv) cv.addEventListener('webglcontextlost', () => { gone = true; on = false; giveUp(); });
-        window.btProgress && window.btProgress();
-        fx.__gl = cv && (cv.getContext('webgl2') || cv.getContext('webgl'));
+        const made = await loading;
+        if (gone) return;
+        if (!made) { gone = true; giveUp(); return; }
+        if (!fx) {
+          fx = made;
+          window.btRouteFx = fx;
+          const cv = stage.querySelector('canvas');
+          if (cv) cv.addEventListener('webglcontextlost', () => { gone = true; on = false; giveUp(); });
+          window.btProgress && window.btProgress();
+          fx.__gl = cv && (cv.getContext('webgl2') || cv.getContext('webgl'));
+        }
       }
-      if (!fx) return;
-      if (e.isIntersecting && !on) { fx.start(); on = true; requestAnimationFrame(() => check(fx.__gl)); }
-      else if (!e.isIntersecting && on) { fx.stop(); on = false; }
+      sync();
     }, { rootMargin: '200px 0px' }).observe(route);
   }
 }
+</script>
+<script data-ekonom="7a82f5fe">
+
+(function () {
+  var D = document, W = window;
+  if (W.__ekonom || !D.getAnimations || !W.IntersectionObserver) return;
+  W.__ekonom = 1;
+  var vis = new WeakMap(), seen = new WeakSet(), held = new WeakSet(), asleep = new WeakSet(), L = [], timer = 0;
+  var on = function (e) { return vis.get(e) !== false; };
+  var io = new IntersectionObserver(function (es) {
+    es.forEach(function (e) {
+      var t = e.target, sleep = !e.isIntersecting;
+      if (vis.get(t) === !sleep) return;
+      vis.set(t, !sleep);
+      if (t.tagName === 'CANVAS' && sleep !== asleep.has(t)) {
+        sleep ? asleep.add(t) : asleep['delete'](t);
+        sleep ? t.setAttribute('data-sleep', '') : t.removeAttribute('data-sleep');
+        t.dispatchEvent(new Event(sleep ? 'ekonom:sleep' : 'ekonom:wake'));
+      }
+    });
+    apply();
+  }, { rootMargin: '200px' });
+  var watch = function (e) { if (e && !seen.has(e)) { seen.add(e); io.observe(e); } };
+  function apply() {
+    L.forEach(function (x) {
+      var a = x[0], run = !D.hidden && (on(x[1]) || on(x[2]));
+      if (run) {
+        if (!held.has(a)) return;
+        held['delete'](a);
+        if (a.playState === 'paused' && /running/.test(getComputedStyle(x[1], a.effect.pseudoElement).animationPlayState)) a.play();
+      } else if (a.playState === 'running') { held.add(a); a.pause(); }
+    });
+  }
+  function scan() {
+    timer = 0;
+    L = [];
+    D.getAnimations().forEach(function (a) {
+      var f = a.effect, t = f && f.target, p = t && t.parentElement;
+      if (!p || p === D.body || p === D.documentElement || !f.getTiming || f.getTiming().iterations !== Infinity) return;
+      L.push([a, t, p]);
+      watch(t); watch(p);
+    });
+    apply();
+  }
+  D.addEventListener('animationstart', function () { if (!timer) timer = setTimeout(scan, 100); }, true);
+  D.addEventListener('visibilitychange', apply);
+  [].forEach.call(D.querySelectorAll('canvas'), watch);
+  var P = W.HTMLCanvasElement && HTMLCanvasElement.prototype, gc = P && P.getContext;
+  if (gc) P.getContext = function () { watch(this); return gc.apply(this, arguments); };
+  scan();
+})();
 </script>
 <a class="osb-bot" href="https://t.me/opensites_io?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5%21%20%D0%A1%D0%BC%D0%BE%D1%82%D1%80%D1%8E%20%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%20%D1%81%D0%B0%D0%B9%D1%82%D0%B0%20%D0%B4%D0%BB%D1%8F%20%C2%ABBatumi%20Tours%20Georgia%C2%BB%20%E2%80%94%20%D1%85%D0%BE%D1%87%D1%83%20%D1%82%D0%B0%D0%BA%D0%BE%D0%B9" target="_blank" rel="noopener"><span class="osb-in"><span>Сделано в <span class="osb-mark"><span class="osb-dot"></span>open-sites.io</span></span><span class="osb-cta">Написать нам →</span></span></a>
 <script src="https://crm.18.185.108.90.sslip.io/e.js" defer></script>
