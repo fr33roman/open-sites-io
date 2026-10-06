@@ -704,19 +704,19 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
     </div>
     <div class="docs">
       <article class="doc rv" style="--d:.05s">
-        <div class="mono"><i></i><span class="ph-doc"><img src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?q=80&w=600&auto=format&fit=crop" alt="Анна Гелашвили, главный врач" width="600" height="600" loading="lazy" decoding="async"></span></div>
+        <div class="mono"><i></i><span class="ph-doc"><img src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?q=80&w=600&auto=format&fit=crop" srcset="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?q=80&w=400&auto=format&fit=crop 400w, https://images.unsplash.com/photo-1559839734-2b71ea197ec2?q=80&w=600&auto=format&fit=crop 600w" sizes="(min-width: 1024px) 600px, (min-width: 820px) 130px, 128px" alt="Анна Гелашвили, главный врач" width="600" height="600" loading="lazy" decoding="async"></span></div>
         <h3>Анна Гелашвили</h3>
         <div class="role">Главный врач · терапия</div>
         <p class="exp">Лечение под микроскопом · 14 лет практики</p>
       </article>
       <article class="doc rv" style="--d:.16s">
-        <div class="mono"><i></i><span class="ph-doc"><img src="https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?q=80&w=600&auto=format&fit=crop" alt="Дато Церетели, хирург-имплантолог" width="600" height="600" loading="lazy" decoding="async"></span></div>
+        <div class="mono"><i></i><span class="ph-doc"><img src="https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?q=80&w=600&auto=format&fit=crop" srcset="https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?q=80&w=400&auto=format&fit=crop 400w, https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?q=80&w=600&auto=format&fit=crop 600w" sizes="(min-width: 1024px) 600px, (min-width: 820px) 130px, 128px" alt="Дато Церетели, хирург-имплантолог" width="600" height="600" loading="lazy" decoding="async"></span></div>
         <h3>Дато Церетели</h3>
         <div class="role">Хирург-имплантолог</div>
         <p class="exp">Имплантация и костная пластика · 11 лет практики</p>
       </article>
       <article class="doc rv" style="--d:.27s">
-        <div class="mono"><i></i><span class="ph-doc"><img src="https://images.unsplash.com/photo-1651008376811-b90baee60c1f?q=80&w=600&auto=format&fit=crop" alt="Нино Каладзе, ортопед" width="600" height="600" loading="lazy" decoding="async"></span></div>
+        <div class="mono"><i></i><span class="ph-doc"><img src="https://images.unsplash.com/photo-1651008376811-b90baee60c1f?q=80&w=600&auto=format&fit=crop" srcset="https://images.unsplash.com/photo-1651008376811-b90baee60c1f?q=80&w=280&auto=format&fit=crop 280w, https://images.unsplash.com/photo-1651008376811-b90baee60c1f?q=80&w=600&auto=format&fit=crop 600w" sizes="(min-width: 1024px) 600px, (min-width: 820px) 90px, 84px" alt="Нино Каладзе, ортопед" width="600" height="600" loading="lazy" decoding="async"></span></div>
         <h3>Нино Каладзе</h3>
         <div class="role">Ортопед</div>
         <p class="exp">Виниры и керамика · 9 лет практики</p>
@@ -1107,13 +1107,14 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
   </span>
   <span class="chat-label">Задать вопрос</span>
 </div>
-<script data-ekonom="7a82f5fe">
+<script data-ekonom="b3249965">
 
 (function () {
   var D = document, W = window;
   if (W.__ekonom || !D.getAnimations || !W.IntersectionObserver) return;
   W.__ekonom = 1;
-  var vis = new WeakMap(), seen = new WeakSet(), held = new WeakSet(), asleep = new WeakSet(), L = [], timer = 0;
+  var TIMES = 3;
+  var vis = new WeakMap(), near = new WeakMap(), seen = new WeakSet(), held = new WeakSet(), asleep = new WeakSet(), checked = new WeakSet(), L = [], T = [], timer = 0;
   var on = function (e) { return vis.get(e) !== false; };
   var io = new IntersectionObserver(function (es) {
     es.forEach(function (e) {
@@ -1129,6 +1130,10 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
     apply();
   }, { rootMargin: '200px' });
   var watch = function (e) { if (e && !seen.has(e)) { seen.add(e); io.observe(e); } };
+  var eye = new IntersectionObserver(function (es) {
+    es.forEach(function (e) { near.set(e.target, e.isIntersecting); });
+    apply();
+  });
   function apply() {
     L.forEach(function (x) {
       var a = x[0], run = !D.hidden && (on(x[1]) || on(x[2]));
@@ -1138,13 +1143,50 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
         if (a.playState === 'paused' && /running/.test(getComputedStyle(x[1], a.effect.pseudoElement).animationPlayState)) a.play();
       } else if (a.playState === 'running') { held.add(a); a.pause(); }
     });
+    T.forEach(function (x) {
+      var a = x[0], run = !D.hidden && near.get(x[1]) !== false;
+      try {
+        if (!run) { x[2] = 1; if (a.playState === 'running') a.pause(); }
+        else if (x[2]) { x[2] = 0; again(a, x[1]); }
+      } catch (e) {  }
+    });
+  }
+  function again(a, t) {
+    var f = a.effect, c = getComputedStyle(t, f.pseudoElement);
+    if (c.animationName.split(/\s*,\s*/).indexOf(a.animationName) < 0 || !/running/.test(c.animationPlayState)) return;
+    a.currentTime = Math.max(0, f.getTiming().delay);
+    a.play();
+  }
+  function pinned(a, g, t) {
+    if (typeof a.animationName !== 'string' || a.timeline !== D.timeline || typeof g.duration !== 'number' || g.duration > 1e4) return false;
+    for (var n = t, s, r, q; n && n.nodeType === 1; n = n.parentElement) {
+      s = getComputedStyle(n).position;
+      if (s !== 'fixed' && s !== 'sticky') continue;
+      r = n.getBoundingClientRect();
+      if (r.height > W.innerHeight * 0.3) continue;
+      if (t.closest('a,button,[role=button]') === t) return true;
+      if (s === 'fixed' && r.width <= 320 && r.height <= 140) { q = t.getBoundingClientRect(); return q.width >= 16 && q.height >= 16; }
+    }
+    return false;
+  }
+  function tame(a, f, g, t) {
+    var alt = /alternate/.test(g.direction) ? 2 : 1, n = Math.max(TIMES * alt, Math.ceil((((a.currentTime || 0) - g.delay) / g.duration) / alt) * alt);
+    f.updateTiming({ iterations: n });
+    T.push([a, t, 0]);
+    eye.observe(t);
   }
   function scan() {
     timer = 0;
     L = [];
+    T = T.filter(function (x) { return x[1].isConnected && x[0].playState !== 'idle'; });
     D.getAnimations().forEach(function (a) {
-      var f = a.effect, t = f && f.target, p = t && t.parentElement;
-      if (!p || p === D.body || p === D.documentElement || !f.getTiming || f.getTiming().iterations !== Infinity) return;
+      var f = a.effect, t = f && f.target, p = t && t.parentElement, g = f && f.getTiming && f.getTiming();
+      if (!p || !g) return;
+      if (g.iterations === Infinity && !checked.has(a)) {
+        checked.add(a);
+        try { if (pinned(a, g, t)) { tame(a, f, g, t); return; } } catch (e) {  }
+      }
+      if (p === D.body || p === D.documentElement || g.iterations !== Infinity) return;
       L.push([a, t, p]);
       watch(t); watch(p);
     });

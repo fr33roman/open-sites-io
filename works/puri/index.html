@@ -364,8 +364,8 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
       <li><b>07:00</b><span>привезли к двери</span></li>
     </ol>
     <div class="strip">
-      <figure><img src="https://images.unsplash.com/photo-1686154596696-d6f594a98af9?auto=format&fit=crop&w=900&q=76" alt="Буханка хлеба на прилавке" width="900" height="600" fetchpriority="high" decoding="async"></figure>
-      <figure><img src="https://images.unsplash.com/photo-1693483640461-267d788b6148?auto=format&fit=crop&w=900&q=76" alt="Круассаны в ряд на противне" width="900" height="600" decoding="async"></figure>
+      <figure><img src="https://images.unsplash.com/photo-1686154596696-d6f594a98af9?auto=format&fit=crop&w=900&q=76" srcset="https://images.unsplash.com/photo-1686154596696-d6f594a98af9?auto=format&fit=crop&w=640&q=76 640w, https://images.unsplash.com/photo-1686154596696-d6f594a98af9?auto=format&fit=crop&w=900&q=76 900w" sizes="(min-width: 1024px) 900px, (min-width: 820px) 340px, (min-width: 640px) 280px, (min-width: 480px) 220px, calc(10vw + 172px)" alt="Буханка хлеба на прилавке" width="900" height="600" fetchpriority="high" decoding="async"></figure>
+      <figure><img src="https://images.unsplash.com/photo-1693483640461-267d788b6148?auto=format&fit=crop&w=900&q=76" srcset="https://images.unsplash.com/photo-1693483640461-267d788b6148?auto=format&fit=crop&w=560&q=76 560w, https://images.unsplash.com/photo-1693483640461-267d788b6148?auto=format&fit=crop&w=900&q=76 900w" sizes="(min-width: 1024px) 900px, (min-width: 820px) 310px, (min-width: 640px) 260px, (min-width: 480px) 220px, calc(50vw - 20px)" alt="Круассаны в ряд на противне" width="900" height="600" decoding="async"></figure>
       <figure><img src="https://images.unsplash.com/photo-1763297014734-e2ac58a6f3c0?auto=format&fit=crop&w=900&q=76" alt="Батоны на стеллаже после печи" width="900" height="600" decoding="async"></figure>
     </div>
   </section>
@@ -739,13 +739,14 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
   document.getElementById('policy').addEventListener('click', function (e) { e.preventDefault(); });
 })();
 </script>
-<script data-ekonom="7a82f5fe">
+<script data-ekonom="b3249965">
 
 (function () {
   var D = document, W = window;
   if (W.__ekonom || !D.getAnimations || !W.IntersectionObserver) return;
   W.__ekonom = 1;
-  var vis = new WeakMap(), seen = new WeakSet(), held = new WeakSet(), asleep = new WeakSet(), L = [], timer = 0;
+  var TIMES = 3;
+  var vis = new WeakMap(), near = new WeakMap(), seen = new WeakSet(), held = new WeakSet(), asleep = new WeakSet(), checked = new WeakSet(), L = [], T = [], timer = 0;
   var on = function (e) { return vis.get(e) !== false; };
   var io = new IntersectionObserver(function (es) {
     es.forEach(function (e) {
@@ -761,6 +762,10 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
     apply();
   }, { rootMargin: '200px' });
   var watch = function (e) { if (e && !seen.has(e)) { seen.add(e); io.observe(e); } };
+  var eye = new IntersectionObserver(function (es) {
+    es.forEach(function (e) { near.set(e.target, e.isIntersecting); });
+    apply();
+  });
   function apply() {
     L.forEach(function (x) {
       var a = x[0], run = !D.hidden && (on(x[1]) || on(x[2]));
@@ -770,13 +775,50 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
         if (a.playState === 'paused' && /running/.test(getComputedStyle(x[1], a.effect.pseudoElement).animationPlayState)) a.play();
       } else if (a.playState === 'running') { held.add(a); a.pause(); }
     });
+    T.forEach(function (x) {
+      var a = x[0], run = !D.hidden && near.get(x[1]) !== false;
+      try {
+        if (!run) { x[2] = 1; if (a.playState === 'running') a.pause(); }
+        else if (x[2]) { x[2] = 0; again(a, x[1]); }
+      } catch (e) {  }
+    });
+  }
+  function again(a, t) {
+    var f = a.effect, c = getComputedStyle(t, f.pseudoElement);
+    if (c.animationName.split(/\s*,\s*/).indexOf(a.animationName) < 0 || !/running/.test(c.animationPlayState)) return;
+    a.currentTime = Math.max(0, f.getTiming().delay);
+    a.play();
+  }
+  function pinned(a, g, t) {
+    if (typeof a.animationName !== 'string' || a.timeline !== D.timeline || typeof g.duration !== 'number' || g.duration > 1e4) return false;
+    for (var n = t, s, r, q; n && n.nodeType === 1; n = n.parentElement) {
+      s = getComputedStyle(n).position;
+      if (s !== 'fixed' && s !== 'sticky') continue;
+      r = n.getBoundingClientRect();
+      if (r.height > W.innerHeight * 0.3) continue;
+      if (t.closest('a,button,[role=button]') === t) return true;
+      if (s === 'fixed' && r.width <= 320 && r.height <= 140) { q = t.getBoundingClientRect(); return q.width >= 16 && q.height >= 16; }
+    }
+    return false;
+  }
+  function tame(a, f, g, t) {
+    var alt = /alternate/.test(g.direction) ? 2 : 1, n = Math.max(TIMES * alt, Math.ceil((((a.currentTime || 0) - g.delay) / g.duration) / alt) * alt);
+    f.updateTiming({ iterations: n });
+    T.push([a, t, 0]);
+    eye.observe(t);
   }
   function scan() {
     timer = 0;
     L = [];
+    T = T.filter(function (x) { return x[1].isConnected && x[0].playState !== 'idle'; });
     D.getAnimations().forEach(function (a) {
-      var f = a.effect, t = f && f.target, p = t && t.parentElement;
-      if (!p || p === D.body || p === D.documentElement || !f.getTiming || f.getTiming().iterations !== Infinity) return;
+      var f = a.effect, t = f && f.target, p = t && t.parentElement, g = f && f.getTiming && f.getTiming();
+      if (!p || !g) return;
+      if (g.iterations === Infinity && !checked.has(a)) {
+        checked.add(a);
+        try { if (pinned(a, g, t)) { tame(a, f, g, t); return; } } catch (e) {  }
+      }
+      if (p === D.body || p === D.documentElement || g.iterations !== Infinity) return;
       L.push([a, t, p]);
       watch(t); watch(p);
     });

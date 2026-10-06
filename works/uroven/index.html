@@ -849,13 +849,14 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
   document.getElementById('policy').addEventListener('click', function (e) { e.preventDefault(); });
 })();
 </script>
-<script data-ekonom="7a82f5fe">
+<script data-ekonom="b3249965">
 
 (function () {
   var D = document, W = window;
   if (W.__ekonom || !D.getAnimations || !W.IntersectionObserver) return;
   W.__ekonom = 1;
-  var vis = new WeakMap(), seen = new WeakSet(), held = new WeakSet(), asleep = new WeakSet(), L = [], timer = 0;
+  var TIMES = 3;
+  var vis = new WeakMap(), near = new WeakMap(), seen = new WeakSet(), held = new WeakSet(), asleep = new WeakSet(), checked = new WeakSet(), L = [], T = [], timer = 0;
   var on = function (e) { return vis.get(e) !== false; };
   var io = new IntersectionObserver(function (es) {
     es.forEach(function (e) {
@@ -871,6 +872,10 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
     apply();
   }, { rootMargin: '200px' });
   var watch = function (e) { if (e && !seen.has(e)) { seen.add(e); io.observe(e); } };
+  var eye = new IntersectionObserver(function (es) {
+    es.forEach(function (e) { near.set(e.target, e.isIntersecting); });
+    apply();
+  });
   function apply() {
     L.forEach(function (x) {
       var a = x[0], run = !D.hidden && (on(x[1]) || on(x[2]));
@@ -880,13 +885,50 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
         if (a.playState === 'paused' && /running/.test(getComputedStyle(x[1], a.effect.pseudoElement).animationPlayState)) a.play();
       } else if (a.playState === 'running') { held.add(a); a.pause(); }
     });
+    T.forEach(function (x) {
+      var a = x[0], run = !D.hidden && near.get(x[1]) !== false;
+      try {
+        if (!run) { x[2] = 1; if (a.playState === 'running') a.pause(); }
+        else if (x[2]) { x[2] = 0; again(a, x[1]); }
+      } catch (e) {  }
+    });
+  }
+  function again(a, t) {
+    var f = a.effect, c = getComputedStyle(t, f.pseudoElement);
+    if (c.animationName.split(/\s*,\s*/).indexOf(a.animationName) < 0 || !/running/.test(c.animationPlayState)) return;
+    a.currentTime = Math.max(0, f.getTiming().delay);
+    a.play();
+  }
+  function pinned(a, g, t) {
+    if (typeof a.animationName !== 'string' || a.timeline !== D.timeline || typeof g.duration !== 'number' || g.duration > 1e4) return false;
+    for (var n = t, s, r, q; n && n.nodeType === 1; n = n.parentElement) {
+      s = getComputedStyle(n).position;
+      if (s !== 'fixed' && s !== 'sticky') continue;
+      r = n.getBoundingClientRect();
+      if (r.height > W.innerHeight * 0.3) continue;
+      if (t.closest('a,button,[role=button]') === t) return true;
+      if (s === 'fixed' && r.width <= 320 && r.height <= 140) { q = t.getBoundingClientRect(); return q.width >= 16 && q.height >= 16; }
+    }
+    return false;
+  }
+  function tame(a, f, g, t) {
+    var alt = /alternate/.test(g.direction) ? 2 : 1, n = Math.max(TIMES * alt, Math.ceil((((a.currentTime || 0) - g.delay) / g.duration) / alt) * alt);
+    f.updateTiming({ iterations: n });
+    T.push([a, t, 0]);
+    eye.observe(t);
   }
   function scan() {
     timer = 0;
     L = [];
+    T = T.filter(function (x) { return x[1].isConnected && x[0].playState !== 'idle'; });
     D.getAnimations().forEach(function (a) {
-      var f = a.effect, t = f && f.target, p = t && t.parentElement;
-      if (!p || p === D.body || p === D.documentElement || !f.getTiming || f.getTiming().iterations !== Infinity) return;
+      var f = a.effect, t = f && f.target, p = t && t.parentElement, g = f && f.getTiming && f.getTiming();
+      if (!p || !g) return;
+      if (g.iterations === Infinity && !checked.has(a)) {
+        checked.add(a);
+        try { if (pinned(a, g, t)) { tame(a, f, g, t); return; } } catch (e) {  }
+      }
+      if (p === D.body || p === D.documentElement || g.iterations !== Infinity) return;
       L.push([a, t, p]);
       watch(t); watch(p);
     });
