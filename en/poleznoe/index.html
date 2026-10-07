@@ -4008,7 +4008,7 @@ window.osGoLang = function(lang){
   st.parentNode.appendChild(dots);
   var mq = window.matchMedia("(max-width:640px)");
   var calm = window.matchMedia("(prefers-reduced-motion:reduce)");
-  var cur = 0, touched = 0, seen = false, tick = 0;
+  var cur = 0, touched = 0, seen = false, tick = 0, hold = 0, x0 = 0, y0 = 0, own = false;
   function left(i){ return cards[i].offsetLeft - (st.clientWidth - cards[i].offsetWidth) / 2; }
   function mark(){
     tick = 0;
@@ -4022,9 +4022,28 @@ window.osGoLang = function(lang){
     [].forEach.call(dots.children, function(d, i){ d.classList.toggle("on", i === best); });
   }
   st.addEventListener("scroll", function(){ if(!tick) tick = requestAnimationFrame(mark); }, {passive: true});
-  ["touchstart", "pointerdown", "wheel"].forEach(function(ev){
-    st.addEventListener(ev, function(){ touched = Date.now(); }, {passive: true});
+
+  function side(e){
+    var t = (e.touches && e.touches[0]) || (e.changedTouches && e.changedTouches[0]);
+    if(!t) return;
+    var dx = Math.abs(t.clientX - x0), dy = Math.abs(t.clientY - y0);
+    if(dx > 12 && dx > dy) own = true;
+  }
+  st.addEventListener("touchstart", function(e){
+    hold = Date.now(); own = false;
+    if(e.touches && e.touches[0]){ x0 = e.touches[0].clientX; y0 = e.touches[0].clientY; }
+  }, {passive: true});
+  st.addEventListener("touchmove", side, {passive: true});
+  ["touchend", "touchcancel"].forEach(function(ev){
+    st.addEventListener(ev, function(e){
+      side(e);
+      if(own) touched = Date.now();
+      hold = 0;
+    }, {passive: true});
   });
+  st.addEventListener("wheel", function(e){
+    if(Math.abs(e.deltaX) > Math.abs(e.deltaY)) touched = Date.now();
+  }, {passive: true});
   if("IntersectionObserver" in window){
     new IntersectionObserver(function(en){ seen = en[0].isIntersecting; }, {threshold: .5}).observe(st);
   }
@@ -4032,9 +4051,10 @@ window.osGoLang = function(lang){
   start();
   if(mq.addEventListener) mq.addEventListener("change", start);
   setInterval(function(){
-    if(!mq.matches || calm.matches || document.hidden || !seen || Date.now() - touched < 9000) return;
+    if(!mq.matches || calm.matches || document.hidden || !seen) return;
+    if((hold && Date.now() - hold < 8000) || Date.now() - touched < 4000) return;
     st.scrollTo({left: left((cur + 1) % cards.length), behavior: "smooth"});
-  }, 3400);
+  }, 2000);
 })();
 </script>
 <script>
