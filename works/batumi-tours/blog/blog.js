@@ -67,7 +67,7 @@
     list.textContent = '';
     count.textContent = items.length;
     count.hidden = !items.length;
-    if (!items.length) { list.appendChild(el('li', 'bl-empty', 'Пока никто не написал. Будьте первым.')); return; }
+    if (!items.length) { list.appendChild(el('li', 'bl-empty', 'Пока нет комментариев. Будьте первым!')); return; }
     items.forEach(function (c) {
       var li = el('li', 'bl-c');
       li.appendChild(el('span', 'bl-c__a', (c.name || '?').trim().charAt(0)));

@@ -16,6 +16,8 @@ a{color:inherit}
 button,input,textarea{font:inherit;color:inherit}
 h1,h2,h3{font-family:var(--disp);font-weight:800;margin:0;line-height:1;text-transform:uppercase;letter-spacing:.012em}
 :focus-visible{outline:2px solid var(--yellow);outline-offset:3px;border-radius:6px}
+html{-webkit-tap-highlight-color:transparent}
+a,button,summary,label,input,select,textarea,[role="tab"],[role="option"],[tabindex]{-webkit-tap-highlight-color:transparent}
 .bt-s{fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 .bt-f{fill:currentColor;stroke:none}
 .bt-flip{transform:scaleX(-1)}
