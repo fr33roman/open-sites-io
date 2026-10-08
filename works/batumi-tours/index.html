@@ -328,6 +328,10 @@ section[id]{scroll-margin-top:84px}
 @media (hover:hover) and (pointer:fine){.bt-prog__track{cursor:grab}}
 .bt-prog__track.is-drag{scroll-snap-type:none;cursor:grabbing;user-select:none;-webkit-user-select:none}
 .bt-prog__track::-webkit-scrollbar{display:none}
+
+.bt-prog__wrap.is-run{overflow:hidden;overflow:clip;-webkit-mask-image:linear-gradient(90deg,transparent,#000 26px,#000 calc(100% - 26px),transparent);mask-image:linear-gradient(90deg,transparent,#000 26px,#000 calc(100% - 26px),transparent)}
+.bt-prog__wrap.is-run .bt-prog__track{overflow:visible;scroll-snap-type:none;touch-action:pan-y;will-change:transform;user-select:none;-webkit-user-select:none;cursor:grab}
+.bt-prog__wrap.is-run .bt-prog__track.is-drag{cursor:grabbing}
 .bt-pr{position:relative;flex:0 0 156px;scroll-snap-align:center;display:grid;gap:10px;align-content:start;padding:26px 14px 16px;border-radius:24px;background:var(--paper);box-shadow:0 14px 24px -20px rgba(35,46,11,.8),0 0 0 1px rgba(35,46,11,.06);
   transition:transform .45s var(--ease),box-shadow .45s,background .35s}
 .bt-pr::before{content:"";position:absolute;z-index:1;top:-1px;left:52px;right:-26px;border-top:3px dashed rgba(86,100,43,.38)}
@@ -354,6 +358,7 @@ section[id]{scroll-margin-top:84px}
 .bt-pp__b{padding:16px 22px 22px;display:grid;gap:10px;align-content:start}
 .bt-pp h3{font-size:44px}
 .bt-pp__r{margin:0;font-weight:700;font-size:15px;color:var(--olive);letter-spacing:.06em;text-transform:uppercase}
+.bt-pp__t{margin:0;font-size:17.5px;line-height:1.5}
 .bt-pp blockquote{margin:2px 0 4px;padding:0 0 0 16px;border-left:3px solid var(--yellow);font-size:17.5px;line-height:1.45}
 .bt-facts{list-style:none;margin:0;padding:0;display:grid;gap:10px}
 .bt-facts li{display:flex;align-items:center;gap:11px;font-weight:600;font-size:16px;line-height:1.3}
@@ -363,7 +368,8 @@ section[id]{scroll-margin-top:84px}
 .bt-pp--main .bt-facts{gap:11px}
 .bt-pp--main .bt-facts li{font-weight:700}
 .bt-pp--main .bt-facts svg{background:var(--yellow);color:var(--ink)}
-.bt-pp__rb{position:absolute;z-index:2;left:0;top:17%;display:inline-flex;align-items:center;gap:8px;max-width:calc(100% - 10px);overflow:hidden;padding:8px 16px 8px 12px;border-radius:0 999px 999px 0;
+
+.bt-pp__rb{position:absolute;z-index:2;left:0;right:7%;top:10.45%;transform:translateY(-50%);display:flex;align-items:center;justify-content:center;gap:8px;overflow:hidden;padding:8px 16px 8px 12px;border-radius:0 999px 999px 0;
   background:linear-gradient(100deg,#F7CB2D,var(--yellow) 55%,#E2AB0B);color:var(--ink);font:800 13px/1.15 var(--text);letter-spacing:.01em;box-shadow:0 10px 18px -8px rgba(0,0,0,.55)}
 .bt-pp__rb svg{flex:none;width:20px;height:20px}
 .bt-pp__rb::after{content:"";position:absolute;top:0;bottom:0;left:0;width:38%;pointer-events:none;background:linear-gradient(100deg,transparent,rgba(255,255,255,.8),transparent);transform:translateX(-150%) skewX(-18deg);animation:btRbShine 5.2s ease-in-out 1.4s infinite}
@@ -449,6 +455,15 @@ section[id]{scroll-margin-top:84px}
 .bt-where dt{flex:none;font-weight:700;font-size:12.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--mute)}
 .bt-where dd{margin:0;text-align:right;font-weight:600}
 .bt-where a{display:inline-flex;align-items:center;min-height:44px;margin:-10px 0;text-decoration:none}
+
+.bt-where a.bt-call{gap:9px;margin:-6px 0;padding:0 16px 0 6px;border-radius:999px;background:var(--yellow);color:var(--ink);font-weight:700;white-space:nowrap;box-shadow:0 10px 18px -12px rgba(201,148,0,.95);transition:background .3s,transform .3s var(--ease),box-shadow .3s}
+.bt-where a.bt-call:active{transform:scale(.96)}
+.bt-call__i{flex:none;width:32px;height:32px;border-radius:50%;display:grid;place-items:center;background:var(--ink);color:var(--yellow)}
+.bt-call__i svg{width:17px;height:17px;animation:btRing 4.5s ease-in-out 2s infinite}
+@keyframes btRing{0%,84%,100%{transform:rotate(0)}87%{transform:rotate(-16deg)}90%{transform:rotate(14deg)}93%{transform:rotate(-10deg)}96%{transform:rotate(6deg)}}
+@media (hover:hover){.bt-where a.bt-call:hover{background:var(--yellow2);transform:translateY(-2px);box-shadow:0 14px 22px -12px rgba(201,148,0,1)}}
+@media (max-width:400px){.bt-where a.bt-call{gap:7px;padding:0 12px 0 5px;font-size:15px}.bt-call__i{width:30px;height:30px}}
+@media (prefers-reduced-motion:reduce){.bt-call__i svg{animation:none}}
 
 
 .bt-foot{padding:46px 0 40px;margin-bottom:0}
@@ -587,87 +602,305 @@ body.bt-lock{overflow:hidden}
   .bt-fd__i{transform:none}
 }
 
+#tours.bt-sec{padding-top:30px}
+#tours .bt-head{margin-bottom:14px}
+@media (min-width:760px){#tours.bt-sec{padding-top:52px}#tours .bt-head{margin-bottom:20px}}
+
+
+.bt-tabs{display:none}
+.bt-js .bt-tabs{position:relative;display:flex;gap:8px;margin:0 -18px 20px;padding:4px 18px 10px;overflow-x:auto;scrollbar-width:none;overscroll-behavior-x:contain;-webkit-overflow-scrolling:touch}
+.bt-tabs::-webkit-scrollbar{display:none}
+.bt-tabs.has-r{-webkit-mask-image:linear-gradient(90deg,#000 calc(100% - 38px),transparent);mask-image:linear-gradient(90deg,#000 calc(100% - 38px),transparent)}
+.bt-tabs.has-l{-webkit-mask-image:linear-gradient(90deg,transparent,#000 38px);mask-image:linear-gradient(90deg,transparent,#000 38px)}
+.bt-tabs.has-l.has-r{-webkit-mask-image:linear-gradient(90deg,transparent,#000 38px,#000 calc(100% - 38px),transparent);mask-image:linear-gradient(90deg,transparent,#000 38px,#000 calc(100% - 38px),transparent)}
+.bt-tab{flex:none;display:inline-flex;align-items:center;gap:10px;min-height:52px;padding:0 20px;border-radius:999px;border:2px solid var(--ink);background:transparent;color:var(--ink);font:700 17px/1.1 var(--text);white-space:nowrap;cursor:pointer;
+  transition:background .3s,color .3s,border-color .3s,transform .3s var(--ease),box-shadow .3s}
+@media (hover:hover){.bt-tab:not(.is-act):hover{background:var(--ink);color:var(--cream);transform:translateY(-2px)}}
+.bt-tab:active{transform:scale(.96)}
+.bt-tab.is-act{background:var(--yellow);border-color:var(--yellow);box-shadow:0 14px 24px -14px rgba(239,184,13,.95)}
+.bt-tab i{display:inline-grid;place-items:center;min-width:26px;height:26px;padding:0 7px;border-radius:999px;background:rgba(86,100,43,.16);color:var(--ink);font:800 14px/1 var(--text);font-style:normal;font-variant-numeric:tabular-nums;transition:background .3s,color .3s}
+.bt-tab.is-act i{background:var(--ink);color:var(--yellow)}
+@media (hover:hover){.bt-tab:not(.is-act):hover i{background:rgba(243,239,223,.22);color:var(--cream)}}
+.bt-tab em{padding:5px 9px;border-radius:999px;background:rgba(239,184,13,.3);color:var(--ink);font:700 12px/1 var(--text);font-style:normal;letter-spacing:.09em;text-transform:uppercase;transition:background .3s,color .3s}
+.bt-tab.is-act em{background:var(--ink);color:var(--yellow)}
+@media (min-width:760px){.bt-js .bt-tabs{flex-wrap:wrap;margin:0 0 26px;padding:0 0 6px;overflow:visible}}
+
+
+.bt-tp__h{margin:0 0 18px;font-size:clamp(40px,8vw,64px)}
+.bt-tp+.bt-tp{margin-top:58px}
+.bt-js .bt-tp__h{display:none}
+.bt-js .bt-tp+.bt-tp{margin-top:0}
+.bt-js .bt-tp:not(.is-act){display:none}
+.bt-tp.is-swap{animation:btTpIn .55s var(--ease) backwards}
+@keyframes btTpIn{from{opacity:0;transform:translateY(14px)}}
+
+.bt-tp .bt-cards{padding:10px 10px 34px;margin:-10px -10px -34px}
+.bt-tp .bt-card{scroll-margin-top:110px}
+.bt-js .bt-tp:not(.is-open) .bt-card.is-x{display:none}
+.bt-tp__more{display:none;justify-content:center;margin-top:26px}
+.bt-js .bt-tp__more{display:flex}
+.bt-tp__btn svg{transition:transform .45s var(--ease)}
+.bt-tp.is-open .bt-tp__btn svg{transform:rotate(180deg)}
+.bt-card.is-flash{animation:btFlash 2s var(--ease)}
+@keyframes btFlash{0%,100%{box-shadow:0 20px 34px -26px rgba(35,46,11,.75),0 0 0 1px rgba(35,46,11,.06)}18%,72%{box-shadow:0 0 0 4px var(--yellow),0 0 0 12px rgba(239,184,13,.38),0 26px 40px -24px rgba(35,46,11,.8)}}
+
+
+.bt-ret{position:relative;isolation:isolate;overflow:hidden;display:grid;justify-items:center;gap:16px;padding:46px 22px 42px;border-radius:34px;text-align:center;color:var(--cream);
+  background-color:var(--deep2);background-image:var(--noise),radial-gradient(circle at 18% 14%,rgba(255,255,255,.08),transparent 40%),radial-gradient(circle at 84% 86%,rgba(166,184,86,.24),transparent 46%);background-size:200px 200px,auto,auto;background-blend-mode:screen,normal,normal;
+  box-shadow:0 26px 40px -28px rgba(35,46,11,.85),inset 0 0 0 1px rgba(243,239,223,.16)}
+.bt-ret::before{content:"";position:absolute;left:0;right:0;bottom:0;top:-760px;z-index:-1;pointer-events:none;background:var(--topo) 0 0/760px 760px;animation:btTopo 100s linear infinite}
+.bt-ret__glow{position:absolute;left:50%;top:34px;z-index:-1;width:340px;height:340px;margin-left:-170px;border-radius:50%;pointer-events:none;background:radial-gradient(circle,rgba(239,184,13,.36),transparent 66%);animation:btRetGlow 6s ease-in-out infinite alternate}
+@keyframes btRetGlow{from{transform:scale(.8);opacity:.5}to{transform:scale(1.12);opacity:1}}
+.bt-ret__ic{position:relative;display:grid;place-items:center;width:112px;height:112px;margin-bottom:6px;border-radius:50%;background:rgba(42,52,17,.6);box-shadow:inset 0 0 0 2px rgba(243,239,223,.3);color:var(--yellow)}
+.bt-ret__ic::before{content:"";position:absolute;inset:-12px;border-radius:50%;border:2px dashed var(--yellow);animation:btRing 30s linear infinite}
+.bt-ret__ic svg{width:66px;height:66px;animation:btFloat 4.8s ease-in-out infinite alternate}
+.bt-lot path{fill:rgba(239,184,13,.2)}
+.bt-lot path:last-child{fill:none}
+.bt-lot path:not(:last-child){transform-box:fill-box;transform-origin:50% 100%;animation:btSway 5s ease-in-out infinite alternate}
+.bt-lot path:nth-child(2){animation-delay:-1.2s;animation-direction:alternate-reverse}
+.bt-lot path:nth-child(3){animation-delay:-2.1s}
+.bt-lot path:nth-child(4){animation-delay:-3s;animation-direction:alternate-reverse}
+@keyframes btSway{from{transform:rotate(-3deg)}to{transform:rotate(3deg)}}
+.bt-ret__chip{display:inline-flex;align-items:center;min-height:34px;padding:0 18px;border-radius:999px;background:var(--yellow);color:var(--ink);font:800 14px/1 var(--text);letter-spacing:.16em;text-transform:uppercase}
+.bt-ret h3{max-width:11em;font-size:clamp(48px,11vw,88px);line-height:.92;color:var(--cream);text-shadow:0 3px 0 rgba(0,0,0,.14)}
+.bt-ret p{margin:0;max-width:30em;font-size:18px;line-height:1.5;color:#ECE9D3}
+.bt-ret .bt-go{margin-top:8px;min-height:56px}
+@media (min-width:760px){.bt-ret{padding:72px 40px 66px;border-radius:44px}.bt-ret__glow{top:64px}}
+
+
+.bt-f--kind,.bt-pick{display:none}
+.bt-js .bt-f--kind{display:grid}
+.bt-js .bt-pick{display:block;position:relative}
+.bt-js #btTour{display:none}
+.bt-kind{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+@media (min-width:560px) and (max-width:999px),(min-width:1200px){.bt-kind{grid-template-columns:repeat(4,minmax(0,1fr))}}
+.bt-kind__b{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;min-height:52px;padding:6px 8px;border-radius:14px;border:2px solid rgba(35,46,11,.16);background:#fff;color:var(--ink);font:700 15.5px/1.15 var(--text);text-align:center;cursor:pointer;
+  transition:background .3s,border-color .3s,color .3s,transform .3s var(--ease),box-shadow .3s}
+@media (hover:hover){.bt-kind__b:not(:disabled):not(.is-act):hover{border-color:var(--olive);transform:translateY(-2px)}}
+.bt-kind__b:not(:disabled):active{transform:scale(.96)}
+.bt-kind__b.is-act{background:var(--yellow);border-color:var(--yellow);box-shadow:0 12px 22px -14px rgba(239,184,13,.95)}
+.bt-kind__b:disabled{background:#E7E7E1;border-style:dashed;border-color:#C5C6BB;color:#585B4F;cursor:not-allowed}
+.bt-kind__b small{font:700 12px/1 var(--text);letter-spacing:.1em;text-transform:uppercase}
+.bt-pick__b{display:flex;align-items:center;gap:12px;width:100%;min-height:58px;padding:6px 14px 6px 16px;border-radius:14px;border:2px solid rgba(35,46,11,.16);background:#fff;text-align:left;cursor:pointer;transition:border-color .3s,box-shadow .3s}
+.bt-pick__b[aria-expanded="true"]{border-color:var(--olive);box-shadow:0 0 0 4px rgba(86,100,43,.18)}
+.bt-pick__b.is-flip{animation:btPop .45s var(--ease)}
+.bt-pick__n{flex:1 1 auto;min-width:0;font-weight:700;font-size:17px;line-height:1.2}
+.bt-pick__p{flex:none;font:800 28px/1 var(--disp);letter-spacing:.01em;white-space:nowrap}
+.bt-pick__c{flex:none;width:22px;height:22px;color:var(--olive);transition:transform .35s var(--ease)}
+.bt-pick__b[aria-expanded="true"] .bt-pick__c{transform:rotate(180deg)}
+.bt-pick__bg{display:none}
+.bt-pick__sheet{position:absolute;z-index:30;left:0;right:0;top:calc(100% + 8px);display:flex;flex-direction:column;overflow:hidden;border-radius:20px;background:var(--paper);box-shadow:0 0 0 1px rgba(35,46,11,.1),0 30px 50px -20px rgba(35,46,11,.6);
+  opacity:0;visibility:hidden;transform:translateY(-8px);transition:opacity .25s,transform .3s var(--ease),visibility 0s .3s}
+.bt-pick.is-open .bt-pick__sheet{opacity:1;visibility:visible;transform:none;transition:opacity .25s,transform .3s var(--ease)}
+.bt-pick__hd{display:none}
+.bt-pick__list{position:relative;list-style:none;margin:0;padding:6px;display:grid;gap:2px;max-height:min(344px,52vh);overflow-y:auto;overscroll-behavior:contain;outline:0}
+.bt-opt{display:grid;grid-template-columns:minmax(0,1fr) auto;grid-template-areas:"n p" "l p";align-items:center;gap:2px 14px;min-height:58px;padding:8px 14px;border-radius:14px;cursor:pointer;transition:background .2s,box-shadow .2s}
+.bt-opt__n{grid-area:n;font-weight:700;font-size:16px;line-height:1.25}
+.bt-opt__l{grid-area:l;font-size:13.5px;line-height:1.2;color:var(--mute)}
+.bt-opt__p{grid-area:p;font:800 27px/1 var(--disp);letter-spacing:.01em;white-space:nowrap}
+.bt-opt.is-cur{background:rgba(86,100,43,.13)}
+.bt-opt[aria-selected="true"]{background:rgba(239,184,13,.22);box-shadow:inset 0 0 0 2px var(--yellow)}
+@media (hover:hover){.bt-opt:hover{background:rgba(86,100,43,.13)}.bt-opt[aria-selected="true"]:hover{background:rgba(239,184,13,.3)}}
+.bt-pick__list:focus-visible .bt-opt.is-cur{box-shadow:inset 0 0 0 2px var(--olive)}
+@media (min-width:640px){
+  .bt-opt{grid-template-columns:minmax(0,1fr) 112px 92px;grid-template-areas:"n l p"}
+  .bt-opt__l{font-size:14.5px}
+  .bt-opt__p{text-align:right}
+}
+@media (max-width:639px){
+  .bt-pick__bg{display:block;position:fixed;inset:0;z-index:89;background:rgba(20,26,8,.62);opacity:0;visibility:hidden;transition:opacity .3s,visibility 0s .3s}
+  .bt-pick.is-open .bt-pick__bg{opacity:1;visibility:visible;transition:opacity .3s}
+  .bt-pick__sheet{position:fixed;left:0;right:0;top:auto;bottom:0;z-index:90;height:50vh;height:50dvh;border-radius:28px 28px 0 0;opacity:1;transform:translateY(105%);padding-bottom:env(safe-area-inset-bottom);
+    box-shadow:0 -24px 50px -20px rgba(0,0,0,.6);transition:transform .4s var(--ease),visibility 0s .4s}
+  .bt-pick.is-open .bt-pick__sheet{transform:none;transition:transform .4s var(--ease)}
+  .bt-pick__hd{display:flex;flex:none;align-items:center;justify-content:space-between;gap:10px;padding:10px 10px 6px 22px}
+  .bt-pick__hd b{font:800 30px/1 var(--disp);text-transform:uppercase;letter-spacing:.02em}
+  .bt-pick__x{flex:none;display:grid;place-items:center;width:44px;height:44px;padding:0;border:0;border-radius:50%;background:var(--sand);color:var(--ink);cursor:pointer}
+  .bt-pick__x svg{width:22px;height:22px}
+  .bt-pick__list{flex:1 1 auto;min-height:0;max-height:none;padding:4px 10px 14px}
+}
+.bt-total small{display:block;margin-top:8px;font-size:13.5px;line-height:1.35;color:#4f5a33}
+@media (prefers-reduced-motion:reduce){.bt-card.is-flash{box-shadow:0 0 0 4px var(--yellow),0 0 0 12px rgba(239,184,13,.38),0 26px 40px -24px rgba(35,46,11,.8)}}
+
+
+
+.bt-tex.bt-geo{background-color:#4A5826;background-image:radial-gradient(110% 75% at 74% 0%,rgba(246,240,200,.12),transparent 64%),linear-gradient(180deg,rgba(255,255,255,.02),rgba(0,0,0,.06));background-size:auto;background-position:0 0;background-blend-mode:normal}
+.bt-tex.bt-geo::before,.bt-tex.bt-geo::after{content:none;animation:none}
+.bt-geo{--zoom:cubic-bezier(.6,.04,.2,1)}
 .bt-geo__grid{display:grid;grid-template-columns:minmax(0,1fr);gap:22px}
 .bt-geo .bt-pill{margin:0;background:var(--yellow);color:var(--ink);box-shadow:0 8px 20px -10px rgba(0,0,0,.6)}
 .bt-geo h2{margin-top:14px;font-size:clamp(68px,19vw,132px);line-height:.86;color:var(--cream);text-shadow:0 3px 0 rgba(0,0,0,.14)}
 .bt-geo h2 em{font-style:normal;color:var(--yellow);font-variant-numeric:tabular-nums}
 .bt-geo__lead{margin:14px 0 0;max-width:25em;font-size:18.5px;color:#ECE9D3}
-.bt-geo__map{position:relative;aspect-ratio:800/520;margin:0 -6px;border-radius:26px;overflow:hidden;isolation:isolate;background:#27310F;box-shadow:inset 0 0 0 1px rgba(243,239,223,.22),0 30px 44px -30px rgba(0,0,0,.8)}
-.bt-geo__svg{position:absolute;inset:0;width:100%;height:100%;display:block}
-.bt-geo__sea{fill:#27310F}
-.bt-geo__waves path{fill:none;stroke:rgba(243,239,223,.2);stroke-width:2.4;stroke-linecap:round;animation:btGeoWave 5s ease-in-out infinite alternate}
+.bt-geo__mapcol{min-width:0}
+
+
+.bt-geo__switch{display:none}
+.bt-js .bt-geo__switch{position:relative;display:grid;grid-template-columns:1fr 1fr;width:100%;max-width:340px;margin:0 0 12px;padding:4px;border-radius:999px;background:rgba(18,24,6,.34);box-shadow:inset 0 0 0 1px rgba(243,239,223,.2)}
+.bt-geo__switch::before{content:"";position:absolute;left:4px;top:4px;bottom:4px;width:calc(50% - 4px);border-radius:999px;background:var(--yellow);box-shadow:0 8px 18px -8px rgba(239,184,13,.9);transform:translateX(100%);transition:transform .6s var(--ease)}
+.bt-geo__grid.is-a .bt-geo__switch::before{transform:none}
+.bt-geo__switch button{position:relative;min-height:44px;padding:0 14px;border:0;border-radius:999px;background:none;color:var(--cream);font:700 15px/1 var(--text);cursor:pointer;transition:color .4s}
+.bt-geo__switch button[aria-pressed=true]{color:var(--ink)}
+
+
+.bt-geo__map{position:relative;aspect-ratio:800/520;margin:0 -6px;border-radius:26px;overflow:hidden;isolation:isolate;background:radial-gradient(90% 90% at 18% 40%,#2C3A14 0%,#1F290C 100%);box-shadow:inset 0 0 0 1px rgba(243,239,223,.2),0 30px 44px -30px rgba(0,0,0,.8)}
+.bt-geo__svg{position:absolute;inset:0;width:100%;height:100%;display:block;transition:opacity .9s}
+.bt-geo__svg path{vector-effect:non-scaling-stroke}
+.bt-geo__zoom{transform-box:view-box;transform-origin:0 0;transform:translate(0px,0px) scale(1);transition:transform 1.2s var(--zoom)}
+.bt-geo__map.is-z .bt-geo__zoom{transform:translate(-910.9px,-1240.6px) scale(4.952)}
+.bt-geo__waves path{fill:none;stroke:rgba(243,239,223,.08);stroke-width:1.6;stroke-linecap:round;animation:btGeoWave 6s ease-in-out infinite alternate}
 .bt-geo__waves path:nth-child(even){animation-direction:alternate-reverse}
-@keyframes btGeoWave{from{transform:translateX(-9px)}to{transform:translateX(9px)}}
-.bt-geo__land{fill:#55632A}
-.bt-geo__adj{fill:url(#geoLand);transition:opacity .7s}
-.bt-geo__topo ellipse{fill:none;stroke:rgba(86,100,43,.26);stroke-width:1.6}
-.bt-geo__edge{fill:none;stroke:var(--ink);stroke-width:3;stroke-linejoin:round;stroke-dasharray:1;stroke-dashoffset:0;transition:stroke-dashoffset 1.5s var(--ease)}
-.bt-geo__riv{fill:none;stroke:#7FA39A;stroke-width:3.4;stroke-linecap:round;stroke-dasharray:1;stroke-dashoffset:0;transition:stroke-dashoffset 1.3s var(--ease) .35s}
-.bt-geo__lines path{fill:none;stroke:rgba(35,46,11,.3);stroke-width:1.8;stroke-linecap:round;stroke-dasharray:1;stroke-dashoffset:0;transition:stroke-dashoffset .7s var(--ease) calc(.5s + var(--i,0)*.1s),stroke .3s,stroke-width .3s}
-.bt-geo__lines path.is-on{stroke:var(--ink);stroke-width:3.4}
-.bt-geo__svg text{font:700 15px/1 var(--text);letter-spacing:.24em;text-transform:uppercase;fill:rgba(243,239,223,.5)}
-.bt-geo__svg text.is-sea{font:400 34px/1 var(--hand);letter-spacing:.02em;text-transform:none;fill:rgba(243,239,223,.58)}
+.bt-geo__waves--a path{animation-name:btGeoWaveA}
+.bt-geo__waves--a{opacity:0;transition:opacity .8s}
+.bt-geo__waves--w{transition:opacity .8s}
+.bt-geo__map.is-z .bt-geo__waves--a{opacity:1}
+.bt-geo__map:not(.is-z) .bt-geo__waves--a path,.bt-geo__map.is-z .bt-geo__waves--w path{animation-play-state:paused}
+.bt-geo__map.is-z .bt-geo__waves--w{opacity:0}
+@keyframes btGeoWave{from{transform:translateX(-7px)}to{transform:translateX(7px)}}
+@keyframes btGeoWaveA{from{transform:translateX(-1.6px)}to{transform:translateX(1.6px)}}
+.bt-geo__halo{fill:none;stroke:rgba(243,239,223,.07);stroke-width:18;stroke-linejoin:round}
+.bt-geo__halo2{fill:none;stroke:rgba(243,239,223,.07);stroke-width:7;stroke-linejoin:round}
+.bt-geo__land{fill:#56642B}
+.bt-geo__ge{fill:url(#geoCream)}
+.bt-geo__adj{fill:url(#geoWarm)}
+.bt-geo__glow{fill:none;stroke-linejoin:round}
+.bt-geo__glow path{fill:none}
+.bt-geo__glow--1{stroke:rgba(239,184,13,.2);stroke-width:22}
+.bt-geo__glow--2{stroke:rgba(239,184,13,.3);stroke-width:9}
+.bt-geo__glow--3{stroke:#EFB80D;stroke-width:3}
+.bt-geo__glowbox{animation:btGeoGlow 3.4s ease-in-out infinite alternate}
+@keyframes btGeoGlow{from{opacity:.62}to{opacity:1}}
+.bt-geo__riv{fill:none;stroke:#7FB0A8;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;opacity:.9}
+.bt-geo__edge{fill:none;stroke:rgba(42,52,17,.55);stroke-width:1.5;stroke-linejoin:round;stroke-linecap:round}
+
+
+.bt-rg{position:absolute;left:0;top:0;width:100%;height:100%;pointer-events:none;transform:translate(var(--wx),var(--wy));transition:transform 1.2s var(--zoom),opacity .7s}
+.bt-geo__map.is-z .bt-rg{transform:translate(var(--ax),var(--ay))}
+.bt-rg b{position:absolute;left:0;top:0;transform:translate(-50%,-50%) rotate(var(--rot,0deg));white-space:nowrap;font:700 9.5px/1 var(--text);letter-spacing:.14em;text-transform:uppercase;color:rgba(243,239,223,.76)}
+.bt-rg--sea b{font:400 21px/1 var(--hand);letter-spacing:.02em;text-transform:none;color:rgba(243,239,223,.66)}
+.bt-rg--land b{color:rgba(74,88,38,.92)}
+.bt-geo__map:not(.is-z) .bt-rg[data-v=a],.bt-geo__map.is-z .bt-rg[data-v=w]{opacity:0}
+.bt-js .bt-geo__map:not(.is-live) .bt-rg{opacity:0}
+
+
 .bt-geo__pins{position:absolute;inset:0;z-index:2}
-.bt-pin{position:absolute;width:0;height:0}
+.bt-pin{position:absolute;left:0;top:0;width:100%;height:100%;pointer-events:none;transform:translate(var(--wx),var(--wy));transition:transform 1.2s var(--zoom),opacity .3s,visibility 0s}
+.bt-geo__map.is-z .bt-pin{transform:translate(var(--ax),var(--ay))}
 .bt-pin.is-on{z-index:4}
-.bt-pin::before{content:"";position:absolute;left:-17px;top:-17px;width:34px;height:34px;border-radius:50%}
+.bt-pin>button{position:absolute;left:0;top:0;width:0;height:0;padding:0;margin:0;border:0;background:none;overflow:visible;pointer-events:auto;cursor:pointer;font:inherit;color:inherit;-webkit-tap-highlight-color:transparent}
+.bt-pin>button::before{content:"";position:absolute;left:-18px;top:-18px;width:36px;height:36px;border-radius:50%}
+.bt-pin>button::after{content:"";position:absolute;z-index:-1;left:-30px;top:-30px;width:60px;height:60px;border-radius:50%;background:radial-gradient(circle,rgba(239,184,13,.62) 0%,rgba(239,184,13,.22) 38%,rgba(239,184,13,0) 70%);opacity:0;transform:scale(.4);transition:opacity .4s,transform .55s var(--ease)}
+.bt-pin.is-on>button::after{opacity:1;transform:none}
 .bt-pin i{position:absolute;left:-6px;top:-6px;width:12px;height:12px;border-radius:50%;background:var(--yellow);box-shadow:0 0 0 2.5px var(--ink),0 4px 8px rgba(0,0,0,.4);transition:transform .45s var(--ease)}
 .bt-pin i::after{content:"";position:absolute;inset:-3px;border-radius:50%;border:2px solid var(--yellow);opacity:0}
 .bt-pin.is-on i{transform:scale(1.45)}
 .bt-pin.is-on i::after{animation:btPing 1.5s ease-out infinite}
-@keyframes btPing{0%{transform:scale(1);opacity:.95}100%{transform:scale(3.4);opacity:0}}
-.bt-pin b{position:absolute;left:0;top:-12px;--tx:-50%;--ty:-100%;white-space:nowrap;padding:5px 10px;border-radius:999px;background:var(--paper);color:var(--ink);font:700 12.5px/1 var(--text);box-shadow:0 6px 14px -6px rgba(0,0,0,.65);opacity:0;transform:translate(var(--tx),var(--ty)) scale(.7);transition:opacity .3s,transform .4s var(--ease),background .3s;pointer-events:none}
-.bt-pin.is-on b{opacity:1;transform:translate(var(--tx),var(--ty)) scale(1);background:var(--yellow)}
-.bt-pin[data-k=lake] b{--tx:-80%}
-.bt-pin--home i{left:-9px;top:-9px;width:18px;height:18px;background:var(--paper);box-shadow:0 0 0 3.5px var(--ink),0 0 0 6.5px var(--yellow),0 6px 12px rgba(0,0,0,.45)}
-.bt-pin--home i::after{inset:-7px;animation:btPing 2.4s ease-out infinite}
-.bt-pin.bt-pin--home b{top:16px;--tx:-34%;--ty:0;opacity:1;transform:translate(var(--tx),var(--ty));background:var(--ink);color:var(--cream)}
-.bt-geo__list{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:8px}
+@keyframes btPing{0%{transform:scale(1);opacity:.95}100%{transform:scale(2.9);opacity:0}}
+@keyframes btPingH{0%{transform:scale(1);opacity:.8}100%{transform:scale(2);opacity:0}}
+.bt-pin b{position:absolute;left:0;top:-13px;--tx:-50%;--ty:-100%;white-space:nowrap;padding:5px 10px;border-radius:999px;background:var(--ink);color:var(--cream);font:700 12.5px/1 var(--text);box-shadow:0 6px 14px -6px rgba(0,0,0,.65),0 0 0 1px rgba(243,239,223,.2);opacity:0;transform:translate(var(--tx),var(--ty)) scale(.7);transition:opacity .3s,transform .4s var(--ease),background .3s,color .3s;pointer-events:none}
+.bt-pin.is-on b{opacity:1;transform:translate(var(--tx),var(--ty)) scale(1);background:var(--yellow);color:var(--ink)}
+.bt-pin[data-m=t] b{top:-13px;left:0;--tx:-50%;--ty:-100%}
+.bt-pin[data-m=b] b{top:13px;left:0;--tx:-50%;--ty:0%}
+.bt-pin[data-m=l] b{top:0;left:-14px;--tx:-100%;--ty:-50%}
+.bt-pin[data-m=r] b{top:0;left:14px;--tx:0%;--ty:-50%}
+
+.bt-pin.bt-pin--home i{left:-8px;top:-8px;width:16px;height:16px;background:var(--paper);box-shadow:0 0 0 3px var(--ink),0 0 0 6px var(--yellow),0 6px 12px rgba(0,0,0,.45)}
+.bt-pin--home i::after{inset:-6px;animation:btPingH 2.4s ease-out infinite}
+.bt-pin--home b{opacity:1;transform:translate(var(--tx),var(--ty)) scale(1)}
+
+.bt-pin.bt-pin--adj i{left:-14px;top:-14px;width:28px;height:28px;display:grid;place-items:center;font:800 15px/1 var(--text);color:var(--ink);font-variant-numeric:tabular-nums}
+.bt-pin--adj i::after{inset:-5px;animation:btPingH 2.6s ease-out infinite}
+.bt-pin--adj.is-on i{transform:scale(1.2)}
+.bt-pin--adj b{opacity:1;transform:translate(var(--tx),var(--ty)) scale(1)}
+.bt-pin--adj[data-m=b] b{top:21px}
+.bt-geo__map:not(.is-z) .bt-pin.bt-pin--home i{transform:scale(.72)}
+.bt-geo__map:not(.is-z) .bt-pin.bt-pin--home.is-on i{transform:scale(1.05)}
+.bt-geo__map:not(.is-z) .bt-pin--home i::after{animation:none}
+
+.bt-geo__map:not(.is-z) .bt-pin[data-v=a],.bt-geo__map.is-z .bt-pin[data-v=w]{opacity:0;visibility:hidden;pointer-events:none;transition:transform 1.2s var(--zoom),opacity .3s,visibility 0s .3s}
+.bt-geo__map.is-z .bt-pin[data-v=a]{transition:transform 1.2s var(--zoom),opacity .55s .4s,visibility 0s}
+
+
+.bt-geo__plate{position:absolute;z-index:6;left:6px;right:6px;bottom:8px;width:max-content;min-width:min(280px,calc(100% - 12px));max-width:calc(100% - 12px);margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:8px;padding:5px 5px 5px 14px;border-radius:999px;background:var(--paper);color:var(--ink);box-shadow:0 18px 30px -14px rgba(0,0,0,.75),0 0 0 1px rgba(35,46,11,.1);opacity:0;visibility:hidden;transform:translateY(14px);transition:opacity .3s,transform .45s var(--ease),visibility 0s .45s}
+.bt-geo__plate.is-top{bottom:auto;top:8px;transform:translateY(-14px)}
+.bt-geo__plate.is-on{opacity:1;visibility:visible;transform:none;transition:opacity .3s,transform .45s var(--ease),visibility 0s}
+.bt-geo__plate b{font:800 21px/1 var(--disp);text-transform:uppercase;letter-spacing:.015em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+.bt-geo__plate button{flex:0 0 auto;min-height:44px;padding:0 14px;border:0;border-radius:999px;background:var(--yellow);color:var(--ink);font:700 14px/1 var(--text);cursor:pointer;white-space:nowrap;transition:background .3s,transform .35s var(--ease)}
+.bt-geo__plate button:active{transform:scale(.97)}
+
+
+.bt-geo__lists{display:block}
+.bt-js .bt-geo__lists{display:grid;align-items:start;transition:height .5s var(--ease)}
+.bt-geo__list{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:8px;align-content:start}
+.bt-geo__list+.bt-geo__list{margin-top:8px}
+.bt-js .bt-geo__list{grid-area:1/1;align-self:start;margin:0;transition:opacity .5s .2s,transform .55s var(--ease) .2s,visibility 0s}
+.bt-js .bt-geo__grid:not(.is-a) .bt-geo__list[data-for=a],.bt-js .bt-geo__grid.is-a .bt-geo__list[data-for=w]{opacity:0;visibility:hidden;transform:translateY(10px);transition:opacity .25s,transform .3s,visibility 0s .3s}
 .bt-geo__list button{min-height:44px;padding:0 15px;border:0;border-radius:999px;background:rgba(243,239,223,.12);box-shadow:inset 0 0 0 1px rgba(243,239,223,.26);color:var(--cream);font:600 15px/1 var(--text);cursor:pointer;transition:background .3s,color .3s,transform .35s var(--ease),box-shadow .3s}
 .bt-geo__list button.is-on{background:var(--yellow);color:var(--ink);transform:translateY(-2px);box-shadow:0 10px 20px -12px rgba(239,184,13,.95)}
-.bt-geo__far{display:flex;flex-wrap:wrap;align-items:center;gap:7px;margin:16px 0 0;font-size:14.5px;color:#DDDBC4}
-.bt-geo__far b{flex:0 0 100%;font-weight:700;font-size:12.5px;letter-spacing:.12em;text-transform:uppercase;color:#C9C8A9}
-.bt-geo__far span{display:inline-flex;align-items:center;min-height:30px;padding:0 12px;border-radius:999px;border:1px dashed rgba(243,239,223,.42)}
+.bt-geo__list button.bt-geo__zoomin{box-shadow:inset 0 0 0 1.5px var(--yellow)}
+.bt-geo__list button.bt-geo__zoomin::after{content:"\2192";margin-left:7px;font-weight:700}
 .bt-geo__cta{margin-top:24px;display:flex}
-.bt-js .bt-geo__map:not(.is-live) .bt-geo__adj{opacity:0}
-.bt-js .bt-geo__map:not(.is-live) .bt-geo__edge,.bt-js .bt-geo__map:not(.is-live) .bt-geo__riv,.bt-js .bt-geo__map:not(.is-live) .bt-geo__lines path{stroke-dashoffset:1}
+
+
+.bt-js .bt-geo__map:not(.is-live) .bt-geo__svg{opacity:0}
 .bt-js .bt-geo__map:not(.is-live) .bt-pin i{transform:scale(0)}
-.bt-js .bt-geo__map:not(.is-live) .bt-pin b{opacity:0}
 .bt-js .bt-geo__map.is-live .bt-pin i{transition-delay:calc(.5s + var(--i,0)*.1s)}
 .bt-js .bt-geo__map.is-live.is-done .bt-pin i{transition-delay:0s}
 .bt-geo__map.is-off *,.bt-geo__map.is-off *::after{animation-play-state:paused!important}
+.bt-js .bt-pin b{opacity:0}
+.bt-js .bt-pin.is-on b,.bt-js .bt-pin--home b,.bt-js .bt-pin--adj b{opacity:1}
+.bt-js .bt-geo__map:not(.is-live) .bt-pin b{opacity:0}
 @media (hover:hover){
   .bt-geo__list button:hover{background:rgba(243,239,223,.24)}
   .bt-geo__list button.is-on:hover{background:var(--yellow)}
-  .bt-pin{cursor:pointer}
+  .bt-geo__switch button:hover{color:var(--yellow)}
+  .bt-geo__switch button[aria-pressed=true]:hover{color:var(--ink)}
+  .bt-geo__plate button:hover{background:var(--yellow2)}
 }
-@media (min-width:560px){
+@media (max-width:599px){
+  .bt-geo__map:not(.is-z) .bt-pin--home[data-m=t] b{--tx:-74%}
+}
+@media (min-width:480px){
+  .bt-geo__plate{left:10px;right:10px;bottom:10px;padding-left:18px;gap:10px;min-width:min(300px,calc(100% - 20px));max-width:calc(100% - 20px)}
+  .bt-geo__plate.is-top{top:10px}
+  .bt-geo__plate b{font-size:24px}
+  .bt-geo__plate button{padding:0 18px;font-size:15px}
   .bt-pin i{left:-7px;top:-7px;width:14px;height:14px}
   .bt-pin b{font-size:13px}
+  .bt-rg b{font-size:10.5px;letter-spacing:.18em}
+  .bt-rg--sea b{font-size:25px}
 }
-@media (min-width:760px){
+@media (min-width:600px){
   .bt-geo__map{margin:0;border-radius:32px}
-  .bt-geo__svg text{font-size:13px}
-  .bt-geo__svg text.is-sea{font-size:30px}
+  .bt-geo__switch{max-width:360px}
+  .bt-rg b{font-size:12px;letter-spacing:.22em}
+  .bt-rg--sea b{font-size:30px}
+  .bt-geo__plate{left:16px;right:16px;bottom:16px;padding-left:24px;gap:22px;min-width:min(340px,calc(100% - 32px));max-width:calc(100% - 32px)}
+  .bt-geo__plate.is-top{top:16px}
+  .bt-geo__plate b{font-size:30px}
   
-  .bt-pin b{opacity:1;transform:translate(var(--tx),var(--ty)) scale(1)}
+  .bt-pin b,.bt-js .bt-pin b{opacity:1;transform:translate(var(--tx),var(--ty)) scale(1)}
+  .bt-js .bt-geo__map:not(.is-live) .bt-pin b{opacity:0}
   .bt-pin[data-s=t] b{top:-13px;left:0;--tx:-50%;--ty:-100%}
   .bt-pin[data-s=b] b{top:13px;left:0;--tx:-50%;--ty:0%}
   .bt-pin[data-s=l] b{top:0;left:-14px;--tx:-100%;--ty:-50%}
   .bt-pin[data-s=r] b{top:0;left:14px;--tx:0%;--ty:-50%}
-  .bt-pin.bt-pin--home b{top:0;left:-18px;--tx:-100%;--ty:-50%}
+  .bt-pin--home[data-s=l] b{left:-18px}
+  .bt-pin--adj[data-s=b] b{top:21px}
   .bt-js .bt-geo__map.is-live .bt-pin b{transition-delay:calc(.6s + var(--i,0)*.1s)}
   .bt-js .bt-geo__map.is-live.is-done .bt-pin b{transition-delay:0s}
+  .bt-geo__map:not(.is-z) .bt-pin[data-v=a] b,.bt-geo__map.is-z .bt-pin[data-v=w] b{transition-delay:0s}
 }
 @media (min-width:1000px){
+  .bt-js .bt-geo__lists{height:auto!important}
   .bt-geo__grid{grid-template-columns:minmax(0,.82fr) minmax(0,1.18fr);grid-template-areas:"head map" "foot map";gap:26px 44px;align-items:center}
   .bt-geo__head{grid-area:head;align-self:end}
-  .bt-geo__map{grid-area:map}
+  .bt-geo__mapcol{grid-area:map}
   .bt-geo__foot{grid-area:foot;align-self:start}
   .bt-geo__lead{font-size:20px}
 }
 @media (prefers-reduced-motion:reduce){
-  .bt-geo__map *,.bt-geo__map *::after,.bt-geo__list button{animation:none!important;transition:none!important}
+  .bt-geo__map *,.bt-geo__map *::after,.bt-geo__list,.bt-geo__lists,.bt-geo__switch::before,.bt-geo__plate{animation:none!important;transition:none!important}
 }
 
 
@@ -737,7 +970,16 @@ body.bt-lock{overflow:hidden}
 .bt-post p{margin:0;padding:0 10px;font-size:15.5px;line-height:1.4;color:var(--mute);display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden}
 .bt-post__go{margin-top:auto;padding:6px 10px 0;display:inline-flex;align-items:center;gap:8px;font-weight:700;font-size:15px;color:var(--olive)}
 .bt-post__go svg{width:18px;height:18px;transition:transform .35s var(--ease)}
+.bt-blog__side{display:grid;gap:12px;justify-items:start}
+.bt-blog__all{display:inline-flex;align-items:center;gap:10px;min-height:48px;padding:0 8px 0 16px;border-radius:999px;background:rgba(243,239,223,.12);box-shadow:inset 0 0 0 1px rgba(243,239,223,.34);color:var(--cream);font:700 15.5px/1 var(--text);text-decoration:none;transition:background .3s,color .3s,transform .35s var(--ease),box-shadow .3s}
+.bt-blog__all svg{width:20px;height:20px}
+.bt-blog__all b{min-width:32px;height:32px;padding:0 9px;border-radius:999px;display:grid;place-items:center;background:var(--yellow);color:var(--ink);font:800 20px/1 var(--disp);transition:background .3s,color .3s}
+.bt-post--all{justify-content:flex-end;gap:6px;padding:18px 12px 18px;background:linear-gradient(160deg,#F6C624,var(--yellow2))}
+.bt-post--all .bt-post__n{padding:0 10px;font:800 132px/.82 var(--disp);color:var(--ink)}
+.bt-post--all .bt-post__go{margin-top:8px;color:var(--ink)}
 @media (hover:hover){
+  .bt-blog__all:hover{background:var(--yellow);color:var(--ink);transform:translateY(-2px);box-shadow:0 12px 22px -12px rgba(239,184,13,.9)}
+  .bt-blog__all:hover b{background:var(--ink);color:var(--yellow)}
   .bt-blog__track{cursor:grab}
   .bt-post:hover{transform:translateY(-6px);box-shadow:0 32px 40px -26px rgba(0,0,0,.95)}
   .bt-post:hover img{transform:scale(1.06)}
@@ -926,109 +1168,553 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
 <section class="bt-sec bt-cream bt-paper" id="tours">
   <div class="bt-shell">
     <div class="bt-head bt-up"><h2>Туры</h2></div>
-    <div class="bt-cards">
-      <article class="bt-card bt-card--top bt-glow bt-up" data-glow>
-        <div class="bt-sl bt-sl--card" data-sl data-auto="5200" role="group" aria-roledescription="карусель" aria-label="Фотографии тура Мачахела">
-          <div class="bt-sl__track">
-            <img class="bt-sl__s" src="img/mc1-640.jpg" srcset="img/mc1-640.jpg 640w, img/mc1-1000.jpg 1000w" sizes="(min-width:1000px) 720px, (min-width:640px) 48vw, 92vw" width="1000" height="800" alt="Каменный арочный мост над горной рекой в Мачахельском ущелье" loading="lazy" decoding="async">
-            <img class="bt-sl__s" data-src="img/mc2-640.jpg" data-srcset="img/mc2-640.jpg 640w, img/mc2-1000.jpg 1000w" sizes="(min-width:1000px) 720px, (min-width:640px) 48vw, 92vw" width="1000" height="800" alt="Высокий водопад, у подножия гости тура" loading="lazy" decoding="async">
-            <img class="bt-sl__s" data-src="img/mc3-640.jpg" data-srcset="img/mc3-640.jpg 640w, img/mc3-1000.jpg 1000w" sizes="(min-width:1000px) 720px, (min-width:640px) 48vw, 92vw" width="1000" height="800" alt="Стол с шашлыком, хачапури и вином" loading="lazy" decoding="async">
-            <img class="bt-sl__s" data-src="img/mc4-640.jpg" data-srcset="img/mc4-640.jpg 640w, img/mc4-1000.jpg 1000w" sizes="(min-width:1000px) 720px, (min-width:640px) 48vw, 92vw" width="1000" height="800" alt="Деревянные качели-полумесяц над рекой" loading="lazy" decoding="async">
-          </div>
-          <span class="bt-chip bt-chip--len"><svg class="bt-s" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-clock"/></svg>1 день</span>
-          <span class="bt-chip bt-chip--hit">Выбирают чаще всего</span>
-          <button class="bt-sl__nav bt-sl__nav--l" type="button" data-prev aria-label="Назад"><svg class="bt-s" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-arr"/></svg></button>
-          <button class="bt-sl__nav bt-sl__nav--r" type="button" data-next aria-label="Дальше"><svg class="bt-s" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-arr"/></svg></button>
-          <div class="bt-sl__dots" role="group" aria-label="Кадры"><button type="button" aria-label="Кадр 1"></button><button type="button" aria-label="Кадр 2"></button><button type="button" aria-label="Кадр 3"></button><button type="button" aria-label="Кадр 4"></button></div>
-        </div>
-        <div class="bt-card__b"><h3>Мачахела</h3><p>Водопады, мост царицы Тамары и застолье с танцами</p>
-          <div class="bt-card__foot"><b>75 €</b><a class="bt-go bt-go--sm" href="#book" data-tour="machakhela" data-in="1">Записаться</a></div></div>
-      </article>
 
-      <article class="bt-card bt-glow bt-up" data-glow style="--d:.06s">
-        <div class="bt-sl bt-sl--card" data-sl data-auto="5800" role="group" aria-roledescription="карусель" aria-label="Фотографии тура Гомисмта">
-          <div class="bt-sl__track">
-            <img class="bt-sl__s" src="img/gc1-640.jpg" srcset="img/gc1-640.jpg 640w, img/gc1-1000.jpg 1000w" sizes="(min-width:1000px) 360px, (min-width:640px) 48vw, 92vw" width="1000" height="800" alt="Закат над облаками на курорте Гомисмта" loading="lazy" decoding="async">
-            <img class="bt-sl__s" data-src="img/gc2-640.jpg" data-srcset="img/gc2-640.jpg 640w, img/gc2-1000.jpg 1000w" sizes="(min-width:1000px) 360px, (min-width:640px) 48vw, 92vw" width="1000" height="800" alt="Горный луг с коровами под облаками" loading="lazy" decoding="async">
-            <img class="bt-sl__s" data-src="img/gc3-640.jpg" data-srcset="img/gc3-640.jpg 640w, img/gc3-1000.jpg 1000w" sizes="(min-width:1000px) 360px, (min-width:640px) 48vw, 92vw" width="1000" height="800" alt="Девушка с поднятыми руками на склоне, рядом корова" loading="lazy" decoding="async">
-            <img class="bt-sl__s" data-src="img/gc4-640.jpg" data-srcset="img/gc4-640.jpg 640w, img/gc4-1000.jpg 1000w" sizes="(min-width:1000px) 360px, (min-width:640px) 48vw, 92vw" width="1000" height="800" alt="Гости тура на пикнике на вершине" loading="lazy" decoding="async">
-          </div>
-          <span class="bt-chip bt-chip--len"><svg class="bt-s" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-clock"/></svg>1 день</span>
-          <button class="bt-sl__nav bt-sl__nav--l" type="button" data-prev aria-label="Назад"><svg class="bt-s" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-arr"/></svg></button>
-          <button class="bt-sl__nav bt-sl__nav--r" type="button" data-next aria-label="Дальше"><svg class="bt-s" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-arr"/></svg></button>
-          <div class="bt-sl__dots" role="group" aria-label="Кадры"><button type="button" aria-label="Кадр 1"></button><button type="button" aria-label="Кадр 2"></button><button type="button" aria-label="Кадр 3"></button><button type="button" aria-label="Кадр 4"></button></div>
+<div class="bt-tabs bt-up" id="btTabs" role="tablist" aria-label="Виды туров">
+  <button class="bt-tab is-act" type="button" role="tab" id="tab-oneday" aria-controls="tp-oneday" aria-selected="true" tabindex="0" data-g="oneday"><span>Однодневные</span><i>18</i></button>
+  <button class="bt-tab" type="button" role="tab" id="tab-multiday" aria-controls="tp-multiday" aria-selected="false" tabindex="-1" data-g="multiday"><span>Многодневные</span><i>6</i></button>
+  <button class="bt-tab" type="button" role="tab" id="tab-package" aria-controls="tp-package" aria-selected="false" tabindex="-1" data-g="package"><span>Пакетные</span><i>6</i></button>
+  <button class="bt-tab" type="button" role="tab" id="tab-retreat" aria-controls="tp-retreat" aria-selected="false" tabindex="-1" data-g="retreat"><span>Ретрит-туры</span><em>скоро</em></button>
+</div>
+<div class="bt-tp is-act" id="tp-oneday" role="tabpanel" aria-labelledby="tab-oneday" data-g="oneday">
+  <h3 class="bt-tp__h">Однодневные</h3>
+  <div class="bt-cards" id="cards-oneday">
+    <article class="bt-card bt-card--top bt-glow bt-up" id="tour-machakhela" data-g="oneday" data-glow>
+      <div class="bt-sl bt-sl--card" data-sl data-auto="5200" role="group" aria-roledescription="карусель" aria-label="Фотографии тура Мачахела">
+        <div class="bt-sl__track">
+          <img class="bt-sl__s" src="img/mc1-640.jpg" srcset="img/mc1-640.jpg 640w, img/mc1-1000.jpg 1000w" sizes="(min-width:1000px) 720px, (min-width:640px) 48vw, 92vw" width="960" height="768" alt="Каменный арочный мост над горной рекой в Мачахельском ущелье" loading="lazy" decoding="async">
+          <img class="bt-sl__s" data-src="img/mc2-640.jpg" data-srcset="img/mc2-640.jpg 640w, img/mc2-1000.jpg 1000w" sizes="(min-width:1000px) 720px, (min-width:640px) 48vw, 92vw" width="1000" height="800" alt="Высокий водопад, у подножия гости тура" loading="lazy" decoding="async">
+          <img class="bt-sl__s" data-src="img/mc3-640.jpg" data-srcset="img/mc3-640.jpg 640w, img/mc3-1000.jpg 1000w" sizes="(min-width:1000px) 720px, (min-width:640px) 48vw, 92vw" width="1000" height="800" alt="Стол с шашлыком, хачапури и вином" loading="lazy" decoding="async">
+          <img class="bt-sl__s" data-src="img/mc4-640.jpg" data-srcset="img/mc4-640.jpg 640w, img/mc4-1000.jpg 1000w" sizes="(min-width:1000px) 720px, (min-width:640px) 48vw, 92vw" width="1000" height="800" alt="Деревянные качели-полумесяц над рекой" loading="lazy" decoding="async">
         </div>
-        <div class="bt-card__b"><h3>Гомисмта</h3><p>Облака под ногами и пикник на вершине</p>
-          <div class="bt-card__foot"><b>70 €</b><a class="bt-go bt-go--sm" href="#book" data-tour="gomismta" data-in="sat">Записаться</a></div></div>
-      </article>
+        <span class="bt-chip bt-chip--len"><svg class="bt-s" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-clock"/></svg>1 день</span>
+        <span class="bt-chip bt-chip--hit">Выбирают чаще всего</span>
+        <button class="bt-sl__nav bt-sl__nav--l" type="button" data-prev aria-label="Назад"><svg class="bt-s" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-arr"/></svg></button>
+        <button class="bt-sl__nav bt-sl__nav--r" type="button" data-next aria-label="Дальше"><svg class="bt-s" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-arr"/></svg></button>
+        <div class="bt-sl__dots" role="group" aria-label="Кадры"><button type="button" aria-label="Кадр 1"></button><button type="button" aria-label="Кадр 2"></button><button type="button" aria-label="Кадр 3"></button><button type="button" aria-label="Кадр 4"></button></div>
+      </div>
+      <div class="bt-card__b"><h3>Мачахела</h3><p>Водопады, мост царицы Тамары и застолье с танцами</p>
+        <div class="bt-card__foot"><b>75 €</b><a class="bt-go bt-go--sm" href="#book" data-tour="machakhela" data-in="1">Записаться</a></div></div>
+    </article>
 
-      <article class="bt-card bt-glow bt-up" data-glow style="--d:.12s">
-        <div class="bt-sl bt-sl--card" data-sl data-auto="6200" role="group" aria-roledescription="карусель" aria-label="Фотографии тура Мтирала">
-          <div class="bt-sl__track">
-            <img class="bt-sl__s" src="img/tc1-640.jpg" srcset="img/tc1-640.jpg 640w, img/tc1-1000.jpg 1000w" sizes="(min-width:1000px) 360px, (min-width:640px) 48vw, 92vw" width="1000" height="800" alt="Путешественница с палками идёт по лесу в национальном парке Мтирала" loading="lazy" decoding="async">
-            <img class="bt-sl__s" data-src="img/tc2-640.jpg" data-srcset="img/tc2-640.jpg 640w, img/tc2-1000.jpg 1000w" sizes="(min-width:1000px) 360px, (min-width:640px) 48vw, 92vw" width="1000" height="800" alt="Квадроциклы на фоне гор" loading="lazy" decoding="async">
-            <img class="bt-sl__s" data-src="img/tc3-640.jpg" data-srcset="img/tc3-640.jpg 640w, img/tc3-1000.jpg 1000w" sizes="(min-width:1000px) 360px, (min-width:640px) 48vw, 92vw" width="1000" height="800" alt="Каменная часовня в зелени" loading="lazy" decoding="async">
-            <img class="bt-sl__s" data-src="img/tc4-640.jpg" data-srcset="img/tc4-640.jpg 640w, img/tc4-1000.jpg 1000w" sizes="(min-width:1000px) 360px, (min-width:640px) 48vw, 92vw" width="1000" height="800" alt="Зелёные горы над долиной" loading="lazy" decoding="async">
-          </div>
-          <span class="bt-chip bt-chip--len"><svg class="bt-s" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-clock"/></svg>8 часов</span>
-          <button class="bt-sl__nav bt-sl__nav--l" type="button" data-prev aria-label="Назад"><svg class="bt-s" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-arr"/></svg></button>
-          <button class="bt-sl__nav bt-sl__nav--r" type="button" data-next aria-label="Дальше"><svg class="bt-s" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-arr"/></svg></button>
-          <div class="bt-sl__dots" role="group" aria-label="Кадры"><button type="button" aria-label="Кадр 1"></button><button type="button" aria-label="Кадр 2"></button><button type="button" aria-label="Кадр 3"></button><button type="button" aria-label="Кадр 4"></button></div>
+    <article class="bt-card bt-glow bt-up" id="tour-gomismta" data-g="oneday" data-glow style="--d:.06s">
+      <div class="bt-sl bt-sl--card" data-sl data-auto="5800" role="group" aria-roledescription="карусель" aria-label="Фотографии тура Гомисмта">
+        <div class="bt-sl__track">
+          <img class="bt-sl__s" src="img/gc1-640.jpg" srcset="img/gc1-640.jpg 640w, img/gc1-1000.jpg 1000w" sizes="(min-width:1000px) 360px, (min-width:640px) 48vw, 92vw" width="1000" height="800" alt="Закат над облаками на курорте Гомисмта" loading="lazy" decoding="async">
+          <img class="bt-sl__s" data-src="img/gc2-640.jpg" data-srcset="img/gc2-640.jpg 640w, img/gc2-1000.jpg 1000w" sizes="(min-width:1000px) 360px, (min-width:640px) 48vw, 92vw" width="1000" height="800" alt="Горный луг с коровами под облаками" loading="lazy" decoding="async">
+          <img class="bt-sl__s" data-src="img/gc3-640.jpg" data-srcset="img/gc3-640.jpg 640w, img/gc3-1000.jpg 1000w" sizes="(min-width:1000px) 360px, (min-width:640px) 48vw, 92vw" width="1000" height="800" alt="Девушка с поднятыми руками на склоне, рядом корова" loading="lazy" decoding="async">
+          <img class="bt-sl__s" data-src="img/gc4-640.jpg" data-srcset="img/gc4-640.jpg 640w, img/gc4-1000.jpg 1000w" sizes="(min-width:1000px) 360px, (min-width:640px) 48vw, 92vw" width="1000" height="800" alt="Гости тура на пикнике на вершине" loading="lazy" decoding="async">
         </div>
-        <div class="bt-card__b"><h3>Мтирала</h3><p>Джунгли и обед в грузинской семье</p>
-          <div class="bt-card__foot"><b>60 €</b><a class="bt-go bt-go--sm" href="#book" data-tour="mtirala" data-in="2">Записаться</a></div></div>
-      </article>
+        <span class="bt-chip bt-chip--len"><svg class="bt-s" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-clock"/></svg>1 день</span>
+        <button class="bt-sl__nav bt-sl__nav--l" type="button" data-prev aria-label="Назад"><svg class="bt-s" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-arr"/></svg></button>
+        <button class="bt-sl__nav bt-sl__nav--r" type="button" data-next aria-label="Дальше"><svg class="bt-s" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-arr"/></svg></button>
+        <div class="bt-sl__dots" role="group" aria-label="Кадры"><button type="button" aria-label="Кадр 1"></button><button type="button" aria-label="Кадр 2"></button><button type="button" aria-label="Кадр 3"></button><button type="button" aria-label="Кадр 4"></button></div>
+      </div>
+      <div class="bt-card__b"><h3>Гомисмта</h3><p>Облака под ногами и пикник на вершине</p>
+        <div class="bt-card__foot"><b>70 €</b><a class="bt-go bt-go--sm" href="#book" data-tour="gomismta" data-in="sat">Записаться</a></div></div>
+    </article>
 
-      <article class="bt-card bt-glow bt-up" data-glow>
-        <div class="bt-sl bt-sl--card" data-sl data-auto="5400" role="group" aria-roledescription="карусель" aria-label="Фотографии тура Шуахеви">
-          <div class="bt-sl__track">
-            <img class="bt-sl__s" src="img/sc1-640.jpg" srcset="img/sc1-640.jpg 640w, img/sc1-1000.jpg 1000w" sizes="(min-width:1000px) 360px, (min-width:640px) 48vw, 92vw" width="1000" height="800" alt="Заснеженные горы Шуахеви над облаками" loading="lazy" decoding="async">
-            <img class="bt-sl__s" data-src="img/sc2-640.jpg" data-srcset="img/sc2-640.jpg 640w, img/sc2-1000.jpg 1000w" sizes="(min-width:1000px) 360px, (min-width:640px) 48vw, 92vw" width="1000" height="800" alt="Заснеженная дорога в лесу" loading="lazy" decoding="async">
-            <img class="bt-sl__s" data-src="img/sc3-640.jpg" data-srcset="img/sc3-640.jpg 640w, img/sc3-1000.jpg 1000w" sizes="(min-width:1000px) 360px, (min-width:640px) 48vw, 92vw" width="1000" height="800" alt="Пара стоит спиной к камере и смотрит на облака над горами" loading="lazy" decoding="async">
-            <img class="bt-sl__s" data-src="img/sc4-640.jpg" data-srcset="img/sc4-640.jpg 640w, img/sc4-1000.jpg 1000w" sizes="(min-width:1000px) 360px, (min-width:640px) 48vw, 92vw" width="1000" height="800" alt="Прыжок в снегу на фоне гор" loading="lazy" decoding="async">
-          </div>
-          <span class="bt-chip bt-chip--len"><svg class="bt-s" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-clock"/></svg>8 часов</span>
-          <button class="bt-sl__nav bt-sl__nav--l" type="button" data-prev aria-label="Назад"><svg class="bt-s" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-arr"/></svg></button>
-          <button class="bt-sl__nav bt-sl__nav--r" type="button" data-next aria-label="Дальше"><svg class="bt-s" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-arr"/></svg></button>
-          <div class="bt-sl__dots" role="group" aria-label="Кадры"><button type="button" aria-label="Кадр 1"></button><button type="button" aria-label="Кадр 2"></button><button type="button" aria-label="Кадр 3"></button><button type="button" aria-label="Кадр 4"></button></div>
+    <article class="bt-card bt-glow bt-up" id="tour-mtirala" data-g="oneday" data-glow style="--d:.12s">
+      <div class="bt-sl bt-sl--card" data-sl data-auto="6200" role="group" aria-roledescription="карусель" aria-label="Фотографии тура Мтирала">
+        <div class="bt-sl__track">
+          <img class="bt-sl__s" src="img/tc1-640.jpg" srcset="img/tc1-640.jpg 640w, img/tc1-1000.jpg 1000w" sizes="(min-width:1000px) 360px, (min-width:640px) 48vw, 92vw" width="1000" height="800" alt="Путешественница с палками идёт по лесу в национальном парке Мтирала" loading="lazy" decoding="async">
+          <img class="bt-sl__s" data-src="img/tc2-640.jpg" data-srcset="img/tc2-640.jpg 640w, img/tc2-1000.jpg 1000w" sizes="(min-width:1000px) 360px, (min-width:640px) 48vw, 92vw" width="1000" height="800" alt="Квадроциклы на фоне гор" loading="lazy" decoding="async">
+          <img class="bt-sl__s" data-src="img/tc3-640.jpg" data-srcset="img/tc3-640.jpg 640w, img/tc3-1000.jpg 1000w" sizes="(min-width:1000px) 360px, (min-width:640px) 48vw, 92vw" width="1000" height="800" alt="Каменная часовня в зелени" loading="lazy" decoding="async">
+          <img class="bt-sl__s" data-src="img/tc4-640.jpg" data-srcset="img/tc4-640.jpg 640w, img/tc4-1000.jpg 1000w" sizes="(min-width:1000px) 360px, (min-width:640px) 48vw, 92vw" width="1000" height="800" alt="Зелёные горы над долиной" loading="lazy" decoding="async">
         </div>
-        <div class="bt-card__b"><h3>Шуахеви</h3><p>Горы на высоте 1500 метров, шашлыки и 10 сортов вина</p>
-          <div class="bt-card__foot"><b>75 €</b><a class="bt-go bt-go--sm" href="#book" data-tour="shuakhevi">Записаться</a></div></div>
-      </article>
+        <span class="bt-chip bt-chip--len"><svg class="bt-s" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-clock"/></svg>8 часов</span>
+        <button class="bt-sl__nav bt-sl__nav--l" type="button" data-prev aria-label="Назад"><svg class="bt-s" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-arr"/></svg></button>
+        <button class="bt-sl__nav bt-sl__nav--r" type="button" data-next aria-label="Дальше"><svg class="bt-s" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-arr"/></svg></button>
+        <div class="bt-sl__dots" role="group" aria-label="Кадры"><button type="button" aria-label="Кадр 1"></button><button type="button" aria-label="Кадр 2"></button><button type="button" aria-label="Кадр 3"></button><button type="button" aria-label="Кадр 4"></button></div>
+      </div>
+      <div class="bt-card__b"><h3>Мтирала</h3><p>Джунгли и обед в грузинской семье</p>
+        <div class="bt-card__foot"><b>60 €</b><a class="bt-go bt-go--sm" href="#book" data-tour="mtirala" data-in="2">Записаться</a></div></div>
+    </article>
 
-      <article class="bt-card bt-glow bt-up" data-glow style="--d:.06s">
-        <div class="bt-sl bt-sl--card" data-sl data-auto="5000" role="group" aria-roledescription="карусель" aria-label="Фотографии тура Горная Аджария">
-          <div class="bt-sl__track">
-            <img class="bt-sl__s" src="img/ac1-640.jpg" srcset="img/ac1-640.jpg 640w, img/ac1-1000.jpg 1000w" sizes="(min-width:1000px) 360px, (min-width:640px) 48vw, 92vw" width="1000" height="800" alt="Водопад в ущелье Горной Аджарии" loading="lazy" decoding="async">
-            <img class="bt-sl__s" data-src="img/ac2-640.jpg" data-srcset="img/ac2-640.jpg 640w, img/ac2-1000.jpg 1000w" sizes="(min-width:1000px) 360px, (min-width:640px) 48vw, 92vw" width="1000" height="800" alt="Гостья раскинула руки над долиной в горах Аджарии" loading="lazy" decoding="async">
-            <img class="bt-sl__s" data-src="img/ac3-640.jpg" data-srcset="img/ac3-640.jpg 640w, img/ac3-1000.jpg 1000w" sizes="(min-width:1000px) 360px, (min-width:640px) 48vw, 92vw" width="1000" height="800" alt="Терраса над рекой в горной долине" loading="lazy" decoding="async">
-            <img class="bt-sl__s" data-src="img/ac4-640.jpg" data-srcset="img/ac4-640.jpg 640w, img/ac4-1000.jpg 1000w" sizes="(min-width:1000px) 360px, (min-width:640px) 48vw, 92vw" width="1000" height="800" alt="Изгиб реки между зелёными склонами" loading="lazy" decoding="async">
-          </div>
-          <span class="bt-chip bt-chip--len"><svg class="bt-s" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-clock"/></svg>6 часов</span>
-          <button class="bt-sl__nav bt-sl__nav--l" type="button" data-prev aria-label="Назад"><svg class="bt-s" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-arr"/></svg></button>
-          <button class="bt-sl__nav bt-sl__nav--r" type="button" data-next aria-label="Дальше"><svg class="bt-s" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-arr"/></svg></button>
-          <div class="bt-sl__dots" role="group" aria-label="Кадры"><button type="button" aria-label="Кадр 1"></button><button type="button" aria-label="Кадр 2"></button><button type="button" aria-label="Кадр 3"></button><button type="button" aria-label="Кадр 4"></button></div>
+    <article class="bt-card bt-glow bt-up" id="tour-shuakhevi" data-g="oneday" data-glow>
+      <div class="bt-sl bt-sl--card" data-sl data-auto="5400" role="group" aria-roledescription="карусель" aria-label="Фотографии тура Шуахеви">
+        <div class="bt-sl__track">
+          <img class="bt-sl__s" src="img/sc1-640.jpg" srcset="img/sc1-640.jpg 640w, img/sc1-1000.jpg 1000w" sizes="(min-width:1000px) 360px, (min-width:640px) 48vw, 92vw" width="1000" height="800" alt="Заснеженные горы Шуахеви над облаками" loading="lazy" decoding="async">
+          <img class="bt-sl__s" data-src="img/sc2-640.jpg" data-srcset="img/sc2-640.jpg 640w, img/sc2-1000.jpg 1000w" sizes="(min-width:1000px) 360px, (min-width:640px) 48vw, 92vw" width="1000" height="800" alt="Заснеженная дорога в лесу" loading="lazy" decoding="async">
+          <img class="bt-sl__s" data-src="img/sc3-640.jpg" data-srcset="img/sc3-640.jpg 640w, img/sc3-1000.jpg 1000w" sizes="(min-width:1000px) 360px, (min-width:640px) 48vw, 92vw" width="1000" height="800" alt="Пара стоит спиной к камере и смотрит на облака над горами" loading="lazy" decoding="async">
+          <img class="bt-sl__s" data-src="img/sc4-640.jpg" data-srcset="img/sc4-640.jpg 640w, img/sc4-1000.jpg 1000w" sizes="(min-width:1000px) 360px, (min-width:640px) 48vw, 92vw" width="1000" height="801" alt="Прыжок в снегу на фоне гор" loading="lazy" decoding="async">
         </div>
-        <div class="bt-card__b"><h3>Горная Аджария</h3><p>Водопад Махунцети, крепость Гвара и дегустация вина</p>
-          <div class="bt-card__foot"><b>от 35 €</b><a class="bt-go bt-go--sm" href="#book" data-tour="adjara">Записаться</a></div></div>
-      </article>
+        <span class="bt-chip bt-chip--len"><svg class="bt-s" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-clock"/></svg>8 часов</span>
+        <button class="bt-sl__nav bt-sl__nav--l" type="button" data-prev aria-label="Назад"><svg class="bt-s" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-arr"/></svg></button>
+        <button class="bt-sl__nav bt-sl__nav--r" type="button" data-next aria-label="Дальше"><svg class="bt-s" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-arr"/></svg></button>
+        <div class="bt-sl__dots" role="group" aria-label="Кадры"><button type="button" aria-label="Кадр 1"></button><button type="button" aria-label="Кадр 2"></button><button type="button" aria-label="Кадр 3"></button><button type="button" aria-label="Кадр 4"></button></div>
+      </div>
+      <div class="bt-card__b"><h3>Шуахеви</h3><p>Горы на высоте 1500 метров, шашлыки и 10 сортов вина</p>
+        <div class="bt-card__foot"><b>75 €</b><a class="bt-go bt-go--sm" href="#book" data-tour="shuakhevi">Записаться</a></div></div>
+    </article>
 
-      <article class="bt-card bt-glow bt-up" data-glow style="--d:.12s">
-        <div class="bt-sl bt-sl--card" data-sl data-auto="5600" role="group" aria-roledescription="карусель" aria-label="Фотографии мандаринового тура">
-          <div class="bt-sl__track">
-            <img class="bt-sl__s" src="img/nc1-640.jpg" srcset="img/nc1-640.jpg 640w, img/nc1-1000.jpg 1000w" sizes="(min-width:1000px) 360px, (min-width:640px) 48vw, 92vw" width="930" height="743" alt="Мандарины на ветках в саду под Батуми" loading="lazy" decoding="async">
-            <img class="bt-sl__s" data-src="img/nc2-640.jpg" data-srcset="img/nc2-640.jpg 640w, img/nc2-1000.jpg 1000w" sizes="(min-width:1000px) 360px, (min-width:640px) 48vw, 92vw" width="1000" height="800" alt="Гостья срывает мандарины в саду" loading="lazy" decoding="async">
-          </div>
-          <span class="bt-chip bt-chip--len"><svg class="bt-s" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-clock"/></svg>ноябрь и декабрь</span>
-          <button class="bt-sl__nav bt-sl__nav--l" type="button" data-prev aria-label="Назад"><svg class="bt-s" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-arr"/></svg></button>
-          <button class="bt-sl__nav bt-sl__nav--r" type="button" data-next aria-label="Дальше"><svg class="bt-s" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-arr"/></svg></button>
-          <div class="bt-sl__dots" role="group" aria-label="Кадры"><button type="button" aria-label="Кадр 1"></button><button type="button" aria-label="Кадр 2"></button></div>
+    <article class="bt-card bt-glow bt-up" id="tour-adjara" data-g="oneday" data-glow style="--d:.06s">
+      <div class="bt-sl bt-sl--card" data-sl data-auto="5000" role="group" aria-roledescription="карусель" aria-label="Фотографии тура Горная Аджария">
+        <div class="bt-sl__track">
+          <img class="bt-sl__s" src="img/ac1-640.jpg" srcset="img/ac1-640.jpg 640w, img/ac1-1000.jpg 1000w" sizes="(min-width:1000px) 360px, (min-width:640px) 48vw, 92vw" width="960" height="768" alt="Водопад в ущелье Горной Аджарии" loading="lazy" decoding="async">
+          <img class="bt-sl__s" data-src="img/ac2-640.jpg" data-srcset="img/ac2-640.jpg 640w, img/ac2-1000.jpg 1000w" sizes="(min-width:1000px) 360px, (min-width:640px) 48vw, 92vw" width="1000" height="800" alt="Гостья раскинула руки над долиной в горах Аджарии" loading="lazy" decoding="async">
+          <img class="bt-sl__s" data-src="img/ac3-640.jpg" data-srcset="img/ac3-640.jpg 640w, img/ac3-1000.jpg 1000w" sizes="(min-width:1000px) 360px, (min-width:640px) 48vw, 92vw" width="1000" height="800" alt="Терраса над рекой в горной долине" loading="lazy" decoding="async">
+          <img class="bt-sl__s" data-src="img/ac4-640.jpg" data-srcset="img/ac4-640.jpg 640w, img/ac4-1000.jpg 1000w" sizes="(min-width:1000px) 360px, (min-width:640px) 48vw, 92vw" width="960" height="768" alt="Изгиб реки между зелёными склонами" loading="lazy" decoding="async">
         </div>
-        <div class="bt-card__b"><h3>Мандариновый тур</h3><p>Сбор мандаринов и пикник в саду</p>
-          <div class="bt-card__foot"><b>50 €</b><a class="bt-go bt-go--sm" href="#book" data-tour="mandarin">Записаться</a></div></div>
-      </article>
-    </div>
-    <p class="bt-per bt-up">Цена за человека. В Горную Аджарию 35 € в группе от трёх, 95 € вдвоём.</p>
+        <span class="bt-chip bt-chip--len"><svg class="bt-s" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-clock"/></svg>6 часов</span>
+        <button class="bt-sl__nav bt-sl__nav--l" type="button" data-prev aria-label="Назад"><svg class="bt-s" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-arr"/></svg></button>
+        <button class="bt-sl__nav bt-sl__nav--r" type="button" data-next aria-label="Дальше"><svg class="bt-s" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-arr"/></svg></button>
+        <div class="bt-sl__dots" role="group" aria-label="Кадры"><button type="button" aria-label="Кадр 1"></button><button type="button" aria-label="Кадр 2"></button><button type="button" aria-label="Кадр 3"></button><button type="button" aria-label="Кадр 4"></button></div>
+      </div>
+      <div class="bt-card__b"><h3>Горная Аджария</h3><p>Водопад Махунцети, крепость Гвара и дегустация вина</p>
+        <div class="bt-card__foot"><b>от 35 €</b><a class="bt-go bt-go--sm" href="#book" data-tour="adjara">Записаться</a></div></div>
+    </article>
+
+    <article class="bt-card bt-glow bt-up" id="tour-mandarin" data-g="oneday" data-glow style="--d:.12s">
+      <div class="bt-sl bt-sl--card" data-sl data-auto="5600" role="group" aria-roledescription="карусель" aria-label="Фотографии мандаринового тура">
+        <div class="bt-sl__track">
+          <img class="bt-sl__s" src="img/nc1-640.jpg" srcset="img/nc1-640.jpg 640w, img/nc1-1000.jpg 1000w" sizes="(min-width:1000px) 360px, (min-width:640px) 48vw, 92vw" width="930" height="743" alt="Мандарины на ветках в саду под Батуми" loading="lazy" decoding="async">
+          <img class="bt-sl__s" data-src="img/nc2-640.jpg" data-srcset="img/nc2-640.jpg 640w, img/nc2-1000.jpg 1000w" sizes="(min-width:1000px) 360px, (min-width:640px) 48vw, 92vw" width="1000" height="800" alt="Гостья срывает мандарины в саду" loading="lazy" decoding="async">
+        </div>
+        <span class="bt-chip bt-chip--len"><svg class="bt-s" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-clock"/></svg>ноябрь и декабрь</span>
+        <button class="bt-sl__nav bt-sl__nav--l" type="button" data-prev aria-label="Назад"><svg class="bt-s" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-arr"/></svg></button>
+        <button class="bt-sl__nav bt-sl__nav--r" type="button" data-next aria-label="Дальше"><svg class="bt-s" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-arr"/></svg></button>
+        <div class="bt-sl__dots" role="group" aria-label="Кадры"><button type="button" aria-label="Кадр 1"></button><button type="button" aria-label="Кадр 2"></button></div>
+      </div>
+      <div class="bt-card__b"><h3>Мандариновый тур</h3><p>Сбор мандаринов и пикник в саду</p>
+        <div class="bt-card__foot"><b>50 €</b><a class="bt-go bt-go--sm" href="#book" data-tour="mandarin">Записаться</a></div></div>
+    </article>
+
+    <article class="bt-card bt-glow bt-up is-x" id="tour-rafting-hot-springs" data-g="oneday" data-glow>
+      <div class="bt-sl bt-sl--card">
+        <div class="bt-sl__track">
+          <img class="bt-sl__s" src="img/t-rafting-hot-springs-640.jpg" srcset="img/t-rafting-hot-springs-640.jpg 640w, img/t-rafting-hot-springs-1000.jpg 1000w" sizes="(min-width:1000px) 360px, (min-width:640px) 48vw, 92vw" width="1000" height="800" alt="Группа в касках и жилетах на рафте посреди горной реки" loading="lazy" decoding="async">
+        </div>
+        <span class="bt-chip bt-chip--len"><svg class="bt-s" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-clock"/></svg>10 часов</span>
+      </div>
+      <div class="bt-card__b"><h3>Рафтинг и горячие источники</h3><p>Адреналин горной реки и отдых в горячих источниках</p>
+        <div class="bt-card__foot"><b>60 €</b><a class="bt-go bt-go--sm" href="#book" data-tour="rafting-hot-springs">Записаться</a></div></div>
+    </article>
+
+    <article class="bt-card bt-glow bt-up is-x" id="tour-wellness" data-g="oneday" data-glow style="--d:.06s">
+      <div class="bt-sl bt-sl--card">
+        <div class="bt-sl__track">
+          <img class="bt-sl__s" src="img/t-wellness-640.jpg" srcset="img/t-wellness-640.jpg 640w, img/t-wellness-1000.jpg 1000w" sizes="(min-width:1000px) 360px, (min-width:640px) 48vw, 92vw" width="1000" height="800" alt="Девушка в белом платье среди зелени парка" loading="lazy" decoding="async">
+        </div>
+        <span class="bt-chip bt-chip--len"><svg class="bt-s" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-clock"/></svg>5–6 часов</span>
+      </div>
+      <div class="bt-card__b"><h3>Оздоровительный тур</h3><p>Эвкалиптовые парки и магнитный пляж</p>
+        <div class="bt-card__foot"><b>от 55 €</b><a class="bt-go bt-go--sm" href="#book" data-tour="wellness">Записаться</a></div></div>
+    </article>
+
+    <article class="bt-card bt-glow bt-up is-x" id="tour-keda" data-g="oneday" data-glow style="--d:.12s">
+      <div class="bt-sl bt-sl--card">
+        <div class="bt-sl__track">
+          <img class="bt-sl__s" src="img/t-keda-640.jpg" srcset="img/t-keda-640.jpg 640w, img/t-keda-1000.jpg 1000w" sizes="(min-width:1000px) 360px, (min-width:640px) 48vw, 92vw" width="1000" height="800" alt="Деревянная арка в форме сердца на берегу реки" loading="lazy" decoding="async">
+        </div>
+        <span class="bt-chip bt-chip--len"><svg class="bt-s" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-clock"/></svg>6 часов</span>
+      </div>
+      <div class="bt-card__b"><h3>Кеда</h3><p>Водопад Медзибна и горная природа</p>
+        <div class="bt-card__foot"><b>от 65 €</b><a class="bt-go bt-go--sm" href="#book" data-tour="keda">Записаться</a></div></div>
+    </article>
+
+    <article class="bt-card bt-glow bt-up is-x" id="tour-okatse-martvili" data-g="oneday" data-glow>
+      <div class="bt-sl bt-sl--card">
+        <div class="bt-sl__track">
+          <img class="bt-sl__s" src="img/t-okatse-martvili-640.jpg" srcset="img/t-okatse-martvili-640.jpg 640w, img/t-okatse-martvili-1000.jpg 1000w" sizes="(min-width:1000px) 360px, (min-width:640px) 48vw, 92vw" width="1000" height="800" alt="Подсвеченный зал пещеры Прометея с мостками" loading="lazy" decoding="async">
+        </div>
+        <span class="bt-chip bt-chip--len"><svg class="bt-s" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-clock"/></svg>10 часов</span>
+      </div>
+      <div class="bt-card__b"><h3>Прометей, Окаце и Мартвили</h3><p>Пещера и два каньона за один день</p>
+        <div class="bt-card__foot"><b>55 €</b><a class="bt-go bt-go--sm" href="#book" data-tour="okatse-martvili">Записаться</a></div></div>
+    </article>
+
+    <article class="bt-card bt-glow bt-up is-x" id="tour-georgian-cuisine" data-g="oneday" data-glow style="--d:.06s">
+      <div class="bt-sl bt-sl--card">
+        <div class="bt-sl__track">
+          <img class="bt-sl__s" src="img/t-georgian-cuisine-640.jpg" srcset="img/t-georgian-cuisine-640.jpg 640w, img/t-georgian-cuisine-1000.jpg 1000w" sizes="(min-width:1000px) 360px, (min-width:640px) 48vw, 92vw" width="1000" height="800" alt="Хинкали достают из котла на костре" loading="lazy" decoding="async">
+        </div>
+        <span class="bt-chip bt-chip--len"><svg class="bt-s" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-clock"/></svg>7 часов</span>
+      </div>
+      <div class="bt-card__b"><h3>Секреты грузинской кухни</h3><p>Готовим хинкали или хачапури в грузинской семье</p>
+        <div class="bt-card__foot"><b>от 60 €</b><a class="bt-go bt-go--sm" href="#book" data-tour="georgian-cuisine">Записаться</a></div></div>
+    </article>
+
+    <article class="bt-card bt-glow bt-up is-x" id="tour-chirukhi" data-g="oneday" data-glow style="--d:.12s">
+      <div class="bt-sl bt-sl--card">
+        <div class="bt-sl__track">
+          <img class="bt-sl__s" src="img/t-chirukhi-640.jpg" srcset="img/t-chirukhi-640.jpg 640w, img/t-chirukhi-1000.jpg 1000w" sizes="(min-width:1000px) 360px, (min-width:640px) 48vw, 92vw" width="1000" height="800" alt="Мужчина сидит на гребне над горными хребтами Чирухи" loading="lazy" decoding="async">
+        </div>
+        <span class="bt-chip bt-chip--len"><svg class="bt-s" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-clock"/></svg>10 часов</span>
+      </div>
+      <div class="bt-card__b"><h3>Чирухи</h3><p>Драйв и полёт над горным хребтом</p>
+        <div class="bt-card__foot"><b>75 €</b><a class="bt-go bt-go--sm" href="#book" data-tour="chirukhi">Записаться</a></div></div>
+    </article>
+
+    <article class="bt-card bt-glow bt-up is-x" id="tour-prometheus-martvili" data-g="oneday" data-glow>
+      <div class="bt-sl bt-sl--card">
+        <div class="bt-sl__track">
+          <img class="bt-sl__s" src="img/t-prometheus-martvili-640.jpg" srcset="img/t-prometheus-martvili-640.jpg 640w, img/t-prometheus-martvili-1000.jpg 1000w" sizes="(min-width:1000px) 360px, (min-width:640px) 48vw, 92vw" width="1000" height="800" alt="Узкий Мартвильский каньон с зелёными стенами" loading="lazy" decoding="async">
+        </div>
+        <span class="bt-chip bt-chip--len"><svg class="bt-s" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-clock"/></svg>1 день</span>
+      </div>
+      <div class="bt-card__b"><h3>Пещера Прометея и Мартвильский каньон</h3><p>Пещера и каньон, лодки по желанию</p>
+        <div class="bt-card__foot"><b>50 €</b><a class="bt-go bt-go--sm" href="#book" data-tour="prometheus-martvili">Записаться</a></div></div>
+    </article>
+
+    <article class="bt-card bt-glow bt-up is-x" id="tour-green-lake" data-g="oneday" data-glow style="--d:.06s">
+      <div class="bt-sl bt-sl--card">
+        <div class="bt-sl__track">
+          <img class="bt-sl__s" src="img/t-green-lake-640.jpg" srcset="img/t-green-lake-640.jpg 640w, img/t-green-lake-1000.jpg 1000w" sizes="(min-width:1000px) 360px, (min-width:640px) 48vw, 92vw" width="1000" height="800" alt="Бирюзовое Зелёное озеро среди гор и елей" loading="lazy" decoding="async">
+        </div>
+        <span class="bt-chip bt-chip--len"><svg class="bt-s" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-clock"/></svg>10 часов</span>
+      </div>
+      <div class="bt-card__b"><h3>Зелёное озеро</h3><p>Горные ущелья Аджарии и пикник на природе</p>
+        <div class="bt-card__foot"><b>70 €</b><a class="bt-go bt-go--sm" href="#book" data-tour="green-lake">Записаться</a></div></div>
+    </article>
+
+    <article class="bt-card bt-glow bt-up is-x" id="tour-batumi-walking" data-g="oneday" data-glow style="--d:.12s">
+      <div class="bt-sl bt-sl--card">
+        <div class="bt-sl__track">
+          <img class="bt-sl__s" src="img/t-batumi-walking-640.jpg" srcset="img/t-batumi-walking-640.jpg 640w, img/t-batumi-walking-1000.jpg 1000w" sizes="(min-width:1000px) 360px, (min-width:640px) 48vw, 92vw" width="1000" height="800" alt="Колесо обозрения и скульптура «Али и Нино» в Батуми" loading="lazy" decoding="async">
+        </div>
+        <span class="bt-chip bt-chip--len"><svg class="bt-s" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-clock"/></svg>2,5 часа</span>
+      </div>
+      <div class="bt-card__b"><h3>Пеший тур по Батуми</h3><p>Исторический Батуми, архитектура</p>
+        <div class="bt-card__foot"><b>от 25 €</b><a class="bt-go bt-go--sm" href="#book" data-tour="batumi-walking">Записаться</a></div></div>
+    </article>
+
+    <article class="bt-card bt-glow bt-up is-x" id="tour-bakhmaro" data-g="oneday" data-glow>
+      <div class="bt-sl bt-sl--card">
+        <div class="bt-sl__track">
+          <img class="bt-sl__s" src="img/t-bakhmaro-640.jpg" srcset="img/t-bakhmaro-640.jpg 640w, img/t-bakhmaro-1000.jpg 1000w" sizes="(min-width:1000px) 360px, (min-width:640px) 48vw, 92vw" width="1000" height="800" alt="Гости тура на фоне полосатых от снега гор Бахмаро" loading="lazy" decoding="async">
+        </div>
+        <span class="bt-chip bt-chip--len"><svg class="bt-s" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-clock"/></svg>10 часов</span>
+      </div>
+      <div class="bt-card__b"><h3>Бахмаро</h3><p>Полосатые горы, облака и шашлыки</p>
+        <div class="bt-card__foot"><b>75 €</b><a class="bt-go bt-go--sm" href="#book" data-tour="bakhmaro">Записаться</a></div></div>
+    </article>
+
+    <article class="bt-card bt-glow bt-up is-x" id="tour-rtveli" data-g="oneday" data-glow style="--d:.06s">
+      <div class="bt-sl bt-sl--card">
+        <div class="bt-sl__track">
+          <img class="bt-sl__s" src="img/t-rtveli-640.jpg" srcset="img/t-rtveli-640.jpg 640w, img/t-rtveli-1000.jpg 1000w" sizes="(min-width:1000px) 360px, (min-width:640px) 48vw, 92vw" width="1000" height="800" alt="Гостья срезает гроздь винограда" loading="lazy" decoding="async">
+        </div>
+        <span class="bt-chip bt-chip--len"><svg class="bt-s" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-clock"/></svg>8 часов</span>
+      </div>
+      <div class="bt-card__b"><h3>Ртвели</h3><p>Сбор винограда и праздник грузинского вина</p>
+        <div class="bt-card__foot"><b>70 €</b><a class="bt-go bt-go--sm" href="#book" data-tour="rtveli">Записаться</a></div></div>
+    </article>
+
+    <article class="bt-card bt-glow bt-up is-x" id="tour-tea" data-g="oneday" data-glow style="--d:.12s">
+      <div class="bt-sl bt-sl--card">
+        <div class="bt-sl__track">
+          <img class="bt-sl__s" src="img/t-tea-640.jpg" srcset="img/t-tea-640.jpg 640w, img/t-tea-1000.jpg 1000w" sizes="(min-width:1000px) 360px, (min-width:640px) 48vw, 92vw" width="1000" height="800" alt="Сборщики чая в соломенных шляпах на плантации" loading="lazy" decoding="async">
+        </div>
+        <span class="bt-chip bt-chip--len"><svg class="bt-s" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-clock"/></svg>7 часов</span>
+      </div>
+      <div class="bt-card__b"><h3>Чайный тур</h3><p>Мастер-класс по сбору чая, плантации и 3 локальных производства</p>
+        <div class="bt-card__foot"><b>70 €</b><a class="bt-go bt-go--sm" href="#book" data-tour="tea">Записаться</a></div></div>
+    </article>
+  </div>
+  <div class="bt-tp__more"><button class="bt-go bt-go--ghost bt-tp__btn" type="button" data-more aria-expanded="false" aria-controls="cards-oneday" data-all="Показать все 18 туров" data-less="Свернуть"><span>Показать все 18 туров</span><svg class="bt-s" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button></div>
+  <p class="bt-per">Цена за человека. Цена «от» для группы от трёх человек, вдвоём или одному дороже.</p>
+</div>
+<div class="bt-tp" id="tp-multiday" role="tabpanel" aria-labelledby="tab-multiday" data-g="multiday">
+  <h3 class="bt-tp__h">Многодневные</h3>
+  <div class="bt-cards" id="cards-multiday">
+    <article class="bt-card bt-glow bt-up" id="tour-svaneti-2-days" data-g="multiday" data-glow>
+      <div class="bt-sl bt-sl--card">
+        <div class="bt-sl__track">
+          <img class="bt-sl__s" src="img/t-svaneti-2-days-640.jpg" srcset="img/t-svaneti-2-days-640.jpg 640w, img/t-svaneti-2-days-1000.jpg 1000w" sizes="(min-width:1000px) 360px, (min-width:640px) 48vw, 92vw" width="1000" height="800" alt="Четверо всадников на фоне заснеженной вершины в Сванетии" loading="lazy" decoding="async">
+        </div>
+        <span class="bt-chip bt-chip--len"><svg class="bt-s" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-clock"/></svg>2 дня</span>
+      </div>
+      <div class="bt-card__b"><h3>Сванети на 2 дня</h3><p>Сванские башни, ледники и гора Шхара (5201 м)</p>
+        <div class="bt-card__foot"><b>от 170 €</b><a class="bt-go bt-go--sm" href="#book" data-tour="svaneti-2-days">Записаться</a></div></div>
+    </article>
+
+    <article class="bt-card bt-glow bt-up" id="tour-racha-9-crosses-2-days" data-g="multiday" data-glow style="--d:.06s">
+      <div class="bt-sl bt-sl--card">
+        <div class="bt-sl__track">
+          <img class="bt-sl__s" src="img/t-racha-9-crosses-2-days-640.jpg" srcset="img/t-racha-9-crosses-2-days-640.jpg 640w, img/t-racha-9-crosses-2-days-1000.jpg 1000w" sizes="(min-width:1000px) 360px, (min-width:640px) 48vw, 92vw" width="1000" height="800" alt="Пара на смотровой площадке над озером и горами Рачи" loading="lazy" decoding="async">
+        </div>
+        <span class="bt-chip bt-chip--len"><svg class="bt-s" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-clock"/></svg>2 дня</span>
+      </div>
+      <div class="bt-card__b"><h3>Рача на 2 дня</h3><p>Хванчкара, горы Рачи и гора 9 крестов</p>
+        <div class="bt-card__foot"><b>от 150 €</b><a class="bt-go bt-go--sm" href="#book" data-tour="racha-9-crosses-2-days">Записаться</a></div></div>
+    </article>
+
+    <article class="bt-card bt-glow bt-up" id="tour-borjomi-2-days" data-g="multiday" data-glow style="--d:.12s">
+      <div class="bt-sl bt-sl--card">
+        <div class="bt-sl__track">
+          <img class="bt-sl__s" src="img/t-borjomi-2-days-640.jpg" srcset="img/t-borjomi-2-days-640.jpg 640w, img/t-borjomi-2-days-1000.jpg 1000w" sizes="(min-width:1000px) 360px, (min-width:640px) 48vw, 92vw" width="1000" height="800" alt="Замок Рабати и сад с зелёным лабиринтом" loading="lazy" decoding="async">
+        </div>
+        <span class="bt-chip bt-chip--len"><svg class="bt-s" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-clock"/></svg>2 дня</span>
+      </div>
+      <div class="bt-card__b"><h3>Боржоми на 2 дня</h3><p>Минеральные источники, замок Рабати и Зелёное озеро</p>
+        <div class="bt-card__foot"><b>от 170 €</b><a class="bt-go bt-go--sm" href="#book" data-tour="borjomi-2-days">Записаться</a></div></div>
+    </article>
+
+    <article class="bt-card bt-glow bt-up" id="tour-svaneti-racha-3-days" data-g="multiday" data-glow>
+      <div class="bt-sl bt-sl--card">
+        <div class="bt-sl__track">
+          <img class="bt-sl__s" src="img/t-svaneti-racha-3-days-640.jpg" srcset="img/t-svaneti-racha-3-days-640.jpg 640w, img/t-svaneti-racha-3-days-1000.jpg 1000w" sizes="(min-width:1000px) 360px, (min-width:640px) 48vw, 92vw" width="1000" height="800" alt="Заснеженные вершины Кавказа под облаками" loading="lazy" decoding="async">
+        </div>
+        <span class="bt-chip bt-chip--len"><svg class="bt-s" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-clock"/></svg>3 дня</span>
+      </div>
+      <div class="bt-card__b"><h3>Сванети и Рача на 3 дня</h3><p>От ледников Кавказа до вечерних деревень</p>
+        <div class="bt-card__foot"><b>от 240 €</b><a class="bt-go bt-go--sm" href="#book" data-tour="svaneti-racha-3-days">Записаться</a></div></div>
+    </article>
+
+    <article class="bt-card bt-glow bt-up" id="tour-svaneti-3-days" data-g="multiday" data-glow style="--d:.06s">
+      <div class="bt-sl bt-sl--card">
+        <div class="bt-sl__track">
+          <img class="bt-sl__s" src="img/t-svaneti-3-days-640.jpg" srcset="img/t-svaneti-3-days-640.jpg 640w, img/t-svaneti-3-days-1000.jpg 1000w" sizes="(min-width:1000px) 360px, (min-width:640px) 48vw, 92vw" width="1000" height="800" alt="Девушка сидит на склоне над сванским селом" loading="lazy" decoding="async">
+        </div>
+        <span class="bt-chip bt-chip--len"><svg class="bt-s" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-clock"/></svg>3 дня</span>
+      </div>
+      <div class="bt-card__b"><h3>Сванети на 3 дня</h3><p>Ледники Кавказа и древняя Сванетия</p>
+        <div class="bt-card__foot"><b>от 240 €</b><a class="bt-go bt-go--sm" href="#book" data-tour="svaneti-3-days">Записаться</a></div></div>
+    </article>
+
+    <article class="bt-card bt-glow bt-up" id="tour-racha-9-crosses-3-days" data-g="multiday" data-glow style="--d:.12s">
+      <div class="bt-sl bt-sl--card">
+        <div class="bt-sl__track">
+          <img class="bt-sl__s" src="img/t-racha-9-crosses-3-days-640.jpg" srcset="img/t-racha-9-crosses-3-days-640.jpg 640w, img/t-racha-9-crosses-3-days-1000.jpg 1000w" sizes="(min-width:1000px) 360px, (min-width:640px) 48vw, 92vw" width="1000" height="800" alt="Горная река в долине Рачи на фоне хребта" loading="lazy" decoding="async">
+        </div>
+        <span class="bt-chip bt-chip--len"><svg class="bt-s" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-clock"/></svg>3 дня</span>
+      </div>
+      <div class="bt-card__b"><h3>Рача 9 крестов на 3 дня</h3><p>Большое путешествие по Раче</p>
+        <div class="bt-card__foot"><b>от 240 €</b><a class="bt-go bt-go--sm" href="#book" data-tour="racha-9-crosses-3-days">Записаться</a></div></div>
+    </article>
+  </div>
+  <p class="bt-per">Цена при группе от 4 человек</p>
+</div>
+<div class="bt-tp" id="tp-package" role="tabpanel" aria-labelledby="tab-package" data-g="package">
+  <h3 class="bt-tp__h">Пакетные</h3>
+  <div class="bt-cards" id="cards-package">
+    <article class="bt-card bt-glow bt-up" id="tour-sunny-georgia" data-g="package" data-glow>
+      <div class="bt-sl bt-sl--card">
+        <div class="bt-sl__track">
+          <img class="bt-sl__s" src="img/t-sunny-georgia-640.jpg" srcset="img/t-sunny-georgia-640.jpg 640w, img/t-sunny-georgia-1000.jpg 1000w" sizes="(min-width:1000px) 360px, (min-width:640px) 48vw, 92vw" width="1000" height="800" alt="Горная река в лесистом ущелье под облаками" loading="lazy" decoding="async">
+        </div>
+        <span class="bt-chip bt-chip--len"><svg class="bt-s" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-clock"/></svg>8 дней · 7 ночей</span>
+      </div>
+      <div class="bt-card__b"><h3>Солнечная Грузия</h3><p>5 регионов от моря до Кавказских гор</p>
+        <div class="bt-card__foot"><b>от 840 €</b><a class="bt-go bt-go--sm" href="#book" data-tour="sunny-georgia">Записаться</a></div></div>
+    </article>
+
+    <article class="bt-card bt-glow bt-up" id="tour-cities-regions" data-g="package" data-glow style="--d:.06s">
+      <div class="bt-sl bt-sl--card">
+        <div class="bt-sl__track">
+          <img class="bt-sl__s" src="img/t-cities-regions-640.jpg" srcset="img/t-cities-regions-640.jpg 640w, img/t-cities-regions-1000.jpg 1000w" sizes="(min-width:1000px) 360px, (min-width:640px) 48vw, 92vw" width="1000" height="800" alt="Церковь Метехи на скале над Курой в Тбилиси" loading="lazy" decoding="async">
+        </div>
+        <span class="bt-chip bt-chip--len"><svg class="bt-s" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-clock"/></svg>8 дней · 7 ночей</span>
+      </div>
+      <div class="bt-card__b"><h3>Города и регионы Грузии</h3><p>30+ локаций, от которых захватывает дух</p>
+        <div class="bt-card__foot"><b>от 840 €</b><a class="bt-go bt-go--sm" href="#book" data-tour="cities-regions">Записаться</a></div></div>
+    </article>
+
+    <article class="bt-card bt-glow bt-up" id="tour-soul-of-georgia" data-g="package" data-glow style="--d:.12s">
+      <div class="bt-sl bt-sl--card">
+        <div class="bt-sl__track">
+          <img class="bt-sl__s" src="img/t-soul-of-georgia-640.jpg" srcset="img/t-soul-of-georgia-640.jpg 640w, img/t-soul-of-georgia-1000.jpg 1000w" sizes="(min-width:1000px) 360px, (min-width:640px) 48vw, 92vw" width="1000" height="800" alt="Монастырь на холме над слиянием двух рек" loading="lazy" decoding="async">
+        </div>
+        <span class="bt-chip bt-chip--len"><svg class="bt-s" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-clock"/></svg>8 дней · 7 ночей</span>
+      </div>
+      <div class="bt-card__b"><h3>Душа Грузии</h3><p>Самые значимые исторические места</p>
+        <div class="bt-card__foot"><b>от 840 €</b><a class="bt-go bt-go--sm" href="#book" data-tour="soul-of-georgia">Записаться</a></div></div>
+    </article>
+
+    <article class="bt-card bt-glow bt-up" id="tour-active-batumi" data-g="package" data-glow>
+      <div class="bt-sl bt-sl--card">
+        <div class="bt-sl__track">
+          <img class="bt-sl__s" src="img/t-active-batumi-640.jpg" srcset="img/t-active-batumi-640.jpg 640w, img/t-active-batumi-1000.jpg 1000w" sizes="(min-width:1000px) 360px, (min-width:640px) 48vw, 92vw" width="1000" height="800" alt="Кабина канатной дороги над городом в зелёном ущелье" loading="lazy" decoding="async">
+        </div>
+        <span class="bt-chip bt-chip--len"><svg class="bt-s" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-clock"/></svg>5 дней · 4 ночи</span>
+      </div>
+      <div class="bt-card__b"><h3>Грузия в активном ритме из Батуми</h3><p>Активный маршрут по главным локациям Грузии</p>
+        <div class="bt-card__foot"><b>от 650 €</b><a class="bt-go bt-go--sm" href="#book" data-tour="active-batumi">Записаться</a></div></div>
+    </article>
+
+    <article class="bt-card bt-glow bt-up" id="tour-active-tbilisi" data-g="package" data-glow style="--d:.06s">
+      <div class="bt-sl bt-sl--card">
+        <div class="bt-sl__track">
+          <img class="bt-sl__s" src="img/t-active-tbilisi-640.jpg" srcset="img/t-active-tbilisi-640.jpg 640w, img/t-active-tbilisi-1000.jpg 1000w" sizes="(min-width:1000px) 360px, (min-width:640px) 48vw, 92vw" width="1000" height="800" alt="Пещерный город, вырубленный в скале" loading="lazy" decoding="async">
+        </div>
+        <span class="bt-chip bt-chip--len"><svg class="bt-s" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-clock"/></svg>5 дней · 4 ночи</span>
+      </div>
+      <div class="bt-card__b"><h3>Грузия в активном ритме из Тбилиси</h3><p>Активный маршрут по главным локациям Грузии</p>
+        <div class="bt-card__foot"><b>от 650 €</b><a class="bt-go bt-go--sm" href="#book" data-tour="active-tbilisi">Записаться</a></div></div>
+    </article>
+
+    <article class="bt-card bt-glow bt-up" id="tour-grand-georgia" data-g="package" data-glow style="--d:.12s">
+      <div class="bt-sl bt-sl--card">
+        <div class="bt-sl__track">
+          <img class="bt-sl__s" src="img/t-grand-georgia-640.jpg" srcset="img/t-grand-georgia-640.jpg 640w, img/t-grand-georgia-1000.jpg 1000w" sizes="(min-width:1000px) 360px, (min-width:640px) 48vw, 92vw" width="1000" height="800" alt="Компания с гитарой на склоне перед ледником" loading="lazy" decoding="async">
+        </div>
+        <span class="bt-chip bt-chip--len"><svg class="bt-s" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-clock"/></svg>10 дней · 9 ночей</span>
+      </div>
+      <div class="bt-card__b"><h3>Большое путешествие по Грузии</h3><p>50+ локаций, главные места Грузии</p>
+        <div class="bt-card__foot"><b>от 1250 €</b><a class="bt-go bt-go--sm" href="#book" data-tour="grand-georgia">Записаться</a></div></div>
+    </article>
+  </div>
+  <p class="bt-per">Цена при двухместном размещении, одноместное +200 €</p>
+</div>
+<div class="bt-tp" id="tp-retreat" role="tabpanel" aria-labelledby="tab-retreat" data-g="retreat">
+  <h3 class="bt-tp__h">Ретрит-туры</h3>
+  <div class="bt-ret">
+    <i class="bt-ret__glow" aria-hidden="true"></i>
+    <div class="bt-ret__ic" aria-hidden="true"><svg class="bt-s bt-lot" viewBox="0 0 64 64" aria-hidden="true"><path d="M32 46C20 49 10 46 4 38C14 34 25 38 32 46Z"/><path d="M32 46C44 49 54 46 60 38C50 34 39 38 32 46Z"/><path d="M32 46C19 44 10 35 9 22C21 24 30 33 32 46Z"/><path d="M32 46C45 44 54 35 55 22C43 24 34 33 32 46Z"/><path d="M32 46C26 34 26 20 32 8C38 20 38 34 32 46Z"/><path d="M14 54h36"/></svg></div>
+    <span class="bt-ret__chip">Скоро</span>
+    <h3>Ретрит-туры уже в пути</h3>
+    <p>Мы готовим особенные ретрит-программы с йогой, восстановлением и заботой о себе. Совсем скоро они появятся здесь.</p>
+    <a class="bt-go bt-go--pulse" href="https://wa.me/995591927262?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5!%20%D0%A5%D0%BE%D1%87%D1%83%20%D0%BF%D0%BE%D0%B4%D1%80%D0%BE%D0%B1%D0%BD%D0%B5%D0%B5%20%D1%83%D0%B7%D0%BD%D0%B0%D1%82%D1%8C%20%D0%BE%20%D1%80%D0%B5%D1%82%D1%80%D0%B8%D1%82-%D1%82%D1%83%D1%80%D0%B0%D1%85." target="_blank" rel="noopener"><svg class="bt-f" aria-hidden="true"><use href="#i-wa"/></svg>Узнать первым</a>
+  </div>
+</div>
+<script>
+(function () {
+  'use strict';
+  var D = document, W = window;
+  var REDUCED = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var sec = D.getElementById('tours'), bar = D.getElementById('btTabs');
+  if (!sec || !bar) return;
+  var tabs = [].slice.call(bar.querySelectorAll('[role="tab"]'));
+  var panels = [].slice.call(sec.querySelectorAll('.bt-tp'));
+  var cur = '';
+  tabs.forEach(function (t) { if (t.classList.contains('is-act')) cur = t.getAttribute('data-g'); });
+  function tabOf(g) { return tabs.filter(function (t) { return t.getAttribute('data-g') === g; })[0]; }
+  function panelOf(g) { return panels.filter(function (p) { return p.getAttribute('data-g') === g; })[0]; }
+  function cardsOf(p) { return [].slice.call(p.querySelectorAll('.bt-card')); }
+  function shown(p) { return cardsOf(p).filter(function (c) { return c.offsetParent !== null; }); }
+  function jump(y) { W.scrollTo({ top: Math.max(0, y), behavior: REDUCED ? 'auto' : 'smooth' }); }
+
+
+  function edges() {
+    var max = bar.scrollWidth - bar.clientWidth;
+    bar.classList.toggle('has-l', bar.scrollLeft > 4);
+    bar.classList.toggle('has-r', bar.scrollLeft < max - 4);
+  }
+  function seeTab(tab, smooth) {
+    var to = tab.offsetLeft - (bar.clientWidth - tab.offsetWidth) / 2;
+    bar.scrollTo({ left: Math.max(0, to), behavior: smooth && !REDUCED ? 'smooth' : 'auto' });
+  }
+  bar.addEventListener('scroll', edges, { passive: true });
+  addEventListener('resize', edges);
+
+
+  function reveal(cards, step) {
+    if (!cards.length) return;
+    if (REDUCED) { cards.forEach(function (c) { c.classList.add('is-in'); }); return; }
+    cards.forEach(function (c) { c.style.transition = 'none'; c.classList.remove('is-in'); });
+    void bar.offsetWidth;
+    cards.forEach(function (c, k) { c.style.removeProperty('transition'); c.style.setProperty('--d', (k * step).toFixed(2) + 's'); });
+    requestAnimationFrame(function () { cards.forEach(function (c) { c.classList.add('is-in'); }); });
+    clearTimeout(cards[0]._rt);
+    cards[0]._rt = setTimeout(function () {
+      cards.forEach(function (c) {
+        var k = cardsOf(c.closest('.bt-tp')).indexOf(c);
+        c.style.setProperty('--d', ['0s', '.06s', '.12s'][Math.max(0, k) % 3]);
+      });
+    }, cards.length * step * 1000 + 1300);
+  }
+
+  function show(g, o) {
+    o = o || {};
+    var tab = tabOf(g); if (!tab) return false;
+    if (g !== cur) {
+      cur = g;
+      tabs.forEach(function (t) {
+        var on = t === tab;
+        t.classList.toggle('is-act', on); t.setAttribute('aria-selected', on ? 'true' : 'false'); t.tabIndex = on ? 0 : -1;
+      });
+      panels.forEach(function (p) { p.classList.toggle('is-act', p.getAttribute('data-g') === g); });
+      var p = panelOf(g);
+      if (!o.instant && !REDUCED) {
+        p.classList.remove('is-swap'); void p.offsetWidth; p.classList.add('is-swap');
+        clearTimeout(p._st); p._st = setTimeout(function () { p.classList.remove('is-swap'); }, 900);
+        reveal(shown(p), .06);
+      } else { cardsOf(p).forEach(function (c) { c.classList.add('is-in'); }); }
+    }
+    seeTab(tab, !o.instant);
+    return true;
+  }
+  tabs.forEach(function (t) { t.addEventListener('click', function () { show(t.getAttribute('data-g')); }); });
+  bar.addEventListener('keydown', function (e) {
+    var i = tabs.indexOf(D.activeElement); if (i < 0) return;
+    var n = e.key === 'ArrowRight' ? (i + 1) % tabs.length : e.key === 'ArrowLeft' ? (i - 1 + tabs.length) % tabs.length : e.key === 'Home' ? 0 : e.key === 'End' ? tabs.length - 1 : -1;
+    if (n < 0) return;
+    e.preventDefault(); tabs[n].focus({ preventScroll: true }); show(tabs[n].getAttribute('data-g'));
+  });
+
+
+  function glide(grid, h0, h1, done) {
+    clearTimeout(grid._gt);
+    grid.style.transition = 'none'; grid.style.height = h0 + 'px'; grid.style.overflow = 'hidden';
+    void grid.offsetHeight;
+    grid.style.transition = 'height .75s cubic-bezier(.2,.7,.2,1)'; grid.style.height = h1 + 'px';
+    grid._gt = setTimeout(function () {
+      grid.style.removeProperty('height'); grid.style.removeProperty('overflow'); grid.style.removeProperty('transition');
+      if (done) done();
+    }, 820);
+  }
+  function label(p, open) {
+    var b = p.querySelector('[data-more]'); if (!b) return;
+    b.setAttribute('aria-expanded', open ? 'true' : 'false');
+    b.firstElementChild.textContent = b.getAttribute(open ? 'data-less' : 'data-all');
+  }
+  function expand(p, animate) {
+    if (p.classList.contains('is-open')) return;
+    var grid = p.querySelector('.bt-cards'), h0 = grid.offsetHeight;
+    p.classList.add('is-open'); label(p, true);
+    var extra = [].slice.call(grid.querySelectorAll('.is-x'));
+    if (!animate || REDUCED) { extra.forEach(function (c) { c.classList.add('is-in'); }); return; }
+    glide(grid, h0, grid.offsetHeight);
+    reveal(extra, .07);
+  }
+  function collapse(p) {
+    if (!p.classList.contains('is-open')) return;
+    var grid = p.querySelector('.bt-cards'), h1 = grid.offsetHeight;
+    label(p, false);
+    p.classList.remove('is-open');
+    var h0 = grid.offsetHeight;
+    if (REDUCED) return;
+    p.classList.add('is-open');
+    glide(grid, h1, h0, function () { p.classList.remove('is-open'); });
+    var top = grid.getBoundingClientRect().top + W.scrollY;
+    if (top + h0 + 90 < W.scrollY + 120 || top > W.scrollY + W.innerHeight) jump(top + h0 - W.innerHeight * .55);
+  }
+  [].slice.call(sec.querySelectorAll('[data-more]')).forEach(function (b) {
+    b.addEventListener('click', function () {
+      var p = b.closest('.bt-tp');
+      if (p._busy) return;
+      p._busy = true; setTimeout(function () { p._busy = false; }, 850);
+      if (p.classList.contains('is-open')) collapse(p); else expand(p, true);
+    });
+  });
+
+
+  W.btShowTour = function (id) {
+    var c = D.getElementById('tour-' + id); if (!c) return false;
+    show(c.getAttribute('data-g'), { instant: true });
+    var p = c.closest('.bt-tp');
+    if (c.classList.contains('is-x')) expand(p, false);
+    cardsOf(p).forEach(function (x) { x.classList.add('is-in'); });
+    jump(c.getBoundingClientRect().top + W.scrollY - 104);
+    c.classList.add('is-hot', 'is-flash');
+    clearTimeout(c._ft);
+    c._ft = setTimeout(function () { c.classList.remove('is-hot', 'is-flash'); }, 2000);
+    return true;
+  };
+  W.btShowTab = function (group) {
+    if (!show(group)) return false;
+    jump(sec.getBoundingClientRect().top + W.scrollY - (W.innerWidth >= 1000 ? 96 : 84));
+    return true;
+  };
+
+  edges(); seeTab(tabOf(cur) || tabs[0], false);
+  addEventListener('load', function () {
+    var m = /^#tour-(.+)$/.exec(location.hash);
+    if (m) setTimeout(function () { W.btShowTour(decodeURIComponent(m[1])); }, 250);
+  });
+})();
+</script>
+
     <div class="bt-more bt-glow bt-up" data-glow>
       <svg class="bt-s" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-plan"/></svg>
       <p>Всего больше 30 туров, есть Сванетия, Рача и Мартвили.</p>
@@ -1039,59 +1725,96 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
 
 <section class="bt-sec bt-tex bt-geo" id="map" aria-labelledby="geoH">
   <div class="bt-shell">
-    <div class="bt-geo__grid">
+    <div class="bt-geo__grid is-a">
       <div class="bt-geo__head">
         <p class="bt-pill bt-up">Аджария и вся Грузия</p>
         <h2 id="geoH" class="bt-up" style="--d:.06s">Более <em id="btGeoN">30</em> туров</h2>
         <p class="bt-geo__lead bt-up" style="--d:.12s">Из Батуми на день, на 2–3 дня и в большие путешествия на 5–10 дней.</p>
       </div>
-      <div class="bt-geo__map bt-up" id="btGeo" style="--d:.1s">
+      <div class="bt-geo__mapcol bt-up" style="--d:.1s">
+        <div class="bt-geo__switch" role="group" aria-label="Вид карты">
+          <button type="button" data-view="a" aria-pressed="true">Аджария</button>
+          <button type="button" data-view="w" aria-pressed="false">Вся Грузия</button>
+        </div>
+        <div class="bt-geo__map" id="btGeo">
         <svg class="bt-geo__svg" viewBox="0 0 800 520" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false">
           <defs>
-            <clipPath id="geoAdj"><path d="M92.3 368.3Q95.4 358.4 98.5 346.9Q101.6 335.4 112.3 323Q123.1 310.6 127.7 299.5Q132.3 288.4 136.9 278.1Q141.6 267.8 152.3 269Q163.1 270.3 172.3 260.8Q181.6 251.3 184.7 242.3Q187.7 233.2 193.9 220.8Q200 208.5 209.3 192.8Q218.5 177.2 224.7 154.5Q230.8 131.8 227.7 98.9Q224.7 65.9 250.8 72.1Q277 78.3 301.6 88.6Q326.2 98.9 347.8 109.2Q369.3 119.5 393.9 125.7Q418.5 131.8 443.2 136Q467.8 140.1 495.5 144.2Q523.2 148.3 550.9 152.4Q578.6 156.6 606.3 162.7Q634 168.9 655.5 183.3Q677.1 197.8 695.5 218.4Q714 239 726.3 263.7Q738.6 288.4 732.4 313.1Q726.3 337.8 710.9 362.6Q695.5 387.3 670.9 401.7Q646.3 416.1 618.6 424.4Q590.9 432.6 563.2 436.7Q535.5 440.8 507.8 442.9Q480.1 445 452.4 440.8Q424.7 436.7 400.1 426.4Q375.5 416.1 357 405.8Q338.5 395.5 323.1 407.9Q307.8 420.2 286.2 432.6Q264.7 445 243.1 442.9Q221.6 440.8 203.1 430.5Q184.7 420.2 163.1 407.9Q141.6 395.5 115.4 386.9Q89.2 378.2 92.3 368.3Z"/></clipPath>
-            <linearGradient id="geoLand" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFFDF4"/><stop offset="1" stop-color="#E6E0BF"/></linearGradient>
+            <linearGradient id="geoCream" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFFCF0"/><stop offset="1" stop-color="#E8E1C1"/></linearGradient>
+            <linearGradient id="geoWarm" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FCEBB8"/><stop offset="1" stop-color="#F1D78E"/></linearGradient>
+            <clipPath id="geoClipG"><path d="M34.5 54C42.1 45.9 50.8 29 61.3 25.5C73.3 21.5 93.8 26 105.9 30C119.7 34.6 136.8 50.4 150.5 55.5C162.5 59.9 182.6 59.8 195 63C214.3 67.9 242.2 81.4 261.9 84C274.5 85.7 293.7 77.8 306.5 78C319.3 78.2 339.8 79.4 351.1 85.5C364.6 92.8 377 115 390.1 123C399.8 129 418.5 129.2 429.1 133.5C437.6 136.9 449.5 144.6 456.9 150C463.8 154.9 471.3 166.7 479.2 169.5C486.7 172.2 499.6 170.4 507.1 168C517.4 164.7 530.1 152.8 540.5 150C551.2 147.1 568.6 146.9 579.5 148.5C589.5 149.9 603.8 156.3 613 160.5C624.4 165.7 640.7 176 652 181.5C658.1 184.5 672.8 183.8 674.3 190.5C676.9 202.5 658.4 221.1 663.1 232.5C668.2 244.7 690.8 251.2 702.1 258C709.8 262.6 721.7 269.5 730 273C736 275.5 750.2 272.8 752.3 279C756.3 290.8 742.8 310.7 746.7 322.5C752 338.6 777.4 354.3 782.4 370.5C785.2 379.5 780.5 400.1 771.2 402C757.2 404.9 738.5 385.6 724.4 382.5C716.7 380.8 703.9 388.5 696.6 385.5C686.6 381.5 678 365.2 668.7 360C656.4 353.1 635.9 342.1 621.9 343.5C611.3 344.5 601.6 361.4 592.9 367.5C587 371.6 577.5 377.3 570.6 379.5C562.4 382.1 549.2 384 540.5 384C528.8 384 510.9 377.9 499.3 379.5C485.1 381.4 465.5 393.3 451.4 396C442.7 397.6 428.9 396.1 420.2 394.5C412.3 393.1 399.5 390.7 393.4 385.5C382.4 376.1 371.3 356.3 362.2 345C357.7 339.3 352 328.8 345.5 325.5C339.8 322.7 328.4 322 323.2 325.5C317.8 329.1 320.6 344.9 314.3 346.5C303.6 349.2 287.2 339.5 276.4 337.5C269.2 336.1 257.9 332.7 250.8 334.5C244.9 336 240.1 348 234 348C225.3 348 214.1 338.3 206.2 334.5C208.5 332.4 210.3 328.3 211.8 325.5C213.3 322.5 214.5 318 216.2 315C218.6 310.8 222.7 305.7 225.1 301.5C227.1 298 230.1 293.4 230.7 289.5C231.5 284.6 230 277.9 229.6 273C229.3 268.9 229.7 263.4 228.5 259.5C226.6 253.8 221.8 247.1 219.6 241.5C216.8 234.5 214.2 224.7 211.8 217.5C210.2 213 207.3 207.2 206.2 202.5C204 193.6 203.1 181.3 200.6 172.5C198.7 165.9 196.2 156.6 191.7 151.5C185.8 144.9 173.8 140.8 167.2 135C160.4 129 154.4 117.9 147.1 112.5C140.7 107.7 130.1 104.9 122.6 102C116 99.5 107 96.7 100.3 94.5C92 91.8 79.7 90.4 72.4 85.5C65.8 81 61.9 69.6 55.7 64.5C50.3 60 40.2 58.3 34.5 54Z"/></clipPath>
+            <clipPath id="geoClipP"><path d="M229.6 277.5C234 278.4 240.9 279.3 245.2 280.5C251.6 282.3 260.9 286.9 267.5 288C273.7 289 283.5 287.3 289.8 288C295.6 288.6 304.8 289.6 309.8 292.5C314.7 295.4 321.1 302.2 323.2 307.5C325.1 312.2 323 320.4 323.2 325.5C323.6 337.4 324.8 355.6 325.4 367.5L325.4 412.5L100.3 412.5L100.3 262.5Z"/></clipPath>
           </defs>
-          <rect class="bt-geo__sea" width="800" height="520"/>
-          <g class="bt-geo__waves"><path d="M28 62c8-7 16-7 24 0s16 7 24 0 16-7 24 0"/><path d="M96 128c8-7 16-7 24 0s16 7 24 0 16-7 24 0"/><path d="M22 214c8-7 16-7 24 0s16 7 24 0 16-7 24 0"/><path d="M40 318c8-7 16-7 24 0s16 7 24 0"/><path d="M14 398c8-7 16-7 24 0s16 7 24 0"/></g>
-          <path class="bt-geo__land" d="M229.3 -28.8Q227.7 0 226.2 33Q224.7 65.9 227.7 98.9Q230.8 131.8 224.7 154.5Q218.5 177.2 209.3 192.8Q200 208.5 193.9 220.8Q187.7 233.2 184.7 242.3Q181.6 251.3 172.3 260.8Q163.1 270.3 152.3 269Q141.6 267.8 136.9 278.1Q132.3 288.4 127.7 299.5Q123.1 310.6 112.3 323Q101.6 335.4 98.5 346.9Q95.4 358.4 92.3 368.3Q89.2 378.2 75.4 399.2Q61.6 420.2 43.1 440.8Q24.6 461.4 0 482L-40 520V640H900V-120Z"/>
-          <path class="bt-geo__adj" d="M92.3 368.3Q95.4 358.4 98.5 346.9Q101.6 335.4 112.3 323Q123.1 310.6 127.7 299.5Q132.3 288.4 136.9 278.1Q141.6 267.8 152.3 269Q163.1 270.3 172.3 260.8Q181.6 251.3 184.7 242.3Q187.7 233.2 193.9 220.8Q200 208.5 209.3 192.8Q218.5 177.2 224.7 154.5Q230.8 131.8 227.7 98.9Q224.7 65.9 250.8 72.1Q277 78.3 301.6 88.6Q326.2 98.9 347.8 109.2Q369.3 119.5 393.9 125.7Q418.5 131.8 443.2 136Q467.8 140.1 495.5 144.2Q523.2 148.3 550.9 152.4Q578.6 156.6 606.3 162.7Q634 168.9 655.5 183.3Q677.1 197.8 695.5 218.4Q714 239 726.3 263.7Q738.6 288.4 732.4 313.1Q726.3 337.8 710.9 362.6Q695.5 387.3 670.9 401.7Q646.3 416.1 618.6 424.4Q590.9 432.6 563.2 436.7Q535.5 440.8 507.8 442.9Q480.1 445 452.4 440.8Q424.7 436.7 400.1 426.4Q375.5 416.1 357 405.8Q338.5 395.5 323.1 407.9Q307.8 420.2 286.2 432.6Q264.7 445 243.1 442.9Q221.6 440.8 203.1 430.5Q184.7 420.2 163.1 407.9Q141.6 395.5 115.4 386.9Q89.2 378.2 92.3 368.3Z"/>
-          <g class="bt-geo__topo" clip-path="url(#geoAdj)"><ellipse cx="575" cy="315" rx="150" ry="78"/><ellipse cx="575" cy="315" rx="108" ry="54"/><ellipse cx="575" cy="315" rx="66" ry="31"/><ellipse cx="578" cy="315" rx="28" ry="12"/><ellipse cx="410" cy="218" rx="112" ry="52" transform="rotate(8 410 218)"/><ellipse cx="410" cy="218" rx="72" ry="31" transform="rotate(8 410 218)"/><ellipse cx="412" cy="218" rx="34" ry="13" transform="rotate(8 410 218)"/><ellipse cx="372" cy="392" rx="92" ry="36" transform="rotate(-6 372 392)"/><ellipse cx="372" cy="392" rx="52" ry="18" transform="rotate(-6 372 392)"/><ellipse cx="640" cy="214" rx="62" ry="26" transform="rotate(24 640 214)"/></g>
-          <path class="bt-geo__riv" pathLength="1" d="M658.6 267.8Q562 280.2 522.9 284.3Q483.8 288.4 441.9 296.6Q400.1 304.9 367.1 311.1Q334.2 317.2 308.1 329.6Q281.9 342 257.9 348.1Q233.9 354.3 210.8 358.4L187.7 362.6"/>
-          <path class="bt-geo__riv" pathLength="1" d="M209.3 432.6Q197 395.5 190.8 379Q184.7 362.6 172.3 350.2Q160 337.8 147.7 327.5Q135.4 317.2 129.3 313.9L123.1 310.6"/>
-          <path class="bt-geo__edge" pathLength="1" d="M92.3 368.3Q95.4 358.4 98.5 346.9Q101.6 335.4 112.3 323Q123.1 310.6 127.7 299.5Q132.3 288.4 136.9 278.1Q141.6 267.8 152.3 269Q163.1 270.3 172.3 260.8Q181.6 251.3 184.7 242.3Q187.7 233.2 193.9 220.8Q200 208.5 209.3 192.8Q218.5 177.2 224.7 154.5Q230.8 131.8 227.7 98.9Q224.7 65.9 250.8 72.1Q277 78.3 301.6 88.6Q326.2 98.9 347.8 109.2Q369.3 119.5 393.9 125.7Q418.5 131.8 443.2 136Q467.8 140.1 495.5 144.2Q523.2 148.3 550.9 152.4Q578.6 156.6 606.3 162.7Q634 168.9 655.5 183.3Q677.1 197.8 695.5 218.4Q714 239 726.3 263.7Q738.6 288.4 732.4 313.1Q726.3 337.8 710.9 362.6Q695.5 387.3 670.9 401.7Q646.3 416.1 618.6 424.4Q590.9 432.6 563.2 436.7Q535.5 440.8 507.8 442.9Q480.1 445 452.4 440.8Q424.7 436.7 400.1 426.4Q375.5 416.1 357 405.8Q338.5 395.5 323.1 407.9Q307.8 420.2 286.2 432.6Q264.7 445 243.1 442.9Q221.6 440.8 203.1 430.5Q184.7 420.2 163.1 407.9Q141.6 395.5 115.4 386.9Q89.2 378.2 92.3 368.3Z"/>
-          <g class="bt-geo__lines"></g>
-          <text class="is-sea" transform="translate(96 150) rotate(-76)" text-anchor="middle">Чёрное море</text>
-          <text x="436" y="496" text-anchor="middle">Турция</text>
-          <text x="668" y="62" text-anchor="middle">Гурия</text>
+          <g class="bt-geo__zoom">
+            <g class="bt-geo__waves bt-geo__waves--w"><path d="M26 110q3.8 -3.2 7.7 0q3.8 3.2 7.7 0q3.8 -3.2 7.7 0q3.8 3.2 7.7 0q3.8 -3.2 7.7 0q3.8 3.2 7.7 0"/><path d="M18 196q3.7 -3.2 7.3 0q3.7 3.2 7.3 0q3.7 -3.2 7.3 0q3.7 3.2 7.3 0q3.7 -3.2 7.3 0q3.7 3.2 7.3 0"/><path d="M26 388q3.7 -3.2 7.3 0q3.7 3.2 7.3 0q3.7 -3.2 7.3 0q3.7 3.2 7.3 0q3.7 -3.2 7.3 0q3.7 3.2 7.3 0"/></g>
+            <g class="bt-geo__waves bt-geo__waves--a"><path d="M186.1 313.5q0.8 -3.2 1.7 0q0.8 3.2 1.7 0q0.8 -3.2 1.7 0q0.8 3.2 1.7 0q0.8 -3.2 1.7 0q0.8 3.2 1.7 0"/><path d="M193.9 295.5q0.8 -3.2 1.5 0q0.8 3.2 1.5 0q0.8 -3.2 1.5 0q0.8 3.2 1.5 0q0.8 -3.2 1.5 0q0.8 3.2 1.5 0"/><path d="M200.6 259.5q0.8 -3.2 1.5 0q0.8 3.2 1.5 0q0.8 -3.2 1.5 0q0.8 3.2 1.5 0q0.8 -3.2 1.5 0q0.8 3.2 1.5 0"/></g>
+            <path class="bt-geo__halo" d="M-55.7 412.5C-22.3 412.5 22.6 417.2 55.7 412.5C80.2 409 111.3 395.9 133.7 385.5C148.4 378.7 165.1 364.8 178.3 355.5C186.9 349.5 198.4 341.5 206.2 334.5C208.5 332.4 210.3 328.3 211.8 325.5C213.3 322.5 214.5 318 216.2 315C218.6 310.8 222.7 305.7 225.1 301.5C227.1 298 230.1 293.4 230.7 289.5C231.5 284.6 230 277.9 229.6 273C229.3 268.9 229.7 263.4 228.5 259.5C226.6 253.8 221.8 247.1 219.6 241.5C216.8 234.5 214.2 224.7 211.8 217.5C210.2 213 207.3 207.2 206.2 202.5C204 193.6 203.1 181.3 200.6 172.5C198.7 165.9 196.2 156.6 191.7 151.5C185.8 144.9 173.8 140.8 167.2 135C160.4 129 154.4 117.9 147.1 112.5C140.7 107.7 130.1 104.9 122.6 102C116 99.5 107 96.7 100.3 94.5C92 91.8 79.7 90.4 72.4 85.5C65.8 81 61.9 69.6 55.7 64.5C50.3 60 40.2 58.3 34.5 54C23.3 45.6 10.4 32 0 22.5C-16.7 7.2 -39 -13.2 -55.7 -28.5L-55.7 -260L1100 -260L1100 900L-55.7 900Z"/>
+            <path class="bt-geo__halo2" d="M-55.7 412.5C-22.3 412.5 22.6 417.2 55.7 412.5C80.2 409 111.3 395.9 133.7 385.5C148.4 378.7 165.1 364.8 178.3 355.5C186.9 349.5 198.4 341.5 206.2 334.5C208.5 332.4 210.3 328.3 211.8 325.5C213.3 322.5 214.5 318 216.2 315C218.6 310.8 222.7 305.7 225.1 301.5C227.1 298 230.1 293.4 230.7 289.5C231.5 284.6 230 277.9 229.6 273C229.3 268.9 229.7 263.4 228.5 259.5C226.6 253.8 221.8 247.1 219.6 241.5C216.8 234.5 214.2 224.7 211.8 217.5C210.2 213 207.3 207.2 206.2 202.5C204 193.6 203.1 181.3 200.6 172.5C198.7 165.9 196.2 156.6 191.7 151.5C185.8 144.9 173.8 140.8 167.2 135C160.4 129 154.4 117.9 147.1 112.5C140.7 107.7 130.1 104.9 122.6 102C116 99.5 107 96.7 100.3 94.5C92 91.8 79.7 90.4 72.4 85.5C65.8 81 61.9 69.6 55.7 64.5C50.3 60 40.2 58.3 34.5 54C23.3 45.6 10.4 32 0 22.5C-16.7 7.2 -39 -13.2 -55.7 -28.5L-55.7 -260L1100 -260L1100 900L-55.7 900Z"/>
+            <path class="bt-geo__land" d="M-55.7 412.5C-22.3 412.5 22.6 417.2 55.7 412.5C80.2 409 111.3 395.9 133.7 385.5C148.4 378.7 165.1 364.8 178.3 355.5C186.9 349.5 198.4 341.5 206.2 334.5C208.5 332.4 210.3 328.3 211.8 325.5C213.3 322.5 214.5 318 216.2 315C218.6 310.8 222.7 305.7 225.1 301.5C227.1 298 230.1 293.4 230.7 289.5C231.5 284.6 230 277.9 229.6 273C229.3 268.9 229.7 263.4 228.5 259.5C226.6 253.8 221.8 247.1 219.6 241.5C216.8 234.5 214.2 224.7 211.8 217.5C210.2 213 207.3 207.2 206.2 202.5C204 193.6 203.1 181.3 200.6 172.5C198.7 165.9 196.2 156.6 191.7 151.5C185.8 144.9 173.8 140.8 167.2 135C160.4 129 154.4 117.9 147.1 112.5C140.7 107.7 130.1 104.9 122.6 102C116 99.5 107 96.7 100.3 94.5C92 91.8 79.7 90.4 72.4 85.5C65.8 81 61.9 69.6 55.7 64.5C50.3 60 40.2 58.3 34.5 54C23.3 45.6 10.4 32 0 22.5C-16.7 7.2 -39 -13.2 -55.7 -28.5L-55.7 -260L1100 -260L1100 900L-55.7 900Z"/>
+            <path class="bt-geo__ge" d="M34.5 54C42.1 45.9 50.8 29 61.3 25.5C73.3 21.5 93.8 26 105.9 30C119.7 34.6 136.8 50.4 150.5 55.5C162.5 59.9 182.6 59.8 195 63C214.3 67.9 242.2 81.4 261.9 84C274.5 85.7 293.7 77.8 306.5 78C319.3 78.2 339.8 79.4 351.1 85.5C364.6 92.8 377 115 390.1 123C399.8 129 418.5 129.2 429.1 133.5C437.6 136.9 449.5 144.6 456.9 150C463.8 154.9 471.3 166.7 479.2 169.5C486.7 172.2 499.6 170.4 507.1 168C517.4 164.7 530.1 152.8 540.5 150C551.2 147.1 568.6 146.9 579.5 148.5C589.5 149.9 603.8 156.3 613 160.5C624.4 165.7 640.7 176 652 181.5C658.1 184.5 672.8 183.8 674.3 190.5C676.9 202.5 658.4 221.1 663.1 232.5C668.2 244.7 690.8 251.2 702.1 258C709.8 262.6 721.7 269.5 730 273C736 275.5 750.2 272.8 752.3 279C756.3 290.8 742.8 310.7 746.7 322.5C752 338.6 777.4 354.3 782.4 370.5C785.2 379.5 780.5 400.1 771.2 402C757.2 404.9 738.5 385.6 724.4 382.5C716.7 380.8 703.9 388.5 696.6 385.5C686.6 381.5 678 365.2 668.7 360C656.4 353.1 635.9 342.1 621.9 343.5C611.3 344.5 601.6 361.4 592.9 367.5C587 371.6 577.5 377.3 570.6 379.5C562.4 382.1 549.2 384 540.5 384C528.8 384 510.9 377.9 499.3 379.5C485.1 381.4 465.5 393.3 451.4 396C442.7 397.6 428.9 396.1 420.2 394.5C412.3 393.1 399.5 390.7 393.4 385.5C382.4 376.1 371.3 356.3 362.2 345C357.7 339.3 352 328.8 345.5 325.5C339.8 322.7 328.4 322 323.2 325.5C317.8 329.1 320.6 344.9 314.3 346.5C303.6 349.2 287.2 339.5 276.4 337.5C269.2 336.1 257.9 332.7 250.8 334.5C244.9 336 240.1 348 234 348C225.3 348 214.1 338.3 206.2 334.5C208.5 332.4 210.3 328.3 211.8 325.5C213.3 322.5 214.5 318 216.2 315C218.6 310.8 222.7 305.7 225.1 301.5C227.1 298 230.1 293.4 230.7 289.5C231.5 284.6 230 277.9 229.6 273C229.3 268.9 229.7 263.4 228.5 259.5C226.6 253.8 221.8 247.1 219.6 241.5C216.8 234.5 214.2 224.7 211.8 217.5C210.2 213 207.3 207.2 206.2 202.5C204 193.6 203.1 181.3 200.6 172.5C198.7 165.9 196.2 156.6 191.7 151.5C185.8 144.9 173.8 140.8 167.2 135C160.4 129 154.4 117.9 147.1 112.5C140.7 107.7 130.1 104.9 122.6 102C116 99.5 107 96.7 100.3 94.5C92 91.8 79.7 90.4 72.4 85.5C65.8 81 61.9 69.6 55.7 64.5C50.3 60 40.2 58.3 34.5 54Z"/>
+            <path class="bt-geo__adj" d="M229.6 277.5C234 278.4 240.9 279.3 245.2 280.5C251.6 282.3 260.9 286.9 267.5 288C273.7 289 283.5 287.3 289.8 288C295.6 288.6 304.8 289.6 309.8 292.5C314.7 295.4 321.1 302.2 323.2 307.5C325.1 312.2 323 320.4 323.2 325.5C323.6 337.4 324.8 355.6 325.4 367.5L325.4 412.5L100.3 412.5L100.3 262.5Z" clip-path="url(#geoClipG)"/>
+            <g class="bt-geo__glowbox" clip-path="url(#geoClipP)"><g clip-path="url(#geoClipG)">
+              <g class="bt-geo__glow bt-geo__glow--1"><path d="M34.5 54C42.1 45.9 50.8 29 61.3 25.5C73.3 21.5 93.8 26 105.9 30C119.7 34.6 136.8 50.4 150.5 55.5C162.5 59.9 182.6 59.8 195 63C214.3 67.9 242.2 81.4 261.9 84C274.5 85.7 293.7 77.8 306.5 78C319.3 78.2 339.8 79.4 351.1 85.5C364.6 92.8 377 115 390.1 123C399.8 129 418.5 129.2 429.1 133.5C437.6 136.9 449.5 144.6 456.9 150C463.8 154.9 471.3 166.7 479.2 169.5C486.7 172.2 499.6 170.4 507.1 168C517.4 164.7 530.1 152.8 540.5 150C551.2 147.1 568.6 146.9 579.5 148.5C589.5 149.9 603.8 156.3 613 160.5C624.4 165.7 640.7 176 652 181.5C658.1 184.5 672.8 183.8 674.3 190.5C676.9 202.5 658.4 221.1 663.1 232.5C668.2 244.7 690.8 251.2 702.1 258C709.8 262.6 721.7 269.5 730 273C736 275.5 750.2 272.8 752.3 279C756.3 290.8 742.8 310.7 746.7 322.5C752 338.6 777.4 354.3 782.4 370.5C785.2 379.5 780.5 400.1 771.2 402C757.2 404.9 738.5 385.6 724.4 382.5C716.7 380.8 703.9 388.5 696.6 385.5C686.6 381.5 678 365.2 668.7 360C656.4 353.1 635.9 342.1 621.9 343.5C611.3 344.5 601.6 361.4 592.9 367.5C587 371.6 577.5 377.3 570.6 379.5C562.4 382.1 549.2 384 540.5 384C528.8 384 510.9 377.9 499.3 379.5C485.1 381.4 465.5 393.3 451.4 396C442.7 397.6 428.9 396.1 420.2 394.5C412.3 393.1 399.5 390.7 393.4 385.5C382.4 376.1 371.3 356.3 362.2 345C357.7 339.3 352 328.8 345.5 325.5C339.8 322.7 328.4 322 323.2 325.5C317.8 329.1 320.6 344.9 314.3 346.5C303.6 349.2 287.2 339.5 276.4 337.5C269.2 336.1 257.9 332.7 250.8 334.5C244.9 336 240.1 348 234 348C225.3 348 214.1 338.3 206.2 334.5C208.5 332.4 210.3 328.3 211.8 325.5C213.3 322.5 214.5 318 216.2 315C218.6 310.8 222.7 305.7 225.1 301.5C227.1 298 230.1 293.4 230.7 289.5C231.5 284.6 230 277.9 229.6 273C229.3 268.9 229.7 263.4 228.5 259.5C226.6 253.8 221.8 247.1 219.6 241.5C216.8 234.5 214.2 224.7 211.8 217.5C210.2 213 207.3 207.2 206.2 202.5C204 193.6 203.1 181.3 200.6 172.5C198.7 165.9 196.2 156.6 191.7 151.5C185.8 144.9 173.8 140.8 167.2 135C160.4 129 154.4 117.9 147.1 112.5C140.7 107.7 130.1 104.9 122.6 102C116 99.5 107 96.7 100.3 94.5C92 91.8 79.7 90.4 72.4 85.5C65.8 81 61.9 69.6 55.7 64.5C50.3 60 40.2 58.3 34.5 54Z"/><path d="M229.6 277.5C234 278.4 240.9 279.3 245.2 280.5C251.6 282.3 260.9 286.9 267.5 288C273.7 289 283.5 287.3 289.8 288C295.6 288.6 304.8 289.6 309.8 292.5C314.7 295.4 321.1 302.2 323.2 307.5C325.1 312.2 323.2 320.4 323.2 325.5"/></g>
+              <g class="bt-geo__glow bt-geo__glow--2"><path d="M34.5 54C42.1 45.9 50.8 29 61.3 25.5C73.3 21.5 93.8 26 105.9 30C119.7 34.6 136.8 50.4 150.5 55.5C162.5 59.9 182.6 59.8 195 63C214.3 67.9 242.2 81.4 261.9 84C274.5 85.7 293.7 77.8 306.5 78C319.3 78.2 339.8 79.4 351.1 85.5C364.6 92.8 377 115 390.1 123C399.8 129 418.5 129.2 429.1 133.5C437.6 136.9 449.5 144.6 456.9 150C463.8 154.9 471.3 166.7 479.2 169.5C486.7 172.2 499.6 170.4 507.1 168C517.4 164.7 530.1 152.8 540.5 150C551.2 147.1 568.6 146.9 579.5 148.5C589.5 149.9 603.8 156.3 613 160.5C624.4 165.7 640.7 176 652 181.5C658.1 184.5 672.8 183.8 674.3 190.5C676.9 202.5 658.4 221.1 663.1 232.5C668.2 244.7 690.8 251.2 702.1 258C709.8 262.6 721.7 269.5 730 273C736 275.5 750.2 272.8 752.3 279C756.3 290.8 742.8 310.7 746.7 322.5C752 338.6 777.4 354.3 782.4 370.5C785.2 379.5 780.5 400.1 771.2 402C757.2 404.9 738.5 385.6 724.4 382.5C716.7 380.8 703.9 388.5 696.6 385.5C686.6 381.5 678 365.2 668.7 360C656.4 353.1 635.9 342.1 621.9 343.5C611.3 344.5 601.6 361.4 592.9 367.5C587 371.6 577.5 377.3 570.6 379.5C562.4 382.1 549.2 384 540.5 384C528.8 384 510.9 377.9 499.3 379.5C485.1 381.4 465.5 393.3 451.4 396C442.7 397.6 428.9 396.1 420.2 394.5C412.3 393.1 399.5 390.7 393.4 385.5C382.4 376.1 371.3 356.3 362.2 345C357.7 339.3 352 328.8 345.5 325.5C339.8 322.7 328.4 322 323.2 325.5C317.8 329.1 320.6 344.9 314.3 346.5C303.6 349.2 287.2 339.5 276.4 337.5C269.2 336.1 257.9 332.7 250.8 334.5C244.9 336 240.1 348 234 348C225.3 348 214.1 338.3 206.2 334.5C208.5 332.4 210.3 328.3 211.8 325.5C213.3 322.5 214.5 318 216.2 315C218.6 310.8 222.7 305.7 225.1 301.5C227.1 298 230.1 293.4 230.7 289.5C231.5 284.6 230 277.9 229.6 273C229.3 268.9 229.7 263.4 228.5 259.5C226.6 253.8 221.8 247.1 219.6 241.5C216.8 234.5 214.2 224.7 211.8 217.5C210.2 213 207.3 207.2 206.2 202.5C204 193.6 203.1 181.3 200.6 172.5C198.7 165.9 196.2 156.6 191.7 151.5C185.8 144.9 173.8 140.8 167.2 135C160.4 129 154.4 117.9 147.1 112.5C140.7 107.7 130.1 104.9 122.6 102C116 99.5 107 96.7 100.3 94.5C92 91.8 79.7 90.4 72.4 85.5C65.8 81 61.9 69.6 55.7 64.5C50.3 60 40.2 58.3 34.5 54Z"/><path d="M229.6 277.5C234 278.4 240.9 279.3 245.2 280.5C251.6 282.3 260.9 286.9 267.5 288C273.7 289 283.5 287.3 289.8 288C295.6 288.6 304.8 289.6 309.8 292.5C314.7 295.4 321.1 302.2 323.2 307.5C325.1 312.2 323.2 320.4 323.2 325.5"/></g>
+              <g class="bt-geo__glow bt-geo__glow--3"><path d="M34.5 54C42.1 45.9 50.8 29 61.3 25.5C73.3 21.5 93.8 26 105.9 30C119.7 34.6 136.8 50.4 150.5 55.5C162.5 59.9 182.6 59.8 195 63C214.3 67.9 242.2 81.4 261.9 84C274.5 85.7 293.7 77.8 306.5 78C319.3 78.2 339.8 79.4 351.1 85.5C364.6 92.8 377 115 390.1 123C399.8 129 418.5 129.2 429.1 133.5C437.6 136.9 449.5 144.6 456.9 150C463.8 154.9 471.3 166.7 479.2 169.5C486.7 172.2 499.6 170.4 507.1 168C517.4 164.7 530.1 152.8 540.5 150C551.2 147.1 568.6 146.9 579.5 148.5C589.5 149.9 603.8 156.3 613 160.5C624.4 165.7 640.7 176 652 181.5C658.1 184.5 672.8 183.8 674.3 190.5C676.9 202.5 658.4 221.1 663.1 232.5C668.2 244.7 690.8 251.2 702.1 258C709.8 262.6 721.7 269.5 730 273C736 275.5 750.2 272.8 752.3 279C756.3 290.8 742.8 310.7 746.7 322.5C752 338.6 777.4 354.3 782.4 370.5C785.2 379.5 780.5 400.1 771.2 402C757.2 404.9 738.5 385.6 724.4 382.5C716.7 380.8 703.9 388.5 696.6 385.5C686.6 381.5 678 365.2 668.7 360C656.4 353.1 635.9 342.1 621.9 343.5C611.3 344.5 601.6 361.4 592.9 367.5C587 371.6 577.5 377.3 570.6 379.5C562.4 382.1 549.2 384 540.5 384C528.8 384 510.9 377.9 499.3 379.5C485.1 381.4 465.5 393.3 451.4 396C442.7 397.6 428.9 396.1 420.2 394.5C412.3 393.1 399.5 390.7 393.4 385.5C382.4 376.1 371.3 356.3 362.2 345C357.7 339.3 352 328.8 345.5 325.5C339.8 322.7 328.4 322 323.2 325.5C317.8 329.1 320.6 344.9 314.3 346.5C303.6 349.2 287.2 339.5 276.4 337.5C269.2 336.1 257.9 332.7 250.8 334.5C244.9 336 240.1 348 234 348C225.3 348 214.1 338.3 206.2 334.5C208.5 332.4 210.3 328.3 211.8 325.5C213.3 322.5 214.5 318 216.2 315C218.6 310.8 222.7 305.7 225.1 301.5C227.1 298 230.1 293.4 230.7 289.5C231.5 284.6 230 277.9 229.6 273C229.3 268.9 229.7 263.4 228.5 259.5C226.6 253.8 221.8 247.1 219.6 241.5C216.8 234.5 214.2 224.7 211.8 217.5C210.2 213 207.3 207.2 206.2 202.5C204 193.6 203.1 181.3 200.6 172.5C198.7 165.9 196.2 156.6 191.7 151.5C185.8 144.9 173.8 140.8 167.2 135C160.4 129 154.4 117.9 147.1 112.5C140.7 107.7 130.1 104.9 122.6 102C116 99.5 107 96.7 100.3 94.5C92 91.8 79.7 90.4 72.4 85.5C65.8 81 61.9 69.6 55.7 64.5C50.3 60 40.2 58.3 34.5 54Z"/><path d="M229.6 277.5C234 278.4 240.9 279.3 245.2 280.5C251.6 282.3 260.9 286.9 267.5 288C273.7 289 283.5 287.3 289.8 288C295.6 288.6 304.8 289.6 309.8 292.5C314.7 295.4 321.1 302.2 323.2 307.5C325.1 312.2 323.2 320.4 323.2 325.5"/></g>
+            </g></g>
+            <g clip-path="url(#geoClipG)"><path class="bt-geo__riv" d="M300.9 313.5C297.6 314.2 293.1 315 289.8 315.7C286.1 316.6 281.2 318 277.5 318.8C272.9 319.7 266.6 320.6 261.9 321.3C258.2 321.8 253.3 322.6 249.6 322.8C246.3 323 241.8 322.5 238.5 322.5C234.5 322.5 229.1 322.4 225.1 322.8C222.4 323.1 218.8 323.8 216.2 324.7C214.2 325.4 211.9 327.1 210.1 328"/><path class="bt-geo__riv" d="M227.4 346.5C225.7 344.3 223.4 341.3 221.8 339C220.4 337 218.9 334.1 217.3 332.3C216.5 331.3 215 330.6 214 330C212.9 329.3 211.3 328.6 210.1 328"/></g>
+            <path class="bt-geo__edge" d="M34.5 54C42.1 45.9 50.8 29 61.3 25.5C73.3 21.5 93.8 26 105.9 30C119.7 34.6 136.8 50.4 150.5 55.5C162.5 59.9 182.6 59.8 195 63C214.3 67.9 242.2 81.4 261.9 84C274.5 85.7 293.7 77.8 306.5 78C319.3 78.2 339.8 79.4 351.1 85.5C364.6 92.8 377 115 390.1 123C399.8 129 418.5 129.2 429.1 133.5C437.6 136.9 449.5 144.6 456.9 150C463.8 154.9 471.3 166.7 479.2 169.5C486.7 172.2 499.6 170.4 507.1 168C517.4 164.7 530.1 152.8 540.5 150C551.2 147.1 568.6 146.9 579.5 148.5C589.5 149.9 603.8 156.3 613 160.5C624.4 165.7 640.7 176 652 181.5C658.1 184.5 672.8 183.8 674.3 190.5C676.9 202.5 658.4 221.1 663.1 232.5C668.2 244.7 690.8 251.2 702.1 258C709.8 262.6 721.7 269.5 730 273C736 275.5 750.2 272.8 752.3 279C756.3 290.8 742.8 310.7 746.7 322.5C752 338.6 777.4 354.3 782.4 370.5C785.2 379.5 780.5 400.1 771.2 402C757.2 404.9 738.5 385.6 724.4 382.5C716.7 380.8 703.9 388.5 696.6 385.5C686.6 381.5 678 365.2 668.7 360C656.4 353.1 635.9 342.1 621.9 343.5C611.3 344.5 601.6 361.4 592.9 367.5C587 371.6 577.5 377.3 570.6 379.5C562.4 382.1 549.2 384 540.5 384C528.8 384 510.9 377.9 499.3 379.5C485.1 381.4 465.5 393.3 451.4 396C442.7 397.6 428.9 396.1 420.2 394.5C412.3 393.1 399.5 390.7 393.4 385.5C382.4 376.1 371.3 356.3 362.2 345C357.7 339.3 352 328.8 345.5 325.5C339.8 322.7 328.4 322 323.2 325.5C317.8 329.1 320.6 344.9 314.3 346.5C303.6 349.2 287.2 339.5 276.4 337.5C269.2 336.1 257.9 332.7 250.8 334.5C244.9 336 240.1 348 234 348C225.3 348 214.1 338.3 206.2 334.5C208.5 332.4 210.3 328.3 211.8 325.5C213.3 322.5 214.5 318 216.2 315C218.6 310.8 222.7 305.7 225.1 301.5C227.1 298 230.1 293.4 230.7 289.5C231.5 284.6 230 277.9 229.6 273C229.3 268.9 229.7 263.4 228.5 259.5C226.6 253.8 221.8 247.1 219.6 241.5C216.8 234.5 214.2 224.7 211.8 217.5C210.2 213 207.3 207.2 206.2 202.5C204 193.6 203.1 181.3 200.6 172.5C198.7 165.9 196.2 156.6 191.7 151.5C185.8 144.9 173.8 140.8 167.2 135C160.4 129 154.4 117.9 147.1 112.5C140.7 107.7 130.1 104.9 122.6 102C116 99.5 107 96.7 100.3 94.5C92 91.8 79.7 90.4 72.4 85.5C65.8 81 61.9 69.6 55.7 64.5C50.3 60 40.2 58.3 34.5 54Z"/>
+          </g>
         </svg>
-        <div class="bt-geo__pins" aria-hidden="true">
-          <span class="bt-pin bt-pin--home" data-x="148.8" data-y="275.4" style="left:18.6%;top:52.96%"><i></i><b>Батуми</b></span>
-          <span class="bt-pin" data-k="mtir" data-s="t" data-x="283.1" data-y="248.8" style="left:35.39%;top:47.86%"><i></i><b>Мтирала</b></span>
-          <span class="bt-pin" data-k="reki" data-s="b" data-x="190.8" data-y="362.6" style="left:23.85%;top:69.72%"><i></i><b>Две реки</b></span>
-          <span class="bt-pin" data-k="makh" data-s="l" data-x="281.9" data-y="335.4" style="left:35.24%;top:64.49%"><i></i><b>Махунцети</b></span>
-          <span class="bt-pin" data-k="mach" data-s="r" data-x="283.1" data-y="395.5" style="left:35.39%;top:76.06%"><i></i><b>Мачахела</b></span>
-          <span class="bt-pin" data-k="keda" data-s="r" data-x="334.2" data-y="314.8" style="left:41.78%;top:60.53%"><i></i><b>Кеда</b></span>
-          <span class="bt-pin" data-k="shua" data-s="b" data-x="483.8" data-y="291.7" style="left:60.47%;top:56.1%"><i></i><b>Шуахеви</b></span>
-          <span class="bt-pin" data-k="chir" data-s="r" data-x="535.5" data-y="197.8" style="left:66.94%;top:38.03%"><i></i><b>Чирухи</b></span>
-          <span class="bt-pin" data-k="lake" data-s="t" data-x="670.9" data-y="263.7" style="left:83.86%;top:50.71%"><i></i><b>Зелёное озеро</b></span>
-          <span class="bt-pin" data-k="gomi" data-s="t" data-x="430.9" data-y="98.9" style="left:53.86%;top:19.02%"><i></i><b>Гомисмта</b></span>
-          <span class="bt-pin" data-k="bakh" data-s="t" data-x="570" data-y="106.3" style="left:71.24%;top:20.44%"><i></i><b>Бахмаро</b></span>
+          <div class="bt-geo__pins" aria-hidden="true">
+          <span class="bt-rg bt-rg--sea" data-v="w" style="--wx:9.25%;--wy:55.38%;--ax:-68.05%;--ay:35.71%;--rot:-66deg"><b>Чёрное море</b></span>
+          <span class="bt-rg" data-v="w" style="--wx:40.25%;--wy:6.54%;--ax:85.48%;--ay:-206.19%;--rot:0deg"><b>Россия</b></span>
+          <span class="bt-rg" data-v="w" style="--wx:40.75%;--wy:85.77%;--ax:87.95%;--ay:186.19%;--rot:0deg"><b>Турция</b></span>
+          <span class="bt-rg" data-v="w" style="--wx:59.75%;--wy:84.62%;--ax:182.05%;--ay:180.48%;--rot:0deg"><b>Армения</b></span>
+          <span class="bt-rg" data-v="w" style="--wx:82.75%;--wy:84.62%;--ax:295.95%;--ay:180.48%;--rot:0deg"><b>Азербайджан</b></span>
+          <span class="bt-rg bt-rg--sea" data-v="a" style="--wx:25.21%;--wy:54.85%;--ax:11%;--ay:33.08%;--rot:-66deg"><b>Чёрное море</b></span>
+          <span class="bt-rg" data-v="a" style="--wx:34.4%;--wy:67.36%;--ax:56.5%;--ay:95%;--rot:0deg"><b>Турция</b></span>
+          <span class="bt-rg bt-rg--land" data-v="a" style="--wx:34.85%;--wy:50.89%;--ax:58.75%;--ay:13.46%;--rot:0deg"><b>Гурия</b></span>
+          <span class="bt-pin" data-k="urek" data-v="a" data-m="r" data-s="r" data-wy="50.63" data-ay="12.14" style="--wx:28.77%;--wy:50.63%;--ax:28.61%;--ay:12.14%;--i:1"><button type="button" tabindex="-1"><i></i><b>Уреки</b></button></span>
+          <span class="bt-pin" data-k="mach" data-v="a" data-m="l" data-s="l" data-wy="65.19" data-ay="84.29" style="--wx:29.95%;--wy:65.19%;--ax:34.48%;--ay:84.29%;--i:2"><button type="button" tabindex="-1"><i></i><b>Мачахела</b></button></span>
+          <span class="bt-pin" data-k="makh" data-v="a" data-m="l" data-s="l" data-wy="62.83" data-ay="72.57" style="--wx:30.09%;--wy:62.83%;--ax:35.17%;--ay:72.57%;--i:3"><button type="button" tabindex="-1"><i></i><b>Махунцети</b></button></span>
+          <span class="bt-pin" data-k="mtir" data-v="a" data-m="r" data-s="t" data-wy="59.86" data-ay="57.86" style="--wx:30.09%;--wy:59.86%;--ax:35.17%;--ay:57.86%;--i:4"><button type="button" tabindex="-1"><i></i><b>Мтирала</b></button></span>
+          <span class="bt-pin" data-k="keda" data-v="a" data-m="r" data-s="r" data-wy="62.08" data-ay="68.86" style="--wx:31.23%;--wy:62.08%;--ax:40.82%;--ay:68.86%;--i:5"><button type="button" tabindex="-1"><i></i><b>Кеда</b></button></span>
+          <span class="bt-pin" data-k="gomi" data-v="a" data-m="t" data-s="t" data-wy="54.37" data-ay="30.71" style="--wx:32.46%;--wy:54.37%;--ax:46.9%;--ay:30.71%;--i:6"><button type="button" tabindex="-1"><i></i><b>Гомисмта</b></button></span>
+          <span class="bt-pin" data-k="shua" data-v="a" data-m="t" data-s="t" data-wy="61.24" data-ay="64.71" style="--wx:34.62%;--wy:61.24%;--ax:57.59%;--ay:64.71%;--i:7"><button type="button" tabindex="-1"><i></i><b>Шуахеви</b></button></span>
+          <span class="bt-pin" data-k="chir" data-v="a" data-m="r" data-s="b" data-wy="64.33" data-ay="80" style="--wx:35.39%;--wy:64.33%;--ax:61.38%;--ay:80%;--i:8"><button type="button" tabindex="-1"><i></i><b>Чирухи</b></button></span>
+          <span class="bt-pin" data-k="bakh" data-v="a" data-m="t" data-s="t" data-wy="54.81" data-ay="32.86" style="--wx:36.57%;--wy:54.81%;--ax:67.25%;--ay:32.86%;--i:9"><button type="button" tabindex="-1"><i></i><b>Бахмаро</b></button></span>
+          <span class="bt-pin" data-k="lake" data-v="a" data-m="t" data-s="t" data-wy="59.86" data-ay="57.86" style="--wx:39.01%;--wy:59.86%;--ax:79.32%;--ay:57.86%;--i:10"><button type="button" tabindex="-1"><i></i><b>Зелёное озеро</b></button></span>
+          <span class="bt-pin" data-k="mart" data-v="w" data-m="l" data-s="l" data-wy="37.3" data-ay="-53.86" style="--wx:37.29%;--wy:37.3%;--ax:70.84%;--ay:-53.86%;--i:11"><button type="button" tabindex="-1"><i></i><b>Мартвили</b></button></span>
+          <span class="bt-pin" data-k="svan" data-v="w" data-m="t" data-s="t" data-wy="20.34" data-ay="-137.86" style="--wx:42.21%;--wy:20.34%;--ax:95.19%;--ay:-137.86%;--i:12"><button type="button" tabindex="-1"><i></i><b>Сванетия</b></button></span>
+          <span class="bt-pin" data-k="racha" data-v="w" data-m="r" data-s="r" data-wy="35.48" data-ay="-62.86" style="--wx:48.06%;--wy:35.48%;--ax:124.17%;--ay:-62.86%;--i:13"><button type="button" tabindex="-1"><i></i><b>Рача</b></button></span>
+          <span class="bt-pin" data-k="borj" data-v="w" data-m="b" data-s="b" data-wy="55.1" data-ay="34.29" style="--wx:51.27%;--wy:55.1%;--ax:140.04%;--ay:34.29%;--i:14"><button type="button" tabindex="-1"><i></i><b>Боржоми</b></button></span>
+          <span class="bt-pin" data-k="tbil" data-v="w" data-m="t" data-s="t" data-wy="58.67" data-ay="52" style="--wx:70.81%;--wy:58.67%;--ax:236.83%;--ay:52%;--i:15"><button type="button" tabindex="-1"><i></i><b>Тбилиси</b></button></span>
+          <span class="bt-pin bt-pin--adj" data-k="adj" data-v="w" data-m="b" data-s="b" data-wy="60.58" data-ay="61.43" style="--wx:36.22%;--wy:60.58%;--ax:65.52%;--ay:61.43%;--i:0"><button type="button" tabindex="-1"><i>11</i><b>Аджария · 11 мест</b></button></span>
+          <span class="bt-pin bt-pin--home" data-k="home" data-v="b" data-m="t" data-s="l" data-wy="60.72" data-ay="62.14" style="--wx:27.03%;--wy:60.72%;--ax:19.99%;--ay:62.14%;--i:0"><button type="button" tabindex="-1"><i></i><b>Батуми</b></button></span>
+          </div>
+          <div class="bt-geo__plate" id="btGeoPlate" aria-live="polite"><b></b><button type="button">Смотреть тур</button></div>
         </div>
       </div>
       <div class="bt-geo__foot bt-up" style="--d:.16s">
-        <ul class="bt-geo__list" id="btGeoList" aria-label="Куда возим из Батуми">
-          <li><button type="button" data-k="mach">Мачахела</button></li>
-          <li><button type="button" data-k="mtir">Мтирала</button></li>
-          <li><button type="button" data-k="gomi">Гомисмта</button></li>
-          <li><button type="button" data-k="shua">Шуахеви</button></li>
-          <li><button type="button" data-k="makh">Махунцети</button></li>
-          <li><button type="button" data-k="reki">Две реки</button></li>
-          <li><button type="button" data-k="keda">Кеда</button></li>
-          <li><button type="button" data-k="chir">Чирухи</button></li>
-          <li><button type="button" data-k="lake">Зелёное озеро</button></li>
-          <li><button type="button" data-k="bakh">Бахмаро</button></li>
-        </ul>
-        <p class="bt-geo__far"><b>Дальше по Грузии</b><span>Мартвили</span><span>Сванетия</span><span>Рача</span><span>Боржоми</span><span>Тбилиси</span></p>
+        <div class="bt-geo__lists">
+          <ul class="bt-geo__list" data-for="a" aria-label="Места Аджарии">
+          <li><button type="button" data-k="home" aria-pressed="false">Батуми</button></li>
+          <li><button type="button" data-k="urek" aria-pressed="false">Уреки</button></li>
+          <li><button type="button" data-k="mach" aria-pressed="false">Мачахела</button></li>
+          <li><button type="button" data-k="makh" aria-pressed="false">Махунцети</button></li>
+          <li><button type="button" data-k="mtir" aria-pressed="false">Мтирала</button></li>
+          <li><button type="button" data-k="keda" aria-pressed="false">Кеда</button></li>
+          <li><button type="button" data-k="gomi" aria-pressed="false">Гомисмта</button></li>
+          <li><button type="button" data-k="shua" aria-pressed="false">Шуахеви</button></li>
+          <li><button type="button" data-k="chir" aria-pressed="false">Чирухи</button></li>
+          <li><button type="button" data-k="bakh" aria-pressed="false">Бахмаро</button></li>
+          <li><button type="button" data-k="lake" aria-pressed="false">Зелёное озеро</button></li>
+          </ul>
+          <ul class="bt-geo__list" data-for="w" aria-label="Места по всей Грузии">
+          <li><button type="button" data-k="adj" class="bt-geo__zoomin" aria-pressed="false">Аджария</button></li>
+          <li><button type="button" data-k="mart" aria-pressed="false">Мартвили</button></li>
+          <li><button type="button" data-k="svan" aria-pressed="false">Сванетия</button></li>
+          <li><button type="button" data-k="racha" aria-pressed="false">Рача</button></li>
+          <li><button type="button" data-k="borj" aria-pressed="false">Боржоми</button></li>
+          <li><button type="button" data-k="tbil" aria-pressed="false">Тбилиси</button></li>
+          </ul>
+        </div>
         <div class="bt-geo__cta"><a class="bt-go bt-go--pulse" href="#tours">Выбрать тур</a></div>
       </div>
     </div>
@@ -1171,12 +1894,14 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
         <div class="bt-pp__b">
           <h3>Аркадий Болквадзе</h3>
           <p class="bt-pp__r">основатель, сертифицированный гид</p>
-          <blockquote>«Более 20 лет руководил обеспечением безопасности первых лиц Аджарии, поэтому безопасность моих туристов… на высшем уровне!»</blockquote>
+          <p class="bt-pp__t">20 лет Аркадий отвечал за безопасность первых лиц Аджарии. Теперь с той же ответственностью сам возит гостей в горы.</p>
+          <p class="bt-pp__t">Вы отдыхаете, он следит за дорогой, временем и застольем.</p>
+          <blockquote>«Безопасность моих туристов… на высшем уровне!»</blockquote>
           <ul class="bt-facts">
-            <li><svg class="bt-s" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-medal"/></svg>Лучший гид Аджарии 2025</li>
-            <li><svg class="bt-s" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-shield"/></svg>Сертифицированный гид</li>
-            <li><svg class="bt-s" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-group"/></svg>С 2013 года принял 6000+ гостей</li>
-            <li><svg class="bt-f" viewBox="0 0 20 20" aria-hidden="true"><use href="#i-star"/></svg>Рейтинг 5,0 в Google, 40 отзывов</li>
+            <li><svg class="bt-s" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-shield"/></svg>20+ лет в охране первых лиц Аджарии</li>
+            <li><svg class="bt-s" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-cap"/></svg>Сертифицированный гид</li>
+            <li><svg class="bt-s" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-car"/></svg>Сам за рулём и сам ведёт тур</li>
+            <li><svg class="bt-f" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-wa"/></svg>Лично отвечает в WhatsApp</li>
             <li><svg class="bt-s" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-pin"/></svg>Родился и живёт в Батуми</li>
           </ul>
         </div>
@@ -1279,16 +2004,17 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
 
 <section class="bt-blog" id="blog" aria-labelledby="blogH">
   <div class="bt-shell">
-    <div class="bt-head bt-up"><h2 id="blogH">Блог</h2><p class="bt-lead">Когда ехать, что взять и что попробовать.</p></div>
+    <div class="bt-head bt-up"><h2 id="blogH">Блог</h2><div class="bt-blog__side"><p class="bt-lead">Когда ехать, что взять и что попробовать.</p><a class="bt-blog__all" href="blog/index.html"><svg class="bt-s" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h7v7H4zM13 4h7v7h-7zM4 13h7v7H4zM13 13h7v7h-7z"/></svg>Все статьи<b>7</b></a></div></div>
     <div class="bt-blog__wrap">
       <div class="bt-blog__track" id="btBlog">
-        <a class="bt-post bt-glow" data-glow href="blog/best-time-to-visit-georgia.html"><figure><img src="img/gc1-1000.jpg" alt="Закат над морем облаков на курорте Гомисмта" style="--op:50% 58%" loading="lazy" decoding="async" sizes="(min-width:1000px) 280px, 300px"><span class="bt-chip">Советы</span><span class="bt-post__d">10 апреля 2026</span></figure><h3>Лучшее время для поездки в Грузию</h3><p>В мае и октябре тепло, красиво и мало людей.</p><span class="bt-post__go">Читать<svg class="bt-s" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-arr"/></svg></span></a>
-        <a class="bt-post bt-glow" data-glow href="blog/batumi-city-guide.html"><figure><img src="img/h4-800.jpg" alt="Каменный арочный мост царицы Тамары над горной рекой" style="--op:50% 62%" loading="lazy" decoding="async" sizes="(min-width:1000px) 280px, 300px"><span class="bt-chip">Места</span><span class="bt-post__d">18 апреля 2026</span></figure><h3>Что посмотреть в Батуми за 2 дня</h3><p>Бульвар, Алфавитная башня, ботанический сад и Махунцети.</p><span class="bt-post__go">Читать<svg class="bt-s" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-arr"/></svg></span></a>
-        <a class="bt-post bt-glow" data-glow href="blog/georgian-cuisine-guide.html"><figure><img src="img/mc3-1000.jpg" alt="Стол с шашлыком, хачапури и вином" style="--op:50% 50%" loading="lazy" decoding="async" sizes="(min-width:1000px) 280px, 300px"><span class="bt-chip">Еда</span><span class="bt-post__d">25 апреля 2026</span></figure><h3>10 блюд грузинской кухни, которые стоит попробовать</h3><p>Хинкали, аджарское хачапури, мцвади и ещё семь блюд.</p><span class="bt-post__go">Читать<svg class="bt-s" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-arr"/></svg></span></a>
-        <a class="bt-post bt-glow" data-glow href="blog/mountain-adjara-trekking.html"><figure><img src="img/tc1-1000.jpg" alt="Путешественница с палками идёт по лесу в национальном парке Мтирала" style="--op:50% 28%" loading="lazy" decoding="async" sizes="(min-width:1000px) 280px, 300px"><span class="bt-chip">Приключения</span><span class="bt-post__d">2 мая 2026</span></figure><h3>Треккинг в горной Аджарии для любого уровня</h3><p>Три маршрута, от прогулки на час до целого дня в джунглях.</p><span class="bt-post__go">Читать<svg class="bt-s" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-arr"/></svg></span></a>
-        <a class="bt-post bt-glow" data-glow href="blog/rtveli-grape-harvest.html"><figure><img src="img/bl-rtveli-1000.jpg" alt="Монастырь на холме над городом и рекой" style="--op:50% 42%" loading="lazy" decoding="async" sizes="(min-width:1000px) 280px, 300px"><span class="bt-chip">Культура</span><span class="bt-post__d">8 мая 2026</span></figure><h3>Ртвели, праздник сбора винограда</h3><p>Сентябрь в Кахетии, виноград, песни и хлеб из тандыра.</p><span class="bt-post__go">Читать<svg class="bt-s" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-arr"/></svg></span></a>
-        <a class="bt-post bt-glow" data-glow href="blog/tbilisi-weekend-guide.html"><figure><img src="img/bl-tbilisi-1000.jpg" alt="Старый Тбилиси, дома на скале над Курой" style="--op:50% 38%" loading="lazy" decoding="async" sizes="(min-width:1000px) 280px, 300px"><span class="bt-chip">Места</span><span class="bt-post__d">12 мая 2026</span></figure><h3>Тбилиси за выходные, маршрут на 48 часов</h3><p>Нарикала, серные бани, Сухой мост и фуникулёр на Мтацминду.</p><span class="bt-post__go">Читать<svg class="bt-s" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-arr"/></svg></span></a>
-        <a class="bt-post bt-glow" data-glow href="blog/packing-list-georgia.html"><figure><img src="img/gc3-1000.jpg" alt="Девушка с поднятыми руками на горном лугу, рядом корова" style="--op:50% 40%" loading="lazy" decoding="async" sizes="(min-width:1000px) 280px, 300px"><span class="bt-chip">Советы</span><span class="bt-post__d">13 мая 2026</span></figure><h3>Что взять с собой в Грузию</h3><p>Наличные лари, ботинки для гор, шарф для храмов и адаптер.</p><span class="bt-post__go">Читать<svg class="bt-s" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-arr"/></svg></span></a>
+        <a class="bt-post bt-glow" data-glow href="blog/best-time-to-visit-georgia.html"><figure><img src="img/gc1-1000.jpg" alt="Закат над морем облаков на курорте Гомисмта" style="--op:50% 58%" loading="lazy" decoding="async" sizes="(min-width:1000px) 280px, 300px"><span class="bt-chip">Советы</span><span class="bt-post__d">10 апреля 2026</span></figure><h3>Лучшее время для поездки в Грузию</h3><p>Грузия хороша в любое время года, но каждый сезон предлагает своё особое…</p><span class="bt-post__go">Читать<svg class="bt-s" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-arr"/></svg></span></a>
+        <a class="bt-post bt-glow" data-glow href="blog/batumi-city-guide.html"><figure><img src="img/h4-800.jpg" alt="Каменный арочный мост царицы Тамары над горной рекой" style="--op:50% 62%" loading="lazy" decoding="async" sizes="(min-width:1000px) 280px, 300px"><span class="bt-chip">Места</span><span class="bt-post__d">18 апреля 2026</span></figure><h3>Путеводитель по Батуми: что посмотреть за 2 дня</h3><p>Батуми — это город контрастов: футуристические небоскрёбы соседствуют с…</p><span class="bt-post__go">Читать<svg class="bt-s" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-arr"/></svg></span></a>
+        <a class="bt-post bt-glow" data-glow href="blog/georgian-cuisine-guide.html"><figure><img src="img/mc3-1000.jpg" alt="Стол с шашлыком, хачапури и вином" style="--op:50% 50%" loading="lazy" decoding="async" sizes="(min-width:1000px) 280px, 300px"><span class="bt-chip">Еда</span><span class="bt-post__d">25 апреля 2026</span></figure><h3>Грузинская кухня: 10 блюд, которые нужно попробовать</h3><p>Грузинская кухня — одна из немногих, способных влюбить в себя с первого…</p><span class="bt-post__go">Читать<svg class="bt-s" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-arr"/></svg></span></a>
+        <a class="bt-post bt-glow" data-glow href="blog/mountain-adjara-trekking.html"><figure><img src="img/tc1-1000.jpg" alt="Путешественница с палками идёт по лесу в национальном парке Мтирала" style="--op:50% 28%" loading="lazy" decoding="async" sizes="(min-width:1000px) 280px, 300px"><span class="bt-chip">Приключения</span><span class="bt-post__d">2 мая 2026</span></figure><h3>Треккинг в горной Аджарии: маршруты для всех уровней</h3><p>Горная Аджария — один из самых живописных и малоизвестных уголков Грузии.…</p><span class="bt-post__go">Читать<svg class="bt-s" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-arr"/></svg></span></a>
+        <a class="bt-post bt-glow" data-glow href="blog/rtveli-grape-harvest.html"><figure><img src="img/bl-rtveli-1000.jpg" alt="Монастырь на холме над городом и рекой" style="--op:50% 42%" loading="lazy" decoding="async" sizes="(min-width:1000px) 280px, 300px"><span class="bt-chip">Культура</span><span class="bt-post__d">8 мая 2026</span></figure><h3>Ртвели: грузинский праздник сбора урожая винограда</h3><p>Ртвели — это не просто сбор урожая, это живая традиция, которой несколько…</p><span class="bt-post__go">Читать<svg class="bt-s" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-arr"/></svg></span></a>
+        <a class="bt-post bt-glow" data-glow href="blog/tbilisi-weekend-guide.html"><figure><img src="img/bl-tbilisi-1000.jpg" alt="Старый Тбилиси, дома на скале над Курой" style="--op:50% 38%" loading="lazy" decoding="async" sizes="(min-width:1000px) 280px, 300px"><span class="bt-chip">Места</span><span class="bt-post__d">12 мая 2026</span></figure><h3>Тбилиси за выходные: идеальный маршрут на 48 часов</h3><p>Тбилиси — один из старейших городов Европы — поражает своей многослойностью.…</p><span class="bt-post__go">Читать<svg class="bt-s" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-arr"/></svg></span></a>
+        <a class="bt-post bt-glow" data-glow href="blog/packing-list-georgia.html"><figure><img src="img/gc3-1000.jpg" alt="Девушка с поднятыми руками на горном лугу, рядом корова" style="--op:50% 40%" loading="lazy" decoding="async" sizes="(min-width:1000px) 280px, 300px"><span class="bt-chip">Советы</span><span class="bt-post__d">13 мая 2026</span></figure><h3>Что взять в Грузию: список вещей для разных сезонов</h3><p>Правильно собранный чемодан — половина успешного путешествия. Грузия — страна…</p><span class="bt-post__go">Читать<svg class="bt-s" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-arr"/></svg></span></a>
+        <a class="bt-post bt-post--all bt-glow" data-glow href="blog/index.html" aria-label="Все статьи блога, 7 статей"><span class="bt-post__n" aria-hidden="true">7</span><h3>Все статьи блога</h3><span class="bt-post__go">Открыть<svg class="bt-s" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-arr"/></svg></span></a>
       </div>
     </div>
   </div>
@@ -1327,7 +2053,22 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
     <div class="bt-book">
       <div class="bt-up">
         <form class="bt-form" id="btForm" novalidate>
-          <label class="bt-f"><span>Тур</span><select id="btTour"></select></label>
+          
+<div class="bt-f bt-f--kind" role="radiogroup" aria-labelledby="btKindL"><span id="btKindL">Вид тура</span>
+  <div class="bt-kind" id="btKind"><button class="bt-kind__b is-act" type="button" role="radio" aria-checked="true" data-g="oneday" tabindex="0">Однодневный</button><button class="bt-kind__b" type="button" role="radio" aria-checked="false" data-g="multiday" tabindex="-1">Многодневный</button><button class="bt-kind__b" type="button" role="radio" aria-checked="false" data-g="package" tabindex="-1">Пакетный</button><button class="bt-kind__b" type="button" role="radio" aria-checked="false" data-g="retreat" disabled aria-disabled="true" tabindex="-1">Ретрит<small>скоро</small></button></div>
+</div>
+<div class="bt-f"><span id="btTourL">Тур</span>
+  <div class="bt-pick" id="btPick">
+    <button class="bt-pick__b" type="button" aria-haspopup="listbox" aria-expanded="false" aria-controls="btPickList" aria-labelledby="btTourL btPickN btPickP"><span class="bt-pick__n" id="btPickN"></span><b class="bt-pick__p" id="btPickP"></b><svg class="bt-s bt-pick__c" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
+    <div class="bt-pick__bg" aria-hidden="true"></div>
+    <div class="bt-pick__sheet">
+      <div class="bt-pick__hd"><b>Выберите тур</b><button class="bt-pick__x" type="button" aria-label="Закрыть"><svg class="bt-s" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-close"/></svg></button></div>
+      <ul class="bt-pick__list" id="btPickList" role="listbox" tabindex="-1" aria-labelledby="btTourL"></ul>
+    </div>
+  </div>
+  <select id="btTour" aria-labelledby="btTourL"><optgroup label="Однодневные"><option value="machakhela">Мачахела · 75 €</option><option value="gomismta">Гомисмта · 70 €</option><option value="mtirala">Мтирала · 60 €</option><option value="shuakhevi">Шуахеви · 75 €</option><option value="adjara">Горная Аджария · от 35 €</option><option value="mandarin">Мандариновый тур · 50 €</option><option value="rafting-hot-springs">Рафтинг и горячие источники · 60 €</option><option value="wellness">Оздоровительный тур · от 55 €</option><option value="keda">Кеда · от 65 €</option><option value="okatse-martvili">Прометей, Окаце и Мартвили · 55 €</option><option value="georgian-cuisine">Секреты грузинской кухни · от 60 €</option><option value="chirukhi">Чирухи · 75 €</option><option value="prometheus-martvili">Пещера Прометея и Мартвильский каньон · 50 €</option><option value="green-lake">Зелёное озеро · 70 €</option><option value="batumi-walking">Пеший тур по Батуми · от 25 €</option><option value="bakhmaro">Бахмаро · 75 €</option><option value="rtveli">Ртвели · 70 €</option><option value="tea">Чайный тур · 70 €</option></optgroup><optgroup label="Многодневные"><option value="svaneti-2-days">Сванети на 2 дня · от 170 €</option><option value="racha-9-crosses-2-days">Рача на 2 дня · от 150 €</option><option value="borjomi-2-days">Боржоми на 2 дня · от 170 €</option><option value="svaneti-racha-3-days">Сванети и Рача на 3 дня · от 240 €</option><option value="svaneti-3-days">Сванети на 3 дня · от 240 €</option><option value="racha-9-crosses-3-days">Рача 9 крестов на 3 дня · от 240 €</option></optgroup><optgroup label="Пакетные"><option value="sunny-georgia">Солнечная Грузия · от 840 €</option><option value="cities-regions">Города и регионы Грузии · от 840 €</option><option value="soul-of-georgia">Душа Грузии · от 840 €</option><option value="active-batumi">Грузия в активном ритме из Батуми · от 650 €</option><option value="active-tbilisi">Грузия в активном ритме из Тбилиси · от 650 €</option><option value="grand-georgia">Большое путешествие по Грузии · от 1250 €</option></optgroup></select>
+</div>
+
           <label class="bt-f bt-f--half"><span>Дата</span><input class="bt-in1" type="date" id="btDate"></label>
           <div class="bt-f bt-f--half"><span id="btPplL">Сколько вас</span><div class="bt-step" role="group" aria-labelledby="btPplL"><button type="button" id="btMinus" aria-label="Меньше">−</button><output id="btPpl">2</output><button type="button" id="btPlus" aria-label="Больше">+</button></div></div>
           <label class="bt-f"><span>Имя</span><input class="bt-in1" id="btName" autocomplete="given-name"></label>
@@ -1344,7 +2085,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
           <a class="bt-glow" data-glow href="tel:+995591927262"><svg class="bt-f" aria-hidden="true"><use href="#i-ph"/></svg>Позвонить</a>
         </div>
         <dl class="bt-where">
-          <div><dt>Телефон</dt><dd><a href="tel:+995591927262">+995 591 92 72 62</a></dd></div>
+          <div><dt>Телефон</dt><dd><a class="bt-call" href="tel:+995591927262" aria-label="Позвонить: +995 591 92 72 62"><span class="bt-call__i"><svg class="bt-f" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-ph"/></svg></span>+995 591 92 72 62</a></dd></div>
           <div><dt>Почта</dt><dd><a href="mailto:info@batumitrips.com">info@batumitrips.com</a></dd></div>
           <div><dt>На связи</dt><dd>каждый день, круглосуточно</dd></div>
         </dl>
@@ -1390,14 +2131,41 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
   var $$ = function (s, r) { return [].slice.call((r || D).querySelectorAll(s)); };
   var clamp = function (v, a, b) { return Math.min(b, Math.max(a, v)); };
   var WA = 'https://wa.me/995591927262?text=';
+
   var TOURS = {
-    machakhela: { name: 'Мачахела', price: 75, zip: 70 },
-    gomismta: { name: 'Гомисмта', price: 70 },
-    mtirala: { name: 'Мтирала', price: 60 },
-    shuakhevi: { name: 'Шуахеви', price: 75 },
-    adjara: { name: 'Горная Аджария', price: 35, small: 95 },   
-    mandarin: { name: 'Мандариновый тур', msg: 'Мандариновый', price: 50, from: 10 } 
+    "machakhela": { name: "Мачахела", g: "oneday", price: 75, zip: 70, len: "1 день" },
+    "gomismta": { name: "Гомисмта", g: "oneday", price: 70, len: "1 день" },
+    "mtirala": { name: "Мтирала", g: "oneday", price: 60, len: "8 часов" },
+    "shuakhevi": { name: "Шуахеви", g: "oneday", price: 75, len: "8 часов" },
+    "adjara": { name: "Горная Аджария", g: "oneday", price: 35, small: 95, len: "6 часов" },
+    "mandarin": { name: "Мандариновый тур", g: "oneday", price: 50, msg: "Мандариновый", from: 10, len: "ноябрь и декабрь" },
+    "rafting-hot-springs": { name: "Рафтинг и горячие источники", g: "oneday", price: 60, len: "10 часов" },
+    "wellness": { name: "Оздоровительный тур", g: "oneday", price: 55, small: 75, len: "5–6 часов" },
+    "keda": { name: "Кеда", g: "oneday", price: 65, small: 95, len: "6 часов" },
+    "okatse-martvili": { name: "Прометей, Окаце и Мартвили", g: "oneday", price: 55, len: "10 часов" },
+    "georgian-cuisine": { name: "Секреты грузинской кухни", g: "oneday", price: 60, small: 95, len: "7 часов" },
+    "chirukhi": { name: "Чирухи", g: "oneday", price: 75, len: "10 часов" },
+    "prometheus-martvili": { name: "Пещера Прометея и Мартвильский каньон", g: "oneday", price: 50, len: "1 день" },
+    "green-lake": { name: "Зелёное озеро", g: "oneday", price: 70, len: "10 часов" },
+    "batumi-walking": { name: "Пеший тур по Батуми", g: "oneday", price: 25, small: 50, len: "2,5 часа" },
+    "bakhmaro": { name: "Бахмаро", g: "oneday", price: 75, len: "10 часов" },
+    "rtveli": { name: "Ртвели", g: "oneday", price: 70, len: "8 часов" },
+    "tea": { name: "Чайный тур", g: "oneday", price: 70, len: "7 часов" },
+    "svaneti-2-days": { name: "Сванети на 2 дня", g: "multiday", price: 170, fr: 1, len: "2 дня" },
+    "racha-9-crosses-2-days": { name: "Рача на 2 дня", g: "multiday", price: 150, fr: 1, len: "2 дня" },
+    "borjomi-2-days": { name: "Боржоми на 2 дня", g: "multiday", price: 170, fr: 1, len: "2 дня" },
+    "svaneti-racha-3-days": { name: "Сванети и Рача на 3 дня", g: "multiday", price: 240, fr: 1, len: "3 дня" },
+    "svaneti-3-days": { name: "Сванети на 3 дня", g: "multiday", price: 240, fr: 1, len: "3 дня" },
+    "racha-9-crosses-3-days": { name: "Рача 9 крестов на 3 дня", g: "multiday", price: 240, fr: 1, len: "3 дня" },
+    "sunny-georgia": { name: "Солнечная Грузия", g: "package", price: 840, fr: 1, len: "8 дней · 7 ночей" },
+    "cities-regions": { name: "Города и регионы Грузии", g: "package", price: 840, fr: 1, len: "8 дней · 7 ночей" },
+    "soul-of-georgia": { name: "Душа Грузии", g: "package", price: 840, fr: 1, len: "8 дней · 7 ночей" },
+    "active-batumi": { name: "Грузия в активном ритме из Батуми", g: "package", price: 650, fr: 1, len: "5 дней · 4 ночи" },
+    "active-tbilisi": { name: "Грузия в активном ритме из Тбилиси", g: "package", price: 650, fr: 1, len: "5 дней · 4 ночи" },
+    "grand-georgia": { name: "Большое путешествие по Грузии", g: "package", price: 1250, fr: 1, len: "10 дней · 9 ночей" }
   };
+  var NOTES = { "multiday": "Цена при группе от 4 человек", "package": "Цена при двухместном размещении, одноместное +200 €" };   
+
   var ZIP = false;   
 
 
@@ -1550,16 +2318,13 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
 
   var tourSel = $('#btTour'), dateIn = $('#btDate'), pplOut = $('#btPpl');
   var total = $('#btTotal'), send = $('#btSend'), nm = $('#btName');
-  Object.keys(TOURS).forEach(function (id) {
-    var t = TOURS[id], o = D.createElement('option');
-    o.value = id; o.textContent = t.name + ' · ' + (t.small ? 'от ' : '') + t.price + ' €'; tourSel.appendChild(o);
-  });
   dateIn.min = iso(inDays('1')); dateIn.value = iso(inDays('1'));
   var ppl = 2, link = WA, agree = $('#btAgree');
   function people(n) { var a = n % 10, b = n % 100; return a >= 2 && a <= 4 && (b < 12 || b > 14) ? 'человека' : 'человек'; }
   function calc() {
-    var t = TOURS[tourSel.value], one = t.small && ppl < 3 ? t.small : t.price, zip = ZIP && t.zip;
-    total.innerHTML = '<b>' + ppl * one + ' €' + (zip ? ' + ' + ppl * t.zip + ' лари' : '') + '</b>' + ppl + ' ' + people(ppl) + ' × ' + one + ' €' + (zip ? ' + зип-лайн ' + t.zip + ' лари' : '');
+    var t = TOURS[tourSel.value], one = t.small && ppl < 3 ? t.small : t.price, zip = ZIP && t.zip, pre = t.fr ? 'от ' : '';
+    total.innerHTML = '<b>' + pre + ppl * one + ' €' + (zip ? ' + ' + ppl * t.zip + ' лари' : '') + '</b>' + ppl + ' ' + people(ppl) + ' × ' + pre + one + ' €' + (zip ? ' + зип-лайн ' + t.zip + ' лари' : '') +
+      (t.fr && NOTES[t.g] ? '<small>' + NOTES[t.g] + '</small>' : '');
     var d = dateIn.value ? new Date(dateIn.value + 'T12:00:00') : null;
     var text = 'Здравствуйте! Хочу записаться. Тур «' + (t.msg || t.name) + '»' +
       (d ? ', ' + d.getDate() + ' ' + MONTHS[d.getMonth()] : '') + ', нас ' + ppl + (zip ? ', с зип-лайном' : '') + '.' +
@@ -1572,12 +2337,102 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
   }
   $('#btMinus').addEventListener('click', function () { ppl = Math.max(1, ppl - 1); pplOut.textContent = ppl; calc(); });
   $('#btPlus').addEventListener('click', function () { ppl = Math.min(10, ppl + 1); pplOut.textContent = ppl; calc(); });
-  tourSel.addEventListener('change', function () { season(); calc(); });
   dateIn.addEventListener('change', calc);
   nm.addEventListener('input', calc);
+
+
+  var kindBox = $('#btKind'), kindBtns = $$('.bt-kind__b', kindBox), pick = $('#btPick');
+  var pickBtn = $('.bt-pick__b', pick), pickN = $('#btPickN'), pickP = $('#btPickP'), list = $('#btPickList');
+  var kind = TOURS[tourSel.value].g, opts = [], curOpt = -1, phone = matchMedia('(max-width:639px)');
+  function priceOf(t) { return (t.fr || t.small ? 'от ' : '') + t.price + ' €'; }
+  function markKind() {
+    kindBtns.forEach(function (b) {
+      var on = b.getAttribute('data-g') === kind;
+      b.classList.toggle('is-act', on); b.setAttribute('aria-checked', on ? 'true' : 'false'); b.tabIndex = on ? 0 : -1;
+    });
+  }
+  function fillList() {
+    list.textContent = ''; opts = [];
+    Object.keys(TOURS).forEach(function (id) {
+      var t = TOURS[id]; if (t.g !== kind) return;
+      var li = D.createElement('li'), a = D.createElement('span'), b = D.createElement('span'), c = D.createElement('span');
+      li.className = 'bt-opt'; li.id = 'btOpt-' + id; li.setAttribute('role', 'option'); li.setAttribute('data-id', id);
+      a.className = 'bt-opt__n'; a.textContent = t.name; b.className = 'bt-opt__l'; b.textContent = t.len; c.className = 'bt-opt__p'; c.textContent = priceOf(t);
+      li.appendChild(a); li.appendChild(b); li.appendChild(c); list.appendChild(li); opts.push(li);
+    });
+  }
+  function syncPick() {
+    var id = tourSel.value, t = TOURS[id];
+    pickN.textContent = t.name; pickP.textContent = priceOf(t);
+    opts.forEach(function (o) { o.setAttribute('aria-selected', o.getAttribute('data-id') === id ? 'true' : 'false'); });
+  }
+  function setTour(id) {
+    var t = TOURS[id]; if (!t) return;
+    tourSel.value = id;
+    if (t.g !== kind) {
+      kind = t.g; markKind(); fillList();
+      if (!REDUCED) { pickBtn.classList.remove('is-flip'); void pickBtn.offsetWidth; pickBtn.classList.add('is-flip'); }
+    }
+    syncPick(); season(); calc();
+  }
+  function setCur(i, center) {
+    if (!opts.length) return;
+    curOpt = clamp(i, 0, opts.length - 1);
+    opts.forEach(function (o, k) { o.classList.toggle('is-cur', k === curOpt); });
+    var o = opts[curOpt], top = o.offsetTop, bot = top + o.offsetHeight;
+    list.setAttribute('aria-activedescendant', o.id);
+    if (center) list.scrollTop = top - (list.clientHeight - o.offsetHeight) / 2;
+    else if (top < list.scrollTop) list.scrollTop = top - 6;
+    else if (bot > list.scrollTop + list.clientHeight) list.scrollTop = bot - list.clientHeight + 6;
+  }
+  function openPick() {
+    if (pick.classList.contains('is-open')) return;
+    pick.classList.add('is-open'); pickBtn.setAttribute('aria-expanded', 'true');
+    if (phone.matches) D.body.classList.add('bt-lock');
+    else $('.bt-pick__sheet', pick).scrollIntoView({ block: 'nearest', behavior: REDUCED ? 'auto' : 'smooth' });
+    var k = 0; opts.forEach(function (o, j) { if (o.getAttribute('aria-selected') === 'true') k = j; });
+    setCur(k, true); list.focus({ preventScroll: true });
+  }
+  function closePick(back) {
+    if (!pick.classList.contains('is-open')) return;
+    pick.classList.remove('is-open'); pickBtn.setAttribute('aria-expanded', 'false'); D.body.classList.remove('bt-lock');
+    if (back) pickBtn.focus({ preventScroll: true });
+  }
+  function choose(i) { if (opts[i]) { setTour(opts[i].getAttribute('data-id')); closePick(true); } }
+  pickBtn.addEventListener('click', function () { if (pick.classList.contains('is-open')) closePick(true); else openPick(); });
+  pickBtn.addEventListener('keydown', function (e) { if (e.key === 'ArrowDown' || e.key === 'ArrowUp') { e.preventDefault(); openPick(); } });
+  list.addEventListener('click', function (e) { var li = e.target.closest('.bt-opt'); if (li) choose(opts.indexOf(li)); });
+  list.addEventListener('keydown', function (e) {
+    var k = e.key;
+    if (k === 'ArrowDown') { e.preventDefault(); setCur(curOpt + 1); }
+    else if (k === 'ArrowUp') { e.preventDefault(); setCur(curOpt - 1); }
+    else if (k === 'Home') { e.preventDefault(); setCur(0); }
+    else if (k === 'End') { e.preventDefault(); setCur(opts.length - 1); }
+    else if (k === 'Enter' || k === ' ') { e.preventDefault(); choose(curOpt); }
+    else if (k === 'Escape') { e.preventDefault(); e.stopPropagation(); closePick(true); }
+    else if (k === 'Tab') closePick(false);
+  });
+  $('.bt-pick__bg', pick).addEventListener('click', function () { closePick(true); });
+  $('.bt-pick__x', pick).addEventListener('click', function () { closePick(true); });
+  D.addEventListener('pointerdown', function (e) { if (pick.classList.contains('is-open') && !pick.contains(e.target)) closePick(false); });
+  kindBtns.forEach(function (b) {
+    b.addEventListener('click', function () {
+      var g = b.getAttribute('data-g'); if (b.disabled || g === kind) return;
+      var first = Object.keys(TOURS).filter(function (id) { return TOURS[id].g === g; })[0];
+      if (first) setTour(first);
+    });
+  });
+  kindBox.addEventListener('keydown', function (e) {
+    var on = kindBtns.filter(function (b) { return !b.disabled; }), i = on.indexOf(D.activeElement);
+    var d = e.key === 'ArrowRight' || e.key === 'ArrowDown' ? 1 : e.key === 'ArrowLeft' || e.key === 'ArrowUp' ? -1 : 0;
+    if (i < 0 || !d) return;
+    e.preventDefault(); var b = on[(i + d + on.length) % on.length]; b.focus(); b.click();
+  });
+  tourSel.addEventListener('change', function () { setTour(tourSel.value); });
+  markKind(); fillList(); syncPick();
   $$('[data-tour]').forEach(function (a) {
     a.addEventListener('click', function () {
-      tourSel.value = a.getAttribute('data-tour');
+      setTour(a.getAttribute('data-tour'));
       var code = a.getAttribute('data-in'); if (code) dateIn.value = iso(inDays(code));
       season(); calc();
     });
@@ -1654,36 +2509,84 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
   });
 
 
-  var prog = $('#btProg'), pr = $$('.bt-pr', prog), progAt = 0;
-  function progMove() {
-    var max = prog.scrollWidth - prog.clientWidth, c = prog.scrollLeft + prog.clientWidth / 2, best = 0, bd = 1e9;
-    if (prog.scrollLeft < 8) best = 0; else if (prog.scrollLeft > max - 8) best = pr.length - 1;
-    else pr.forEach(function (el, k) { var d = Math.abs(el.offsetLeft + el.offsetWidth / 2 - c); if (d < bd) { bd = d; best = k; } });
-    progAt = best;
-    pr.forEach(function (el, k) { el.classList.toggle('is-near', k === best); });
-  }
-  prog.addEventListener('scroll', progMove, { passive: true }); addEventListener('resize', progMove); progMove();
-  autoStrip(prog, 2500, function () {
-    var max = prog.scrollWidth - prog.clientWidth, pitch = pr.length > 1 ? pr[1].offsetLeft - pr[0].offsetLeft : prog.clientWidth;
-    if (prog.scrollLeft >= max - 4) prog.scrollTo({ left: 0, behavior: 'smooth' });
-    else prog.scrollBy({ left: pitch, behavior: 'smooth' });
-  });
+  var prog = $('#btProg'), pr = $$('.bt-pr', prog);
+  if (REDUCED) {
+    var progMove = function () {
+      var max = prog.scrollWidth - prog.clientWidth, c = prog.scrollLeft + prog.clientWidth / 2, best = 0, bd = 1e9;
+      if (prog.scrollLeft < 8) best = 0; else if (prog.scrollLeft > max - 8) best = pr.length - 1;
+      else pr.forEach(function (el, k) { var d = Math.abs(el.offsetLeft + el.offsetWidth / 2 - c); if (d < bd) { bd = d; best = k; } });
+      pr.forEach(function (el, k) { el.classList.toggle('is-near', k === best); });
+    };
+    prog.addEventListener('scroll', progMove, { passive: true }); addEventListener('resize', progMove); progMove();
 
-  (function () {
-    var down = false, x0 = 0, s0 = 0;
-    function end() {
-      if (!down) return; down = false; prog.classList.remove('is-drag');
-      var c = prog.scrollLeft + prog.clientWidth / 2, best = null, bd = 1e9;
-      pr.forEach(function (el) { var d = Math.abs(el.offsetLeft + el.offsetWidth / 2 - c); if (d < bd) { bd = d; best = el; } });
-      if (best) prog.scrollTo({ left: Math.max(0, best.offsetLeft + best.offsetWidth / 2 - prog.clientWidth / 2), behavior: 'smooth' });
+    (function () {
+      var down = false, x0 = 0, s0 = 0;
+      function end() {
+        if (!down) return; down = false; prog.classList.remove('is-drag');
+        var c = prog.scrollLeft + prog.clientWidth / 2, best = null, bd = 1e9;
+        pr.forEach(function (el) { var d = Math.abs(el.offsetLeft + el.offsetWidth / 2 - c); if (d < bd) { bd = d; best = el; } });
+        if (best) prog.scrollTo({ left: Math.max(0, best.offsetLeft + best.offsetWidth / 2 - prog.clientWidth / 2), behavior: 'auto' });
+      }
+      prog.addEventListener('pointerdown', function (e) {
+        if (e.pointerType !== 'mouse' || e.button !== 0) return;
+        down = true; x0 = e.clientX; s0 = prog.scrollLeft; prog.classList.add('is-drag');
+        try { prog.setPointerCapture(e.pointerId); } catch (err) {   }
+      });
+      prog.addEventListener('pointermove', function (e) { if (down) prog.scrollLeft = s0 - (e.clientX - x0); });
+      ['pointerup', 'pointercancel', 'lostpointercapture'].forEach(function (ev) { prog.addEventListener(ev, end); });
+    })();
+  } else (function () {
+    var wrap = prog.parentNode, n = pr.length, SPEED = 52;    
+    pr.forEach(function (el) { var c = el.cloneNode(true); c.setAttribute('aria-hidden', 'true'); prog.appendChild(c); });
+    var all = $$('.bt-pr', prog), dpr = Math.max(1, W.devicePixelRatio || 1);
+    var x = 0, v = 0, vw = 0, left0 = 0, w0 = 0, pitch = 1, period = 1, near = -1;
+    var raf = 0, last = 0, seen = false, held = false, sx = 0, sx0 = 0, lx = 0, lt = 0, vel = 0;
+    wrap.classList.add('is-run');
+    function measure() {
+      vw = wrap.clientWidth; left0 = all[0].offsetLeft; w0 = all[0].offsetWidth;
+      pitch = all[1].offsetLeft - left0 || 1; period = all[n].offsetLeft - left0 || 1;
     }
+    function paint() {
+      prog.style.transform = 'translate3d(' + (-Math.round(x * dpr) / dpr) + 'px,0,0)';
+      var k = clamp(Math.round((x + vw / 2 - left0 - w0 / 2) / pitch), 0, all.length - 1) % n;
+      if (k !== near) { near = k; all.forEach(function (el, j) { el.classList.toggle('is-near', j % n === k); }); }
+    }
+    function wrapX() { x = ((x % period) + period) % period; }
+    function tick(t) {
+      raf = 0;
+      var dt = last ? Math.min(.1, (t - last) / 1000) : 0; last = t;
+      x += (SPEED + v) * dt; v *= Math.exp(-3 * dt); if (Math.abs(v) < 1) v = 0;
+      wrapX(); paint();
+      if (seen && !held && !D.hidden) raf = requestAnimationFrame(tick);
+    }
+    function kick() { if (!raf && seen && !held && !D.hidden) { last = 0; raf = requestAnimationFrame(tick); } }
+    function halt() { if (raf) { cancelAnimationFrame(raf); raf = 0; } }
     prog.addEventListener('pointerdown', function (e) {
-      if (e.pointerType !== 'mouse' || e.button !== 0) return;
-      down = true; x0 = e.clientX; s0 = prog.scrollLeft; prog.classList.add('is-drag');
+      if (e.pointerType === 'mouse' && e.button !== 0) return;
+      held = true; halt(); v = 0; vel = 0; sx = lx = e.clientX; sx0 = x; lt = e.timeStamp;
+      prog.classList.add('is-drag');
       try { prog.setPointerCapture(e.pointerId); } catch (err) {   }
     });
-    prog.addEventListener('pointermove', function (e) { if (down) prog.scrollLeft = s0 - (e.clientX - x0); });
-    ['pointerup', 'pointercancel', 'lostpointercapture'].forEach(function (ev) { prog.addEventListener(ev, end); });
+    prog.addEventListener('pointermove', function (e) {
+      if (!held) return;
+      x = sx0 - (e.clientX - sx); wrapX(); paint();
+      var dt = (e.timeStamp - lt) / 1000;
+      if (dt > 0) vel = vel * .6 + (-(e.clientX - lx) / dt) * .4;
+      lx = e.clientX; lt = e.timeStamp;
+    });
+    function release() {
+      if (!held) return; held = false; prog.classList.remove('is-drag');
+      v = clamp(vel, -2500, 2500) - SPEED; kick();
+    }
+    ['pointerup', 'pointercancel'].forEach(function (ev) { prog.addEventListener(ev, release); });
+    prog.addEventListener('keydown', function (e) {
+      if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+      e.preventDefault(); v = clamp(v + (e.key === 'ArrowRight' ? 1 : -1) * pitch * 3, -2500, 2500); kick();
+    });
+    addEventListener('resize', function () { measure(); wrapX(); paint(); });
+    D.addEventListener('visibilitychange', function () { if (D.hidden) halt(); else kick(); });
+    measure(); paint();
+    watch([wrap], function (el, on) { seen = on; if (on) kick(); else halt(); }, { threshold: 0 });
   })();
 
 
@@ -1710,43 +2613,103 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
 
 (function(){
   var box=document.getElementById('btGeo');if(!box)return;
-  var NS='http://www.w3.org/2000/svg';
-  var pins=[].slice.call(box.querySelectorAll('.bt-pin[data-k]')),home=box.querySelector('.bt-pin--home');
-  var chips=[].slice.call(document.querySelectorAll('#btGeoList [data-k]')),lines=box.querySelector('.bt-geo__lines'),num=document.getElementById('btGeoN');
+  var grid=box.parentNode.parentNode,num=document.getElementById('btGeoN');
+  var plate=document.getElementById('btGeoPlate'),pName=plate.querySelector('b'),pGo=plate.querySelector('button');
+  var sw=[].slice.call(grid.querySelectorAll('.bt-geo__switch button'));
+  var chips=[].slice.call(grid.querySelectorAll('.bt-geo__list [data-k]'));
+  var lists=grid.querySelector('.bt-geo__lists'),listEl={a:grid.querySelector('.bt-geo__list[data-for=a]'),w:grid.querySelector('.bt-geo__list[data-for=w]')};
   var calm=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var cur=-1,hold=0,seen=false,ready=false;
-  var hx=+home.getAttribute('data-x'),hy=+home.getAttribute('data-y');
 
-  pins.forEach(function(p,i){
-    var x=+p.getAttribute('data-x'),y=+p.getAttribute('data-y'),dx=x-hx,dy=y-hy,len=Math.sqrt(dx*dx+dy*dy)||1,k=(i%2?1:-1)*Math.min(44,len*.16);
-    var l=document.createElementNS(NS,'path');
-    l.setAttribute('d','M'+hx+' '+hy+'Q'+((hx+x)/2-dy/len*k).toFixed(1)+' '+((hy+y)/2+dx/len*k).toFixed(1)+' '+x+' '+y);
-    l.setAttribute('pathLength','1');l.style.setProperty('--i',i);lines.appendChild(l);
-    p._line=l;p.style.setProperty('--i',i);
-  });
-  function mark(i,on){
-    pins[i].classList.toggle('is-on',on);pins[i]._line.classList.toggle('is-on',on);
-    var k=pins[i].getAttribute('data-k');
+  var D={
+    home:{n:'Батуми',v:'a',t:'batumi-walking'},urek:{n:'Уреки',v:'a',t:'wellness'},mach:{n:'Мачахела',v:'a',t:'machakhela'},
+    makh:{n:'Махунцети',v:'a',t:'adjara'},mtir:{n:'Мтирала',v:'a',t:'mtirala'},keda:{n:'Кеда',v:'a',t:'keda'},
+    gomi:{n:'Гомисмта',v:'a',t:'gomismta'},shua:{n:'Шуахеви',v:'a',t:'shuakhevi'},chir:{n:'Чирухи',v:'a',t:'chirukhi'},
+    bakh:{n:'Бахмаро',v:'a',t:'bakhmaro'},lake:{n:'Зелёное озеро',v:'a',t:'green-lake'},
+    adj:{n:'Аджария',v:'w',zoom:true},mart:{n:'Мартвили',v:'w',t:'okatse-martvili'},svan:{n:'Сванетия',v:'w',t:'svaneti-2-days'},
+    racha:{n:'Рача',v:'w',t:'racha-9-crosses-2-days'},borj:{n:'Боржоми',v:'w',t:'borjomi-2-days'},tbil:{n:'Тбилиси',v:'w',tab:'package'}
+  };
+  var ORDER={a:['home','urek','mach','makh','mtir','keda','gomi','shua','chir','bakh','lake'],w:['adj','mart','svan','racha','borj','tbil']};
+  var pin={};[].forEach.call(box.querySelectorAll('.bt-pin[data-k]'),function(p){pin[p.getAttribute('data-k')]=p});
+  var view='a',cur=null,hold=0,seen=false,ready=false,plateOpen=false,intro=0;
+
+  function mark(k,on){
+    if(pin[k])pin[k].classList.toggle('is-on',on);
     chips.forEach(function(c){if(c.getAttribute('data-k')===k){c.classList.toggle('is-on',on);c.setAttribute('aria-pressed',on?'true':'false')}});
   }
-  function set(i,user){if(i===cur)return;if(cur>=0)mark(cur,false);cur=i;mark(i,true);if(user)hold=Date.now()+6000}
-  function byKey(k){for(var i=0;i<pins.length;i++)if(pins[i].getAttribute('data-k')===k)return i;return -1}
-  chips.forEach(function(c){c.addEventListener('click',function(){var i=byKey(c.getAttribute('data-k'));if(i>=0)set(i,true)})});
-  pins.forEach(function(p,i){p.addEventListener('mouseenter',function(){if(ready)set(i,true)})});
+  function hidePlate(){plate.classList.remove('is-on');plateOpen=false}
+  function showPlate(k){
+    var d=D[k],p=pin[k];if(!d||!p)return;
+    pName.textContent=d.n;pGo.textContent=d.tab?'Смотреть пакетные туры':'Смотреть тур';plate.setAttribute('data-k',k);
+    var y=parseFloat(p.getAttribute(view==='a'?'data-ay':'data-wy'))/100*box.clientHeight,h=plate.offsetHeight||56;
+    plate.classList.toggle('is-top',y>box.clientHeight-h-22);
+    plate.classList.add('is-on');plateOpen=true;
+  }
+
+  function select(k,how){
+    if(!D[k])return;
+    if(cur!==k){if(cur)mark(cur,false);cur=k;mark(k,true)}
+    if(how===2){hold=Date.now()+6000;showPlate(k)}
+    else{if(how===1)hold=Date.now()+3000;if(plateOpen)hidePlate()}
+  }
+  function setView(v){
+    if(intro){clearTimeout(intro);intro=0;box.classList.add('is-done');ready=true}
+    view=v;
+    grid.classList.toggle('is-a',v==='a');box.classList.toggle('is-z',v==='a');
+    sw.forEach(function(b){b.setAttribute('aria-pressed',b.getAttribute('data-view')===v?'true':'false')});
+    if(cur){mark(cur,false);cur=null}
+    fit();hidePlate();hold=Date.now()+(calm?0:1500);
+    if(calm&&ready)select(ORDER[v][0],0);
+  }
+
+  function fit(){if(lists&&listEl[view])lists.style.height=listEl[view].offsetHeight+'px'}
+  function choose(k){
+    var d=D[k];if(!d)return;
+    if(d.zoom){setView('a');return}
+    if(d.v!==view&&!(k==='home'))setView(d.v);
+    select(k,2);
+  }
+  function openTour(k){
+    var d=D[k];if(!d)return;
+    if(d.tab){if(typeof window.btShowTab==='function')window.btShowTab(d.tab);else location.hash='#tours'}
+    else{if(typeof window.btShowTour==='function')window.btShowTour(d.t);else location.hash='#tours'}
+  }
+  sw.forEach(function(b){b.addEventListener('click',function(){setView(b.getAttribute('data-view'))})});
+  chips.forEach(function(c){c.addEventListener('click',function(){choose(c.getAttribute('data-k'))})});
+  [].forEach.call(box.querySelectorAll('.bt-pin[data-k] > button'),function(b){
+    var k=b.parentNode.getAttribute('data-k');
+    b.addEventListener('click',function(){choose(k)});
+    b.addEventListener('pointerenter',function(e){if(ready&&e.pointerType==='mouse'&&!plateOpen)select(k,1)});
+  });
+  pGo.addEventListener('click',function(){openTour(plate.getAttribute('data-k'))});
+  box.addEventListener('click',function(e){if(!e.target.closest('.bt-pin > button')&&!e.target.closest('.bt-geo__plate')){hidePlate();hold=Date.now()+1500}});
+
   function count(){
     if(!num)return;var to=parseInt(num.textContent,10)||30;if(calm)return;
     var t0=0;num.textContent='0';
     requestAnimationFrame(function tick(t){if(!t0)t0=t;var p=Math.min(1,(t-t0)/1300);num.textContent=Math.round(to*(1-Math.pow(1-p,3)));if(p<1)requestAnimationFrame(tick)});
   }
+
+  function finishIntro(){intro=0;box.classList.add('is-done');ready=true;if(view==='a'&&!cur)select(ORDER.a[0],0)}
   function go(){
     if(box.classList.contains('is-live'))return;
     box.classList.add('is-live');count();
-    setTimeout(function(){box.classList.add('is-done');ready=true;set(byKey('mach')>=0?byKey('mach'):0)},calm?0:(600+pins.length*100+500));
+    if(calm||view!=='a'){box.classList.toggle('is-z',view==='a');finishIntro();return}
+    intro=setTimeout(function(){box.classList.add('is-z');intro=setTimeout(finishIntro,1500)},1700);
   }
   if('IntersectionObserver' in window){
     new IntersectionObserver(function(en){seen=en[0].isIntersecting;box.classList.toggle('is-off',!seen);if(seen&&en[0].intersectionRatio>=.3)go()},{threshold:[0,.3]}).observe(box);
   }else{seen=true;go()}
-  setInterval(function(){if(calm||!seen||!ready||document.hidden||Date.now()<hold)return;set((cur+1)%pins.length)},1500);
+  setInterval(function(){
+    if(calm||!seen||!ready||document.hidden||Date.now()<hold)return;
+    if(plateOpen){
+      if(plate.matches(':hover')||plate.contains(document.activeElement)){hold=Date.now()+3000;return}
+      hidePlate();
+    }
+    var o=ORDER[view],i=o.indexOf(cur);select(o[(i+1)%o.length],0);
+  },1700);
+  grid.classList.add('is-a');
+  fit();
+  if('ResizeObserver' in window){var ro=new ResizeObserver(fit);ro.observe(listEl.a);ro.observe(listEl.w)}
 })();
 
 

@@ -121,6 +121,17 @@ h1,h2,h3{font-family:var(--disp);font-weight:800;margin:0;line-height:1;text-tra
   .bl-post:hover img{transform:scale(1.06)}
 }
 
+/* страница всех статей (blog/index.html) */
+.bl-all h1{font-size:clamp(72px,19vw,132px)}
+.bl-lead{margin:12px 0 0;max-width:26em;font-size:19px;line-height:1.45;color:var(--mute)}
+.bl-all .bl-cards{margin-top:28px}
+.bl-cards--all .bl-post{box-shadow:0 22px 34px -28px rgba(35,46,11,.75),0 0 0 1px rgba(35,46,11,.07);animation:blIn .6s var(--ease) both;animation-delay:calc(var(--i,0)*.07s)}
+.bl-cards.bl-cards--all .bl-post:nth-child(3){display:flex}
+.bl-post time{padding:0 10px;font-weight:600;font-size:13.5px;color:var(--mute)}
+.bl-post__go{margin-top:auto;padding:6px 10px 0;display:inline-flex;align-items:center;gap:8px;font-weight:700;font-size:15px;color:var(--olive)}
+.bl-post__go svg{width:18px;height:18px;transition:transform .35s var(--ease)}
+@media (hover:hover){.bl-post:hover .bl-post__go svg{transform:translateX(5px)}}
+
 /* комментарии */
 .bl-com{padding:44px 0 50px}
 .bl-com h2{font-size:clamp(46px,11vw,84px)}
@@ -131,6 +142,7 @@ h1,h2,h3{font-family:var(--disp);font-weight:800;margin:0;line-height:1;text-tra
 .bl-f>span{font-weight:700;font-size:12.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--mute)}
 .bl-form input[type=text],.bl-form textarea{width:100%;min-height:50px;border-radius:14px;border:2px solid rgba(35,46,11,.16);background:#fff;padding:12px 14px;font:400 17px/1.4 var(--text);color:var(--ink);transition:border-color .3s,box-shadow .3s}
 .bl-form textarea{min-height:120px;resize:vertical}
+.bl-form input.bl-hp[type=text]{position:absolute;left:-9999px;width:1px;min-height:0;height:1px;padding:0;border:0;opacity:0}
 .bl-form input[type=text]:focus,.bl-form textarea:focus{outline:0;border-color:var(--olive);box-shadow:0 0 0 4px rgba(86,100,43,.18)}
 .bl-agree{display:flex;align-items:center;gap:12px;min-height:44px;font-size:15.5px;cursor:pointer}
 .bl-agree input{width:22px;height:22px;flex:none;margin:0;accent-color:var(--olive)}

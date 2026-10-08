@@ -1,8 +1,9 @@
 /* Страницы статей: меню и комментарии.
    Комментарии. Пока сервера нет, они хранятся в браузере посетителя (localStorage) — видны только ему.
-   Когда появится сервер, его адрес ставится в <html data-comments="https://…">: тогда список и отправка
-   идут туда (GET ?post=<slug> → [{id,name,text,ts}], POST {post,name,text} → {id,name,text,ts}),
-   а удаление делает администратор на стороне сервера. Текст всегда выводится через textContent. */
+   Сервер — файл _server/comments.php на хостинге компании (решение Романа 08.10.2026: хранить у них, не у нас).
+   Его адрес ставит сборка блога в <html data-comments="…"> (COMMENTS_API в _blog/make_blog.py): тогда список
+   и отправка идут туда (GET ?post=<slug> → [{id,name,text,ts}], POST {post,name,text,site} → {id,name,text,ts,pending}),
+   а удаляет и одобряет администратор на странице comments.php?admin=<секрет>. Текст всегда выводится через textContent. */
 (function () {
   'use strict';
   var d = document, root = d.documentElement;
@@ -31,6 +32,7 @@
   var list = d.getElementById('blList'), form = d.getElementById('blForm'), count = d.getElementById('blCount');
   var name = d.getElementById('blName'), text = d.getElementById('blText'), agree = d.getElementById('blAgree');
   var send = d.getElementById('blSend'), ok = d.getElementById('blOk');
+  var trap = d.getElementById('blSite');   // скрытое поле: человек его не видит, заполняют только роботы
   var items = [];
 
   var store = {
@@ -39,8 +41,8 @@
       try { return Promise.resolve(JSON.parse(localStorage.getItem(KEY) || '[]')); } catch (e) { return Promise.resolve([]); }
     },
     add: function (c) {
-      if (api) return fetch(api, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ post: slug, name: c.name, text: c.text }) })
-        .then(function (r) { if (!r.ok) throw new Error('send'); return r.json(); });
+      if (api) return fetch(api, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ post: slug, name: c.name, text: c.text, site: trap ? trap.value : '' }) })
+        .then(function (r) { if (!r.ok) throw new Error(r.status === 429 ? 'slow' : 'send'); return r.json(); });
       c.id = String(Date.now()); c.mine = true;
       items.unshift(c);
       try { localStorage.setItem(KEY, JSON.stringify(items)); } catch (e) { /* хранилище закрыто — комментарий останется до перезагрузки */ }
@@ -96,15 +98,17 @@
     var c = { name: name.value.trim().slice(0, 40), text: text.value.trim().slice(0, 1000), ts: Date.now() };
     send.disabled = true;
     store.add(c).then(function (saved) {
-      if (saved) items.unshift(saved);
+      var wait = saved && saved.pending;   // на сервере включена проверка: комментарий появится после одобрения
+      if (saved && !wait) items.unshift(saved);
       text.value = '';
       agree.checked = false;
+      ok.textContent = wait ? 'Спасибо! Комментарий появится после проверки.' : 'Комментарий опубликован.';
       ok.hidden = false;
-      setTimeout(function () { ok.hidden = true; }, 4000);
+      setTimeout(function () { ok.hidden = true; }, wait ? 7000 : 4000);
       render();
       ready();
-    }).catch(function () {
-      ok.textContent = 'Не отправилось. Попробуйте ещё раз.';
+    }).catch(function (err) {
+      ok.textContent = err && err.message === 'slow' ? 'Слишком часто. Попробуйте через минуту.' : 'Не отправилось. Попробуйте ещё раз.';
       ok.hidden = false;
       ready();
     });
