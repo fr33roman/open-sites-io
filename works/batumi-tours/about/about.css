@@ -1,0 +1,226 @@
+/* Страница «О нас» Batumi Tours Georgia. Общие части (шапка, кнопки, панели, блок .bl-cta, подвал) — в ../blog/blog.css,
+   здесь только своё: оливовая панель с видео и живым фоном, лента отзывов (перенесена из index.html без изменений вида).
+   Собирает страницу _about/make_about.py; блоки между метками topo:/arcs: он переписывает сам — руками не править. */
+
+@property --a{syntax:"<angle>";inherits:false;initial-value:0deg}
+
+/* topo:start — контуры гор, тот же узор, что на главной (--topo в index.html); переписывает make_about.py */
+:root{--topo:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='760' height='760' viewBox='0 0 760 760' fill='none' stroke='%23F3EFDF' stroke-opacity='.13' stroke-width='1.6'%3E%3Cpath d='M380 90c90-12 190 40 215 130s-16 150-78 202-166 78-244 40-112-114-86-202S290 102 380 90z'/%3E%3Cpath d='M380 135c70-10 148 30 166 100s-12 118-62 160-130 62-190 32-86-90-66-158 82-124 152-134z'/%3E%3Cpath d='M380 180c50-8 104 20 117 70s-8 86-44 114-92 44-136 24-64-64-48-112 62-88 111-96z'/%3E%3Cpath d='M380 225c30-5 62 14 70 44s-4 56-26 72-56 26-82 14-38-40-28-70 36-55 66-60z'/%3E%3Cpath d='M380 268c14-2 30 8 33 22s-3 28-14 36-30 12-42 6-18-20-12-34 20-27 35-30z'/%3E%3Cpath d='M96 560c52-26 118-20 168 12s90 90 52 128-116 40-180 14S44 586 96 560z'/%3E%3Cpath d='M126 586c38-18 84-12 120 10s62 62 36 90-82 28-126 10-70-86-30-110z'/%3E%3Cpath d='M156 612c24-10 54-6 76 8s36 40 20 58-52 18-80 6-44-54-16-72z'/%3E%3Cpath d='M590 520c36-18 88-10 112 24s8 88-36 106-98 6-118-36 6-76 42-94z'/%3E%3Cpath d='M606 548c24-10 58-6 74 16s6 58-24 70-66 4-78-24 4-50 28-62z'/%3E%3Cpath d='M24 150c26-24 70-22 90 6s6 66-26 76-68-6-72-36 -4-30 8-46z'/%3E%3Cpath d='M680 80c22-16 54-10 66 14s-4 54-30 60-52-8-56-32 8-34 20-42z'/%3E%3C/svg%3E")}
+/* topo:end */
+
+/* ——— свечение и отклик: переливающаяся рамка и пятно света под пальцем (JS ведёт --mx и --my); как на главной ——— */
+.bt-glow{position:relative}
+.bt-glow::before{content:"";position:absolute;inset:0;z-index:3;border-radius:inherit;padding:2px;pointer-events:none;
+  background:conic-gradient(from var(--a),rgba(239,184,13,0) 0 50%,rgba(239,184,13,.95) 72%,#fff3b8 79%,rgba(239,184,13,.95) 86%,rgba(239,184,13,0) 100%);
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);mask-composite:exclude;
+  opacity:0;transition:opacity .35s;animation:btSpin 3.6s linear infinite paused}
+.bt-glow::after{content:"";position:absolute;inset:0;z-index:2;border-radius:inherit;pointer-events:none;
+  background:radial-gradient(260px circle at var(--mx,50%) var(--my,25%),rgba(239,184,13,.2),transparent 70%);opacity:0;transition:opacity .35s}
+.bt-glow.is-hot::before,.bt-glow:focus-within::before{opacity:1;animation-play-state:running}@media (hover:hover){.bt-glow:hover::before{opacity:1;animation-play-state:running}}
+.bt-glow.is-hot::after{opacity:1}@media (hover:hover){.bt-glow:hover::after{opacity:1}}
+@keyframes btSpin{to{--a:360deg}}
+
+/* появление блоков по очереди */
+.bt-js .bt-up{opacity:0;transform:translateY(26px);transition:opacity .85s var(--ease) var(--d,0s),transform .85s var(--ease) var(--d,0s)}
+.bt-js .bt-up.is-in{opacity:1;transform:none}
+
+
+/* ═══════════ А. Оливковая панель: видео в рамке и живой фон ═══════════ */
+
+/* ткань, как .bt-tex на главной (шум, палитра, перелив, контуры гор), но светлые пятна зеркально и контуры едут по диагонали */
+.ab-hero{position:relative;isolation:isolate;overflow:clip;margin:0 0 var(--gap);padding:92px 0 96px;color:var(--cream);
+  background-color:#4A5826;background-image:var(--noise),radial-gradient(circle at 84% 12%,rgba(255,255,255,.07),transparent 30%),radial-gradient(circle at 14% 64%,rgba(255,255,255,.05),transparent 28%);
+  background-size:200px 200px,auto,auto;background-blend-mode:screen,normal,normal}
+.ab-hero::before{content:"";position:absolute;inset:calc(-1*max(16%,72px)) calc(-1*max(14%,84px));z-index:-2;pointer-events:none;
+  background:radial-gradient(40% 36% at 83% 17%,rgba(255,247,210,.24),transparent 70%),radial-gradient(42% 38% at 15% 73%,rgba(166,184,86,.38),transparent 70%),radial-gradient(34% 30% at 47% 106%,rgba(233,225,182,.26),transparent 70%);
+  animation:abFlow 30s ease-in-out infinite alternate;will-change:transform}
+/* контуры гор: слой шире панели на один шаг узора (760 px) влево и вниз, едет вправо-вверх ровно на этот шаг — круг бесшовный, только transform */
+.ab-hero::after{content:"";position:absolute;left:-760px;right:0;top:0;bottom:-760px;z-index:-1;pointer-events:none;background:var(--topo) 0 0/760px 760px;
+  animation:abTopo 90s linear infinite;will-change:transform}
+@keyframes abFlow{0%{transform:translate3d(4%,-3%,0) rotate(0deg) scale(1)}50%{transform:translate3d(-5%,3%,0) rotate(-3deg) scale(1.08)}100%{transform:translate3d(2%,5%,0) rotate(3deg) scale(1.03)}}
+@keyframes abTopo{from{transform:translate3d(0,0,0)}to{transform:translate3d(760px,-760px,0)}}
+/* вне экрана всё стоит (класс ставит about.js) */
+.ab-hero.is-off,.ab-hero.is-off *,.ab-hero.is-off::before,.ab-hero.is-off::after,.ab-hero.is-off *::before,.ab-hero.is-off *::after{animation-play-state:paused!important}
+
+/* светлячки и дуги маршрута: под текстом и рамкой, только transform и opacity */
+.ab-bg{position:absolute;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.ab-ff{position:absolute;left:var(--x);top:var(--y);width:calc(var(--s)*.72);height:calc(var(--s)*.72);margin:calc(var(--s)*-.36) 0 0 calc(var(--s)*-.36);border-radius:50%;
+  background:radial-gradient(circle,var(--c) 0,transparent 68%);opacity:var(--o1);
+  animation-duration:var(--t),var(--g);animation-delay:var(--dl),var(--dg);animation-timing-function:ease-in-out,ease-in-out;animation-iteration-count:infinite,infinite;animation-direction:alternate,normal;will-change:transform,opacity}
+.ab-ff--a{animation-name:abDriftA,abGlow}
+.ab-ff--b{animation-name:abDriftB,abGlow}
+.ab-ff--c{animation-name:abDriftC,abGlow}
+.ab-ff--d{animation-name:abDriftD,abGlow}
+@keyframes abGlow{0%,100%{opacity:var(--o1)}50%{opacity:var(--o2)}}
+@keyframes abDriftA{0%{transform:translate3d(0,0,0) scale(1)}35%{transform:translate3d(46px,-38px,0) scale(1.12)}70%{transform:translate3d(-28px,-84px,0) scale(.92)}100%{transform:translate3d(38px,-30px,0) scale(1.06)}}
+@keyframes abDriftB{0%{transform:translate3d(0,0,0) scale(1)}40%{transform:translate3d(-62px,26px,0) scale(1.1)}75%{transform:translate3d(-20px,78px,0) scale(.9)}100%{transform:translate3d(-48px,40px,0) scale(1.05)}}
+@keyframes abDriftC{0%{transform:translate3d(0,0,0) scale(.95)}30%{transform:translate3d(58px,34px,0) scale(1.08)}65%{transform:translate3d(104px,-22px,0) scale(1)}100%{transform:translate3d(40px,-58px,0) scale(1.12)}}
+@keyframes abDriftD{0%{transform:translate3d(0,0,0) scale(1.05)}33%{transform:translate3d(-40px,-52px,0) scale(.94)}66%{transform:translate3d(22px,-96px,0) scale(1.1)}100%{transform:translate3d(-70px,-30px,0) scale(1)}}
+
+/* две дуги маршрута; контейнер фиксированного размера, масштаб --k ставят медиазапросы, поэтому точка едет по ключевым кадрам в пикселях */
+.ab-arc{position:absolute;left:50%;width:1600px;height:500px;margin-left:-800px;transform:scale(var(--k,.5));transform-origin:50% 0;opacity:.9}
+.ab-arc--1{top:-9%}
+.ab-arc--2{bottom:-1%;top:auto;transform-origin:50% 100%}
+.ab-arc svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible;
+  -webkit-mask-image:linear-gradient(90deg,transparent,#000 14%,#000 86%,transparent);mask-image:linear-gradient(90deg,transparent,#000 14%,#000 86%,transparent)}
+.ab-arc path{fill:none;stroke:var(--yellow);stroke-opacity:.35;stroke-width:3;stroke-linecap:round;stroke-dasharray:2 13}
+.ab-dot{position:absolute;left:0;top:0;width:14px;height:14px;margin:-7px 0 0 -7px;border-radius:50%;background:var(--yellow);opacity:0;
+  box-shadow:0 0 0 7px rgba(239,184,13,.2),0 0 24px 5px rgba(239,184,13,.5);will-change:transform,opacity}
+.ab-arc--1 .ab-dot{animation:abRide1 38s linear infinite}
+.ab-arc--2 .ab-dot{animation:abRide2 46s linear -17s infinite}
+
+/* arcs:start — ключевые кадры точек по дугам; переписывает make_about.py */
+@keyframes abRide1{0%{opacity:0}6%{opacity:1}94%{opacity:1}100%{opacity:0}
+  0%{transform:translate(-40px,400px)}2.94%{transform:translate(-2px,361px)}5.88%{transform:translate(41px,328px)}8.82%{transform:translate(88px,301px)}11.76%{transform:translate(139px,282px)}14.71%{transform:translate(192px,272px)}17.65%{transform:translate(246px,268px)}20.59%{transform:translate(300px,271px)}23.53%{transform:translate(354px,277px)}26.47%{transform:translate(407px,286px)}29.41%{transform:translate(460px,297px)}32.35%{transform:translate(513px,308px)}35.29%{transform:translate(567px,318px)}38.24%{transform:translate(620px,325px)}41.18%{transform:translate(674px,330px)}44.12%{transform:translate(728px,331px)}47.06%{transform:translate(782px,326px)}50%{transform:translate(836px,315px)}52.94%{transform:translate(887px,298px)}55.88%{transform:translate(935px,274px)}58.82%{transform:translate(981px,245px)}61.76%{transform:translate(1024px,211px)}64.71%{transform:translate(1067px,179px)}67.65%{transform:translate(1111px,147px)}70.59%{transform:translate(1157px,118px)}73.53%{transform:translate(1204px,91px)}76.47%{transform:translate(1252px,67px)}79.41%{transform:translate(1303px,48px)}82.35%{transform:translate(1356px,34px)}85.29%{transform:translate(1409px,29px)}88.24%{transform:translate(1463px,32px)}91.18%{transform:translate(1516px,45px)}94.12%{transform:translate(1566px,66px)}97.06%{transform:translate(1614px,92px)}100%{transform:translate(1660px,120px)}}
+@keyframes abRide2{0%{opacity:0}6%{opacity:1}94%{opacity:1}100%{opacity:0}
+  0%{transform:translate(1660px,430px)}2.94%{transform:translate(1610px,446px)}5.88%{transform:translate(1558px,457px)}8.82%{transform:translate(1506px,464px)}11.76%{transform:translate(1453px,467px)}14.71%{transform:translate(1401px,466px)}17.65%{transform:translate(1348px,462px)}20.59%{transform:translate(1296px,455px)}23.53%{transform:translate(1244px,446px)}26.47%{transform:translate(1192px,435px)}29.41%{transform:translate(1140px,424px)}32.35%{transform:translate(1089px,413px)}35.29%{transform:translate(1037px,402px)}38.24%{transform:translate(985px,392px)}41.18%{transform:translate(933px,385px)}44.12%{transform:translate(881px,379px)}47.06%{transform:translate(828px,377px)}50%{transform:translate(775px,378px)}52.94%{transform:translate(723px,383px)}55.88%{transform:translate(671px,392px)}58.82%{transform:translate(620px,406px)}61.76%{transform:translate(569px,420px)}64.71%{transform:translate(518px,433px)}67.65%{transform:translate(467px,446px)}70.59%{transform:translate(415px,457px)}73.53%{transform:translate(363px,465px)}76.47%{transform:translate(311px,469px)}79.41%{transform:translate(258px,465px)}82.35%{transform:translate(207px,453px)}85.29%{transform:translate(159px,432px)}88.24%{transform:translate(114px,404px)}91.18%{transform:translate(73px,371px)}94.12%{transform:translate(34px,336px)}97.06%{transform:translate(-4px,298px)}100%{transform:translate(-40px,260px)}}
+/* arcs:end */
+
+.ab-wrap{position:relative;z-index:1;max-width:1104px;margin:0 auto;padding:0 18px}
+.ab-hero .bl-back{color:var(--cream)}
+.ab-head{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:12px 36px;margin:2px 0 24px}
+.ab-hero h1{font-size:clamp(88px,23vw,132px);line-height:.9;color:var(--cream);text-shadow:0 3px 0 rgba(0,0,0,.14)}
+/* точка после заголовка: та же, что бежит по маршруту */
+.ab-hero h1::after{content:"";display:inline-block;width:.13em;height:.13em;margin-left:.07em;border-radius:50%;background:var(--yellow);box-shadow:0 0 0 .05em rgba(239,184,13,.28)}
+.ab-lead{margin:0 0 .45em;max-width:17em;padding-left:14px;border-left:4px solid var(--yellow);font:600 clamp(18px,4.8vw,21px)/1.32 var(--text);color:var(--paper);text-shadow:0 1px 10px rgba(35,46,11,.5)}
+
+/* сцена видео: рамка — язык первого экрана главной (белая кайма, пунктирное кольцо, пунктир маршрута) */
+.ab-stage{position:relative;z-index:0;--px:0;--py:0}
+.ab-ring{position:absolute;z-index:0;right:-30px;top:-34px;width:128px;aspect-ratio:1;pointer-events:none;transform:translate(calc(var(--px)*8px),calc(var(--py)*6px));transition:transform .6s var(--ease)}
+.ab-ring i{display:block;position:relative;width:100%;height:100%;border-radius:50%;border:2px dashed var(--yellow);animation:abSpin 52s linear infinite}
+.ab-ring i::after{content:"";position:absolute;left:50%;top:-8px;width:14px;height:14px;margin-left:-7px;border-radius:50%;background:var(--yellow);box-shadow:0 0 0 5px rgba(239,184,13,.22)}
+@keyframes abSpin{to{rotate:360deg}}
+.ab-route{position:absolute;z-index:0;left:-34px;bottom:-52px;width:150px;height:127px;overflow:visible;pointer-events:none;transform:translate(calc(var(--px)*-8px),calc(var(--py)*-6px));transition:transform .6s var(--ease)}
+.ab-route path{fill:none;stroke:var(--yellow);stroke-width:3;stroke-linecap:round;stroke-dasharray:2 11}
+.ab-route .ab-pin{fill:var(--yellow)}
+.ab-route .ab-halo{fill:var(--yellow);transform-box:fill-box;transform-origin:center;animation:abHalo 2.8s var(--ease) infinite}
+@keyframes abHalo{0%{transform:scale(1);opacity:.55}70%,100%{transform:scale(3.2);opacity:0}}
+
+.ab-frame{position:relative;z-index:1;isolation:isolate;padding:8px;border-radius:24px;background:var(--paper);
+  box-shadow:0 38px 58px -30px rgba(0,0,0,.74),0 12px 24px -12px rgba(0,0,0,.42)}
+.ab-screen{position:relative;z-index:4;aspect-ratio:16/9;border-radius:16px;overflow:hidden;background:#1B2308}
+.ab-video{display:block;width:100%;height:100%;object-fit:cover;background:#1B2308}
+.ab-screen.is-play .ab-video{object-fit:contain}
+
+/* обложка — картинка поверх видео (телефон берёт лёгкую по srcset), весь кадр — одна кнопка запуска.
+   Люди и надпись ролика в центре кадра, поэтому круглая кнопка и плашка стоят в левом нижнем углу.
+   Без скрипта обложки нет: у ролика родные элементы управления, а кадр стоит фоном видео */
+.ab-cover{position:absolute;inset:0;z-index:2;display:block;width:100%;height:100%;margin:0;padding:0;border:0;border-radius:inherit;overflow:hidden;background:#1B2308;color:var(--ink);cursor:pointer;-webkit-tap-highlight-color:transparent;
+  transition:opacity .5s var(--ease),visibility 0s}
+.ab-cover:focus-visible{outline-offset:-5px}
+.ab-poster{position:absolute;inset:0;display:block;width:100%;height:100%;max-width:none;object-fit:cover;transition:transform 1.2s var(--ease)}
+.ab-cover::after{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(60% 70% at 0% 100%,rgba(27,35,8,.62),rgba(27,35,8,0) 70%),linear-gradient(0deg,rgba(27,35,8,.3),rgba(27,35,8,0) 34%)}
+html:not(.bt-js) .ab-cover{display:none}
+html:not(.bt-js) .ab-video{background:#1B2308 url(poster-800.jpg) center/cover no-repeat}
+.ab-screen.is-play .ab-cover{opacity:0;visibility:hidden;pointer-events:none;transition:opacity .5s var(--ease),visibility 0s .5s}
+.ab-go2{position:absolute;z-index:1;left:10px;bottom:10px;display:flex;align-items:center;gap:8px}
+.ab-play{position:relative;isolation:isolate;flex:none;display:grid;place-items:center;width:52px;height:52px;border-radius:50%;background:var(--yellow);color:var(--ink);
+  box-shadow:0 12px 22px -10px rgba(0,0,0,.65),0 0 0 4px rgba(255,253,244,.34);transition:transform .35s var(--ease),background .3s}
+.ab-play svg{width:22px;height:22px;margin-left:3px;fill:currentColor;transition:opacity .25s}
+.ab-play::before{content:"";position:absolute;inset:-2px;z-index:-1;border-radius:50%;background:var(--yellow);opacity:0;animation:abPulse 2.6s var(--ease) infinite}
+@keyframes abPulse{0%{transform:scale(1);opacity:.62}70%,100%{transform:scale(1.55);opacity:0}}
+.ab-dur{display:inline-flex;align-items:center;min-height:30px;padding:0 12px;border-radius:999px;background:rgba(255,253,244,.96);color:var(--ink);font:700 14px/1 var(--text);font-variant-numeric:tabular-nums;white-space:nowrap;box-shadow:0 10px 20px -10px rgba(0,0,0,.6)}
+/* нажали, ролик ещё грузится: обложка стоит, по кнопке крутится кольцо */
+.ab-play::after{content:"";position:absolute;inset:6px;border-radius:50%;border:4px solid transparent;border-top-color:var(--ink);opacity:0;transition:opacity .25s}
+.ab-screen.is-load .ab-play::before{animation:none}
+.ab-screen.is-load .ab-play svg{opacity:0}
+.ab-screen.is-load .ab-play::after{opacity:1;animation:abLoad .9s linear infinite}
+@keyframes abLoad{to{transform:rotate(360deg)}}
+.ab-cover:active .ab-play{transform:scale(.94)}
+@media (hover:hover){
+  .ab-hero .bl-back:hover{background:rgba(243,239,223,.14)}
+  .ab-cover:hover .ab-play{transform:scale(1.08);background:var(--yellow2)}
+  .ab-cover:hover .ab-play::before{animation-play-state:paused}
+  .ab-cover:hover .ab-poster{transform:scale(1.03)}
+}
+
+
+/* ═══════════ Б. Лента отзывов (перенесена из index.html без изменений вида) ═══════════ */
+.bt-shell{max-width:1200px;margin:0 auto;padding:0 18px}
+.bt-sec{padding:64px 0 70px}
+.bt-cream{position:relative;overflow:clip;border-radius:var(--r);margin:0 0 var(--gap);color:var(--ink)}
+.bt-paper{background-color:var(--cream);background-image:var(--grain);background-size:200px 200px;background-blend-mode:multiply}
+.bt-head{margin-bottom:28px}
+.bt-head h2{font-size:clamp(54px,14vw,104px)}
+.bt-head--row{display:flex;align-items:flex-end;justify-content:space-between;gap:16px}
+@keyframes btTwinkle{0%,100%{transform:scale(1) rotate(0)}50%{transform:scale(1.28) rotate(14deg)}}
+.bt-arr{flex:none;width:44px;height:44px;border-radius:50%;border:2px solid var(--ink);background:transparent;color:var(--ink);display:grid;place-items:center;padding:0;cursor:pointer;transition:background .3s,color .3s,transform .3s var(--ease)}
+@media (hover:hover){.bt-arr:hover{background:var(--ink);color:var(--cream);transform:scale(1.06)}}
+.bt-arr:active{transform:scale(.94)}
+.bt-arr svg{display:block;flex:none;width:22px;height:22px}
+.bt-score{display:flex;align-items:center;flex-wrap:wrap;gap:6px 10px;margin:12px 0 0;font-weight:600;font-size:17px}
+.bt-stars{display:inline-flex;gap:2px}
+.bt-stars svg{width:20px;height:20px;fill:var(--yellow);animation:btTwinkle 3.4s ease-in-out infinite}
+.bt-stars svg:nth-child(2){animation-delay:.25s}.bt-stars svg:nth-child(3){animation-delay:.5s}.bt-stars svg:nth-child(4){animation-delay:.75s}.bt-stars svg:nth-child(5){animation-delay:1s}
+.bt-arrows{display:none;gap:10px}
+.bt-revs{display:flex;gap:14px;margin:0 -18px;padding:10px 18px 22px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain}
+.bt-revs::-webkit-scrollbar{display:none}
+.bt-rv{flex:0 0 min(84vw,350px);scroll-snap-align:start;display:flex;flex-direction:column;gap:14px;padding:22px 22px 18px;border-radius:28px;background:var(--paper);box-shadow:0 20px 32px -26px rgba(35,46,11,.75),0 0 0 1px rgba(35,46,11,.06);transition:transform .45s var(--ease),box-shadow .45s}
+@media (hover:hover){.bt-rv:hover{transform:translateY(-5px)}}
+.bt-rv__st{display:flex;gap:2px}
+.bt-rv__st svg{width:20px;height:20px;fill:var(--yellow)}
+.bt-rv blockquote{position:relative;margin:0;flex:1;font-size:18px;line-height:1.42;font-weight:500}
+.bt-rv blockquote::before{content:"“";position:absolute;right:-4px;top:-26px;font:800 90px/1 var(--disp);color:var(--sand);pointer-events:none;z-index:-1}
+.bt-rv__who{display:flex;align-items:center;flex-wrap:wrap;gap:6px 10px;margin-top:auto}
+.bt-ava{flex:none;width:40px;height:40px;border-radius:50%;display:grid;place-items:center;background:var(--olive);color:var(--cream);font:800 22px/1 var(--disp)}
+.bt-rv__who b{font-weight:700;font-size:16px}
+.bt-src{display:inline-flex;align-items:center;gap:5px;margin-left:auto;padding:4px 10px;border-radius:999px;background:rgba(86,100,43,.12);color:var(--olive);font-weight:700;font-size:13px;line-height:1.2}
+.bt-src svg{width:15px;height:15px}
+.bt-rev__all{margin-top:6px;display:flex;flex-wrap:wrap;justify-content:center;gap:10px}
+/* кнопки под лентой стоят на кремовом: общий .bt-go--ghost из blog.css светлый (для оливового), здесь тёмный, как на главной */
+.bt-rev__all .bt-go--ghost{color:var(--ink);border-color:var(--ink)}
+@media (hover:hover){.bt-rev__all .bt-go--ghost:hover{background:var(--ink);border-color:var(--ink);color:var(--cream);box-shadow:none}}
+@media (max-width:759px){.bt-rev__all .bt-go{padding:0 20px}}
+@media (max-width:560px){.bt-rev__all{flex-direction:column;align-items:stretch;max-width:420px;margin:6px auto 0}}
+
+/* В. Блок с кнопками из блога — внутри кремовой панели отзывов */
+.bt-rev .bl-cta{margin-top:44px}
+.bt-rev.bt-sec{padding-bottom:36px}
+
+
+/* ——— ширины ——— */
+@media (min-width:481px){
+  .ab-hero{--k:.62}
+  .ab-ring{width:160px;right:-44px;top:-48px}
+  .ab-route{left:-50px;bottom:-60px;width:176px;height:149px}
+}
+@media (min-width:641px){
+  .ab-frame{padding:12px;border-radius:36px;box-shadow:0 48px 74px -34px rgba(0,0,0,.76),0 16px 30px -14px rgba(0,0,0,.44)}
+  .ab-screen{border-radius:24px}
+  .ab-go2{left:22px;bottom:22px;gap:14px}
+  .ab-play{width:84px;height:84px;box-shadow:0 20px 34px -12px rgba(0,0,0,.65),0 0 0 7px rgba(255,253,244,.34)}
+  .ab-play svg{width:34px;height:34px;margin-left:5px}
+  .ab-play::after{inset:10px}
+  .ab-dur{min-height:42px;padding:0 20px;font-size:18px}
+  .bt-rv{flex-basis:340px}
+  .bt-arrows{display:flex}
+}
+@media (min-width:760px){
+  .ab-hero{padding:116px 0 112px;--k:.8}
+  .ab-wrap,.bt-shell{padding:0 32px}
+  .ab-head{margin-bottom:30px}
+  .ab-ring{width:190px;right:-66px;top:-68px}
+  .ab-route{left:-76px;bottom:-72px;width:208px;height:176px}
+  .bt-sec{padding:96px 0 104px}
+  .bt-revs{margin:0 -32px;padding:10px 32px 22px}
+  .bt-rev .bl-cta{margin-top:56px}
+  .bt-rev.bt-sec{padding-bottom:56px}
+}
+@media (min-width:1000px){
+  .ab-hero{padding:124px 0 124px;--k:1}
+  .ab-ring{width:236px;right:-92px;top:-88px}
+  .ab-route{left:-100px;bottom:-84px;width:244px;height:207px}
+  .ab-lead{font-size:22px;margin-right:150px}
+}
+@media (min-width:1360px){
+  .ab-hero{--k:1.2}
+}
+@media (max-width:480px){
+  .ab-hero{--k:.5}
+}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  .bt-js .bt-up{opacity:1;transform:none}
+  .ab-hero::before,.ab-hero::after,.ab-ff,.ab-dot{will-change:auto}
+}
