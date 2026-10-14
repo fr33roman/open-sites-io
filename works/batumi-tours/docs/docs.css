@@ -1,0 +1,24 @@
+/* Документы (docs/privacy, docs/soglasie, docs/cookie; собирает _tours/make_docs.py). Цвета и кнопки — blog/blog.css. */
+.dc{padding:96px 0 30px}
+.dc-card{max-width:760px;margin:0 auto;padding:22px 22px 28px;border-radius:30px;color:var(--ink);background-color:var(--cream);background-image:var(--grain);background-size:200px 200px;background-blend-mode:multiply;box-shadow:0 26px 40px -30px rgba(0,0,0,.8)}
+.dc-card h1{font-size:clamp(38px,9vw,60px);line-height:.96;text-wrap:balance;margin-top:4px}
+.dc-upd{margin:12px 0 0;font-weight:600;font-size:15px;color:var(--mute)}
+.dc-body{margin-top:22px;font-size:17px;line-height:1.62}
+.dc-body h2{font-size:clamp(28px,6.6vw,36px);line-height:1;margin:30px 0 10px;color:var(--olive)}
+.dc-body h3{font-size:26px;margin:22px 0 8px}
+.dc-body p{margin:0 0 12px}
+.dc-body ul{margin:0 0 14px;padding-left:1.2em;display:grid;gap:8px}
+.dc-body li::marker{color:var(--olive2)}
+.dc-body strong{font-weight:700}
+.dc-body a{color:var(--olive);text-underline-offset:3px;overflow-wrap:anywhere}
+.dc-body{overflow-wrap:anywhere}
+.dc-tw{margin:0 0 16px;overflow-x:auto;border-radius:16px;box-shadow:0 0 0 1px rgba(35,46,11,.16);background:var(--paper);-webkit-overflow-scrolling:touch}
+.dc-table{width:100%;min-width:560px;border-collapse:collapse;font-size:15.5px;line-height:1.45}
+.dc-table th,.dc-table td{padding:10px 14px;text-align:left;vertical-align:top;border-top:1px solid var(--line)}
+.dc-table thead th{border-top:0;background:var(--olive);color:var(--cream);font-weight:700;font-size:13.5px;letter-spacing:.06em;text-transform:uppercase}
+.dc-table td:first-child{font-weight:700;white-space:nowrap}
+.dc-links{display:flex;flex-wrap:wrap;align-items:center;gap:8px 10px;margin-top:30px;padding-top:18px;border-top:1px solid var(--line)}
+.dc-links span{flex:0 0 100%;font-weight:700;font-size:12.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--mute)}
+.dc-links a{display:inline-flex;align-items:center;min-height:44px;padding:0 16px;border-radius:999px;border:2px solid rgba(35,46,11,.2);font-weight:700;font-size:15px;text-decoration:none;color:var(--ink);transition:background .3s,border-color .3s}
+@media (hover:hover){.dc-links a:hover{border-color:var(--olive);background:rgba(86,100,43,.1)}}
+@media (min-width:760px){.dc{padding:116px 0 40px}.dc-card{padding:30px 40px 36px}}

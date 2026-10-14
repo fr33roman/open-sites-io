@@ -1,0 +1,67 @@
+/* Страница всех отзывов (otzyvy/index.html; собирает _tours/make_otzyvy.py). Цвета и кнопки — blog/blog.css. */
+.rvp{padding:96px 0 44px}
+.rvp__wrap{max-width:1240px;margin:0 auto;padding:0 18px}
+.rv-sum{display:grid;gap:18px;margin:6px 0 24px}
+.rvp h1{font-size:clamp(46px,11vw,96px);line-height:.92;text-wrap:balance}
+.rv-sum__box{display:flex;flex-wrap:wrap;align-items:center;gap:14px 28px}
+.rv-sum__n,.rv-sum__r{display:flex;align-items:center;gap:12px}
+.rv-sum b{font:800 clamp(56px,14vw,80px)/.85 var(--disp);color:var(--olive)}
+.rv-sum__n span{font-weight:700;font-size:18px;color:var(--mute)}
+.rv-sum__st{display:inline-flex;gap:3px}
+.rv-sum__st svg{width:26px;height:26px;color:var(--yellow)}
+.rv-sum__r{padding-left:28px;border-left:2px solid var(--line)}
+
+.rv-filter{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 20px}
+.rv-f{display:inline-flex;align-items:center;gap:9px;min-height:46px;padding:0 18px;border-radius:999px;border:2px solid rgba(35,46,11,.2);background:transparent;color:var(--ink);font-weight:700;font-size:16px;cursor:pointer;transition:background .3s,color .3s,border-color .3s,transform .2s}
+.rv-f i{font-style:normal;min-width:24px;padding:1px 7px;border-radius:999px;background:rgba(35,46,11,.1);font-size:13.5px;text-align:center}
+.rv-f:active{transform:scale(.96)}
+.rv-f.is-on{background:var(--olive);border-color:var(--olive);color:var(--cream)}
+.rv-f.is-on i{background:rgba(243,239,223,.2)}
+.rv-empty{margin:0 0 20px;font-weight:600;color:var(--mute)}
+
+.rv-grid{display:grid;grid-template-columns:minmax(0,1fr);gap:14px;align-items:start}
+.rv{display:flex;flex-direction:column;gap:12px;min-width:0;padding:20px 20px 16px;border-radius:26px;background:var(--paper);box-shadow:0 22px 34px -28px rgba(35,46,11,.75),0 0 0 1px rgba(35,46,11,.07);animation:rvIn .5s var(--ease) both}
+.rv[hidden]{display:none}
+@keyframes rvIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.rv__h{display:flex;align-items:center;gap:12px}
+.rv__ava{flex:none;width:46px;height:46px;border-radius:50%;display:grid;place-items:center;background:var(--olive);color:var(--cream);font:800 24px/1 var(--disp);letter-spacing:.02em}
+.rv__who{min-width:0;flex:1;display:grid;gap:1px}
+.rv__who b{font-size:17px;line-height:1.2;overflow-wrap:anywhere}
+.rv-role{font-size:14px;color:var(--mute);line-height:1.2}
+.rv__src{flex:none;display:inline-flex;align-items:center;gap:6px;min-height:30px;padding:0 11px;border-radius:999px;font-weight:700;font-size:13px;color:#fff;background:var(--olive)}
+.rv__src svg{width:16px;height:16px}
+.rv__src--g{background:#3B73DE}
+.rv__src--ig{background:linear-gradient(45deg,#E1306C,#8A3AB9 60%,#4F5BD5)}
+.rv__src--wa{background:#1FA855}
+.rv__src--site{background:var(--olive)}
+.rv__meta{display:flex;align-items:center;gap:10px}
+.rv__st{display:inline-flex;gap:2px}
+.rv__st svg{width:18px;height:18px;color:var(--yellow)}
+.rv-date{font-size:13.5px;color:var(--mute)}
+.rv__t{font-size:16.5px;line-height:1.55;overflow-wrap:anywhere}
+.rv__t p{margin:0}
+.rv__t p+p{margin-top:10px}
+.bt-js .rv:not(.is-open) .rv__t{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:6;overflow:hidden}
+.rv__more{align-self:flex-start;min-height:44px;margin:-4px 0 -6px -10px;padding:0 10px;border:0;border-radius:999px;background:transparent;color:var(--olive);font-weight:700;font-size:15px;cursor:pointer;text-decoration:underline;text-underline-offset:3px;text-decoration-thickness:1.5px}
+
+.rv-all{display:grid;gap:10px;margin:28px auto 0;max-width:440px}
+.rv-all .bt-go{min-height:58px;font-size:16.5px}
+
+@media (hover:hover){
+  .rv-f:hover:not(.is-on){border-color:var(--olive);background:rgba(86,100,43,.1)}
+  .rv__more:hover{background:rgba(35,46,11,.08)}
+}
+@media (min-width:640px){.rv-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (min-width:600px){.rv-all{max-width:none;display:flex;flex-wrap:wrap;justify-content:center}.rv-all .bt-go{padding:0 24px}}
+@media (min-width:1000px){
+  .rvp{padding:112px 0 54px}
+  .rvp__wrap{padding:0 28px}
+  .rv-sum{grid-template-columns:1fr auto;align-items:end}
+  .rv-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+}
+@media (max-width:480px){.rv-sum__r{padding-left:0;border-left:0}}
+@media (prefers-reduced-motion:reduce){.rv{animation:none}}
+
+/* ghost-кнопки на светлом фоне */
+.rv-all .bt-go--ghost{color:var(--ink);border-color:rgba(35,46,11,.45)}
+@media (hover:hover){.rv-all .bt-go--ghost:hover{background:var(--olive);border-color:var(--olive);color:var(--cream)}}

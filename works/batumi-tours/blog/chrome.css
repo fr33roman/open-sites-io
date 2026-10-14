@@ -1,0 +1,101 @@
+/* chrome:start — шапка и подвал, общие для всех страниц сайта; собирает _blog/chrome.py, руками не править */
+.bt-top{position:fixed;z-index:60;inset:0 10px auto;padding-top:10px;pointer-events:none}
+.bt-top__in{pointer-events:auto;max-width:1180px;margin:0 auto;display:flex;align-items:center;gap:8px;min-height:60px;padding:6px 6px 6px 16px;border-radius:999px;color:var(--cream);
+  background:rgba(54,66,26,.56);-webkit-backdrop-filter:blur(14px) saturate(1.2);backdrop-filter:blur(14px) saturate(1.2);box-shadow:inset 0 0 0 1px rgba(243,239,223,.2),0 14px 32px -16px rgba(0,0,0,.6);
+  transition:background .35s,box-shadow .35s,-webkit-backdrop-filter .35s,backdrop-filter .35s}
+.bt-top.bt-solid .bt-top__in{background:rgba(35,46,11,.93);-webkit-backdrop-filter:none;backdrop-filter:none}
+.bt-logo{display:inline-flex;align-items:center;min-height:44px;margin-right:auto;text-decoration:none}
+.bt-logo img{width:min(150px,34vw)}
+.bt-links{display:none}
+.bt-links a{display:inline-flex;justify-content:center;align-items:center;min-width:44px;min-height:44px;text-decoration:none;font-weight:600;font-size:15.5px;padding:0 4px;
+  background:linear-gradient(var(--yellow),var(--yellow)) 50% 70%/0 2px no-repeat;transition:background-size .35s var(--ease),color .3s}
+.bt-links a[aria-current]{background-size:100% 2px}
+@media (hover:hover){.bt-links a:hover{background-size:100% 2px;color:#fff}}
+.bt-top .bt-go{min-height:44px;padding:0 16px;font-size:14.5px;white-space:nowrap}
+.bt-burger{flex:none;width:44px;height:44px;padding:0;display:grid;place-items:center;border-radius:50%;border:2px solid rgba(243,239,223,.7);background:transparent;color:var(--cream);cursor:pointer;transition:background .3s}
+@media (hover:hover){.bt-burger:hover{background:rgba(243,239,223,.14)}}
+.bt-burger svg{display:block;width:20px;height:20px}
+
+/* значки мессенджеров и соцсетей: круг фирменного цвета, белый знак */
+.bt-ico{display:none;align-items:center;gap:6px}
+.bt-ico a,.bt-menu__ico a,.bt-soc a{display:grid;place-items:center;border-radius:50%;color:#fff;text-decoration:none;transition:transform .35s var(--ease),box-shadow .35s,filter .3s}
+.bt-ico a{width:44px;height:44px;box-shadow:inset 0 0 0 1px rgba(255,255,255,.28)}
+.bt-ico svg{width:21px;height:21px}
+.is-wa{background:#25D366}
+.is-tg{background:#229ED9}
+.is-ig{background:linear-gradient(45deg,#FEDA75,#FA7E1E 25%,#D62976 55%,#962FBF 78%,#4F5BD5)}
+.is-yt{background:#FF0000}
+.is-fb{background:#1877F2}
+.is-vk{background:#0077FF}
+.is-tt{background:#000;box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.5)}
+@media (hover:hover){.bt-ico a:hover,.bt-soc a:hover{transform:translateY(-3px) scale(1.06);filter:brightness(1.08)}}
+
+/* язык: плашка «RU» со списком; работает русский, остальные — «скоро» */
+.bt-lang{position:relative;flex:none}
+.bt-lang__b{display:inline-flex;align-items:center;gap:6px;min-height:44px;padding:0 10px 0 15px;border-radius:999px;border:1.5px solid rgba(243,239,223,.5);background:transparent;color:var(--cream);font:700 14.5px/1 var(--text);letter-spacing:.05em;cursor:pointer;transition:background .3s,border-color .3s}
+.bt-lang__b svg{width:16px;height:16px;transition:transform .35s var(--ease)}
+.bt-lang.is-open .bt-lang__b{background:rgba(243,239,223,.14);border-color:rgba(243,239,223,.85)}
+.bt-lang.is-open .bt-lang__b svg{transform:rotate(180deg)}
+@media (hover:hover){.bt-lang__b:hover{background:rgba(243,239,223,.14)}}
+.bt-lang__list{position:absolute;right:0;top:calc(100% + 12px);z-index:5;display:grid;gap:2px;min-width:216px;padding:6px;border-radius:22px;background:rgba(35,46,11,.98);box-shadow:inset 0 0 0 1px rgba(243,239,223,.16),0 24px 40px -18px rgba(0,0,0,.7);
+  opacity:0;visibility:hidden;transform:translateY(-6px);transition:opacity .25s,transform .3s var(--ease),visibility 0s .3s}
+.bt-lang.is-open .bt-lang__list{opacity:1;visibility:visible;transform:none;transition:opacity .25s,transform .3s var(--ease)}
+.bt-lang__o{display:flex;align-items:center;gap:10px;width:100%;min-height:46px;padding:0 14px;border:0;border-radius:16px;background:none;color:var(--cream);font:600 16px/1 var(--text);text-align:left;cursor:pointer}
+.bt-lang__o b{min-width:38px;font:800 18px/1 var(--disp);letter-spacing:.06em}
+.bt-lang__o em{margin-left:auto;padding:4px 9px;border-radius:999px;background:rgba(239,184,13,.2);color:var(--yellow);font:700 11.5px/1 var(--text);font-style:normal;letter-spacing:.08em;text-transform:uppercase}
+.bt-lang__o[aria-selected="true"]{background:rgba(239,184,13,.18);box-shadow:inset 0 0 0 1.5px rgba(239,184,13,.7)}
+.bt-lang__o:disabled{color:#A5A98F;cursor:not-allowed}
+.bt-top__in>.bt-lang{display:none}
+
+/* меню телефона */
+.bt-menu{position:absolute;left:0;right:0;top:calc(100% + 8px);max-width:1180px;margin:0 auto;padding:6px 20px 16px;border-radius:28px;background:rgba(35,46,11,.97);display:grid;color:var(--cream);
+  box-shadow:0 24px 40px -20px rgba(0,0,0,.6);opacity:0;visibility:hidden;transform:translateY(-8px);transition:opacity .3s,transform .3s,visibility 0s .3s}
+.bt-top.bt-open .bt-menu{opacity:1;visibility:visible;transform:none;pointer-events:auto;transition:opacity .3s,transform .3s}
+.bt-menu__nav{display:grid}
+.bt-menu__nav a{min-height:54px;display:flex;align-items:center;text-decoration:none;font:700 28px/1 var(--disp);text-transform:uppercase;letter-spacing:.03em;border-bottom:1px solid rgba(243,239,223,.14);transition:color .3s,padding .3s var(--ease)}
+.bt-menu__nav a[aria-current]{color:var(--yellow)}
+@media (hover:hover){.bt-menu__nav a:hover{color:var(--yellow);padding-left:8px}}
+.bt-menu__ico{display:flex;gap:14px;padding:18px 0 4px}
+.bt-menu__ico a{width:48px;height:48px;box-shadow:inset 0 0 0 1px rgba(255,255,255,.28)}
+.bt-menu__ico svg{width:24px;height:24px}
+.bt-menu .bt-lang{margin-top:14px}
+.bt-menu .bt-lang__b{min-height:44px;padding:0 14px 0 20px;font-size:16px}
+.bt-menu .bt-lang__list{position:static;display:none;margin-top:10px;min-width:0;max-width:340px;background:rgba(243,239,223,.07);box-shadow:none;opacity:1;visibility:visible;transform:none;transition:none}
+.bt-menu .bt-lang.is-open .bt-lang__list{display:grid}
+
+/* подвал: логотип и фраза, три колонки, значки */
+.bt-foot__in{display:grid;grid-template-columns:minmax(0,1fr);gap:28px}
+.bt-foot .bt-logo{margin-right:0}
+.bt-foot .bt-logo img{width:min(300px,80vw)}
+.bt-foot__brand p{margin:14px 0 0;font:800 32px/1.05 var(--disp);text-transform:uppercase;letter-spacing:.02em;color:var(--cream)}
+.bt-foot__col{display:grid;align-content:start;justify-items:start}
+.bt-foot__col h4{margin:0 0 8px;font:800 25px/1 var(--disp);text-transform:uppercase;letter-spacing:.06em;color:var(--yellow)}
+.bt-foot__col a{display:inline-flex;align-items:center;min-width:44px;min-height:44px;text-decoration:none;font-weight:600;font-size:17px;line-height:1.25;transition:color .3s}
+.bt-foot__col p{display:flex;flex-wrap:wrap;align-items:center;gap:0 8px;margin:0;min-height:44px;font-size:17px}
+.bt-foot__col p span{color:#D4D6BC}
+.bt-foot__col p a{font-weight:700}
+@media (hover:hover){.bt-foot__col a:hover{color:var(--yellow)}}
+.bt-soc{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:12px}
+.bt-soc a{width:50px;height:50px;box-shadow:inset 0 0 0 1px rgba(255,255,255,.28),0 10px 16px -10px rgba(0,0,0,.6)}
+.bt-soc svg{width:24px;height:24px}
+@media (max-width:520px){.bt-soc{gap:10px}.bt-soc a{width:46px;height:46px}}
+@media (min-width:640px){
+  .bt-foot__in{grid-template-columns:repeat(3,minmax(0,1fr));gap:30px 28px}
+  .bt-foot__brand,.bt-soc{grid-column:1/-1}
+}
+@media (min-width:1000px){
+  .bt-top{inset:0 20px auto;padding-top:14px}
+  .bt-top__in{min-height:66px;padding:8px 8px 8px 24px;gap:10px}
+  .bt-logo img{width:176px}
+  .bt-links{display:flex;gap:10px;margin-right:12px}
+  .bt-ico{display:flex}
+  .bt-top__in>.bt-lang{display:block}
+  .bt-burger,.bt-menu{display:none}
+  .bt-top .bt-go{padding:0 22px;font-size:15.5px}
+  .bt-foot__in{grid-template-columns:minmax(0,1.3fr) minmax(0,.7fr) minmax(0,1.2fr) minmax(0,1.2fr);gap:30px 40px}
+  .bt-foot__brand{grid-column:1;grid-row:1;align-self:start}
+  .bt-foot__col{grid-row:1/3}
+  .bt-soc{grid-column:1;grid-row:2;align-self:start}
+}
+@media (min-width:1180px){.bt-logo img{width:190px}.bt-links{gap:14px;margin-right:16px}.bt-ico{gap:8px}}
+/* chrome:end */

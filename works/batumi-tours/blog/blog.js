@@ -1,4 +1,4 @@
-/* Страницы статей: меню и комментарии.
+/* Страницы статей: комментарии (меню — chrome.js).
    Комментарии. Пока сервера нет, они хранятся в браузере посетителя (localStorage) — видны только ему.
    Сервер — файл _server/comments.php на хостинге компании (решение Романа 08.10.2026: хранить у них, не у нас).
    Его адрес ставит сборка блога в <html data-comments="…"> (COMMENTS_API в _blog/make_blog.py): тогда список
@@ -8,15 +8,7 @@
   'use strict';
   var d = document, root = d.documentElement;
 
-  /* меню */
-  var top = d.getElementById('btTop'), burger = d.getElementById('btBurger'), menu = d.getElementById('btMenu');
-  if (burger && top) {
-    var setMenu = function (on) { top.classList.toggle('bt-open', on); burger.setAttribute('aria-expanded', on ? 'true' : 'false'); };
-    burger.addEventListener('click', function () { setMenu(!top.classList.contains('bt-open')); });
-    d.addEventListener('keydown', function (e) { if (e.key === 'Escape') setMenu(false); });
-    d.addEventListener('click', function (e) { if (!top.contains(e.target)) setMenu(false); });
-    if (menu) menu.addEventListener('click', function (e) { if (e.target.closest('a')) setMenu(false); });
-  }
+  /* меню и список языков — в chrome.js */
 
   /* обложка с сайта компании не загрузилась — остаётся фон рамки */
   d.querySelectorAll('img[data-soft]').forEach(function (img) {
