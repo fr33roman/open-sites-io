@@ -30,7 +30,7 @@
 .is-tt{background:#000;box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.5)}
 @media (hover:hover){.bt-ico a:hover,.bt-soc a:hover{transform:translateY(-3px) scale(1.06);filter:brightness(1.08)}}
 
-/* язык: плашка «RU» со списком; работает русский, остальные — «скоро» */
+/* язык: плашка «RU» со списком ссылок на ту же страницу на других языках */
 .bt-lang{position:relative;flex:none}
 .bt-lang__b{display:inline-flex;align-items:center;gap:6px;min-height:44px;padding:0 10px 0 15px;border-radius:999px;border:1.5px solid rgba(243,239,223,.5);background:transparent;color:var(--cream);font:700 14.5px/1 var(--text);letter-spacing:.05em;cursor:pointer;transition:background .3s,border-color .3s}
 .bt-lang__b svg{width:16px;height:16px;transition:transform .35s var(--ease)}
@@ -40,11 +40,12 @@
 .bt-lang__list{position:absolute;right:0;top:calc(100% + 12px);z-index:5;display:grid;gap:2px;min-width:216px;padding:6px;border-radius:22px;background:rgba(35,46,11,.98);box-shadow:inset 0 0 0 1px rgba(243,239,223,.16),0 24px 40px -18px rgba(0,0,0,.7);
   opacity:0;visibility:hidden;transform:translateY(-6px);transition:opacity .25s,transform .3s var(--ease),visibility 0s .3s}
 .bt-lang.is-open .bt-lang__list{opacity:1;visibility:visible;transform:none;transition:opacity .25s,transform .3s var(--ease)}
-.bt-lang__o{display:flex;align-items:center;gap:10px;width:100%;min-height:46px;padding:0 14px;border:0;border-radius:16px;background:none;color:var(--cream);font:600 16px/1 var(--text);text-align:left;cursor:pointer}
+.bt-lang__o{display:flex;align-items:center;gap:10px;width:100%;min-height:46px;padding:0 14px;border:0;border-radius:16px;background:none;color:var(--cream);font:600 16px/1 var(--text);text-align:left;text-decoration:none;cursor:pointer;transition:background .25s}
 .bt-lang__o b{min-width:38px;font:800 18px/1 var(--disp);letter-spacing:.06em}
+@media (hover:hover){a.bt-lang__o:hover{background:rgba(243,239,223,.1)}}
 .bt-lang__o em{margin-left:auto;padding:4px 9px;border-radius:999px;background:rgba(239,184,13,.2);color:var(--yellow);font:700 11.5px/1 var(--text);font-style:normal;letter-spacing:.08em;text-transform:uppercase}
-.bt-lang__o[aria-selected="true"]{background:rgba(239,184,13,.18);box-shadow:inset 0 0 0 1.5px rgba(239,184,13,.7)}
-.bt-lang__o:disabled{color:#A5A98F;cursor:not-allowed}
+.bt-lang__o[aria-current]{background:rgba(239,184,13,.18);box-shadow:inset 0 0 0 1.5px rgba(239,184,13,.7)}
+.bt-lang__o[aria-disabled]{color:#A5A98F;cursor:not-allowed}
 .bt-top__in>.bt-lang{display:none}
 
 /* меню телефона */
@@ -98,4 +99,16 @@
   .bt-soc{grid-column:1;grid-row:2;align-self:start}
 }
 @media (min-width:1180px){.bt-logo img{width:190px}.bt-links{gap:14px;margin-right:16px}.bt-ico{gap:8px}}
+
+/* языковые версии (en/, et/, lv/ — собирает _i18n/build.py): длинное слово переносится, а не вылезает из коробки.
+   Только для страниц не на русском — русская вёрстка не меняется. Проверка — node _i18n/check_layout.js (псевдоперевод
+   на 35 % длиннее: без этих строк вылезали заголовки карточек, h1 туров и документов, кнопки вида тура в форме,
+   рукописная строка первого экрана, плашки преимуществ, «с 2013 года» и награда гида). break-word у всей страницы — запас
+   на любое место, anywhere — там, где коробка узкая (плашка, кнопка, ячейка сетки): он и сжимает коробку, и рвёт слово */
+html:not(:lang(ru)) body{overflow-wrap:break-word}
+html:not(:lang(ru)) :is(h1,h2,h3,h4,h5,dt,th,summary,label,legend,button,.bt-go,.bt-lang__o,.bt-menu__nav a,.bt-foot__col a,
+  .bt-hand,.bt-glow,.bt-pp__rb,.bt-pp__r,.bt-nums b){overflow-wrap:anywhere;hyphens:auto}
+html:not(:lang(ru)) :is(h1,h2,h3,h4){text-wrap:balance}
+html:not(:lang(ru)) :is(.bt-nums b,.bt-pp__rb){white-space:normal}
+html:not(:lang(ru)) .bt-top .bt-go{flex:none}   /* в шапке кнопка в одну строку: не сжимать, иначе текст выходит за края */
 /* chrome:end */

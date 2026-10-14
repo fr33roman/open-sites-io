@@ -29,8 +29,8 @@
       var on = !box.classList.contains('is-open');
       closeLangs(box); box.classList.toggle('is-open', on); b.setAttribute('aria-expanded', on ? 'true' : 'false');
     });
-    box.addEventListener('click', function (e) {      // выбран «RU» (единственный рабочий пункт): список закрывается
-      if (e.target.closest('.bt-lang__o:not(:disabled)')) { box.classList.remove('is-open'); b.setAttribute('aria-expanded', 'false'); b.focus(); }
+    box.addEventListener('click', function (e) {      // выбран текущий язык: страницу не перезагружаем, список закрывается
+      if (e.target.closest('.bt-lang__o[aria-current]')) { e.preventDefault(); box.classList.remove('is-open'); b.setAttribute('aria-expanded', 'false'); b.focus(); }
     });
   });
   d.addEventListener('click', function (e) {

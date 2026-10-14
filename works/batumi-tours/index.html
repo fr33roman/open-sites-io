@@ -140,11 +140,12 @@ a,button,summary,label,input,select,textarea,[role="tab"],[role="option"],[tabin
 .bt-lang__list{position:absolute;right:0;top:calc(100% + 12px);z-index:5;display:grid;gap:2px;min-width:216px;padding:6px;border-radius:22px;background:rgba(35,46,11,.98);box-shadow:inset 0 0 0 1px rgba(243,239,223,.16),0 24px 40px -18px rgba(0,0,0,.7);
   opacity:0;visibility:hidden;transform:translateY(-6px);transition:opacity .25s,transform .3s var(--ease),visibility 0s .3s}
 .bt-lang.is-open .bt-lang__list{opacity:1;visibility:visible;transform:none;transition:opacity .25s,transform .3s var(--ease)}
-.bt-lang__o{display:flex;align-items:center;gap:10px;width:100%;min-height:46px;padding:0 14px;border:0;border-radius:16px;background:none;color:var(--cream);font:600 16px/1 var(--text);text-align:left;cursor:pointer}
+.bt-lang__o{display:flex;align-items:center;gap:10px;width:100%;min-height:46px;padding:0 14px;border:0;border-radius:16px;background:none;color:var(--cream);font:600 16px/1 var(--text);text-align:left;text-decoration:none;cursor:pointer;transition:background .25s}
 .bt-lang__o b{min-width:38px;font:800 18px/1 var(--disp);letter-spacing:.06em}
+@media (hover:hover){a.bt-lang__o:hover{background:rgba(243,239,223,.1)}}
 .bt-lang__o em{margin-left:auto;padding:4px 9px;border-radius:999px;background:rgba(239,184,13,.2);color:var(--yellow);font:700 11.5px/1 var(--text);font-style:normal;letter-spacing:.08em;text-transform:uppercase}
-.bt-lang__o[aria-selected="true"]{background:rgba(239,184,13,.18);box-shadow:inset 0 0 0 1.5px rgba(239,184,13,.7)}
-.bt-lang__o:disabled{color:#A5A98F;cursor:not-allowed}
+.bt-lang__o[aria-current]{background:rgba(239,184,13,.18);box-shadow:inset 0 0 0 1.5px rgba(239,184,13,.7)}
+.bt-lang__o[aria-disabled]{color:#A5A98F;cursor:not-allowed}
 .bt-top__in>.bt-lang{display:none}
 
 
@@ -198,6 +199,14 @@ a,button,summary,label,input,select,textarea,[role="tab"],[role="option"],[tabin
   .bt-soc{grid-column:1;grid-row:2;align-self:start}
 }
 @media (min-width:1180px){.bt-logo img{width:190px}.bt-links{gap:14px;margin-right:16px}.bt-ico{gap:8px}}
+
+
+html:not(:lang(ru)) body{overflow-wrap:break-word}
+html:not(:lang(ru)) :is(h1,h2,h3,h4,h5,dt,th,summary,label,legend,button,.bt-go,.bt-lang__o,.bt-menu__nav a,.bt-foot__col a,
+  .bt-hand,.bt-glow,.bt-pp__rb,.bt-pp__r,.bt-nums b){overflow-wrap:anywhere;hyphens:auto}
+html:not(:lang(ru)) :is(h1,h2,h3,h4){text-wrap:balance}
+html:not(:lang(ru)) :is(.bt-nums b,.bt-pp__rb){white-space:normal}
+html:not(:lang(ru)) .bt-top .bt-go{flex:none}   
 
 
 
@@ -371,7 +380,7 @@ a,button,summary,label,input,select,textarea,[role="tab"],[role="option"],[tabin
 .ab-poster{position:absolute;inset:0;display:block;width:100%;height:100%;max-width:none;object-fit:cover;transition:transform 1.2s var(--ease)}
 .ab-cover::after{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(60% 70% at 0% 100%,rgba(27,35,8,.62),rgba(27,35,8,0) 70%),linear-gradient(0deg,rgba(27,35,8,.3),rgba(27,35,8,0) 34%)}
 html:not(.bt-js) .ab-cover{display:none}
-html:not(.bt-js) .ab-video{background:#1B2308 url(about/poster-800.jpg) center/cover no-repeat}
+html:not(.bt-js) .ab-video{background:#1B2308 url(video/poster-800.jpg) center/cover no-repeat}
 .ab-screen.is-play .ab-cover{opacity:0;visibility:hidden;pointer-events:none;transition:opacity .5s var(--ease),visibility 0s .5s}
 .ab-go2{position:absolute;z-index:1;left:10px;bottom:10px;display:flex;align-items:center;gap:8px}
 .ab-play{position:relative;isolation:isolate;flex:none;display:grid;place-items:center;width:52px;height:52px;border-radius:50%;background:var(--yellow);color:var(--ink);box-shadow:0 12px 22px -10px rgba(0,0,0,.65),0 0 0 4px rgba(255,253,244,.34);transition:transform .35s var(--ease),background .3s}
@@ -733,6 +742,17 @@ body.bt-lock{overflow:hidden}
 
 
 </style>
+
+<link rel="alternate" hreflang="ru" href="https://open-sites.io/works/batumi-tours/">
+<link rel="alternate" hreflang="en" href="https://open-sites.io/works/batumi-tours/en/">
+<link rel="alternate" hreflang="et" href="https://open-sites.io/works/batumi-tours/et/">
+<link rel="alternate" hreflang="lv" href="https://open-sites.io/works/batumi-tours/lv/">
+<link rel="alternate" hreflang="x-default" href="https://open-sites.io/works/batumi-tours/">
+<meta property="og:locale" content="ru_RU">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:locale:alternate" content="et_EE">
+<meta property="og:locale:alternate" content="lv_LV">
+
 </head>
 <body id="page">
 <style>
@@ -811,14 +831,14 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
     <a class="bt-logo" href="#top" aria-label="Batumi Tours Georgia, наверх"><img src="img/logo.svg" alt="Batumi Tours Georgia" width="204" height="32"></a>
     <nav class="bt-links" aria-label="Разделы"><a href="#tours">Туры</a><a href="#about">О нас</a><a href="blog/index.html">Блог</a><a href="#reviews">Отзывы</a><a href="#book">Контакты</a></nav>
     <div class="bt-ico" aria-label="Написать нам"><a class="is-wa" href="https://wa.me/995591927262" target="_blank" rel="noopener" aria-label="WhatsApp"><svg class="bt-f" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-wa"/></svg></a><a class="is-tg" href="https://t.me/+995591927262" target="_blank" rel="noopener" aria-label="Telegram"><svg class="bt-f" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tg"/></svg></a><a class="is-ig" href="https://www.instagram.com/batumi_tours_georgia" target="_blank" rel="noopener" aria-label="Instagram"><svg class="bt-f" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-ig"/></svg></a></div>
-    <div class="bt-lang" data-lang-box><button class="bt-lang__b" type="button" aria-haspopup="listbox" aria-expanded="false" aria-controls="btLangD" aria-label="Язык сайта: русский"><span>RU</span><svg class="bt-s" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button><div class="bt-lang__list" id="btLangD" role="listbox" aria-label="Язык сайта"><button class="bt-lang__o" type="button" role="option" aria-selected="true" data-lang="RU"><b>RU</b>Русский</button><button class="bt-lang__o" type="button" role="option" aria-selected="false" aria-disabled="true" disabled><b>ENG</b>English<em>скоро</em></button><button class="bt-lang__o" type="button" role="option" aria-selected="false" aria-disabled="true" disabled><b>EST</b>Eesti<em>скоро</em></button><button class="bt-lang__o" type="button" role="option" aria-selected="false" aria-disabled="true" disabled><b>LV</b>Latviešu<em>скоро</em></button></div></div>
+    <div class="bt-lang" data-lang-box><button class="bt-lang__b" type="button" aria-expanded="false" aria-controls="btLangD" aria-label="Язык сайта: Русский"><span>RU</span><svg class="bt-s" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button><div class="bt-lang__list" id="btLangD" role="group" aria-label="Язык сайта"><a class="bt-lang__o" href="index.html" hreflang="ru" lang="ru" aria-current="true"><b>RU</b>Русский</a><a class="bt-lang__o" href="en/index.html" hreflang="en" lang="en"><b>ENG</b>English</a><a class="bt-lang__o" href="et/index.html" hreflang="et" lang="et"><b>EST</b>Eesti</a><a class="bt-lang__o" href="lv/index.html" hreflang="lv" lang="lv"><b>LV</b>Latviešu</a></div></div>
     <a class="bt-go bt-go--pulse bt-go--sm bt-bookb" href="#book">Забронировать</a>
     <button class="bt-burger" type="button" id="btBurger" aria-label="Меню" aria-expanded="false" aria-controls="btMenu"><svg class="bt-s" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8h16M4 16h16"/></svg></button>
   </div>
   <div class="bt-menu" id="btMenu">
     <nav class="bt-menu__nav" aria-label="Разделы"><a href="#tours">Туры</a><a href="#about">О нас</a><a href="blog/index.html">Блог</a><a href="#reviews">Отзывы</a><a href="#book">Контакты</a></nav>
     <div class="bt-menu__ico" aria-label="Написать нам"><a class="is-wa" href="https://wa.me/995591927262" target="_blank" rel="noopener" aria-label="WhatsApp"><svg class="bt-f" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-wa"/></svg></a><a class="is-tg" href="https://t.me/+995591927262" target="_blank" rel="noopener" aria-label="Telegram"><svg class="bt-f" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tg"/></svg></a><a class="is-ig" href="https://www.instagram.com/batumi_tours_georgia" target="_blank" rel="noopener" aria-label="Instagram"><svg class="bt-f" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-ig"/></svg></a></div>
-    <div class="bt-lang" data-lang-box><button class="bt-lang__b" type="button" aria-haspopup="listbox" aria-expanded="false" aria-controls="btLangM" aria-label="Язык сайта: русский"><span>RU</span><svg class="bt-s" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button><div class="bt-lang__list" id="btLangM" role="listbox" aria-label="Язык сайта"><button class="bt-lang__o" type="button" role="option" aria-selected="true" data-lang="RU"><b>RU</b>Русский</button><button class="bt-lang__o" type="button" role="option" aria-selected="false" aria-disabled="true" disabled><b>ENG</b>English<em>скоро</em></button><button class="bt-lang__o" type="button" role="option" aria-selected="false" aria-disabled="true" disabled><b>EST</b>Eesti<em>скоро</em></button><button class="bt-lang__o" type="button" role="option" aria-selected="false" aria-disabled="true" disabled><b>LV</b>Latviešu<em>скоро</em></button></div></div>
+    <div class="bt-lang" data-lang-box><button class="bt-lang__b" type="button" aria-expanded="false" aria-controls="btLangM" aria-label="Язык сайта: Русский"><span>RU</span><svg class="bt-s" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button><div class="bt-lang__list" id="btLangM" role="group" aria-label="Язык сайта"><a class="bt-lang__o" href="index.html" hreflang="ru" lang="ru" aria-current="true"><b>RU</b>Русский</a><a class="bt-lang__o" href="en/index.html" hreflang="en" lang="en"><b>ENG</b>English</a><a class="bt-lang__o" href="et/index.html" hreflang="et" lang="et"><b>EST</b>Eesti</a><a class="bt-lang__o" href="lv/index.html" hreflang="lv" lang="lv"><b>LV</b>Latviešu</a></div></div>
   </div>
 </header>
 
@@ -1526,10 +1546,10 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
       <div class="ab-frame bt-glow" data-glow>
         <div class="ab-screen" id="abScreen">
           <video class="ab-video" id="abVideo" controls preload="none" playsinline width="1920" height="1080" aria-label="Видео о Batumi Tours Georgia">
-            <source src="about/o-nas-1080.mp4" type="video/mp4">
+            <source src="video/o-nas-1080.mp4" type="video/mp4">
           </video>
           <button class="ab-cover" id="abCover" type="button" aria-label="Смотреть видео, 1 минута 8 секунд">
-            <img class="ab-poster" src="about/poster-800.jpg" srcset="about/poster-800.jpg 800w, about/poster.jpg 1600w" sizes="(min-width:1000px) 880px, 94vw" width="1600" height="900" alt="Гости Batumi Tours Georgia на вершине над облаками" loading="lazy" decoding="async">
+            <img class="ab-poster" src="video/poster-800.jpg" srcset="video/poster-800.jpg 800w, video/poster.jpg 1600w" sizes="(min-width:1000px) 880px, 94vw" width="1600" height="900" alt="Гости Batumi Tours Georgia на вершине над облаками" loading="lazy" decoding="async">
             <span class="ab-go2"><span class="ab-play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5.200v13.600a1 1 0 0 0 1.500.9l11-6.800a1 1 0 0 0 0-1.800l-11-6.800A1 1 0 0 0 8 5.200z"/></svg></span><span class="ab-dur">Смотреть · 1:08</span></span>
           </button>
         </div>
@@ -1738,7 +1758,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
       closeLangs(box); box.classList.toggle('is-open', on); b.setAttribute('aria-expanded', on ? 'true' : 'false');
     });
     box.addEventListener('click', function (e) {      
-      if (e.target.closest('.bt-lang__o:not(:disabled)')) { box.classList.remove('is-open'); b.setAttribute('aria-expanded', 'false'); b.focus(); }
+      if (e.target.closest('.bt-lang__o[aria-current]')) { e.preventDefault(); box.classList.remove('is-open'); b.setAttribute('aria-expanded', 'false'); b.focus(); }
     });
   });
   d.addEventListener('click', function (e) {
@@ -1798,7 +1818,6 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
   };
   var NOTES = { "multiday": "Цена при группе от 4 человек", "package": "Цена при двухместном размещении, одноместное +200 €" };   
 
-  var ZIP = false;   
 
 
   function watch(els, cb, opt, once) {
@@ -1934,15 +1953,17 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
   var total = $('#btTotal'), send = $('#btSend'), nm = $('#btName');
   dateIn.min = iso(inDays('1')); dateIn.value = iso(inDays('1'));
   var ppl = 2, link = WA;
+
+  var MSG = 'Здравствуйте! Хочу записаться. Тур «{tour}»{date}, нас {n}.', MSG_NAME = ' Меня зовут {name}.';
+  function fill(s, v) { return s.replace(/\{(\w+)\}/g, function (m, k) { return k in v ? v[k] : m; }); }
   function people(n) { var a = n % 10, b = n % 100; return a >= 2 && a <= 4 && (b < 12 || b > 14) ? 'человека' : 'человек'; }
   function calc() {
-    var t = TOURS[tourSel.value], one = t.small && ppl < 3 ? t.small : t.price, zip = ZIP && t.zip, pre = t.fr ? 'от ' : '';
-    total.innerHTML = '<b>' + pre + ppl * one + ' €' + (zip ? ' + ' + ppl * t.zip + ' лари' : '') + '</b>' + ppl + ' ' + people(ppl) + ' × ' + pre + one + ' €' + (zip ? ' + зип-лайн ' + t.zip + ' лари' : '') +
+    var t = TOURS[tourSel.value], one = t.small && ppl < 3 ? t.small : t.price, pre = t.fr ? 'от ' : '';
+    total.innerHTML = '<b>' + pre + ppl * one + ' €' + '</b>' + ppl + ' ' + people(ppl) + ' × ' + pre + one + ' €' +
       (t.fr && NOTES[t.g] ? '<small>' + NOTES[t.g] + '</small>' : '');
-    var d = dateIn.value ? new Date(dateIn.value + 'T12:00:00') : null;
-    var text = 'Здравствуйте! Хочу записаться. Тур «' + (t.msg || t.name) + '»' +
-      (d ? ', ' + d.getDate() + ' ' + MONTHS[d.getMonth()] : '') + ', нас ' + ppl + (zip ? ', с зип-лайном' : '') + '.' +
-      (nm.value.trim() ? ' Меня зовут ' + nm.value.trim() + '.' : '');
+    var d = dateIn.value ? new Date(dateIn.value + 'T12:00:00') : null, name = nm.value.trim();
+    var text = fill(MSG, { tour: t.msg || t.name, date: d ? ', ' + d.getDate() + ' ' + MONTHS[d.getMonth()] : '', n: ppl }) +
+      (name ? fill(MSG_NAME, { name: name }) : '');
     link = WA + encodeURIComponent(text);
   }
   function season() {    
@@ -2065,7 +2086,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
     var pickFile = function () {
       if (picked) return; picked = true;
       var conn = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
-      if (vsrc && (matchMedia('(max-width:700px)').matches || (conn && conn.saveData))) { vsrc.src = 'about/o-nas-720.mp4'; vid.load(); }
+      if (vsrc && (matchMedia('(max-width:700px)').matches || (conn && conn.saveData))) { vsrc.src = 'video/o-nas-720.mp4'; vid.load(); }
     };
     var shown = function () {
       vbox.classList.remove('is-load'); vbox.classList.add('is-play'); vid.controls = true;
