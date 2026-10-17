@@ -137,11 +137,11 @@ a,button,summary,label,input,select,textarea,[role="tab"],[role="option"],[tabin
 .bt-lang.is-open .bt-lang__b{background:rgba(243,239,223,.14);border-color:rgba(243,239,223,.85)}
 .bt-lang.is-open .bt-lang__b svg{transform:rotate(180deg)}
 @media (hover:hover){.bt-lang__b:hover{background:rgba(243,239,223,.14)}}
-.bt-lang__list{position:absolute;right:0;top:calc(100% + 12px);z-index:5;display:grid;gap:2px;min-width:216px;padding:6px;border-radius:22px;background:rgba(35,46,11,.98);box-shadow:inset 0 0 0 1px rgba(243,239,223,.16),0 24px 40px -18px rgba(0,0,0,.7);
+.bt-lang__list{position:absolute;right:0;top:calc(100% + 8px);z-index:5;display:grid;gap:2px;min-width:100%;padding:5px;border-radius:20px;background:rgba(35,46,11,.98);box-shadow:inset 0 0 0 1px rgba(243,239,223,.16),0 24px 40px -18px rgba(0,0,0,.7);
   opacity:0;visibility:hidden;transform:translateY(-6px);transition:opacity .25s,transform .3s var(--ease),visibility 0s .3s}
 .bt-lang.is-open .bt-lang__list{opacity:1;visibility:visible;transform:none;transition:opacity .25s,transform .3s var(--ease)}
-.bt-lang__o{display:flex;align-items:center;gap:10px;width:100%;min-height:46px;padding:0 14px;border:0;border-radius:16px;background:none;color:var(--cream);font:600 16px/1 var(--text);text-align:left;text-decoration:none;cursor:pointer;transition:background .25s}
-.bt-lang__o b{min-width:38px;font:800 18px/1 var(--disp);letter-spacing:.06em}
+.bt-lang__o{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;min-height:42px;padding:0 10px;border:0;border-radius:16px;background:none;color:var(--cream);font:600 16px/1 var(--text);text-align:left;text-decoration:none;cursor:pointer;transition:background .25s}
+.bt-lang__o b{font:800 16px/1 var(--disp);letter-spacing:.06em}
 @media (hover:hover){a.bt-lang__o:hover{background:rgba(243,239,223,.1)}}
 .bt-lang__o em{margin-left:auto;padding:4px 9px;border-radius:999px;background:rgba(239,184,13,.2);color:var(--yellow);font:700 11.5px/1 var(--text);font-style:normal;letter-spacing:.08em;text-transform:uppercase}
 .bt-lang__o[aria-current]{background:rgba(239,184,13,.18);box-shadow:inset 0 0 0 1.5px rgba(239,184,13,.7)}
@@ -150,7 +150,8 @@ a,button,summary,label,input,select,textarea,[role="tab"],[role="option"],[tabin
 
 
 .bt-menu{position:absolute;left:0;right:0;top:calc(100% + 8px);max-width:1180px;margin:0 auto;padding:6px 20px 16px;border-radius:28px;background:rgba(35,46,11,.97);display:grid;color:var(--cream);
-  box-shadow:0 24px 40px -20px rgba(0,0,0,.6);opacity:0;visibility:hidden;transform:translateY(-8px);transition:opacity .3s,transform .3s,visibility 0s .3s}
+  box-shadow:0 24px 40px -20px rgba(0,0,0,.6);opacity:0;visibility:hidden;transform:translateY(-8px);transition:opacity .3s,transform .3s,visibility 0s .3s;
+  max-height:calc(100vh - 96px);max-height:calc(100dvh - 96px);overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch}
 .bt-top.bt-open .bt-menu{opacity:1;visibility:visible;transform:none;pointer-events:auto;transition:opacity .3s,transform .3s}
 .bt-menu__nav{display:grid}
 .bt-menu__nav a{min-height:54px;display:flex;align-items:center;text-decoration:none;font:700 28px/1 var(--disp);text-transform:uppercase;letter-spacing:.03em;border-bottom:1px solid rgba(243,239,223,.14);transition:color .3s,padding .3s var(--ease)}
@@ -159,16 +160,23 @@ a,button,summary,label,input,select,textarea,[role="tab"],[role="option"],[tabin
 .bt-menu__ico{display:flex;gap:14px;padding:18px 0 4px}
 .bt-menu__ico a{width:48px;height:48px;box-shadow:inset 0 0 0 1px rgba(255,255,255,.28)}
 .bt-menu__ico svg{width:24px;height:24px}
-.bt-menu .bt-lang{margin-top:14px}
+.bt-menu .bt-lang{display:block;width:max-content;margin-top:14px}
 .bt-menu .bt-lang__b{min-height:44px;padding:0 14px 0 20px;font-size:16px}
-.bt-menu .bt-lang__list{position:static;display:none;margin-top:10px;min-width:0;max-width:340px;background:rgba(243,239,223,.07);box-shadow:none;opacity:1;visibility:visible;transform:none;transition:none}
+.bt-menu .bt-lang__list{position:static;display:none;margin-top:8px;min-width:100%;background:rgba(243,239,223,.07);box-shadow:none;opacity:1;visibility:visible;transform:none;transition:none}
 .bt-menu .bt-lang.is-open .bt-lang__list{display:grid}
 
 
 .bt-foot__in{display:grid;grid-template-columns:minmax(0,1fr);gap:28px}
 .bt-foot .bt-logo{margin-right:0}
 .bt-foot .bt-logo img{width:min(300px,80vw)}
+.bt-foot .bt-logo{align-items:flex-start;min-height:0}
+.bt-foot .bt-logo img{display:block}
 .bt-foot__brand p{margin:14px 0 0;font:800 32px/1.05 var(--disp);text-transform:uppercase;letter-spacing:.02em;color:var(--cream)}
+.bt-foot__brand p a{color:inherit;text-decoration:none;background:linear-gradient(var(--yellow),var(--yellow)) 0 100%/0 2px no-repeat;transition:color .3s,background-size .4s var(--ease)}
+.bt-foot__brand p a:focus-visible{outline:2px solid var(--yellow);outline-offset:4px;border-radius:4px}
+@media (hover:hover){.bt-foot__brand p a:hover{color:var(--yellow);background-size:100% 2px}}
+.bt-foot__nav{grid-template-columns:repeat(2,minmax(0,max-content));grid-template-rows:auto repeat(3,auto);grid-auto-flow:column;column-gap:28px;justify-content:start}
+.bt-foot__nav h4{grid-column:1/-1;grid-row:1}
 .bt-foot__col{display:grid;align-content:start;justify-items:start}
 .bt-foot__col h4{margin:0 0 8px;font:800 25px/1 var(--disp);text-transform:uppercase;letter-spacing:.06em;color:var(--yellow)}
 .bt-foot__col a{display:inline-flex;align-items:center;min-width:44px;min-height:44px;text-decoration:none;font-weight:600;font-size:17px;line-height:1.25;transition:color .3s}
@@ -181,7 +189,7 @@ a,button,summary,label,input,select,textarea,[role="tab"],[role="option"],[tabin
 .bt-soc svg{width:24px;height:24px}
 @media (max-width:520px){.bt-soc{gap:10px}.bt-soc a{width:46px;height:46px}}
 @media (min-width:640px){
-  .bt-foot__in{grid-template-columns:repeat(3,minmax(0,1fr));gap:30px 28px}
+  .bt-foot__in{grid-template-columns:minmax(0,1.2fr) minmax(0,1fr) minmax(0,1fr);gap:30px 28px}
   .bt-foot__brand,.bt-soc{grid-column:1/-1}
 }
 @media (min-width:1000px){
@@ -193,7 +201,7 @@ a,button,summary,label,input,select,textarea,[role="tab"],[role="option"],[tabin
   .bt-top__in>.bt-lang{display:block}
   .bt-burger,.bt-menu{display:none}
   .bt-top .bt-go{padding:0 22px;font-size:15.5px}
-  .bt-foot__in{grid-template-columns:minmax(0,1.3fr) minmax(0,.7fr) minmax(0,1.2fr) minmax(0,1.2fr);gap:30px 40px}
+  .bt-foot__in{grid-template-columns:minmax(0,1.2fr) minmax(0,1fr) minmax(0,1.1fr) minmax(0,1.1fr);gap:30px 40px}
   .bt-foot__brand{grid-column:1;grid-row:1;align-self:start}
   .bt-foot__col{grid-row:1/3}
   .bt-soc{grid-column:1;grid-row:2;align-self:start}
@@ -543,6 +551,12 @@ html:not(.bt-js) .ab-video{background:#1B2308 url(video/poster-800.jpg) center/c
 body.bt-lock{overflow:hidden}
 
 
+#btIncl{grid-template-columns:minmax(0,1fr)}
+#btIncl li{overflow-wrap:break-word}
+@media (min-width:521px){#btIncl{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (min-width:1000px){#btIncl{grid-template-columns:repeat(4,minmax(0,1fr))}}
+
+
 .bt-js .bt-up{opacity:0;transform:translateY(26px);transition:opacity .85s var(--ease) var(--d,0s),transform .85s var(--ease) var(--d,0s)}
 .bt-js .bt-up.is-in{opacity:1;transform:none}
 
@@ -741,6 +755,11 @@ body.bt-lock{overflow:hidden}
 
 
 
+
+main>section:not(#_){margin:0;border-radius:0;border-bottom:var(--r) solid transparent}
+main>section:not(#_):first-child{border-radius:var(--r) var(--r) 0 0}
+main>section:not(#_)+section:not(#_){margin-top:calc(var(--r)*-1);border-radius:var(--r) var(--r) 0 0}
+body>footer.bt-foot:not(#_){margin-top:calc(var(--r)*-1);border-radius:var(--r)}
 </style>
 
 <link rel="alternate" hreflang="ru" href="https://open-sites.io/works/batumi-tours/">
@@ -831,14 +850,14 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
     <a class="bt-logo" href="#top" aria-label="Batumi Tours Georgia, наверх"><img src="img/logo.svg" alt="Batumi Tours Georgia" width="204" height="32"></a>
     <nav class="bt-links" aria-label="Разделы"><a href="#tours">Туры</a><a href="#about">О нас</a><a href="blog/index.html">Блог</a><a href="#reviews">Отзывы</a><a href="#book">Контакты</a></nav>
     <div class="bt-ico" aria-label="Написать нам"><a class="is-wa" href="https://wa.me/995591927262" target="_blank" rel="noopener" aria-label="WhatsApp"><svg class="bt-f" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-wa"/></svg></a><a class="is-tg" href="https://t.me/+995591927262" target="_blank" rel="noopener" aria-label="Telegram"><svg class="bt-f" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tg"/></svg></a><a class="is-ig" href="https://www.instagram.com/batumi_tours_georgia" target="_blank" rel="noopener" aria-label="Instagram"><svg class="bt-f" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-ig"/></svg></a></div>
-    <div class="bt-lang" data-lang-box><button class="bt-lang__b" type="button" aria-expanded="false" aria-controls="btLangD" aria-label="Язык сайта: Русский"><span>RU</span><svg class="bt-s" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button><div class="bt-lang__list" id="btLangD" role="group" aria-label="Язык сайта"><a class="bt-lang__o" href="index.html" hreflang="ru" lang="ru" aria-current="true"><b>RU</b>Русский</a><a class="bt-lang__o" href="en/index.html" hreflang="en" lang="en"><b>ENG</b>English</a><a class="bt-lang__o" href="et/index.html" hreflang="et" lang="et"><b>EST</b>Eesti</a><a class="bt-lang__o" href="lv/index.html" hreflang="lv" lang="lv"><b>LV</b>Latviešu</a></div></div>
+    <div class="bt-lang" data-lang-box><button class="bt-lang__b" type="button" aria-expanded="false" aria-controls="btLangD" aria-label="Язык сайта: Русский"><span>RU</span><svg class="bt-s" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button><div class="bt-lang__list" id="btLangD" role="group" aria-label="Язык сайта"><a class="bt-lang__o" href="index.html" hreflang="ru" lang="ru" aria-current="true" aria-label="Русский" title="Русский"><b>RU</b></a><a class="bt-lang__o" href="en/index.html" hreflang="en" lang="en" aria-label="English" title="English"><b>ENG</b></a><a class="bt-lang__o" href="et/index.html" hreflang="et" lang="et" aria-label="Eesti" title="Eesti"><b>EST</b></a><a class="bt-lang__o" href="lv/index.html" hreflang="lv" lang="lv" aria-label="Latviešu" title="Latviešu"><b>LV</b></a></div></div>
     <a class="bt-go bt-go--pulse bt-go--sm bt-bookb" href="#book">Забронировать</a>
     <button class="bt-burger" type="button" id="btBurger" aria-label="Меню" aria-expanded="false" aria-controls="btMenu"><svg class="bt-s" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8h16M4 16h16"/></svg></button>
   </div>
   <div class="bt-menu" id="btMenu">
     <nav class="bt-menu__nav" aria-label="Разделы"><a href="#tours">Туры</a><a href="#about">О нас</a><a href="blog/index.html">Блог</a><a href="#reviews">Отзывы</a><a href="#book">Контакты</a></nav>
     <div class="bt-menu__ico" aria-label="Написать нам"><a class="is-wa" href="https://wa.me/995591927262" target="_blank" rel="noopener" aria-label="WhatsApp"><svg class="bt-f" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-wa"/></svg></a><a class="is-tg" href="https://t.me/+995591927262" target="_blank" rel="noopener" aria-label="Telegram"><svg class="bt-f" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tg"/></svg></a><a class="is-ig" href="https://www.instagram.com/batumi_tours_georgia" target="_blank" rel="noopener" aria-label="Instagram"><svg class="bt-f" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-ig"/></svg></a></div>
-    <div class="bt-lang" data-lang-box><button class="bt-lang__b" type="button" aria-expanded="false" aria-controls="btLangM" aria-label="Язык сайта: Русский"><span>RU</span><svg class="bt-s" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button><div class="bt-lang__list" id="btLangM" role="group" aria-label="Язык сайта"><a class="bt-lang__o" href="index.html" hreflang="ru" lang="ru" aria-current="true"><b>RU</b>Русский</a><a class="bt-lang__o" href="en/index.html" hreflang="en" lang="en"><b>ENG</b>English</a><a class="bt-lang__o" href="et/index.html" hreflang="et" lang="et"><b>EST</b>Eesti</a><a class="bt-lang__o" href="lv/index.html" hreflang="lv" lang="lv"><b>LV</b>Latviešu</a></div></div>
+    <div class="bt-lang" data-lang-box><button class="bt-lang__b" type="button" aria-expanded="false" aria-controls="btLangM" aria-label="Язык сайта: Русский"><span>RU</span><svg class="bt-s" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button><div class="bt-lang__list" id="btLangM" role="group" aria-label="Язык сайта"><a class="bt-lang__o" href="index.html" hreflang="ru" lang="ru" aria-current="true" aria-label="Русский" title="Русский"><b>RU</b></a><a class="bt-lang__o" href="en/index.html" hreflang="en" lang="en" aria-label="English" title="English"><b>ENG</b></a><a class="bt-lang__o" href="et/index.html" hreflang="et" lang="et" aria-label="Eesti" title="Eesti"><b>EST</b></a><a class="bt-lang__o" href="lv/index.html" hreflang="lv" lang="lv" aria-label="Latviešu" title="Latviešu"><b>LV</b></a></div></div>
   </div>
 </header>
 
@@ -896,19 +915,19 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
         <li class="bt-tk">
           <div class="bt-tk__in bt-glow" data-glow>
             <div class="bt-tk__main"><b>Парк Мачахела</b><span>Водопады, мост царицы Тамары и застолье с танцами</span></div>
-            <div class="bt-tk__stub"><span class="bt-seats">есть места</span><b>75 €</b><a class="bt-go bt-go--sm" href="#book" data-tour="machakhela">Записаться</a></div>
+            <div class="bt-tk__stub"><span class="bt-seats">есть места</span><b>75 €</b><a class="bt-go bt-go--sm" href="tours/machakhela/index.html">Подробнее</a></div>
           </div>
         </li>
         <li class="bt-tk">
           <div class="bt-tk__in bt-glow" data-glow>
             <div class="bt-tk__main"><b>Парк Мтирала</b><span>Джунгли и обед в грузинской семье</span></div>
-            <div class="bt-tk__stub"><span class="bt-seats">есть места</span><b>60 €</b><a class="bt-go bt-go--sm" href="#book" data-tour="mtirala">Записаться</a></div>
+            <div class="bt-tk__stub"><span class="bt-seats">есть места</span><b>60 €</b><a class="bt-go bt-go--sm" href="tours/mtirala/index.html">Подробнее</a></div>
           </div>
         </li>
         <li class="bt-tk">
           <div class="bt-tk__in bt-glow" data-glow>
             <div class="bt-tk__main"><b>Курорт Гомисмта</b><span>Облака под ногами и пикник на вершине</span></div>
-            <div class="bt-tk__stub"><span class="bt-seats">есть места</span><b>70 €</b><a class="bt-go bt-go--sm" href="#book" data-tour="gomismta">Записаться</a></div>
+            <div class="bt-tk__stub"><span class="bt-seats">есть места</span><b>70 €</b><a class="bt-go bt-go--sm" href="tours/gomismta/index.html">Подробнее</a></div>
           </div>
         </li>
       </ol>
@@ -948,7 +967,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
           <img class="bt-sl__s" data-src="img/mc3-640.jpg" data-srcset="img/mc3-640.jpg 640w, img/mc3-1000.jpg 1000w" sizes="(min-width:1000px) 360px, (min-width:640px) 48vw, 92vw" width="1000" height="800" alt="Стол с шашлыком, хачапури и вином" loading="lazy" decoding="async">
           <img class="bt-sl__s" data-src="img/mc4-640.jpg" data-srcset="img/mc4-640.jpg 640w, img/mc4-1000.jpg 1000w" sizes="(min-width:1000px) 360px, (min-width:640px) 48vw, 92vw" width="1000" height="800" alt="Деревянные качели-полумесяц над рекой" loading="lazy" decoding="async">
         </div>
-        <span class="bt-chip bt-chip--len"><svg class="bt-s" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-clock"/></svg>1 день</span>
+        <span class="bt-chip bt-chip--len"><svg class="bt-s" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-clock"/></svg>8–10 часов</span>
         <button class="bt-sl__nav bt-sl__nav--l" type="button" data-prev aria-label="Назад"><svg class="bt-s" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-arr"/></svg></button>
         <button class="bt-sl__nav bt-sl__nav--r" type="button" data-next aria-label="Дальше"><svg class="bt-s" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-arr"/></svg></button>
         <div class="bt-sl__dots" role="group" aria-label="Кадры"><button type="button" aria-label="Кадр 1"></button><button type="button" aria-label="Кадр 2"></button><button type="button" aria-label="Кадр 3"></button><button type="button" aria-label="Кадр 4"></button></div>
@@ -965,7 +984,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
           <img class="bt-sl__s" data-src="img/gc3-640.jpg" data-srcset="img/gc3-640.jpg 640w, img/gc3-1000.jpg 1000w" sizes="(min-width:1000px) 360px, (min-width:640px) 48vw, 92vw" width="1000" height="800" alt="Девушка с поднятыми руками на склоне, рядом корова" loading="lazy" decoding="async">
           <img class="bt-sl__s" data-src="img/gc4-640.jpg" data-srcset="img/gc4-640.jpg 640w, img/gc4-1000.jpg 1000w" sizes="(min-width:1000px) 360px, (min-width:640px) 48vw, 92vw" width="1000" height="800" alt="Гости тура на пикнике на вершине" loading="lazy" decoding="async">
         </div>
-        <span class="bt-chip bt-chip--len"><svg class="bt-s" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-clock"/></svg>1 день</span>
+        <span class="bt-chip bt-chip--len"><svg class="bt-s" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-clock"/></svg>10 часов</span>
         <button class="bt-sl__nav bt-sl__nav--l" type="button" data-prev aria-label="Назад"><svg class="bt-s" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-arr"/></svg></button>
         <button class="bt-sl__nav bt-sl__nav--r" type="button" data-next aria-label="Дальше"><svg class="bt-s" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-arr"/></svg></button>
         <div class="bt-sl__dots" role="group" aria-label="Кадры"><button type="button" aria-label="Кадр 1"></button><button type="button" aria-label="Кадр 2"></button><button type="button" aria-label="Кадр 3"></button><button type="button" aria-label="Кадр 4"></button></div>
@@ -1034,7 +1053,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
           <img class="bt-sl__s" data-src="img/t-mandarin-d-640.jpg" data-srcset="img/t-mandarin-d-640.jpg 640w, img/t-mandarin-d-1000.jpg 1000w" sizes="(min-width:1000px) 360px, (min-width:640px) 48vw, 92vw" width="1000" height="800" alt="Гости с вёдрами в саду среди пальм" loading="lazy" decoding="async">
           <img class="bt-sl__s" data-src="img/t-mandarin-e-640.jpg" data-srcset="img/t-mandarin-e-640.jpg 640w, img/t-mandarin-e-1000.jpg 1000w" sizes="(min-width:1000px) 360px, (min-width:640px) 48vw, 92vw" width="1000" height="800" alt="Деревянные ящики со свежими мандаринами" loading="lazy" decoding="async">
         </div>
-        <span class="bt-chip bt-chip--len"><svg class="bt-s" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-clock"/></svg>ноябрь и декабрь</span>
+        <span class="bt-chip bt-chip--len"><svg class="bt-s" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-clock"/></svg>6 часов</span>
         <button class="bt-sl__nav bt-sl__nav--l" type="button" data-prev aria-label="Назад"><svg class="bt-s" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-arr"/></svg></button>
         <button class="bt-sl__nav bt-sl__nav--r" type="button" data-next aria-label="Дальше"><svg class="bt-s" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-arr"/></svg></button>
         <div class="bt-sl__dots" role="group" aria-label="Кадры"><button type="button" aria-label="Кадр 1"></button><button type="button" aria-label="Кадр 2"></button><button type="button" aria-label="Кадр 3"></button><button type="button" aria-label="Кадр 4"></button><button type="button" aria-label="Кадр 5"></button></div>
@@ -1073,7 +1092,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
         <span class="bt-chip bt-chip--len"><svg class="bt-s" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-clock"/></svg>6 часов</span>
       </div>
       <div class="bt-card__b"><h3>Тур Кеда</h3><p>Водопад Медзибна и горная природа</p>
-        <div class="bt-card__foot"><b>от 65 €</b><a class="bt-go bt-go--sm" href="tours/keda/index.html">Подробнее</a></div></div>
+        <div class="bt-card__foot"><b>от 70 €</b><a class="bt-go bt-go--sm" href="tours/keda/index.html">Подробнее</a></div></div>
     </article>
 
     <article class="bt-card bt-glow bt-up is-x" id="tour-okatse-martvili" data-g="oneday" data-glow>
@@ -1085,7 +1104,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
           <img class="bt-sl__s" data-src="img/t-okatse-martvili-d-640.jpg" data-srcset="img/t-okatse-martvili-d-640.jpg 640w, img/t-okatse-martvili-d-1000.jpg 1000w" sizes="(min-width:1000px) 360px, (min-width:640px) 48vw, 92vw" width="1000" height="800" alt="Двое гостей сидят на фоне горной долины и реки" loading="lazy" decoding="async">
           <img class="bt-sl__s" data-src="img/t-okatse-martvili-e-640.jpg" data-srcset="img/t-okatse-martvili-e-640.jpg 640w, img/t-okatse-martvili-e-1000.jpg 1000w" sizes="(min-width:1000px) 360px, (min-width:640px) 48vw, 92vw" width="1000" height="800" alt="Накрытый стол с закусками и горячими блюдами" loading="lazy" decoding="async">
         </div>
-        <span class="bt-chip bt-chip--len"><svg class="bt-s" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-clock"/></svg>10 часов</span>
+        <span class="bt-chip bt-chip--len"><svg class="bt-s" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-clock"/></svg>12 часов</span>
         <button class="bt-sl__nav bt-sl__nav--l" type="button" data-prev aria-label="Назад"><svg class="bt-s" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-arr"/></svg></button>
         <button class="bt-sl__nav bt-sl__nav--r" type="button" data-next aria-label="Дальше"><svg class="bt-s" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-arr"/></svg></button>
         <div class="bt-sl__dots" role="group" aria-label="Кадры"><button type="button" aria-label="Кадр 1"></button><button type="button" aria-label="Кадр 2"></button><button type="button" aria-label="Кадр 3"></button><button type="button" aria-label="Кадр 4"></button><button type="button" aria-label="Кадр 5"></button></div>
@@ -1128,7 +1147,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
         <div class="bt-sl__track">
           <img class="bt-sl__s" src="img/t-prometheus-martvili-640.jpg" srcset="img/t-prometheus-martvili-640.jpg 640w, img/t-prometheus-martvili-1000.jpg 1000w" sizes="(min-width:1000px) 360px, (min-width:640px) 48vw, 92vw" width="1000" height="800" alt="Узкий Мартвильский каньон с зелёными стенами" loading="lazy" decoding="async">
         </div>
-        <span class="bt-chip bt-chip--len"><svg class="bt-s" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-clock"/></svg>1 день</span>
+        <span class="bt-chip bt-chip--len"><svg class="bt-s" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-clock"/></svg>10 часов</span>
       </div>
       <div class="bt-card__b"><h3>Пещера Прометея и Мартвильский каньон</h3><p>Пещера и каньон, лодки по желанию</p>
         <div class="bt-card__foot"><b>50 €</b><a class="bt-go bt-go--sm" href="tours/prometheus-martvili/index.html">Подробнее</a></div></div>
@@ -1142,7 +1161,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
         <span class="bt-chip bt-chip--len"><svg class="bt-s" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-clock"/></svg>10 часов</span>
       </div>
       <div class="bt-card__b"><h3>Зелёное озеро</h3><p>Горные ущелья Аджарии и пикник на природе</p>
-        <div class="bt-card__foot"><b>70 €</b><a class="bt-go bt-go--sm" href="tours/green-lake/index.html">Подробнее</a></div></div>
+        <div class="bt-card__foot"><b>85 €</b><a class="bt-go bt-go--sm" href="tours/green-lake/index.html">Подробнее</a></div></div>
     </article>
 
     <article class="bt-card bt-glow bt-up is-x" id="tour-batumi-walking" data-g="oneday" data-glow style="--d:.12s">
@@ -1240,7 +1259,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
         <div class="bt-sl__dots" role="group" aria-label="Кадры"><button type="button" aria-label="Кадр 1"></button><button type="button" aria-label="Кадр 2"></button><button type="button" aria-label="Кадр 3"></button><button type="button" aria-label="Кадр 4"></button><button type="button" aria-label="Кадр 5"></button></div>
       </div>
       <div class="bt-card__b"><h3>Рача на 2 дня</h3><p>Хванчкара, горы Рачи и гора 9 крестов</p>
-        <div class="bt-card__foot"><b>от 150 €</b><a class="bt-go bt-go--sm" href="tours/racha-9-crosses-2-days/index.html">Подробнее</a></div></div>
+        <div class="bt-card__foot"><b>от 170 €</b><a class="bt-go bt-go--sm" href="tours/racha-9-crosses-2-days/index.html">Подробнее</a></div></div>
     </article>
 
     <article class="bt-card bt-glow bt-up" id="tour-borjomi-2-days" data-g="multiday" data-glow style="--d:.12s">
@@ -1531,7 +1550,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
 
 <section class="bt-sec bt-tex bt-about" id="about" aria-labelledby="aboutH">
   <div class="bt-shell">
-    <div class="bt-head bt-up"><h2 id="aboutH">О нас</h2></div>
+    <div class="bt-head bt-up"><h2 id="aboutH">Что мы предлагаем</h2></div>
     <ul class="bt-incl bt-abt">
         <li class="bt-glow bt-up" data-glow><svg class="bt-s" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-mtn"/></svg>Однодневные и многодневные туры</li>
         <li class="bt-glow bt-up" data-glow style="--d:.1s"><svg class="bt-s" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-drop"/></svg>Ретриты</li>
@@ -1563,14 +1582,12 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
         <div class="bt-pp__b">
           <h3>Аркадий Болквадзе</h3>
           <p class="bt-pp__r">Основатель, сертифицированный гид</p>
-          <p class="bt-pp__t">20 лет Аркадий отвечал за безопасность первых лиц Аджарии. Теперь с той же ответственностью сам возит гостей в горы.</p>
-          <p class="bt-pp__t">Вы отдыхаете, а он следит за дорогой, временем и застольем.</p>
-          <blockquote>«Безопасность моих туристов… на высшем уровне!»</blockquote>
+          <p class="bt-pp__t">Более 20 лет Аркадий отвечал за безопасность первых лиц Аджарии. Теперь с той же ответственностью водит гостей в горы. Он отлично знает регион, следит за маршрутом, временем и комфортом гостей, создаёт атмосферу доверия и настоящего грузинского гостеприимства.</p>
         </div>
         <ul class="bt-facts">
-          <li><svg class="bt-s" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-shield"/></svg>20+ лет в охране первых лиц Аджарии</li>
-          <li><svg class="bt-s" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-cap"/></svg>Сертифицированный гид</li>
-          <li><svg class="bt-s" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-pin"/></svg>Родился и живёт в Батуми</li>
+          <li><svg class="bt-s" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-medal"/></svg>Лучший гид Аджарии 2025</li>
+          <li><svg class="bt-s" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-cap"/></svg>Участник профессиональной ассоциации гидов</li>
+          <li><svg class="bt-s" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-pin"/></svg>Родился и вырос в Батуми</li>
         </ul>
       </div></article>
       <article class="bt-up" style="--d:.08s"><div class="bt-pp bt-glow" data-glow>
@@ -1578,10 +1595,25 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
         <div class="bt-pp__b">
           <h3>Малхаз</h3>
           <p class="bt-pp__r">Сертифицированный гид</p>
-          <blockquote>«Более 30 лет провожу экскурсии по Аджарии и всей Грузии на русском языке… Батуми мой родной город.»</blockquote>
+          <p class="bt-pp__t">Более 30 лет проводит экскурсии по Аджарии и всей Грузии на русском языке. Многолетний опыт позволяет точно чувствовать ожидания гостей и предлагать разнообразные форматы путешествий — от классических и гастрономических маршрутов до активных и нестандартных программ.</p>
         </div>
         <ul class="bt-facts">
+          <li><svg class="bt-s" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-medal"/></svg>Серебряный гид</li>
           <li><svg class="bt-s" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-cap"/></svg>Тренер по подготовке гидов Аджарии</li>
+        </ul>
+      </div></article>
+      <article class="bt-up" style="--d:.16s"><div class="bt-pp bt-glow" data-glow>
+        
+        <figure class="bt-pp__ph bt-pp__ph--mono"><span class="bt-mono" aria-hidden="true">Н</span></figure>
+        <div class="bt-pp__b">
+          <h3>Нана</h3>
+          <p class="bt-pp__r">Сертифицированный гид</p>
+          <p class="bt-pp__t">Более 9 лет Нана проводит экскурсии по Грузии на русском и английском языках. Она прекрасно знает историю, культуру и традиции своей страны и с удовольствием знакомит с ними гостей. В её экскурсиях особое место занимают грузинское гостеприимство, национальная кухня и местные обычаи, которые помогают глубже почувствовать характер и атмосферу Грузии.</p>
+        </div>
+        <ul class="bt-facts">
+          <li><svg class="bt-s" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-medal"/></svg>Лучший гид Аджарии 2017</li>
+          <li><svg class="bt-s" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-cap"/></svg>Участник профессиональной ассоциации гидов</li>
+          <li><svg class="bt-s" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-globe"/></svg>Экскурсии на русском и английском языках</li>
         </ul>
       </div></article>
     </div>
@@ -1663,7 +1695,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
       <ul class="bt-pick__list" id="btPickList" role="listbox" tabindex="-1" aria-labelledby="btTourL"></ul>
     </div>
   </div>
-  <select id="btTour" aria-labelledby="btTourL"><optgroup label="Однодневные"><option value="machakhela">Парк Мачахела · 75 €</option><option value="gomismta">Курорт Гомисмта · 70 €</option><option value="mtirala">Парк Мтирала · 60 €</option><option value="shuakhevi">Тур Шуахеви · 75 €</option><option value="adjara">Горная Аджария · от 35 €</option><option value="mandarin">Мандариновый тур · 50 €</option><option value="rafting-hot-springs">Рафтинг и горячие источники · 60 €</option><option value="wellness">Оздоровительный тур · от 55 €</option><option value="keda">Тур Кеда · от 65 €</option><option value="okatse-martvili">Прометей, Окаце и Мартвили · 55 €</option><option value="georgian-cuisine">Секреты грузинской кухни · от 60 €</option><option value="chirukhi">Курорт Чирухи · 75 €</option><option value="prometheus-martvili">Пещера Прометея и Мартвильский каньон · 50 €</option><option value="green-lake">Зелёное озеро · 70 €</option><option value="batumi-walking">Пеший тур по Батуми · от 25 €</option><option value="bakhmaro">Курорт Бахмаро · 75 €</option><option value="rtveli">Тур Ртвели · 70 €</option><option value="tea">Чайный тур · 70 €</option></optgroup><optgroup label="Многодневные"><option value="svaneti-2-days">Сванети на 2 дня · от 170 €</option><option value="racha-9-crosses-2-days">Рача на 2 дня · от 150 €</option><option value="borjomi-2-days">Боржоми на 2 дня · от 170 €</option><option value="svaneti-racha-3-days">Сванети и Рача на 3 дня · от 240 €</option><option value="svaneti-3-days">Сванети на 3 дня · от 240 €</option><option value="racha-9-crosses-3-days">Рача 9 крестов на 3 дня · от 240 €</option></optgroup><optgroup label="Пакетные"><option value="sunny-georgia">Солнечная Грузия · от 840 €</option><option value="cities-regions">Города и регионы Грузии · от 840 €</option><option value="soul-of-georgia">Душа Грузии · от 840 €</option><option value="active-batumi">Грузия в активном ритме из Батуми · от 650 €</option><option value="active-tbilisi">Грузия в активном ритме из Тбилиси · от 650 €</option><option value="grand-georgia">Большое путешествие по Грузии · от 1250 €</option></optgroup></select>
+  <select id="btTour" aria-labelledby="btTourL"><optgroup label="Однодневные"><option value="machakhela">Парк Мачахела · 75 €</option><option value="gomismta">Курорт Гомисмта · 70 €</option><option value="mtirala">Парк Мтирала · 60 €</option><option value="shuakhevi">Тур Шуахеви · 75 €</option><option value="adjara">Горная Аджария · от 35 €</option><option value="mandarin">Мандариновый тур · 50 €</option><option value="rafting-hot-springs">Рафтинг и горячие источники · 60 €</option><option value="wellness">Оздоровительный тур · от 55 €</option><option value="keda">Тур Кеда · от 70 €</option><option value="okatse-martvili">Прометей, Окаце и Мартвили · 55 €</option><option value="georgian-cuisine">Секреты грузинской кухни · от 60 €</option><option value="chirukhi">Курорт Чирухи · 75 €</option><option value="prometheus-martvili">Пещера Прометея и Мартвильский каньон · 50 €</option><option value="green-lake">Зелёное озеро · 85 €</option><option value="batumi-walking">Пеший тур по Батуми · от 25 €</option><option value="bakhmaro">Курорт Бахмаро · 75 €</option><option value="rtveli">Тур Ртвели · 70 €</option><option value="tea">Чайный тур · 70 €</option></optgroup><optgroup label="Многодневные"><option value="svaneti-2-days">Сванети на 2 дня · от 170 €</option><option value="racha-9-crosses-2-days">Рача на 2 дня · от 170 €</option><option value="borjomi-2-days">Боржоми на 2 дня · от 170 €</option><option value="svaneti-racha-3-days">Сванети и Рача на 3 дня · от 240 €</option><option value="svaneti-3-days">Сванети на 3 дня · от 240 €</option><option value="racha-9-crosses-3-days">Рача 9 крестов на 3 дня · от 240 €</option></optgroup><optgroup label="Пакетные"><option value="sunny-georgia">Солнечная Грузия · от 840 €</option><option value="cities-regions">Города и регионы Грузии · от 840 €</option><option value="soul-of-georgia">Душа Грузии · от 840 €</option><option value="active-batumi">Грузия в активном ритме из Батуми · от 650 €</option><option value="active-tbilisi">Грузия в активном ритме из Тбилиси · от 650 €</option><option value="grand-georgia">Большое путешествие по Грузии · от 1250 €</option></optgroup></select>
 </div>
 
           <label class="bt-f bt-f--half"><span>Дата</span><input class="bt-in1" type="date" id="btDate"></label>
@@ -1716,7 +1748,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
   <div class="bt-shell bt-foot__in">
     <div class="bt-foot__brand">
       <a class="bt-logo" href="#top" aria-label="Batumi Tours Georgia, наверх"><img src="img/logo.svg" alt="Batumi Tours Georgia" width="204" height="32" loading="lazy" decoding="async"></a>
-      <p>Туры по Грузии на любой вкус</p>
+      <p><a class="bt-foot__tag" href="#tours">Туры по Грузии на любой вкус</a></p>
     </div>
     <nav class="bt-foot__col bt-foot__nav" aria-label="Навигация"><h4>Навигация</h4><a href="#tours">Туры</a><a href="#about">О нас</a><a href="blog/index.html">Блог</a><a href="#reviews">Отзывы</a><a href="#book">Контакты</a><a href="#faq">Вопрос-Ответ</a></nav>
     <nav class="bt-foot__col bt-foot__docs" aria-label="Документы"><h4>Документы</h4><a href="docs/privacy/index.html">Политика конфиденциальности</a><a href="docs/soglasie/index.html">Согласие на обработку персональных данных</a><a href="docs/cookie/index.html">Политика cookie</a></nav>
@@ -1785,26 +1817,26 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
   var WA = 'https://wa.me/995591927262?text=';
 
   var TOURS = {
-    "machakhela": { name: "Парк Мачахела", g: "oneday", price: 75, zip: 70, len: "1 день" },
-    "gomismta": { name: "Курорт Гомисмта", g: "oneday", price: 70, len: "1 день" },
+    "machakhela": { name: "Парк Мачахела", g: "oneday", price: 75, zip: 70, len: "8–10 часов" },
+    "gomismta": { name: "Курорт Гомисмта", g: "oneday", price: 70, len: "10 часов" },
     "mtirala": { name: "Парк Мтирала", g: "oneday", price: 60, len: "8 часов" },
     "shuakhevi": { name: "Тур Шуахеви", g: "oneday", price: 75, len: "8 часов" },
     "adjara": { name: "Горная Аджария", g: "oneday", price: 35, small: 95, len: "6 часов" },
-    "mandarin": { name: "Мандариновый тур", g: "oneday", price: 50, msg: "Мандариновый", from: 10, len: "ноябрь и декабрь" },
+    "mandarin": { name: "Мандариновый тур", g: "oneday", price: 50, msg: "Мандариновый", from: 10, len: "6 часов" },
     "rafting-hot-springs": { name: "Рафтинг и горячие источники", g: "oneday", price: 60, len: "10 часов" },
     "wellness": { name: "Оздоровительный тур", g: "oneday", price: 55, small: 75, len: "5–6 часов" },
-    "keda": { name: "Тур Кеда", g: "oneday", price: 65, small: 95, len: "6 часов" },
-    "okatse-martvili": { name: "Прометей, Окаце и Мартвили", g: "oneday", price: 55, len: "10 часов" },
+    "keda": { name: "Тур Кеда", g: "oneday", price: 70, small: 95, len: "6 часов" },
+    "okatse-martvili": { name: "Прометей, Окаце и Мартвили", g: "oneday", price: 55, len: "12 часов" },
     "georgian-cuisine": { name: "Секреты грузинской кухни", g: "oneday", price: 60, small: 95, len: "7 часов" },
     "chirukhi": { name: "Курорт Чирухи", g: "oneday", price: 75, len: "10 часов" },
-    "prometheus-martvili": { name: "Пещера Прометея и Мартвильский каньон", g: "oneday", price: 50, len: "1 день" },
-    "green-lake": { name: "Зелёное озеро", g: "oneday", price: 70, len: "10 часов" },
+    "prometheus-martvili": { name: "Пещера Прометея и Мартвильский каньон", g: "oneday", price: 50, len: "10 часов" },
+    "green-lake": { name: "Зелёное озеро", g: "oneday", price: 85, len: "10 часов" },
     "batumi-walking": { name: "Пеший тур по Батуми", g: "oneday", price: 25, small: 50, len: "2,5 часа" },
     "bakhmaro": { name: "Курорт Бахмаро", g: "oneday", price: 75, len: "10 часов" },
     "rtveli": { name: "Тур Ртвели", g: "oneday", price: 70, len: "8 часов" },
     "tea": { name: "Чайный тур", g: "oneday", price: 70, len: "7 часов" },
     "svaneti-2-days": { name: "Сванети на 2 дня", g: "multiday", price: 170, fr: 1, len: "2 дня" },
-    "racha-9-crosses-2-days": { name: "Рача на 2 дня", g: "multiday", price: 150, fr: 1, len: "2 дня" },
+    "racha-9-crosses-2-days": { name: "Рача на 2 дня", g: "multiday", price: 170, fr: 1, len: "2 дня" },
     "borjomi-2-days": { name: "Боржоми на 2 дня", g: "multiday", price: 170, fr: 1, len: "2 дня" },
     "svaneti-racha-3-days": { name: "Сванети и Рача на 3 дня", g: "multiday", price: 240, fr: 1, len: "3 дня" },
     "svaneti-3-days": { name: "Сванети на 3 дня", g: "multiday", price: 240, fr: 1, len: "3 дня" },

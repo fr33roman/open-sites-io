@@ -37,11 +37,11 @@
 .bt-lang.is-open .bt-lang__b{background:rgba(243,239,223,.14);border-color:rgba(243,239,223,.85)}
 .bt-lang.is-open .bt-lang__b svg{transform:rotate(180deg)}
 @media (hover:hover){.bt-lang__b:hover{background:rgba(243,239,223,.14)}}
-.bt-lang__list{position:absolute;right:0;top:calc(100% + 12px);z-index:5;display:grid;gap:2px;min-width:216px;padding:6px;border-radius:22px;background:rgba(35,46,11,.98);box-shadow:inset 0 0 0 1px rgba(243,239,223,.16),0 24px 40px -18px rgba(0,0,0,.7);
+.bt-lang__list{position:absolute;right:0;top:calc(100% + 8px);z-index:5;display:grid;gap:2px;min-width:100%;padding:5px;border-radius:20px;background:rgba(35,46,11,.98);box-shadow:inset 0 0 0 1px rgba(243,239,223,.16),0 24px 40px -18px rgba(0,0,0,.7);
   opacity:0;visibility:hidden;transform:translateY(-6px);transition:opacity .25s,transform .3s var(--ease),visibility 0s .3s}
 .bt-lang.is-open .bt-lang__list{opacity:1;visibility:visible;transform:none;transition:opacity .25s,transform .3s var(--ease)}
-.bt-lang__o{display:flex;align-items:center;gap:10px;width:100%;min-height:46px;padding:0 14px;border:0;border-radius:16px;background:none;color:var(--cream);font:600 16px/1 var(--text);text-align:left;text-decoration:none;cursor:pointer;transition:background .25s}
-.bt-lang__o b{min-width:38px;font:800 18px/1 var(--disp);letter-spacing:.06em}
+.bt-lang__o{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;min-height:42px;padding:0 10px;border:0;border-radius:16px;background:none;color:var(--cream);font:600 16px/1 var(--text);text-align:left;text-decoration:none;cursor:pointer;transition:background .25s}
+.bt-lang__o b{font:800 16px/1 var(--disp);letter-spacing:.06em}
 @media (hover:hover){a.bt-lang__o:hover{background:rgba(243,239,223,.1)}}
 .bt-lang__o em{margin-left:auto;padding:4px 9px;border-radius:999px;background:rgba(239,184,13,.2);color:var(--yellow);font:700 11.5px/1 var(--text);font-style:normal;letter-spacing:.08em;text-transform:uppercase}
 .bt-lang__o[aria-current]{background:rgba(239,184,13,.18);box-shadow:inset 0 0 0 1.5px rgba(239,184,13,.7)}
@@ -50,7 +50,8 @@
 
 /* меню телефона */
 .bt-menu{position:absolute;left:0;right:0;top:calc(100% + 8px);max-width:1180px;margin:0 auto;padding:6px 20px 16px;border-radius:28px;background:rgba(35,46,11,.97);display:grid;color:var(--cream);
-  box-shadow:0 24px 40px -20px rgba(0,0,0,.6);opacity:0;visibility:hidden;transform:translateY(-8px);transition:opacity .3s,transform .3s,visibility 0s .3s}
+  box-shadow:0 24px 40px -20px rgba(0,0,0,.6);opacity:0;visibility:hidden;transform:translateY(-8px);transition:opacity .3s,transform .3s,visibility 0s .3s;
+  max-height:calc(100vh - 96px);max-height:calc(100dvh - 96px);overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch}
 .bt-top.bt-open .bt-menu{opacity:1;visibility:visible;transform:none;pointer-events:auto;transition:opacity .3s,transform .3s}
 .bt-menu__nav{display:grid}
 .bt-menu__nav a{min-height:54px;display:flex;align-items:center;text-decoration:none;font:700 28px/1 var(--disp);text-transform:uppercase;letter-spacing:.03em;border-bottom:1px solid rgba(243,239,223,.14);transition:color .3s,padding .3s var(--ease)}
@@ -59,16 +60,23 @@
 .bt-menu__ico{display:flex;gap:14px;padding:18px 0 4px}
 .bt-menu__ico a{width:48px;height:48px;box-shadow:inset 0 0 0 1px rgba(255,255,255,.28)}
 .bt-menu__ico svg{width:24px;height:24px}
-.bt-menu .bt-lang{margin-top:14px}
+.bt-menu .bt-lang{display:block;width:max-content;margin-top:14px}
 .bt-menu .bt-lang__b{min-height:44px;padding:0 14px 0 20px;font-size:16px}
-.bt-menu .bt-lang__list{position:static;display:none;margin-top:10px;min-width:0;max-width:340px;background:rgba(243,239,223,.07);box-shadow:none;opacity:1;visibility:visible;transform:none;transition:none}
+.bt-menu .bt-lang__list{position:static;display:none;margin-top:8px;min-width:100%;background:rgba(243,239,223,.07);box-shadow:none;opacity:1;visibility:visible;transform:none;transition:none}
 .bt-menu .bt-lang.is-open .bt-lang__list{display:grid}
 
 /* подвал: логотип и фраза, три колонки, значки */
 .bt-foot__in{display:grid;grid-template-columns:minmax(0,1fr);gap:28px}
 .bt-foot .bt-logo{margin-right:0}
 .bt-foot .bt-logo img{width:min(300px,80vw)}
+.bt-foot .bt-logo{align-items:flex-start;min-height:0}
+.bt-foot .bt-logo img{display:block}
 .bt-foot__brand p{margin:14px 0 0;font:800 32px/1.05 var(--disp);text-transform:uppercase;letter-spacing:.02em;color:var(--cream)}
+.bt-foot__brand p a{color:inherit;text-decoration:none;background:linear-gradient(var(--yellow),var(--yellow)) 0 100%/0 2px no-repeat;transition:color .3s,background-size .4s var(--ease)}
+.bt-foot__brand p a:focus-visible{outline:2px solid var(--yellow);outline-offset:4px;border-radius:4px}
+@media (hover:hover){.bt-foot__brand p a:hover{color:var(--yellow);background-size:100% 2px}}
+.bt-foot__nav{grid-template-columns:repeat(2,minmax(0,max-content));grid-template-rows:auto repeat(3,auto);grid-auto-flow:column;column-gap:28px;justify-content:start}
+.bt-foot__nav h4{grid-column:1/-1;grid-row:1}
 .bt-foot__col{display:grid;align-content:start;justify-items:start}
 .bt-foot__col h4{margin:0 0 8px;font:800 25px/1 var(--disp);text-transform:uppercase;letter-spacing:.06em;color:var(--yellow)}
 .bt-foot__col a{display:inline-flex;align-items:center;min-width:44px;min-height:44px;text-decoration:none;font-weight:600;font-size:17px;line-height:1.25;transition:color .3s}
@@ -81,7 +89,7 @@
 .bt-soc svg{width:24px;height:24px}
 @media (max-width:520px){.bt-soc{gap:10px}.bt-soc a{width:46px;height:46px}}
 @media (min-width:640px){
-  .bt-foot__in{grid-template-columns:repeat(3,minmax(0,1fr));gap:30px 28px}
+  .bt-foot__in{grid-template-columns:minmax(0,1.2fr) minmax(0,1fr) minmax(0,1fr);gap:30px 28px}
   .bt-foot__brand,.bt-soc{grid-column:1/-1}
 }
 @media (min-width:1000px){
@@ -93,7 +101,7 @@
   .bt-top__in>.bt-lang{display:block}
   .bt-burger,.bt-menu{display:none}
   .bt-top .bt-go{padding:0 22px;font-size:15.5px}
-  .bt-foot__in{grid-template-columns:minmax(0,1.3fr) minmax(0,.7fr) minmax(0,1.2fr) minmax(0,1.2fr);gap:30px 40px}
+  .bt-foot__in{grid-template-columns:minmax(0,1.2fr) minmax(0,1fr) minmax(0,1.1fr) minmax(0,1.1fr);gap:30px 40px}
   .bt-foot__brand{grid-column:1;grid-row:1;align-self:start}
   .bt-foot__col{grid-row:1/3}
   .bt-soc{grid-column:1;grid-row:2;align-self:start}

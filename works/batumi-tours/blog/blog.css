@@ -175,3 +175,10 @@ a,button,summary,label,input,select,textarea,[role="tab"],[role="option"],[tabin
   *{animation:none!important;transition:none!important}
   html{scroll-behavior:auto}
 }
+
+/* стыковка блоков (17.10.2026): блоки вплотную, без полосы фона; следующий блок заходит скруглёнными верхними углами на предыдущий
+   (его нижняя кромка — прозрачная рамка высотой в радиус, фон идёт под неё, так что содержимое не сдвигается). Шапка плавающая, не затронута. */
+main>section:not(#_){margin:0;border-radius:0;border-bottom:var(--r) solid transparent}
+main>section:not(#_):first-child{border-radius:var(--r) var(--r) 0 0}
+main>section:not(#_)+section:not(#_){margin-top:calc(var(--r)*-1);border-radius:var(--r) var(--r) 0 0}
+body>footer.bt-foot:not(#_){margin-top:calc(var(--r)*-1);border-radius:var(--r)}
