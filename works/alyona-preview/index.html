@@ -36,6 +36,7 @@
 </header>
 
 <div class="scroll-line" id="scrollLine" aria-hidden="true"></div>
+<div class="cur-dot" id="curDot" aria-hidden="true"><span data-i18n="gal.open">Открыть</span></div>
 <div class="panel-overlay" id="panelOverlay"></div>
 <aside class="side-panel" id="sidePanel" aria-label="Menu">
   <button class="side-close" id="menuClose" aria-label="Close">✕</button>
@@ -49,32 +50,56 @@
 
 <main id="top">
   
-  <section class="hero">
-    <div class="hero-bg"><img src="img/p1-2.jpg" alt="Alyonaa Design — interior"></div>
-    <div class="hero-content">
-      <h1 data-i18n="hero.h1">Пространства<br>для осознанной жизни</h1>
-      <span class="hero-rule" aria-hidden="true"></span>
-      <p data-i18n="hero.p">Создаю продуманные интерьеры для вас по всему миру.</p>
-      <a class="btn btn-light" href="#contact" data-i18n="hero.btn">Задать вопрос</a>
+  <section class="hero" id="hero">
+    <div class="hero-frame">
+      <div class="hero-bg"><img src="img/p1-2.jpg" alt="Alyonaa Design — interior"></div>
+      <div class="hero-content">
+        <span class="hero-tag"><i></i><span data-i18n="nav.left">Дизайнер интерьера</span></span>
+        <h1 data-i18n="hero.h1">Пространства<br>для <em class="hl">осознанной</em> жизни</h1>
+        <p data-i18n="hero.p">Создаю продуманные интерьеры для вас по всему миру.</p>
+        <div class="hero-btns">
+          <a class="btn btn-gold mag" href="#contact" data-i18n="hero.btn">Задать вопрос</a>
+          <a class="btn btn-glass mag" href="#gallery" data-i18n="menu.projects">Проекты</a>
+        </div>
+        
+        <ul class="hero-chips">
+          <li><b>4+</b><span data-i18n="fact1">года практики</span></li>
+          <li><b>3</b><span data-i18n="fact2">страны: Грузия, Россия, Беларусь</span></li>
+          <li class="hc-wide"><span data-i18n="contact.note">Онлайн по всему миру · лично в Батуми</span></li>
+        </ul>
+      </div>
+      <div class="hero-fan" id="heroFan" aria-hidden="true">
+        <div class="print p1" data-d="18"><img src="img/p2-1.jpg" alt=""></div>
+        <div class="print p2" data-d="30"><img src="img/p3-1.jpg" alt=""></div>
+        <div class="print p3" data-d="44"><img src="img/p1-1.jpg" alt=""></div>
+      </div>
+      <div class="seal hero-seal" aria-hidden="true">
+        <svg viewBox="0 0 200 200"><defs><path id="sealPath" d="M100,100 m-78,0 a78,78 0 1,1 156,0 a78,78 0 1,1 -156,0"/></defs>
+          <text><textPath href="#sealPath">ALYONAA DESIGN · INTERIOR · BATUMI · ONLINE ·</textPath></text></svg>
+        <b>A</b>
+      </div>
     </div>
-    <div class="hero-meta" data-i18n="contact.note">Онлайн по всему миру · лично в Батуми</div>
-    <div class="scroll-cue"><span data-i18n="hero.scroll">прокрутите вниз</span><i aria-hidden="true"></i></div>
   </section>
 
   <section class="section philosophy" id="philosophy">
+    <svg class="philo-plan" viewBox="0 0 600 400" aria-hidden="true" preserveAspectRatio="xMidYMid slice">
+      <path pathLength="1" d="M40 40 H560 V360 H40 Z M300 40 V210 M300 260 V360 M40 200 H220 M260 200 H300 M430 40 V150 M430 190 V360 M300 280 H430"/>
+      <path pathLength="1" d="M90 250 h120 v60 h-120 z M340 80 h60 v40 h-60 z M470 240 h60 v90 h-60 z M120 90 a40 40 0 1 0 80 0 a40 40 0 1 0 -80 0"/>
+    </svg>
     <div class="wrap philo-grid">
-      <div class="philo-photo reveal"><img src="img/alyona-1.jpg" alt="Alyona Andreeva, interior designer"></div>
+      <div class="philo-photo reveal tilt">
+        <img src="img/alyona-1.jpg" alt="Alyona Andreeva, interior designer">
+        <div class="seal philo-seal" aria-hidden="true">
+          <svg viewBox="0 0 200 200"><text><textPath href="#sealPath">ALYONAA DESIGN · INTERIOR · BATUMI · ONLINE ·</textPath></text></svg>
+          <b>A</b>
+        </div>
+      </div>
       <div class="philo-text reveal">
         <span class="kicker" data-n="01" data-i18n="philo.kicker">Философия</span>
         <h2 data-i18n="philo.h2">Меня рекомендуют близким</h2>
         <p data-i18n="philo.p1">Алёна Андреева — ваш дизайнер интерьера! Главное для меня — вы, а не рамки конкретного стиля. Мы вместе поймём, какая атмосфера делает именно ВАШ дом по-настоящему ВАШИМ.</p>
         <p data-i18n="philo.p2">Я создаю не просто картинки, а продуманную функциональность и детальные чертежи для строителей. У меня за плечами более четырёх лет работы в Грузии, России, Беларуси и по всему миру.</p>
-        
-        <dl class="philo-facts">
-          <div><dt>4+</dt><dd data-i18n="fact1">года практики</dd></div>
-          <div><dt>3</dt><dd data-i18n="fact2">страны: Грузия, Россия, Беларусь</dd></div>
-        </dl>
-        <a class="btn" href="#contact" data-i18n="philo.btn">Связаться</a>
+        <a class="btn btn-ink mag" href="#contact" data-i18n="philo.btn">Связаться</a>
       </div>
     </div>
   </section>
@@ -83,48 +108,37 @@
     <div class="fx__stage"></div>
   </section>
 
-  <section class="section gallery" id="gallery">
-    <div class="wrap">
-      <div class="head gal-head reveal">
-        <div>
-          <span class="kicker" data-n="02" data-i18n="gal.kicker">Проекты</span>
-          <h2 class="title" data-i18n="gal.h2">Примеры работ</h2>
-        </div>
-        <div class="pf-count" aria-live="polite"><span class="pf-num" id="pfNum">01</span><span class="pf-of" id="pfOf">/ 03</span></div>
+  <section class="fx sketch" id="sketch" data-fx="brush" data-photo="img/p1-1.jpg">
+    <div class="fx__stage">
+      <div class="sketch-cap">
+        <span class="kicker" data-n="02" data-i18n="sk.kicker">Эскиз</span>
+        <h2 data-i18n="sk.h2">От наброска<br>до интерьера</h2>
+        <p data-i18n="sk.p">Проведите по рисунку — набросок оживёт в цвете.</p>
       </div>
-      <div class="pf-tabs reveal" id="pfTabs" role="tablist"></div>
     </div>
+  </section>
 
-    <div class="pf reveal" id="pf">
-      <div class="pf-stage">
-        <div class="pf-rail" data-name="01">
-          <figure class="pf-item" style="--ar:16/9"><img src="img/p1-1.jpg" alt="Project 1 — living room" loading="lazy" draggable="false"></figure>
-          <figure class="pf-item" style="--ar:3/4"><img src="img/p1-3.jpg" alt="Project 1 — interior" loading="lazy" draggable="false"></figure>
-          <figure class="pf-item" style="--ar:16/9"><img src="img/p1-2.jpg" alt="Project 1 — interior" loading="lazy" draggable="false"></figure>
-          <figure class="pf-item" style="--ar:3/4"><img src="img/p1-4.jpg" alt="Project 1 — interior" loading="lazy" draggable="false"></figure>
-        </div>
-        <div class="pf-rail" data-name="02">
-          <figure class="pf-item" style="--ar:1/1"><img src="img/p2-1.jpg" alt="Project 2 — interior" loading="lazy" draggable="false"></figure>
-          <figure class="pf-item" style="--ar:3/4"><img src="img/p2-3.jpg" alt="Project 2 — interior" loading="lazy" draggable="false"></figure>
-          <figure class="pf-item" style="--ar:1/1"><img src="img/p2-2.jpg" alt="Project 2 — interior" loading="lazy" draggable="false"></figure>
-        </div>
-        <div class="pf-rail" data-name="03">
-          <figure class="pf-item" style="--ar:16/9"><img src="img/p3-1.jpg" alt="Project 3 — interior" loading="lazy" draggable="false"></figure>
-          <figure class="pf-item" style="--ar:4/3"><img src="img/p3-2.jpg" alt="Project 3 — interior" loading="lazy" draggable="false"></figure>
-        </div>
+  <section class="fly" id="gallery" style="--h:460vh">
+    <div class="fly__stage" id="flyStage">
+      <div class="fly__glow" aria-hidden="true"></div>
+      <div class="fly__title">
+        <span class="kicker" data-n="03" data-i18n="gal.kicker">Проекты</span>
+        <h2 data-i18n="gal.h2">Примеры работ</h2>
       </div>
-      <div class="wrap pf-bar">
-        <div class="pf-progress"><span id="pfProg"></span></div>
-        <div class="pf-arrows">
-          <button class="pf-btn" id="pfPrev" aria-label="Previous"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
-          <button class="pf-btn" id="pfNext" aria-label="Next"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
-        </div>
+      <div class="fly__world" id="flyWorld">
+        <figure class="fly__card" style="--ar:16/9"><img src="img/p1-1.jpg" alt="Interior — living room" loading="lazy" draggable="false"></figure>
+        <figure class="fly__card" style="--ar:1/1"><img src="img/p2-1.jpg" alt="Interior" loading="lazy" draggable="false"></figure>
+        <figure class="fly__card" style="--ar:3/4"><img src="img/p1-3.jpg" alt="Interior" loading="lazy" draggable="false"></figure>
+        <figure class="fly__card" style="--ar:16/9"><img src="img/p3-1.jpg" alt="Interior" loading="lazy" draggable="false"></figure>
+        <figure class="fly__card" style="--ar:3/4"><img src="img/p2-3.jpg" alt="Interior" loading="lazy" draggable="false"></figure>
+        <figure class="fly__card" style="--ar:16/9"><img src="img/p1-2.jpg" alt="Interior" loading="lazy" draggable="false"></figure>
+        <figure class="fly__card" style="--ar:1/1"><img src="img/p2-2.jpg" alt="Interior" loading="lazy" draggable="false"></figure>
+        <figure class="fly__card" style="--ar:3/4"><img src="img/p1-4.jpg" alt="Interior" loading="lazy" draggable="false"></figure>
+        <figure class="fly__card" style="--ar:4/3"><img src="img/p3-2.jpg" alt="Interior" loading="lazy" draggable="false"></figure>
       </div>
-      <div class="pf-cursor" id="pfCursor" aria-hidden="true"><span data-i18n="gal.open">Открыть</span></div>
-    </div>
-
-    <div class="wrap">
-      <div class="more reveal"><a class="btn" href="https://instagram.com/alyonaa_design" target="_blank" rel="noopener" data-i18n="gal.more">Больше проектов в Instagram</a></div>
+      <div class="fly__end">
+        <a class="btn btn-gold mag" href="https://instagram.com/alyonaa_design" target="_blank" rel="noopener" data-i18n="gal.more">Больше проектов в Instagram</a>
+      </div>
     </div>
   </section>
 
@@ -136,18 +150,20 @@
     <div class="lb-count" id="lbCount"></div>
   </div>
 
-  <section class="testi">
-    <div class="testi-bg"><img src="img/p2-3.jpg" alt="Alyonaa Design — interior"></div>
-    <div class="inner reveal">
-      <div class="mark" aria-hidden="true">“</div>
-      <blockquote data-i18n="testi">Настоящий дом — это про вашу жизнь и комфорт, а не про идеальные картинки.</blockquote>
+  <section class="testi" id="testi">
+    <div class="testi-frame">
+      <div class="testi-bg"><img src="img/p2-3.jpg" alt="Alyonaa Design — interior"></div>
+      <div class="inner">
+        <div class="mark" aria-hidden="true">“</div>
+        <blockquote id="quote" data-i18n="testi">Настоящий дом — это про вашу жизнь и комфорт, а не про идеальные картинки.</blockquote>
+      </div>
     </div>
   </section>
 
-  <section class="section services" id="services">
+  <section class="section services sheet" id="services">
     <div class="wrap">
       <div class="head reveal">
-        <span class="kicker" data-n="03" data-i18n="svc.kicker">Услуги и цены</span>
+        <span class="kicker" data-n="04" data-i18n="svc.kicker">Услуги и цены</span>
         <h2 class="title" data-i18n="svc.h2">Что входит в тарифы</h2>
         <p data-i18n="svc.p">Стоимость считается за квадратный метр. Чем выше тариф — тем полнее комплект проектной документации.</p>
       </div>
@@ -231,11 +247,11 @@
     </div>
   </section>
 
-  <section class="section contact" id="contact">
+  <section class="section contact sheet" id="contact">
     <div class="wrap contact-grid2">
       <div class="contact-photo reveal"><img src="img/alyona-2.jpg" alt="Alyona Andreeva, interior designer"></div>
       <div class="contact-block reveal">
-        <span class="kicker" data-n="04" data-i18n="contact.kicker">Контакты</span>
+        <span class="kicker" data-n="05" data-i18n="contact.kicker">Контакты</span>
         <h2 data-i18n="contact.h2">Расскажите про ваш дом</h2>
         <p data-i18n="contact.p">Напишите удобным способом: обсудим задачу, метраж и подберём тариф.</p>
         <div class="social-row">

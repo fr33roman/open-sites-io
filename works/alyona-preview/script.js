@@ -64,170 +64,171 @@ window.adOnLang = function (lang) {
   let saved = null;
   try { saved = localStorage.getItem(CUR_KEY); } catch (_) {}
   setCur(saved || (lang === "en" ? "usd" : "rub"), false);
-  pfTabs();
+  if (window.adOnLangExtra) window.adOnLangExtra();
 };
 
-/* ---------- проекты: лента фото на каждый проект ----------
-   Вкладки «Проект 01 / 02 / 03», крупный номер, ленту листают мышью (тянуть), пальцем и стрелками.
-   В конце ленты стрелка «дальше» открывает следующий проект. Нажатие на фото — фото на весь экран. */
-const pf = document.getElementById("pf");
-const lang2 = () => ((document.documentElement.lang || "ru").slice(0, 2) === "en" ? "en" : "ru");
-let pfTabs = () => {};
-if (pf) {
-  const rails = [...pf.querySelectorAll(".pf-rail")];
-  const tabsBox = document.getElementById("pfTabs");
-  const num = document.getElementById("pfNum");
-  const prog = document.getElementById("pfProg");
-  const cursor = document.getElementById("pfCursor");
-  const two = (n) => String(n).padStart(2, "0");
-  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
-  let cur = -1;
-  document.getElementById("pfOf").textContent = "/ " + two(rails.length);
-  rails.forEach((r) => [...r.children].forEach((it, i) => it.style.setProperty("--i", i)));
+/* ================= вторая волна 21.10: движение и объём ================= */
+const REDUCED = matchMedia("(prefers-reduced-motion: reduce)").matches;
+const FINE = matchMedia("(hover: hover) and (pointer: fine)").matches;
+const clamp01 = (v) => Math.max(0, Math.min(1, v));
+const sstep = (a, b, x) => { const t = clamp01((x - a) / (b - a)); return t * t * (3 - 2 * t); };
+const two = (n) => String(n).padStart(2, "0");
 
-  pfTabs = () => {
-    const en = lang2() === "en";
-    tabsBox.innerHTML = "";
-    rails.forEach((r, k) => {
-      const b = document.createElement("button");
-      b.type = "button"; b.className = "pf-tab"; b.setAttribute("role", "tab");
-      b.setAttribute("aria-selected", k === cur ? "true" : "false");
-      const n = r.children.length;
-      b.innerHTML = (en ? "Project " : "Проект ") + two(k + 1) + "<small>" + n + (en ? " photos" : " фото") + "</small>";
-      b.addEventListener("click", () => show(k));
-      tabsBox.appendChild(b);
+/* золотой штрих «от руки» вокруг выделенного слова заголовка (после смены языка — заново) */
+function ring() {
+  const hl = document.querySelector(".hl");
+  if (!hl || hl.querySelector("svg")) return;
+  hl.insertAdjacentHTML("beforeend",
+    '<svg viewBox="0 0 200 80" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M24 52 C18 22 96 6 168 18 C204 25 200 58 150 68 C100 78 26 74 12 50 C4 34 40 14 92 12"/></svg>');
+}
+
+/* цитата: слова загораются по одному при прокрутке */
+const quote = document.getElementById("quote");
+function splitQuote() {
+  if (!quote) return;
+  const t = quote.textContent;
+  quote.innerHTML = t.split(/(\s+)/).map((w) => (/^\s+$/.test(w) || !w ? w : '<span class="w">' + w.replace(/[&<>]/g, "") + "</span>")).join("");
+}
+
+window.adOnLangExtra = function () { ring(); splitQuote(); onPage(); };
+
+/* «магнит»: кнопка тянется к курсору */
+if (FINE && !REDUCED) {
+  document.querySelectorAll(".mag").forEach((b) => {
+    b.addEventListener("pointermove", (e) => {
+      const r = b.getBoundingClientRect();
+      b.style.setProperty("--bx", ((e.clientX - r.left - r.width / 2) * 0.22).toFixed(1) + "px");
+      b.style.setProperty("--by", ((e.clientY - r.top - r.height / 2) * 0.3).toFixed(1) + "px");
     });
-  };
-
-  const padL = (r) => parseFloat(getComputedStyle(r).paddingLeft) || 0;
-  const maxS = (r) => r.scrollWidth - r.clientWidth;
-
-  function frame() {
-    const r = rails[cur];
-    if (!r) return;
-    const m = maxS(r);
-    const vis = r.clientWidth / r.scrollWidth;
-    prog.parentNode.style.setProperty("--p", (vis + (1 - vis) * (m > 0 ? r.scrollLeft / m : 1)).toFixed(4));
-    if (reduce) return;
-    const W = innerWidth;
-    for (const it of r.children) {
-      const b = it.getBoundingClientRect();
-      if (b.right < -50 || b.left > W + 50) continue;
-      const d = (b.left + b.width / 2 - W / 2) / W;            // −0.5 … 0.5 от середины экрана
-      it.firstElementChild.style.setProperty("--px", (Math.max(-1, Math.min(1, d)) * -5).toFixed(2) + "%");
-    }
-  }
-  let fq = false;
-  const queue = () => { if (!fq) { fq = true; requestAnimationFrame(() => { fq = false; frame(); }); } };
-  rails.forEach((r) => r.addEventListener("scroll", queue, { passive: true }));
-  addEventListener("resize", queue);
-
-  function show(k) {
-    k = (k + rails.length) % rails.length;
-    if (k === cur) return;
-    const old = rails[cur];
-    if (old) {
-      old.classList.remove("on", "play");
-      if (!reduce) { old.classList.add("out"); setTimeout(() => old.classList.remove("out"), 460); }
-    }
-    cur = k;
-    const r = rails[k];
-    r.scrollLeft = 0;
-    r.classList.add("on");
-    if (old && !reduce) {
-      r.classList.add("play");
-      clearTimeout(r._t); r._t = setTimeout(() => r.classList.remove("play"), 1300 + r.children.length * 90);
-      num.classList.remove("flip"); void num.offsetWidth; num.classList.add("flip");
-    }
-    num.textContent = two(k + 1);
-    [...tabsBox.children].forEach((b, n) => b.setAttribute("aria-selected", n === k ? "true" : "false"));
-    frame();
-  }
-
-  function step(dir) {
-    const r = rails[cur], pl = padL(r), items = [...r.children], x = r.scrollLeft;
-    if (dir > 0) {
-      if (x >= maxS(r) - 4) return show(cur + 1);
-      const t = items.find((it) => it.offsetLeft - pl > x + 5);
-      r.scrollTo({ left: t ? t.offsetLeft - pl : maxS(r), behavior: "smooth" });
-    } else {
-      if (x <= 4) return show(cur - 1);
-      const t = items.filter((it) => it.offsetLeft - pl < x - 5).pop();
-      r.scrollTo({ left: t ? t.offsetLeft - pl : 0, behavior: "smooth" });
-    }
-  }
-  document.getElementById("pfPrev").addEventListener("click", () => step(-1));
-  document.getElementById("pfNext").addEventListener("click", () => step(1));
-
-  /* мышью: тянуть ленту; круглая подсказка у курсора */
-  const fine = matchMedia("(hover: hover) and (pointer: fine)").matches;
-  let drag = null;
-  rails.forEach((r) => {
-    r.addEventListener("pointerdown", (e) => {
-      if (e.pointerType !== "mouse" || e.button !== 0) return;
-      drag = { r, x0: e.clientX, s0: r.scrollLeft, moved: false };
-    });
-    r.addEventListener("click", (e) => {
-      if (r._dragged) { r._dragged = false; return; }
-      const it = e.target.closest(".pf-item");
-      if (it) openLb(r, [...r.children].indexOf(it));
-    });
-    if (fine) {
-      r.addEventListener("pointerenter", () => cursor.classList.add("on"));
-      r.addEventListener("pointerleave", () => cursor.classList.remove("on"));
-    }
+    b.addEventListener("pointerleave", () => { b.style.removeProperty("--bx"); b.style.removeProperty("--by"); });
   });
+  /* фото Алёны поворачиваются к курсору */
+  document.querySelectorAll(".philo-photo, .contact-photo").forEach((box) => {
+    const img = box.querySelector("img");
+    box.addEventListener("pointermove", (e) => {
+      const r = box.getBoundingClientRect();
+      const u = (e.clientX - r.left) / r.width - 0.5, v = (e.clientY - r.top) / r.height - 0.5;
+      img.style.setProperty("--ty", (u * 12).toFixed(2) + "deg");
+      img.style.setProperty("--tx", (-v * 10).toFixed(2) + "deg");
+    });
+    box.addEventListener("pointerleave", () => { img.style.removeProperty("--tx"); img.style.removeProperty("--ty"); });
+  });
+  /* пятно света за курсором на листах тарифов и контактов */
+  document.querySelectorAll(".sheet").forEach((sh) => {
+    sh.addEventListener("pointermove", (e) => {
+      const r = sh.getBoundingClientRect();
+      sh.style.setProperty("--mx", (e.clientX - r.left).toFixed(0) + "px");
+      sh.style.setProperty("--my", (e.clientY - r.top).toFixed(0) + "px");
+      sh.style.setProperty("--lo", "1");
+    });
+    sh.addEventListener("pointerleave", () => sh.style.setProperty("--lo", "0"));
+  });
+}
+
+/* герой: веер отпечатков следует за мышью, каждый на своей глубине */
+const hero = document.getElementById("hero");
+const prints = [...document.querySelectorAll(".print")];
+let hmx = 0, hmy = 0;
+if (hero && FINE && !REDUCED) {
+  hero.addEventListener("pointermove", (e) => {
+    hmx = e.clientX / innerWidth - 0.5; hmy = e.clientY / innerHeight - 0.5;
+    prints.forEach((p) => {
+      const d = +p.dataset.d || 20;
+      p.style.setProperty("--x", (hmx * d).toFixed(1) + "px");
+      p.style.setProperty("--y", (hmy * d).toFixed(1) + "px");
+    });
+  });
+}
+
+/* ---------- проекты: пролёт сквозь фото ---------- */
+const fly = document.getElementById("gallery");
+const flyStage = document.getElementById("flyStage");
+const flyWorld = document.getElementById("flyWorld");
+const cards = flyWorld ? [...flyWorld.children] : [];
+/* где висит каждый снимок: доля ширины / высоты экрана от центра и наклон; последний — по центру, им пролёт кончается */
+const FX = [-0.25, 0.24, -0.2, 0.23, -0.26, 0.2, -0.19, 0.24, 0];
+const FY = [-0.07, 0.09, 0.11, -0.1, 0.05, -0.12, 0.12, 0.03, -0.02];
+const FR = [-4, 3, -2, 5, -3, 2, -5, 3, 0];
+let flyP = 0, rx = 0, ry = 0, trx = 0, try_ = 0;
+function flyFrame() {
+  if (!fly || !cards.length) return;
+  const r = fly.getBoundingClientRect();
+  const p = clamp01(-r.top / Math.max(1, r.height - innerHeight));
+  flyP = p;
+  const W = innerWidth, H = innerHeight, narrow = W < 700;
+  const D = narrow ? 560 : 680, N = cards.length;
+  const cam = p * (N + 3) * D;
+  const k = narrow ? 0.62 : 1;
+  cards.forEach((c, i) => {
+    const z = -(i + 4) * D + cam;
+    const o = REDUCED ? (z > -3 * D && z < 400 ? 1 : 0) : sstep(-5.2 * D, -3 * D, z) * (1 - sstep(60, 380, z));
+    c.style.opacity = o.toFixed(3);
+    c.style.visibility = o < 0.01 ? "hidden" : "visible";
+    c._o = o;
+    if (o < 0.01) return;
+    c.style.transform = `translate(-50%, -50%) translate3d(${(FX[i] * W * k).toFixed(1)}px, ${(FY[i] * H).toFixed(1)}px, ${z.toFixed(1)}px) rotate(${FR[i]}deg)`;
+  });
+  flyStage.style.setProperty("--to", (1 - sstep(0.0, 0.1, p)).toFixed(3));
+  flyStage.style.setProperty("--ts", (1 + sstep(0, 0.1, p) * 0.25).toFixed(3));
+  const eo = sstep(0.9, 0.985, p);
+  flyStage.style.setProperty("--eo", eo.toFixed(3));
+  fly.classList.toggle("end-on", eo > 0.5);
+}
+/* лёгкий наклон всего «мира» за мышью — объём */
+if (flyStage && FINE && !REDUCED) {
+  flyStage.addEventListener("pointermove", (e) => {
+    const u = e.clientX / innerWidth - 0.5, v = e.clientY / innerHeight - 0.5;
+    try_ = u * 7; trx = -v * 5;
+    flyStage.style.setProperty("--gx", (50 + u * 60).toFixed(1) + "%");
+    flyStage.style.setProperty("--gy", (45 + v * 60).toFixed(1) + "%");
+    if (!tilting) { tilting = true; requestAnimationFrame(tiltStep); }
+  });
+  flyStage.addEventListener("pointerleave", () => { trx = 0; try_ = 0; if (!tilting) { tilting = true; requestAnimationFrame(tiltStep); } });
+}
+let tilting = false;
+function tiltStep() {
+  rx += (trx - rx) * 0.08; ry += (try_ - ry) * 0.08;
+  flyWorld.style.setProperty("--rx", rx.toFixed(2) + "deg");
+  flyWorld.style.setProperty("--ry", ry.toFixed(2) + "deg");
+  if (Math.abs(trx - rx) + Math.abs(try_ - ry) > 0.02) requestAnimationFrame(tiltStep); else tilting = false;
+}
+
+/* подсказка «Открыть» у курсора над снимком */
+const curDot = document.getElementById("curDot");
+if (FINE && curDot) {
   addEventListener("pointermove", (e) => {
-    if (fine) cursor.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
-    if (!drag) return;
-    const dx = e.clientX - drag.x0;
-    if (!drag.moved && Math.abs(dx) > 5) { drag.moved = true; drag.r.classList.add("drag"); cursor.classList.add("drag"); }
-    if (drag.moved) drag.r.scrollLeft = drag.s0 - dx;
-  });
-  addEventListener("pointerup", () => {
-    if (!drag) return;
-    const { r, moved } = drag;
-    drag = null;
-    cursor.classList.remove("drag");
-    if (!moved) return;
-    r._dragged = true;
-    setTimeout(() => (r._dragged = false), 50);
-    /* докатить до ближайшего кадра */
-    const pl = padL(r), x = r.scrollLeft;
-    let best = 0, bd = Infinity;
-    for (const it of r.children) { const d = Math.abs(it.offsetLeft - pl - x); if (d < bd) { bd = d; best = it.offsetLeft - pl; } }
-    if (x >= maxS(r) - 30) best = maxS(r);
-    r.classList.remove("drag");
-    r.scrollTo({ left: best, behavior: "smooth" });
-  });
+    curDot.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
+    const c = e.target.closest && e.target.closest(".fly__card");
+    curDot.classList.toggle("on", !!(c && c._o > 0.4));
+  }, { passive: true });
+}
 
-  pfTabs();
-  show(0);
-
-  /* ---------- фото на весь экран ---------- */
-  const lb = document.getElementById("lb"), lbImg = document.getElementById("lbImg"), lbCount = document.getElementById("lbCount");
-  let list = [], li = 0, lastFocus = null;
-  function paint(swap) {
-    const im = list[li];
-    const set = () => { lbImg.src = im.currentSrc || im.src; lbImg.alt = im.alt; lbImg.classList.remove("swap"); };
-    lbCount.textContent = two(li + 1) + " / " + two(list.length);
-    if (swap && !reduce) { lbImg.classList.add("swap"); setTimeout(set, 220); } else set();
-  }
-  function openLb(r, i) {
-    list = [...r.querySelectorAll("img")]; li = Math.max(0, i);
-    lastFocus = document.activeElement;
-    paint(false);
-    lb.hidden = false; document.body.style.overflow = "hidden";
-    cursor.classList.remove("on");
-    void lb.offsetWidth; lb.classList.add("open");
-    document.getElementById("lbClose").focus();
-  }
-  function closeLb() {
-    lb.classList.remove("open"); document.body.style.overflow = "";
-    setTimeout(() => (lb.hidden = true), 350);
-    if (lastFocus) lastFocus.focus();
-  }
+/* ---------- фото на весь экран ---------- */
+const lb = document.getElementById("lb"), lbImg = document.getElementById("lbImg"), lbCount = document.getElementById("lbCount");
+let list = [], li = 0, lastFocus = null;
+function paint(swap) {
+  const im = list[li];
+  const set = () => { lbImg.src = im.currentSrc || im.src; lbImg.alt = im.alt; lbImg.classList.remove("swap"); };
+  lbCount.textContent = two(li + 1) + " / " + two(list.length);
+  if (swap && !REDUCED) { lbImg.classList.add("swap"); setTimeout(set, 220); } else set();
+}
+function openLb(imgs, i) {
+  list = imgs; li = Math.max(0, i);
+  lastFocus = document.activeElement;
+  paint(false);
+  lb.hidden = false; document.body.style.overflow = "hidden";
+  void lb.offsetWidth; lb.classList.add("open");
+  if (curDot) curDot.classList.remove("on");
+  document.getElementById("lbClose").focus();
+}
+function closeLb() {
+  lb.classList.remove("open"); document.body.style.overflow = "";
+  setTimeout(() => (lb.hidden = true), 350);
+  if (lastFocus) lastFocus.focus();
+}
+if (lb) {
   const lbGo = (d) => { li = (li + d + list.length) % list.length; paint(true); };
+  cards.forEach((c, i) => c.addEventListener("click", () => { if (c._o > 0.4) openLb(cards.map((x) => x.querySelector("img")), i); }));
   document.getElementById("lbClose").addEventListener("click", closeLb);
   document.getElementById("lbPrev").addEventListener("click", () => lbGo(-1));
   document.getElementById("lbNext").addEventListener("click", () => lbGo(1));
@@ -247,23 +248,47 @@ if (pf) {
   }, { passive: true });
 }
 
-/* золотая полоса прокрутки сверху и медленный фон у цитаты */
+/* ---------- всё, что живёт от прокрутки ---------- */
 const sLine = document.getElementById("scrollLine");
 const testiImg = document.querySelector(".testi-bg img");
-const still = matchMedia("(prefers-reduced-motion: reduce)").matches;
+const philo = document.getElementById("philosophy");
+const plan = document.querySelector(".philo-plan");
 let sq = false;
 function onPage() {
   sq = false;
-  const h = document.documentElement.scrollHeight - innerHeight;
+  const H = innerHeight;
+  const h = document.documentElement.scrollHeight - H;
   sLine.style.setProperty("--sp", (h > 0 ? scrollY / h : 0).toFixed(4));
-  if (testiImg && !still) {
+  /* чертёж в «Философии» дорисовывается, пока блок проходит по экрану */
+  if (plan) {
+    const b = philo.getBoundingClientRect();
+    const t = REDUCED ? 1 : clamp01((H - b.top) / (H + b.height * 0.6));
+    plan.style.setProperty("--d", sstep(0.05, 0.75, t).toFixed(3));
+    plan.style.setProperty("--d2", sstep(0.35, 0.95, t).toFixed(3));
+  }
+  /* веер в герое уходит вверх медленнее страницы */
+  if (hero && !REDUCED && scrollY < H * 1.2) hero.querySelector(".hero-fan").style.translate = `0 ${(scrollY * -0.18).toFixed(1)}px`;
+  if (testiImg && !REDUCED) {
     const b = testiImg.parentNode.getBoundingClientRect();
-    if (b.bottom > 0 && b.top < innerHeight) {
-      const t = (b.top + b.height / 2 - innerHeight / 2) / innerHeight;  // −1 … 1
-      testiImg.style.setProperty("--ty", (t * -0.1 * b.height).toFixed(1) + "px");
+    if (b.bottom > 0 && b.top < H) {
+      const t = (b.top + b.height / 2 - H / 2) / H;
+      testiImg.style.setProperty("--ty", (t * -0.12 * b.height).toFixed(1) + "px");
     }
+  }
+  if (quote) {
+    const b = quote.getBoundingClientRect();
+    const t = REDUCED ? 1 : clamp01((H * 0.9 - b.top) / (H * 0.55));
+    const ws = quote.querySelectorAll(".w"), n = ws.length;
+    ws.forEach((w, i) => w.style.setProperty("--o", clamp01(t * (n + 3) / 3 - i / 3 * 1).toFixed(3)));
+  }
+  if (fly) {
+    const b = fly.getBoundingClientRect();
+    if (b.bottom > -100 && b.top < H + 100) flyFrame();
   }
 }
 addEventListener("scroll", () => { if (!sq) { sq = true; requestAnimationFrame(onPage); } }, { passive: true });
 addEventListener("resize", onPage);
+ring();
+splitQuote();
 onPage();
+flyFrame();
