@@ -430,7 +430,7 @@ html { scroll-padding-top: 96px; }
 
 /* ---------- «Кисть»: подпись слева, лист справа (на телефоне — подпись снизу) ---------- */
 .sketch .fx__stage { height: 100vh; height: 100svh; min-height: 620px; background: #f0e9de; }
-.sketch-cap { position: absolute; z-index: 5; left: max(5vw, calc((100vw - 1180px) / 2)); top: 50%; transform: translateY(-50%); width: min(30vw, 400px); pointer-events: none; }
+.sketch-cap { position: absolute; z-index: 5; left: max(5vw, calc((100vw - 1180px) / 2)); top: 50%; transform: translateY(-50%); width: min(32vw, 450px); pointer-events: none; }
 .sketch-cap .kicker { display: block; margin-bottom: 14px; }
 .sketch-cap h2 { font-size: clamp(36px, 4.6vw, 66px); line-height: 1.02; }
 .sketch-cap p { margin-top: 18px; color: var(--text); }
@@ -588,3 +588,194 @@ html.js .reveal.in > *:nth-child(6) { transition-delay: 0.4s; }
   .testi-bg img, .philo-photo img, .contact-photo img { transform: none; }
   html.js .reveal:not(.in) > * { opacity: 1; transform: none; }
 }
+
+/* =====================================================================
+   Третья волна 22.10: переходы между разделами, свет в цвет снимка, богатые карточки,
+   тёмный финал. Двигаем только transform и opacity; «уменьшить движение» всё останавливает.
+   ===================================================================== */
+
+/* ---------- шапка над тёмными разделами — тёмное стекло ---------- */
+.nav.solid.dark .nav-inner {
+  background: rgba(31, 26, 20, 0.58); border-color: rgba(243, 237, 225, 0.12); color: var(--cream);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.05) inset, 0 16px 34px -18px rgba(0, 0, 0, 0.8);
+}
+
+/* ---------- герой уходит: рама чуть уменьшается, текст поднимается быстрее фото ---------- */
+.hero-frame { transform: scale(var(--hs, 1)); transform-origin: 50% 0; }
+.hero-content { transform: translateY(var(--hy, 0px)); opacity: var(--ho, 1); }
+
+/* ---------- ленты: две перекрещенные полосы со словами из тарифов ---------- */
+.ribbons { position: relative; z-index: 4; height: clamp(150px, 15vw, 220px); margin: -34px 0 -20px; overflow: hidden; pointer-events: none; }
+.rb { position: absolute; left: -6%; right: -6%; top: 50%; padding: 15px 0 13px; white-space: nowrap; overflow: hidden; }
+.rb--ink { z-index: 2; background: linear-gradient(180deg, #342d24, var(--night)); color: var(--gold-3); transform: translateY(-58%) rotate(-3deg);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08), 0 24px 40px -20px rgba(31, 26, 20, 0.7); }
+.rb--gold { z-index: 1; color: var(--ink); transform: translateY(-38%) rotate(2.2deg);
+  background: linear-gradient(90deg, #c9aa76, #ead9b8 30%, #d8bf94 55%, #b99863 80%, #e3cfa8);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.55), 0 16px 30px -18px rgba(120, 90, 40, 0.7); }
+.rb__track { display: inline-flex; will-change: transform; }
+.rb__set { flex: none; font-family: var(--font-serif); font-size: clamp(21px, 2.3vw, 33px); font-style: italic; line-height: 1.2; padding-right: 0.55em; }
+.rb__set i { font-style: normal; display: inline-block; margin: 0 0.5em; font-size: 0.62em; vertical-align: 0.22em; color: var(--gold-2); }
+.rb--gold .rb__set i { color: var(--ink); opacity: 0.55; }
+
+/* ---------- заголовки разделов поднимаются из-под черты по словам ---------- */
+.wm { display: inline-block; overflow: hidden; vertical-align: top; padding: 0.06em 0.04em 0.12em; margin: -0.06em -0.04em -0.12em; }
+.wi { display: inline-block; transform: translateY(108%); transition: transform 1.05s cubic-bezier(0.2, 0.7, 0.15, 1); transition-delay: calc(var(--i, 0) * 70ms + 0.1s); }
+.split.in .wi { transform: none; }
+
+/* ---------- фото Алёны открываются шторкой снизу ---------- */
+html.js .philo-photo.reveal > img, html.js .contact-photo.reveal > img {
+  clip-path: inset(100% 0 0 0 round 8px); scale: 1.16;
+  transition: opacity 0.6s ease, clip-path 1.4s cubic-bezier(0.7, 0, 0.2, 1), scale 1.9s cubic-bezier(0.2, 0.7, 0.2, 1), transform 0.6s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+html.js .philo-photo.reveal.in > img, html.js .contact-photo.reveal.in > img { clip-path: inset(0 0 0 0 round 8px); scale: 1; }
+html.js .philo-photo.shown > img, html.js .contact-photo.shown > img { clip-path: none; }
+
+/* ---------- листы: разделы наезжают друг на друга скруглённым краем ---------- */
+.sketch, .fly, .testi { z-index: 2; }
+.sketch::before, .fly::before, .testi::before {
+  content: ""; position: absolute; left: 0; right: 0; top: -38px; height: 40px; border-radius: 40px 40px 0 0; pointer-events: none;
+  box-shadow: 0 -18px 34px -22px rgba(31, 26, 20, 0.45);
+}
+.sketch::before { background: #f0e9de; }
+.fly::before { background: #241d16; box-shadow: 0 -22px 40px -22px rgba(31, 26, 20, 0.6); }
+.testi::before { background: var(--cream); }
+/* листы тарифов, контактов и рама цитаты вырастают, когда входят в экран */
+.sheet, .testi-frame { transform: scale(var(--g, 1)); transform-origin: 50% 0; }
+
+/* ---------- проекты: свет в цвет снимка и палитра проекта ---------- */
+@property --amb { syntax: "<color>"; inherits: true; initial-value: #4a3c2c; }
+.fly__stage { --amb: #4a3c2c; transition: --amb 1.6s ease; }
+.fly__amb { position: absolute; inset: 0; pointer-events: none;
+  background: radial-gradient(ellipse 72% 62% at 50% 48%, color-mix(in srgb, var(--amb) 78%, transparent) 0%, color-mix(in srgb, var(--amb) 26%, transparent) 48%, transparent 78%); }
+.fly__card { --ch: min(60vh, 540px); }
+.fly__pal {
+  position: absolute; z-index: 4; left: clamp(20px, 4vw, 60px); bottom: clamp(26px, 7vh, 64px); display: grid; gap: 12px;
+  opacity: var(--po, 0); transform: translateY(calc((1 - var(--po, 0)) * 18px)); pointer-events: none;
+}
+.fly__pal-l { font-size: 10.5px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold-2); }
+.fly__pal-l::before { content: ""; display: inline-block; width: 26px; height: 1px; margin-right: 12px; vertical-align: middle; background: currentColor; }
+.fly__chips { display: flex; gap: 9px; }
+.fly__chips i { display: block; width: 62px; padding: 5px 5px 8px; border-radius: 4px; background: #f3ede1;
+  box-shadow: inset 0 1px 0 #fff, 0 14px 26px -12px rgba(0, 0, 0, 0.75); transform: rotate(var(--cr, 0deg)) translateY(var(--cy, 0px)); transition: transform 0.6s cubic-bezier(0.2, 0.7, 0.2, 1); }
+.fly__chips i:nth-child(1) { --cr: -4deg; } .fly__chips i:nth-child(2) { --cr: -1.5deg; --cy: -4px; } .fly__chips i:nth-child(3) { --cr: 1deg; --cy: -6px; }
+.fly__chips i:nth-child(4) { --cr: 3deg; --cy: -3px; } .fly__chips i:nth-child(5) { --cr: 5deg; }
+.fly__chips b { display: block; height: 58px; border-radius: 2px; background: var(--c, #8a7a64); transition: background-color 0.9s ease;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.06); }
+.fly__chips s { display: block; margin-top: 7px; text-decoration: none; font: 600 9.5px/1 ui-monospace, Consolas, monospace; letter-spacing: 0.06em; text-transform: uppercase; color: #6b6052; }
+.fly__pal.flip .fly__chips i { --cy: -14px; }
+html:not(.js) .fly__pal { display: none; }
+
+/* ---------- условия: три плитки со значками ---------- */
+.terms { list-style: none; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin-top: 40px; }
+.term { display: flex; align-items: center; gap: 16px; padding: 18px 22px; border-radius: 22px; border: 1px solid rgba(46, 40, 32, 0.08);
+  background: linear-gradient(170deg, #fbf8f2, #efe7d8); box-shadow: inset 0 1px 0 #fff, var(--sh-1); }
+.term-ic, .x-ic { flex: none; display: grid; place-items: center; width: 54px; height: 54px; border-radius: 17px;
+  background: linear-gradient(160deg, #ecd9b2 0%, #c9aa76 55%, #a8885a 100%);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.65), inset 0 -2px 0 rgba(90, 66, 30, 0.22), 0 12px 22px -10px rgba(120, 90, 40, 0.8);
+  transition: transform 0.6s cubic-bezier(0.2, 0.7, 0.2, 1); }
+.term-ic svg, .x-ic svg { width: 27px; height: 27px; fill: none; stroke: var(--ink); stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+.term-t { font-size: 14.5px; line-height: 1.45; color: var(--text); }
+.term-t b { display: block; font-family: var(--font-serif); font-size: 34px; font-weight: 500; line-height: 1; color: var(--ink); margin-bottom: 3px; }
+
+/* ---------- доп. услуги: карточки со значком и ценой ---------- */
+.extras-block { margin-top: 56px; }
+.extras-title { text-align: center; margin-bottom: 22px; }
+.extras { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; border: 0; border-radius: 0; background: none; box-shadow: none; overflow: visible; }
+.xcard { position: relative; display: flex; flex-direction: column; gap: 14px; padding: 22px 20px 20px; border-radius: 24px; overflow: hidden;
+  border: 1px solid rgba(46, 40, 32, 0.08); background: linear-gradient(170deg, #fbf8f2, #efe7d8);
+  box-shadow: inset 0 1px 0 #fff, var(--sh-1); transition: transform 0.55s cubic-bezier(0.2, 0.7, 0.2, 1), box-shadow 0.55s; }
+.xcard::after { content: ""; position: absolute; inset: 0; pointer-events: none; background: linear-gradient(105deg, transparent 35%, rgba(255, 255, 255, 0.65) 50%, transparent 65%); transform: translateX(-120%); transition: transform 1s ease; }
+.x-name { font-size: 17.5px; line-height: 1.35; font-weight: 500; }
+.x-cost { margin-top: auto; padding-top: 12px; border-top: 1px dashed rgba(156, 124, 79, 0.45); font-size: 15px; font-weight: 600; line-height: 1.4; color: var(--ink); }
+@media (hover: hover) {
+  .xcard:hover { transform: translateY(-6px); box-shadow: inset 0 1px 0 #fff, var(--sh-2); }
+  .xcard:hover::after { transform: translateX(120%); }
+  .xcard:hover .x-ic { transform: rotate(-8deg) scale(1.07); }
+}
+
+/* ---------- контакты — тёмный финал ---------- */
+.contact--dark { background: radial-gradient(ellipse 80% 75% at 22% 35%, #42362a 0%, #2a231b 50%, #17130e 100%); color: #d9cfbf; box-shadow: var(--sh-2); }
+.contact--dark.sheet::before { background: radial-gradient(460px circle at var(--mx, 50%) var(--my, 50%), rgba(216, 191, 148, 0.16), transparent 60%); }
+.contact--dark.sheet::after { opacity: 0.9; }
+.contact--dark h2 { color: var(--cream); }
+.contact--dark .kicker { color: #a99c88; }
+.contact--dark .contact-block > p, .contact--dark .contact-note { color: #bdb19f; }
+.contact--dark .contact-photo::before { content: ""; position: absolute; inset: -12% -16%; border-radius: 50%; background: radial-gradient(circle, rgba(216, 191, 148, 0.28), transparent 62%); pointer-events: none; }
+.contact--dark .contact-photo img { border-color: #f3ede1; }
+.contact--dark .social { background: linear-gradient(170deg, rgba(243, 237, 225, 0.1), rgba(243, 237, 225, 0.035)); border-color: rgba(243, 237, 225, 0.14);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08), 0 20px 40px -22px rgba(0, 0, 0, 0.85); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
+.contact--dark .social::before { background: linear-gradient(105deg, transparent 30%, rgba(234, 217, 184, 0.22) 50%, transparent 70%); }
+.contact--dark .social:hover { border-color: rgba(216, 191, 148, 0.6); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 24px 50px -20px rgba(0, 0, 0, 0.9); }
+.contact--dark .social .t b { color: var(--cream); }
+.contact--dark .social .t span, .contact--dark .social .arr { color: #a99c88; }
+.contact--dark .social:hover .arr { color: var(--gold-3); }
+.contact--dark .social .ic { color: #fff; }
+.contact--dark .social.wa .ic { background: linear-gradient(160deg, #4ee08f, #1fa855); }
+.contact--dark .social.tg .ic { background: linear-gradient(160deg, #4cc0ef, #1e8fc8); }
+.contact--dark .social.ig .ic { background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fd5949 45%, #d6249f 60%, #285aeb 95%); }
+.contact--dark .social:hover .ic { filter: brightness(1.08); }
+
+/* ---------- подвал: её имя во всю ширину, буквы поднимаются по очереди ---------- */
+.footer { position: relative; overflow: hidden; padding-top: 0; }
+.footer-mark { display: flex; justify-content: center; gap: 0.01em; padding-top: clamp(40px, 6vw, 80px); margin-bottom: clamp(18px, 3vw, 36px);
+  font-family: var(--font-serif); font-weight: 400; font-size: clamp(64px, 15.5vw, 250px); line-height: 0.82; letter-spacing: 0.04em; user-select: none; }
+.footer-mark span { display: inline-block; color: transparent; background: linear-gradient(180deg, #f1e3c4 0%, #c9aa76 55%, #8a6c42 100%); -webkit-background-clip: text; background-clip: text; }
+html.js .footer-mark span { transform: translateY(70%); opacity: 0; transition: transform 1.2s cubic-bezier(0.2, 0.7, 0.15, 1), opacity 0.9s ease; }
+html.js .footer-mark.in span { transform: none; opacity: 1; }
+.footer-mark span:nth-child(2) { transition-delay: 0.07s; } .footer-mark span:nth-child(3) { transition-delay: 0.14s; }
+.footer-mark span:nth-child(4) { transition-delay: 0.21s; } .footer-mark span:nth-child(5) { transition-delay: 0.28s; }
+.footer-mark span:nth-child(6) { transition-delay: 0.35s; } .footer-mark span:nth-child(7) { transition-delay: 0.42s; }
+
+/* ---------- планшет и телефон ---------- */
+@media (max-width: 960px) {
+  .terms { grid-template-columns: 1fr; max-width: 560px; margin-left: auto; margin-right: auto; }
+  .extras { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 600px) {
+  .ribbons { height: 128px; margin: -22px 0 -12px; }
+  .rb { padding: 11px 0 9px; }
+  .rb__set { font-size: 19px; }
+  .sketch::before, .fly::before, .testi::before { top: -26px; height: 28px; border-radius: 28px 28px 0 0; }
+  /* тарифы на телефоне — лента: «Базовый» по центру, соседние выглядывают по краям и листаются пальцем */
+  .plans { display: flex; grid-template-columns: none; max-width: none; gap: 14px; margin: 22px -5vw 0; padding: 22px 13vw 40px;
+    overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; overscroll-behavior-x: contain; -webkit-overflow-scrolling: touch; }
+  .plans::-webkit-scrollbar { display: none; }
+  .plans > .plan { flex: 0 0 74vw; scroll-snap-align: center; }
+  html.js .plans.in > .plan { transform: scale(var(--cs, 1)); opacity: var(--co, 1); transition: box-shadow 0.45s ease; }
+  .terms { margin-top: 18px; gap: 10px; }
+  .term { padding: 14px 16px; border-radius: 18px; }
+  .term-ic, .x-ic { width: 46px; height: 46px; border-radius: 14px; }
+  .term-ic svg, .x-ic svg { width: 23px; height: 23px; }
+  .term-t b { font-size: 28px; }
+  .extras-block { margin-top: 40px; }
+  .extras { grid-template-columns: 1fr; gap: 10px; }
+  .xcard { display: grid; grid-template-columns: auto 1fr; column-gap: 14px; row-gap: 6px; padding: 16px; border-radius: 20px; }
+  .xcard .x-ic { grid-row: span 2; }
+  .x-name { font-size: 16px; }
+  .x-cost { margin-top: 0; padding-top: 8px; font-size: 14.5px; }
+  .fly__card { --ch: min(42vh, 330px); }
+  .fly__pal { left: 50%; bottom: 22px; transform: translate(-50%, calc((1 - var(--po, 0)) * 18px)); justify-items: center; }
+  .fly__chips { gap: 7px; }
+  .fly__chips i { width: 50px; padding: 4px 4px 6px; }
+  .fly__chips b { height: 40px; }
+  .fly__chips s { font-size: 8.5px; }
+  .footer-mark { font-size: 17vw; padding-top: 44px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-frame, .sheet, .testi-frame { transform: none; }
+  .hero-content { transform: none; opacity: 1; }
+  .wi { transform: none; transition: none; }
+  html.js .philo-photo.reveal > img, html.js .contact-photo.reveal > img { clip-path: none; scale: 1; transition: none; }
+  html.js .footer-mark span { transform: none; opacity: 1; transition: none; }
+  .fly__stage { transition: none; }
+  .xcard, .xcard::after, .term-ic, .x-ic, .fly__chips i, .fly__chips b { transition: none; }
+}
+/* без JavaScript шапка не знает, где она: сразу светлая капсула, чтобы надписи читались на любом фоне */
+html:not(.js) .nav .nav-inner { background: rgba(247, 242, 232, 0.9); border-color: rgba(46, 40, 32, 0.1); color: var(--ink); text-shadow: none; }
+/* без JavaScript пролёта нет: заголовок над сеткой снимков, кнопка Instagram под ней */
+html:not(.js) .fly__title { position: relative; inset: auto; grid-column: 1 / -1; padding: 0 0 18px; }
+html:not(.js) .fly__end { position: relative; grid-column: 1 / -1; bottom: auto; opacity: 1; transform: none; pointer-events: auto; padding-top: 18px; }
+/* первый экран короче на полосу: перекрещенные ленты видны уже на нём, внизу */
+html.js .hero { height: calc(100vh - 84px); height: calc(100svh - 84px); }
+@media (max-width: 600px) { html.js .hero { height: calc(100svh - 60px); } }
+@media (max-width: 600px) { .hero-fan { width: 56vw; top: 72px; } }

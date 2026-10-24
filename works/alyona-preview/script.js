@@ -292,3 +292,211 @@ ring();
 splitQuote();
 onPage();
 flyFrame();
+
+/* ================= третья волна 22.10 ================= */
+
+/* заголовки разделов: слова поднимаются из-под черты (после смены языка — заново) */
+function splitHeads() {
+  document.querySelectorAll("main h2").forEach((h) => {
+    if (h.querySelector(".wm")) return;
+    let i = 0;
+    const wrap = (node) => {
+      [...node.childNodes].forEach((n) => {
+        if (n.nodeType === 3) {
+          const frag = document.createDocumentFragment();
+          n.textContent.split(/(\s+)/).forEach((w) => {
+            if (!w) return;
+            if (/^\s+$/.test(w)) { frag.appendChild(document.createTextNode(w)); return; }
+            const m = document.createElement("span"); m.className = "wm";
+            const s = document.createElement("span"); s.className = "wi"; s.style.setProperty("--i", i++); s.textContent = w;
+            m.appendChild(s); frag.appendChild(m);
+          });
+          n.replaceWith(frag);
+        } else if (n.nodeType === 1 && n.tagName !== "BR") {
+          const m = document.createElement("span"); m.className = "wm";
+          const s = document.createElement("span"); s.className = "wi"; s.style.setProperty("--i", i++);
+          n.replaceWith(m); s.appendChild(n); m.appendChild(s);
+        }
+      });
+    };
+    wrap(h);
+    if (!h.classList.contains("split")) { h.classList.add("split"); io.observe(h); }
+  });
+}
+
+/* фото Алёны: после шторки снимаем обрезку, чтобы вернулась тень */
+document.querySelectorAll(".philo-photo, .contact-photo").forEach((box) => {
+  new MutationObserver(() => { if (box.classList.contains("in")) setTimeout(() => box.classList.add("shown"), 1700); })
+    .observe(box, { attributes: true, attributeFilter: ["class"] });
+});
+
+/* подвал: буквы имени поднимаются по очереди */
+const fMark = document.querySelector(".footer-mark");
+if (fMark) io.observe(fMark);
+
+/* цифры в плашках героя досчитываются */
+if (!REDUCED) document.querySelectorAll("[data-count]").forEach((el) => {
+  const n = +el.dataset.count, suf = el.dataset.suffix || "", t0 = performance.now() + 1300;
+  el.textContent = "0" + suf;
+  const step = (t) => { const k = clamp01((t - t0) / 1100); el.textContent = Math.round(n * (1 - Math.pow(1 - k, 3))) + suf; if (k < 1) requestAnimationFrame(step); };
+  requestAnimationFrame(step);
+});
+
+/* ---------- ленты: бегут сами, от прокрутки — быстрее и в её сторону ---------- */
+const rbTracks = [...document.querySelectorAll(".rb__track")];
+function fillRibbons() {
+  rbTracks.forEach((tr) => {
+    const set = tr.querySelector(".rb__set");
+    tr.querySelectorAll(".rb__clone").forEach((n) => n.remove());
+    set.innerHTML = set.textContent.replace(/[&<>]/g, "").replace(/✦/g, "<i>✦</i>");
+    const w = set.getBoundingClientRect().width || 1;
+    for (let k = 0, n = Math.ceil((innerWidth * 1.25) / w) + 1; k < n; k++) {
+      const c = set.cloneNode(true); c.classList.add("rb__clone"); c.removeAttribute("data-i18n"); tr.appendChild(c);
+    }
+    tr._w = w; tr._x = tr._x || 0;
+  });
+}
+let rbOn = false, rbLastY = scrollY, rbDir = 1, rbBoost = 0;
+function rbStep() {
+  if (!rbOn) return;
+  const dy = scrollY - rbLastY; rbLastY = scrollY;
+  if (dy) rbDir = dy > 0 ? 1 : -1;
+  rbBoost += (Math.min(14, Math.abs(dy) * 0.35) - rbBoost) * 0.12;
+  rbTracks.forEach((tr) => {
+    const d = +tr.dataset.dir || 1;
+    tr._x = (tr._x + (0.55 + rbBoost) * d * rbDir) % tr._w;
+    tr.style.transform = `translate3d(${(tr._x > 0 ? tr._x - tr._w : tr._x).toFixed(2)}px,0,0)`;
+  });
+  requestAnimationFrame(rbStep);
+}
+const ribbons = document.querySelector(".ribbons");
+if (ribbons && !REDUCED) {
+  new IntersectionObserver((es) => es.forEach((e) => {
+    const was = rbOn; rbOn = e.isIntersecting; rbLastY = scrollY;
+    if (rbOn && !was) requestAnimationFrame(rbStep);
+  })).observe(ribbons);
+}
+
+/* ---------- палитра проекта: цвета каждого снимка считаются в браузере из самого фото ---------- */
+const hex = (r, g, b) => "#" + [r, g, b].map((v) => Math.round(v).toString(16).padStart(2, "0")).join("");
+function paletteOf(img) {
+  const S = 48, c = document.createElement("canvas"); c.width = S; c.height = S;
+  const x = c.getContext("2d", { willReadFrequently: true });
+  x.drawImage(img, 0, 0, S, S);
+  const d = x.getImageData(0, 0, S, S).data, box = new Map();
+  for (let i = 0; i < d.length; i += 4) {
+    const k = (d[i] >> 4) * 256 + (d[i + 1] >> 4) * 16 + (d[i + 2] >> 4);
+    const b = box.get(k) || [0, 0, 0, 0];
+    b[0] += d[i]; b[1] += d[i + 1]; b[2] += d[i + 2]; b[3]++; box.set(k, b);
+  }
+  const all = [...box.values()].map((b) => [b[0] / b[3], b[1] / b[3], b[2] / b[3], b[3]]).sort((a, b) => b[3] - a[3]);
+  const dist = (a, b) => Math.hypot(a[0] - b[0], (a[1] - b[1]) * 1.2, a[2] - b[2]);
+  let pick = [];
+  for (const lim of [56, 40, 26, 12]) {
+    pick = [];
+    for (const c2 of all) { if (pick.every((p) => dist(p, c2) > lim)) pick.push(c2); if (pick.length === 5) break; }
+    if (pick.length === 5) break;
+  }
+  const lum = (c2) => 0.2126 * c2[0] + 0.7152 * c2[1] + 0.0722 * c2[2];
+  const sat = (c2) => Math.max(c2[0], c2[1], c2[2]) - Math.min(c2[0], c2[1], c2[2]);
+  /* свет сцены: самый «цветной» из средних по яркости, приглушённый к ночному фону */
+  const mid = pick.filter((c2) => lum(c2) > 45 && lum(c2) < 205);
+  const a = (mid.length ? mid : pick).slice().sort((p, q) => sat(q) - sat(p))[0];
+  return { chips: pick.sort((p, q) => lum(q) - lum(p)).map((c2) => hex(c2[0], c2[1], c2[2])),
+    amb: hex(a[0] * 0.62 + 31 * 0.38, a[1] * 0.62 + 26 * 0.38, a[2] * 0.62 + 20 * 0.38) };
+}
+const flyPal = document.getElementById("flyPal");
+const chipEls = flyPal ? [...flyPal.querySelectorAll("i")] : [];
+let palIdx = -1;
+function palFor(card) {
+  if (card._pal !== undefined) return card._pal;
+  const img = card.querySelector("img");
+  if (!img.complete || !img.naturalWidth) {
+    if (!card._wait) { card._wait = true; img.addEventListener("load", () => { palIdx = -1; flyFrame(); }, { once: true }); }
+    return null;
+  }
+  try { card._pal = paletteOf(img); } catch (_) { card._pal = null; }
+  return card._pal;
+}
+function showPalette(i) {
+  if (i === palIdx || !flyPal) return;
+  const pal = palFor(cards[i]);
+  if (!pal) return;
+  palIdx = i;
+  chipEls.forEach((el, k) => {
+    const c = pal.chips[k] || pal.chips[pal.chips.length - 1];
+    el.querySelector("b").style.backgroundColor = c;
+    el.querySelector("s").textContent = c;
+  });
+  flyStage.style.setProperty("--amb", pal.amb);
+  if (!REDUCED) { flyPal.classList.add("flip"); setTimeout(() => flyPal.classList.remove("flip"), 260); }
+}
+/* какой снимок сейчас ближе всех к зрителю — тот и задаёт свет и палитру */
+const _flyFrame = flyFrame;
+flyFrame = function () {
+  _flyFrame();
+  if (!cards.length) return;
+  /* снимки летят к зрителю по порядку: ближний — первый из тех, что ещё хорошо видны */
+  const best = cards.findIndex((c) => (c._o || 0) > 0.5);
+  if (best >= 0) showPalette(best);
+  const po = sstep(0.05, 0.12, flyP) * (1 - sstep(0.86, 0.93, flyP));
+  flyStage.style.setProperty("--po", po.toFixed(3));
+};
+
+/* ---------- тарифы на телефоне — лента, «Базовый» по центру; соседние чуть меньше и тусклее ---------- */
+const plansEl = document.querySelector(".plans");
+const phone = matchMedia("(max-width: 600px)");
+function plansCenter() {
+  if (!plansEl || !phone.matches) return;
+  const main = plansEl.querySelector(".plan--main");
+  plansEl.scrollLeft = main.offsetLeft - (plansEl.clientWidth - main.offsetWidth) / 2;
+  plansFlow();
+}
+function plansFlow() {
+  if (!plansEl || !phone.matches) return;
+  const mid = plansEl.scrollLeft + plansEl.clientWidth / 2;
+  plansEl.querySelectorAll(".plan").forEach((p) => {
+    const d = Math.min(1, Math.abs(p.offsetLeft + p.offsetWidth / 2 - mid) / p.offsetWidth);
+    p.style.setProperty("--cs", (1 - d * 0.07).toFixed(3));
+    p.style.setProperty("--co", (1 - d * 0.35).toFixed(3));
+  });
+}
+if (plansEl) {
+  plansEl.addEventListener("scroll", () => requestAnimationFrame(plansFlow), { passive: true });
+  phone.addEventListener("change", plansCenter);
+  plansCenter();
+}
+
+/* ---------- всё, что живёт от прокрутки: герой уходит, листы вырастают, шапка темнеет ---------- */
+const heroFrame = document.querySelector(".hero-frame"), heroContent = document.querySelector(".hero-content");
+const growEls = [...document.querySelectorAll(".sheet, .testi-frame")];
+const darkEls = [...document.querySelectorAll("[data-nav='dark']")];
+const _onPage = onPage;
+onPage = function () {
+  _onPage();
+  const H = innerHeight;
+  if (!REDUCED) {
+    if (heroFrame && scrollY < H * 1.3) {
+      const p = clamp01(scrollY / H);
+      heroFrame.style.setProperty("--hs", (1 - p * 0.08).toFixed(4));
+      heroContent.style.setProperty("--hy", (-p * H * 0.22).toFixed(1) + "px");
+      heroContent.style.setProperty("--ho", (1 - sstep(0.15, 0.7, p)).toFixed(3));
+    }
+    growEls.forEach((el) => {
+      const r = el.getBoundingClientRect();
+      if (r.top > H * 1.2 || r.bottom < -H) return;
+      el.style.setProperty("--g", (0.93 + 0.07 * sstep(0, 1, (H - r.top) / (H * 0.75))).toFixed(4));
+    });
+  }
+  const y = 44;
+  nav.classList.toggle("dark", darkEls.some((el) => { const r = el.getBoundingClientRect(); return r.top <= y && r.bottom >= y; }));
+};
+
+const _extra = window.adOnLangExtra;
+window.adOnLangExtra = function () { _extra(); splitHeads(); fillRibbons(); palIdx = -1; flyFrame(); };
+splitHeads();
+fillRibbons();
+addEventListener("resize", () => { fillRibbons(); plansCenter(); });
+if (document.fonts) document.fonts.ready.then(fillRibbons);
+onPage();
+flyFrame();

@@ -2,8 +2,8 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <meta name="robots" content="noindex, nofollow">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
   <title>Alyonaa — дизайн интерьера для осознанной жизни</title>
   <meta name="description" content="Алёна Андреева — дизайнер интерьера. Спокойные, продуманные пространства. Проект с визуализациями и планами онлайн по всему миру.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -63,8 +63,8 @@
         </div>
         
         <ul class="hero-chips">
-          <li><b>4+</b><span data-i18n="fact1">года практики</span></li>
-          <li><b>3</b><span data-i18n="fact2">страны: Грузия, Россия, Беларусь</span></li>
+          <li><b data-count="4" data-suffix="+">4+</b><span data-i18n="fact1">года практики</span></li>
+          <li><b data-count="3">3</b><span data-i18n="fact2">страны: Грузия, Россия, Беларусь</span></li>
           <li class="hc-wide"><span data-i18n="contact.note">Онлайн по всему миру · лично в Батуми</span></li>
         </ul>
       </div>
@@ -80,6 +80,11 @@
       </div>
     </div>
   </section>
+
+  <div class="ribbons" aria-hidden="true">
+    <div class="rb rb--ink"><div class="rb__track" data-dir="-1"><span class="rb__set" data-i18n="rb.a">Планировка ✦ 3D-визуализация ✦ Чертежи для строителей ✦ Комплектация ✦ Онлайн по всему миру ✦ Батуми ✦</span></div></div>
+    <div class="rb rb--gold"><div class="rb__track" data-dir="1"><span class="rb__set" data-i18n="rb.b">План электрики ✦ Освещение ✦ Сантехника ✦ Тёплые полы ✦ Развёртки стен ✦ Таблица отделки ✦</span></div></div>
+  </div>
 
   <section class="section philosophy" id="philosophy">
     <svg class="philo-plan" viewBox="0 0 600 400" aria-hidden="true" preserveAspectRatio="xMidYMid slice">
@@ -118,8 +123,9 @@
     </div>
   </section>
 
-  <section class="fly" id="gallery" style="--h:460vh">
+  <section class="fly" id="gallery" style="--h:400vh" data-nav="dark">
     <div class="fly__stage" id="flyStage">
+      <div class="fly__amb" aria-hidden="true"></div>
       <div class="fly__glow" aria-hidden="true"></div>
       <div class="fly__title">
         <span class="kicker" data-n="03" data-i18n="gal.kicker">Проекты</span>
@@ -135,6 +141,11 @@
         <figure class="fly__card" style="--ar:1/1"><img src="img/p2-2.jpg" alt="Interior" loading="lazy" draggable="false"></figure>
         <figure class="fly__card" style="--ar:3/4"><img src="img/p1-4.jpg" alt="Interior" loading="lazy" draggable="false"></figure>
         <figure class="fly__card" style="--ar:4/3"><img src="img/p3-2.jpg" alt="Interior" loading="lazy" draggable="false"></figure>
+      </div>
+      
+      <div class="fly__pal" id="flyPal" aria-hidden="true">
+        <span class="fly__pal-l" data-i18n="gal.pal">Палитра проекта</span>
+        <div class="fly__chips"><i><b></b><s></s></i><i><b></b><s></s></i><i><b></b><s></s></i><i><b></b><s></s></i><i><b></b><s></s></i></div>
       </div>
       <div class="fly__end">
         <a class="btn btn-gold mag" href="https://instagram.com/alyonaa_design" target="_blank" rel="noopener" data-i18n="gal.more">Больше проектов в Instagram</a>
@@ -233,21 +244,45 @@
           <a class="btn plan-btn" href="#contact" data-i18n="pl3.btn">Выбрать «Полный»</a>
         </article>
       </div>
-      <p class="tnote" data-i18n="tnote">Срок проекта — от 1 до 2,5 месяцев. Оплата поэтапно по договору: в рублях на российскую карту или в долларах / лари на грузинскую.</p>
+      
+      <ul class="terms reveal">
+        <li class="term"><span class="term-ic"><svg viewBox="0 0 32 32"><rect x="5" y="7" width="22" height="20" rx="3"/><path d="M5 13h22M11 4v6M21 4v6M10 18h4M18 18h4M10 22h4"/></svg></span>
+          <span class="term-t"><b data-i18n="tn1.b">1–2,5</b><span data-i18n="tn1">месяца на проект</span></span></li>
+        <li class="term"><span class="term-ic"><svg viewBox="0 0 32 32"><path d="M8 4h11l6 6v18H8z"/><path d="M19 4v6h6M12 15h9M12 19h9M12 23h5"/></svg></span>
+          <span class="term-t"><span data-i18n="tn2">Оплата поэтапно по договору</span></span></li>
+        <li class="term"><span class="term-ic"><svg viewBox="0 0 32 32"><rect x="3" y="8" width="26" height="17" rx="3"/><path d="M3 13h26M8 20h6"/></svg></span>
+          <span class="term-t"><span data-i18n="tn3">₽ на российскую карту, $ и ₾ на грузинскую</span></span></li>
+      </ul>
 
       <div class="extras-block reveal">
         <div class="extras-title" data-i18n="extras.title">Дополнительные услуги — отдельно</div>
         <div class="extras">
-          <div class="extra-row"><span class="ename" data-i18n="ex1">Замер объекта в Батуми</span><span class="ecost" data-i18n="ex1.cost">60 $ · 160 ₾ (периферия 75 $ · 200 ₾)</span></div>
-          <div class="extra-row"><span class="ename" data-i18n="ex2">Спецификация на мебель и отделку (таблица со ссылками и артикулами товаров из реальных магазинов)</span><span class="ecost">200 $ · 540 ₾</span></div>
-          <div class="extra-row"><span class="ename" data-i18n="ex3">Комплектация с сопровождением — лично в Батуми</span><span class="ecost" data-i18n="ex3.cost">300 $ · 800 ₾ / месяц</span></div>
-          <div class="extra-row"><span class="ename" data-i18n="ex4">Консультация на стройке (разовый выезд)</span><span class="ecost">30 $ · 80 ₾</span></div>
+          <article class="xcard">
+            <span class="x-ic"><svg viewBox="0 0 32 32"><path d="M4 22 22 4l6 6-18 18z"/><path d="M9 17l2 2M12 14l3 3M15 11l2 2M18 8l3 3"/></svg></span>
+            <h3 class="x-name" data-i18n="ex1">Замер объекта в Батуми</h3>
+            <p class="x-cost" data-i18n="ex1.cost">60 $ · 160 ₾ (периферия 75 $ · 200 ₾)</p>
+          </article>
+          <article class="xcard">
+            <span class="x-ic"><svg viewBox="0 0 32 32"><rect x="6" y="4" width="20" height="24" rx="2"/><path d="M11 10h10M11 15h10M11 20h6"/><circle cx="23" cy="23" r="4"/></svg></span>
+            <h3 class="x-name" data-i18n="ex2">Спецификация на мебель и отделку (таблица со ссылками и артикулами товаров из реальных магазинов)</h3>
+            <p class="x-cost">200 $ · 540 ₾</p>
+          </article>
+          <article class="xcard">
+            <span class="x-ic"><svg viewBox="0 0 32 32"><path d="M5 17v-4a3 3 0 0 1 3-3h16a3 3 0 0 1 3 3v4"/><path d="M3 17a2 2 0 0 1 4 0v3h18v-3a2 2 0 0 1 4 0v7H3z"/><path d="M7 24v3M25 24v3"/></svg></span>
+            <h3 class="x-name" data-i18n="ex3">Комплектация с сопровождением — лично в Батуми</h3>
+            <p class="x-cost" data-i18n="ex3.cost">300 $ · 800 ₾ / месяц</p>
+          </article>
+          <article class="xcard">
+            <span class="x-ic"><svg viewBox="0 0 32 32"><path d="M6 20a10 10 0 0 1 20 0"/><path d="M4 20h24v3H4zM14 10V7h4v3M16 10v4"/></svg></span>
+            <h3 class="x-name" data-i18n="ex4">Консультация на стройке (разовый выезд)</h3>
+            <p class="x-cost">30 $ · 80 ₾</p>
+          </article>
         </div>
       </div>
     </div>
   </section>
 
-  <section class="section contact sheet" id="contact">
+  <section class="section contact sheet contact--dark" id="contact" data-nav="dark">
     <div class="wrap contact-grid2">
       <div class="contact-photo reveal"><img src="img/alyona-2.jpg" alt="Alyona Andreeva, interior designer"></div>
       <div class="contact-block reveal">
@@ -277,7 +312,8 @@
   </section>
 </main>
 
-<footer class="footer">
+<footer class="footer" data-nav="dark">
+  <div class="footer-mark" aria-hidden="true"><span>A</span><span>L</span><span>Y</span><span>O</span><span>N</span><span>A</span><span>A</span></div>
   <div class="wrap">
     <div class="footer-inner">
       <div class="brand">Alyonaa&nbsp;Design</div>
