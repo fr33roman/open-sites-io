@@ -374,4 +374,43 @@
     });
     $('done-back').addEventListener('click', function () { done.hidden = true; form.hidden = false; nm.focus(); });
   })();
+  /* фото на весь экран: все кнопки с data-full листаются по порядку на странице; свайп, стрелки, Esc */
+  (function () {
+    var lb = $('lb'), items = all('[data-full]'), im = $('lb-i'), cur = 0, last = null, sx = 0, sy = 0, tr = false;
+    if (!lb || !items.length) return;
+    function show(i) {
+      cur = (i + items.length) % items.length;
+      var b = items[cur], t = b.querySelector('img');
+      im.alt = t ? t.alt : '';
+      im.src = b.getAttribute('data-full');
+      im.width = +b.getAttribute('data-w') || 0; im.height = +b.getAttribute('data-h') || 0;
+      var nx = items[(cur + 1) % items.length]; if (nx) new Image().src = nx.getAttribute('data-full');
+    }
+    function open(i) {
+      last = D.activeElement; lb.hidden = false; show(i); H.classList.add('sf-lb-open');
+      void lb.offsetWidth; lb.classList.add('is-on'); $('lb-x').focus();
+    }
+    function close() {
+      lb.classList.remove('is-on'); H.classList.remove('sf-lb-open');
+      setTimeout(function () { lb.hidden = true; im.removeAttribute('src'); }, calm ? 0 : 350);
+      if (last) last.focus({ preventScroll: true });
+    }
+    items.forEach(function (b, i) { b.addEventListener('click', function () { open(i); }); });
+    $('lb-x').addEventListener('click', close);
+    $('lb-p').addEventListener('click', function () { show(cur - 1); });
+    $('lb-n').addEventListener('click', function () { show(cur + 1); });
+    lb.addEventListener('click', function (e) { if (e.target === lb || e.target === $('lb-st')) close(); });
+    D.addEventListener('keydown', function (e) {
+      if (lb.hidden) return;
+      if (e.key === 'Escape') close();
+      else if (e.key === 'ArrowLeft') show(cur - 1);
+      else if (e.key === 'ArrowRight') show(cur + 1);
+    });
+    lb.addEventListener('touchstart', function (e) { tr = e.touches.length === 1; sx = e.touches[0].clientX; sy = e.touches[0].clientY; }, { passive: true });
+    lb.addEventListener('touchend', function (e) {
+      if (!tr) return; tr = false;
+      var dx = e.changedTouches[0].clientX - sx, dy = e.changedTouches[0].clientY - sy;
+      if (Math.abs(dx) > 48 && Math.abs(dx) > Math.abs(dy) * 1.4) show(cur + (dx < 0 ? 1 : -1));
+    }, { passive: true });
+  })();
 })();

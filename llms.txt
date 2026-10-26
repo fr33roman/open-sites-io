@@ -6,10 +6,10 @@
 
 ## Services and prices
 
-- Store “Your Own Storefront”: For businesses with dozens of products or services, where customers prefer to choose on their own first and then order. Price: 990 GEL / 369 USD / 29900 RUB.
-- Landing page “First Leads”: For launching a service, an offer or a new line of business when you need leads by next week. Price: 290 GEL / 109 USD / 8900 RUB.
-- Website “Bridge to Clients”: For businesses with several services, where customers want to look everything over calmly before booking. Price: 590 GEL / 219 USD / 17900 RUB.
-- Site + AI “Always On”: For businesses that lose leads in the evenings and on weekends because nobody is there to reply. Price: 790 GEL / 295 USD / 23900 RUB.
+- Store “Your Own Storefront”: For businesses with dozens of products or services, where customers prefer to choose on their own first and then order. Price: 1189 GEL / 439 USD / 35890 RUB.
+- Landing page “First Leads”: For launching a service, an offer or a new line of business when you need leads by next week. Price: 349 GEL / 129 USD / 10690 RUB.
+- Website “Bridge to Clients”: For businesses with several services, where customers want to look everything over calmly before booking. Price: 709 GEL / 259 USD / 21490 RUB.
+- Site + AI “Always On”: For businesses that lose leads in the evenings and on weekends because nobody is there to reply. Price: 949 GEL / 359 USD / 28690 RUB.
 - App “In the Client's Pocket”: For businesses with regular customers who like to book, order and collect loyalty points right on their phone. Price is quoted after a short call.
 - Support “In Good Hands”: For those who don't want to look after the site themselves or keep a developer on the payroll. Price: 60 GEL / 22 USD / 1800 RUB per month.
 
