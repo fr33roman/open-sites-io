@@ -1,0 +1,115 @@
+/* ==========================================================================
+   OPEN-SITES DESIGN KIT — 5 СЛОЁВ ГЛУБИНЫ И ПРУЖИННАЯ ФИЗИКА (tokens.css)
+   При пересборке через assemble_3_presets.py префикс .dk- заменяется
+   на уникальный префикс пресета (.sfa-, .sfb-, .sfc- и т.д.)
+   ========================================================================== */
+
+:root {
+  /* Слой 0: Среда (переопределяется паспортом бренда в DESIGN.md) */
+  --bg: #0F1014;
+  --panel: #16181F;
+  --panel-hi: #1E212B;
+  --text: #EFE9DF;
+  --dim: #B2B4BE;
+  --accent: #E8721A;
+  --accent-hi: #FFB37A;
+  --accent-lo: #BD5200;
+
+  /* Слой 1: Архитектурные линии */
+  --line: rgba(239, 233, 223, 0.10);
+  --line-accent: rgba(232, 114, 26, 0.34);
+
+  /* Геометрия и пружинные кривые */
+  --radius-lg: 26px;
+  --radius-md: 20px;
+  --radius-pill: 999px;
+  --ease-spring: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-snappy: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html {
+  background-color: var(--bg);
+  color: var(--text);
+  font-size: 16px;
+  line-height: 1.5;
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+/* Слой 2 + Слой 3: Матовая панель с толщиной стекла и прожектором под пальцем/курсором */
+.dk-spot {
+  position: relative;
+  background-color: var(--panel);
+  background-image: radial-gradient(
+    420px circle at var(--mx, 50%) var(--my, 0%),
+    color-mix(in srgb, var(--accent) 14%, transparent),
+    transparent 65%
+  );
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  box-shadow:
+    0 18px 44px rgba(0, 0, 0, 0.42),
+    inset 0 1px 0 rgba(255, 255, 255, 0.07);
+  transition:
+    border-color 0.28s var(--ease-spring),
+    transform 0.28s var(--ease-spring);
+}
+
+.dk-spot:hover {
+  border-color: var(--line-accent);
+}
+
+/* Слой 4: Единственная карточка-фаворит с градиентной маской-рамкой (RING_MAX = 1) */
+.dk-featured {
+  position: relative;
+}
+
+.dk-featured::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1.5px;
+  background: linear-gradient(135deg, var(--accent-hi) 0%, var(--accent) 45%, transparent 100%);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+/* Надзаголовок-координата БЕЗ скруглённой таблетки (против штампа T0) */
+.dk-coord {
+  display: inline-block;
+  margin: 0 0 10px;
+  padding: 0 0 0 10px;
+  border-left: 2px solid var(--accent);
+  border-radius: 0;
+  background: transparent;
+  color: var(--accent-hi);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+/* Защита мобильного первого экрана (HOLE_PX <= 72 px от шапки до H1) */
+@media (max-width: 640px) {
+  .dk-coord {
+    margin: 0 0 4px;
+    font-size: 0.7rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
