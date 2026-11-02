@@ -408,7 +408,7 @@
     form.addEventListener('submit', function (e) {
       e.preventDefault();
       if (feedback) {
-        feedback.textContent = 'Заявка принята! Куратор школы Tamarjoba свяжется с вами в течение 15 минут.';
+        feedback.textContent = 'Заявка принята! Куратор школы Tamarjoba свяжется с вами в ближайшее время.';
       }
       if (submitBtn) {
         submitBtn.textContent = 'Отправлено ✓';
