@@ -1,0 +1,1137 @@
+/* ==========================================================================
+   TAMARJOBA — ПРЕСЕТ Б (Многостраничный портал + Живая пропись на Canvas)
+   Строгий брендбук: #FC0304, #B4B4B4, #000000, #FFFFFF, #F7F7F7, #121215
+   Шрифты: Open Sans (400, 700, 800), Neucha, Noto Serif Georgian, Sylfaen
+   Уникальный префикс: .tjb-
+   ========================================================================== */
+
+:root {
+  --tjb-red: #FC0304;
+  --tjb-red-deep: #B80001;
+  --tjb-red-soft: rgba(252, 3, 4, 0.09);
+  --tjb-black: #000000;
+  --tjb-graphite: #121215;
+  --tjb-graphite-2: #1A1A20;
+  --tjb-silver: #B4B4B4;
+  --tjb-ink-2: #36363C;
+  --tjb-ink-3: #52525B;
+  --tjb-white: #FFFFFF;
+  --tjb-paper: #F7F7F7;
+  --tjb-paper-2: #EFEFEF;
+  --tjb-line-light: rgba(0, 0, 0, 0.11);
+  --tjb-line-dark: rgba(255, 255, 255, 0.14);
+  --tjb-font-main: 'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --tjb-font-hand: 'Neucha', cursive, sans-serif;
+  --tjb-font-geo: 'Noto Serif Georgian', 'Sylfaen', Georgia, serif;
+  --tjb-shadow-panel: 0 18px 42px -16px rgba(0, 0, 0, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.85);
+  --tjb-shadow-dark: 0 22px 48px -16px rgba(0, 0, 0, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+  background-color: var(--tjb-paper);
+  color: var(--tjb-black);
+  font-family: var(--tjb-font-main);
+}
+
+body.tjb-body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--tjb-paper);
+  background-image:
+    radial-gradient(900px 480px at 88% 6%, rgba(252, 3, 4, 0.07), transparent 65%),
+    radial-gradient(750px 440px at 10% 34%, rgba(180, 180, 180, 0.18), transparent 65%);
+  color: var(--tjb-black);
+  font-family: var(--tjb-font-main);
+  font-size: 16px;
+  line-height: 1.5;
+  overflow-x: hidden;
+  opacity: 1;
+  transition: opacity 0.24s ease, transform 0.24s ease;
+}
+
+body.tjb-body.is-leaving {
+  opacity: 0;
+  transform: translateY(6px);
+}
+
+img, svg, canvas {
+  max-width: 100%;
+  display: block;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* ───────────────────────── ШАПКА САЙТА (header_sig: hdr|nav5|btn0) ───────────────────────── */
+.tjb-header {
+  position: sticky;
+  top: 0;
+  z-index: 90;
+  background: rgba(255, 255, 255, 0.96);
+  border-bottom: 1px solid var(--tjb-line-light);
+}
+
+.tjb-header__inner {
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 8px 24px;
+  min-height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.tjb-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 44px;
+  padding: 4px 6px 4px 0;
+}
+
+.tjb-logo__img {
+  height: 36px;
+  width: auto;
+  object-fit: contain;
+}
+
+.tjb-logo__word {
+  font-weight: 800;
+  font-size: 18px;
+  letter-spacing: -0.02em;
+  color: var(--tjb-black);
+}
+
+.tjb-logo__word b {
+  color: var(--tjb-red-deep);
+  font-family: var(--tjb-font-hand);
+  font-weight: 400;
+  font-size: 20px;
+  margin-left: 3px;
+}
+
+.tjb-nav {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+
+.tjb-nav__item {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 8px 12px;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--tjb-black);
+  border-bottom: 2px solid transparent;
+  transition: color 0.18s ease, border-color 0.18s ease, background-color 0.18s ease;
+}
+
+.tjb-nav__item:hover,
+.tjb-nav__item.is-active {
+  color: var(--tjb-red-deep);
+  border-bottom-color: var(--tjb-red);
+  background-color: rgba(252, 3, 4, 0.05);
+}
+
+.tjb-header__right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.tjb-presets {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid var(--tjb-line-light);
+  background: var(--tjb-paper);
+  padding: 2px;
+  gap: 2px;
+}
+
+.tjb-preset-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 0 10px;
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--tjb-black);
+  transition: background-color 0.18s ease, color 0.18s ease;
+}
+
+.tjb-preset-link:hover {
+  background: var(--tjb-paper-2);
+}
+
+.tjb-preset-link.is-current {
+  background: var(--tjb-black);
+  color: var(--tjb-white);
+}
+
+.tjb-cta-top {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 8px 16px;
+  background: var(--tjb-red-deep);
+  color: var(--tjb-white);
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: 0.01em;
+  transition: background-color 0.18s ease, transform 0.18s ease;
+}
+
+.tjb-cta-top:hover {
+  background: var(--tjb-black);
+  transform: translateY(-1px);
+}
+
+/* ───────────────────────── КОНТЕЙНЕР И СЕКЦИИ ───────────────────────── */
+.tjb-main {
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.tjb-sec {
+  padding: 56px 0;
+  border-top: 1px solid var(--tjb-line-light);
+  position: relative;
+}
+
+.tjb-sec--dark {
+  background: var(--tjb-graphite);
+  color: var(--tjb-white);
+  margin-left: -24px;
+  margin-right: -24px;
+  padding-left: 24px;
+  padding-right: 24px;
+  border-top-color: var(--tjb-line-dark);
+}
+
+/* H2 всегда первый дочерний элемент (.tjb-sec__head > h2:first-child) для KICKER_RUN == 0 */
+.tjb-sec__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 18px;
+  flex-wrap: wrap;
+  margin-bottom: 28px;
+}
+
+.tjb-h2 {
+  margin: 0;
+  font-size: clamp(24px, 3vw, 36px);
+  font-weight: 800;
+  line-height: 1.16;
+  letter-spacing: -0.02em;
+  color: inherit;
+}
+
+.tjb-sec__idx {
+  font-family: var(--tjb-font-hand);
+  font-size: 20px;
+  color: var(--tjb-red-deep);
+  letter-spacing: 0.03em;
+}
+
+.tjb-sec--dark .tjb-sec__idx {
+  color: #FF6B6B;
+}
+
+.tjb-sec__intro {
+  margin: 0 0 24px 0;
+  max-width: 64ch;
+  font-size: 16px;
+  color: var(--tjb-ink-2);
+}
+
+.tjb-sec--dark .tjb-sec__intro {
+  color: #E2E2E8;
+}
+
+/* ───────────────────────── ПЕРВЫЙ ЭКРАН (Архетип T6 30/70, hero: img) ───────────────────────── */
+.tjb-hero {
+  padding: 28px 0 44px;
+}
+
+.tjb-hero__grid {
+  display: grid;
+  grid-template-columns: 0.92fr 1.28fr;
+  gap: 28px;
+  align-items: stretch;
+}
+
+.tjb-hero__left {
+  background: var(--tjb-white);
+  border: 1px solid var(--tjb-line-light);
+  border-left: 4px solid var(--tjb-red);
+  padding: 28px 26px;
+  box-shadow: var(--tjb-shadow-panel);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 18px;
+}
+
+.tjb-coord {
+  border-left: 2px solid var(--tjb-red);
+  padding-left: 10px;
+  font-size: 13px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--tjb-red-deep);
+}
+
+.tjb-h1 {
+  margin: 0;
+  font-size: clamp(28px, 3.5vw, 44px);
+  font-weight: 800;
+  line-height: 1.12;
+  letter-spacing: -0.025em;
+  color: var(--tjb-black);
+}
+
+.tjb-h1 em {
+  font-style: normal;
+  font-family: var(--tjb-font-hand);
+  color: var(--tjb-red-deep);
+  font-weight: 400;
+  font-size: 1.1em;
+}
+
+.tjb-lead {
+  margin: 0;
+  font-size: 17px;
+  line-height: 1.5;
+  color: var(--tjb-ink-2);
+}
+
+.tjb-hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.tjb-action-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  padding: 12px 22px;
+  background: var(--tjb-red-deep);
+  color: var(--tjb-white);
+  font-weight: 800;
+  font-size: 15px;
+  transition: background-color 0.18s ease, transform 0.18s ease;
+}
+
+.tjb-action-primary:hover {
+  background: var(--tjb-black);
+  transform: translateY(-1px);
+}
+
+.tjb-action-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  padding: 12px 20px;
+  background: var(--tjb-paper);
+  color: var(--tjb-black);
+  border: 1px solid var(--tjb-black);
+  font-weight: 700;
+  font-size: 15px;
+  transition: background-color 0.18s ease, color 0.18s ease;
+}
+
+.tjb-action-secondary:hover {
+  background: var(--tjb-black);
+  color: var(--tjb-white);
+}
+
+.tjb-hero__stage {
+  background: var(--tjb-graphite);
+  color: var(--tjb-white);
+  border: 1px solid var(--tjb-line-dark);
+  padding: 24px;
+  box-shadow: var(--tjb-shadow-dark);
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  gap: 20px;
+  align-items: center;
+}
+
+.tjb-hero__portrait-wrap {
+  position: relative;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: var(--tjb-black);
+}
+
+.tjb-hero__portrait {
+  width: 100%;
+  height: 320px;
+  object-fit: cover;
+  object-position: center top;
+}
+
+.tjb-hero__tag {
+  background: var(--tjb-black);
+  color: var(--tjb-white);
+  border-top: 2px solid var(--tjb-red);
+  padding: 10px 14px;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.tjb-hero__portals {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.tjb-portal-mini {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 48px;
+  padding: 10px 14px;
+  background: var(--tjb-graphite-2);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-left: 3px solid var(--tjb-red);
+  color: var(--tjb-white);
+  font-size: 14px;
+  font-weight: 700;
+  transition: transform 0.18s ease, border-color 0.18s ease, background-color 0.18s ease;
+}
+
+.tjb-portal-mini:hover {
+  transform: translateX(4px);
+  background: #23232B;
+  border-color: var(--tjb-white);
+}
+
+.tjb-portal-mini b {
+  font-family: var(--tjb-font-geo);
+  color: #FF8585;
+  font-size: 15px;
+  margin-left: 8px;
+}
+
+/* ───────────────────────── СЛОЙ 4: ОДНА КАРТОЧКА С КОМЕТОЙ (RING_MAX <= 1) ───────────────────────── */
+.tjb-comet-card {
+  position: relative;
+}
+
+.tjb-comet-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  padding: 2px;
+  background: linear-gradient(135deg, var(--tjb-red), var(--tjb-black), var(--tjb-red));
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+/* ───────────────────────── ЖИВАЯ ПРОПИСЬ И СБОРКА 3 СЛОВ (Canvas + Буквы) ───────────────────────── */
+.tjb-game-layout {
+  display: grid;
+  grid-template-columns: 1.08fr 0.92fr;
+  gap: 24px;
+  align-items: start;
+}
+
+.tjb-game-panel {
+  background: var(--tjb-white);
+  border: 1px solid var(--tjb-line-light);
+  padding: 24px;
+  box-shadow: var(--tjb-shadow-panel);
+}
+
+.tjb-word-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.tjb-word-tab {
+  min-height: 44px;
+  padding: 8px 14px;
+  background: var(--tjb-paper);
+  border: 1px solid var(--tjb-line-light);
+  color: var(--tjb-black);
+  font-family: var(--tjb-font-main);
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.16s ease, color 0.16s ease, border-color 0.16s ease;
+}
+
+.tjb-word-tab.is-active {
+  background: var(--tjb-black);
+  color: var(--tjb-white);
+  border-color: var(--tjb-black);
+}
+
+.tjb-word-slots {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  min-height: 62px;
+  padding: 12px;
+  background: var(--tjb-paper);
+  border: 1px dashed var(--tjb-black);
+  margin-bottom: 14px;
+  align-items: center;
+}
+
+.tjb-slot-char {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 4px 10px;
+  background: var(--tjb-white);
+  border: 1px solid var(--tjb-line-light);
+  font-family: var(--tjb-font-geo);
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--tjb-black);
+}
+
+.tjb-slot-char.is-filled {
+  background: var(--tjb-black);
+  color: var(--tjb-white);
+  border-color: var(--tjb-red);
+}
+
+.tjb-letter-pool {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.tjb-letter-btn {
+  min-width: 48px;
+  min-height: 48px;
+  padding: 6px 12px;
+  background: var(--tjb-white);
+  border: 1px solid var(--tjb-black);
+  color: var(--tjb-black);
+  font-family: var(--tjb-font-geo);
+  font-size: 22px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.15s ease, background-color 0.15s ease, color 0.15s ease;
+}
+
+.tjb-letter-btn:hover:not(:disabled) {
+  background: var(--tjb-paper-2);
+  transform: translateY(-2px);
+}
+
+.tjb-letter-btn.is-next {
+  border: 2px solid var(--tjb-red);
+  box-shadow: 0 0 0 3px rgba(252, 3, 4, 0.18);
+  animation: tjbPulse 1.5s infinite;
+}
+
+.tjb-letter-btn:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+
+@keyframes tjbPulse {
+  0%, 100% { box-shadow: 0 0 0 2px rgba(252, 3, 4, 0.16); }
+  50% { box-shadow: 0 0 0 6px rgba(252, 3, 4, 0.32); }
+}
+
+.tjb-game-status {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  padding-top: 10px;
+  border-top: 1px solid var(--tjb-line-light);
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.tjb-reset-btn {
+  min-height: 44px;
+  padding: 8px 14px;
+  background: var(--tjb-paper);
+  border: 1px solid var(--tjb-black);
+  color: var(--tjb-black);
+  font-weight: 700;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.tjb-reset-btn:hover {
+  background: var(--tjb-black);
+  color: var(--tjb-white);
+}
+
+/* 8 карточек грузинских букв с произношением */
+.tjb-flip-grid {
+  display: grid;
+  grid-template-columns: 1.08fr 0.96fr 1.04fr 0.92fr;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.tjb-flip-card {
+  min-height: 68px;
+  padding: 10px;
+  background: var(--tjb-paper);
+  border: 1px solid var(--tjb-line-light);
+  color: var(--tjb-black);
+  text-align: left;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: background-color 0.18s ease, border-color 0.18s ease;
+}
+
+.tjb-flip-card:hover,
+.tjb-flip-card.is-flipped {
+  background: var(--tjb-black);
+  color: var(--tjb-white);
+  border-color: var(--tjb-red);
+}
+
+.tjb-flip-card__geo {
+  font-family: var(--tjb-font-geo);
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--tjb-red-deep);
+}
+
+.tjb-flip-card:hover .tjb-flip-card__geo,
+.tjb-flip-card.is-flipped .tjb-flip-card__geo {
+  color: #FF8585;
+}
+
+.tjb-flip-card__ru {
+  font-size: 12px;
+  font-weight: 700;
+}
+
+/* Правая панель: Живая пропись на Canvas */
+.tjb-canvas-wrap {
+  position: relative;
+  border: 2px solid var(--tjb-black);
+  background: var(--tjb-white);
+  margin: 12px 0;
+}
+
+.tjb-trace-canvas {
+  width: 100%;
+  height: 250px;
+  touch-action: none;
+  cursor: crosshair;
+}
+
+.tjb-trace-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.tjb-char-Switch {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.tjb-char-pick {
+  min-width: 44px;
+  min-height: 44px;
+  padding: 6px 12px;
+  background: var(--tjb-paper);
+  border: 1px solid var(--tjb-line-light);
+  font-family: var(--tjb-font-geo);
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--tjb-black);
+  cursor: pointer;
+}
+
+.tjb-char-pick.is-active {
+  background: var(--tjb-red-deep);
+  color: var(--tjb-white);
+  border-color: var(--tjb-red-deep);
+}
+
+.tjb-trace-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+/* ───────────────────────── АРХИТЕКТУРНЫЕ ПОРТАЛЫ УСЛУГ И ПРАЙС ───────────────────────── */
+.tjb-portals-grid {
+  display: grid;
+  grid-template-columns: 1.16fr 0.94fr;
+  gap: 20px;
+}
+
+.tjb-service-card {
+  background: var(--tjb-white);
+  border: 1px solid var(--tjb-line-light);
+  padding: 24px;
+  box-shadow: var(--tjb-shadow-panel);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.tjb-service-card__top {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  border-bottom: 1px solid var(--tjb-line-light);
+  padding-bottom: 12px;
+}
+
+.tjb-h3 {
+  margin: 0;
+  font-size: 21px;
+  font-weight: 800;
+  line-height: 1.25;
+  color: var(--tjb-black);
+}
+
+.tjb-price-badge {
+  font-family: var(--tjb-font-hand);
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--tjb-red-deep);
+  white-space: nowrap;
+}
+
+.tjb-price-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.tjb-price-list li {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 8px 10px;
+  background: var(--tjb-paper);
+  font-size: 14px;
+}
+
+.tjb-price-list li b {
+  color: var(--tjb-red-deep);
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.tjb-card-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 46px;
+  padding: 10px 16px;
+  background: var(--tjb-black);
+  color: var(--tjb-white);
+  font-size: 14px;
+  font-weight: 700;
+  transition: background-color 0.18s ease;
+}
+
+.tjb-card-link:hover {
+  background: var(--tjb-red-deep);
+}
+
+/* ───────────────────────── КОМАНДА 8 ПРЕПОДАВАТЕЛЕЙ (people_form: ul-li) ───────────────────────── */
+.tjb-faculty {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: 1.12fr 0.94fr 1.06fr 0.92fr;
+  gap: 16px;
+}
+
+.tjb-faculty__card {
+  background: var(--tjb-graphite-2);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.tjb-faculty__photo {
+  width: 100%;
+  height: 190px;
+  object-fit: cover;
+  object-position: center top;
+  border-bottom: 2px solid var(--tjb-red);
+}
+
+.tjb-faculty__name {
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--tjb-white);
+}
+
+.tjb-faculty__role {
+  font-size: 13px;
+  color: #D8D8E0;
+  line-height: 1.4;
+}
+
+/* ───────────────────────── КАРУСЕЛЬ И КАРТОЧКИ ОТЗЫВОВ ───────────────────────── */
+.tjb-reviews-grid {
+  display: grid;
+  grid-template-columns: 1.15fr 0.95fr 1.05fr;
+  gap: 18px;
+}
+
+.tjb-review-card {
+  background: var(--tjb-white);
+  border: 1px solid var(--tjb-line-light);
+  border-top: 3px solid var(--tjb-red);
+  padding: 22px;
+  box-shadow: var(--tjb-shadow-panel);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.tjb-review-card blockquote {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--tjb-black);
+}
+
+.tjb-review-card__author {
+  font-weight: 800;
+  font-size: 14px;
+  color: var(--tjb-red-deep);
+}
+
+/* ───────────────────────── ТАБЛИЦЫ И ПРОГРАММЫ НА ВНУТРЕННИХ СТРАНИЦАХ ───────────────────────── */
+.tjb-table-wrap {
+  overflow-x: auto;
+  background: var(--tjb-white);
+  border: 1px solid var(--tjb-line-light);
+  box-shadow: var(--tjb-shadow-panel);
+}
+
+.tjb-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 15px;
+}
+
+.tjb-table th,
+.tjb-table td {
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--tjb-line-light);
+}
+
+.tjb-table th {
+  background: var(--tjb-black);
+  color: var(--tjb-white);
+  font-weight: 800;
+}
+
+.tjb-table tr:nth-child(even) td {
+  background: var(--tjb-paper);
+}
+
+/* ───────────────────────── ФИНАЛЬНАЯ СЕКЦИЯ ЗАПИСИ (ending_sig: form) ───────────────────────── */
+.tjb-form-box {
+  background: var(--tjb-white);
+  border: 2px solid var(--tjb-black);
+  padding: 32px;
+  box-shadow: var(--tjb-shadow-panel);
+}
+
+.tjb-form-grid {
+  display: grid;
+  grid-template-columns: 1.08fr 0.96fr 1.04fr;
+  gap: 16px;
+  margin-bottom: 18px;
+}
+
+.tjb-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.tjb-label {
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--tjb-black);
+}
+
+.tjb-input,
+.tjb-select {
+  min-height: 48px;
+  padding: 10px 14px;
+  border: 1px solid var(--tjb-black);
+  background: var(--tjb-paper);
+  color: var(--tjb-black);
+  font-family: var(--tjb-font-main);
+  font-size: 15px;
+}
+
+.tjb-input:focus,
+.tjb-select:focus {
+  outline: 2px solid var(--tjb-red);
+  background: var(--tjb-white);
+}
+
+.tjb-consent {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 44px;
+  font-size: 14px;
+  color: var(--tjb-ink-2);
+  cursor: pointer;
+  margin-bottom: 16px;
+}
+
+.tjb-consent input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  accent-color: var(--tjb-red-deep);
+}
+
+.tjb-submit {
+  min-height: 50px;
+  padding: 12px 28px;
+  background: var(--tjb-red-deep);
+  color: var(--tjb-white);
+  border: none;
+  font-family: var(--tjb-font-main);
+  font-size: 16px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: background-color 0.18s ease;
+}
+
+.tjb-submit:hover:not(:disabled) {
+  background: var(--tjb-black);
+}
+
+.tjb-submit:disabled {
+  background: #76767E;
+  color: var(--tjb-white);
+  cursor: not-allowed;
+}
+
+.tjb-form-feedback {
+  margin-top: 12px;
+  font-weight: 700;
+  color: var(--tjb-red-deep);
+}
+
+/* ───────────────────────── ПОДВАЛ САЙТА (footer_sig: address-ul-a) ───────────────────────── */
+.tjb-footer {
+  background: var(--tjb-black);
+  color: var(--tjb-white);
+  border-top: 3px solid var(--tjb-red);
+  padding: 40px 24px;
+  margin-top: 48px;
+}
+
+.tjb-footer__inner {
+  max-width: 1320px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 28px;
+  align-items: start;
+}
+
+.tjb-address {
+  font-style: normal;
+  line-height: 1.6;
+  font-size: 15px;
+  color: #E4E4EA;
+}
+
+.tjb-address strong {
+  color: var(--tjb-white);
+  font-size: 17px;
+}
+
+.tjb-footer-links {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.tjb-footer-links a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 8px 14px;
+  background: var(--tjb-graphite-2);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  color: var(--tjb-white);
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.tjb-footer-links a:hover {
+  border-color: var(--tjb-red);
+  color: #FF8585;
+}
+
+/* ───────────────────────── АДАПТИВ ДЛЯ ПЛАНШЕТА И ТЕЛЕФОНА (HOLE_PX <= 72) ───────────────────────── */
+@media (max-width: 980px) {
+  .tjb-hero__grid,
+  .tjb-hero__stage,
+  .tjb-game-layout,
+  .tjb-portals-grid,
+  .tjb-reviews-grid,
+  .tjb-form-grid,
+  .tjb-footer__inner {
+    grid-template-columns: 1fr;
+  }
+
+  .tjb-faculty {
+    grid-template-columns: 1.06fr 0.94fr;
+  }
+
+  .tjb-flip-grid {
+    grid-template-columns: 1.04fr 0.96fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .tjb-header__inner {
+    padding: 4px 12px;
+    min-height: 46px;
+    gap: 6px;
+  }
+
+  .tjb-logo {
+    min-height: 44px;
+    padding: 4px 0;
+  }
+
+  .tjb-logo__img {
+    height: 28px;
+  }
+
+  .tjb-logo__word {
+    font-size: 15px;
+  }
+
+  .tjb-nav {
+    display: none;
+  }
+
+  .tjb-nav__item {
+    min-height: 44px;
+    padding: 6px 10px;
+    font-size: 13px;
+    white-space: nowrap;
+  }
+
+  .tjb-preset-link {
+    min-width: 44px;
+    min-height: 44px;
+    padding: 0 8px;
+    font-size: 12px;
+  }
+
+  .tjb-cta-top {
+    min-height: 44px;
+    padding: 6px 12px;
+    font-size: 12px;
+  }
+
+  .tjb-main {
+    padding: 0 14px;
+  }
+
+  /* Важно для HOLE_PX <= 72 на 481px: минимальный отступ до H1 */
+  .tjb-hero {
+    padding: 8px 0 28px;
+  }
+
+  .tjb-hero__left {
+    padding: 12px 14px;
+    gap: 10px;
+  }
+
+  .tjb-coord {
+    font-size: 11px;
+    margin-bottom: 0;
+  }
+
+  .tjb-h1 {
+    font-size: 25px;
+  }
+
+  .tjb-sec {
+    padding: 36px 0;
+  }
+  .tjb-sec--dark {
+    margin-left: -14px;
+    margin-right: -14px;
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+
+  .tjb-faculty {
+    grid-template-columns: 1fr;
+  }
+
+  .tjb-form-box {
+    padding: 18px;
+  }
+}

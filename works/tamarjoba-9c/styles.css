@@ -1,0 +1,1451 @@
+/* ==========================================================================
+   TAMARJOBA — ПРЕСЕТ В (tamarjoba-9c)
+   Архетип T5 + T8: Интерактивный пульт 3 клика + Переходы глав + Игра Анбани
+   Строгий брендбук: #0E0E11, #FFFFFF, #B4B4B4, #FC0304
+   Шрифты: Neucha, Open Sans, Noto Serif Georgian / Sylfaen
+   Уникальный префикс классов: .tjc-
+   ========================================================================== */
+
+:root {
+  --tjc-ink: #0E0E11;
+  --tjc-ink-hi: #16171D;
+  --tjc-ink-card: #1B1C24;
+  --tjc-black: #000000;
+  --tjc-white: #FFFFFF;
+  --tjc-paper: #F5F5F7;
+  --tjc-silver: #B4B4B4;
+  --tjc-silver-hi: #D8D8DE;
+  --tjc-graphite: #3A3B42;
+  --tjc-red: #FC0304;
+  --tjc-red-dark: #C80002;
+  --tjc-red-soft: rgba(252, 3, 4, 0.14);
+  --tjc-line-dark: rgba(255, 255, 255, 0.11);
+  --tjc-line-light: rgba(14, 14, 17, 0.10);
+  --tjc-radius-lg: 22px;
+  --tjc-radius-md: 14px;
+  --tjc-radius-sm: 10px;
+  --tjc-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --tjc-font-sans: 'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --tjc-font-accent: 'Neucha', cursive, sans-serif;
+  --tjc-font-geo: 'Noto Serif Georgian', 'Sylfaen', serif;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html {
+  background-color: var(--tjc-ink);
+  color: var(--tjc-white);
+  font-family: var(--tjc-font-sans);
+  font-size: 16px;
+  line-height: 1.5;
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background-color: var(--tjc-paper);
+  color: var(--tjc-ink);
+  overflow-x: hidden;
+}
+
+img, svg {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button, input, select, textarea {
+  font: inherit;
+  color: inherit;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ── Шапка (4 ссылки в <nav>, 2 кнопки в <header>, компактная высота) ── */
+.tjc-hdr {
+  position: relative;
+  z-index: 30;
+  background-color: var(--tjc-ink);
+  color: var(--tjc-white);
+  border-bottom: 1px solid var(--tjc-line-dark);
+}
+
+.tjc-hdr__wrap {
+  max-width: 1360px;
+  margin: 0 auto;
+  padding: 10px 28px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.tjc-hdr__brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 44px;
+  min-width: 44px;
+  color: var(--tjc-white);
+}
+
+.tjc-hdr__logo {
+  width: 138px;
+  height: 42px;
+  flex-shrink: 0;
+}
+
+.tjc-hdr__modes {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px;
+  background: var(--tjc-ink-hi);
+  border: 1px solid var(--tjc-line-dark);
+  border-radius: var(--tjc-radius-sm);
+}
+
+.tjc-hdr__mode {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 0 10px;
+  border-radius: 8px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--tjc-silver-hi);
+  transition: background-color 0.22s var(--tjc-ease), color 0.22s var(--tjc-ease);
+}
+
+.tjc-hdr__mode:hover {
+  color: var(--tjc-white);
+  background-color: rgba(255, 255, 255, 0.08);
+}
+
+.tjc-hdr__mode--active {
+  background-color: var(--tjc-white);
+  color: var(--tjc-ink);
+}
+
+.tjc-hdr__nav {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.tjc-hdr__link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  min-width: 44px;
+  padding: 0 12px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--tjc-silver-hi);
+  border-radius: 8px;
+  transition: color 0.2s var(--tjc-ease), background-color 0.2s var(--tjc-ease);
+}
+
+.tjc-hdr__link:hover {
+  color: var(--tjc-white);
+  background-color: rgba(255, 255, 255, 0.07);
+}
+
+.tjc-hdr__actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.tjc-hdr-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  min-width: 44px;
+  padding: 0 16px;
+  border-radius: var(--tjc-radius-sm);
+  border: 1px solid var(--tjc-silver);
+  background-color: var(--tjc-ink-hi);
+  color: var(--tjc-white);
+  font-size: 0.88rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.22s var(--tjc-ease), border-color 0.22s var(--tjc-ease);
+}
+
+.tjc-hdr-btn:hover {
+  border-color: var(--tjc-white);
+  transform: translateY(-1px);
+}
+
+.tjc-hdr-btn--red {
+  border-color: var(--tjc-red);
+  background-color: var(--tjc-red);
+  background-image: linear-gradient(180deg, #FC0304 0%, #C90002 100%);
+  color: var(--tjc-white);
+}
+
+/* ── Первый экран: 38% левая колонка + 62% живой пульт подбора за 3 клика ── */
+.tjc-hero {
+  position: relative;
+  background-color: var(--tjc-ink);
+  background-image:
+    radial-gradient(640px circle at 82% 18%, rgba(252, 3, 4, 0.12), transparent 65%),
+    radial-gradient(520px circle at 14% 80%, rgba(180, 180, 180, 0.08), transparent 65%);
+  color: var(--tjc-white);
+  padding: 28px 0 36px;
+  border-bottom: 1px solid var(--tjc-line-dark);
+}
+
+.tjc-hero__wrap {
+  max-width: 1360px;
+  margin: 0 auto;
+  padding: 0 28px;
+  display: grid;
+  grid-template-columns: 0.64fr 1.06fr;
+  gap: 28px;
+  align-items: start;
+}
+
+.tjc-coord {
+  display: inline-block;
+  margin: 0 0 8px;
+  padding: 0 0 0 10px;
+  border-left: 2px solid var(--tjc-red);
+  border-radius: 0;
+  background: transparent;
+  color: var(--tjc-silver-hi);
+  font-family: var(--tjc-font-accent);
+  font-size: 0.98rem;
+  letter-spacing: 0.06em;
+}
+
+.tjc-hero__title {
+  margin: 0 0 12px;
+  font-size: clamp(1.95rem, 3.2vw, 2.95rem);
+  font-weight: 800;
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+  color: var(--tjc-white);
+}
+
+.tjc-hero__title em {
+  font-style: normal;
+  font-family: var(--tjc-font-accent);
+  color: var(--tjc-red);
+  font-weight: 400;
+}
+
+.tjc-hero__lead {
+  margin: 0 0 18px;
+  font-size: 1.02rem;
+  line-height: 1.5;
+  color: var(--tjc-silver-hi);
+  max-width: 46ch;
+}
+
+.tjc-hero__art {
+  background-color: var(--tjc-ink-hi);
+  border: 1px solid var(--tjc-line-dark);
+  border-radius: var(--tjc-radius-md);
+  padding: 14px;
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.38), inset 0 1px 0 rgba(255, 255, 255, 0.07);
+}
+
+.tjc-hero__svg {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+}
+
+.tjc-hero__status {
+  margin-top: 12px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding-top: 10px;
+  border-top: 1px solid var(--tjc-line-dark);
+  font-size: 0.86rem;
+  color: var(--tjc-silver-hi);
+}
+
+.tjc-hero__pulse {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 700;
+  color: var(--tjc-white);
+}
+
+.tjc-hero__dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background-color: var(--tjc-red);
+  box-shadow: 0 0 0 4px rgba(252, 3, 4, 0.24);
+  animation: tjcPulse 1.8s infinite ease-in-out;
+}
+
+/* ── Живой пульт подбора курса (60%+ ширины) ── */
+.tjc-console {
+  position: relative;
+  background-color: var(--tjc-white);
+  color: var(--tjc-ink);
+  border-radius: var(--tjc-radius-lg);
+  padding: 22px 24px;
+  box-shadow: 0 24px 56px rgba(0, 0, 0, 0.48);
+  border: 2px solid var(--tjc-ink);
+}
+
+.tjc-console__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding-bottom: 12px;
+  margin-bottom: 14px;
+  border-bottom: 1px solid var(--tjc-line-light);
+}
+
+.tjc-console__heading {
+  margin: 0;
+  font-size: 1.16rem;
+  font-weight: 800;
+  color: var(--tjc-ink);
+}
+
+.tjc-console__step {
+  font-family: var(--tjc-font-accent);
+  font-size: 1rem;
+  color: var(--tjc-red-dark);
+  font-weight: 700;
+}
+
+.tjc-console__group {
+  margin-bottom: 14px;
+}
+
+.tjc-console__label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 0.84rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--tjc-graphite);
+}
+
+.tjc-console__goals {
+  display: grid;
+  grid-template-columns: 1.06fr 0.94fr;
+  gap: 8px;
+}
+
+.tjc-console__formats {
+  display: grid;
+  grid-template-columns: 1.15fr 0.95fr 1.05fr;
+  gap: 8px;
+}
+
+.tjc-opt {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  min-height: 46px;
+  min-width: 44px;
+  padding: 8px 12px;
+  border-radius: var(--tjc-radius-sm);
+  border: 1.5px solid #D0D0D6;
+  background-color: var(--tjc-paper);
+  color: var(--tjc-ink);
+  font-size: 0.88rem;
+  font-weight: 700;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 0.2s var(--tjc-ease), background-color 0.2s var(--tjc-ease), transform 0.2s var(--tjc-ease);
+}
+
+.tjc-opt:hover {
+  border-color: var(--tjc-ink);
+  transform: translateY(-1px);
+}
+
+.tjc-opt--active {
+  background-color: var(--tjc-ink);
+  color: var(--tjc-white);
+  border-color: var(--tjc-red);
+  box-shadow: 0 6px 16px rgba(14, 14, 17, 0.18);
+}
+
+.tjc-opt__mark {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--tjc-silver);
+  flex-shrink: 0;
+}
+
+.tjc-opt--active .tjc-opt__mark {
+  background-color: var(--tjc-red);
+}
+
+.tjc-console__summary {
+  margin-top: 14px;
+  padding: 16px;
+  border-radius: var(--tjc-radius-md);
+  background-color: var(--tjc-ink);
+  color: var(--tjc-white);
+  display: grid;
+  grid-template-columns: 1.12fr 0.88fr;
+  gap: 14px;
+  align-items: center;
+}
+
+.tjc-console__course {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: var(--tjc-white);
+  margin: 0 0 4px;
+}
+
+.tjc-console__pack {
+  font-size: 0.88rem;
+  color: var(--tjc-silver-hi);
+  margin: 0;
+}
+
+.tjc-console__pricebox {
+  text-align: right;
+}
+
+.tjc-console__price {
+  display: block;
+  font-size: 1.65rem;
+  font-weight: 800;
+  line-height: 1.1;
+  color: var(--tjc-white);
+}
+
+.tjc-console__rub {
+  display: block;
+  margin-top: 3px;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--tjc-silver-hi);
+}
+
+.tjc-console__actions {
+  margin-top: 14px;
+  display: grid;
+  grid-template-columns: 0.92fr 1.08fr;
+  gap: 10px;
+}
+
+.tjc-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  min-width: 44px;
+  padding: 10px 16px;
+  border-radius: var(--tjc-radius-sm);
+  font-size: 0.92rem;
+  font-weight: 800;
+  cursor: pointer;
+  transition: transform 0.22s var(--tjc-ease), box-shadow 0.22s var(--tjc-ease);
+}
+
+.tjc-cta--ghost {
+  background-color: var(--tjc-paper);
+  color: var(--tjc-ink);
+  border: 1.5px solid var(--tjc-ink);
+}
+
+.tjc-cta--ghost:hover {
+  transform: translateY(-1px);
+  background-color: #EAEAEE;
+}
+
+.tjc-cta--primary {
+  border: 1.5px solid var(--tjc-red);
+  background-color: var(--tjc-red);
+  background-image: linear-gradient(180deg, #FC0304 0%, #C60002 100%);
+  color: var(--tjc-white);
+  box-shadow: 0 10px 24px rgba(252, 3, 4, 0.28);
+}
+
+.tjc-cta--primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 28px rgba(252, 3, 4, 0.36);
+}
+
+/* ── Панель быстрого переключения глав и отдельных страниц ── */
+.tjc-chapters {
+  max-width: 1360px;
+  margin: 20px auto 0;
+  padding: 0 28px;
+}
+
+.tjc-chapters__bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 10px 14px;
+  background-color: var(--tjc-ink-hi);
+  border: 1px solid var(--tjc-line-dark);
+  border-radius: var(--tjc-radius-md);
+}
+
+.tjc-chapters__tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.tjc-tab {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  min-width: 44px;
+  padding: 0 14px;
+  border-radius: 8px;
+  border: 1px solid var(--tjc-line-dark);
+  background-color: transparent;
+  color: var(--tjc-silver-hi);
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.2s var(--tjc-ease), color 0.2s var(--tjc-ease);
+}
+
+.tjc-tab:hover {
+  color: var(--tjc-white);
+  background-color: rgba(255, 255, 255, 0.08);
+}
+
+.tjc-tab--active {
+  background-color: var(--tjc-white);
+  color: var(--tjc-ink);
+  border-color: var(--tjc-white);
+}
+
+.tjc-chapters__pages {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.tjc-page-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  min-width: 44px;
+  padding: 0 12px;
+  border-radius: 8px;
+  background-color: rgba(252, 3, 4, 0.16);
+  border: 1px solid rgba(252, 3, 4, 0.45);
+  color: var(--tjc-white);
+  font-size: 0.83rem;
+  font-weight: 700;
+}
+
+.tjc-page-link:hover {
+  background-color: rgba(252, 3, 4, 0.28);
+}
+
+/* ── Общие секции и шапки разделов (H2 строго :first-child) ── */
+.tjc-sec {
+  padding: 56px 0;
+  border-bottom: 1px solid var(--tjc-line-light);
+}
+
+.tjc-sec--hidden {
+  display: none !important;
+}
+
+.tjc-sec--dark {
+  background-color: var(--tjc-ink);
+  color: var(--tjc-white);
+  border-bottom-color: var(--tjc-line-dark);
+}
+
+.tjc-sec__wrap {
+  max-width: 1360px;
+  margin: 0 auto;
+  padding: 0 28px;
+}
+
+.tjc-sec__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 28px;
+}
+
+.tjc-sec__title {
+  margin: 0;
+  font-size: clamp(1.65rem, 2.5vw, 2.3rem);
+  font-weight: 800;
+  line-height: 1.14;
+  letter-spacing: -0.02em;
+}
+
+.tjc-sec__idx {
+  margin: 0;
+  font-family: var(--tjc-font-accent);
+  font-size: 1.05rem;
+  color: var(--tjc-red-dark);
+  font-weight: 700;
+}
+
+.tjc-sec--dark .tjc-sec__idx {
+  color: var(--tjc-silver-hi);
+}
+
+/* ── Слой 4: Единственная карточка-фаворит с градиентной рамкой (RING_MAX = 1) ── */
+.tjc-featured {
+  position: relative;
+}
+
+.tjc-featured::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 2px;
+  background: linear-gradient(135deg, #FC0304 0%, #0E0E11 55%, #B4B4B4 100%);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+/* ── Секция 2: Тарифы и маршруты школы (асимметричная сетка + таблица) ── */
+.tjc-tariffs {
+  display: grid;
+  grid-template-columns: 1.18fr 0.94fr 0.88fr;
+  gap: 18px;
+  margin-bottom: 24px;
+}
+
+.tjc-card {
+  background-color: var(--tjc-white);
+  border: 1px solid var(--tjc-line-light);
+  border-radius: var(--tjc-radius-lg);
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 14px;
+  box-shadow: 0 12px 28px rgba(14, 14, 17, 0.06);
+  transition: transform 0.25s var(--tjc-ease), border-color 0.25s var(--tjc-ease);
+}
+
+.tjc-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--tjc-ink);
+}
+
+.tjc-card__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.tjc-card__tag {
+  font-family: var(--tjc-font-accent);
+  font-size: 0.96rem;
+  color: var(--tjc-red-dark);
+  font-weight: 700;
+}
+
+.tjc-card__price {
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: var(--tjc-ink);
+}
+
+.tjc-card__name {
+  margin: 6px 0;
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: var(--tjc-ink);
+}
+
+.tjc-card__desc {
+  margin: 0;
+  font-size: 0.93rem;
+  color: var(--tjc-graphite);
+}
+
+.tjc-card__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.tjc-card__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  min-width: 44px;
+  padding: 0 14px;
+  border-radius: var(--tjc-radius-sm);
+  border: 1.5px solid var(--tjc-ink);
+  background-color: var(--tjc-ink);
+  color: var(--tjc-white);
+  font-size: 0.86rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.tjc-card__more {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  min-width: 44px;
+  padding: 0 14px;
+  border-radius: var(--tjc-radius-sm);
+  border: 1.5px solid #C6C6CE;
+  background-color: var(--tjc-paper);
+  color: var(--tjc-ink);
+  font-size: 0.86rem;
+  font-weight: 700;
+}
+
+.tjc-table-wrap {
+  background-color: var(--tjc-white);
+  border: 1px solid var(--tjc-line-light);
+  border-radius: var(--tjc-radius-md);
+  overflow-x: auto;
+}
+
+.tjc-matrix {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 0.92rem;
+}
+
+div.tjc-matrix {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr 0.9fr;
+}
+
+.tjc-matrix__cell {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--tjc-line-light);
+}
+
+.tjc-matrix__head {
+  background-color: var(--tjc-ink);
+  color: var(--tjc-white);
+  font-weight: 700;
+}
+
+.tjc-matrix th,
+.tjc-matrix td {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--tjc-line-light);
+}
+
+.tjc-matrix th {
+  background-color: var(--tjc-ink);
+  color: var(--tjc-white);
+  font-weight: 700;
+}
+
+.tjc-matrix tr:last-child td {
+  border-bottom: 0;
+}
+
+/* ── Секция 3: Метод Тамары Кавтарадзе (фото со 2-й секции) ── */
+.tjc-method {
+  display: grid;
+  grid-template-columns: 0.88fr 1.12fr;
+  gap: 24px;
+  align-items: center;
+}
+
+.tjc-method__visual {
+  display: grid;
+  grid-template-columns: 1.12fr 0.88fr;
+  gap: 14px;
+  align-items: stretch;
+}
+
+.tjc-method__photo {
+  width: 100%;
+  height: 290px;
+  object-fit: cover;
+  border-radius: var(--tjc-radius-md);
+  border: 2px solid var(--tjc-ink);
+}
+
+.tjc-method__body {
+  background-color: var(--tjc-white);
+  border: 1px solid var(--tjc-line-light);
+  border-radius: var(--tjc-radius-lg);
+  padding: 24px;
+}
+
+.tjc-method__headline {
+  margin: 0 0 10px;
+  font-size: 1.28rem;
+  font-weight: 800;
+  color: var(--tjc-ink);
+}
+
+.tjc-method__text {
+  margin: 0 0 14px;
+  font-size: 0.96rem;
+  color: var(--tjc-graphite);
+}
+
+.tjc-method__list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  grid-template-columns: 1.08fr 0.92fr;
+  gap: 10px;
+}
+
+.tjc-method__fact {
+  padding: 12px 14px;
+  background-color: var(--tjc-paper);
+  border-left: 3px solid var(--tjc-red);
+  border-radius: 8px;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--tjc-ink);
+}
+
+/* ── Секция 4: Квест с грузинским алфавитом (#alphabet) на графите #0E0E11 ── */
+.tjc-quest {
+  display: grid;
+  grid-template-columns: 0.92fr 1.08fr;
+  gap: 24px;
+  align-items: start;
+}
+
+.tjc-board {
+  background-color: var(--tjc-ink-hi);
+  border: 1px solid var(--tjc-line-dark);
+  border-radius: var(--tjc-radius-lg);
+  padding: 22px;
+  box-shadow: 0 20px 44px rgba(0, 0, 0, 0.45);
+}
+
+.tjc-board__rounds {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.tjc-round-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  min-width: 44px;
+  padding: 0 12px;
+  border-radius: 8px;
+  border: 1px solid var(--tjc-line-dark);
+  background-color: var(--tjc-ink-card);
+  color: var(--tjc-silver-hi);
+  font-size: 0.84rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.tjc-round-btn--active {
+  background-color: var(--tjc-red);
+  background-image: linear-gradient(180deg, #FC0304 0%, #C60002 100%);
+  color: var(--tjc-white);
+  border-color: var(--tjc-red);
+}
+
+.tjc-board__target {
+  padding: 14px;
+  border-radius: var(--tjc-radius-md);
+  background-color: var(--tjc-ink);
+  border: 1px solid var(--tjc-line-dark);
+  margin-bottom: 14px;
+}
+
+.tjc-board__word {
+  font-family: var(--tjc-font-geo);
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--tjc-white);
+  letter-spacing: 0.04em;
+}
+
+.tjc-board__meaning {
+  display: block;
+  margin-top: 4px;
+  font-size: 0.9rem;
+  color: var(--tjc-silver-hi);
+}
+
+.tjc-board__slots {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 14px 0;
+}
+
+.tjc-slot {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 46px;
+  min-height: 46px;
+  padding: 0 10px;
+  border-radius: 10px;
+  border: 1.5px dashed var(--tjc-silver);
+  background-color: var(--tjc-ink-card);
+  font-family: var(--tjc-font-geo);
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--tjc-white);
+}
+
+.tjc-slot--done {
+  border-style: solid;
+  border-color: var(--tjc-white);
+  background-color: var(--tjc-white);
+  color: var(--tjc-ink);
+}
+
+.tjc-slot--next {
+  border-style: solid;
+  border-color: var(--tjc-red);
+  box-shadow: 0 0 0 3px rgba(252, 3, 4, 0.28);
+}
+
+.tjc-board__footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding-top: 12px;
+  border-top: 1px solid var(--tjc-line-dark);
+}
+
+.tjc-board__score {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--tjc-silver-hi);
+}
+
+.tjc-board__reset {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  min-width: 44px;
+  padding: 0 14px;
+  border-radius: 8px;
+  border: 1px solid var(--tjc-silver);
+  background-color: transparent;
+  color: var(--tjc-white);
+  font-size: 0.84rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.tjc-letters {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+
+.tjc-letter {
+  position: relative;
+  min-height: 112px;
+  min-width: 44px;
+  padding: 12px 10px;
+  border-radius: var(--tjc-radius-md);
+  border: 1.5px solid var(--tjc-line-dark);
+  background-color: var(--tjc-white);
+  color: var(--tjc-ink);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  text-align: center;
+  cursor: pointer;
+  transition: transform 0.24s var(--tjc-ease), border-color 0.24s var(--tjc-ease), box-shadow 0.24s var(--tjc-ease);
+}
+
+.tjc-letter:hover {
+  transform: translateY(-3px);
+}
+
+.tjc-letter--target {
+  border-color: var(--tjc-red);
+  box-shadow: 0 0 0 3px rgba(252, 3, 4, 0.35), 0 12px 24px rgba(252, 3, 4, 0.22);
+  animation: tjcTargetGlow 1.5s infinite ease-in-out;
+}
+
+.tjc-letter__char {
+  font-family: var(--tjc-font-geo);
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: 1.05;
+  color: var(--tjc-ink);
+}
+
+.tjc-letter--target .tjc-letter__char {
+  color: var(--tjc-red);
+}
+
+.tjc-letter__sound {
+  font-family: var(--tjc-font-accent);
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: var(--tjc-red-dark);
+}
+
+.tjc-letter__word {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--tjc-graphite);
+}
+
+/* ── Секция 5: Преподаватели-билингвы (строго через <dl class="tjc-mentors">) ── */
+.tjc-mentors {
+  margin: 0;
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  gap: 16px;
+}
+
+.tjc-mentors__item {
+  background-color: var(--tjc-white);
+  border: 1px solid var(--tjc-line-light);
+  border-radius: var(--tjc-radius-md);
+  padding: 16px;
+  display: grid;
+  grid-template-columns: 84px 1fr;
+  gap: 16px;
+  align-items: center;
+}
+
+.tjc-mentors__avatar {
+  width: 84px;
+  height: 84px;
+  border-radius: 14px;
+  object-fit: cover;
+  border: 2px solid var(--tjc-ink);
+}
+
+.tjc-mentors__name {
+  margin: 0 0 4px;
+  font-size: 1.08rem;
+  font-weight: 800;
+  color: var(--tjc-ink);
+}
+
+.tjc-mentors__bio {
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--tjc-graphite);
+}
+
+/* ── Секция 6: Финальная запись (<form> + <ul> без <dl>) ── */
+.tjc-enroll {
+  display: grid;
+  grid-template-columns: 1.08fr 0.92fr;
+  gap: 24px;
+  align-items: start;
+}
+
+.tjc-form {
+  background-color: var(--tjc-white);
+  border: 2px solid var(--tjc-ink);
+  border-radius: var(--tjc-radius-lg);
+  padding: 24px;
+  color: var(--tjc-ink);
+}
+
+.tjc-form__preset {
+  margin-bottom: 14px;
+  padding: 12px 14px;
+  border-radius: var(--tjc-radius-sm);
+  background-color: var(--tjc-ink);
+  color: var(--tjc-white);
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.tjc-form__gift {
+  margin-bottom: 14px;
+  padding: 10px 14px;
+  border-radius: var(--tjc-radius-sm);
+  background-color: #FFF2F2;
+  border: 1.5px solid var(--tjc-red);
+  color: var(--tjc-ink);
+  font-size: 0.88rem;
+  font-weight: 700;
+}
+
+.tjc-form__row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.tjc-form__field {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin-bottom: 12px;
+}
+
+.tjc-form__label {
+  font-size: 0.84rem;
+  font-weight: 700;
+  color: var(--tjc-ink);
+}
+
+.tjc-form__input,
+.tjc-form__select {
+  min-height: 46px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1.5px solid #C4C4CC;
+  background-color: var(--tjc-paper);
+  color: var(--tjc-ink);
+  font-size: 0.94rem;
+}
+
+.tjc-form__consent {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 44px;
+  margin: 10px 0 14px;
+  font-size: 0.86rem;
+  color: var(--tjc-graphite);
+  cursor: pointer;
+}
+
+.tjc-form__check {
+  width: 20px;
+  height: 20px;
+  accent-color: var(--tjc-red);
+  flex-shrink: 0;
+}
+
+.tjc-form__submit {
+  width: 100%;
+  min-height: 48px;
+  padding: 12px 18px;
+  border-radius: var(--tjc-radius-sm);
+  border: 1.5px solid var(--tjc-red);
+  background-color: var(--tjc-red);
+  background-image: linear-gradient(180deg, #FC0304 0%, #C60002 100%);
+  color: var(--tjc-white);
+  font-size: 0.96rem;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.tjc-form__submit:disabled {
+  background-image: none;
+  background-color: #DCDCE2;
+  border-color: #C4C4CC;
+  color: #555660;
+  cursor: not-allowed;
+}
+
+.tjc-form__ok {
+  margin-top: 12px;
+  padding: 12px;
+  border-radius: 8px;
+  background-color: var(--tjc-ink);
+  color: var(--tjc-white);
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.tjc-places {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.tjc-places__item {
+  background-color: var(--tjc-white);
+  border: 1px solid var(--tjc-line-light);
+  border-radius: var(--tjc-radius-md);
+  padding: 18px;
+  color: var(--tjc-ink);
+}
+
+.tjc-places__city {
+  display: block;
+  font-size: 1.06rem;
+  font-weight: 800;
+  margin-bottom: 4px;
+}
+
+.tjc-places__addr {
+  display: block;
+  font-size: 0.92rem;
+  color: var(--tjc-graphite);
+}
+
+.tjc-places__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.tjc-places__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  min-width: 44px;
+  padding: 0 14px;
+  border-radius: 8px;
+  background-color: var(--tjc-ink);
+  color: var(--tjc-white);
+  font-size: 0.86rem;
+  font-weight: 700;
+}
+
+/* ── Выдвижная шторка подробной программы курса (Drawer) ── */
+.tjc-drawer {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  background-color: rgba(14, 14, 17, 0.72);
+  display: flex;
+  justify-content: flex-end;
+}
+
+.tjc-drawer[hidden] {
+  display: none !important;
+}
+
+.tjc-drawer__panel {
+  width: min(520px, 100%);
+  height: 100%;
+  background-color: var(--tjc-white);
+  color: var(--tjc-ink);
+  padding: 24px;
+  overflow-y: auto;
+  box-shadow: -16px 0 44px rgba(0, 0, 0, 0.45);
+}
+
+.tjc-drawer__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--tjc-line-light);
+  margin-bottom: 16px;
+}
+
+.tjc-drawer__title {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 800;
+}
+
+.tjc-drawer__close {
+  min-width: 44px;
+  min-height: 44px;
+  border-radius: 8px;
+  border: 1.5px solid var(--tjc-ink);
+  background-color: var(--tjc-paper);
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.tjc-drawer__list {
+  margin: 14px 0;
+  padding-left: 18px;
+  color: var(--tjc-graphite);
+}
+
+.tjc-drawer__list li {
+  margin-bottom: 8px;
+}
+
+/* ── Подвал: строго <p>, <small> и <a> (отпечаток p-small-a) ── */
+.tjc-foot {
+  background-color: var(--tjc-ink);
+  color: var(--tjc-silver-hi);
+  padding: 24px 28px;
+  border-top: 1px solid var(--tjc-line-dark);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.tjc-foot__line {
+  margin: 0;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--tjc-white);
+}
+
+.tjc-foot__legal {
+  font-size: 0.84rem;
+  color: var(--tjc-silver-hi);
+}
+
+.tjc-foot__top {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  min-width: 44px;
+  padding: 0 12px;
+  margin-left: 8px;
+  border-radius: 8px;
+  border: 1px solid var(--tjc-line-dark);
+  color: var(--tjc-white);
+  font-weight: 700;
+}
+
+@keyframes tjcPulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.25); opacity: 0.72; }
+}
+
+@keyframes tjcTargetGlow {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-3px); }
+}
+
+/* ── Адаптив для планшетов и телефонов (HOLE_PX <= 72 на <= 640px) ── */
+@media (max-width: 1024px) {
+  .tjc-hdr__nav {
+    display: none;
+  }
+  .tjc-hero__wrap,
+  .tjc-method,
+  .tjc-quest,
+  .tjc-enroll {
+    grid-template-columns: 1fr;
+  }
+  .tjc-tariffs {
+    grid-template-columns: 1fr 1fr;
+  }
+  .tjc-mentors {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 680px) {
+  .tjc-hdr__wrap {
+    padding: 6px 14px;
+    gap: 8px;
+  }
+  .tjc-hdr__logo {
+    width: 112px;
+    height: 36px;
+  }
+  .tjc-hdr__actions .tjc-hdr-btn:first-child {
+    display: none;
+  }
+  .tjc-hero {
+    padding: 12px 0 24px;
+  }
+  .tjc-hero__wrap,
+  .tjc-sec__wrap,
+  .tjc-chapters {
+    padding: 0 14px;
+  }
+  .tjc-coord {
+    margin: 0 0 4px;
+    font-size: 0.82rem;
+  }
+  .tjc-hero__title {
+    font-size: 1.68rem;
+    margin-bottom: 8px;
+  }
+  .tjc-console {
+    padding: 16px;
+  }
+  .tjc-console__goals,
+  .tjc-console__formats,
+  .tjc-console__summary,
+  .tjc-console__actions,
+  .tjc-tariffs,
+  .tjc-method__visual,
+  .tjc-method__list,
+  .tjc-form__row {
+    grid-template-columns: 1fr;
+  }
+  .tjc-console__pricebox {
+    text-align: left;
+  }
+  .tjc-letters {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .tjc-sec {
+    padding: 36px 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

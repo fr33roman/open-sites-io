@@ -1,0 +1,1593 @@
+/* ==========================================================================
+   TAMARJOBA — ПРЕСЕТ А · КЛУБНОЕ ДОСЬЕ И ЖИВОЙ АЛФАВИТ (styles.css)
+   Строгий брендбук клиента: #FC0304 (алый гранат), #000000 (тушь),
+   #B4B4B4 (серебро), #FFFFFF / #F6F6F7 / #EDEDEF (5 слоёв глубины)
+   Шрифты: Open Sans (400,600,700,800), Neucha (400), Noto Serif Georgian / Sylfaen
+   Уникальный префикс всех классов: .tja-
+   ========================================================================== */
+
+:root {
+  /* Слой 0: Среда (Строго по брендбуку стр. 5) */
+  --bg: #F6F6F7;
+  --bg-deep: #EDEDEF;
+  --panel: #FFFFFF;
+  --panel-alt: #F6F6F7;
+  --ink: #000000;
+  --ink-soft: #262629;
+  --silver: #B4B4B4;
+  --silver-dark: #58585E;
+  --red: #FC0304;
+  --red-dark: #CC0001;
+  --red-soft: rgba(252, 3, 4, 0.08);
+
+  /* Слой 1: Архитектурные линии */
+  --line: rgba(0, 0, 0, 0.10);
+  --line-strong: rgba(0, 0, 0, 0.18);
+  --line-red: rgba(252, 3, 4, 0.38);
+
+  /* Типографика из брендбука (стр. 4) */
+  --font-main: 'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-hand: 'Neucha', cursive;
+  --font-geo: 'Noto Serif Georgian', 'Sylfaen', Georgia, serif;
+
+  /* Геометрия и пружины */
+  --radius-xl: 28px;
+  --radius-lg: 22px;
+  --radius-md: 16px;
+  --radius-pill: 999px;
+  --ease-spring: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-snappy: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html {
+  background-color: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-main);
+  font-size: 16px;
+  line-height: 1.5;
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body.tja-body {
+  margin: 0;
+  min-height: 100vh;
+  background-color: var(--bg);
+  background-image:
+    radial-gradient(680px circle at 12% 8%, rgba(252, 3, 4, 0.05), transparent 65%),
+    radial-gradient(640px circle at 88% 22%, rgba(0, 0, 0, 0.035), transparent 65%);
+  color: var(--ink);
+  overflow-x: hidden;
+}
+
+body.tja-body.is-modal-open {
+  overflow: hidden;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button, input, select {
+  font: inherit;
+  color: inherit;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ==========================================================================
+   5 СЛОЁВ ГЛУБИНЫ: СЛОЙ 2 (ТОЛЩИНА МАТЕРИАЛА) + СЛОЙ 3 (ОТКЛИК СВЕТА)
+   ========================================================================== */
+.tja-spot {
+  position: relative;
+  background-color: var(--panel);
+  background-image: radial-gradient(
+    420px circle at var(--mx, 50%) var(--my, 0%),
+    rgba(252, 3, 4, 0.07),
+    transparent 65%
+  );
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  box-shadow:
+    0 16px 38px rgba(0, 0, 0, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  transition:
+    border-color 0.26s var(--ease-spring),
+    transform 0.26s var(--ease-spring),
+    box-shadow 0.26s var(--ease-spring);
+}
+
+.tja-spot:hover {
+  border-color: var(--line-red);
+  box-shadow:
+    0 20px 44px rgba(0, 0, 0, 0.09),
+    inset 0 1px 0 rgba(255, 255, 255, 0.95);
+}
+
+/* Слой 4: РОВНО ОДНА карточка-фаворит с градиентной маской-рамкой (RING_MAX <= 1) */
+.tja-card--featured {
+  position: relative;
+}
+
+.tja-card--featured::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 2px;
+  background: linear-gradient(135deg, #FC0304 0%, #000000 52%, transparent 95%);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+/* ==========================================================================
+   ШАПКА СТРАНИЦЫ (header_sig: hdr|nav3|btn1)
+   ========================================================================== */
+.tja-header {
+  position: sticky;
+  top: 0;
+  z-index: 60;
+  background: rgba(255, 255, 255, 0.94);
+  border-bottom: 1px solid var(--line);
+}
+
+.tja-header__inner {
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 8px 24px;
+  min-height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.tja-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 44px;
+  flex-shrink: 0;
+}
+
+.tja-brand__logo {
+  height: 42px;
+  width: auto;
+}
+
+.tja-nav {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.tja-nav__link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 8px 14px;
+  border-radius: var(--radius-pill);
+  font-size: 0.93rem;
+  font-weight: 700;
+  color: var(--ink);
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.tja-nav__link:hover {
+  background-color: var(--bg-deep);
+  color: var(--red);
+}
+
+.tja-header__right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.tja-presets {
+  display: inline-flex;
+  align-items: center;
+  background: var(--bg-deep);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-pill);
+  padding: 2px;
+}
+
+.tja-preset {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 0 10px;
+  border-radius: var(--radius-pill);
+  font-size: 0.82rem;
+  font-weight: 800;
+  color: var(--ink-soft);
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.tja-preset.is-current {
+  background: var(--ink);
+  color: #FFFFFF;
+}
+
+.tja-preset:hover:not(.is-current) {
+  color: var(--red);
+}
+
+/* Кнопки (только 1 элемент имеет слово btn в классе внутри <header> ради btn1!) */
+.tja-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 46px;
+  padding: 10px 22px;
+  border-radius: var(--radius-pill);
+  border: 1.5px solid transparent;
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition:
+    transform 0.22s var(--ease-spring),
+    background-color 0.22s ease,
+    border-color 0.22s ease,
+    box-shadow 0.22s ease;
+}
+
+.tja-btn--red,
+.tja-cta--red {
+  background-color: var(--red);
+  background-image: linear-gradient(180deg, #FC0304 0%, #D90001 100%);
+  color: #FFFFFF;
+  border-color: var(--red);
+  box-shadow: 0 10px 24px rgba(252, 3, 4, 0.24);
+}
+
+.tja-btn--red:hover,
+.tja-cta--red:hover {
+  background-color: var(--red-dark);
+  border-color: var(--red-dark);
+  transform: translateY(-2px);
+}
+
+.tja-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 48px;
+  padding: 12px 24px;
+  border-radius: var(--radius-pill);
+  border: 1.5px solid var(--ink);
+  font-size: 0.96rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition:
+    transform 0.22s var(--ease-spring),
+    background-color 0.22s ease,
+    color 0.22s ease,
+    border-color 0.22s ease;
+}
+
+.tja-cta--red {
+  border-color: var(--red);
+}
+
+.tja-cta--ghost {
+  background-color: #FFFFFF;
+  color: var(--ink);
+  border-color: var(--ink);
+}
+
+.tja-cta--ghost:hover {
+  background-color: var(--ink);
+  color: #FFFFFF;
+  transform: translateY(-2px);
+}
+
+.tja-cta--dark {
+  background-color: var(--ink);
+  color: #FFFFFF;
+  border-color: var(--ink);
+}
+
+.tja-cta--dark:hover {
+  background-color: var(--red);
+  border-color: var(--red);
+  transform: translateY(-2px);
+}
+
+.tja-cta:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* ==========================================================================
+   ПЕРВЫЙ ЭКРАН С ДРЕЙФУЮЩИМИ БУКВАМИ И ИЛЛЮСТРАЦИЕЙ БРЕНДБУКА
+   ========================================================================== */
+.tja-main {
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 0 24px 64px;
+}
+
+.tja-hero {
+  position: relative;
+  padding: 28px 0 36px;
+  overflow: hidden;
+}
+
+.tja-drift-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.tja-drift-char {
+  position: absolute;
+  font-family: var(--font-geo);
+  font-size: clamp(2.8rem, 5vw, 4.8rem);
+  font-weight: 700;
+  color: rgba(0, 0, 0, 0.045);
+  user-select: none;
+  animation: tjaDrift 18s ease-in-out infinite alternate;
+}
+
+.tja-drift-char--red {
+  color: rgba(252, 3, 4, 0.075);
+}
+
+.tja-drift-char:nth-child(1) { top: 6%; left: 4%; animation-duration: 14s; }
+.tja-drift-char:nth-child(2) { top: 18%; left: 44%; animation-duration: 19s; }
+.tja-drift-char:nth-child(3) { top: 68%; left: 8%; animation-duration: 16s; }
+.tja-drift-char:nth-child(4) { top: 10%; right: 6%; animation-duration: 21s; }
+.tja-drift-char:nth-child(5) { top: 56%; left: 48%; animation-duration: 17s; }
+.tja-drift-char:nth-child(6) { top: 76%; right: 12%; animation-duration: 22s; }
+.tja-drift-char:nth-child(7) { top: 38%; left: 26%; animation-duration: 15s; }
+
+@keyframes tjaDrift {
+  0% { transform: translate3d(0, 0, 0) rotate(-4deg); }
+  100% { transform: translate3d(14px, -18px, 0) rotate(5deg); }
+}
+
+.tja-hero__grid {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: minmax(0, 1.12fr) minmax(0, 0.88fr);
+  gap: 24px;
+  align-items: stretch;
+}
+
+.tja-hero__copy {
+  min-width: 0;
+  padding: 34px 36px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 18px;
+}
+
+/* Строгая координата без таблетки (border-left: 3px solid #FC0304; border-radius: 0) */
+.tja-coord {
+  display: inline-block;
+  margin: 0;
+  padding: 2px 0 2px 12px;
+  border-left: 3px solid var(--red);
+  border-radius: 0;
+  background: transparent;
+  color: var(--ink);
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.tja-h1 {
+  margin: 0;
+  font-size: clamp(2.1rem, 4.1vw, 3.35rem);
+  font-weight: 800;
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+
+/* Единственный <em> на всю страницу в H1 рукописным шрифтом Neucha (ACCENT_MAX <= 1) */
+.tja-h1 em {
+  font-family: var(--font-hand);
+  font-style: normal;
+  font-weight: 400;
+  color: var(--red);
+  font-size: 1.12em;
+  padding: 0 4px;
+}
+
+.tja-lead {
+  margin: 0;
+  font-size: 1.06rem;
+  font-weight: 600;
+  color: var(--ink-soft);
+  max-width: 54ch;
+}
+
+/* Интерактивная кнопка-приветствие გამარჯობა */
+.tja-hello-btn {
+  align-self: flex-start;
+  max-width: 100%;
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  min-height: 50px;
+  padding: 8px 14px;
+  background: var(--bg);
+  border: 1.5px solid var(--ink);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: border-color 0.2s ease, transform 0.2s var(--ease-spring);
+}
+
+.tja-hello-btn:hover {
+  border-color: var(--red);
+  transform: translateY(-2px);
+}
+
+.tja-hello-btn__geo {
+  font-family: var(--font-geo);
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--red);
+}
+
+.tja-hello-btn__sep {
+  color: var(--silver-dark);
+  font-weight: 700;
+}
+
+.tja-hello-btn__tr {
+  font-family: var(--font-hand);
+  font-size: 1.12rem;
+  color: var(--ink);
+  letter-spacing: 0.02em;
+}
+
+.tja-hello-btn__sound {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--ink);
+  color: #FFFFFF;
+  font-size: 0.78rem;
+}
+
+.tja-hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+/* 4 наклоняющиеся плашки цифр (НЕ 3, чтобы исключить штамп 3 статистик) */
+.tja-metrics {
+  display: grid;
+  grid-template-columns: 1.05fr 1.15fr 0.9fr 1.1fr;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+.tja-metric {
+  padding: 12px 14px;
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  transition: transform 0.24s var(--ease-spring), border-color 0.24s ease;
+}
+
+.tja-metric:hover {
+  border-color: var(--red);
+  transform: rotate(-1.5deg) translateY(-3px);
+}
+
+.tja-metric__val {
+  display: block;
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: var(--ink);
+}
+
+.tja-metric__lbl {
+  display: block;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--silver-dark);
+  margin-top: 2px;
+}
+
+/* Правая колонка Hero: фирменная иллюстрация Тамары в арочной раме */
+.tja-hero__stage {
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 14px;
+  background: var(--panel);
+}
+
+.tja-arch-frame {
+  position: relative;
+  border-radius: 140px 140px 20px 20px;
+  overflow: hidden;
+  border: 2px solid var(--ink);
+  background: #FFFFFF;
+  aspect-ratio: 4 / 3.4;
+}
+
+.tja-arch-frame__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.tja-ig-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  min-height: 48px;
+  padding: 10px 16px;
+  background: var(--ink);
+  color: #FFFFFF;
+  border-radius: var(--radius-md);
+  font-size: 0.9rem;
+  font-weight: 700;
+  transition: background-color 0.2s ease, transform 0.2s var(--ease-spring);
+}
+
+.tja-ig-badge:hover {
+  background: var(--red);
+  transform: translateY(-2px);
+}
+
+.tja-ig-badge__dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--red);
+  box-shadow: 0 0 0 4px rgba(252, 3, 4, 0.28);
+  animation: tjaPulse 2s infinite;
+}
+
+.tja-ig-badge:hover .tja-ig-badge__dot {
+  background: #FFFFFF;
+}
+
+@keyframes tjaPulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.25); opacity: 0.75; }
+}
+
+/* ==========================================================================
+   ОБЩИЕ СТИЛИ СЕКЦИЙ (H2 всегда :first-child ради KICKER_RUN == 0)
+   ========================================================================== */
+.tja-sec {
+  padding: 44px 0 12px;
+}
+
+.tja-sec__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 24px;
+  padding-bottom: 12px;
+  border-bottom: 2px solid var(--ink);
+}
+
+.tja-h2 {
+  margin: 0;
+  font-size: clamp(1.65rem, 3vw, 2.35rem);
+  font-weight: 800;
+  line-height: 1.12;
+  letter-spacing: -0.015em;
+  color: var(--ink);
+}
+
+.tja-sec__tag {
+  font-family: var(--font-hand);
+  font-size: 1.18rem;
+  color: var(--ink);
+  border-bottom: 2px solid var(--red);
+  padding-bottom: 2px;
+  letter-spacing: 0.03em;
+}
+
+/* ==========================================================================
+   СЕКЦИЯ 2: ИНТЕРАКТИВНЫЙ АЛФАВИТ (3D КАРТОЧКИ + СБОРКА გამარჯობა)
+   ========================================================================== */
+.tja-alpha-layout {
+  display: grid;
+  grid-template-columns: 1.18fr 0.82fr;
+  gap: 22px;
+  align-items: stretch;
+}
+
+.tja-alpha-deck {
+  padding: 24px;
+}
+
+.tja-alpha-deck__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.tja-hand-label {
+  font-family: var(--font-hand);
+  font-size: 1.2rem;
+  color: var(--ink);
+}
+
+.tja-alpha-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+
+.tja-letter-card {
+  position: relative;
+  height: 132px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  perspective: 900px;
+  cursor: pointer;
+}
+
+.tja-letter-card.is-pulse::after {
+  content: "";
+  position: absolute;
+  inset: -4px;
+  border-radius: 18px;
+  border: 2px solid var(--red);
+  animation: tjaRingPulse 1.8s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes tjaRingPulse {
+  0%, 100% { opacity: 0.9; transform: scale(1); }
+  50% { opacity: 0.25; transform: scale(1.04); }
+}
+
+.tja-letter-card__inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: transform 0.52s var(--ease-spring);
+}
+
+.tja-letter-card.is-flipped .tja-letter-card__inner {
+  transform: rotateY(180deg);
+}
+
+.tja-letter-card__face {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  border-radius: var(--radius-md);
+  border: 1.5px solid var(--ink);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+}
+
+.tja-letter-card__front {
+  background: #FFFFFF;
+  background-image: linear-gradient(180deg, #FFFFFF 0%, #F6F6F7 100%);
+  color: var(--ink);
+}
+
+.tja-letter-card:hover .tja-letter-card__front {
+  border-color: var(--red);
+}
+
+.tja-letter-card__glyph {
+  font-family: var(--font-geo);
+  font-size: 2.5rem;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--ink);
+}
+
+.tja-letter-card__sound {
+  margin-top: 8px;
+  font-size: 0.84rem;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.tja-letter-card__back {
+  background: var(--ink);
+  background-image: linear-gradient(180deg, #18181B 0%, #000000 100%);
+  color: #FFFFFF;
+  border-color: var(--red);
+  transform: rotateY(180deg);
+  text-align: center;
+}
+
+.tja-letter-card__word {
+  font-family: var(--font-geo);
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #FFFFFF;
+}
+
+.tja-letter-card__read {
+  margin-top: 4px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--red);
+}
+
+.tja-letter-card__mean {
+  margin-top: 2px;
+  font-size: 0.78rem;
+  color: #EDEDEF;
+}
+
+/* Часть 2: Мини-игра сборки слова გამარჯობა */
+.tja-word-game {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 16px;
+  background: var(--ink);
+  color: #FFFFFF;
+  border-radius: var(--radius-lg);
+  border: 2px solid var(--ink);
+}
+
+.tja-word-game__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.tja-word-game__title {
+  margin: 0;
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: #FFFFFF;
+}
+
+.tja-word-game__reset {
+  min-height: 44px;
+  padding: 6px 14px;
+  border-radius: var(--radius-pill);
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  background: rgba(255, 255, 255, 0.08);
+  color: #FFFFFF;
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.tja-word-game__reset:hover {
+  border-color: var(--red);
+  background: var(--red);
+}
+
+.tja-slots {
+  display: grid;
+  grid-template-columns: repeat(9, 1fr);
+  gap: 6px;
+}
+
+.tja-slot {
+  height: 46px;
+  border-radius: 10px;
+  border: 1.5px dashed rgba(255, 255, 255, 0.35);
+  background: rgba(255, 255, 255, 0.05);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-geo);
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #FFFFFF;
+  transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.2s var(--ease-spring);
+}
+
+.tja-slot.is-filled {
+  border-style: solid;
+  border-color: var(--red);
+  background: var(--red);
+  transform: scale(1.04);
+}
+
+.tja-tray {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.tja-chip {
+  min-width: 46px;
+  min-height: 46px;
+  padding: 0 12px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(255, 255, 255, 0.35);
+  background: #1A1A1D;
+  color: #FFFFFF;
+  font-family: var(--font-geo);
+  font-size: 1.25rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.2s var(--ease-spring), border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.tja-chip.is-next {
+  border-color: var(--red);
+  box-shadow: 0 0 0 3px rgba(252, 3, 4, 0.35);
+}
+
+.tja-chip.is-used {
+  opacity: 0.22;
+  pointer-events: none;
+}
+
+.tja-chip.is-wrong {
+  animation: tjaShake 0.32s ease;
+  border-color: var(--red);
+}
+
+@keyframes tjaShake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
+}
+
+.tja-word-game__win {
+  padding: 14px;
+  border-radius: var(--radius-md);
+  background: rgba(252, 3, 4, 0.16);
+  border: 1px solid var(--red);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.tja-word-game__win[hidden] {
+  display: none;
+}
+
+/* ==========================================================================
+   СЕКЦИЯ 3: КОМПАКТНАЯ ВИТРИНА 6 НАПРАВЛЕНИЙ С ОТКРЫВАЮЩИМИСЯ ДОСЬЕ
+   Асимметричная сетка 1.15fr 0.95fr 0.9fr (GRID3_MAX <= 1)
+   ========================================================================== */
+.tja-courses-grid {
+  display: grid;
+  grid-template-columns: 1.15fr 0.95fr 0.9fr;
+  gap: 18px;
+}
+
+.tja-course-card {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.tja-course-card__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.tja-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  border-radius: 6px;
+  background: var(--bg-deep);
+  color: var(--ink);
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.tja-badge--red {
+  background: var(--red);
+  background-image: linear-gradient(180deg, #FC0304 0%, #D90001 100%);
+  color: #FFFFFF;
+}
+
+.tja-course-card__price {
+  font-size: 1.18rem;
+  font-weight: 800;
+  color: var(--red);
+}
+
+.tja-h3 {
+  margin: 0;
+  font-size: 1.24rem;
+  font-weight: 800;
+  line-height: 1.22;
+  color: var(--ink);
+}
+
+.tja-course-card__p {
+  margin: 0;
+  font-size: 0.92rem;
+  color: var(--ink-soft);
+}
+
+.tja-course-card__Trigger {
+  width: 100%;
+  min-height: 46px;
+  padding: 10px 16px;
+  border-radius: var(--radius-md);
+  border: 1.5px solid var(--ink);
+  background: #FFFFFF;
+  color: var(--ink);
+  font-size: 0.88rem;
+  font-weight: 800;
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.tja-course-card__Trigger:hover {
+  background: var(--ink);
+  color: #FFFFFF;
+  border-color: var(--ink);
+}
+
+.tja-card--featured .tja-course-card__Trigger {
+  background: var(--red);
+  background-image: linear-gradient(180deg, #FC0304 0%, #D90001 100%);
+  color: #FFFFFF;
+  border-color: var(--red);
+}
+
+.tja-card--featured .tja-course-card__Trigger:hover {
+  background: var(--ink);
+  border-color: var(--ink);
+}
+
+/* Компактная сводная таблица прайса для мгновенного сравнения */
+.tja-price-strip {
+  margin-top: 20px;
+  padding: 18px 22px;
+  overflow-x: auto;
+}
+
+.tja-price-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+.tja-price-table th,
+.tja-price-table td {
+  padding: 10px 12px;
+  text-align: left;
+  border-bottom: 1px solid var(--line);
+}
+
+.tja-price-table th {
+  font-weight: 800;
+  color: var(--ink);
+}
+
+.tja-price-table td:last-child {
+  font-weight: 800;
+  color: var(--red);
+  white-space: nowrap;
+}
+
+/* ==========================================================================
+   СЕКЦИЯ 4: ТАМАРА КАВТАРАДЗЕ, 8 ПРЕПОДАВАТЕЛЕЙ (<ol><li>) И КАРУСЕЛЬ ОТЗЫВОВ
+   ========================================================================== */
+.tja-team-top {
+  display: grid;
+  grid-template-columns: 0.92fr 1.08fr;
+  gap: 20px;
+  margin-bottom: 22px;
+}
+
+.tja-founder {
+  padding: 22px;
+  display: grid;
+  grid-template-columns: 148px 1fr;
+  gap: 18px;
+  align-items: center;
+}
+
+.tja-founder__photo {
+  width: 148px;
+  height: 176px;
+  object-fit: cover;
+  border-radius: var(--radius-md);
+  border: 2px solid var(--ink);
+}
+
+.tja-founder__body {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* Карусель 3 реальных отзывов (Светлана, Алёна, София) */
+.tja-reviews {
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 12px;
+  background: var(--ink);
+  color: #FFFFFF;
+  border-radius: var(--radius-lg);
+}
+
+.tja-reviews__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.tja-reviews__quote {
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: #F6F6F7;
+}
+
+.tja-reviews__author {
+  font-size: 0.86rem;
+  font-weight: 800;
+  color: #EDEDEF;
+}
+
+.tja-reviews__dots {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.tja-rev-dot {
+  min-width: 44px;
+  min-height: 44px;
+  padding: 0 10px;
+  border-radius: var(--radius-pill);
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  background: transparent;
+  color: #FFFFFF;
+  font-size: 0.78rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.tja-rev-dot.is-active {
+  background: var(--red);
+  background-image: linear-gradient(180deg, #FC0304 0%, #D90001 100%);
+  border-color: var(--red);
+}
+
+/* Список 8 преподавателей (<ol class="tja-team-list"><li class="tja-team-item">) */
+.tja-team-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+}
+
+.tja-team-item {
+  padding: 14px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+}
+
+.tja-team-item__img {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--ink);
+  flex-shrink: 0;
+}
+
+.tja-team-item__info {
+  min-width: 0;
+  flex: 1;
+}
+
+.tja-team-item__name {
+  display: block;
+  font-size: 0.98rem;
+  font-weight: 800;
+  color: var(--ink);
+}
+
+.tja-team-item__role {
+  display: block;
+  font-size: 0.8rem;
+  color: var(--silver-dark);
+  margin-top: 2px;
+}
+
+.tja-team-item__open {
+  min-width: 44px;
+  min-height: 44px;
+  border-radius: 50%;
+  border: 1px solid var(--line-strong);
+  background: var(--bg);
+  color: var(--ink);
+  font-weight: 800;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.tja-team-item:hover .tja-team-item__open {
+  background: var(--red);
+  border-color: var(--red);
+  color: #FFFFFF;
+}
+
+/* ==========================================================================
+   СЕКЦИЯ 5: ПОНЯТНАЯ ФОРМА ЗАПИСИ + АДРЕСА ШКОЛ (ending_sig: form+dl)
+   ========================================================================== */
+.tja-book-grid {
+  display: grid;
+  grid-template-columns: 1.18fr 0.82fr;
+  gap: 22px;
+  align-items: stretch;
+}
+
+.tja-form {
+  padding: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.tja-form__fields {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.tja-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.tja-field--full {
+  grid-column: 1 / -1;
+}
+
+.tja-field__label {
+  font-size: 0.86rem;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.tja-input {
+  width: 100%;
+  min-height: 48px;
+  padding: 10px 14px;
+  border-radius: var(--radius-md);
+  border: 1.5px solid var(--line-strong);
+  background: #FFFFFF;
+  color: var(--ink);
+  font-size: 0.95rem;
+}
+
+.tja-input:focus {
+  outline: none;
+  border-color: var(--red);
+  box-shadow: 0 0 0 3px rgba(252, 3, 4, 0.14);
+}
+
+.tja-consent {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 44px;
+  font-size: 0.86rem;
+  color: var(--ink-soft);
+  cursor: pointer;
+}
+
+.tja-consent__box {
+  width: 20px;
+  height: 20px;
+  accent-color: var(--red);
+  flex-shrink: 0;
+}
+
+.tja-form__ok {
+  padding: 14px;
+  border-radius: var(--radius-md);
+  background: #000000;
+  color: #FFFFFF;
+  font-size: 0.92rem;
+  font-weight: 700;
+}
+
+.tja-form__ok[hidden] {
+  display: none;
+}
+
+/* Правая колонка записи: <dl> с адресами в Тбилиси и Батуми + мессенджеры */
+.tja-places {
+  padding: 28px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 18px;
+}
+
+.tja-dl {
+  margin: 0;
+  display: grid;
+  gap: 14px;
+}
+
+.tja-dl__row {
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--line);
+}
+
+.tja-dl dt {
+  font-size: 0.82rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--ink);
+  border-left: 3px solid var(--red);
+  padding-left: 8px;
+}
+
+.tja-dl dd {
+  margin: 4px 0 0;
+  font-size: 0.96rem;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.tja-quick-links {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.tja-quick-link {
+  min-height: 46px;
+  padding: 10px 16px;
+  border-radius: var(--radius-md);
+  border: 1.5px solid var(--ink);
+  background: var(--bg);
+  color: var(--ink);
+  font-size: 0.9rem;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.tja-quick-link:hover {
+  background: var(--ink);
+  color: #FFFFFF;
+}
+
+/* ==========================================================================
+   ПОДВАЛ САЙТА (footer_sig: small-nav-a-a-a)
+   ========================================================================== */
+.tja-footer {
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 24px;
+  border-top: 2px solid var(--ink);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+
+.tja-footer__copy {
+  font-size: 0.86rem;
+  font-weight: 600;
+  color: var(--ink-soft);
+}
+
+.tja-footer__nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.tja-footer__nav a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 6px 12px;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.tja-footer__nav a:hover {
+  color: var(--red);
+}
+
+/* ==========================================================================
+   МОДАЛЬНОЕ ОКНО-ДОСЬЕ (БЕЗ ПЕРЕХОДА НА ДРУГИЕ СТРАНИЦЫ!)
+   ========================================================================== */
+.tja-drawer-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 120;
+  background: rgba(0, 0, 0, 0.62);
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 16px;
+}
+
+.tja-drawer-backdrop[hidden] {
+  display: none;
+}
+
+.tja-drawer {
+  width: min(620px, 100%);
+  max-height: calc(100vh - 32px);
+  overflow-y: auto;
+  background: #FFFFFF;
+  color: var(--ink);
+  border-radius: var(--radius-xl);
+  border: 2px solid var(--ink);
+  padding: 28px;
+  box-shadow: -16px 0 48px rgba(0, 0, 0, 0.28);
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  animation: tjaSlideIn 0.28s var(--ease-spring);
+}
+
+@keyframes tjaSlideIn {
+  from { opacity: 0; transform: translateX(36px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+.tja-drawer__top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  padding-bottom: 14px;
+  border-bottom: 2px solid var(--ink);
+}
+
+.tja-drawer__close {
+  min-width: 44px;
+  min-height: 44px;
+  border-radius: 50%;
+  border: 1.5px solid var(--ink);
+  background: var(--bg);
+  color: var(--ink);
+  font-size: 1.1rem;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.tja-drawer__close:hover {
+  background: var(--red);
+  border-color: var(--red);
+  color: #FFFFFF;
+}
+
+.tja-drawer__title {
+  margin: 4px 0 0;
+  font-size: 1.5rem;
+  font-weight: 800;
+  line-height: 1.18;
+}
+
+.tja-drawer__lead {
+  margin: 0;
+  font-size: 0.96rem;
+  color: var(--ink-soft);
+}
+
+.tja-drawer__tiers {
+  display: grid;
+  gap: 10px;
+}
+
+.tja-tier-row {
+  padding: 12px 14px;
+  border-radius: var(--radius-md);
+  background: var(--bg);
+  border: 1px solid var(--line-strong);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.tja-tier-row__name {
+  font-weight: 700;
+  font-size: 0.92rem;
+}
+
+.tja-tier-row__val {
+  font-weight: 800;
+  font-size: 0.98rem;
+  color: var(--red);
+  white-space: nowrap;
+}
+
+.tja-drawer__list {
+  margin: 0;
+  padding-left: 20px;
+  display: grid;
+  gap: 8px;
+  font-size: 0.92rem;
+}
+
+/* ==========================================================================
+   АДАПТИВ И ЗАЩИТА ПЕРВОГО ЭКРАНА НА ТЕЛЕФОНЕ (HOLE_PX <= 72 НА 481 PX)
+   ========================================================================== */
+@media (max-width: 1060px) {
+  .tja-hero__grid,
+  .tja-alpha-layout,
+  .tja-team-top,
+  .tja-book-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .tja-courses-grid {
+    grid-template-columns: minmax(0, 1.08fr) minmax(0, 0.92fr);
+  }
+
+  .tja-team-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 720px) {
+  .tja-nav {
+    display: none;
+  }
+
+  .tja-header__inner {
+    min-height: 46px;
+    padding: 1px 12px;
+    gap: 8px;
+  }
+
+  .tja-brand {
+    min-height: 44px;
+  }
+
+  .tja-brand__logo {
+    height: 30px;
+  }
+
+  .tja-preset {
+    min-width: 44px;
+    min-height: 44px;
+    padding: 0 8px;
+    font-size: 0.78rem;
+  }
+
+  .tja-btn {
+    min-height: 44px;
+    padding: 4px 12px;
+    font-size: 0.82rem;
+  }
+
+  .tja-main {
+    padding: 0 12px 44px;
+  }
+
+  /* HOLE_PX <= 72: минимальный отступ от шапки до H1 на телефоне */
+  .tja-hero {
+    padding: 8px 0 20px;
+  }
+
+  .tja-hero__copy {
+    padding: 10px 14px;
+    gap: 10px;
+  }
+
+  .tja-h1 {
+    font-size: 1.78rem;
+  }
+
+  .tja-metrics {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .tja-alpha-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .tja-courses-grid,
+  .tja-team-list,
+  .tja-form__fields {
+    grid-template-columns: 1fr;
+  }
+
+  .tja-founder {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

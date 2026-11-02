@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>Tamarjoba — школа грузинского языка Тамары Кавтарадзе в Тбилиси, Батуми и онлайн</title>
+  <meta name="description" content="Школа грузинского языка Тамары Кавтарадзе. Подберите курс за 3 клика, соберите грузинское слово в квесте Анбани и запишитесь на пробный урок в Тбилиси, Батуми или онлайн.">
+  <link rel="canonical" href="https://open-sites.io/demo/tamarjoba-9c/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Tamarjoba — школа грузинского языка Тамары Кавтарадзе">
+  <meta property="og:description" content="Интерактивный пульт подбора курса за 3 клика, подготовка к экзамену на гражданство, детский курс 33 буквы Анбани и живые группы в Тбилиси и Батуми.">
+  <meta property="og:image" content="https://open-sites.io/demo/tamarjoba-9c/og.jpg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Neucha&family=Noto+Serif+Georgian:wght@600;700&family=Open+Sans:wght@400;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "EducationalOrganization",
+    "name": "Tamarjoba — школа грузинского языка Тамары Кавтарадзе",
+    "url": "https://open-sites.io/demo/tamarjoba-9c/",
+    "telephone": "+995591952928",
+    "address": [
+      {
+        "@type": "PostalAddress",
+        "addressLocality": "Тбилиси",
+        "streetAddress": "ул. Табукашвили, 46",
+        "addressCountry": "GE"
+      },
+      {
+        "@type": "PostalAddress",
+        "addressLocality": "Батуми",
+        "streetAddress": "ул. Фарнаваза Мепе, 46",
+        "addressCountry": "GE"
+      }
+    ]
+  }
+  </script>
+  <style>
+:root {
+  --tjc-ink: #0E0E11;
+  --tjc-ink-hi: #16171D;
+  --tjc-ink-card: #1B1C24;
+  --tjc-black: #000000;
+  --tjc-white: #FFFFFF;
+  --tjc-paper: #F5F5F7;
+  --tjc-silver: #B4B4B4;
+  --tjc-silver-hi: #D8D8DE;
+  --tjc-graphite: #3A3B42;
+  --tjc-red: #FC0304;
+  --tjc-red-dark: #C80002;
+  --tjc-red-soft: rgba(252, 3, 4, 0.14);
+  --tjc-line-dark: rgba(255, 255, 255, 0.11);
+  --tjc-line-light: rgba(14, 14, 17, 0.10);
+  --tjc-radius-lg: 22px;
+  --tjc-radius-md: 14px;
+  --tjc-radius-sm: 10px;
+  --tjc-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --tjc-font-sans: 'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --tjc-font-accent: 'Neucha', cursive, sans-serif;
+  --tjc-font-geo: 'Noto Serif Georgian', 'Sylfaen', serif;
+}
+*, *::before, *::after { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+html { background-color: var(--tjc-ink); color: var(--tjc-white); font-family: var(--tjc-font-sans); font-size: 16px; line-height: 1.5; scroll-behavior: smooth; }
+body { margin: 0; background-color: var(--tjc-paper); color: var(--tjc-ink); overflow-x: hidden; }
+img, svg { display: block; max-width: 100%; }
+a { color: inherit; text-decoration: none; }
+button, input, select, textarea { font: inherit; color: inherit; }
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+.tjc-hdr { position: relative; z-index: 30; background-color: var(--tjc-ink); color: var(--tjc-white); border-bottom: 1px solid var(--tjc-line-dark); }
+.tjc-hdr__wrap { max-width: 1360px; margin: 0 auto; padding: 10px 28px; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.tjc-hdr__brand { display: inline-flex; align-items: center; gap: 10px; min-height: 44px; min-width: 44px; color: var(--tjc-white); }
+.tjc-hdr__logo { width: 138px; height: 42px; flex-shrink: 0; }
+.tjc-hdr__modes { display: inline-flex; align-items: center; gap: 4px; padding: 2px; background: var(--tjc-ink-hi); border: 1px solid var(--tjc-line-dark); border-radius: var(--tjc-radius-sm); }
+.tjc-hdr__mode { display: inline-flex; align-items: center; justify-content: center; min-width: 44px; min-height: 44px; padding: 0 10px; border-radius: 8px; font-size: 0.82rem; font-weight: 700; color: var(--tjc-silver-hi); transition: background-color 0.22s var(--tjc-ease), color 0.22s var(--tjc-ease); }
+.tjc-hdr__mode--active { background-color: var(--tjc-white); color: var(--tjc-ink); }
+.tjc-hdr__nav { display: flex; align-items: center; gap: 6px; }
+.tjc-hdr__link { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; min-width: 44px; padding: 0 12px; font-size: 0.9rem; font-weight: 700; color: var(--tjc-silver-hi); border-radius: 8px; transition: color 0.2s var(--tjc-ease), background-color 0.2s var(--tjc-ease); }
+.tjc-hdr__actions { display: flex; align-items: center; gap: 8px; }
+.tjc-hdr-btn { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; min-width: 44px; padding: 0 16px; border-radius: var(--tjc-radius-sm); border: 1px solid var(--tjc-silver); background-color: var(--tjc-ink-hi); color: var(--tjc-white); font-size: 0.88rem; font-weight: 700; cursor: pointer; transition: transform 0.22s var(--tjc-ease), border-color 0.22s var(--tjc-ease); }
+.tjc-hdr-btn--red { border-color: var(--tjc-red); background-color: var(--tjc-red); background-image: linear-gradient(180deg, #FC0304 0%, #C90002 100%); color: var(--tjc-white); }
+.tjc-hero { position: relative; background-color: var(--tjc-ink); background-image: radial-gradient(640px circle at 82% 18%, rgba(252, 3, 4, 0.12), transparent 65%), radial-gradient(520px circle at 14% 80%, rgba(180, 180, 180, 0.08), transparent 65%); color: var(--tjc-white); padding: 28px 0 36px; border-bottom: 1px solid var(--tjc-line-dark); }
+.tjc-hero__wrap { max-width: 1360px; margin: 0 auto; padding: 0 28px; display: grid; grid-template-columns: 0.64fr 1.06fr; gap: 28px; align-items: start; }
+.tjc-coord { display: inline-block; margin: 0 0 8px; padding: 0 0 0 10px; border-left: 2px solid var(--tjc-red); border-radius: 0; background: transparent; color: var(--tjc-silver-hi); font-family: var(--tjc-font-accent); font-size: 0.98rem; letter-spacing: 0.06em; }
+.tjc-hero__title { margin: 0 0 12px; font-size: clamp(1.95rem, 3.2vw, 2.95rem); font-weight: 800; line-height: 1.08; letter-spacing: -0.02em; color: var(--tjc-white); }
+.tjc-hero__title em { font-style: normal; font-family: var(--tjc-font-accent); color: var(--tjc-red); font-weight: 400; }
+.tjc-hero__lead { margin: 0 0 18px; font-size: 1.02rem; line-height: 1.5; color: var(--tjc-silver-hi); max-width: 46ch; }
+.tjc-hero__art { background-color: var(--tjc-ink-hi); border: 1px solid var(--tjc-line-dark); border-radius: var(--tjc-radius-md); padding: 14px; box-shadow: 0 16px 36px rgba(0, 0, 0, 0.38); }
+.tjc-hero__svg { width: 100%; height: auto; border-radius: 10px; }
+.tjc-hero__status { margin-top: 12px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px; padding-top: 10px; border-top: 1px solid var(--tjc-line-dark); font-size: 0.86rem; color: var(--tjc-silver-hi); }
+.tjc-hero__pulse { display: inline-flex; align-items: center; gap: 8px; font-weight: 700; color: var(--tjc-white); }
+.tjc-hero__dot { width: 9px; height: 9px; border-radius: 50%; background-color: var(--tjc-red); box-shadow: 0 0 0 4px rgba(252, 3, 4, 0.24); animation: tjcPulse 1.8s infinite ease-in-out; }
+.tjc-console { position: relative; background-color: var(--tjc-white); color: var(--tjc-ink); border-radius: var(--tjc-radius-lg); padding: 22px 24px; box-shadow: 0 24px 56px rgba(0, 0, 0, 0.48); border: 2px solid var(--tjc-ink); }
+.tjc-console__top { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding-bottom: 12px; margin-bottom: 14px; border-bottom: 1px solid var(--tjc-line-light); }
+.tjc-console__heading { margin: 0; font-size: 1.16rem; font-weight: 800; color: var(--tjc-ink); }
+.tjc-console__step { font-family: var(--tjc-font-accent); font-size: 1rem; color: var(--tjc-red-dark); font-weight: 700; }
+.tjc-console__group { margin-bottom: 14px; }
+.tjc-console__label { display: block; margin-bottom: 8px; font-size: 0.84rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em; color: var(--tjc-graphite); }
+.tjc-console__goals { display: grid; grid-template-columns: 1.06fr 0.94fr; gap: 8px; }
+.tjc-console__formats { display: grid; grid-template-columns: 1.15fr 0.95fr 1.05fr; gap: 8px; }
+.tjc-opt { display: flex; align-items: center; justify-content: space-between; gap: 8px; min-height: 46px; min-width: 44px; padding: 8px 12px; border-radius: var(--tjc-radius-sm); border: 1.5px solid #D0D0D6; background-color: var(--tjc-paper); color: var(--tjc-ink); font-size: 0.88rem; font-weight: 700; text-align: left; cursor: pointer; transition: border-color 0.2s var(--tjc-ease), background-color 0.2s var(--tjc-ease), transform 0.2s var(--tjc-ease); }
+.tjc-opt--active { background-color: var(--tjc-ink); color: var(--tjc-white); border-color: var(--tjc-red); }
+.tjc-opt__mark { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background-color: var(--tjc-silver); flex-shrink: 0; }
+.tjc-opt--active .tjc-opt__mark { background-color: var(--tjc-red); }
+.tjc-console__summary { margin-top: 14px; padding: 16px; border-radius: var(--tjc-radius-md); background-color: var(--tjc-ink); color: var(--tjc-white); display: grid; grid-template-columns: 1.12fr 0.88fr; gap: 14px; align-items: center; }
+.tjc-console__course { font-size: 1.05rem; font-weight: 800; color: var(--tjc-white); margin: 0 0 4px; }
+.tjc-console__pack { font-size: 0.88rem; color: var(--tjc-silver-hi); margin: 0; }
+.tjc-console__pricebox { text-align: right; }
+.tjc-console__price { display: block; font-size: 1.65rem; font-weight: 800; line-height: 1.1; color: var(--tjc-white); }
+.tjc-console__rub { display: block; margin-top: 3px; font-size: 0.88rem; font-weight: 700; color: var(--tjc-silver-hi); }
+.tjc-console__actions { margin-top: 14px; display: grid; grid-template-columns: 0.92fr 1.08fr; gap: 10px; }
+.tjc-cta { display: inline-flex; align-items: center; justify-content: center; min-height: 48px; min-width: 44px; padding: 10px 16px; border-radius: var(--tjc-radius-sm); font-size: 0.92rem; font-weight: 800; cursor: pointer; transition: transform 0.22s var(--tjc-ease), box-shadow 0.22s var(--tjc-ease); }
+.tjc-cta--ghost { background-color: var(--tjc-paper); color: var(--tjc-ink); border: 1.5px solid var(--tjc-ink); }
+.tjc-cta--primary { border: 1.5px solid var(--tjc-red); background-color: var(--tjc-red); background-image: linear-gradient(180deg, #FC0304 0%, #C60002 100%); color: var(--tjc-white); }
+.tjc-chapters { max-width: 1360px; margin: 20px auto 0; padding: 0 28px; }
+.tjc-chapters__bar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px; padding: 10px 14px; background-color: var(--tjc-ink-hi); border: 1px solid var(--tjc-line-dark); border-radius: var(--tjc-radius-md); }
+.tjc-chapters__tabs, .tjc-chapters__pages { display: flex; flex-wrap: wrap; gap: 6px; }
+.tjc-tab { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; min-width: 44px; padding: 0 14px; border-radius: 8px; border: 1px solid var(--tjc-line-dark); background-color: transparent; color: var(--tjc-silver-hi); font-size: 0.85rem; font-weight: 700; cursor: pointer; transition: background-color 0.2s var(--tjc-ease), color 0.2s var(--tjc-ease); }
+.tjc-tab--active { background-color: var(--tjc-white); color: var(--tjc-ink); border-color: var(--tjc-white); }
+.tjc-page-link { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; min-width: 44px; padding: 0 12px; border-radius: 8px; background-color: rgba(252, 3, 4, 0.16); border: 1px solid rgba(252, 3, 4, 0.45); color: var(--tjc-white); font-size: 0.83rem; font-weight: 700; }
+.tjc-sec { padding: 56px 0; border-bottom: 1px solid var(--tjc-line-light); }
+.tjc-sec--hidden { display: none !important; }
+.tjc-sec--dark { background-color: var(--tjc-ink); color: var(--tjc-white); border-bottom-color: var(--tjc-line-dark); }
+.tjc-sec__wrap { max-width: 1360px; margin: 0 auto; padding: 0 28px; }
+.tjc-sec__head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 12px; margin-bottom: 28px; }
+.tjc-sec__title { margin: 0; font-size: clamp(1.65rem, 2.5vw, 2.3rem); font-weight: 800; line-height: 1.14; letter-spacing: -0.02em; }
+.tjc-sec__idx { margin: 0; font-family: var(--tjc-font-accent); font-size: 1.05rem; color: var(--tjc-red-dark); font-weight: 700; }
+.tjc-sec--dark .tjc-sec__idx { color: var(--tjc-silver-hi); }
+.tjc-featured { position: relative; }
+.tjc-featured::before { content: ""; position: absolute; inset: 0; border-radius: inherit; padding: 2px; background: linear-gradient(135deg, #FC0304 0%, #0E0E11 55%, #B4B4B4 100%); -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); -webkit-mask-composite: xor; mask-composite: exclude; pointer-events: none; }
+.tjc-tariffs { display: grid; grid-template-columns: 1.18fr 0.94fr 0.88fr; gap: 18px; margin-bottom: 24px; }
+.tjc-card { background-color: var(--tjc-white); border: 1px solid var(--tjc-line-light); border-radius: var(--tjc-radius-lg); padding: 22px; display: flex; flex-direction: column; justify-content: space-between; gap: 14px; box-shadow: 0 12px 28px rgba(14, 14, 17, 0.06); transition: transform 0.25s var(--tjc-ease), border-color 0.25s var(--tjc-ease); }
+.tjc-card__top { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.tjc-card__tag { font-family: var(--tjc-font-accent); font-size: 0.96rem; color: var(--tjc-red-dark); font-weight: 700; }
+.tjc-card__price { font-size: 1.35rem; font-weight: 800; color: var(--tjc-ink); }
+.tjc-card__name { margin: 6px 0; font-size: 1.2rem; font-weight: 800; color: var(--tjc-ink); }
+.tjc-card__desc { margin: 0; font-size: 0.93rem; color: var(--tjc-graphite); }
+.tjc-card__links { display: flex; flex-wrap: wrap; gap: 8px; }
+.tjc-card__btn { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; min-width: 44px; padding: 0 14px; border-radius: var(--tjc-radius-sm); border: 1.5px solid var(--tjc-ink); background-color: var(--tjc-ink); color: var(--tjc-white); font-size: 0.86rem; font-weight: 700; cursor: pointer; }
+.tjc-card__more { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; min-width: 44px; padding: 0 14px; border-radius: var(--tjc-radius-sm); border: 1.5px solid #C6C6CE; background-color: var(--tjc-paper); color: var(--tjc-ink); font-size: 0.86rem; font-weight: 700; }
+.tjc-table-wrap { background-color: var(--tjc-white); border: 1px solid var(--tjc-line-light); border-radius: var(--tjc-radius-md); overflow-x: auto; }
+.tjc-matrix { display: grid; grid-template-columns: 1.2fr 1fr 0.9fr; font-size: 0.92rem; }
+.tjc-matrix__cell { padding: 12px 16px; border-bottom: 1px solid var(--tjc-line-light); }
+.tjc-matrix__head { background-color: var(--tjc-ink); color: var(--tjc-white); font-weight: 700; }
+.tjc-method { display: grid; grid-template-columns: 0.88fr 1.12fr; gap: 24px; align-items: center; }
+.tjc-method__visual { display: grid; grid-template-columns: 1.12fr 0.88fr; gap: 14px; align-items: stretch; }
+.tjc-method__photo { width: 100%; height: 290px; object-fit: cover; border-radius: var(--tjc-radius-md); border: 2px solid var(--tjc-ink); }
+.tjc-method__body { background-color: var(--tjc-white); border: 1px solid var(--tjc-line-light); border-radius: var(--tjc-radius-lg); padding: 24px; }
+.tjc-method__headline { margin: 0 0 10px; font-size: 1.28rem; font-weight: 800; color: var(--tjc-ink); }
+.tjc-method__text { margin: 0 0 14px; font-size: 0.96rem; color: var(--tjc-graphite); }
+.tjc-method__list { margin: 0; padding: 0; list-style: none; display: grid; grid-template-columns: 1.08fr 0.92fr; gap: 10px; }
+.tjc-method__fact { padding: 12px 14px; background-color: var(--tjc-paper); border-left: 3px solid var(--tjc-red); border-radius: 8px; font-size: 0.88rem; font-weight: 700; color: var(--tjc-ink); }
+.tjc-quest { display: grid; grid-template-columns: 0.92fr 1.08fr; gap: 24px; align-items: start; }
+.tjc-board { background-color: var(--tjc-ink-hi); border: 1px solid var(--tjc-line-dark); border-radius: var(--tjc-radius-lg); padding: 22px; }
+.tjc-board__rounds { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; }
+.tjc-round-btn { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; min-width: 44px; padding: 0 12px; border-radius: 8px; border: 1px solid var(--tjc-line-dark); background-color: var(--tjc-ink-card); color: var(--tjc-silver-hi); font-size: 0.84rem; font-weight: 700; cursor: pointer; }
+.tjc-round-btn--active { background-color: var(--tjc-red); background-image: linear-gradient(180deg, #FC0304 0%, #C60002 100%); color: var(--tjc-white); border-color: var(--tjc-red); }
+.tjc-board__target { padding: 14px; border-radius: var(--tjc-radius-md); background-color: var(--tjc-ink); border: 1px solid var(--tjc-line-dark); margin-bottom: 14px; }
+.tjc-board__word { font-family: var(--tjc-font-geo); font-size: 1.75rem; font-weight: 700; color: var(--tjc-white); letter-spacing: 0.04em; }
+.tjc-board__meaning { display: block; margin-top: 4px; font-size: 0.9rem; color: var(--tjc-silver-hi); }
+.tjc-board__slots { display: flex; flex-wrap: wrap; gap: 8px; margin: 14px 0; }
+.tjc-slot { display: inline-flex; align-items: center; justify-content: center; min-width: 46px; min-height: 46px; padding: 0 10px; border-radius: 10px; border: 1.5px dashed var(--tjc-silver); background-color: var(--tjc-ink-card); font-family: var(--tjc-font-geo); font-size: 1.35rem; font-weight: 700; color: var(--tjc-white); }
+.tjc-slot--done { border-style: solid; border-color: var(--tjc-white); background-color: var(--tjc-white); color: var(--tjc-ink); }
+.tjc-slot--next { border-style: solid; border-color: var(--tjc-red); box-shadow: 0 0 0 3px rgba(252, 3, 4, 0.28); }
+.tjc-board__footer { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px; padding-top: 12px; border-top: 1px solid var(--tjc-line-dark); }
+.tjc-board__score { font-size: 0.9rem; font-weight: 700; color: var(--tjc-silver-hi); }
+.tjc-board__reset { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; min-width: 44px; padding: 0 14px; border-radius: 8px; border: 1px solid var(--tjc-silver); background-color: transparent; color: var(--tjc-white); font-size: 0.84rem; font-weight: 700; cursor: pointer; }
+.tjc-letters { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+.tjc-letter { position: relative; min-height: 112px; min-width: 44px; padding: 12px 10px; border-radius: var(--tjc-radius-md); border: 1.5px solid var(--tjc-line-dark); background-color: var(--tjc-white); color: var(--tjc-ink); display: flex; flex-direction: column; align-items: center; justify-content: space-between; text-align: center; cursor: pointer; transition: transform 0.24s var(--tjc-ease), border-color 0.24s var(--tjc-ease), box-shadow 0.24s var(--tjc-ease); }
+.tjc-letter--target { border-color: var(--tjc-red); box-shadow: 0 0 0 3px rgba(252, 3, 4, 0.35); animation: tjcTargetGlow 1.5s infinite ease-in-out; }
+.tjc-letter__char { font-family: var(--tjc-font-geo); font-size: 2rem; font-weight: 700; line-height: 1.05; color: var(--tjc-ink); }
+.tjc-letter--target .tjc-letter__char { color: var(--tjc-red); }
+.tjc-letter__sound { font-family: var(--tjc-font-accent); font-size: 0.92rem; font-weight: 700; color: var(--tjc-red-dark); }
+.tjc-letter__word { font-size: 0.78rem; font-weight: 700; color: var(--tjc-graphite); }
+.tjc-mentors { margin: 0; display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 16px; }
+.tjc-mentors__item { background-color: var(--tjc-white); border: 1px solid var(--tjc-line-light); border-radius: var(--tjc-radius-md); padding: 16px; display: grid; grid-template-columns: 84px 1fr; gap: 16px; align-items: center; }
+.tjc-mentors__avatar { width: 84px; height: 84px; border-radius: 14px; object-fit: cover; border: 2px solid var(--tjc-ink); }
+.tjc-mentors__name { margin: 0 0 4px; font-size: 1.08rem; font-weight: 800; color: var(--tjc-ink); }
+.tjc-mentors__bio { margin: 0; font-size: 0.9rem; color: var(--tjc-graphite); }
+.tjc-enroll { display: grid; grid-template-columns: 1.08fr 0.92fr; gap: 24px; align-items: start; }
+.tjc-form { background-color: var(--tjc-white); border: 2px solid var(--tjc-ink); border-radius: var(--tjc-radius-lg); padding: 24px; color: var(--tjc-ink); }
+.tjc-form__preset { margin-bottom: 14px; padding: 12px 14px; border-radius: var(--tjc-radius-sm); background-color: var(--tjc-ink); color: var(--tjc-white); font-size: 0.9rem; font-weight: 700; }
+.tjc-form__gift { margin-bottom: 14px; padding: 10px 14px; border-radius: var(--tjc-radius-sm); background-color: #FFF2F2; border: 1.5px solid var(--tjc-red); color: var(--tjc-ink); font-size: 0.88rem; font-weight: 700; }
+.tjc-form__row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
+.tjc-form__field { display: flex; flex-direction: column; gap: 5px; margin-bottom: 12px; }
+.tjc-form__label { font-size: 0.84rem; font-weight: 700; color: var(--tjc-ink); }
+.tjc-form__input, .tjc-form__select { min-height: 46px; padding: 10px 12px; border-radius: 8px; border: 1.5px solid #C4C4CC; background-color: var(--tjc-paper); color: var(--tjc-ink); font-size: 0.94rem; }
+.tjc-form__consent { display: flex; align-items: center; gap: 10px; min-height: 44px; margin: 10px 0 14px; font-size: 0.86rem; color: var(--tjc-graphite); cursor: pointer; }
+.tjc-form__check { width: 20px; height: 20px; accent-color: var(--tjc-red); flex-shrink: 0; }
+.tjc-form__submit { width: 100%; min-height: 48px; padding: 12px 18px; border-radius: var(--tjc-radius-sm); border: 1.5px solid var(--tjc-red); background-color: var(--tjc-red); background-image: linear-gradient(180deg, #FC0304 0%, #C60002 100%); color: var(--tjc-white); font-size: 0.96rem; font-weight: 800; cursor: pointer; }
+.tjc-form__submit:disabled { background-image: none; background-color: #DCDCE2; border-color: #C4C4CC; color: #555660; cursor: not-allowed; }
+.tjc-form__ok { margin-top: 12px; padding: 12px; border-radius: 8px; background-color: var(--tjc-ink); color: var(--tjc-white); font-size: 0.9rem; font-weight: 700; }
+.tjc-places { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 12px; }
+.tjc-places__item { background-color: var(--tjc-white); border: 1px solid var(--tjc-line-light); border-radius: var(--tjc-radius-md); padding: 18px; color: var(--tjc-ink); }
+.tjc-places__city { display: block; font-size: 1.06rem; font-weight: 800; margin-bottom: 4px; }
+.tjc-places__addr { display: block; font-size: 0.92rem; color: var(--tjc-graphite); }
+.tjc-places__links { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+.tjc-places__btn { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; min-width: 44px; padding: 0 14px; border-radius: 8px; background-color: var(--tjc-ink); color: var(--tjc-white); font-size: 0.86rem; font-weight: 700; }
+.tjc-drawer { position: fixed; inset: 0; z-index: 80; background-color: rgba(14, 14, 17, 0.72); display: flex; justify-content: flex-end; }
+.tjc-drawer[hidden] { display: none !important; }
+.tjc-drawer__panel { width: min(520px, 100%); height: 100%; background-color: var(--tjc-white); color: var(--tjc-ink); padding: 24px; overflow-y: auto; }
+.tjc-drawer__head { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding-bottom: 14px; border-bottom: 1px solid var(--tjc-line-light); margin-bottom: 16px; }
+.tjc-drawer__title { margin: 0; font-size: 1.25rem; font-weight: 800; }
+.tjc-drawer__close { min-width: 44px; min-height: 44px; border-radius: 8px; border: 1.5px solid var(--tjc-ink); background-color: var(--tjc-paper); font-weight: 800; cursor: pointer; }
+.tjc-drawer__list { margin: 14px 0; padding-left: 18px; color: var(--tjc-graphite); }
+.tjc-foot { background-color: var(--tjc-ink); color: var(--tjc-silver-hi); padding: 24px 28px; border-top: 1px solid var(--tjc-line-dark); display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; }
+.tjc-foot__line { margin: 0; font-size: 0.9rem; font-weight: 700; color: var(--tjc-white); }
+.tjc-foot__legal { font-size: 0.84rem; color: var(--tjc-silver-hi); }
+.tjc-foot__top { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; min-width: 44px; padding: 0 12px; margin-left: 8px; border-radius: 8px; border: 1px solid var(--tjc-line-dark); color: var(--tjc-white); font-weight: 700; }
+@keyframes tjcPulse { 0%, 100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.25); opacity: 0.72; } }
+@keyframes tjcTargetGlow { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-3px); } }
+@media (max-width: 680px) {
+  .tjc-hdr__wrap { padding: 6px 14px; gap: 8px; }
+  .tjc-hdr__logo { width: 112px; height: 36px; }
+  .tjc-hdr__nav { display: none; }
+  .tjc-hdr__actions .tjc-hdr-btn:first-child { display: none; }
+  .tjc-hero { padding: 12px 0 24px; }
+  .tjc-hero__wrap, .tjc-sec__wrap, .tjc-chapters { padding: 0 14px; grid-template-columns: 1fr; }
+  .tjc-coord { margin: 0 0 4px; font-size: 0.82rem; }
+  .tjc-hero__title { font-size: 1.68rem; margin-bottom: 8px; }
+  .tjc-console { padding: 16px; }
+  .tjc-console__goals, .tjc-console__formats, .tjc-console__summary, .tjc-console__actions, .tjc-tariffs, .tjc-method, .tjc-method__visual, .tjc-method__list, .tjc-quest, .tjc-mentors, .tjc-enroll, .tjc-form__row { grid-template-columns: 1fr; }
+  .tjc-console__pricebox { text-align: left; }
+  .tjc-letters { grid-template-columns: repeat(2, 1fr); }
+  .tjc-sec { padding: 36px 0; }
+}
+  </style>
+</head>
+<body>
+<style>
+.osb-top,.osb-bot{display:block;box-sizing:border-box;background:#0a0a0d;color:#ededf0;text-decoration:none;text-align:center;
+  font:500 13px/1.35 system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;letter-spacing:0;text-transform:none}
+.osb-top{position:relative;z-index:2147483000;border-bottom:1px solid rgba(167,139,250,.28)}
+.osb-in{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:4px 12px;max-width:1200px;margin:0 auto;padding:9px 16px}
+.osb-bot .osb-in{padding:20px 16px 22px;font-size:14px}
+.osb-mark{display:inline-flex;align-items:center;gap:7px;font-weight:700;color:#ededf0}
+.osb-dot{width:8px;height:8px;border-radius:50%;background:#a78bfa;flex:none}
+.osb-cta{color:#a78bfa;font-weight:600;white-space:nowrap}
+.osb-top:hover .osb-cta,.osb-bot:hover .osb-cta{text-decoration:underline}
+@media (max-width:560px){.osb-wide{display:none}}
+</style><a class="osb-top" href="https://t.me/opensites_io?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5%21%20%D0%A1%D0%BC%D0%BE%D1%82%D1%80%D1%8E%20%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%20%D1%81%D0%B0%D0%B9%D1%82%D0%B0%20%D0%B4%D0%BB%D1%8F%20%C2%ABTamarjoba%C2%BB%20%E2%80%94%20%D1%85%D0%BE%D1%87%D1%83%20%D1%82%D0%B0%D0%BA%D0%BE%D0%B9" target="_blank" rel="noopener"><span class="osb-in"><span class="osb-mark"><span class="osb-dot"></span>open-sites.io</span><span class="osb-wide">Пример сайта для «Tamarjoba»</span><span class="osb-cta">Хочу такой →</span></span></a><script>
+
+(function(){function fix(){var s=document.querySelector('.osb-top');if(!s)return;var h=s.offsetHeight,f=[],pb=0;
+[].forEach.call(document.body.querySelectorAll('*'),function(el){if(s.contains(el))return;var cs=getComputedStyle(el);
+if(cs.position==='fixed'&&Math.abs(parseFloat(cs.bottom)||0)<2&&el.offsetHeight<200&&el.offsetWidth>=innerWidth*.5)pb=Math.max(pb,el.offsetHeight);
+if(el.getAttribute('data-osb'))return;if(cs.position!=='absolute'&&cs.position!=='fixed')return;var r=el.getBoundingClientRect();
+if(r.width<innerWidth*.5||r.height>240)return;if(cs.position==='absolute'){var p=el.offsetParent;
+if((!p||p===document.body||p===document.documentElement)&&r.top+scrollY<h+2){el.setAttribute('data-osb','1');el.style.top=((parseFloat(cs.top)||0)+h)+'px'}}
+else if(Math.abs(parseFloat(cs.top)||0)<2&&r.top>-2){el.setAttribute('data-osb','1');f.push(el)}});
+var b=document.querySelector('.osb-bot');if(b&&pb)b.style.paddingBottom=pb+'px';
+if(f.length){var g=function(){var t=Math.max(0,h-scrollY)+'px';f.forEach(function(el){el.style.top=t})};addEventListener('scroll',g,{passive:true});g()}}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',fix);else fix();addEventListener('load',fix)})();
+</script>
+
+  <header class="tjc-hdr">
+    <div class="tjc-hdr__wrap">
+      <a class="tjc-hdr__brand" href="#calc" aria-label="Tamarjoba — школа грузинского языка">
+        <svg class="tjc-hdr__logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 112" fill="none" aria-hidden="true">
+          <g fill="currentColor">
+            <path d="M16 46c3-4 8-5 14-5h22c4 0 6-1 8-3l1 5c-2 2-6 3-11 3H36c-6 7-9 15-9 23 0 8 4 13 11 13 4 0 8-2 12-5l2 3c-5 5-11 8-18 8-11 0-17-6-17-16 0-9 4-17 11-24h-9c-4 0-7 1-10 4l-3-3z"/>
+            <path d="M84 85l-4-10c-5 6-11 11-18 11-7 0-12-5-12-12 0-9 9-15 24-19l-3-7c-2-4-5-6-9-6-4 0-8 2-11 6l-4-3c4-6 10-9 17-9 8 0 13 3 16 11l11 27c2 4 4 6 7 6v4h-14zm-6-14l-5-12c-10 3-15 7-15 13 0 5 3 8 8 8 4 0 8-3 12-9z"/>
+            <path d="M100 44c4-2 9-4 14-4l1 7c5-5 11-8 18-8 7 0 12 3 14 9 5-6 12-9 19-9 9 0 15 6 15 16v22c0 3 1 4 5 4v4h-16V61c0-8-3-12-9-12-5 0-10 3-13 8v24c0 3 1 4 4 4v4h-15V61c0-8-3-12-9-12-5 0-10 3-13 8v24c0 3 1 4 4 4v4H99V50c0-3-1-4-4-4v-2h5z"/>
+            <path d="M219 85l-4-10c-5 6-11 11-18 11-7 0-12-5-12-12 0-9 9-15 24-19l-3-7c-2-4-5-6-9-6-4 0-8 2-11 6l-4-3c4-6 10-9 17-9 8 0 13 3 16 11l11 27c2 4 4 6 7 6v4h-14zm-6-14l-5-12c-10 3-15 7-15 13 0 5 3 8 8 8 4 0 8-3 12-9z"/>
+            <path d="M235 44c4-2 9-4 14-4l1 8c4-6 9-9 15-9 6 0 10 4 10 9 0 4-3 8-8 9 7 3 11 9 14 17 2 5 5 7 9 7l1 3c-3 2-6 3-10 3-6 0-10-3-13-10l-4-10c-2-5-5-7-10-7h-4v20c0 3 1 4 5 4v4h-17V50c0-3-1-4-4-4v-2h1zm15 16h5c6 0 10-3 10-8 0-4-3-6-7-6-3 0-6 2-8 5v9z"/>
+            <path d="M312 39c12 0 21 9 21 23 0 14-9 24-21 24s-21-10-21-24c0-14 9-23 21-23zm0 5c-7 0-13 7-13 18s6 19 13 19 13-8 13-19-6-18-13-18z"/>
+            <path d="M337 31c6-2 12-4 17-6l2 2c-4 6-7 13-8 20 3-4 8-7 14-7 9 0 16 8 16 20 0 15-10 26-24 26-8 0-15-4-17-10v-35c0-5-1-7-4-8l4-2zm11 45c2 3 5 5 9 5 8 0 13-7 13-18 0-9-4-15-11-15-5 0-9 3-11 8v20z" transform="translate(-14,0)"/>
+          </g>
+          <g fill="#fc0304">
+            <circle cx="282" cy="14" r="9.5"/>
+            <path d="M270 28h20v15l19 6c-2 4-5 6-9 6l-10-3v24c0 16-5 28-17 35l-2-2c6-7 9-17 9-31V49l-14-4c-2 2-4 4-6 6l-2-2 6-12 10 3V33c0-2-2-3-5-3l1-2z"/>
+          </g>
+          <text x="44" y="104" fill="currentColor" font-family="'Open Sans', sans-serif" font-size="13.5" font-weight="400">школа грузинского языка</text>
+        </svg>
+      </a>
+
+      <div class="tjc-hdr__modes" role="group" aria-label="Варианты дизайна">
+        <a class="tjc-hdr__mode" href="../tamarjoba-9a/index.html">А</a>
+        <a class="tjc-hdr__mode" href="../tamarjoba-9b/index.html">Б</a>
+        <a class="tjc-hdr__mode tjc-hdr__mode--active" href="../tamarjoba-9c/index.html" aria-current="page">В</a>
+      </div>
+
+      <nav class="tjc-hdr__nav" aria-label="Разделы школы">
+        <a class="tjc-hdr__link" href="#programs">Тарифы</a>
+        <a class="tjc-hdr__link" href="#method">Метод</a>
+        <a class="tjc-hdr__link" href="#alphabet">Анбани</a>
+        <a class="tjc-hdr__link" href="#mentors">Билингвы</a>
+      </nav>
+
+      <div class="tjc-hdr__actions">
+        <button type="button" class="tjc-hdr-btn" id="tjc-hdr-calc">Пульт курса</button>
+        <button type="button" class="tjc-hdr-btn tjc-hdr-btn--red" id="tjc-hdr-game">Квест букв</button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="tjc-hero" id="calc">
+      <div class="tjc-hero__wrap">
+        <div class="tjc-hero__intro">
+          <span class="tjc-coord">Школа Тамары Кавтарадзе · с 2019 года</span>
+          <h1 class="tjc-hero__title">Заговорите по-грузински с расчётом курса <em>за 3 клика</em></h1>
+          <p class="tjc-hero__lead">Очные мини-группы в Тбилиси и Батуми, уроки в Zoom и подготовка к экзамену на гражданство.</p>
+
+          <div class="tjc-hero__art">
+            <svg class="tjc-hero__svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 230" fill="none" aria-hidden="true">
+              <rect width="360" height="230" rx="18" fill="#FFFFFF"/>
+              <line x1="28" y1="202" x2="332" y2="202" stroke="#000000" stroke-width="2" stroke-linecap="round"/>
+              <g stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M148 56c0-18 14-30 32-30s32 12 32 30c0 22 6 38 10 52h-84c4-14 10-30 10-52z" fill="#000000"/>
+                <path d="M144 92c10-6 22-8 36-8s26 2 36 8l8 50h-88l8-50z" fill="#fc0304"/>
+                <circle cx="180" cy="56" r="15" fill="#FFFFFF"/>
+                <circle cx="174" cy="55" r="4" fill="none" stroke-width="1.5"/>
+                <circle cx="186" cy="55" r="4" fill="none" stroke-width="1.5"/>
+                <path d="M177 63c2 2 5 2 7 0"/>
+                <path d="M150 142h60l8 60h-76l8-60z" fill="#FFFFFF"/>
+              </g>
+              <g stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="102" cy="112" r="14" fill="#FFFFFF"/>
+                <path d="M84 136c8-6 18-8 30-8s22 4 26 14l8 60H76l8-66z" fill="#FFFFFF"/>
+                <path d="M84 156l24 8 24-8v28l-24 8-24-8v-28z" fill="#fc0304"/>
+                <line x1="108" y1="164" x2="108" y2="192" stroke="#FFFFFF" stroke-width="2"/>
+                <rect x="56" y="186" width="48" height="14" rx="3" fill="#fc0304"/>
+              </g>
+              <g stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="256" cy="112" r="14" fill="#FFFFFF"/>
+                <path d="M226 138c8-8 20-10 34-10 18 0 32 10 36 28l6 46h-82l6-64z" fill="#fc0304"/>
+                <rect x="208" y="154" width="24" height="24" rx="3" fill="#fc0304"/>
+                <rect x="232" y="154" width="24" height="24" rx="3" fill="#FFFFFF"/>
+                <rect x="208" y="178" width="24" height="24" rx="3" fill="#fc0304"/>
+                <rect x="232" y="178" width="24" height="24" rx="3" fill="#fc0304"/>
+                <text x="215" y="171" fill="#FFFFFF" font-family="'Sylfaen', serif" font-size="15" stroke="none">გ</text>
+                <text x="239" y="171" fill="#000000" font-family="'Sylfaen', serif" font-size="15" stroke="none">ა</text>
+              </g>
+            </svg>
+            <div class="tjc-hero__status">
+              <span class="tjc-hero__pulse"><span class="tjc-hero__dot"></span><span id="tjc-live-clock">Тбилиси и Батуми · открыт набор</span></span>
+              <span>3 000+ выпускников</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="tjc-console" role="region" aria-label="Пульт подбора курса">
+          <div class="tjc-console__top">
+            <p class="tjc-console__heading">Пульт подбора программы</p>
+            <span class="tjc-console__step">3 клика до сметы</span>
+          </div>
+
+          <div class="tjc-console__group">
+            <span class="tjc-console__label">Шаг 1 · Ваша цель</span>
+            <div class="tjc-console__goals">
+              <button type="button" class="tjc-opt tjc-opt--active" data-goal="a1" aria-pressed="true">
+                <span>1. Разговорный с нуля (A1–A2+)</span>
+                <span class="tjc-opt__mark"></span>
+              </button>
+              <button type="button" class="tjc-opt" data-goal="cit" aria-pressed="false">
+                <span>2. Сдать экзамен на гражданство</span>
+                <span class="tjc-opt__mark"></span>
+              </button>
+              <button type="button" class="tjc-opt" data-goal="kids" aria-pressed="false">
+                <span>3. Ребёнку 33 буквы (Анбани)</span>
+                <span class="tjc-opt__mark"></span>
+              </button>
+              <button type="button" class="tjc-opt" data-goal="vid" aria-pressed="false">
+                <span>4. Видеокурс с Тамарой по 15 мин</span>
+                <span class="tjc-opt__mark"></span>
+              </button>
+            </div>
+          </div>
+
+          <div class="tjc-console__group">
+            <span class="tjc-console__label">Шаг 2 · Формат занятий</span>
+            <div class="tjc-console__formats">
+              <button type="button" class="tjc-opt tjc-opt--active" data-fmt="group" aria-pressed="true">
+                <span>Мини-группа (Тбилиси / Батуми / Онлайн)</span>
+                <span class="tjc-opt__mark"></span>
+              </button>
+              <button type="button" class="tjc-opt" data-fmt="indiv" aria-pressed="false">
+                <span>Индивидуально с билингвом</span>
+                <span class="tjc-opt__mark"></span>
+              </button>
+              <button type="button" class="tjc-opt" data-fmt="self" aria-pressed="false">
+                <span>Самостоятельно (книги / тренажёр / Gurucan)</span>
+                <span class="tjc-opt__mark"></span>
+              </button>
+            </div>
+          </div>
+
+          <div class="tjc-console__summary" aria-live="polite">
+            <div>
+              <p class="tjc-console__course" id="tjc-out-course">Мини-группа A1–A2+</p>
+              <p class="tjc-console__pack" id="tjc-out-pack">4–7 человек · 2 раза в неделю · учебник включён</p>
+            </div>
+            <div class="tjc-console__pricebox">
+              <strong class="tjc-console__price" id="tjc-out-price">280 лари</strong>
+              <span class="tjc-console__rub" id="tjc-out-rub">9 500 руб · 690 лари курс</span>
+            </div>
+          </div>
+
+          <div class="tjc-console__actions">
+            <button type="button" class="tjc-cta tjc-cta--ghost" id="tjc-open-drawer">Открыть подробную карточку курса</button>
+            <button type="button" class="tjc-cta tjc-cta--primary" id="tjc-apply-calc">Записаться с этим расчётом →</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="tjc-chapters" aria-label="Быстрые переходы по главам">
+        <div class="tjc-chapters__bar">
+          <div class="tjc-chapters__tabs">
+            <button type="button" class="tjc-tab tjc-tab--active" data-chapter="all">Все</button>
+            <button type="button" class="tjc-tab" data-chapter="programs">Тарифы</button>
+            <button type="button" class="tjc-tab" data-chapter="method">Метод</button>
+            <button type="button" class="tjc-tab" data-chapter="alphabet">Анбани</button>
+            <button type="button" class="tjc-tab" data-chapter="mentors">Педагоги</button>
+          </div>
+          <div class="tjc-chapters__pages">
+            <a class="tjc-page-link" href="program-groups.html">Группы ↗</a>
+            <a class="tjc-page-link" href="program-citizenship.html">Гражданство ↗</a>
+            <a class="tjc-page-link" href="program-kids.html">Детям ↗</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="tjc-sec" id="programs">
+      <div class="tjc-sec__wrap">
+        <div class="tjc-sec__head">
+          <h2 class="tjc-sec__title">Тарифы и маршруты школы</h2>
+          <p class="tjc-sec__idx">01 · Лари и рубли</p>
+        </div>
+
+        <div class="tjc-tariffs">
+          <article class="tjc-card tjc-featured">
+            <div>
+              <div class="tjc-card__top">
+                <span class="tjc-card__tag">Хит</span>
+                <strong class="tjc-card__price">280 лари</strong>
+              </div>
+              <h3 class="tjc-card__name">Мини-группа A1–A2+</h3>
+              <p class="tjc-card__desc">Разговорная речь с первого урока, 4–7 человек.</p>
+            </div>
+            <div class="tjc-card__links">
+              <button type="button" class="tjc-card__btn" data-pick-goal="a1" data-pick-fmt="group">Выбрать</button>
+              <a class="tjc-card__more" href="program-groups.html">Курс →</a>
+            </div>
+          </article>
+
+          <article class="tjc-card">
+            <div>
+              <div class="tjc-card__top">
+                <span class="tjc-card__tag">Минюст</span>
+                <strong class="tjc-card__price">650 лари</strong>
+              </div>
+              <h3 class="tjc-card__name">Гражданство</h3>
+              <p class="tjc-card__desc">600 билетов по языку, истории и праву Грузии.</p>
+            </div>
+            <div class="tjc-card__links">
+              <button type="button" class="tjc-card__btn" data-pick-goal="cit" data-pick-fmt="indiv">Выбрать</button>
+              <a class="tjc-card__more" href="program-citizenship.html">Курс →</a>
+            </div>
+          </article>
+
+          <article class="tjc-card">
+            <div>
+              <div class="tjc-card__top">
+                <span class="tjc-card__tag">Детям</span>
+                <strong class="tjc-card__price">50 лари</strong>
+              </div>
+              <h3 class="tjc-card__name">Анбани и Gurucan</h3>
+              <p class="tjc-card__desc">Группы 280 лари, прописи 50 лари, видео 90 лари.</p>
+            </div>
+            <div class="tjc-card__links">
+              <button type="button" class="tjc-card__btn" data-pick-goal="kids" data-pick-fmt="group">Выбрать</button>
+              <a class="tjc-card__more" href="program-kids.html">Курс →</a>
+            </div>
+          </article>
+        </div>
+
+        <div class="tjc-table-wrap">
+          <div class="tjc-matrix" role="region" aria-label="Сводка тарифов">
+            <div class="tjc-matrix__cell tjc-matrix__head">Тариф</div>
+            <div class="tjc-matrix__cell tjc-matrix__head">Формат</div>
+            <div class="tjc-matrix__cell tjc-matrix__head">Цена</div>
+            <div class="tjc-matrix__cell">Мини-группа</div>
+            <div class="tjc-matrix__cell">Тбилиси, Батуми, Zoom</div>
+            <div class="tjc-matrix__cell">280 лари · 690 лари</div>
+            <div class="tjc-matrix__cell">1 на 1 с билингвом</div>
+            <div class="tjc-matrix__cell">8 уроков</div>
+            <div class="tjc-matrix__cell">640 лари</div>
+            <div class="tjc-matrix__cell">Гражданство</div>
+            <div class="tjc-matrix__cell">600 тестов Минюста</div>
+            <div class="tjc-matrix__cell">650 лари · 90 лари</div>
+            <div class="tjc-matrix__cell">Книги и видео</div>
+            <div class="tjc-matrix__cell">Ozon, WB, Gurucan</div>
+            <div class="tjc-matrix__cell">50 лари · 90 лари</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="tjc-sec" id="method">
+      <div class="tjc-sec__wrap">
+        <div class="tjc-sec__head">
+          <h2 class="tjc-sec__title">Метод Тамары Кавтарадзе</h2>
+          <p class="tjc-sec__idx">02 · Живая речь</p>
+        </div>
+
+        <div class="tjc-method">
+          <div class="tjc-method__visual">
+            <img class="tjc-method__photo" src="img/tamara.jpg" width="480" height="580" loading="lazy" alt="Тамара Кавтарадзе">
+            <img class="tjc-method__photo" src="img/illyustraciya.jpg" width="480" height="580" loading="lazy" alt="Урок в школе Tamarjoba">
+          </div>
+
+          <div class="tjc-method__body">
+            <h3 class="tjc-method__headline">Говорим с первого урока на сценках Тбилиси и Батуми</h3>
+            <p class="tjc-method__text">С 2019 года выпустили 3 000+ учеников в 600+ группах.</p>
+            <ul class="tjc-method__list">
+              <li class="tjc-method__fact">Книги на Ozon и WB</li>
+              <li class="tjc-method__fact">Gurucan по 15 минут</li>
+              <li class="tjc-method__fact">Классы в Тбилиси и Батуми</li>
+              <li class="tjc-method__fact">Разговорные клубы</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="tjc-sec tjc-sec--dark" id="alphabet">
+      <div class="tjc-sec__wrap">
+        <div class="tjc-sec__head">
+          <h2 class="tjc-sec__title">Квест с грузинским алфавитом</h2>
+          <p class="tjc-sec__idx">03 · Бонус к уроку</p>
+        </div>
+
+        <div class="tjc-quest">
+          <div class="tjc-board">
+            <div class="tjc-board__rounds" role="group" aria-label="Раунды игры">
+              <button type="button" class="tjc-round-btn tjc-round-btn--active" data-round="0">Раунд 1 · გამარჯობა</button>
+              <button type="button" class="tjc-round-btn" data-round="1">Раунд 2 · მადლობა</button>
+              <button type="button" class="tjc-round-btn" data-round="2">Раунд 3 · თბილისი</button>
+            </div>
+
+            <div class="tjc-board__target" aria-live="polite">
+              <strong class="tjc-board__word" id="tjc-quest-word">გამარჯობა</strong>
+              <span class="tjc-board__meaning" id="tjc-quest-meaning">გამარჯობა · здравствуйте</span>
+              <div class="tjc-board__slots" id="tjc-quest-slots">
+                <span class="tjc-slot tjc-slot--next">გ</span>
+                <span class="tjc-slot">·</span>
+                <span class="tjc-slot">·</span>
+                <span class="tjc-slot">·</span>
+                <span class="tjc-slot">·</span>
+              </div>
+            </div>
+
+            <div class="tjc-board__footer">
+              <span class="tjc-board__score" id="tjc-quest-score">Слов · 0 из 3</span>
+              <button type="button" class="tjc-board__reset" id="tjc-quest-reset">Сброс</button>
+            </div>
+          </div>
+
+          <div class="tjc-letters" role="group" aria-label="Карточки грузинских букв">
+            <button type="button" class="tjc-letter" data-char="ა" data-word="ატამი" data-freq="330">
+              <span class="tjc-letter__char">ა</span>
+              <span class="tjc-letter__sound">ани</span>
+              <span class="tjc-letter__word">ატამი</span>
+            </button>
+            <button type="button" class="tjc-letter" data-char="ბ" data-word="ბავშვი" data-freq="370">
+              <span class="tjc-letter__char">ბ</span>
+              <span class="tjc-letter__sound">бани</span>
+              <span class="tjc-letter__word">ბავშვი</span>
+            </button>
+            <button type="button" class="tjc-letter tjc-letter--target" data-char="გ" data-word="გემრიელი" data-freq="415">
+              <span class="tjc-letter__char">გ</span>
+              <span class="tjc-letter__sound">гани</span>
+              <span class="tjc-letter__word">გემრიელი</span>
+            </button>
+            <button type="button" class="tjc-letter" data-char="დ" data-word="დედა" data-freq="440">
+              <span class="tjc-letter__char">დ</span>
+              <span class="tjc-letter__sound">дони</span>
+              <span class="tjc-letter__word">დედა</span>
+            </button>
+            <button type="button" class="tjc-letter" data-char="ე" data-word="ენა" data-freq="494">
+              <span class="tjc-letter__char">ე</span>
+              <span class="tjc-letter__sound">эни</span>
+              <span class="tjc-letter__word">ენა</span>
+            </button>
+            <button type="button" class="tjc-letter" data-char="თ" data-word="თევზი" data-freq="523">
+              <span class="tjc-letter__char">თ</span>
+              <span class="tjc-letter__sound">тани</span>
+              <span class="tjc-letter__word">თევზი</span>
+            </button>
+            <button type="button" class="tjc-letter" data-char="მ" data-word="მზე" data-freq="587">
+              <span class="tjc-letter__char">მ</span>
+              <span class="tjc-letter__sound">мани</span>
+              <span class="tjc-letter__word">მზე</span>
+            </button>
+            <button type="button" class="tjc-letter" data-char="ს" data-word="სახლი" data-freq="659">
+              <span class="tjc-letter__char">ს</span>
+              <span class="tjc-letter__sound">сани</span>
+              <span class="tjc-letter__word">სახლი</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="tjc-sec" id="mentors">
+      <div class="tjc-sec__wrap">
+        <div class="tjc-sec__head">
+          <h2 class="tjc-sec__title">Билингвы нашей школы</h2>
+          <p class="tjc-sec__idx">04 · Носители</p>
+        </div>
+
+        <dl class="tjc-mentors">
+          <div class="tjc-mentors__item">
+            <img class="tjc-mentors__avatar" src="img/prepod-1.jpg" width="84" height="84" loading="lazy" alt="Тамара Кавтарадзе">
+            <div>
+              <dt class="tjc-mentors__name">Тамара Кавтарадзе</dt>
+              <dd class="tjc-mentors__bio">Основатель, автор учебников и курса гражданства.</dd>
+            </div>
+          </div>
+
+          <div class="tjc-mentors__item">
+            <img class="tjc-mentors__avatar" src="img/prepod-2.jpg" width="84" height="84" loading="lazy" alt="Нино Гелашвили">
+            <div>
+              <dt class="tjc-mentors__name">Нино Гелашвили</dt>
+              <dd class="tjc-mentors__bio">Филолог ТГУ, ставит чистое произношение.</dd>
+            </div>
+          </div>
+
+          <div class="tjc-mentors__item">
+            <img class="tjc-mentors__avatar" src="img/prepod-3.jpg" width="84" height="84" loading="lazy" alt="Мариам Беридзе">
+            <div>
+              <dt class="tjc-mentors__name">Мариам Беридзе</dt>
+              <dd class="tjc-mentors__bio">Куратор в Батуми, разговорные группы A1–A2.</dd>
+            </div>
+          </div>
+
+          <div class="tjc-mentors__item">
+            <img class="tjc-mentors__avatar" src="img/prepod-4.jpg" width="84" height="84" loading="lazy" alt="Саломе Кварацхелия">
+            <div>
+              <dt class="tjc-mentors__name">Саломе Кварацхелия</dt>
+              <dd class="tjc-mentors__bio">Педагог детского курса 33 буквы Анбани.</dd>
+            </div>
+          </div>
+        </dl>
+      </div>
+    </section>
+
+    <section class="tjc-sec" id="enroll">
+      <div class="tjc-sec__wrap">
+        <div class="tjc-sec__head">
+          <h2 class="tjc-sec__title">Запись на пробный урок</h2>
+          <p class="tjc-sec__idx">05 · Старт за 15 минут</p>
+        </div>
+
+        <div class="tjc-enroll">
+          <form class="tjc-form" id="tjc-form" action="#" method="post">
+            <div class="tjc-form__preset" id="tjc-form-preset">Расчёт · Мини-группа A1–A2+ · 280 лари</div>
+            <div class="tjc-form__gift" id="tjc-gift-banner" hidden aria-hidden="true">Бонус активирован · прописи + пробный урок</div>
+
+            <div class="tjc-form__row">
+              <div class="tjc-form__field">
+                <label class="tjc-form__label" for="tjc-name">Имя</label>
+                <input class="tjc-form__input" id="tjc-name" name="name" type="text" placeholder="Анна" required>
+              </div>
+              <div class="tjc-form__field">
+                <label class="tjc-form__label" for="tjc-phone">Телефон / Telegram</label>
+                <input class="tjc-form__input" id="tjc-phone" name="phone" type="tel" placeholder="+995 591 95 29 28" required>
+              </div>
+            </div>
+
+            <div class="tjc-form__field">
+              <label class="tjc-form__label" for="tjc-course-select">Тариф</label>
+              <select class="tjc-form__select" id="tjc-course-select" name="course">
+                <option value="Интенсив в мини-группе (280 лари / мес)">Группа 280 лари</option>
+                <option value="Полный курс в группе 3 мес (690 лари)">Курс 690 лари</option>
+                <option value="Индивидуально с билингвом (640 лари / 8 уроков)">1 на 1 · 640 лари</option>
+                <option value="Экзамен на гражданство · индивидуально (650 лари)">Гражданство 650 лари</option>
+                <option value="Детский курс 33 буквы Анбани (280 лари)">Детям 280 лари</option>
+                <option value="Видеокурс с Тамарой по 15 мин (90 лари)">Видео 90 лари</option>
+                <option value="Самостоятельно · Книги и Gurucan (50 лари)">Книги 50 лари</option>
+              </select>
+            </div>
+
+            <label class="tjc-form__consent" for="tjc-consent">
+              <input class="tjc-form__check" id="tjc-consent" type="checkbox">
+              <span>Соглашаюсь на обработку данных</span>
+            </label>
+
+            <button type="submit" class="tjc-form__submit" id="tjc-submit" disabled>Отправить заявку</button>
+            <div class="tjc-form__ok" id="tjc-form-ok" hidden aria-hidden="true">Заявка принята!</div>
+          </form>
+
+          <ul class="tjc-places">
+            <li class="tjc-places__item">
+              <strong class="tjc-places__city">Тбилиси · ул. Табукашвили, 46</strong>
+              <span class="tjc-places__addr">Пн–сб 10.00–21.00</span>
+            </li>
+            <li class="tjc-places__item">
+              <strong class="tjc-places__city">Батуми · ул. Фарнаваза Мепе, 46</strong>
+              <span class="tjc-places__addr">Пн–сб 10.00–21.00</span>
+            </li>
+            <li class="tjc-places__item">
+              <strong class="tjc-places__city">Контакты школы</strong>
+              <div class="tjc-places__links">
+                <a class="tjc-places__btn" href="tel:+995591952928">+995 591 95 29 28</a>
+                <a class="tjc-places__btn" href="https://wa.me/995591952928" target="_blank" rel="noopener">WhatsApp</a>
+                <a class="tjc-places__btn" href="https://t.me/tamarjoba" target="_blank" rel="noopener">Telegram</a>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <aside class="tjc-drawer" id="tjc-drawer" hidden aria-hidden="true" aria-label="Карточка курса">
+    <div class="tjc-drawer__panel">
+      <div class="tjc-drawer__head">
+        <h3 class="tjc-drawer__title" id="tjc-drawer-title">Интенсив в мини-группе A1–A2+</h3>
+        <button type="button" class="tjc-drawer__close" id="tjc-close-drawer" aria-label="Закрыть">✕</button>
+      </div>
+      <p><strong id="tjc-drawer-price">280 лари · 9 500 руб</strong></p>
+      <p id="tjc-drawer-pack">4–7 человек · 2 раза в неделю · учебник включён</p>
+      <ul class="tjc-drawer__list" id="tjc-drawer-list">
+        <li>Недели 1–2 · Алфавит Анбани и чтение</li>
+        <li>Недели 3–6 · Живые диалоги в городе</li>
+        <li>Недели 7–12 · Глаголы и практика</li>
+      </ul>
+      <div class="tjc-console__actions">
+        <a class="tjc-cta tjc-cta--ghost" id="tjc-drawer-page" href="program-groups.html">Страница курса ↗</a>
+        <button type="button" class="tjc-cta tjc-cta--primary" id="tjc-drawer-enroll">Записаться →</button>
+      </div>
+    </div>
+  </aside>
+
+  <footer class="tjc-foot">
+    <p class="tjc-foot__line">Tamarjoba · Тбилиси и Батуми</p>
+    <small class="tjc-foot__legal">2019–2026 <a class="tjc-foot__top" href="#calc">Наверх</a></small>
+  </footer>
+
+  <script src="script.js"></script>
+  <script>
+  if ('IntersectionObserver' in window && 'requestAnimationFrame' in window) {
+    requestAnimationFrame(function () {});
+  }
+  </script>
+<a class="osb-bot" href="https://t.me/opensites_io?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5%21%20%D0%A1%D0%BC%D0%BE%D1%82%D1%80%D1%8E%20%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%20%D1%81%D0%B0%D0%B9%D1%82%D0%B0%20%D0%B4%D0%BB%D1%8F%20%C2%ABTamarjoba%C2%BB%20%E2%80%94%20%D1%85%D0%BE%D1%87%D1%83%20%D1%82%D0%B0%D0%BA%D0%BE%D0%B9" target="_blank" rel="noopener"><span class="osb-in"><span>Сделано в <span class="osb-mark"><span class="osb-dot"></span>open-sites.io</span></span><span class="osb-cta">Написать нам →</span></span></a>
+<script src="https://crm.3.78.134.4.sslip.io/e.js" defer></script>
+</body>
+</html>
