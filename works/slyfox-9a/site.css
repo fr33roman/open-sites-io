@@ -1,0 +1,1531 @@
+/* ==========================================================================
+   SLY FOX SCHOOL — BATUMI (2026)
+   Фирменная палитра: Обсидиан #0F1014, Графит #16181F / #1E212B,
+   Кость #EFE9DF, Сталь #B2B4BE, Лисья медь #E8721A, Янтарь #FFB37A / #BD5200
+   ========================================================================== */
+
+:root {
+  --bg: #0F1014;
+  --panel: #16181F;
+  --panel-hi: #1E212B;
+  --text: #EFE9DF;
+  --dim: #B2B4BE;
+  --fox: #E8721A;
+  --fox-hi: #FFB37A;
+  --fox-lo: #BD5200;
+  --line: rgba(239, 233, 223, 0.10);
+  --line-fox: rgba(232, 114, 26, 0.34);
+  --radius-lg: 26px;
+  --radius-md: 20px;
+  --radius-pill: 999px;
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --font: 'Geologica', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: var(--font);
+  font-size: 16px;
+  line-height: 1.5;
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background-color: var(--bg);
+  background-image:
+    radial-gradient(900px 500px at 82% 8%, rgba(232, 114, 26, 0.13), transparent 70%),
+    radial-gradient(700px 460px at 12% 35%, rgba(189, 82, 0, 0.08), transparent 72%);
+  color: var(--text);
+  overflow-x: hidden;
+}
+
+img, video {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button, input, select {
+  font: inherit;
+  color: inherit;
+}
+
+ul, ol, dl, dd, figure {
+  margin: 0;
+  padding: 0;
+}
+
+ul, ol {
+  list-style: none;
+}
+
+/* ==========================================================================
+   ШАПКА САЙТА
+   ========================================================================== */
+.sfa-header {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  padding: 10px 16px 0;
+}
+
+.sfa-header__bar {
+  max-width: 1280px;
+  margin: 0 auto;
+  min-height: 58px;
+  padding: 6px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  background: rgba(22, 24, 31, 0.92);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-pill);
+  box-shadow: 0 14px 36px rgba(0, 0, 0, 0.45);
+}
+
+.sfa-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 44px;
+  padding: 2px 6px;
+}
+
+.sfa-brand__logo {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 1px solid var(--line-fox);
+  object-fit: cover;
+}
+
+.sfa-brand__txt {
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: var(--text);
+  white-space: nowrap;
+}
+
+.sfa-brand__txt b {
+  color: var(--fox-hi);
+  font-weight: 700;
+}
+
+.sfa-nav {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.sfa-nav__link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 12px;
+  border-radius: var(--radius-pill);
+  font-size: 0.92rem;
+  font-weight: 500;
+  color: var(--dim);
+  transition: color 0.2s var(--ease-out), background-color 0.2s var(--ease-out);
+}
+
+.sfa-nav__link:hover,
+.sfa-nav__link:focus-visible {
+  color: var(--text);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.sfa-header__tools {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.sfa-presets,
+.sfa-lang {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  padding: 2px;
+  background: #111319;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-pill);
+}
+
+.sfa-preset-pill,
+.sfa-lang__btn {
+  min-width: 44px;
+  min-height: 44px;
+  padding: 0 10px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: transparent;
+  color: var(--dim);
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s var(--ease-out), color 0.2s var(--ease-out);
+}
+
+.sfa-preset-pill.is-current,
+.sfa-lang__btn.is-active {
+  background: var(--fox);
+  color: #0F1014;
+}
+
+.sfa-top-action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 0 18px;
+  border-radius: var(--radius-pill);
+  background: var(--fox);
+  color: #0F1014;
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+/* ==========================================================================
+   КНОПКИ И КАРТОЧКИ
+   ========================================================================== */
+.sfa-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  padding: 10px 22px;
+  border-radius: var(--radius-pill);
+  border: 1px solid transparent;
+  font-size: 0.96rem;
+  font-weight: 600;
+  line-height: 1.2;
+  cursor: pointer;
+  transition: transform 0.22s var(--ease-out), box-shadow 0.22s var(--ease-out), background-color 0.22s var(--ease-out);
+  white-space: nowrap;
+}
+
+.sfa-btn:active {
+  transform: translateY(1px) scale(0.99);
+}
+
+.sfa-btn--primary {
+  background: linear-gradient(180deg, #F5842B 0%, #D9640E 100%);
+  color: #0F1014;
+  border-color: rgba(255, 200, 150, 0.45);
+  box-shadow: 0 10px 28px rgba(232, 114, 26, 0.32), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+}
+
+.sfa-btn--primary:hover {
+  box-shadow: 0 14px 34px rgba(232, 114, 26, 0.46), inset 0 1px 0 rgba(255, 255, 255, 0.45);
+  transform: translateY(-1px);
+}
+
+.sfa-btn--ghost {
+  background: #1C1F29;
+  color: var(--text);
+  border-color: rgba(239, 233, 223, 0.20);
+}
+
+.sfa-btn--ghost:hover {
+  border-color: var(--fox-hi);
+  background: #232734;
+}
+
+.sfa-btn--header {
+  min-height: 44px;
+  padding: 0 16px;
+  background: var(--fox);
+  color: #0F1014;
+  font-weight: 700;
+}
+
+.sfa-btn--sm {
+  min-height: 44px;
+  padding: 8px 16px;
+  background: var(--fox);
+  color: #0F1014;
+  font-size: 0.88rem;
+  font-weight: 700;
+}
+
+.sfa-spot {
+  position: relative;
+  background-color: var(--panel);
+  background-image: radial-gradient(
+    420px circle at var(--mx, 50%) var(--my, 0%),
+    rgba(232, 114, 26, 0.13),
+    transparent 65%
+  );
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 18px 44px rgba(0, 0, 0, 0.42), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  transition: border-color 0.25s var(--ease-out), transform 0.25s var(--ease-out);
+}
+
+.sfa-spot:hover {
+  border-color: rgba(232, 114, 26, 0.36);
+}
+
+/* ==========================================================================
+   ПЕРВЫЙ ЭКРАН (А / Б / В)
+   ========================================================================== */
+.sfa-main {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 14px 16px 72px;
+}
+
+.sfa-coord {
+  display: inline-block;
+  margin: 0 0 10px;
+  padding: 0 0 0 10px;
+  border-left: 2px solid var(--fox);
+  border-radius: 0;
+  background: transparent;
+  color: var(--fox-hi);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.sfa-h1 {
+  margin: 0 0 14px;
+  font-size: clamp(2.05rem, 4.1vw, 3.65rem);
+  font-weight: 700;
+  line-height: 1.06;
+  letter-spacing: -0.025em;
+  color: var(--text);
+}
+
+.sfa-h1 em {
+  font-style: normal;
+  color: var(--fox-hi);
+}
+
+.sfa-lead {
+  margin: 0 0 22px;
+  max-width: 54ch;
+  font-size: clamp(1.02rem, 1.35vw, 1.18rem);
+  color: var(--dim);
+}
+
+.sfa-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+/* --- ПРЕСЕТ А --- */
+.sfa-bento {
+  display: grid;
+  grid-template-columns: 1.32fr 0.98fr;
+  gap: 16px;
+  align-items: stretch;
+}
+
+.sfa-bento__main {
+  padding: 34px 32px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.sfa-next-slot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  background: #111319;
+  border: 1px solid rgba(232, 114, 26, 0.28);
+  border-radius: var(--radius-md);
+  font-size: 0.9rem;
+}
+
+.sfa-next-slot__dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--fox);
+  box-shadow: 0 0 12px var(--fox);
+}
+
+.sfa-next-slot__label {
+  flex: 1 1 200px;
+  color: var(--text);
+  font-weight: 500;
+}
+
+.sfa-next-slot__go {
+  min-height: 44px;
+  padding: 0 12px;
+  display: inline-flex;
+  align-items: center;
+  color: var(--fox-hi);
+  font-weight: 600;
+}
+
+.sfa-bento__dial {
+  position: relative;
+  min-height: 390px;
+  padding: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: radial-gradient(circle at 50% 50%, #1C1F2B 0%, #11131A 78%);
+}
+
+.sfa-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.sfa-emblem-core {
+  position: relative;
+  z-index: 2;
+  width: 224px;
+  height: 224px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #0F1014;
+  border: 1px solid rgba(232, 114, 26, 0.45);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7), 0 0 40px rgba(232, 114, 26, 0.18);
+}
+
+.sfa-emblem-ring {
+  position: absolute;
+  inset: -12px;
+  border-radius: 50%;
+  border: 1px dashed rgba(255, 179, 122, 0.42);
+  animation: sf-spin 28s linear infinite;
+}
+
+@keyframes sf-spin {
+  to { transform: rotate(360deg); }
+}
+
+.sfa-emblem-img {
+  width: 204px;
+  height: 204px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.sfa-dial-readout {
+  position: absolute;
+  left: 20px;
+  right: 20px;
+  bottom: 18px;
+  z-index: 3;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 14px;
+  background: #12141B;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-pill);
+  font-size: 0.8rem;
+}
+
+.sfa-dial-tag {
+  color: var(--dim);
+  letter-spacing: 0.12em;
+}
+
+.sfa-dial-val {
+  color: var(--fox-hi);
+}
+
+.sfa-bento__reel {
+  position: relative;
+  min-height: 210px;
+  overflow: hidden;
+  padding: 0;
+}
+
+.sfa-bento__video {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  filter: brightness(0.84) contrast(1.06);
+}
+
+.sfa-bento__overlay {
+  position: absolute;
+  inset: auto 0 0 0;
+  padding: 16px 22px;
+  background: linear-gradient(180deg, transparent 0%, rgba(15, 16, 20, 0.94) 85%);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.sfa-pill-tag {
+  display: inline-block;
+  font-size: 0.74rem;
+  font-weight: 600;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--fox-hi);
+}
+
+.sfa-pill-tag--copper {
+  color: #FFD1AE;
+}
+
+.sfa-bento__title {
+  font-size: 1.08rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.sfa-bento__coach {
+  padding: 20px 24px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.sfa-bento__avatar {
+  width: 84px;
+  height: 84px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--fox);
+  flex-shrink: 0;
+}
+
+.sfa-bento__coach-body {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+}
+
+.sfa-bento__meta {
+  font-size: 0.88rem;
+  color: var(--dim);
+}
+
+.sfa-icon-link {
+  min-width: 46px;
+  min-height: 46px;
+  border-radius: 50%;
+  border: 1px solid var(--line-fox);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--fox-hi);
+  font-size: 1.15rem;
+}
+
+/* --- ПРЕСЕТ Б --- */
+.sfa-split-b {
+  display: grid;
+  grid-template-columns: 0.92fr 1.38fr;
+  gap: 18px;
+  align-items: stretch;
+}
+
+.sfa-split-b__left {
+  padding: 34px 30px;
+  border-left: 3px solid var(--fox);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.sfa-spine-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.sfa-chip {
+  padding: 7px 13px;
+  border-radius: var(--radius-pill);
+  background: #12141B;
+  border: 1px solid var(--line);
+  font-size: 0.84rem;
+  color: var(--text);
+}
+
+.sfa-split-b__stage {
+  position: relative;
+  padding: 20px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  min-height: 440px;
+}
+
+.sfa-stage-media {
+  position: relative;
+  z-index: 2;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  border: 1px solid var(--line-fox);
+}
+
+.sfa-stage-video {
+  width: 100%;
+  height: 360px;
+  object-fit: cover;
+}
+
+.sfa-stage-seal {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 104px;
+  height: 104px;
+}
+
+.sfa-stage-seal .sfa-emblem-img {
+  width: 96px;
+  height: 96px;
+}
+
+.sfa-stage-switcher {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr 1fr;
+  gap: 6px;
+  padding: 10px;
+  background: #12141B;
+}
+
+.sfa-stage-btn {
+  min-height: 44px;
+  padding: 8px 12px;
+  border-radius: 12px;
+  border: 1px solid var(--line);
+  background: #181B24;
+  color: var(--dim);
+  font-size: 0.84rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.sfa-stage-btn.is-active {
+  background: var(--fox);
+  color: #0F1014;
+  border-color: var(--fox-hi);
+}
+
+/* --- ПРЕСЕТ В --- */
+.sfa-console-grid {
+  display: grid;
+  grid-template-columns: 0.95fr 1.35fr;
+  gap: 18px;
+  align-items: stretch;
+}
+
+.sfa-console-intro {
+  padding: 32px 28px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.sfa-emblem-inline {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 16px;
+  margin-bottom: 18px;
+  background: #12141B;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+}
+
+.sfa-emblem-inline__bg {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  border: 1px solid var(--fox);
+  background: #0F1014 url("img/logo-260.png") center / cover no-repeat;
+  flex-shrink: 0;
+}
+
+.sfa-emblem-inline__txt {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-size: 0.9rem;
+}
+
+.sfa-emblem-inline__txt span {
+  color: var(--dim);
+  font-size: 0.82rem;
+}
+
+.sfa-console-deck {
+  position: relative;
+  padding: 26px;
+  overflow: hidden;
+}
+
+.sfa-console-ui {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.sfa-console-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.sfa-console-status {
+  font-size: 0.8rem;
+  color: var(--dim);
+  letter-spacing: 0.1em;
+}
+
+.sfa-console-row {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.sfa-console-lbl {
+  font-size: 0.86rem;
+  color: var(--dim);
+  font-weight: 500;
+}
+
+.sfa-seg {
+  display: grid;
+  grid-template-columns: 1fr 1.08fr 1.15fr;
+  gap: 8px;
+}
+
+.sfa-seg__btn {
+  min-height: 46px;
+  padding: 8px 12px;
+  border-radius: 14px;
+  border: 1px solid var(--line);
+  background: #111319;
+  color: var(--text);
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.sfa-seg__btn.is-active {
+  background: var(--fox);
+  color: #0F1014;
+  border-color: var(--fox-hi);
+}
+
+.sfa-holo-pass {
+  padding: 20px;
+  border-radius: var(--radius-md);
+  background: linear-gradient(135deg, #1E222E 0%, #12141C 100%);
+  border: 1px solid var(--line-fox);
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.48);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.sfa-holo-pass__top {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.sfa-holo-pass__seal {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid var(--fox);
+  background: #0F1014 url("img/logo-96.png") center / cover no-repeat;
+  flex-shrink: 0;
+}
+
+.sfa-holo-pass__sub {
+  display: block;
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  color: var(--fox-hi);
+}
+
+.sfa-holo-pass__grp {
+  font-size: 1.15rem;
+  color: var(--text);
+}
+
+.sfa-holo-pass__price {
+  margin-left: auto;
+  font-size: 1.85rem;
+  font-weight: 300;
+  color: var(--fox-hi);
+}
+
+.sfa-holo-pass__bottom {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding-top: 12px;
+  border-top: 1px solid var(--line);
+  font-size: 0.88rem;
+  color: var(--dim);
+}
+
+/* ==========================================================================
+   СЕКЦИИ
+   ========================================================================== */
+.sfa-sec {
+  margin-top: 56px;
+}
+
+.sfa-sec__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 24px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--line);
+}
+
+.sfa-h2 {
+  margin: 0;
+  font-size: clamp(1.65rem, 2.8vw, 2.35rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--text);
+}
+
+.sfa-sec__idx {
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  color: var(--fox-hi);
+}
+
+.sfa-h3 {
+  margin: 0;
+  font-size: 1.22rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.sfa-p {
+  margin: 8px 0 0;
+  color: var(--dim);
+  font-size: 0.96rem;
+  line-height: 1.52;
+}
+
+/* ==========================================================================
+   ТРЕНЕР
+   ========================================================================== */
+.sfa-coach-layout {
+  display: grid;
+  grid-template-columns: 0.85fr 1.45fr;
+  gap: 20px;
+  align-items: start;
+}
+
+.sfa-coach-portrait {
+  position: sticky;
+  top: 84px;
+  overflow: hidden;
+  padding: 0;
+}
+
+.sfa-coach-portrait__img {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+}
+
+.sfa-coach-portrait__plate {
+  padding: 18px 22px;
+  background: #14161E;
+  border-top: 1px solid var(--line);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.sfa-coach-portrait__plate span {
+  font-size: 0.86rem;
+  color: var(--dim);
+}
+
+.sfa-coach-stages {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.sfa-stage-card {
+  padding: 24px;
+}
+
+.sfa-stage-card__top {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.sfa-stage-card__num {
+  font-size: 1.3rem;
+  font-weight: 300;
+  color: var(--fox-hi);
+}
+
+.sfa-stage-thumbs {
+  margin-top: 16px;
+  display: grid;
+  grid-template-columns: 1.12fr 1fr 1fr;
+  gap: 10px;
+}
+
+.sfa-thumb {
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  overflow: hidden;
+  background: #111319;
+  cursor: pointer;
+  min-height: 84px;
+}
+
+.sfa-thumb img {
+  width: 100%;
+  height: 112px;
+  object-fit: cover;
+  transition: transform 0.35s var(--ease-out);
+}
+
+.sfa-thumb:hover img {
+  transform: scale(1.05);
+}
+
+/* ==========================================================================
+   ПЯТЬ ЭТАПОВ ТРЕНИРОВКИ
+   ========================================================================== */
+.sfa-track-line {
+  width: 100%;
+  height: 6px;
+  margin-bottom: 18px;
+  display: block;
+}
+
+.sfa-track-line__fill {
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 0;
+  transition: stroke-dashoffset 0.5s var(--ease-out);
+}
+
+.sfa-workout-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.sfa-step-card {
+  overflow: hidden;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+}
+
+.sfa-step-card.is-active {
+  border-color: var(--fox);
+}
+
+.sfa-step-card__media {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+}
+
+.sfa-step-card__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s var(--ease-out);
+}
+
+.sfa-step-card:hover .sfa-step-card__media img {
+  transform: scale(1.05);
+}
+
+.sfa-step-card__num {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  padding: 4px 10px;
+  border-radius: var(--radius-pill);
+  background: #111319;
+  border: 1px solid var(--line-fox);
+  color: var(--fox-hi);
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+
+.sfa-step-card__body {
+  padding: 16px;
+}
+
+/* ==========================================================================
+   ГАЛЕРЕЯ И REELS
+   ========================================================================== */
+.sfa-ig-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 14px;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--line-fox);
+  color: var(--fox-hi);
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.sfa-reels-row {
+  display: grid;
+  grid-template-columns: 1.15fr 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.sfa-reel-card {
+  overflow: hidden;
+  padding: 0;
+}
+
+.sfa-reel-card__video {
+  width: 100%;
+  height: 310px;
+  object-fit: cover;
+  background: #0D0E12;
+}
+
+.sfa-reel-card__bar {
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.sfa-reel-play {
+  min-width: 44px;
+  min-height: 44px;
+  border-radius: 50%;
+  border: 1px solid var(--line-fox);
+  background: #12141B;
+  color: var(--fox-hi);
+  cursor: pointer;
+}
+
+.sfa-photo-mosaic {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr 1.1fr;
+  gap: 14px;
+}
+
+.sfa-mosaic-item {
+  padding: 0;
+  overflow: hidden;
+  cursor: pointer;
+  min-height: 180px;
+}
+
+.sfa-mosaic-item img {
+  width: 100%;
+  height: 210px;
+  object-fit: cover;
+  transition: transform 0.35s var(--ease-out);
+}
+
+.sfa-mosaic-item:hover img {
+  transform: scale(1.04);
+}
+
+/* ==========================================================================
+   РАСПИСАНИЕ
+   ========================================================================== */
+.sfa-day-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 18px;
+}
+
+.sfa-day-tab {
+  min-width: 56px;
+  min-height: 46px;
+  padding: 0 18px;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--line);
+  background: var(--panel);
+  color: var(--dim);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.sfa-day-tab.is-active {
+  background: var(--fox);
+  color: #0F1014;
+  border-color: var(--fox-hi);
+}
+
+.sfa-sched-board {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.sfa-slot-card {
+  padding: 22px 20px;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.sfa-slot-card[hidden] {
+  display: none;
+}
+
+.sfa-slot-card__days {
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--fox-hi);
+}
+
+.sfa-slot-card__time {
+  font-size: 2.1rem;
+  font-weight: 300;
+  line-height: 1.05;
+  color: var(--text);
+}
+
+.sfa-slot-card__grp {
+  font-size: 0.95rem;
+  color: var(--dim);
+}
+
+.sfa-slot-card__act {
+  margin-top: 8px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--fox-hi);
+}
+
+/* ==========================================================================
+   ЦЕНЫ
+   ========================================================================== */
+.sfa-price-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.14fr 1fr;
+  gap: 18px;
+  align-items: stretch;
+}
+
+.sfa-club-card {
+  padding: 26px 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 18px;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+.sfa-club-card--featured {
+  background: linear-gradient(165deg, #211D1B 0%, #15171F 100%);
+}
+
+.sfa-club-card--featured::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1.5px;
+  background: linear-gradient(135deg, #FFB37A 0%, #E8721A 45%, rgba(232, 114, 26, 0.12) 100%);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+.sfa-club-card__head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.sfa-club-card__seal {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid var(--line-fox);
+}
+
+.sfa-price-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.sfa-price-table th,
+.sfa-price-table td {
+  padding: 10px 0;
+  border-bottom: 1px solid var(--line);
+  font-size: 0.94rem;
+}
+
+.sfa-price-table th {
+  text-align: left;
+  font-weight: 400;
+  color: var(--dim);
+}
+
+.sfa-price-table td {
+  text-align: right;
+  font-weight: 600;
+  color: var(--text);
+  white-space: nowrap;
+}
+
+.sfa-btn--card {
+  width: 100%;
+  background: #202430;
+  color: var(--text);
+  border-color: var(--line-fox);
+}
+
+.sfa-btn--card:hover {
+  background: var(--fox);
+  color: #0F1014;
+}
+
+/* ==========================================================================
+   ФОРМА ЗАПИСИ И БОТ
+   ========================================================================== */
+.sfa-book-layout {
+  display: grid;
+  grid-template-columns: 1.3fr 0.9fr;
+  gap: 18px;
+  align-items: stretch;
+}
+
+.sfa-form {
+  padding: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.sfa-form__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.sfa-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.sfa-field__lbl {
+  font-size: 0.86rem;
+  font-weight: 500;
+  color: var(--dim);
+}
+
+.sfa-input {
+  min-height: 48px;
+  padding: 10px 14px;
+  border-radius: 14px;
+  border: 1px solid rgba(239, 233, 223, 0.18);
+  background: #101218;
+  color: var(--text);
+  font-size: 0.96rem;
+}
+
+.sfa-input:focus {
+  outline: 2px solid var(--fox);
+  border-color: transparent;
+}
+
+.sfa-consent {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 44px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  color: var(--dim);
+}
+
+.sfa-consent__chk {
+  width: 22px;
+  height: 22px;
+  accent-color: var(--fox);
+  flex-shrink: 0;
+}
+
+.sfa-btn--submit[disabled] {
+  opacity: 0.48;
+  cursor: not-allowed;
+}
+
+.sfa-tma-card {
+  padding: 28px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.sfa-tma-card__top {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.sfa-tma-card__top img {
+  border-radius: 50%;
+  border: 1px solid var(--fox);
+}
+
+.sfa-meta-dl {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 4px;
+  padding: 10px 14px;
+  border-radius: 12px;
+  background: #11131A;
+  border: 1px solid var(--line);
+  font-size: 0.84rem;
+}
+
+.sfa-meta-dl dt {
+  color: var(--fox-hi);
+  font-weight: 600;
+}
+
+.sfa-meta-dl dd {
+  color: var(--dim);
+  margin-bottom: 4px;
+}
+
+.sfa-contact-links {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.sfa-contact-btn {
+  min-height: 48px;
+  padding: 10px 16px;
+  border-radius: 14px;
+  border: 1px solid var(--line);
+  background: #12141C;
+  color: var(--text);
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.sfa-contact-btn--tma {
+  border-color: var(--line-fox);
+  color: var(--fox-hi);
+}
+
+/* ==========================================================================
+   ПОДВАЛ И ЛАЙТБОКС
+   ========================================================================== */
+.sfa-footer {
+  max-width: 1280px;
+  margin: 0 auto;
+  border-top: 1px solid var(--line);
+  padding: 28px 16px 40px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  color: var(--dim);
+  font-size: 0.9rem;
+}
+
+.sfa-footer__copy {
+  font-style: normal;
+  margin: 0;
+}
+
+.sfa-footer__links {
+  display: flex;
+  gap: 14px;
+}
+
+.sfa-footer__links a {
+  min-height: 44px;
+  padding: 0 10px;
+  display: inline-flex;
+  align-items: center;
+  color: var(--text);
+}
+
+.sfa-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: rgba(10, 11, 14, 0.92);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.sfa-lightbox[hidden] {
+  display: none;
+}
+
+.sfa-lightbox__img {
+  max-width: min(92vw, 1080px);
+  max-height: 86vh;
+  border-radius: 18px;
+  border: 1px solid var(--line-fox);
+}
+
+.sfa-lightbox__close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  min-width: 48px;
+  min-height: 48px;
+  border-radius: 50%;
+  border: 1px solid var(--line-fox);
+  background: #16181F;
+  color: var(--text);
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+@media (max-width: 1024px) {
+  .sfa-nav {
+    display: none;
+  }
+  .sfa-bento,
+  .sfa-split-b,
+  .sfa-console-grid,
+  .sfa-coach-layout,
+  .sfa-price-grid,
+  .sfa-book-layout {
+    grid-template-columns: 1fr;
+  }
+  .sfa-coach-portrait {
+    position: relative;
+    top: 0;
+  }
+  .sfa-workout-grid,
+  .sfa-sched-board,
+  .sfa-reels-row,
+  .sfa-photo-mosaic {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .sfa-header {
+    padding: 4px 10px 0;
+  }
+  .sfa-header__bar {
+    min-height: 48px;
+    padding: 4px 10px;
+    gap: 6px;
+  }
+  .sfa-brand__txt b,
+  .sfa-lang,
+  .sfa-btn--header,
+  .sfa-top-action {
+    display: none;
+  }
+  .sfa-main {
+    padding: 6px 10px 56px;
+  }
+  .sfa-bento__main,
+  .sfa-split-b__left,
+  .sfa-console-intro {
+    padding: 14px 16px 20px;
+  }
+  .sfa-coord {
+    margin: 0 0 4px;
+    font-size: 0.7rem;
+  }
+  .sfa-h1 {
+    font-size: 1.85rem;
+    margin-bottom: 10px;
+  }
+  .sfa-workout-grid,
+  .sfa-sched-board,
+  .sfa-reels-row,
+  .sfa-photo-mosaic,
+  .sfa-form__grid,
+  .sfa-seg,
+  .sfa-stage-switcher {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
