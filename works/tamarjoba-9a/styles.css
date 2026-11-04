@@ -1826,3 +1826,13 @@ button, input, select {
   .tja-dl__row { grid-template-columns: minmax(0, 1fr) auto; }
   .tja-dl__row dt { grid-column: auto; }
 }
+
+/* быстрые кнопки: WhatsApp и Telegram рядом, меньше, без номера и ника (слово Романа 04.11) */
+.tja-quick-links { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.tja-quick-link { min-height: 44px; padding: 8px 14px; font-size: .88rem; }
+.tja-quick-link:nth-child(3) { grid-column: 1 / -1; }
+
+/* кнопка маршрута на 20 % меньше (слово Романа 04.11): круг 42 px, место для пальца 44 px */
+.tja-route { width: 44px; height: 44px; padding: 1px; background-clip: content-box; }
+.tja-route::after { inset: -3px; }
+.tja-route svg { width: 19px; height: 19px; }
