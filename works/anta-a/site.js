@@ -11,13 +11,62 @@
   // скрытая вкладка — все анимации на паузе
   d.addEventListener('visibilitychange', function () { root.classList.toggle('is-hidden', d.hidden); });
 
-  // шапка: над тёмным первым экраном прозрачная, дальше сливочная
-  var hd = $('.tna-hd--dark');
-  if (hd) {
-    var onScroll = function () { hd.classList.toggle('is-solid', window.scrollY > 40); };
-    onScroll();
-    window.addEventListener('scroll', onScroll, { passive: true });
+  // шапка: над тёмным первым экраном прозрачная, дальше сливочная; линия прогресса чтения
+  var hd = $('.tna-hd');
+  var hdDark = $('.tna-hd--dark');
+  var par = $$('[data-par]'), parOn = par.length && 'IntersectionObserver' in window && !reduce;
+  var ticking = false;
+  function frame() {
+    ticking = false;
+    var y = window.scrollY, vh = window.innerHeight;
+    if (hdDark) hdDark.classList.toggle('is-solid', y > 40);
+    if (hd) {
+      var max = d.documentElement.scrollHeight - vh;
+      hd.style.setProperty('--sp', max > 0 ? Math.min(1, y / max).toFixed(4) : 0);
+    }
+    if (parOn && !d.hidden) par.forEach(function (el) {
+      if (!el.__vis) return;
+      var kind = el.getAttribute('data-par'), py;
+      if (kind === 'hero') {
+        py = Math.min(1, y / vh) * 44;
+      } else {
+        var r = el.parentElement.getBoundingClientRect();
+        var p = Math.max(0, Math.min(1, (vh - r.top) / (vh + r.height)));
+        py = kind === 'arch' ? -20 + 20 * p : (p - 0.5) * 32;
+      }
+      el.style.setProperty('--py', py.toFixed(1) + 'px');
+    });
   }
+  function onScroll() { if (!ticking) { ticking = true; requestAnimationFrame(frame); } }
+  frame();
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', onScroll);
+  if (parOn) {
+    var pio = new IntersectionObserver(function (es) {
+      es.forEach(function (e) { e.target.__vis = e.isIntersecting; });
+      onScroll();
+    }, { rootMargin: '12% 0px' });
+    par.forEach(function (el) { pio.observe(el); });
+  }
+
+  // тема оформления: три образца, выбор запоминается
+  var TC = { wine: '#17141A', cypress: '#0E1A16', graphite: '#0C0D10' };
+  var sws = $$('.tna-sw'), metaTC = $('meta[name=theme-color]');
+  function applyTheme(t, save) {
+    if (!TC[t]) t = 'wine';
+    if (t === 'wine') root.removeAttribute('data-theme'); else root.setAttribute('data-theme', t);
+    sws.forEach(function (b) { b.setAttribute('aria-pressed', b.getAttribute('data-theme-set') === t ? 'true' : 'false'); });
+    if (metaTC) metaTC.setAttribute('content', TC[t]);
+    if (save) { try { localStorage.setItem('tna-theme', t); } catch (e) {} }
+  }
+  applyTheme(root.getAttribute('data-theme') || 'wine', false);
+  sws.forEach(function (b) {
+    b.addEventListener('click', function () {
+      root.classList.add('is-theming');
+      applyTheme(b.getAttribute('data-theme-set'), true);
+      setTimeout(function () { root.classList.remove('is-theming'); }, 700);
+    });
+  });
 
   // меню на телефоне
   var burger = $('.tna-burger'), menu = $('#tna-menu');
@@ -27,8 +76,8 @@
     burger.setAttribute('aria-label', open ? 'Закрыть меню' : 'Открыть меню');
     menu.hidden = !open;
     d.body.style.overflow = open ? 'hidden' : '';
-    if (hd && open) hd.classList.add('is-solid');
-    else if (hd) hd.classList.toggle('is-solid', window.scrollY > 40);
+    if (hdDark && open) hdDark.classList.add('is-solid');
+    else if (hdDark) hdDark.classList.toggle('is-solid', window.scrollY > 40);
   }
   if (burger) {
     burger.addEventListener('click', function () { setMenu(burger.getAttribute('aria-expanded') !== 'true'); });
@@ -76,44 +125,69 @@
     d.addEventListener('visibilitychange', function () { if (d.hidden) vid.pause(); });
   }
 
-  // время в Тбилиси
-  var clock = $('.tna-clock');
-  if (clock && window.Intl && Intl.DateTimeFormat) {
-    var fmt = new Intl.DateTimeFormat('ru-RU', { timeZone: clock.getAttribute('data-tz'), hour: '2-digit', minute: '2-digit', hour12: false });
-    var tick = function () { if (!d.hidden) clock.textContent = fmt.format(new Date()); };
-    tick();
-    setInterval(tick, 20000);
-    d.addEventListener('visibilitychange', tick);
+  // заголовки появляются строками: слова в обёртках, задержка по номеру строки
+  function splitLines(h) {
+    if (h.__split) return; h.__split = true;
+    var parts = h.textContent.split(/( +)/), frag = d.createDocumentFragment();
+    parts.forEach(function (w) {
+      if (!w) return;
+      if (/^ +$/.test(w)) { frag.appendChild(d.createTextNode(' ')); return; }
+      var o = d.createElement('b'), i = d.createElement('b');
+      o.className = 'tna-wd'; i.textContent = w; o.appendChild(i); frag.appendChild(o);
+    });
+    h.textContent = ''; h.appendChild(frag);
+    var tops = [], cnt = {};
+    $$('.tna-wd', h).forEach(function (o) {
+      var t = o.offsetTop, li = tops.indexOf(t);
+      if (li < 0) { tops.push(t); li = tops.length - 1; }
+      cnt[li] = (cnt[li] || 0);
+      o.style.setProperty('--wl', li); o.style.setProperty('--wi', cnt[li]++);
+    });
   }
+  var heads = $$('.tna-hero h1, .tna-phero h1, .tna-thero h1, .tna-head h2, .tna-band h2, .tna-band__q');
+  var canAnim = 'IntersectionObserver' in window && !reduce;
 
   // появление по очереди
-  var targets = $$('.tna-head, .tna-about__body > *, .tna-tours__lead, .tna-cat, .tna-mice__p, .tna-mice__tx .tna-btn, .tna-rev, .tna-contact__tx > *, .tna-voucher, .tna-adv li, .tna-fmt li, .tna-row, .tna-days li, .tna-list, .tna-morelist li, .tna-prose, .tna-band > *');
+  var targets = $$('.tna-head, .tna-about__body > *, .tna-tours__lead, .tna-cat, .tna-mice__p, .tna-mice__tx .tna-btn, .tna-rev, .tna-contact__tx > *, .tna-voucher, .tna-adv li, .tna-fmt li, .tna-row, .tna-days li, .tna-list, .tna-morelist li, .tna-prose, .tna-band > *, .tna-facts__row li');
   var curt = $$('[data-curtain]');
-  if ('IntersectionObserver' in window && !reduce) {
+  if (canAnim) {
     var io = new IntersectionObserver(function (es) {
       es.forEach(function (e) {
         if (e.isIntersecting) { e.target.classList.add('is-in'); io.unobserve(e.target); }
       });
     }, { threshold: 0.12, rootMargin: '0px 0px -6% 0px' });
-    targets.forEach(function (el, i) {
+    var order = new Map();
+    targets.forEach(function (el) {
+      var par = el.parentElement, n = order.get(par) || 0;
+      order.set(par, n + 1);
       el.classList.add('tna-rv');
-      el.style.setProperty('--d', (i % 4) * 0.07 + 's');
+      el.style.setProperty('--d', Math.min(n, 6) * 0.09 + 's');
       io.observe(el);
     });
     curt.forEach(function (el) { io.observe(el); });
+    var go = function () {
+      heads.forEach(splitLines);
+      // первый экран и шапки страниц: строки идут сразу
+      $$('.tna-hero h1, .tna-phero h1, .tna-thero h1').forEach(function (h) {
+        h.style.setProperty('--w0', '.15s');
+        requestAnimationFrame(function () { requestAnimationFrame(function () { h.classList.add('is-lines'); }); });
+      });
+    };
+    var done = false, once = function () { if (!done) { done = true; go(); } };
+    if (d.fonts && d.fonts.ready) { d.fonts.ready.then(once); setTimeout(once, 1200); } else once();
   } else {
-    curt.forEach(function (el) { el.classList.add('is-in'); });
+    curt.forEach(function (el) { el.classList.add('is-curtain'); el.classList.add('is-in'); });
   }
 
   // цифры досчитываются
   var counters = $$('[data-count]');
   if (counters.length && 'IntersectionObserver' in window && !reduce) {
+    counters.forEach(function (el) { el.textContent = '0'; });
     var cio = new IntersectionObserver(function (es) {
       es.forEach(function (e) {
         if (!e.isIntersecting) return;
         cio.unobserve(e.target);
         var el = e.target, to = +el.getAttribute('data-count'), t0 = null, dur = 1400;
-        el.textContent = '0';
         (function step(ts) {
           if (t0 === null) t0 = ts;
           var k = Math.min(1, (ts - t0) / dur), v = 1 - Math.pow(1 - k, 3);
@@ -140,13 +214,14 @@
   $$('.tna-form').forEach(function (f) {
     var agree = f.elements.ok, send = $('button[type=submit]', f);
     if (agree && send) agree.addEventListener('change', function () { send.disabled = !agree.checked; });
+    ['name', 'way', 'msg'].forEach(function (n) { f.elements[n].addEventListener('input', function () { this.classList.remove('is-bad'); }); });
     f.addEventListener('submit', function (e) {
       e.preventDefault();
       if (agree && !agree.checked) return;
       var ok = $('.tna-form__ok', f), bad = null;
       ['name', 'way', 'msg'].forEach(function (n) {
         var el = f.elements[n];
-        if (!el.value.trim()) { el.style.borderColor = '#B3261E'; bad = bad || el; } else { el.style.borderColor = ''; }
+        if (!el.value.trim()) { el.classList.add('is-bad'); bad = bad || el; } else { el.classList.remove('is-bad'); }
       });
       if (bad) { bad.focus(); return; }
       var text = f.getAttribute('data-hello') + '\n\nИмя — ' + f.elements.name.value.trim() +
