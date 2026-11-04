@@ -1,0 +1,31 @@
+{
+ "cat_files": {
+  "tbilisi": "glavnaya/05-img_1110-scaled.jpg",
+  "regiony": "gallery/01-img_0076.jpeg",
+  "mnogodnevnye": "gallery/06-img_0088.jpeg"
+ },
+ "about_file": "glavnaya/07-img_0179-scaled.jpg",
+ "about_crop": [
+  0.12,
+  0.0,
+  0.78,
+  1.0
+ ],
+ "mice_file": "gallery/08-img_0562-scaled.jpg",
+ "exclude": [],
+ "tour_files": {
+  "rtveli": [
+   "gallery/03-img_0078.jpeg",
+   "gallery/01-img_0076.jpeg"
+  ],
+  "devichnik": [
+   "glavnaya/01-frame-347-scaled.jpg"
+  ],
+  "staryj-gorod": [
+   "glavnaya/03-img_9800-scaled.jpg"
+  ],
+  "sololaki": [
+   "glavnaya/07-img_0179-scaled.jpg"
+  ]
+ }
+}
