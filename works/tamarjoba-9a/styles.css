@@ -1801,3 +1801,28 @@ button, input, select {
   .tja-dl__row dt { grid-column: 1 / -1; }
 }
 .tja-dl dd.tja-dl__go { margin: 0; }
+
+/* адреса: город сверху, адрес одной строкой во всю ширину, справа круглая кнопка-навигатор (слово Романа 04.11) */
+.tja-dl__row { grid-template-columns: minmax(0, 1fr) auto; grid-template-areas: "city go" "addr go"; row-gap: 4px; column-gap: 16px; }
+.tja-dl__row dt { grid-area: city; }
+.tja-dl__row dd:not(.tja-dl__go) { grid-area: addr; margin: 0; font-size: 1rem; line-height: 1.35; }
+.tja-dl dd.tja-dl__go { grid-area: go; align-self: center; }
+.tja-route {
+  position: relative; width: 52px; height: 52px; min-height: 0; padding: 0; justify-content: center;
+  border-radius: 50%; background: var(--red); color: #FFFFFF;
+  animation: tjaNav 2.2s ease-in-out infinite;
+}
+.tja-route::before { content: none; }
+.tja-route::after {
+  content: ""; position: absolute; inset: -6px; border-radius: 50%;
+  border: 2px solid rgba(252, 3, 4, .45); animation: tjaNavRing 2.2s ease-out infinite; pointer-events: none;
+}
+.tja-route svg { width: 24px; height: 24px; fill: currentColor; }
+.tja-route:hover { background: var(--ink); }
+.tja-route:hover::after { border-color: rgba(0, 0, 0, .3); }
+@keyframes tjaNav { 0%, 100% { box-shadow: 0 6px 16px -6px rgba(252, 3, 4, .6); filter: brightness(1); } 50% { box-shadow: 0 8px 24px -4px rgba(252, 3, 4, .85); filter: brightness(1.12); } }
+@keyframes tjaNavRing { 0% { transform: scale(.85); opacity: .9; } 100% { transform: scale(1.25); opacity: 0; } }
+@media (max-width: 720px) {
+  .tja-dl__row { grid-template-columns: minmax(0, 1fr) auto; }
+  .tja-dl__row dt { grid-column: auto; }
+}
