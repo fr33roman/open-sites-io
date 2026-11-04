@@ -41,21 +41,32 @@
   var helloBtn = document.getElementById('tja-hello-btn');
   var helloTr = document.getElementById('tja-hello-tr');
   var greetings = [
-    { geo: 'გამარჯობა', tr: 'Гамарджоба · Здравствуйте!', freq: 523.25 },
-    { geo: 'როგორ ხარ?', tr: 'Рогор хар · Как дела?', freq: 587.33 },
-    { geo: 'მადლობა', tr: 'Мадлоба · Спасибо!', freq: 659.25 },
-    { geo: 'საქართველო', tr: 'Сакартвело · Грузия!', freq: 698.46 }
+    { geo: 'გამარჯობა', tr: 'Гамарджоба · Здравствуйте!', freq: 523.25, audio: 'audio/gamarjoba.mp3' },
+    { geo: 'როგორ ხარ?', tr: 'Рогор хар · Как дела?', freq: 587.33, audio: 'audio/rogor-khar.mp3' },
+    { geo: 'მადლობა', tr: 'Мадлоба · Спасибо!', freq: 659.25, audio: 'audio/madloba.mp3' },
+    { geo: 'საქართველო', tr: 'Сакартвело · Грузия!', freq: 698.46, audio: 'audio/sakartvelo.mp3' }
   ];
-  var greetIdx = 0;
+  // озвучка — временный голос Microsoft (ka-GE-EkaNeural, 04.11); потом заменить записью голоса Тамары с теми же именами файлов
+  var greetIdx = 0, greetHeard = false, greetSound = null;
+  function sayGreeting(item) {
+    try {
+      if (greetSound) greetSound.pause();
+      greetSound = new Audio(item.audio);
+      var p = greetSound.play();
+      if (p && p.catch) p.catch(function () { playTone(item.freq, 0.26, 'triangle'); });
+    } catch (err) { playTone(item.freq, 0.26, 'triangle'); }
+  }
 
   if (helloBtn && helloTr) {
     helloBtn.addEventListener('click', function () {
-      greetIdx = (greetIdx + 1) % greetings.length;
+      // первое нажатие озвучивает то, что уже написано; дальше — следующая фраза
+      if (greetHeard) greetIdx = (greetIdx + 1) % greetings.length;
+      greetHeard = true;
       var item = greetings[greetIdx];
       var geoSpan = helloBtn.querySelector('.tja-hello-btn__geo');
       if (geoSpan) geoSpan.textContent = item.geo;
       helloTr.textContent = item.tr;
-      playTone(item.freq, 0.26, 'triangle');
+      sayGreeting(item);
     });
   }
 
