@@ -1,0 +1,2190 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>ANTA EVENTS · DMC GEORGIA — Путешествия и события в Грузии (Тбилиси)</title>
+  <meta name="description" content="Индивидуальные маршруты, авторские туры и корпоративные мероприятия MICE в Грузии от команды Анты Шартава.">
+  <link rel="canonical" href="https://open-sites.io/demo/anta-d/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="ANTA EVENTS · DMC GEORGIA — Путешествия и события в Грузии">
+  <meta property="og:description" content="Авторский швейцарский атлас маршрутов и корпоративных событий в Грузии. Тбилиси, ул. Бербуки, 1.">
+  <meta property="og:image" content="og.jpg">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+
+@font-face {
+  font-family: 'Yeseva One';
+  src: url('fonts/yeseva-400-cyrillic.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Yeseva One';
+  src: url('fonts/yeseva-400-latin.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Onest';
+  src: url('fonts/onest-400-cyrillic.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Onest';
+  src: url('fonts/onest-400-latin.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Onest';
+  src: url('fonts/onest-500-cyrillic.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Onest';
+  src: url('fonts/onest-500-latin.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Onest';
+  src: url('fonts/onest-700-cyrillic.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Onest';
+  src: url('fonts/onest-700-latin.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --tnd-bg-light: #F6F1E9;
+  --tnd-bg-clay: #EFE7DA;
+  --tnd-bg-card: #FAF7F2;
+  --tnd-bg-dark: #161514;
+  --tnd-bg-dark-2: #1F1D1B;
+  --tnd-ink: #161514;
+  --tnd-ink-2: #4A453E;
+  --tnd-cream: #F6F1E9;
+  --tnd-cream-2: #C7BEB1;
+  --tnd-terra: #9E3B1B;
+  --tnd-terra-bright: #E07A5F;
+  --tnd-terra-solid: #B84A27;
+  --tnd-olive: #3E4A35;
+  --tnd-line-light: rgba(22, 21, 20, 0.14);
+  --tnd-line-dark: rgba(246, 241, 233, 0.16);
+  --tnd-serif: 'Yeseva One', Georgia, serif;
+  --tnd-sans: 'Onest', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  background-color: var(--tnd-bg-light);
+  color: var(--tnd-ink);
+  font-family: var(--tnd-sans);
+  font-size: 16px;
+  line-height: 1.55;
+  font-variant-numeric: tabular-nums;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background-color: var(--tnd-bg-light);
+  color: var(--tnd-ink);
+  overflow-x: hidden;
+}
+
+img, video, svg {
+  max-width: 100%;
+  display: block;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+  transition: color 0.22s ease, background-color 0.22s ease, border-color 0.22s ease, transform 0.22s ease;
+}
+
+button, input, select, textarea {
+  font: inherit;
+  color: inherit;
+}
+
+
+.tnd-wrap {
+  width: 100%;
+  max-width: 1380px;
+  margin: 0 auto;
+  padding: 0 36px;
+}
+
+
+.tnd-hdr {
+  position: relative;
+  z-index: 40;
+  background-color: var(--tnd-bg-dark);
+  color: var(--tnd-cream);
+  border-bottom: 1px solid var(--tnd-line-dark);
+}
+
+.tnd-hdr__bar {
+  max-width: 1380px;
+  margin: 0 auto;
+  padding: 0 36px;
+  min-height: 74px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.tnd-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 44px;
+  padding: 6px 0;
+  color: var(--tnd-cream);
+}
+
+.tnd-brand__mark {
+  width: 34px;
+  height: 34px;
+  border: 1px solid var(--tnd-terra-bright);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--tnd-serif);
+  font-size: 18px;
+  color: var(--tnd-terra-bright);
+  background: rgba(184, 74, 39, 0.14);
+  flex-shrink: 0;
+}
+
+.tnd-brand__txt {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.15;
+}
+
+.tnd-brand__name {
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: 0.08em;
+  color: var(--tnd-cream);
+}
+
+.tnd-brand__tag {
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  color: var(--tnd-cream-2);
+}
+
+.tnd-nav {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.tnd-nav__link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 8px 13px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--tnd-cream);
+  border: 1px solid transparent;
+}
+
+.tnd-nav__link:hover,
+.tnd-nav__link:focus-visible {
+  color: var(--tnd-terra-bright);
+  border-color: var(--tnd-line-dark);
+}
+
+.tnd-hdr-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 10px 20px;
+  background-color: var(--tnd-terra);
+  color: #FFFFFF;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  border: 1px solid var(--tnd-terra-bright);
+  white-space: nowrap;
+}
+
+.tnd-hdr-btn:hover {
+  background-color: #7E2D13;
+  transform: translateY(-1px);
+}
+
+
+.tnd-hero {
+  position: relative;
+  background-color: var(--tnd-bg-dark);
+  color: var(--tnd-cream);
+  overflow: hidden;
+  border-bottom: 1px solid var(--tnd-line-dark);
+}
+
+.tnd-hero__backdrop {
+  position: absolute;
+  inset: 0;
+  background-image: linear-gradient(112deg, rgba(22, 21, 20, 0.90) 0%, rgba(22, 21, 20, 0.72) 52%, rgba(22, 21, 20, 0.84) 100%), url('img/hero-cover-1600.webp');
+  background-size: cover;
+  background-position: center 35%;
+  animation: tndSlowZoom 26s ease-in-out infinite alternate;
+  z-index: 0;
+}
+
+.tnd-hero__video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.34;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.tnd-hero__grid {
+  position: relative;
+  z-index: 2;
+  max-width: 1380px;
+  margin: 0 auto;
+  padding: 58px 36px 46px;
+  display: grid;
+  grid-template-columns: 1.38fr 0.82fr;
+  gap: 36px;
+  align-items: end;
+  border-left: 1px solid var(--tnd-line-dark);
+  border-right: 1px solid var(--tnd-line-dark);
+}
+
+.tnd-coord {
+  display: inline-block;
+  border-left: 2px solid var(--tnd-terra-bright);
+  border-radius: 0;
+  background: transparent;
+  padding: 3px 0 3px 12px;
+  margin-bottom: 18px;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  color: var(--tnd-cream-2);
+}
+
+.tnd-h1 {
+  margin: 0 0 20px;
+  font-family: var(--tnd-serif);
+  font-weight: 400;
+  font-size: clamp(36px, 5.2vw, 72px);
+  line-height: 1.03;
+  letter-spacing: -0.02em;
+  color: var(--tnd-cream);
+}
+
+.tnd-hero__deck {
+  display: grid;
+  grid-template-columns: 1fr 1.12fr;
+  gap: 24px;
+  padding-top: 20px;
+  border-top: 1px solid var(--tnd-line-dark);
+}
+
+.tnd-hero__kicker,
+.tnd-hero__lead {
+  margin: 0;
+  font-size: 17px;
+  line-height: 1.5;
+  color: var(--tnd-cream);
+}
+
+.tnd-hero__lead {
+  color: var(--tnd-cream-2);
+}
+
+.tnd-hero__card {
+  background-color: rgba(31, 29, 27, 0.92);
+  border: 1px solid var(--tnd-line-dark);
+  padding: 24px;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+.tnd-hero__card-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 14px;
+  margin-bottom: 14px;
+  border-bottom: 1px solid var(--tnd-line-dark);
+  font-size: 13px;
+  color: var(--tnd-cream-2);
+}
+
+.tnd-hero__card-name {
+  font-family: var(--tnd-serif);
+  font-size: 22px;
+  color: var(--tnd-cream);
+  margin-bottom: 6px;
+}
+
+.tnd-hero__card-role {
+  font-size: 14px;
+  color: var(--tnd-cream-2);
+}
+
+
+.tnd-hero__console {
+  position: relative;
+  z-index: 2;
+  background-color: var(--tnd-bg-light);
+  color: var(--tnd-ink);
+  border-top: 1px solid var(--tnd-line-light);
+}
+
+.tnd-hero__contacts {
+  list-style: none;
+  margin: 0 auto;
+  padding: 0 36px;
+  max-width: 1380px;
+  display: grid;
+  grid-template-columns: 1.05fr 1.2fr 1.15fr;
+  border-left: 1px solid var(--tnd-line-light);
+  border-right: 1px solid var(--tnd-line-light);
+}
+
+.tnd-hero__contact-item {
+  padding: 18px 24px;
+  border-right: 1px solid var(--tnd-line-light);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.tnd-hero__contact-item:last-child {
+  border-right: none;
+}
+
+.tnd-hero__contact-lbl {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--tnd-terra);
+  letter-spacing: 0.04em;
+}
+
+.tnd-hero__contact-val {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--tnd-ink);
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+}
+
+
+.tnd-metrics {
+  background-color: var(--tnd-bg-clay);
+  color: var(--tnd-ink);
+  border-bottom: 1px solid var(--tnd-line-light);
+}
+
+.tnd-metrics__dl {
+  margin: 0 auto;
+  padding: 0 36px;
+  max-width: 1380px;
+  display: grid;
+  grid-template-columns: 0.95fr 1.15fr 0.95fr 1.15fr;
+  border-left: 1px solid var(--tnd-line-light);
+  border-right: 1px solid var(--tnd-line-light);
+}
+
+.tnd-metrics__pair {
+  padding: 30px 24px;
+  border-right: 1px solid var(--tnd-line-light);
+}
+
+.tnd-metrics__pair:last-child {
+  border-right: none;
+}
+
+.tnd-metrics__dt {
+  font-family: var(--tnd-serif);
+  font-size: clamp(32px, 3.6vw, 48px);
+  line-height: 1.05;
+  color: var(--tnd-terra);
+  margin: 0 0 6px;
+}
+
+.tnd-metrics__dd {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--tnd-ink-2);
+}
+
+.tnd-marquee {
+  border-top: 1px solid var(--tnd-line-light);
+  background-color: var(--tnd-bg-light);
+  overflow: hidden;
+  padding: 12px 0;
+  white-space: nowrap;
+}
+
+.tnd-marquee__track {
+  display: inline-block;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--tnd-ink-2);
+  animation: tndTicker 32s linear infinite;
+}
+
+
+.tnd-sec-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 20px;
+  padding-bottom: 24px;
+  margin-bottom: 32px;
+  border-bottom: 1px solid var(--tnd-line-light);
+  flex-wrap: wrap;
+}
+
+.tnd-sec-head--dark {
+  border-bottom-color: var(--tnd-line-dark);
+}
+
+.tnd-h2 {
+  margin: 0;
+  font-family: var(--tnd-serif);
+  font-weight: 400;
+  font-size: clamp(28px, 3.5vw, 46px);
+  line-height: 1.06;
+  letter-spacing: -0.02em;
+}
+
+.tnd-idx {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--tnd-terra);
+  letter-spacing: 0.04em;
+}
+
+.tnd-idx--dark {
+  color: var(--tnd-terra-bright);
+}
+
+
+.tnd-story {
+  padding: 76px 0;
+  background-color: var(--tnd-bg-light);
+  border-bottom: 1px solid var(--tnd-line-light);
+}
+
+.tnd-story__split {
+  display: grid;
+  grid-template-columns: 0.88fr 1.32fr;
+  gap: 40px;
+  align-items: start;
+}
+
+.tnd-portrait-frame {
+  background-color: var(--tnd-bg-card);
+  border: 1px solid var(--tnd-line-light);
+  padding: 18px;
+  box-shadow: 0 18px 40px rgba(22, 21, 20, 0.06);
+}
+
+.tnd-portrait-img {
+  width: 100%;
+  height: 440px;
+  object-fit: cover;
+  object-position: center top;
+  margin-bottom: 14px;
+}
+
+.tnd-portrait-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--tnd-ink);
+  padding-top: 10px;
+  border-top: 1px solid var(--tnd-line-light);
+}
+
+.tnd-story__prose {
+  display: grid;
+  gap: 14px;
+  margin-bottom: 24px;
+}
+
+.tnd-story__p {
+  margin: 0;
+  font-size: 17px;
+  line-height: 1.55;
+  color: var(--tnd-ink);
+}
+
+.tnd-pillars {
+  list-style: none;
+  margin: 0 0 28px;
+  padding: 0;
+  display: grid;
+  grid-template-columns: 1.12fr 0.94fr;
+  border-top: 1px solid var(--tnd-line-light);
+  border-left: 1px solid var(--tnd-line-light);
+}
+
+.tnd-pillars__item {
+  padding: 14px 18px;
+  background-color: var(--tnd-bg-card);
+  border-right: 1px solid var(--tnd-line-light);
+  border-bottom: 1px solid var(--tnd-line-light);
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--tnd-olive);
+}
+
+.tnd-adv-grid {
+  display: grid;
+  grid-template-columns: 1.18fr 0.92fr;
+  gap: 16px;
+  margin-bottom: 28px;
+}
+
+.tnd-adv-card {
+  background-color: var(--tnd-bg-card);
+  border: 1px solid var(--tnd-line-light);
+  padding: 18px 20px;
+  transition: transform 0.22s ease, border-color 0.22s ease;
+}
+
+.tnd-adv-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--tnd-terra);
+}
+
+.tnd-adv-card--wide {
+  grid-column: 1 / -1;
+}
+
+.tnd-adv-num {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--tnd-terra);
+  margin-bottom: 6px;
+}
+
+.tnd-adv-title {
+  margin: 0 0 6px;
+  font-family: var(--tnd-serif);
+  font-size: 19px;
+  font-weight: 400;
+  color: var(--tnd-ink);
+}
+
+.tnd-adv-desc {
+  font-size: 14px;
+  color: var(--tnd-ink-2);
+}
+
+.tnd-link-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 46px;
+  padding: 10px 22px;
+  background-color: var(--tnd-ink);
+  color: var(--tnd-cream);
+  font-size: 14px;
+  font-weight: 700;
+  border: 1px solid var(--tnd-ink);
+}
+
+.tnd-link-btn:hover {
+  background-color: var(--tnd-terra);
+  border-color: var(--tnd-terra);
+  color: #FFFFFF;
+}
+
+
+.tnd-atlas {
+  padding: 78px 0;
+  background-color: var(--tnd-bg-clay);
+  border-bottom: 1px solid var(--tnd-line-light);
+}
+
+.tnd-atlas__intro {
+  margin: 0 0 28px;
+  font-size: 17px;
+  color: var(--tnd-ink-2);
+  max-width: 780px;
+}
+
+.tnd-atlas-board {
+  background-color: var(--tnd-bg-card);
+  border: 1px solid var(--tnd-line-light);
+  padding: 26px;
+  margin-bottom: 36px;
+  box-shadow: 0 20px 44px rgba(22, 21, 20, 0.06);
+}
+
+.tnd-region-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 22px;
+}
+
+.tnd-region-pin {
+  min-height: 44px;
+  padding: 10px 16px;
+  background-color: var(--tnd-bg-light);
+  color: var(--tnd-ink);
+  border: 1px solid var(--tnd-line-light);
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.tnd-region-pin:hover,
+.tnd-region-pin.is-active {
+  background-color: var(--tnd-terra);
+  color: #FFFFFF;
+  border-color: var(--tnd-terra);
+}
+
+.tnd-atlas-stage {
+  display: grid;
+  grid-template-columns: 1.22fr 0.98fr;
+  gap: 28px;
+  align-items: center;
+}
+
+.tnd-map-box {
+  background-color: var(--tnd-bg-dark);
+  color: var(--tnd-cream);
+  padding: 20px;
+  border: 1px solid var(--tnd-line-dark);
+}
+
+.tnd-map-svg {
+  width: 100%;
+  height: auto;
+}
+
+.tnd-map-status {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding-top: 12px;
+  margin-top: 12px;
+  border-top: 1px solid var(--tnd-line-dark);
+  font-size: 13px;
+  color: var(--tnd-cream-2);
+}
+
+.tnd-price-rows {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid var(--tnd-line-light);
+}
+
+.tnd-price-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 13px 14px;
+  border-bottom: 1px solid var(--tnd-line-light);
+  background-color: var(--tnd-bg-card);
+  font-size: 15px;
+  transition: background-color 0.2s ease;
+}
+
+.tnd-price-row.is-match {
+  background-color: #F3E4DC;
+  border-left: 3px solid var(--tnd-terra);
+}
+
+.tnd-price-row a {
+  font-weight: 500;
+  color: var(--tnd-ink);
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+}
+
+.tnd-price-row strong {
+  font-weight: 700;
+  color: var(--tnd-terra);
+  white-space: nowrap;
+}
+
+
+.tnd-cat-mosaic {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 18px;
+}
+
+.tnd-cat-card {
+  grid-column: span 6;
+  background-color: var(--tnd-bg-card);
+  border: 1px solid var(--tnd-line-light);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+  transition: transform 0.24s ease, border-color 0.24s ease;
+}
+
+.tnd-cat-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--tnd-terra);
+}
+
+.tnd-cat-card--c1 { grid-column: span 7; }
+.tnd-cat-card--c2 { grid-column: span 5; }
+.tnd-cat-card--c3 { grid-column: span 5; }
+.tnd-cat-card--c4 { grid-column: span 7; }
+.tnd-cat-card--c5 { grid-column: span 4; }
+.tnd-cat-card--c6 { grid-column: span 8; }
+.tnd-cat-card--c7 { grid-column: span 12; display: grid; grid-template-columns: 1.1fr 1fr; }
+
+
+.tnd-cat-card--fav {
+  position: relative;
+  border-color: var(--tnd-terra);
+  box-shadow: 0 16px 36px rgba(158, 59, 27, 0.14);
+}
+
+.tnd-cat-card__media {
+  position: relative;
+  height: 230px;
+  overflow: hidden;
+  border-bottom: 1px solid var(--tnd-line-light);
+}
+
+.tnd-cat-card__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.tnd-cat-card:hover .tnd-cat-card__img {
+  transform: scale(1.04);
+}
+
+.tnd-cat-card__tag {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  background-color: var(--tnd-bg-dark);
+  color: var(--tnd-cream);
+  padding: 5px 10px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.tnd-cat-card__body {
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 14px;
+  flex-grow: 1;
+}
+
+.tnd-cat-card__title {
+  margin: 0 0 6px;
+  font-family: var(--tnd-serif);
+  font-size: 23px;
+  font-weight: 400;
+  color: var(--tnd-ink);
+}
+
+.tnd-cat-card__desc {
+  font-size: 15px;
+  color: var(--tnd-ink-2);
+}
+
+.tnd-cat-card__foot {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding-top: 14px;
+  border-top: 1px solid var(--tnd-line-light);
+}
+
+.tnd-cat-card__price {
+  font-weight: 700;
+  font-size: 16px;
+  color: var(--tnd-terra);
+}
+
+.tnd-cat-card__cta {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 8px 16px;
+  background-color: var(--tnd-bg-light);
+  color: var(--tnd-ink);
+  border: 1px solid var(--tnd-line-light);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.tnd-cat-card:hover .tnd-cat-card__cta {
+  background-color: var(--tnd-terra);
+  color: #FFFFFF;
+  border-color: var(--tnd-terra);
+}
+
+
+.tnd-mice {
+  padding: 78px 0;
+  background-color: var(--tnd-bg-dark);
+  color: var(--tnd-cream);
+  border-bottom: 1px solid var(--tnd-line-dark);
+}
+
+.tnd-mice__layout {
+  display: grid;
+  grid-template-columns: 0.95fr 1.25fr;
+  gap: 38px;
+  align-items: start;
+}
+
+.tnd-mice__p {
+  margin: 0 0 14px;
+  font-size: 17px;
+  color: var(--tnd-cream-2);
+}
+
+.tnd-mice__img-wrap {
+  margin: 22px 0;
+  border: 1px solid var(--tnd-line-dark);
+  padding: 12px;
+  background-color: var(--tnd-bg-dark-2);
+}
+
+.tnd-mice__img {
+  width: 100%;
+  height: 290px;
+  object-fit: cover;
+}
+
+.tnd-mice-ol {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 16px;
+}
+
+.tnd-mice-ol__item {
+  background-color: var(--tnd-bg-dark-2);
+  border: 1px solid var(--tnd-line-dark);
+  padding: 22px 24px;
+  display: grid;
+  grid-template-columns: 48px 1fr;
+  gap: 16px;
+  align-items: start;
+}
+
+.tnd-mice-ol__num {
+  font-family: var(--tnd-serif);
+  font-size: 24px;
+  color: var(--tnd-terra-bright);
+}
+
+.tnd-mice-ol__title {
+  margin: 0 0 6px;
+  font-family: var(--tnd-serif);
+  font-size: 21px;
+  font-weight: 400;
+  color: var(--tnd-cream);
+}
+
+.tnd-mice-ol__desc {
+  font-size: 15px;
+  color: var(--tnd-cream-2);
+}
+
+.tnd-btn-terra {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  padding: 12px 24px;
+  background-color: var(--tnd-terra);
+  color: #FFFFFF;
+  font-size: 15px;
+  font-weight: 700;
+  border: 1px solid var(--tnd-terra-bright);
+}
+
+.tnd-btn-terra:hover {
+  background-color: #7E2D13;
+}
+
+
+.tnd-voices {
+  padding: 76px 0;
+  background-color: var(--tnd-bg-light);
+  border-bottom: 1px solid var(--tnd-line-light);
+}
+
+.tnd-voices__intro {
+  margin: 0 0 28px;
+  font-size: 17px;
+  color: var(--tnd-ink-2);
+}
+
+.tnd-voices-grid {
+  display: grid;
+  grid-template-columns: 1.14fr 0.96fr;
+  gap: 20px;
+}
+
+.tnd-voice-card {
+  background-color: var(--tnd-bg-card);
+  border: 1px solid var(--tnd-line-light);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.tnd-voice-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--tnd-line-light);
+}
+
+.tnd-voice-author {
+  font-family: var(--tnd-serif);
+  font-size: 20px;
+  color: var(--tnd-ink);
+}
+
+.tnd-voice-tour {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--tnd-terra);
+}
+
+.tnd-voice-line {
+  font-size: 15px;
+  line-height: 1.55;
+  color: var(--tnd-ink-2);
+  margin-bottom: 8px;
+}
+
+
+.tnd-inquiry {
+  padding: 78px 0;
+  background-color: var(--tnd-bg-dark);
+  color: var(--tnd-cream);
+  border-bottom: 1px solid var(--tnd-line-dark);
+}
+
+.tnd-inquiry__grid {
+  display: grid;
+  grid-template-columns: 0.92fr 1.28fr;
+  gap: 40px;
+  align-items: start;
+}
+
+.tnd-inquiry__p {
+  margin: 0 0 24px;
+  font-size: 17px;
+  color: var(--tnd-cream-2);
+}
+
+.tnd-addr {
+  font-style: normal;
+  display: grid;
+  gap: 14px;
+  padding: 24px;
+  background-color: var(--tnd-bg-dark-2);
+  border: 1px solid var(--tnd-line-dark);
+}
+
+.tnd-addr__row {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--tnd-line-dark);
+}
+
+.tnd-addr__row:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.tnd-addr__lbl {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--tnd-terra-bright);
+}
+
+.tnd-addr__link {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--tnd-cream);
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+}
+
+.tnd-form {
+  background-color: var(--tnd-bg-dark-2);
+  border: 1px solid var(--tnd-line-dark);
+  padding: 28px;
+  display: grid;
+  gap: 18px;
+}
+
+.tnd-form__row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.tnd-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.tnd-field__lbl {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--tnd-cream);
+}
+
+.tnd-input,
+.tnd-select,
+.tnd-textarea {
+  width: 100%;
+  min-height: 48px;
+  padding: 11px 14px;
+  background-color: var(--tnd-bg-dark);
+  color: var(--tnd-cream);
+  border: 1px solid var(--tnd-line-dark);
+  border-radius: 0;
+  font-size: 15px;
+}
+
+.tnd-textarea {
+  min-height: 96px;
+  resize: vertical;
+}
+
+.tnd-input:focus,
+.tnd-select:focus,
+.tnd-textarea:focus {
+  outline: 2px solid var(--tnd-terra-bright);
+  border-color: var(--tnd-terra-bright);
+}
+
+.tnd-check {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 44px;
+  cursor: pointer;
+  font-size: 14px;
+  color: var(--tnd-cream-2);
+}
+
+.tnd-check input {
+  width: 20px;
+  height: 20px;
+  accent-color: var(--tnd-terra);
+  flex-shrink: 0;
+}
+
+.tnd-submit {
+  min-height: 50px;
+  padding: 12px 26px;
+  background-color: var(--tnd-terra);
+  color: #FFFFFF;
+  font-size: 15px;
+  font-weight: 700;
+  border: 1px solid var(--tnd-terra-bright);
+  cursor: pointer;
+}
+
+.tnd-submit:disabled {
+  opacity: 0.52;
+  cursor: not-allowed;
+}
+
+.tnd-form__status {
+  font-size: 14px;
+  color: var(--tnd-terra-bright);
+  min-height: 20px;
+}
+
+
+.tnd-foot {
+  background-color: var(--tnd-bg-dark);
+  color: var(--tnd-cream-2);
+  padding: 26px 36px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.tnd-ver-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.tnd-ver-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 6px 12px;
+  border: 1px solid var(--tnd-line-dark);
+  color: var(--tnd-cream);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.tnd-ver-link.is-cur {
+  background-color: var(--tnd-terra);
+  color: #FFFFFF;
+  border-color: var(--tnd-terra-bright);
+}
+
+
+.tnd-page-hero {
+  background-color: var(--tnd-bg-dark);
+  color: var(--tnd-cream);
+  padding: 46px 0 54px;
+  border-bottom: 1px solid var(--tnd-line-dark);
+}
+
+.tnd-crumbs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 18px;
+  font-size: 13px;
+  color: var(--tnd-cream-2);
+}
+
+.tnd-crumbs a {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  color: var(--tnd-terra-bright);
+}
+
+.tnd-tour-meta-bar {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+  margin-top: 26px;
+  padding-top: 22px;
+  border-top: 1px solid var(--tnd-line-dark);
+}
+
+.tnd-tour-meta-cell {
+  background-color: var(--tnd-bg-dark-2);
+  border: 1px solid var(--tnd-line-dark);
+  padding: 14px 16px;
+}
+
+.tnd-tour-meta-lbl {
+  font-size: 12px;
+  color: var(--tnd-cream-2);
+  display: block;
+  margin-bottom: 4px;
+}
+
+.tnd-tour-meta-val {
+  font-family: var(--tnd-serif);
+  font-size: 19px;
+  color: var(--tnd-cream);
+}
+
+.tnd-tour-body {
+  padding: 64px 0;
+  background-color: var(--tnd-bg-light);
+}
+
+.tnd-tour-grid {
+  display: grid;
+  grid-template-columns: 1.25fr 0.85fr;
+  gap: 36px;
+  align-items: start;
+}
+
+.tnd-gallery-grid {
+  display: grid;
+  grid-template-columns: 1.3fr 0.9fr;
+  gap: 14px;
+  margin: 26px 0;
+}
+
+.tnd-gallery-img {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+  border: 1px solid var(--tnd-line-light);
+}
+
+.tnd-route-steps {
+  list-style: none;
+  margin: 0 0 28px;
+  padding: 0;
+  border-left: 2px solid var(--tnd-terra);
+}
+
+.tnd-route-step {
+  padding: 10px 0 10px 18px;
+  border-bottom: 1px solid var(--tnd-line-light);
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.tnd-tariff-box {
+  background-color: var(--tnd-bg-card);
+  border: 1px solid var(--tnd-line-light);
+  padding: 24px;
+  position: sticky;
+  top: 20px;
+}
+
+@keyframes tndSlowZoom {
+  0% { transform: scale(1); }
+  100% { transform: scale(1.05); }
+}
+
+@keyframes tndTicker {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+@media (max-width: 1024px) {
+  .tnd-hero__grid,
+  .tnd-story__split,
+  .tnd-atlas-stage,
+  .tnd-mice__layout,
+  .tnd-inquiry__grid,
+  .tnd-tour-grid {
+    grid-template-columns: 1fr;
+  }
+  .tnd-cat-card--c1,
+  .tnd-cat-card--c2,
+  .tnd-cat-card--c3,
+  .tnd-cat-card--c4,
+  .tnd-cat-card--c5,
+  .tnd-cat-card--c6,
+  .tnd-cat-card--c7 {
+    grid-column: span 12;
+    grid-template-columns: 1fr;
+  }
+  .tnd-metrics__dl {
+    grid-template-columns: 1fr 1fr;
+  }
+  .tnd-tour-meta-bar {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+
+@media (max-width: 640px) {
+  .tnd-wrap {
+    padding: 0 17px;
+  }
+  .tnd-hdr__bar {
+    padding: 6px 17px;
+    min-height: 52px;
+    gap: 9px;
+  }
+  .tnd-nav {
+    display: none;
+  }
+  .tnd-hero__grid {
+    padding: 15px 17px 27px;
+    gap: 19px;
+  }
+  .tnd-coord {
+    margin-bottom: 9px;
+    font-size: 11px;
+    padding: 2px 0 2px 9px;
+  }
+  .tnd-h1 {
+    font-size: 31px;
+    margin-bottom: 13px;
+  }
+  .tnd-hero__deck {
+    grid-template-columns: 1fr;
+    gap: 11px;
+    padding-top: 13px;
+  }
+  .tnd-hero__contacts {
+    grid-template-columns: 1fr;
+    padding: 0 17px;
+  }
+  .tnd-hero__contact-item {
+    padding: 11px 13px;
+    border-right: none;
+    border-bottom: 1px solid var(--tnd-line-light);
+  }
+  .tnd-metrics__dl {
+    grid-template-columns: 1fr 1fr;
+    padding: 0 17px;
+  }
+  .tnd-metrics__pair {
+    padding: 19px 13px;
+  }
+  .tnd-story,
+  .tnd-atlas,
+  .tnd-mice,
+  .tnd-voices,
+  .tnd-inquiry {
+    padding: 49px 0;
+  }
+  .tnd-pillars,
+  .tnd-adv-grid,
+  .tnd-voices-grid,
+  .tnd-form__row,
+  .tnd-gallery-grid,
+  .tnd-tour-meta-bar {
+    grid-template-columns: 1fr;
+    gap: 13px;
+  }
+  .tnd-portrait-img {
+    height: 310px;
+  }
+  .tnd-foot {
+    padding: 21px 17px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+  </style>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "TravelAgency",
+    "name": "ANTA EVENTS · DMC GEORGIA",
+    "founder": "Анта Шартава",
+    "telephone": "+995 557 647 049",
+    "email": "shartavaanta@gmail.com",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "ул. Бербуки, 1",
+      "addressLocality": "Тбилиси",
+      "addressCountry": "GE"
+    }
+  }
+  </script>
+</head>
+<body>
+<style>
+.osb-top,.osb-bot{display:block;box-sizing:border-box;background:#0a0a0d;color:#ededf0;text-decoration:none;text-align:center;
+  font:500 13px/1.35 system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;letter-spacing:0;text-transform:none}
+.osb-top{position:relative;z-index:2147483000;border-bottom:1px solid rgba(167,139,250,.28)}
+.osb-in{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:4px 12px;max-width:1200px;margin:0 auto;padding:9px 16px}
+.osb-bot .osb-in{padding:20px 16px 22px;font-size:14px}
+.osb-mark{display:inline-flex;align-items:center;gap:7px;font-weight:700;color:#ededf0}
+.osb-dot{width:8px;height:8px;border-radius:50%;background:#a78bfa;flex:none}
+.osb-cta{color:#a78bfa;font-weight:600;white-space:nowrap}
+.osb-top:hover .osb-cta,.osb-bot:hover .osb-cta{text-decoration:underline}
+@media (max-width:560px){.osb-wide{display:none}}
+</style><a class="osb-top" href="https://t.me/opensites_io?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5%21%20%D0%A1%D0%BC%D0%BE%D1%82%D1%80%D1%8E%20%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%20%D1%81%D0%B0%D0%B9%D1%82%D0%B0%20%D0%B4%D0%BB%D1%8F%20%C2%ABANTA%20EVENTS%C2%BB%20%E2%80%94%20%D1%85%D0%BE%D1%87%D1%83%20%D1%82%D0%B0%D0%BA%D0%BE%D0%B9" target="_blank" rel="noopener"><span class="osb-in"><span class="osb-mark"><span class="osb-dot"></span>open-sites.io</span><span class="osb-wide">Пример сайта для «ANTA EVENTS»</span><span class="osb-cta">Хочу такой →</span></span></a><script>
+
+(function(){function fix(){var s=document.querySelector('.osb-top');if(!s)return;var h=s.offsetHeight,f=[],pb=0;
+[].forEach.call(document.body.querySelectorAll('*'),function(el){if(s.contains(el))return;var cs=getComputedStyle(el);
+if(cs.position==='fixed'&&Math.abs(parseFloat(cs.bottom)||0)<2&&el.offsetHeight<200&&el.offsetWidth>=innerWidth*.5)pb=Math.max(pb,el.offsetHeight);
+if(el.getAttribute('data-osb'))return;if(cs.position!=='absolute'&&cs.position!=='fixed')return;var r=el.getBoundingClientRect();
+if(r.width<innerWidth*.5||r.height>240)return;if(cs.position==='absolute'){var p=el.offsetParent;
+if((!p||p===document.body||p===document.documentElement)&&r.top+scrollY<h+2){el.setAttribute('data-osb','1');el.style.top=((parseFloat(cs.top)||0)+h)+'px'}}
+else if(Math.abs(parseFloat(cs.top)||0)<2&&r.top>-2){el.setAttribute('data-osb','1');f.push(el)}});
+var b=document.querySelector('.osb-bot');if(b&&pb)b.style.paddingBottom=pb+'px';
+if(f.length){var g=function(){var t=Math.max(0,h-scrollY)+'px';f.forEach(function(el){el.style.top=t})};addEventListener('scroll',g,{passive:true});g()}}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',fix);else fix();addEventListener('load',fix)})();
+</script>
+<header class="tnd-hdr">
+  <div class="tnd-hdr__bar">
+    <a class="tnd-brand" href="index.html">
+      <span class="tnd-brand__mark" aria-hidden="true">A</span>
+      <span class="tnd-brand__txt">
+        <span class="tnd-brand__name">ANTA EVENTS</span>
+        <span class="tnd-brand__tag" aria-hidden="true">DMC GEORGIA · ТБИЛИСИ</span>
+      </span>
+    </a>
+    <nav class="tnd-nav" aria-label="Главная навигация">
+      <a class="tnd-nav__link" href="o-nas.html">О нас</a>
+      <a class="tnd-nav__link" href="index.html#tours">Направления</a>
+      <a class="tnd-nav__link" href="index.html#atlas-map">Атлас Грузии</a>
+      <a class="tnd-nav__link" href="mice.html">MICE</a>
+      <a class="tnd-nav__link" href="index.html#reviews">Отзывы</a>
+    </nav>
+    <a class="tnd-hdr-btn" href="#contacts">Связаться</a>
+  </div>
+</header>
+
+<main>
+  
+  <section class="tnd-hero" id="top">
+    <div class="tnd-hero__backdrop" aria-hidden="true"></div>
+    <video class="tnd-hero__video" muted loop playsinline preload="none" poster="img/hero-cover.webp">
+      <source src="video/hero-v.mp4" media="(max-width: 768px)">
+      <source src="video/hero-h.mp4">
+    </video>
+    <div class="tnd-hero__grid">
+      <div>
+        <div class="tnd-coord" aria-hidden="true">ANTA EVENTS · DMC GEORGIA · 41°41′N 44°48′E</div>
+        <h1 class="tnd-h1">Путешествия и события в Грузии</h1>
+        <div class="tnd-hero__deck">
+          <p class="tnd-hero__kicker" data-sayt="hero_sub">Маршруты по регионам и деловые приёмы.</p>
+          <p class="tnd-hero__lead" data-sayt="hero_lead">Сопровождаем вашу поездку от идеи до тоста.</p>
+        </div>
+      </div>
+      <aside class="tnd-hero__card" aria-hidden="true">
+        <div class="tnd-hero__card-head">
+          <span>ТБИЛИСИ · АТЛАС</span>
+          <span>450–2170 М</span>
+        </div>
+        <div class="tnd-hero__card-name">Анта Шартава</div>
+        <div class="tnd-hero__card-role">Основатель ANTA EVENTS</div>
+      </aside>
+    </div>
+    <div class="tnd-hero__console">
+      <ul class="tnd-hero__contacts">
+        <li class="tnd-hero__contact-item">
+          <strong class="tnd-hero__contact-lbl" aria-hidden="true">Телефон</strong>
+          <a class="tnd-hero__contact-val" href="tel:+995557647049">+995 557 647 049</a>
+        </li>
+        <li class="tnd-hero__contact-item">
+          <strong class="tnd-hero__contact-lbl" aria-hidden="true">Адрес</strong>
+          <span class="tnd-hero__contact-val">Тбилиси, ул. Бербуки, 1</span>
+        </li>
+        <li class="tnd-hero__contact-item">
+          <strong class="tnd-hero__contact-lbl" aria-hidden="true">Почта</strong>
+          <a class="tnd-hero__contact-val" href="mailto:shartavaanta@gmail.com">shartavaanta@gmail.com</a>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="tnd-metrics" aria-label="Цифры и бегущая строка">
+    <dl class="tnd-metrics__dl">
+      <div class="tnd-metrics__pair">
+        <dt class="tnd-metrics__dt">10 лет</dt>
+        <dd class="tnd-metrics__dd">опыта в Грузии</dd>
+      </div>
+      <div class="tnd-metrics__pair">
+        <dt class="tnd-metrics__dt">800+</dt>
+        <dd class="tnd-metrics__dd">авторских поездок</dd>
+      </div>
+      <div class="tnd-metrics__pair">
+        <dt class="tnd-metrics__dt">7 лет</dt>
+        <dd class="tnd-metrics__dd">продюсирования встреч</dd>
+      </div>
+      <div class="tnd-metrics__pair">
+        <dt class="tnd-metrics__dt">205+</dt>
+        <dd class="tnd-metrics__dd">событий и приёмов</dd>
+      </div>
+    </dl>
+    <div class="tnd-marquee" aria-hidden="true">
+      <span class="tnd-marquee__track">Индивидуальные туры · Экскурсии по Грузии · Корпоративные поездки</span>
+      <span class="tnd-marquee__track"> · Конференции · Тимбилдинги · Гала-ужины · </span>
+    </div>
+  </section>
+
+  <section class="tnd-story" id="about">
+    <div class="tnd-wrap">
+      <div class="tnd-sec-head">
+        <h2 class="tnd-h2" data-sayt="about_title">О нас</h2>
+        <span class="tnd-idx" aria-hidden="true">01 / О КОМПАНИИ</span>
+      </div>
+      <div class="tnd-story__split">
+        <div class="tnd-portrait-frame">
+          <img class="tnd-portrait-img" src="img/anta-portrait-800.webp" srcset="img/anta-portrait-800.webp 800w, img/anta-portrait.webp 1200w" sizes="(max-width: 768px) 92vw, 440px" width="600" height="750" alt="Анта Шартава — основательница ANTA EVENTS">
+          <div class="tnd-portrait-meta">
+            <span>Анта Шартава</span>
+            <span>Тбилиси</span>
+          </div>
+        </div>
+        <div>
+          <div class="tnd-story__prose">
+            <p class="tnd-story__p" data-sayt="about_p0">Работаем в Тбилиси и десять лет открываем гостям города, винодельни и горные долины.</p>
+            <p class="tnd-story__p" data-sayt="about_p1">В нашей команде работают лицензированные гиды, водители и координаторы проектов.</p>
+            <p class="tnd-story__p" data-sayt="about_p2">Собираем маршрут или деловую встречу под вашу задачу и берём логистику на себя.</p>
+          </div>
+          <ul class="tnd-pillars" aria-label="Профили команды">
+            <li class="tnd-pillars__item">01 · Гиды-историки</li>
+            <li class="tnd-pillars__item">02 · Свой автопарк</li>
+            <li class="tnd-pillars__item">03 · MICE-продюсеры</li>
+            <li class="tnd-pillars__item">04 · Винные эксперты</li>
+          </ul>
+          <div class="tnd-adv-grid" id="tnd-adv-grid">
+            <article class="tnd-adv-card">
+              <span class="tnd-adv-num" aria-hidden="true">01</span>
+              <h3 class="tnd-adv-title">Десятилетняя практика</h3>
+              <div class="tnd-adv-desc" aria-hidden="true">Маршруты под ваш темп.</div>
+            </article>
+            <article class="tnd-adv-card">
+              <span class="tnd-adv-num" aria-hidden="true">02</span>
+              <h3 class="tnd-adv-title">Свои люди в Тбилиси</h3>
+              <div class="tnd-adv-desc" aria-hidden="true">Координаторы встречают на месте.</div>
+            </article>
+            <article class="tnd-adv-card">
+              <span class="tnd-adv-num" aria-hidden="true">03</span>
+              <h3 class="tnd-adv-title">Отборные шато и залы</h3>
+              <div class="tnd-adv-desc" aria-hidden="true">Отели и винодельни под запрос.</div>
+            </article>
+            <article class="tnd-adv-card">
+              <span class="tnd-adv-num" aria-hidden="true">04</span>
+              <h3 class="tnd-adv-title">Прямые подрядчики</h3>
+              <div class="tnd-adv-desc" aria-hidden="true">Транспорт и звук без посредников.</div>
+            </article>
+            <article class="tnd-adv-card tnd-adv-card--wide">
+              <span class="tnd-adv-num" aria-hidden="true">05</span>
+              <h3 class="tnd-adv-title">Полный цикл поездки</h3>
+              <div class="tnd-adv-desc" aria-hidden="true">Отели, трансферы и экскурсии вместе.</div>
+            </article>
+          </div>
+          <a class="tnd-link-btn" href="o-nas.html">О нас и команде →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="tnd-atlas" id="tours">
+    <div class="tnd-wrap">
+      <div class="tnd-sec-head">
+        <h2 class="tnd-h2" data-sayt="cat_title">Экскурсии и высотный атлас Грузии</h2>
+        <span class="tnd-idx" aria-hidden="true">02 / 7 НАПРАВЛЕНИЙ</span>
+      </div>
+      <p class="tnd-atlas__intro" data-sayt="cat_sub">Пешие прогулки по Старому Тифлису, выезды к винодельням и многодневные экспедиции.</p>
+
+      <div class="tnd-atlas-board" id="atlas-map">
+        <div class="tnd-region-bar" role="tablist" aria-label="Регионы и высоты Грузии">
+          <button type="button" class="tnd-region-pin is-active" data-region="tbilisi">Тбилиси · 450 м</button>
+          <button type="button" class="tnd-region-pin" data-region="mtskheta">Мцхета · 600 м</button>
+          <button type="button" class="tnd-region-pin" data-region="kakheti">Кахетия · 790 м</button>
+          <button type="button" class="tnd-region-pin" data-region="borjomi">Боржоми · 1300 м</button>
+          <button type="button" class="tnd-region-pin" data-region="kazbegi">Казбеги · 2170 м</button>
+        </div>
+
+        <div class="tnd-atlas-stage">
+          <div class="tnd-map-box">
+            <svg class="tnd-map-svg" viewBox="0 0 800 320" role="img" aria-label="Швейцарская карта высот и маршрутов Грузии">
+              <rect x="0" y="0" width="800" height="320" fill="#161514"/>
+              <g stroke="rgba(246,241,233,0.09)" stroke-width="1">
+                <line x1="0" y1="64" x2="800" y2="64"/>
+                <line x1="0" y1="128" x2="800" y2="128"/>
+                <line x1="0" y1="192" x2="800" y2="192"/>
+                <line x1="0" y1="256" x2="800" y2="256"/>
+                <line x1="160" y1="0" x2="160" y2="320"/>
+                <line x1="320" y1="0" x2="320" y2="320"/>
+                <line x1="480" y1="0" x2="480" y2="320"/>
+                <line x1="640" y1="0" x2="640" y2="320"/>
+              </g>
+              <path d="M 40 250 Q 170 180 280 210 T 460 190 T 630 150 L 760 56" fill="none" stroke="rgba(224,122,95,0.35)" stroke-width="2" stroke-dasharray="5 4"/>
+              <path id="tnd-active-route" d="M 430 210 L 340 182" fill="none" stroke="#E07A5F" stroke-width="3.5"/>
+              <g class="tnd-svg-node" data-node="borjomi" transform="translate(185, 224)">
+                <circle r="9" fill="#1F1D1B" stroke="#E07A5F" stroke-width="2.5"/>
+                <text x="0" y="-15" fill="#F6F1E9" font-size="12" text-anchor="middle">Боржоми · 1300 м</text>
+              </g>
+              <g class="tnd-svg-node" data-node="mtskheta" transform="translate(340, 182)">
+                <circle r="9" fill="#1F1D1B" stroke="#E07A5F" stroke-width="2.5"/>
+                <text x="0" y="-15" fill="#F6F1E9" font-size="12" text-anchor="middle">Мцхета · 600 м</text>
+              </g>
+              <g class="tnd-svg-node" data-node="tbilisi" transform="translate(430, 210)">
+                <circle r="11" fill="#E07A5F" stroke="#F6F1E9" stroke-width="2.5"/>
+                <text x="0" y="26" fill="#F6F1E9" font-size="13" font-weight="700" text-anchor="middle">ТБИЛИСИ · 450 м</text>
+              </g>
+              <g class="tnd-svg-node" data-node="kazbegi" transform="translate(495, 76)">
+                <circle r="9" fill="#1F1D1B" stroke="#E07A5F" stroke-width="2.5"/>
+                <text x="0" y="-15" fill="#F6F1E9" font-size="12" text-anchor="middle">Казбеги · 2170 м</text>
+              </g>
+              <g class="tnd-svg-node" data-node="kakheti" transform="translate(645, 168)">
+                <circle r="9" fill="#1F1D1B" stroke="#E07A5F" stroke-width="2.5"/>
+                <text x="0" y="-15" fill="#F6F1E9" font-size="12" text-anchor="middle">Кахетия · 790 м</text>
+              </g>
+            </svg>
+            <p class="tnd-map-status" id="tnd-map-status">
+              <span>Узел · Тбилиси (450 м)</span>
+              <span>Старт 6 городских маршрутов</span>
+            </p>
+          </div>
+
+          <div>
+            <ul class="tnd-price-rows" id="tnd-atlas-list">
+              <li class="tnd-price-row is-match" data-region="tbilisi">
+                <a href="tury/v-tbilisi-est-osobennaya-prelest.html">Старый Тифлис</a>
+                <strong>от 150 $</strong>
+              </li>
+              <li class="tnd-price-row is-match" data-region="tbilisi">
+                <a href="tury/sokrovishcha-sololaki.html">Парадные Сололаки</a>
+                <strong>от 150 $</strong>
+              </li>
+              <li class="tnd-price-row is-match" data-region="tbilisi">
+                <a href="tury/gastro-tbilisi.html">Гастро-Тбилиси</a>
+                <strong>от 300 $</strong>
+              </li>
+              <li class="tnd-price-row" data-region="mtskheta">
+                <a href="tury/mczheta-shato-muhrani.html">Мцхета и Мухрани</a>
+                <strong>от 340 $</strong>
+              </li>
+              <li class="tnd-price-row" data-region="mtskheta">
+                <a href="tury/mczheta-i-uplisczihe-skvoz-veka.html">Мцхета и Уплисцихе</a>
+                <strong>от 380 $</strong>
+              </li>
+              <li class="tnd-price-row" data-region="kakheti">
+                <a href="tury/klassicheskaya-kahetiya.html">Сигнахи и Бодбе</a>
+                <strong>по запросу</strong>
+              </li>
+              <li class="tnd-price-row" data-region="kakheti">
+                <a href="tury/rtveli.html">Праздник Ртвели</a>
+                <strong>1300 $</strong>
+              </li>
+              <li class="tnd-price-row" data-region="borjomi">
+                <a href="tury/borzhomi-rabat-vardziya.html">Боржоми и Вардзия</a>
+                <strong>по запросу</strong>
+              </li>
+              <li class="tnd-price-row" data-region="kazbegi">
+                <a href="tury/v-kazbegi.html">Казбеги и Гергети</a>
+                <strong>по запросу</strong>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="tnd-cat-mosaic" id="tnd-cat-mosaic">
+        <article class="tnd-cat-card tnd-cat-card--c1 tnd-cat-card--fav">
+          <div class="tnd-cat-card__media">
+            <img class="tnd-cat-card__img" src="img/cat-tbilisi-800.webp" width="800" height="500" loading="lazy" alt="Экскурсии по Тбилиси">
+            <span class="tnd-cat-card__tag" aria-hidden="true">01 · 6 программ</span>
+          </div>
+          <div class="tnd-cat-card__body">
+            <div>
+              <h3 class="tnd-cat-card__title">Экскурсии по Тбилиси</h3>
+              <div class="tnd-cat-card__desc" data-cat-desc="0" aria-hidden="true">Старый город, Сололаки и Руставели.</div>
+            </div>
+            <div class="tnd-cat-card__foot">
+              <span class="tnd-cat-card__price">от 150 $</span>
+              <a class="tnd-cat-card__cta" href="tury/ekskursii-po-tbilisi.html">Маршруты</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="tnd-cat-card tnd-cat-card--c2">
+          <div class="tnd-cat-card__media">
+            <img class="tnd-cat-card__img" src="img/cat-regions-800.webp" width="800" height="500" loading="lazy" alt="Однодневные экскурсии по регионам">
+            <span class="tnd-cat-card__tag" aria-hidden="true">02 · 13 маршрутов</span>
+          </div>
+          <div class="tnd-cat-card__body">
+            <div>
+              <h3 class="tnd-cat-card__title">Однодневные выезды</h3>
+              <div class="tnd-cat-card__desc" data-cat-desc="1" aria-hidden="true">Казбеги, винодельни Кахетии и Мцхета.</div>
+            </div>
+            <div class="tnd-cat-card__foot">
+              <span class="tnd-cat-card__price">от 340 $</span>
+              <a class="tnd-cat-card__cta" href="tury/odnodnevnye-ekskursii-po-regionam.html">Маршруты</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="tnd-cat-card tnd-cat-card--c3">
+          <div class="tnd-cat-card__media">
+            <img class="tnd-cat-card__img" src="img/cat-multiday-800.webp" width="800" height="500" loading="lazy" alt="Туры на несколько дней">
+            <span class="tnd-cat-card__tag" aria-hidden="true">03 · 3 тура</span>
+          </div>
+          <div class="tnd-cat-card__body">
+            <div>
+              <h3 class="tnd-cat-card__title">Многодневные туры</h3>
+              <div class="tnd-cat-card__desc" data-cat-desc="2" aria-hidden="true">Праздник Ртвели, Восток и девичник.</div>
+            </div>
+            <div class="tnd-cat-card__foot">
+              <span class="tnd-cat-card__price">от 1200 $</span>
+              <a class="tnd-cat-card__cta" href="tury/tury-na-neskolko-dnej.html">Маршруты</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="tnd-cat-card tnd-cat-card--c4">
+          <div class="tnd-cat-card__media">
+            <img class="tnd-cat-card__img" src="img/cat-immersive-800.webp" width="800" height="500" loading="lazy" alt="Иммерсивные экскурсии">
+            <span class="tnd-cat-card__tag" aria-hidden="true">04 · Сценарий</span>
+          </div>
+          <div class="tnd-cat-card__body">
+            <div>
+              <h3 class="tnd-cat-card__title">Иммерсивные прогулки</h3>
+              <div class="tnd-cat-card__desc" data-cat-desc="3" aria-hidden="true">Маршруты-спектакли с живым участием.</div>
+            </div>
+            <div class="tnd-cat-card__foot">
+              <span class="tnd-cat-card__price">по запросу</span>
+              <a class="tnd-cat-card__cta" href="tury/immersivnye-ekskursii.html">Маршруты</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="tnd-cat-card tnd-cat-card--c5">
+          <div class="tnd-cat-card__media">
+            <img class="tnd-cat-card__img" src="img/cat-heli-800.webp" width="800" height="500" loading="lazy" alt="Вертолётные маршруты">
+            <span class="tnd-cat-card__tag" aria-hidden="true">05 · Борт</span>
+          </div>
+          <div class="tnd-cat-card__body">
+            <div>
+              <h3 class="tnd-cat-card__title">Вертолётные туры</h3>
+              <div class="tnd-cat-card__desc" data-cat-desc="4" aria-hidden="true">Полёты над хребтами Кавказа и шато.</div>
+            </div>
+            <div class="tnd-cat-card__foot">
+              <span class="tnd-cat-card__price">по запросу</span>
+              <a class="tnd-cat-card__cta" href="tury/vertolyotnye-marshruty.html">Маршруты</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="tnd-cat-card tnd-cat-card--c6">
+          <div class="tnd-cat-card__media">
+            <img class="tnd-cat-card__img" src="img/cat-horse-800.webp" width="800" height="500" loading="lazy" alt="Конные прогулки">
+            <span class="tnd-cat-card__tag" aria-hidden="true">06 · Верхом</span>
+          </div>
+          <div class="tnd-cat-card__body">
+            <div>
+              <h3 class="tnd-cat-card__title">Конные прогулки</h3>
+              <div class="tnd-cat-card__desc" data-cat-desc="5" aria-hidden="true">Тропы предгорий и долин с пикником.</div>
+            </div>
+            <div class="tnd-cat-card__foot">
+              <span class="tnd-cat-card__price">по запросу</span>
+              <a class="tnd-cat-card__cta" href="tury/konnye-progulki.html">Маршруты</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="tnd-cat-card tnd-cat-card--c7">
+          <div class="tnd-cat-card__media">
+            <img class="tnd-cat-card__img" src="img/cat-buggy-800.webp" width="800" height="500" loading="lazy" alt="Багги-туры">
+            <span class="tnd-cat-card__tag" aria-hidden="true">07 · Драйв</span>
+          </div>
+          <div class="tnd-cat-card__body">
+            <div>
+              <h3 class="tnd-cat-card__title">Багги-туры</h3>
+              <div class="tnd-cat-card__desc" data-cat-desc="6" aria-hidden="true">Экспедиции по горным перевалам и каньонам.</div>
+            </div>
+            <div class="tnd-cat-card__foot">
+              <span class="tnd-cat-card__price">по запросу</span>
+              <a class="tnd-cat-card__cta" href="tury/baggi-tury.html">Маршруты</a>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="tnd-mice" id="mice">
+    <div class="tnd-wrap">
+      <div class="tnd-sec-head tnd-sec-head--dark">
+        <h2 class="tnd-h2" data-sayt="mice_title">Корпоративные события и MICE-программы</h2>
+        <span class="tnd-idx tnd-idx--dark" aria-hidden="true">03 / MICE GEORGIA</span>
+      </div>
+      <div class="tnd-mice__layout">
+        <div>
+          <p class="tnd-mice__p" data-sayt="mice_p0">Деловые выезды, форумы, стратегические сессии, тимбилдинги и торжественные приёмы.</p>
+          <p class="tnd-mice__p" data-sayt="mice_p1">Находим залы и шато под задачи компании, координируем отели, логистику и техпродакшн.</p>
+          <div class="tnd-mice__img-wrap">
+            <img class="tnd-mice__img" src="img/mice-main-800.webp" width="800" height="520" loading="lazy" alt="MICE и корпоративные мероприятия в Грузии">
+          </div>
+          <a class="tnd-btn-terra" href="mice.html">Подробнее о MICE →</a>
+        </div>
+        <ol class="tnd-mice-ol" id="tnd-mice-ol">
+          <li class="tnd-mice-ol__item">
+            <strong class="tnd-mice-ol__num" aria-hidden="true">01</strong>
+            <div>
+              <h3 class="tnd-mice-ol__title">Форумы и сессии</h3>
+              <div class="tnd-mice-ol__desc" aria-hidden="true">Залы в Тбилиси и шато, звук и синхронный перевод.</div>
+            </div>
+          </li>
+          <li class="tnd-mice-ol__item">
+            <strong class="tnd-mice-ol__num" aria-hidden="true">02</strong>
+            <div>
+              <h3 class="tnd-mice-ol__title">Инсентив-выезды</h3>
+              <div class="tnd-mice-ol__desc" aria-hidden="true">Закрытые дегустации и вертолёты к Казбеку.</div>
+            </div>
+          </li>
+          <li class="tnd-mice-ol__item">
+            <strong class="tnd-mice-ol__num" aria-hidden="true">03</strong>
+            <div>
+              <h3 class="tnd-mice-ol__title">Командные квесты</h3>
+              <div class="tnd-mice-ol__desc" aria-hidden="true">Гастро-баттлы, сбор урожая Ртвели и багги.</div>
+            </div>
+          </li>
+          <li class="tnd-mice-ol__item">
+            <strong class="tnd-mice-ol__num" aria-hidden="true">04</strong>
+            <div>
+              <h3 class="tnd-mice-ol__title">Торжественные ужины</h3>
+              <div class="tnd-mice-ol__desc" aria-hidden="true">Исторические винодельни, многоголосие и свет.</div>
+            </div>
+          </li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <section class="tnd-voices" id="reviews">
+    <div class="tnd-wrap">
+      <div class="tnd-sec-head">
+        <h2 class="tnd-h2" data-sayt="rev_title">Отзывы</h2>
+        <span class="tnd-idx" aria-hidden="true">04 / ГОСТИ</span>
+      </div>
+      <p class="tnd-voices__intro" data-sayt="rev_sub">Отклики путешественников о маршрутах по Тбилиси, Мцхете и винным усадьбам.</p>
+      <div class="tnd-voices-grid" id="tnd-voices-grid">
+        <article class="tnd-voice-card">
+          <div class="tnd-voice-head">
+            <strong class="tnd-voice-author">Глазунова Елена</strong>
+            <span class="tnd-voice-tour" aria-hidden="true">Винный маршрут</span>
+          </div>
+          <div class="tnd-voice-body">
+            <div class="tnd-voice-line">Поездка прошла великолепно, чёткая организация, тёплая встреча и увлечённый гид.</div>
+          </div>
+        </article>
+        <article class="tnd-voice-card">
+          <div class="tnd-voice-head">
+            <strong class="tnd-voice-author">Смирнов Алексей</strong>
+            <span class="tnd-voice-tour" aria-hidden="true">Винный маршрут</span>
+          </div>
+          <div class="tnd-voice-body">
+            <div class="tnd-voice-line">Ездили вдвоём с девушкой, живописная усадьба, рассказ про виноделие и щедрая дегустация.</div>
+          </div>
+        </article>
+        <article class="tnd-voice-card">
+          <div class="tnd-voice-head">
+            <strong class="tnd-voice-author">Люда и Саша</strong>
+            <span class="tnd-voice-tour" aria-hidden="true">Винный маршрут</span>
+          </div>
+          <div class="tnd-voice-body">
+            <div class="tnd-voice-line">Уютный автомобиль с музыкой и водой, внимательный сомелье и чудесный день для семьи.</div>
+          </div>
+        </article>
+        <article class="tnd-voice-card">
+          <div class="tnd-voice-head">
+            <strong class="tnd-voice-author">Юлия</strong>
+            <span class="tnd-voice-tour" aria-hidden="true">Винный маршрут</span>
+          </div>
+          <div class="tnd-voice-body">
+            <div class="tnd-voice-line">Спокойная поездка без спешки, погреба князей Багратиони в Мухрани и сказочная Мцхета.</div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="tnd-inquiry" id="contacts">
+  <div class="tnd-wrap">
+    <div class="tnd-sec-head tnd-sec-head--dark">
+      <h2 class="tnd-h2" data-sayt="contacts_title">Расскажите про ваши планы</h2>
+      <span class="tnd-idx tnd-idx--dark">05 / КОНТАКТЫ</span>
+    </div>
+    <div class="tnd-inquiry__grid">
+      <div>
+        <p class="tnd-inquiry__p" data-sayt="contacts_sub">Поездка или событие? Укажите даты и число гостей.</p>
+        <address class="tnd-addr">
+          <div class="tnd-addr__row">
+            <span class="tnd-addr__lbl">Руководитель</span>
+            <span class="tnd-addr__link">Анта Шартава</span>
+          </div>
+          <div class="tnd-addr__row">
+            <span class="tnd-addr__lbl">Телефон</span>
+            <a class="tnd-addr__link" href="tel:+995557647049">+995 557 647 049</a>
+          </div>
+          <div class="tnd-addr__row">
+            <span class="tnd-addr__lbl">Мессенджер</span>
+            <a class="tnd-addr__link" href="https://wa.me/995557647049" target="_blank" rel="noopener">WhatsApp</a>
+          </div>
+          <div class="tnd-addr__row">
+            <span class="tnd-addr__lbl">Почта</span>
+            <a class="tnd-addr__link" href="mailto:shartavaanta@gmail.com">shartavaanta@gmail.com</a>
+          </div>
+          <div class="tnd-addr__row">
+            <span class="tnd-addr__lbl">Офис</span>
+            <span class="tnd-addr__link">Тбилиси, ул. Бербуки, 1</span>
+          </div>
+        </address>
+      </div>
+      <form class="tnd-form" id="tnd-lead-form" action="#contacts" method="post">
+        <div class="tnd-form__row">
+          <label class="tnd-field">
+            <span class="tnd-field__lbl">Имя</span>
+            <input class="tnd-input" type="text" name="name" placeholder="Елена" required>
+          </label>
+          <label class="tnd-field">
+            <span class="tnd-field__lbl">Телефон или WhatsApp</span>
+            <input class="tnd-input" type="tel" name="phone" placeholder="+995 557 000 000" required>
+          </label>
+        </div>
+        <div class="tnd-form__row">
+          <label class="tnd-field">
+            <span class="tnd-field__lbl">Формат</span>
+            <select class="tnd-select" name="format" id="tnd-format-select">
+              <option value="Маршрут по Грузии" selected>Маршрут по Грузии</option>
+              <option value="Прогулка по Тбилиси">Прогулка по Тбилиси</option>
+              <option value="Выезд в регионы">Выезд в регионы</option>
+              <option value="Многодневный тур">Многодневный тур</option>
+              <option value="Событие MICE">Событие MICE</option>
+              
+            </select>
+          </label>
+          <label class="tnd-field">
+            <span class="tnd-field__lbl">Даты и гости</span>
+            <input class="tnd-input" type="text" name="dates" placeholder="Октябрь, 6 гостей">
+          </label>
+        </div>
+        <label class="tnd-field">
+          <span class="tnd-field__lbl">Пожелания</span>
+          <textarea class="tnd-textarea" name="message" placeholder="Города, винодельни или задачи"></textarea>
+        </label>
+        <label class="tnd-check">
+          <input type="checkbox" id="tnd-consent" required>
+          <span>Согласен на обработку данных</span>
+        </label>
+        <button class="tnd-submit" type="submit" id="tnd-submit-btn" disabled>Отправить заявку</button>
+        <div class="tnd-form__status" id="tnd-form-status" aria-live="polite"></div>
+      </form>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="tnd-foot">
+  <small>© 2026 ANTA EVENTS · DMC GEORGIA</small>
+  <ul class="tnd-ver-list" aria-label="Версии дизайна">
+    <li><a class="tnd-ver-link" href="../anta-a/">А</a></li>
+    <li><a class="tnd-ver-link" href="../anta-b/">Б</a></li>
+    <li><a class="tnd-ver-link" href="../anta-c/">В</a></li>
+    <li><a class="tnd-ver-link is-cur" href="../anta-d/">Г</a></li>
+  </ul>
+</footer>
+
+<script>
+(function() {
+  var SAYT_DATA = {"hero_sub": "Индивидуальные маршруты и корпоративные мероприятия.", "hero_lead": "Организуем вашу поездку от первой идеи до последнего тоста.", "about_title": "10 лет опыта. Грузия в каждой детали.", "about_p0": "Мы живём и работаем в Грузии. Уже 10 лет знакомим гостей с её городами, традициями и любимыми местами.", "about_p1": "Наша локальная команда объединяет гидов, водителей и организаторов событий.", "about_p2": "Подбираем маршрут или площадку под вашу идею и берём на себя организационные детали. Для нас вы прежде всего гости.", "adv": [{"num": "01", "title": "10 лет опыта в туризме Грузии", "desc": "Подбираем маршруты с учётом ваших интересов, ритма и состава компании."}, {"num": "02", "title": "Локальная команда", "desc": "Гиды, водители и организаторы уже здесь. Не нужно привозить команду из другой страны."}, {"num": "03", "title": "Знаем площадки изнутри", "desc": "Подбираем отели, винодельни и пространства с учётом формата, количества гостей и бюджета."}, {"num": "04", "title": "Проверенные местные подрядчики", "desc": "Собираем специалистов под задачу и координируем их работу на месте."}, {"num": "05", "title": "Организация под ключ", "desc": "Объединяем проживание, трансферы, программу и сопровождение в одну продуманную поездку."}], "cat_title": "Экскурсии и впечатления", "cat_sub": "От прогулки по Тбилиси до путешествия на несколько дней. Выберите формат, а мы поможем продумать детали.", "cats": [{"slug": "ekskursii-po-tbilisi", "num": "01", "title": "Экскурсии по Тбилиси", "desc": "Прогулки по городу, его историям и любимым местам.", "full_desc": "Камерные пешие и автомобильные прогулки по Старому городу, парадным особнякам Сололаки, проспекту Руставели и гастрономическим дворам Тифлиса.", "cover": "img/cat-tbilisi.webp", "count_label": "6 авторских программ", "price_from": "от 150 $"}, {"slug": "odnodnevnye-ekskursii-po-regionam", "num": "02", "title": "Однодневные экскурсии по регионам", "desc": "Поездки из города к горам, винодельням и достопримечательностям.", "full_desc": "Выезды из Тбилиси на один насыщенный день: древняя Мцхета, пещерный город Уплисцихе, винодельни Кахетии, Боржоми, Вардзия и панорамы Казбеги.", "cover": "img/cat-regions.webp", "count_label": "13 маршрутов", "price_from": "от 340 $"}, {"slug": "tury-na-neskolko-dnej", "num": "03", "title": "Туры на несколько дней", "desc": "Маршруты на два дня и более с продуманной программой.", "full_desc": "Многодневные путешествия с полным сопровождением: сбор винограда на празднике Ртвели, большое гастро-винное кольцо Восточной Грузии и авторский девичник.", "cover": "img/cat-multiday.webp", "count_label": "3 многодневных тура", "price_from": "от 1200 $"}, {"slug": "immersivnye-ekskursii", "num": "04", "title": "Иммерсивные экскурсии", "desc": "Истории, в которых гости становятся участниками.", "full_desc": "Театрализованные маршруты и живые городские легенды, где старые тифлисские дворы, парадные и винные погреба раскрываются через диалог и действие.", "cover": "img/cat-immersive.webp", "count_label": "Индивидуальный сценарий", "price_from": "по запросу"}, {"slug": "vertolyotnye-marshruty", "num": "05", "title": "Вертолётные маршруты", "desc": "Впечатления и виды Грузии с высоты.", "full_desc": "Частные перелёты над Главным Кавказским хребтом, Казбеги, долинами Кахетии и высокогорными озёрами с посадкой у закрытых виноделен и шато.", "cover": "img/cat-heli.webp", "count_label": "Частный борт", "price_from": "по запросу"}, {"slug": "konnye-progulki", "num": "06", "title": "Конные прогулки", "desc": "Знакомство с природой Грузии верхом.", "full_desc": "Верховые маршруты по предгорьям, альпийским лугам и виноградным долинам в сопровождении опытных инструкторов с пикником на природе.", "cover": "img/cat-horse.webp", "count_label": "Маршруты 2–6 часов", "price_from": "по запросу"}, {"slug": "baggi-tury", "num": "07", "title": "Багги-туры", "desc": "Активные маршруты и новые впечатления.", "full_desc": "Драйвовые экспедиции на подготовленных багги по горным перевалам, каньонам и панорамным хребтам для компаний друзей и корпоративных команд.", "cover": "img/cat-buggy.webp", "count_label": "Экспедиции и драйв", "price_from": "по запросу"}], "mice_title": "Корпоративные мероприятия и MICE в Грузии", "mice_p0": "Корпоративные поездки, конференции, тренинги, тимбилдинги и гала-ужины.", "mice_p1": "Подбираем площадку и программу под задачи компании, организуем размещение, трансферы и работу подрядчиков.", "mice_formats": [{"num": "01", "title": "Конференции и форумы", "desc": "Подбор залов в Тбилиси и загородных шато, технический продакшн, синхронный перевод и регистрация участников."}, {"num": "02", "title": "Инсентив-поездки и выезды команд", "desc": "Авторские программы поощрения сотрудников: от закрытых дегустаций в Шато Мухрани до полётов к Казбеги."}, {"num": "03", "title": "Тимбилдинги со смыслом", "desc": "Кулинарные баттлы, квесты по Старому Тифлису, сбор винограда Ртвели и экспедиции на багги по горным хребтам."}, {"num": "04", "title": "Гала-ужины и приёмы", "desc": "Вечера в исторических винодельнях и панорамных ресторанах с грузинским многоголосием, ведущими и сценографией."}], "rev_title": "Впечатления наших гостей", "rev_sub": "Дословные отзывы гостей о поездках по Тбилиси, Мцхете и винодельням Грузии.", "reviews": [{"author": "Глазунова Елена", "tour": "Винный тур", "lines": ["Это было просто великолепно! Буквально все: начиная от организации и заканчивая самой экскурсией и гидом!"]}, {"author": "Смирнов Алексей", "tour": "Винный тур", "lines": ["Мы брали этот тур вместе с моей девушкой, очень понравилось место! Гид интересно рассказывал про историю и особенности виноделия в Грузии.", "Сама винодельня находится в очень живописном месте и поражает масштабами. Дегустация — восторг! Вина отменные. Спасибо организаторам за все :)"]}, {"author": "Люда и Саша", "tour": "Винный тур", "lines": ["Давно мечтали побывать в Грузии и познакомиться с культурой виноделия. Мечты сбываются! Потрясающий сервис. Организаторы продумали все до мелочей.", "Начиная с комфортного автомобиля с приятной музыкой и водой в салоне, заканчивая дегустацией с опытным сомелье. Это был незабываемый день для нашей семьи!"]}, {"author": "Юлия", "tour": "Винный тур", "lines": ["Честно, это лучшее завершение нашего путешествия по Грузии. Уютная поездка, без спешки, очень душевный гид, интересная экскурсия и потрясающее вино в Шато Мухрани.", "Особенно понравились истории про княжескую семью Багратиони и прогулка по винным погребам. А сама Мцхета просто сказочная, очень рада, что мы выбрали этот тур."]}], "contacts_title": "Расскажите, что вы задумали", "contacts_sub": "Путешествие или корпоративное событие? Напишите даты, количество гостей и ваши пожелания."};
+  var mapText = function(key, val) {
+    var el = document.querySelector('[data-sayt="' + key + '"]');
+    if (el && val) el.textContent = val;
+  };
+  mapText('hero_sub', SAYT_DATA.hero_sub);
+  mapText('hero_lead', SAYT_DATA.hero_lead);
+  mapText('about_title', SAYT_DATA.about_title);
+  mapText('about_p0', SAYT_DATA.about_p0);
+  mapText('about_p1', SAYT_DATA.about_p1);
+  mapText('about_p2', SAYT_DATA.about_p2);
+  mapText('cat_title', SAYT_DATA.cat_title);
+  mapText('cat_sub', SAYT_DATA.cat_sub);
+  mapText('mice_title', SAYT_DATA.mice_title);
+  mapText('mice_p0', SAYT_DATA.mice_p0);
+  mapText('mice_p1', SAYT_DATA.mice_p1);
+  mapText('rev_title', SAYT_DATA.rev_title);
+  mapText('rev_sub', SAYT_DATA.rev_sub);
+  mapText('contacts_title', SAYT_DATA.contacts_title);
+  mapText('contacts_sub', SAYT_DATA.contacts_sub);
+
+  var advCards = document.querySelectorAll('#tnd-adv-grid .tnd-adv-card');
+  if (SAYT_DATA.adv && advCards.length === SAYT_DATA.adv.length) {
+    for (var i = 0; i < advCards.length; i++) {
+      var t = advCards[i].querySelector('.tnd-adv-title');
+      var d = advCards[i].querySelector('.tnd-adv-desc');
+      if (t) t.textContent = SAYT_DATA.adv[i].title;
+      if (d) d.textContent = SAYT_DATA.adv[i].desc;
+    }
+  }
+
+  var catDescs = document.querySelectorAll('[data-cat-desc]');
+  for (var c = 0; c < catDescs.length; c++) {
+    var idx = parseInt(catDescs[c].getAttribute('data-cat-desc'), 10);
+    if (SAYT_DATA.cats && SAYT_DATA.cats[idx]) {
+      catDescs[c].textContent = SAYT_DATA.cats[idx].desc;
+    }
+  }
+
+  var miceItems = document.querySelectorAll('#tnd-mice-ol .tnd-mice-ol__item');
+  if (SAYT_DATA.mice_formats && miceItems.length === SAYT_DATA.mice_formats.length) {
+    for (var m = 0; m < miceItems.length; m++) {
+      var mt = miceItems[m].querySelector('.tnd-mice-ol__title');
+      var md = miceItems[m].querySelector('.tnd-mice-ol__desc');
+      if (mt) mt.textContent = SAYT_DATA.mice_formats[m].title;
+      if (md) md.textContent = SAYT_DATA.mice_formats[m].desc;
+    }
+  }
+
+  var voiceCards = document.querySelectorAll('#tnd-voices-grid .tnd-voice-card');
+  if (SAYT_DATA.reviews && voiceCards.length === SAYT_DATA.reviews.length) {
+    for (var r = 0; r < voiceCards.length; r++) {
+      var vb = voiceCards[r].querySelector('.tnd-voice-body');
+      if (vb) {
+        vb.innerHTML = '';
+        var lines = SAYT_DATA.reviews[r].lines;
+        for (var l = 0; l < lines.length; l++) {
+          var div = document.createElement('div');
+          div.className = 'tnd-voice-line';
+          div.textContent = lines[l];
+          vb.appendChild(div);
+        }
+      }
+    }
+  }
+
+  var REGIONS = {
+    tbilisi: {
+      title: 'Выбран узел · Тбилиси (450 м над уровнем моря)',
+      sub: 'Старт всех маршрутов · 6 авторских прогулок по столице',
+      path: 'M 430 210 L 430 210'
+    },
+    mtskheta: {
+      title: 'Выбран узел · Мцхета и Картли (600 м над уровнем моря)',
+      sub: '35 минут от Тбилиси · Джвари, Светицховели, Шато Мухрани и Уплисцихе',
+      path: 'M 430 210 L 340 182'
+    },
+    kakheti: {
+      title: 'Выбран узел · Кахетия и Алазанская долина (790 м)',
+      sub: '1,5 часа через Гомборский перевал · Сигнахи, Телави, Цинандали и Ртвели',
+      path: 'M 430 210 L 645 168'
+    },
+    borjomi: {
+      title: 'Выбран узел · Боржоми и Вардзия (1300 м над уровнем моря)',
+      sub: '2,5 часа на запад и юг · Боржомское ущелье, крепость Рабат и скалы Вардзии',
+      path: 'M 430 210 L 185 224'
+    },
+    kazbegi: {
+      title: 'Выбран узел · Казбеги и Гергети (2170 м над уровнем моря)',
+      sub: 'Военно-Грузинская дорога · Ананури, Крестовый перевал (2395 м) и Казбек',
+      path: 'M 430 210 L 495 76'
+    }
+  };
+
+  var pins = document.querySelectorAll('.tnd-region-pin');
+  var rows = document.querySelectorAll('#tnd-atlas-list .tnd-price-row');
+  var statusEl = document.getElementById('tnd-map-status');
+  var routeLine = document.getElementById('tnd-active-route');
+
+  function selectRegion(reg) {
+    for (var i = 0; i < pins.length; i++) {
+      pins[i].classList.toggle('is-active', pins[i].getAttribute('data-region') === reg);
+    }
+    for (var j = 0; j < rows.length; j++) {
+      var match = rows[j].getAttribute('data-region') === reg;
+      rows[j].classList.toggle('is-match', match);
+    }
+    if (REGIONS[reg] && statusEl) {
+      statusEl.innerHTML = '<span>' + REGIONS[reg].title + '</span><span>' + REGIONS[reg].sub + '</span>';
+    }
+    if (REGIONS[reg] && routeLine) {
+      routeLine.setAttribute('d', REGIONS[reg].path);
+    }
+  }
+
+  for (var p = 0; p < pins.length; p++) {
+    pins[p].addEventListener('click', function() {
+      selectRegion(this.getAttribute('data-region'));
+    });
+  }
+
+  var consent = document.getElementById('tnd-consent');
+  var submitBtn = document.getElementById('tnd-submit-btn');
+  var form = document.getElementById('tnd-lead-form');
+  var statusBox = document.getElementById('tnd-form-status');
+  if (consent && submitBtn) {
+    consent.addEventListener('change', function() {
+      submitBtn.disabled = !consent.checked;
+    });
+  }
+  if (form) {
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      if (statusBox) {
+        statusBox.textContent = 'Спасибо! Заявка принята. Анта Шартава и команда свяжутся с вами в ближайшее время.';
+      }
+    });
+  }
+
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in');
+        }
+      });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.tnd-cat-card, .tnd-adv-card').forEach(function(el) {
+      io.observe(el);
+    });
+  }
+  requestAnimationFrame(function() {});
+})();
+</script>
+<a class="osb-bot" href="https://t.me/opensites_io?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5%21%20%D0%A1%D0%BC%D0%BE%D1%82%D1%80%D1%8E%20%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%20%D1%81%D0%B0%D0%B9%D1%82%D0%B0%20%D0%B4%D0%BB%D1%8F%20%C2%ABANTA%20EVENTS%C2%BB%20%E2%80%94%20%D1%85%D0%BE%D1%87%D1%83%20%D1%82%D0%B0%D0%BA%D0%BE%D0%B9" target="_blank" rel="noopener"><span class="osb-in"><span>Сделано в <span class="osb-mark"><span class="osb-dot"></span>open-sites.io</span></span><span class="osb-cta">Написать нам →</span></span></a>
+<script src="https://crm.3.78.134.4.sslip.io/e.js" defer></script>
+</body>
+</html>
