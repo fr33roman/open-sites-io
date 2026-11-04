@@ -1853,3 +1853,19 @@ button, input, select {
   .tja-hcontact svg { width: 26px; height: 26px; stroke-width: 1.9; }
   .tja-btn { min-height: 44px; padding: 6px 16px; font-size: .86rem; }
 }
+
+/* ролик на телефоне ниже на ~17 %: срезано белое поле сверху и край стола снизу, сцена целиком (слово Романа 04.11) */
+@media (max-width: 720px) {
+  .tja-has-video .tja-arch-frame { aspect-ratio: 540 / 800; }
+  .tja-has-video .tja-arch-frame__video { object-fit: cover; object-position: 50% 62%; }
+  .tja-hero__stage { padding: 14px; gap: 12px; }
+}
+
+/* телефон: отзывы — после учителей, перед заявкой (слово Романа 04.11) */
+@media (max-width: 720px) {
+  #team { display: flex; flex-direction: column; }
+  #team .tja-team-top { display: contents; }
+  #team .tja-founder { order: 1; margin-bottom: 14px; }
+  #team .tja-team-list { order: 2; }
+  #team .tja-reviews { order: 3; margin-top: 20px; }
+}

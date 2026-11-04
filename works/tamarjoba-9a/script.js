@@ -46,6 +46,10 @@
     if (!reducedMotion) {
       heroVideo.src = heroVideo.getAttribute('data-src');
       heroVideo.preload = 'auto';
+      // на 20 % медленнее (слово Романа 04.11); браузер сбрасывает скорость при загрузке — ставим и после неё
+      heroVideo.defaultPlaybackRate = 0.8;
+      heroVideo.playbackRate = 0.8;
+      heroVideo.addEventListener('loadedmetadata', function () { heroVideo.playbackRate = 0.8; });
       var tryPlay = function () { var pr = heroVideo.play(); if (pr && pr.catch) pr.catch(function () {}); };
       if ('IntersectionObserver' in window) {
         new IntersectionObserver(function (en) {
