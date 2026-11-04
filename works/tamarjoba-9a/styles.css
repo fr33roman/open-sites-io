@@ -1591,3 +1591,213 @@ button, input, select {
     scroll-behavior: auto !important;
   }
 }
+
+/* ==========================================================================
+   ПРАВКИ РОМАНА 04.11 («Указка», _pravki/2026-11-04-200244.md)
+   ========================================================================== */
+
+/* 13: в шапке вместо вариантов А/Б/В — профиль и контакты; кнопка в одну строку */
+.tja-btn { white-space: nowrap; }
+.tja-hcontacts { display: inline-flex; align-items: center; gap: 4px; }
+.tja-hcontact {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 44px; height: 44px; border-radius: 50%;
+  color: var(--ink); transition: color .2s ease, background-color .2s ease, transform .2s var(--ease-spring);
+}
+.tja-hcontact svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linejoin: round; stroke-linecap: round; }
+.tja-hcontact .tja-ico-dot, .tja-hcontact .tja-ico-fill { fill: currentColor; stroke: none; }
+.tja-hcontact:hover { background: var(--bg-deep); transform: translateY(-1px); }
+.tja-hcontact--ig:hover { color: #D62976; }
+.tja-hcontact--wa:hover { color: #1FA855; }
+.tja-hcontact--tg:hover { color: #229ED9; }
+
+/* 1: иллюстрация на первом экране — выше, до самой плашки подписчиков */
+@media (min-width: 1061px) {
+  .tja-hero__stage { justify-content: flex-start; }
+  .tja-arch-frame { flex: 1 1 auto; aspect-ratio: auto; min-height: 460px; }
+  .tja-arch-frame__img { object-position: 50% 30%; }
+}
+
+/* 3: подписей «звук…» сразу нет — появляются по одной и когда звучит буква */
+.tja-js .tja-letter-card__sound {
+  opacity: 0; transform: translateY(8px) scale(.9);
+  transition: opacity .45s ease, transform .55s var(--ease-spring);
+}
+.tja-js .tja-letter-card.is-said .tja-letter-card__sound { opacity: 1; transform: none; }
+
+/* 5, 7: карточка курса и педагога — посередине экрана */
+.tja-drawer-backdrop { justify-content: center; }
+.tja-drawer { box-shadow: 0 30px 80px rgba(0, 0, 0, .35); animation: tjaPopIn .34s var(--ease-spring); }
+@keyframes tjaPopIn {
+  from { opacity: 0; transform: translateY(16px) scale(.96); }
+  to { opacity: 1; transform: none; }
+}
+.tja-drawer__about { display: grid; grid-template-columns: 120px 1fr; gap: 18px; align-items: start; }
+.tja-drawer__about[hidden] { display: none; }
+.tja-drawer__photo { width: 120px; height: 120px; border-radius: var(--radius-md); object-fit: cover; border: 2px solid var(--ink); }
+.tja-drawer__text { display: grid; gap: 10px; font-size: .95rem; line-height: 1.55; color: var(--ink-soft); }
+.tja-drawer__text p { margin: 0; }
+
+/* 6: отзывы сменяют друг друга — карточка гаснет вверх, следующая въезжает снизу */
+.tja-reviews__quote, .tja-reviews__author { transition: opacity .38s ease, transform .45s var(--ease-spring); }
+.tja-reviews.is-out .tja-reviews__quote, .tja-reviews.is-out .tja-reviews__author { opacity: 0; transform: translateY(-14px); }
+.tja-reviews.is-in .tja-reviews__quote { animation: tjaRevIn .55s var(--ease-spring); }
+.tja-reviews.is-in .tja-reviews__author { animation: tjaRevIn .55s .08s var(--ease-spring) both; }
+@keyframes tjaRevIn { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
+.tja-reviews__quote { min-height: 4.5em; }
+.tja-reviews__dots { gap: 0; margin: 0 -14px -10px; }
+.tja-rev-dot { position: relative; min-width: 44px; width: 44px; min-height: 44px; padding: 0; border: 0; background: transparent; }
+.tja-rev-dot::before {
+  content: ""; position: absolute; left: 50%; top: 50%; width: 9px; height: 9px; margin: -4.5px 0 0 -4.5px;
+  border-radius: 50%; background: rgba(255, 255, 255, .35); transition: width .3s var(--ease-spring), background-color .3s;
+}
+.tja-rev-dot.is-active { background: transparent; background-image: none; }
+.tja-rev-dot.is-active::before { width: 22px; margin-left: -11px; border-radius: 6px; background: var(--red); }
+
+/* 8: свой выпадающий список — скруглённый, в стиле сайта, без системной таблицы */
+.tja-pick { position: relative; }
+.tja-pick__native { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
+.tja-pick__b {
+  display: flex; align-items: center; justify-content: space-between; gap: 10px;
+  width: 100%; min-height: 48px; padding: 10px 14px 10px 16px; text-align: left;
+  border-radius: var(--radius-md); border: 1.5px solid var(--line-strong); background: #FFFFFF;
+  color: var(--ink); font: inherit; font-size: .95rem; cursor: pointer;
+  transition: border-color .2s ease, box-shadow .2s ease;
+}
+.tja-pick__b:hover { border-color: var(--ink); }
+.tja-pick__b[aria-expanded="true"] { border-color: var(--red); box-shadow: 0 0 0 3px rgba(252, 3, 4, .14); }
+.tja-pick__v { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.tja-pick__c { flex: none; width: 10px; height: 10px; margin-top: -4px; border-right: 2px solid var(--red); border-bottom: 2px solid var(--red); transform: rotate(45deg); transition: transform .3s var(--ease-spring), margin .3s; }
+.tja-pick__b[aria-expanded="true"] .tja-pick__c { transform: rotate(-135deg); margin-top: 4px; }
+.tja-pick__list {
+  position: absolute; z-index: 40; left: 0; right: 0; top: calc(100% + 8px);
+  list-style: none; margin: 0; padding: 6px; display: grid; gap: 2px;
+  max-height: min(320px, 56vh); overflow-y: auto; overscroll-behavior: contain; outline: 0;
+  background: #FFFFFF; border: 1.5px solid var(--ink); border-radius: 18px;
+  box-shadow: 0 24px 48px -18px rgba(0, 0, 0, .45);
+  opacity: 0; visibility: hidden; transform: translateY(-6px) scale(.98); transform-origin: top center;
+  transition: opacity .2s ease, transform .28s var(--ease-spring), visibility 0s .28s;
+}
+.tja-pick.is-open .tja-pick__list { opacity: 1; visibility: visible; transform: none; transition: opacity .2s ease, transform .28s var(--ease-spring); }
+.tja-opt { display: flex; align-items: center; min-height: 44px; padding: 8px 14px; border-radius: 12px; font-size: .94rem; font-weight: 600; cursor: pointer; transition: background-color .15s ease; }
+.tja-opt.is-cur { background: var(--bg-deep); }
+.tja-opt[aria-selected="true"] { background: var(--red-soft); color: var(--red-dark); box-shadow: inset 3px 0 0 var(--red); }
+@media (hover: hover) { .tja-opt:hover { background: var(--bg-deep); } }
+
+/* 12: быстрые кнопки — цветные, с лёгким переливом и мягким миганием */
+.tja-quick-link {
+  position: relative; overflow: hidden; border: 0; color: #FFFFFF; isolation: isolate;
+  animation: tjaGlow 2.8s ease-in-out infinite;
+}
+.tja-quick-link::after {
+  content: ""; position: absolute; inset: 0; z-index: -1;
+  background: linear-gradient(110deg, transparent 30%, rgba(255, 255, 255, .38) 48%, transparent 66%);
+  transform: translateX(-120%); animation: tjaShine 3.6s ease-in-out infinite;
+}
+.tja-quick-link:nth-child(1) { background: linear-gradient(135deg, #1FA855, #0E7A3F); --glow: rgba(37, 211, 102, .45); }
+.tja-quick-link:nth-child(2) { background: linear-gradient(135deg, #1E88C8, #136AA3); --glow: rgba(34, 158, 217, .45); animation-delay: .9s; }
+.tja-quick-link:nth-child(3) { background: linear-gradient(135deg, #E00203, #A80002); --glow: rgba(252, 3, 4, .4); animation-delay: 1.8s; }
+.tja-quick-link:nth-child(2)::after { animation-delay: 1.2s; }
+.tja-quick-link:nth-child(3)::after { animation-delay: 2.4s; }
+.tja-quick-link:hover { color: #FFFFFF; filter: brightness(1.08); }
+@keyframes tjaGlow { 0%, 100% { box-shadow: 0 0 0 0 transparent; } 50% { box-shadow: 0 8px 22px -6px var(--glow, transparent); } }
+@keyframes tjaShine { 0%, 55% { transform: translateX(-120%); } 85%, 100% { transform: translateX(120%); } }
+
+/* 9: подвал шире — знак, подпись, контакты, адреса */
+.tja-footer { display: block; padding: 40px 24px 26px; }
+.tja-footer__grid { display: grid; grid-template-columns: 1.3fr 1fr 1fr .8fr; gap: 28px; margin-bottom: 26px; }
+.tja-footer__brand { display: grid; gap: 12px; align-content: start; }
+.tja-footer__logo { width: 220px; height: auto; }
+.tja-footer__about { margin: 0; max-width: 32ch; font-size: .92rem; line-height: 1.5; color: var(--ink-soft); }
+.tja-footer__col { display: flex; flex-direction: column; align-items: flex-start; gap: 4px; font-size: .9rem; color: var(--ink-soft); }
+.tja-footer__h { margin-bottom: 4px; font-size: .76rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: var(--red-dark); }
+.tja-footer__col a { display: inline-flex; align-items: center; min-height: 44px; font-weight: 700; color: var(--ink); }
+.tja-footer__col a:hover { color: var(--red); }
+.tja-footer__col > span:not(.tja-footer__h) { padding: 6px 0; line-height: 1.4; }
+.tja-footer__nav { flex-wrap: nowrap; gap: 4px; }
+.tja-footer__nav a { padding: 0; }
+.tja-footer__copy { display: block; padding-top: 18px; border-top: 1px solid var(--line); }
+@media (max-width: 1060px) { .tja-footer__grid { grid-template-columns: 1fr 1fr; } }
+
+@media (max-width: 720px) {
+  .tja-hcontacts { gap: 0; }
+  .tja-hcontact { width: 44px; height: 44px; }
+  .tja-hcontact svg { width: 20px; height: 20px; }
+
+  /* 10: алфавит на телефоне компактнее — 4 карточки в ряд, ниже */
+  .tja-alpha-deck { padding: 14px; }
+  .tja-alpha-deck__top { margin-bottom: 10px; }
+  .tja-alpha-grid { grid-template-columns: repeat(4, 1fr); gap: 8px; }
+  .tja-letter-card { height: 86px; }
+  .tja-letter-card__face { padding: 6px 4px; }
+  .tja-letter-card__glyph { font-size: 1.85rem; }
+  .tja-letter-card__sound { margin-top: 4px; font-size: .72rem; }
+  .tja-letter-card__word { font-size: .95rem; }
+  .tja-letter-card__read { font-size: .66rem; line-height: 1.2; }
+
+  /* 11: фото Тамары на телефоне во всю ширину карточки, без пустой половины */
+  .tja-founder { padding: 14px; gap: 14px; }
+  .tja-founder__photo { width: 100%; height: 320px; object-position: 50% 18%; }
+
+  .tja-drawer { padding: 20px; }
+  .tja-drawer__about { grid-template-columns: 84px 1fr; gap: 14px; }
+  .tja-drawer__photo { width: 84px; height: 84px; }
+
+  .tja-footer { padding: 30px 16px 22px; }
+  .tja-footer__grid { grid-template-columns: 1fr; gap: 22px; }
+}
+
+/* узкий телефон: в шапке остаётся Instagram — WhatsApp и Telegram есть в записи и в подвале */
+@media (max-width: 430px) {
+  .tja-hcontact--wa, .tja-hcontact--tg { display: none; }
+}
+
+/* ==========================================================================
+   ПРАВКИ РОМАНА 04.11, второй круг (_pravki/2026-11-04-210116.md)
+   ========================================================================== */
+
+/* «кружки под буквами»: внутренняя часть карточки была строчным span без размера — лицевые стороны
+   сжимались в кружок 22 px. Теперь она во всю карточку */
+.tja-letter-card__inner { display: block; }
+
+/* буква подсвечивается при наведении */
+.tja-letter-card { transition: transform .25s var(--ease-spring); }
+.tja-letter-card__glyph { transition: color .2s ease, transform .3s var(--ease-spring); }
+@media (hover: hover) {
+  .tja-letter-card:hover { transform: translateY(-3px); }
+  .tja-letter-card:hover .tja-letter-card__front { border-color: var(--red); box-shadow: 0 10px 24px -12px rgba(252, 3, 4, .55); }
+  .tja-letter-card:hover .tja-letter-card__glyph { color: var(--red); transform: scale(1.12); }
+}
+/* смена восьмёрки букв: карточки гаснут волной и возвращаются с новыми буквами */
+.tja-letter-card__inner { transition: transform .52s var(--ease-spring), opacity .35s ease; }
+.tja-alpha-grid.is-turning .tja-letter-card__inner { opacity: 0; transform: translateY(8px) scale(.94); }
+.tja-alpha-grid .tja-letter-card:nth-child(2) .tja-letter-card__inner { transition-delay: 0s, .03s; }
+.tja-alpha-grid .tja-letter-card:nth-child(3) .tja-letter-card__inner { transition-delay: 0s, .06s; }
+.tja-alpha-grid .tja-letter-card:nth-child(4) .tja-letter-card__inner { transition-delay: 0s, .09s; }
+.tja-alpha-grid .tja-letter-card:nth-child(5) .tja-letter-card__inner { transition-delay: 0s, .12s; }
+.tja-alpha-grid .tja-letter-card:nth-child(6) .tja-letter-card__inner { transition-delay: 0s, .15s; }
+.tja-alpha-grid .tja-letter-card:nth-child(7) .tja-letter-card__inner { transition-delay: 0s, .18s; }
+.tja-alpha-grid .tja-letter-card:nth-child(8) .tja-letter-card__inner { transition-delay: 0s, .21s; }
+
+/* метка «Отзывы» — спокойнее, в тон тёмной карточке */
+.tja-reviews .tja-badge--red {
+  background: rgba(255, 255, 255, .08); color: #EDEDEF;
+  border: 1px solid rgba(255, 255, 255, .18); letter-spacing: .1em;
+}
+
+/* кнопка маршрута у каждого адреса — пульсирует, ведёт в Google Карты (память map-route-button) */
+.tja-dl__row { display: grid; grid-template-columns: auto 1fr auto; align-items: center; column-gap: 14px; }
+.tja-route {
+  display: inline-flex; align-items: center; gap: 6px; min-height: 44px; padding: 0 16px;
+  border-radius: var(--radius-pill); background: var(--ink); color: #FFFFFF;
+  font-size: .84rem; font-weight: 700; white-space: nowrap;
+  animation: tjaRoute 2.4s ease-in-out infinite;
+}
+.tja-route::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--red); box-shadow: 0 0 0 3px rgba(252, 3, 4, .3); }
+.tja-route:hover { background: var(--red); }
+@keyframes tjaRoute { 0%, 100% { box-shadow: 0 0 0 0 rgba(0, 0, 0, .28); } 50% { box-shadow: 0 0 0 7px rgba(0, 0, 0, 0); } }
+@media (max-width: 720px) {
+  .tja-dl__row { grid-template-columns: 1fr auto; row-gap: 4px; }
+  .tja-dl__row dt { grid-column: 1 / -1; }
+}
+.tja-dl dd.tja-dl__go { margin: 0; }
