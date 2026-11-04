@@ -36,6 +36,27 @@
   }
 
   /* --------------------------------------------------------------------------
+     1б. РОЛИК ПЕРВОГО ЭКРАНА НА ТЕЛЕФОНЕ (вместо картинки; на компьютере не грузится)
+         Играет только пока виден — вне экрана стоит, чтобы не греть телефон
+     -------------------------------------------------------------------------- */
+  var heroVideo = document.querySelector('.tja-arch-frame__video');
+  var phoneMq = window.matchMedia('(max-width: 720px)');
+  if (heroVideo && phoneMq.matches) {
+    document.documentElement.classList.add('tja-has-video');
+    if (!reducedMotion) {
+      heroVideo.src = heroVideo.getAttribute('data-src');
+      heroVideo.preload = 'auto';
+      var tryPlay = function () { var pr = heroVideo.play(); if (pr && pr.catch) pr.catch(function () {}); };
+      if ('IntersectionObserver' in window) {
+        new IntersectionObserver(function (en) {
+          if (en[0].isIntersecting) tryPlay(); else heroVideo.pause();
+        }, { threshold: 0.2 }).observe(heroVideo);
+      } else tryPlay();
+      document.addEventListener('visibilitychange', function () { if (document.hidden) heroVideo.pause(); });
+    }
+  }
+
+  /* --------------------------------------------------------------------------
      2. КНОПКА ПРИВЕТСТВИЯ გამარჯობა НА ПЕРВОМ ЭКРАНЕ
      -------------------------------------------------------------------------- */
   var helloBtn = document.getElementById('tja-hello-btn');
