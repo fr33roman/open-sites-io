@@ -310,7 +310,7 @@ ul, ol {
 
 .sfa-h1 {
   margin: 0 0 14px;
-  font-size: clamp(2.05rem, 4.1vw, 3.65rem);
+  font-size: clamp(2.4rem, 4.9vw, 4.25rem);
   font-weight: 700;
   line-height: 1.06;
   letter-spacing: -0.025em;
@@ -1500,15 +1500,15 @@ ul, ol {
   .sfa-bento__main,
   .sfa-split-b__left,
   .sfa-console-intro {
-    padding: 14px 16px 20px;
+    padding: 10px 16px 20px;
   }
   .sfa-coord {
     margin: 0 0 4px;
     font-size: 0.7rem;
   }
   .sfa-h1 {
-    font-size: 1.85rem;
-    margin-bottom: 10px;
+    font-size: 2.3rem;
+    margin-bottom: 12px;
   }
   .sfa-workout-grid,
   .sfa-sched-board,
@@ -1529,3 +1529,5 @@ ul, ol {
     scroll-behavior: auto !important;
   }
 }
+*{-webkit-tap-highlight-color:transparent}
+:focus:not(:focus-visible){outline:none}

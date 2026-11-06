@@ -1135,3 +1135,5 @@ a {
     padding: 18px;
   }
 }
+*{-webkit-tap-highlight-color:transparent}
+:focus:not(:focus-visible){outline:none}

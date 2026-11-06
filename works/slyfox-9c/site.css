@@ -1529,3 +1529,5 @@ ul, ol {
     scroll-behavior: auto !important;
   }
 }
+*{-webkit-tap-highlight-color:transparent}
+:focus:not(:focus-visible){outline:none}
