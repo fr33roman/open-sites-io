@@ -1,3 +1,5 @@
+*{-webkit-tap-highlight-color:transparent}
+:focus:not(:focus-visible){outline:none}
 @font-face {
   font-family: 'Forum';
   src: url('fonts/forum-400-cyrillic.woff2') format('woff2');

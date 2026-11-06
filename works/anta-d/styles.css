@@ -1,4 +1,6 @@
 /* ANTA EVENTS · DMC GEORGIA — Версия Г (Швейцарский Атлас & Терракота Квеври) */
+*{-webkit-tap-highlight-color:transparent}
+:focus:not(:focus-visible){outline:none}
 @font-face {
   font-family: 'Yeseva One';
   src: url('fonts/yeseva-400-cyrillic.woff2') format('woff2');
