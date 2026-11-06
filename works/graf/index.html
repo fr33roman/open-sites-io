@@ -277,6 +277,8 @@
   html.js .rv-r{transform:translateX(46px)}
   html.js .rv.in{opacity:1;transform:translateX(0)}
 
+  
+  @media(max-width:899px){.hero{min-height:0;justify-content:flex-start;padding-top:clamp(150px,20svh,220px)}}
   @media(min-width:640px){
     .pr-sub{flex-direction:row;justify-content:space-between;align-items:baseline;gap:16px}
     .sticker{grid-template-columns:1fr 1fr;align-items:center}
@@ -297,6 +299,8 @@
     html .rv,html.js .rv,.slam{opacity:1;transform:none}
     html.js .mmenu nav a{opacity:1;transform:none}
   }
+*{-webkit-tap-highlight-color:transparent}
+:focus:not(:focus-visible){outline:none}
 </style>
 </head>
 <body>

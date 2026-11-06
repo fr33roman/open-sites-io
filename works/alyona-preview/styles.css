@@ -779,3 +779,5 @@ html:not(.js) .fly__end { position: relative; grid-column: 1 / -1; bottom: auto;
 html.js .hero { height: calc(100vh - 84px); height: calc(100svh - 84px); }
 @media (max-width: 600px) { html.js .hero { height: calc(100svh - 60px); } }
 @media (max-width: 600px) { .hero-fan { width: 56vw; top: 72px; } }
+*{-webkit-tap-highlight-color:transparent}
+:focus:not(:focus-visible){outline:none}

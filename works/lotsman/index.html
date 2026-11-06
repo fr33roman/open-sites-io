@@ -377,7 +377,7 @@ html:not(.js) .mbar{display:none}
   .brand{font-size:30px}
   .top-right .btn,.plate-top{display:none}
   .hero{padding:0 0 40px}
-  .hero-photo{position:relative;width:100%;height:392px;margin-top:64px;z-index:0}
+  .hero-photo{position:relative;width:100%;height:clamp(230px,30svh,300px);margin-top:64px;z-index:0} 
   .hero-photo img{position:absolute;top:0;left:-5%;width:118%;height:auto;max-width:none;object-fit:initial}
   .hero-photo .fade{background:linear-gradient(0deg,var(--hull) 0,rgba(22,35,58,.7) 12%,rgba(22,35,58,0) 30%)}
   .hero-copy{margin-top:-40px;padding:0 16px;z-index:2}
@@ -604,6 +604,8 @@ html:not(.js) .mbar{display:none}
   .g-bar,.gantt li,.cut .ph img,.mc,.mc-ph img{transition:none}
   .mc:hover::after{animation:none;opacity:0}
 }
+*{-webkit-tap-highlight-color:transparent}
+:focus:not(:focus-visible){outline:none}
 </style>
 </head>
 <body>
