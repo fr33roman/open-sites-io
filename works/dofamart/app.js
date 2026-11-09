@@ -343,7 +343,7 @@ const race = (() => {
 
 /* ---------- video background: one looping clip per theme, cross-fade on change ---------- */
 /* Which themes already have a clip in bg/. The others show their still image. */
-const HAS_VIDEO = new Set(['race-rave', 'race-sunset']);
+const HAS_VIDEO = new Set(['race-rave', 'race-sunset', 'race-ice', 'solo', 'duo']);
 const bgVideo = (() => {
   const box = $('.bgv'), vs = [$('#v1'), $('#v2')]; let cur = 0, want = '';
   // the still image always sits under the video, so the page is never black (no autoplay, low-power mode, slow network)
