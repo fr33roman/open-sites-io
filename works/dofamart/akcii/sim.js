@@ -990,8 +990,8 @@ function renderIns(box) {
     '<div class="panel trade"><p class="lbl">' + t('tr_amount') + '</p>' +
     '<label class="field"><span>$</span><input id="amt" type="text" inputmode="decimal" autocomplete="off" maxlength="12" aria-label="' + t('tr_amount') + '"></label>' +
     '<div class="chips eq">' + [10, 25, 50, 100].map(p => '<button class="chip" type="button" data-pre="' + p + '">' + (p === 100 ? t('tr_all') : p + '%') + '</button>').join('') + '</div>' +
-    '<p class="hint">' + t('tr_cash') + ': <span class="num" id="trCash"></span></p>' +
-    '<p class="lbl mt">' + t('tr_lev') + '</p><div class="chips eq">' +
+    '<p class="free"><span>' + t('tr_cash') + '</span><b class="num" id="trCash"></b></p>' +
+    '<p class="lbl mt qrow">' + t('tr_lev') + qm('tip_lev') + '</p><div class="chips eq">' +
     E.LEVS.map(l => '<button class="chip' + (l === ui.lev ? ' on' : '') + '" type="button" data-lev="' + l + '">×' + l + '</button>').join('') + '</div>' +
     '<div class="warn" id="levWarn" hidden></div><p class="fee num" id="feeLine"></p>' +
     '<div class="sides"><button class="side buy" type="button" data-side="1"><b>' + t('tr_buy') + '</b><small>' + t('tr_buy_s') + '</small></button>' +
@@ -1012,15 +1012,14 @@ function tradeInfo() {
   const w = $('levWarn');
   if (w) { w.hidden = l === 1; if (l > 1) setTxt(w, tf('lev_warn', { l: l, p: (100 / l).toFixed(0) })); }
   const m = $('trMsg');
-  if (m && S.cash < 1 && !m.firstChild) {
-    m.textContent = t('need_money') + ' ';
-    const lk = document.createElement('a'); lk.href = '#money'; lk.className = 'gold-link'; lk.textContent = t('need_money_a'); m.appendChild(lk);
+  if (m && S.cash < 1 && !m.querySelector('.topup')) {
+    needMoney(m);
   }
 }
 function doTrade(side) {
   const inp = $('amt'), m = $('trMsg'); if (!inp) return;
   const r = E.open(S, M, ui.sym, side, parseAmt(inp.value), ui.lev);
-  if (!r.ok) { if (m) m.textContent = t('err_' + r.err); vib(20); return; }
+  if (!r.ok) { if (m) { if (r.err === 'funds' || S.cash < 1) needMoney(m, S.cash < 1 ? 'need_money' : 'err_funds'); else m.textContent = t('err_' + r.err); } vib(20); return; }
   if (m) m.textContent = '';
   inp.value = ''; snd.key(); vib(12);
   toast(tf('opened', { s: tk(ui.sym) + ' ×' + ui.lev }) + (r.imp ? '. ' + t('imp_note') : ''));
@@ -1143,7 +1142,7 @@ function renderTruth() {
     '<p class="quote" id="tSum"></p><p class="tnote" id="tOpen"></p><p class="tnote" id="tImp"></p>' +
     '<div class="stats truth-stats">' + st('tN', 't_trades') + st('tWin', 't_winrate') + st('tFees', 't_fees') + st('tMax', 't_maxloss') + st('tImpN', 't_imp') + st('tLiq', 't_liq') + '</div>' +
     '<h2 class="h2">' + t('t_cmp') + '</h2><div class="panel cmp">' + row('cYou', 'cmp_you') + row('cHold', 'cmp_hold') + row('cIdx', 'cmp_index') + '</div>' +
-    '<div class="truth-act"><button class="btn-ghost" type="button" data-act="pause">' + t('t_pause_btn') + '</button></div>';
+    '<div class="truth-act"><button class="btn-ghost" type="button" data-act="pause">' + t('t_pause_btn') + '</button>' + qm('tip_pause') + '</div>';
 }
 function refreshTruth() {
   const st = E.stats(S, M), n = st.n; let s;
@@ -1379,6 +1378,14 @@ function bst() {
   if (!S.betAgg || typeof S.betAgg !== 'object') S.betAgg = { n: 0, won: 0, staked: 0, paid: 0 };
   return S;
 }
+// Pictures: only from Polymarket's own image store, nothing else is ever put into src.
+const bimg = u => (typeof u === 'string' && /^https:\/\/polymarket-upload\.s3\.us-east-2\.amazonaws\.com\/[\w.\-\/%+]{1,200}\.(png|jpe?g|webp)$/i.test(u) ? u : '');
+function badge(name) {
+  const w = String(name).replace(/[^\p{L}\p{N} ]/gu, ' ').trim().split(/\s+/).filter(Boolean);
+  const ini = (w.length > 1 ? w[0][0] + w[1][0] : (w[0] || '?').slice(0, 2)).toUpperCase();
+  let h = 0; for (let i = 0; i < name.length; i++) h = (h * 31 + name.charCodeAt(i)) % 360;
+  const s = mkEl('span', 'tbadge', ini); s.style.setProperty('--h', h); s.setAttribute('aria-hidden', 'true'); return s;
+}
 function cleanMk(o) {
   if (!o || !/^\d{1,12}$/.test(String(o.id)) || typeof o.question !== 'string') return null;
   let out, pr;
@@ -1387,6 +1394,7 @@ function cleanMk(o) {
   const ev = Array.isArray(o.events) && o.events[0] ? o.events[0] : {};
   return { id: String(o.id), q: o.question.trim().slice(0, 200), g: typeof o.groupItemTitle === 'string' ? o.groupItemTitle.trim().slice(0, 80) : '',
     out: out.map(x => String(x).trim().slice(0, 40)), pr: pr, end: Date.parse(o.endDate) || 0, closed: o.closed === true, vol: +o.volume24hr > 0 ? +o.volume24hr : 0,
+    img: bimg(ev.icon) || bimg(ev.image) || bimg(o.icon) || bimg(o.image),
     ev: /^\d{1,12}$/.test(String(ev.id)) ? String(ev.id) : 'm' + o.id, et: typeof ev.title === 'string' ? ev.title.trim().slice(0, 160) : '' };
 }
 const coef = p => { const k = 1 / p; return fixed(k, k >= 10 ? 1 : 2); };
@@ -1395,6 +1403,30 @@ const bvol = v => '$' + (v >= 1e6 ? (v / 1e6).toFixed(1) + 'M' : v >= 1e3 ? Math
 function bdate(ms) { const d = new Date(ms); return ms - Date.now() > 2.6e10 ? p2(d.getDate()) + '.' + p2(d.getMonth() + 1) + '.' + d.getFullYear() : stamp(ms); }
 const oname = s => (s === 'Yes' ? t('bet_yes') : s === 'No' ? t('bet_no') : s);
 const mkEl = (tag, cls, txt) => { const e = document.createElement(tag); if (cls) e.className = cls; if (txt != null) e.textContent = txt; return e; };
+
+// Money is missing or not enough: the same message with a top-up button everywhere.
+Object.assign(T.ru, { topup: 'Пополнить кошелёк', need_more: 'В кошельке не хватает денег.', tip_aria: 'Что это?',
+  tip_pause: 'Откроет минуту тишины: дыхание на четыре счёта и ваш общий итог. Сделки не закрывает и торговать не запрещает. Сама появляется после трёх убыточных сделок подряд.',
+  tip_lev: 'Плечо умножает и прибыль, и убыток. При ×10 цена, ушедшая против вас на 10%, съедает всю сумму сделки — позицию закроет автоматически.',
+  tip_sell: 'Забрать деньги до исхода события по текущему коэффициенту: шанс вырос — вернётся больше ставки, упал — меньше.' });
+Object.assign(T.en, { topup: 'Top up the wallet', need_more: 'Not enough money in the wallet.', tip_aria: 'What is this?',
+  tip_pause: 'Opens a quiet minute: four-count breathing and your overall result. It does not close trades or block trading. It also appears by itself after three losing trades in a row.',
+  tip_lev: 'Leverage multiplies both profit and loss. At ×10 a 10% move against you wipes out the whole amount and the position is closed automatically.',
+  tip_sell: 'Take the money back before the event ends at the current odds: more than the stake if the chance went up, less if it went down.' });
+function needMoney(el, key) {
+  if (!el) return;
+  el.textContent = '';
+  el.appendChild(mkEl('span', 'need-t', t(key || (S.cash < 1 ? 'need_money' : 'need_more'))));
+  const a = mkEl('a', 'btn-gold topup', t('topup')); a.href = '#money'; a.setAttribute('data-act', 'modal-close'); el.appendChild(a);
+}
+const qm = k => '<button class="qm" type="button" data-tip="' + k + '" aria-label="' + t('tip_aria') + '">?</button>';
+function showTip(el) {
+  const old = document.querySelector('.tipbox'), mine = old && old.previousElementSibling === el;
+  if (old) old.remove();
+  if (mine) return;
+  const b = mkEl('span', 'tipbox', t(el.getAttribute('data-tip'))); b.setAttribute('role', 'note');
+  el.insertAdjacentElement('afterend', b);
+}
 
 async function loadBets(more) {
   if (betBusy) return;
@@ -1440,14 +1472,17 @@ function fillBets() {
     const card = mkEl('article', 'bcard'), top = mkEl('div', 'ncard-top');
     top.appendChild(mkEl('span', 'lbl', tf('bet_until', { t: bdate(e.end) })));
     if (e.vol >= 1000) top.appendChild(mkEl('time', '', tf('bet_vol', { v: bvol(e.vol) })));
-    card.appendChild(top); card.appendChild(mkEl('h3', '', e.t));
+    card.appendChild(top);
+    const hd = mkEl('div', 'bhead'), pic = e.m[0] && e.m[0].img;
+    if (pic) { const im = mkEl('img', 'bpic'); im.alt = ''; im.loading = 'lazy'; im.decoding = 'async'; im.referrerPolicy = 'no-referrer'; im.width = 48; im.height = 48; im.onerror = () => im.remove(); im.src = pic; hd.appendChild(im); }
+    hd.appendChild(mkEl('h3', '', e.t)); card.appendChild(hd);
     e.m.slice(0, 6).forEach(m => {
       const row = mkEl('div', 'brow'), lab = m.g || (m.q !== e.t ? m.q : '');
       if (lab) row.appendChild(mkEl('p', 'bq', lab));
       const od = mkEl('div', 'bodds');
       m.out.forEach((o, i) => {
         const b = mkEl('button', 'odd'); b.type = 'button'; b.setAttribute('data-bet', m.id); b.setAttribute('data-oi', i);
-        b.appendChild(mkEl('span', 'odd-n', oname(o))); b.appendChild(mkEl('b', 'num', coef(m.pr[i]))); b.appendChild(mkEl('i', 'num', chance(m.pr[i])));
+        const yn = o === 'Yes' || o === 'No'; b.appendChild(yn ? mkEl('span', 'tbadge ' + (o === 'Yes' ? 'yes' : 'no'), o === 'Yes' ? '\u2713' : '\u2715') : badge(o)); b.appendChild(mkEl('span', 'odd-n', oname(o))); b.appendChild(mkEl('b', 'num', coef(m.pr[i]))); b.appendChild(mkEl('i', 'num', chance(m.pr[i])));
         od.appendChild(b);
       });
       row.appendChild(od); card.appendChild(row);
@@ -1468,7 +1503,7 @@ function fillMine() {
     l.appendChild(mkEl('p', 'bm-q', b.q));
     l.appendChild(mkEl('p', 'bm-s num', oname(b.o) + ' · ' + coef(b.p) + ' · ' + t('bet_stake') + ' ' + money(b.a) + ' · ' + tf('bet_until', { t: bdate(b.end) })));
     r.appendChild(mkEl('span', 'num' + (val > b.a ? ' up' : val < b.a ? ' down' : ''), t('bet_now') + ' ' + money(val)));
-    const s = mkEl('button', 'btn-ghost bm-sell', t('bet_sell')); s.type = 'button'; s.setAttribute('data-bsell', b.id); r.appendChild(s);
+    const s = mkEl('button', 'btn-ghost bm-sell', t('bet_sell')); s.type = 'button'; s.setAttribute('data-bsell', b.id); const sw = mkEl('span', 'qrow'); sw.appendChild(s); sw.insertAdjacentHTML('beforeend', qm('tip_sell')); r.appendChild(sw);
     row.appendChild(l); row.appendChild(r); list.appendChild(row);
   });
   if (!S.bets.length) list.appendChild(mkEl('p', 'empty', t('bet_my_none')));
@@ -1497,7 +1532,8 @@ function betInfo() {
   const b = ui.bet, m = b && betMk[b.id]; if (!m) return;
   const a = parseAmt(($('betAmt') || {}).value), p = m.pr[b.oi];
   setTxt($('betWin'), a > 0 ? money(E.round2(a / p)) : '—');
-  const msg = $('betMsg'); if (msg) msg.textContent = '';
+  const msg = $('betMsg'); if (!msg) return;
+  if (S.cash < 1 || a > S.cash + 1e-9) needMoney(msg); else msg.textContent = '';
 }
 function openBet(id, oi) {
   const m = betMk[id]; if (!m || !(oi === 0 || oi === 1)) return;
@@ -1512,14 +1548,15 @@ function openBet(id, oi) {
   setTxt($('modalTitle'), m.et && m.et !== m.q ? m.et + ' — ' + (m.g || m.q) : m.q);
   setTxt($('betPick'), oname(m.out[oi])); setTxt($('betK'), coef(m.pr[oi])); setTxt($('betCh'), chance(m.pr[oi]));
   const inp = $('betAmt'); if (inp && inp.addEventListener) inp.addEventListener('input', betInfo);
+  betInfo();
   $('modal').hidden = false;
 }
 function doBet() {
   const b = ui.bet, m = b && betMk[b.id], msg = $('betMsg'); if (!m) return;
   bst();
   const a = E.round2(parseAmt(($('betAmt') || {}).value)), p = m.pr[b.oi];
+  if (S.cash < 1 || a > S.cash + 1e-9) { needMoney(msg); vib(20); return; }
   if (!(a >= 1)) { setTxt(msg, t('bet_min')); return; }
-  if (a > S.cash + 1e-9) { setTxt(msg, t('bet_funds')); return; }
   if (!(p >= BLO && p <= BHI) || m.end <= Date.now()) { setTxt(msg, t('bet_closed')); return; }
   if (S.bets.length >= 40) { setTxt(msg, t('bet_many')); return; }
   S.cash = E.round2(S.cash - a);
@@ -1622,9 +1659,11 @@ function applyLang() {
 }
 function onClick(e) {
   snd.gesture();
-  const el = e.target && e.target.closest ? e.target.closest('[data-tf],[data-lev],[data-pre],[data-side],[data-close],[data-amt],[data-key],[data-act],[data-ncat],[data-ccat],[data-csym],[data-per],[data-bcat],[data-bet],[data-bsell],[data-bpre],#langBtn,#sndBtn,#skinBtn,#modal') : null;
+  const el = e.target && e.target.closest ? e.target.closest('[data-tf],[data-lev],[data-pre],[data-side],[data-close],[data-amt],[data-key],[data-act],[data-ncat],[data-ccat],[data-csym],[data-per],[data-bcat],[data-bet],[data-bsell],[data-bpre],[data-tip],#langBtn,#sndBtn,#skinBtn,#modal') : null;
   if (!el) return;
   const A = k => el.getAttribute(k), has = k => el.hasAttribute(k);
+  if (has('data-tip')) { showTip(el); return; }
+  { const tb = document.querySelector('.tipbox'); if (tb) tb.remove(); }
   if (el.id === 'modal') { if (e.target === el) el.hidden = true; return; }
   if (el.id === 'skinBtn') { nextSkin(); if (S.sound) snd.key(); return; }
   if (el.id === 'langBtn') { S.lang = S.lang === 'en' ? 'ru' : 'en'; save(); applyLang(); render(); return; }
