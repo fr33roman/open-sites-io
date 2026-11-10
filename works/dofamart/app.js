@@ -8,20 +8,21 @@ const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
 const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 const RM = matchMedia('(prefers-reduced-motion: reduce)');
+const PORT = matchMedia('(orientation: portrait) and (max-width: 700px)');  // телефон в вертикали — видео 720×1280 с размытыми полями
 const LOCS = Object.fromEntries(LANGS.map(l => [l[0], l[2]]));
 const PM = Object.fromEntries(P.map(p => [p.id, p]));
 const COINM = Object.fromEntries(COINS.map(c => [c.c, c]));
 const WORLD = MAJOR.concat(Object.keys(FIAT).filter(c => !CIS.includes(c) && !MAJOR.includes(c)).sort());
 const TKEYS = Object.keys(THEMES);
-const DEST = { home: '🏠', office: '🏢', dacha: '🏡', moon: '🌕' };
-const SPEED = { std: '🛵', exp: '🏍' + VS, tp: '🛸' };
-const PAY = { card: '💳', crypto: '💎', cash: '💵', mind: '🧠' };
+const DEST = { home: '🏠', office: '🏢', dacha: '🏡' };
+const SPEED = { std: '🛵', exp: '🏍' + VS };
+const PAY = { card: '💳', crypto: '💎', cash: '💵' };
 const ST_EMO = ['🧾', '📦', '🤝', '🛣' + VS];
 const STX_EMO = ['🔔', '🐈', '⏳', '🔺', '🍲', '🐢', '🌀', '✨'];
 const ACH = [['first_cart', '🛒'], ['first_order', '🧾'], ['ten', '🛍' + VS], ['million', '💸'], ['yacht', '⚓'], ['moon', '🌙'], ['rider', '🏁'],
   ['crypto', '💎'], ['promo', '🎟' + VS], ['food', '🍽' + VS], ['night', '🦉'], ['polyglot', '🗣' + VS], ['tourist', '🌍'], ['dj', '🎧']];
 const CAP_COINS = ['BTC', 'ETH', 'USDT', 'TON', 'SOL', 'BNB', 'DOGE', 'DOFA'];
-const imgUrl = (id, w) => `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=${w}&q=70`;
+const imgUrl = (id, w) => id ? `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=${w}&q=70` : "";
 
 /* ---------- state ---------- */
 const KEY = 'dofamart:v2';
@@ -144,7 +145,8 @@ $$('[data-ic]').forEach(el => { el.innerHTML = IC[el.dataset.ic] || ''; });
 
 /* photo with emoji fallback (used when images can't load) */
 function photo(p, w, cls = '') {
-  return `<span class="fb emo" aria-hidden="true">${p.e}</span><img class="loading ${cls}" src="${imgUrl(p.img, w)}" alt="" loading="lazy" decoding="async" onload="this.classList.remove('loading')" onerror="this.remove()">`;
+  if (!p.img) return '';
+  return `<img class="loading ${cls}" src="${imgUrl(p.img, w)}" alt="" loading="lazy" decoding="async" onload="this.classList.remove('loading')" onerror="this.remove()">`;
 }
 
 /* ---------- sound ---------- */
@@ -173,6 +175,7 @@ const hex = h => [1, 3, 5].map(i => parseInt(h.slice(i, i + 2), 16));
 const PAL_KEYS = ['a1', 'a2', 'a3', 'bg', 'sky', 'hz', 'sun1', 'sun2', 'grid'];
 const palOf = k => Object.fromEntries(PAL_KEYS.map(n => [n, hex(THEMES[k][n])]));
 let pal = palOf(S.theme), target = palOf(S.theme), palMoving = true;
+document.documentElement.dataset.tone = THEMES[S.theme].tone || 'light';
 const rgb = c => `rgb(${c[0] | 0},${c[1] | 0},${c[2] | 0})`;
 const rgba = (c, a) => `rgba(${c[0] | 0},${c[1] | 0},${c[2] | 0},${a})`;
 const mix = (a, b, k) => [a[0] + (b[0] - a[0]) * k, a[1] + (b[1] - a[1]) * k, a[2] + (b[2] - a[2]) * k];
@@ -187,7 +190,7 @@ function stepPalette() {
 function setTheme(k, manual) {
   if (!THEMES[k]) return;
   S.theme = k; if (manual) S.autoTheme = false;
-  target = palOf(k); palMoving = true;
+  target = palOf(k); palMoving = true; document.documentElement.dataset.tone = THEMES[k].tone || 'light';
   if (typeof bgVideo !== 'undefined') bgVideo.show(k);
   if (!S.themes.includes(k)) S.themes.push(k);
   save(); renderThemeUI(); if (DLG.prefs.open) renderPrefs();
@@ -330,33 +333,32 @@ const race = (() => {
     g.stroke();
   }
   function loop(now) {
-    if (document.body.classList.contains('has-video')) stepPalette();
-    else if (!document.hidden && now - last > 30) { last = now; frame(now); }
+    stepPalette();
     if (!RM.matches) requestAnimationFrame(loop);
   }
   addEventListener('resize', () => { resize(); if (RM.matches) frame(performance.now()); });
   resize();
-  if (RM.matches) { const f = () => { stepPalette(); frame(t0 + 4000); if (palMoving) requestAnimationFrame(f); }; f(); setInterval(() => { if (palMoving) f(); }, 500); }
+  if (RM.matches) { const f = () => { stepPalette(); if (palMoving) requestAnimationFrame(f); }; f(); setInterval(() => { if (palMoving) f(); }, 500); }
   else requestAnimationFrame(loop);
   return { frame };
 })();
 
 /* ---------- video background: one looping clip per theme, cross-fade on change ---------- */
 /* Which themes already have a clip in bg/. The others show their still image. */
-const HAS_VIDEO = new Set(['race-rave', 'race-sunset', 'race-ice', 'solo', 'duo']);
+const HAS_VIDEO = new Set();
 const bgVideo = (() => {
   const box = $('.bgv'), vs = [$('#v1'), $('#v2')]; let cur = 0, want = '';
   // the still image always sits under the video, so the page is never black (no autoplay, low-power mode, slow network)
-  function setStill(name) { box.style.backgroundImage = `url("bg/${name}.jpg")`; document.body.classList.add('has-video'); }
+  function setStill() {}
   function hideAll() { vs.forEach(v => { v.classList.remove('on', 'ready'); v.pause(); }); }
   function show(key) {
-    const th = THEMES[key]; if (!th || !th.bg_v) return;
+    return;
     const name = th.bg_v; if (want === name) return; want = name;
     setStill(name);
     if (RM.matches || !HAS_VIDEO.has(name)) { hideAll(); return; }
     const next = vs[1 - cur], prev = vs[cur];
     next.classList.remove('ready');
-    next.src = `bg/${name}.mp4`; next.load();
+    next.src = `bg/${name}${PORT.matches ? '-p' : ''}.mp4`; next.load();
     const p = next.play(); if (p && p.catch) p.catch(() => {});
     next.addEventListener('playing', () => {
       if (want !== name) return;
@@ -366,6 +368,7 @@ const bgVideo = (() => {
     }, { once: true });
   }
   document.addEventListener('visibilitychange', () => { const v = vs[cur]; if (!v.src) return; if (document.hidden) v.pause(); else { const p = v.play(); if (p && p.catch) p.catch(() => {}); } });
+  PORT.addEventListener('change', () => { if (vs[cur].src) { want = ''; show(S.theme); } });
   return { show };
 })();
 bgVideo.show(S.theme);
@@ -495,7 +498,7 @@ function renderTiles() {
   const all = `<button class="tile all${S.cat === 'all' ? ' on' : ''}" data-act="tile" data-v="all"><span class="big">${P.length}</span><span class="t-n">${esc(t('cats.all'))}</span><span class="t-c">${CATS.length} × ${esc(t('catsTitle'))}</span></button>`;
   $('#tiles').innerHTML = all + CATS.map(([c, e]) => {
     const items = P.filter(p => p.c === c); const cover = items[0];
-    return `<button class="tile${S.cat === c ? ' on' : ''}" data-act="tile" data-v="${c}"><img src="${imgUrl(cover.img, 400)}" alt="" loading="lazy" onerror="this.remove()"><span class="emo">${e}</span><span class="t-n">${esc(t('cats')[c])}</span><span class="t-c">${items.length} · ${esc(t('items'))}</span></button>`;
+    return `<button class="tile${S.cat === c ? ' on' : ''}" data-act="tile" data-v="${c}"><img src="${imgUrl(cover.img, 400)}" alt="" loading="lazy" onerror="this.remove()"><span class="t-n">${esc(t('cats')[c])}</span><span class="t-c">${items.length} · ${esc(t('items'))}</span></button>`;
   }).join('');
 }
 
@@ -578,7 +581,7 @@ function renderSteps() { $('#steps').innerHTML = t('how').map(([a, b]) => `<li><
 function fly(src, p) {
   const a = src.getBoundingClientRect(), b = $('#btnCart').getBoundingClientRect();
   const s = document.createElement('div'); s.className = 'flyer';
-  s.innerHTML = `<img src="${imgUrl(p.img, 140)}" alt="" onerror="this.outerHTML='<span class=&quot;emo&quot;>${p.e}</span>'">`;
+  s.innerHTML = p.img ? `<img src="${imgUrl(p.img, 140)}" alt="" onerror="this.outerHTML='<span class=&quot;emo&quot;>${p.e}</span>'">` : `<span class="emo">${p.e}</span>`;
   s.style.left = (a.left + a.width / 2 - 35) + 'px'; s.style.top = (a.top + a.height / 2 - 35) + 'px';
   document.body.appendChild(s);
   const dx = b.left + b.width / 2 - (a.left + a.width / 2), dy = b.top + b.height / 2 - (a.top + a.height / 2);
@@ -660,7 +663,7 @@ function startCheckout() {
 const opt = (k, v, emo, [a, b]) => `<button class="opt" data-act="co-set" data-k="${k}" data-v="${v}" aria-pressed="${co[k] === v}"><span class="emo">${emo}</span><span><b>${esc(a)}</b><small>${esc(b)}</small></span></button>`;
 function coSum(btn) {
   const ids = cartIds(), sum = cartSum();
-  const lines = ids.slice(0, 4).map(id => `<div class="co-li"><span class="emo">${PM[id].e}</span><span>${esc(pn(id)[0])}</span><em>×${S.cart[id]}</em></div>`).join('') + (ids.length > 4 ? `<div class="co-more">+${ids.length - 4}</div>` : '');
+  const lines = ids.slice(0, 4).map(id => `<div class="co-li"><img class="co-th" src="${imgUrl(PM[id].img, 80)}" alt="" onerror="this.remove()"><span>${esc(pn(id)[0])}</span><em>×${S.cart[id]}</em></div>`).join('') + (ids.length > 4 ? `<div class="co-more">+${ids.length - 4}</div>` : '');
   return `<aside class="co-sum">${lines}${sumHTML(sum)}${btn}</aside>`;
 }
 function coStep1() {
@@ -680,7 +683,7 @@ function coStep2() {
   const amt = co.pay === 'crypto' ? fmtCoin(sum.usd / COINM[co.coin].r, co.coin) : fmt(sum.total);
   return `<div class="co-grid"><div class="co-main"><h3>${esc(t('coPay'))}</h3><div class="opts">${Object.keys(PAY).map(k => opt('pay', k, PAY[k], pm[k])).join('')}</div>
 <div class="pay-det">${det}</div><div id="coConsentSlot"></div><p class="note">${IC.lock}<span>${esc(t('noDataNote'))}</span></p></div>
-${coSum(`<div class="co-btns"><button class="btn btn-ghost" data-act="co-back">← ${esc(t('back'))}</button><span id="coPaySlot" data-amt="${esc(amt)}" style="display:contents"></span></div>`)}</div>`;
+${coSum(`<div class="co-btns"><button class="btn btn-ghost" data-act="co-back">← ${esc(t('back'))}</button><span id="coPaySlot" data-amt="${esc(amt)}" style="display:contents"></span></div><button class="btn btn-ghost full fp-btn" data-mx="fp">${esc(tx('fpBtn'))}</button>`)}</div>`;
 }
 const plogHTML = () => co.log.map((s, i) => `<li class="${i < co.log.length - 1 ? 'ok' : 'cur'}">${esc(s)}</li>`).join('');
 function receiptHTML(o) {
@@ -900,6 +903,506 @@ setInterval(() => {
     social();
   }, 26000 + Math.random() * 24000);
 })();
+
+/* ---------- механики 09–10.11: корзина другу, челленджи, темы за баллы, рейтинг, подсказки, страница товара ---------- */
+
+/* ---------- тексты (ru, en; остальные языки — английский) ---------- */
+const TX = {
+  ru: {
+    shareBtn: 'Отправить корзину другу', shareTitle: 'Корзина для друга',
+    shareSub: 'Друг откроет ссылку — и корзина уже будет у него.', dl: 'Скачать картинку',
+    send: 'Отправить', copy: 'Скопировать ссылку', copied: 'Ссылка скопирована',
+    friendCart: 'Корзина друга добавлена: {n} шт.', cardTitle: 'Моя корзина', cardCta: 'Собери свою',
+    empty: 'Корзина пуста, делиться нечем.', chTitle: 'Челленджи и баллы', pts: 'Баллы',
+    chMain: 'Челленджи', chDaily: 'Ежедневные задания', chReset: 'Обновятся завтра',
+    themesShop: 'Темы за баллы', buy: 'Открыть за {n}', owned: 'Открыто', notEnough: 'Не хватает баллов',
+    themeBought: 'Тема открыта: {name}', won: 'Выполнено: +{pts} баллов',
+    rtTitle: 'Рейтинг корзин', rtSub: 'Кто соберёт самую дорогую корзину. Соперники — боты.',
+    you: 'Вы', place: 'Вы на {n} месте', rtEmpty: 'Добавьте товары, и вы попадёте в рейтинг.',
+    help: 'Как это работает', helpShare: 'Нажмите «Отправить корзину другу»: появится картинка с вашей корзиной и ссылка. Друг откроет ссылку, и корзина будет у него.',
+    helpCh: 'Выполняйте челленджи, за них дают баллы. Баллы открывают темы оформления. Ежедневные задания обновляются каждый день.',
+    helpRt: 'Чем дороже корзина, тем выше место в рейтинге. Соперники — боты, но цены в рейтинге настоящие.',
+    pdTabDesc: 'Описание', pdTabFacts: 'Характеристики', pdTabSim: 'Похожие товары', pdZoom: 'Приблизить',
+    ship1: 'Курьер уже в пути', ship2: 'Возврат не нужен: вы ничего не покупали', ship3: 'Гарантия до конца первой мысли',
+    stockLow: 'Осталось {n} шт.', crumbHome: 'Главная',
+    lbl_help: 'Подсказка', close: 'Закрыть'
+  },
+  en: {
+    shareBtn: 'Send basket to a friend', shareTitle: 'Basket for a friend',
+    shareSub: 'Your friend opens the link and the basket is already theirs.', dl: 'Download image',
+    send: 'Send', copy: 'Copy link', copied: 'Link copied',
+    friendCart: 'Friend\'s basket added: {n} pcs', cardTitle: 'My basket', cardCta: 'Build yours',
+    empty: 'The basket is empty, nothing to share.', chTitle: 'Challenges & points', pts: 'Points',
+    chMain: 'Challenges', chDaily: 'Daily tasks', chReset: 'Resets tomorrow',
+    themesShop: 'Themes for points', buy: 'Unlock for {n}', owned: 'Unlocked', notEnough: 'Not enough points',
+    themeBought: 'Theme unlocked: {name}', won: 'Done: +{pts} points',
+    rtTitle: 'Basket leaderboard', rtSub: 'Who builds the most expensive basket. Rivals are bots.',
+    you: 'You', place: 'You are #{n}', rtEmpty: 'Add items to join the leaderboard.',
+    help: 'How it works', helpShare: 'Press "Send basket to a friend": you get a picture of your basket and a link. Your friend opens it and the basket is theirs.',
+    helpCh: 'Complete challenges to earn points. Points unlock themes. Daily tasks refresh every day.',
+    helpRt: 'The more expensive the basket, the higher the place. Rivals are bots, but the prices are real.',
+    pdTabDesc: 'Description', pdTabFacts: 'Specs', pdTabSim: 'Similar items', pdZoom: 'Zoom',
+    ship1: 'The courier is already on the way', ship2: 'No returns: you never bought it', ship3: 'Guarantee until the end of your first thought',
+    stockLow: '{n} left', crumbHome: 'Home',
+    lbl_help: 'Help', close: 'Close'
+  }
+};
+Object.assign(TX.ru, {
+  akLink: 'Акции', fpBtn: 'Оплатит друг', fpTitle: 'Счёт для друга',
+  fpSub: 'Розыгрыш. Друг получит красивый счёт и сообщение о списаниях. По ссылке он увидит, что это шутка.',
+  fpMsg: 'Вам прислали счёт на оплату. С вашей карты будет списываться каждый месяц {m} в течение 12 месяцев. Итого {x}. Подробности:',
+  fpSend: 'Отправить', fpCopy: 'Скопировать текст', fpDl: 'Скачать счёт', fpCopied: 'Текст и ссылка скопированы',
+  fpInv: 'СЧЁТ НА ОПЛАТУ', fpTotal: 'Итого к оплате', fpMonthly: 'Ежемесячное списание', fpMonths: '12 месяцев', fpFine: 'Игровой документ dofamart. Деньги не списываются.',
+  fpPcs: 'шт.', fpMore: 'и ещё {n}',
+  billTitle: 'Это розыгрыш', billText: 'Друг собрал корзину на {x} и «выставил» вам счёт: {m} в месяц на год. Ничего не спишется: dofamart — игра, здесь нельзя заплатить.',
+  billRevenge: 'Собрать свою корзину', billTake: 'Забрать корзину друга',
+  cardMy: 'Моя корзина', cardTotal: 'Итого'
+});
+Object.assign(TX.en, {
+  akLink: 'Stocks', fpBtn: 'A friend will pay', fpTitle: 'Bill for a friend',
+  fpSub: 'A prank. Your friend gets an elegant bill and a message about charges. The link shows it is a joke.',
+  fpMsg: 'You have received a bill. {m} will be charged to your card every month for 12 months. Total {x}. Details:',
+  fpSend: 'Send', fpCopy: 'Copy text', fpDl: 'Download bill', fpCopied: 'Text and link copied',
+  fpInv: 'INVOICE', fpTotal: 'Total due', fpMonthly: 'Monthly charge', fpMonths: '12 months', fpFine: 'A dofamart game document. No money is charged.',
+  fpPcs: 'pcs', fpMore: 'and {n} more',
+  billTitle: 'It is a prank', billText: 'Your friend filled a basket worth {x} and "billed" you: {m} a month for a year. Nothing will be charged: dofamart is a game, you cannot pay here.',
+  billRevenge: 'Build my own basket', billTake: "Take the friend's basket",
+  cardMy: 'My basket', cardTotal: 'Total'
+});
+const tx = (k, v = {}) => ((TX[S.lang] || TX.en)[k] || TX.en[k] || k).replace(/\{(\w+)\}/g, (_, n) => (v[n] ?? ''));
+
+/* ---------- челленджи ---------- */
+// ev: что считаем; need: сколько; pts: награда
+const CH_MAIN = [
+  { id: 'm1', ic: '🛒', need: 1, pts: 20, ev: 'add', ru: ['Первая покупка', 'Положите в корзину 1 товар'], en: ['First purchase', 'Add 1 item to the cart'] },
+  { id: 'm2', ic: '🧺', need: 5, pts: 60, ev: 'add', ru: ['Полная корзина', 'Положите в корзину 5 товаров'], en: ['Full basket', 'Add 5 items to the cart'] },
+  { id: 'm3', ic: '🗂', need: 3, pts: 50, ev: 'cat', ru: ['Путешественник по магазину', 'Добавьте товары из 3 разных категорий'], en: ['Shop traveller', 'Add items from 3 different categories'] },
+  { id: 'm4', ic: '🧾', need: 1, pts: 80, ev: 'order', ru: ['Первый чек', 'Оформите 1 заказ'], en: ['First receipt', 'Place 1 order'] },
+  { id: 'm5', ic: '📤', need: 1, pts: 40, ev: 'share', ru: ['Щедрый', 'Поделитесь корзиной с другом'], en: ['Generous', 'Share your basket with a friend'] },
+  { id: 'm6', ic: '👀', need: 5, pts: 25, ev: 'open', ru: ['Любопытный', 'Откройте 5 карточек товаров'], en: ['Curious', 'Open 5 product cards'] },
+  { id: 'm7', ic: '❤', need: 3, pts: 20, ev: 'fav', ru: ['Коллекционер', 'Добавьте 3 товара в избранное'], en: ['Collector', 'Add 3 items to favourites'] },
+  { id: 'm8', ic: '💎', need: 1, pts: 30, ev: 'crypto', ru: ['Криптоман', 'Переключите цены на криптовалюту'], en: ['Crypto fan', 'Switch prices to a cryptocurrency'] },
+  { id: 'm9', ic: '🌍', need: 2, pts: 15, ev: 'lang', ru: ['Полиглот', 'Смените язык 2 раза'], en: ['Polyglot', 'Change the language 2 times'] },
+  { id: 'm10', ic: '⚡', need: 100, pts: 50, ev: 'dopa', ru: ['Дофаминовый пик', 'Доведите шкалу «Дофамин» до 100'], en: ['Dopamine peak', 'Fill the Dopamine meter to 100'] },
+  { id: 'm11', ic: '🎨', need: 2, pts: 30, ev: 'theme', ru: ['Стилист', 'Смените тему 2 раза'], en: ['Stylist', 'Change the theme 2 times'] }
+];
+const CH_DAILY = [
+  { id: 'd1', ic: '🛍', need: 2, pts: 15, ev: 'add', ru: ['Двойная порция', 'Добавьте 2 товара'], en: ['Double portion', 'Add 2 items'] },
+  { id: 'd2', ic: '🏷', need: 1, pts: 15, ev: 'off30', ru: ['Охота за скидкой', 'Откройте товар со скидкой от 30%'], en: ['Discount hunt', 'Open an item with 30%+ off'] },
+  { id: 'd3', ic: '🎨', need: 1, pts: 10, ev: 'theme', ru: ['Сменить настроение', 'Смените тему'], en: ['Change of mood', 'Change the theme'] },
+  { id: 'd4', ic: '📤', need: 1, pts: 20, ev: 'share', ru: ['Делюсь', 'Поделитесь корзиной'], en: ['Sharing', 'Share your basket'] },
+  { id: 'd5', ic: '🧾', need: 1, pts: 25, ev: 'order', ru: ['Сегодня куплю', 'Оформите заказ'], en: ['Buying today', 'Place an order'] },
+  { id: 'd6', ic: '👀', need: 3, pts: 10, ev: 'open', ru: ['Листаю', 'Откройте 3 товара'], en: ['Scrolling', 'Open 3 items'] }
+];
+const CH_TH = { rave: 120, ice: 160, solo: 200, duo: 240 };   // цены тем в баллах (sunset — бесплатно)
+const START_PTS = Object.values(CH_TH).reduce((a, b) => a + b, 0); // стартовый подарок: хватает на все темы сразу
+const BOTS = ['Vitalik_Dopa', 'NoBuyMax', 'CartQueen', 'Ryabchik', 'KZ_Shopper', 'MoonHunter', 'ChekMaster', 'Lev_Dofamin', 'SaleAddict'];
+
+const hs = s => { let x = 7; for (const ch of String(s)) x = (x * 31 + ch.charCodeAt(0)) >>> 0; return x; };
+const dayKey = () => { const d = new Date(); return d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate(); };
+const cn = c => (c[S.lang] || c.en || c.ru);   // [название, описание]
+
+/* ---------- состояние ---------- */
+function mxInit() {
+  if (S.mxPts === undefined) { S.mxPts = START_PTS; S.mxOwn = ['sunset']; S.mxC = {}; S.mxDone = {}; S.mxCats = []; S.mxDay = null; S.mxMem = 0; }
+  S.mxOwn = S.mxOwn || ['sunset']; S.mxC = S.mxC || {}; S.mxDone = S.mxDone || {}; S.mxCats = S.mxCats || [];
+  mxDay(); mxSyncThemes(); mxPtsShow();
+}
+function mxDay() {
+  const k = dayKey();
+  if (!S.mxDay || S.mxDay.day !== k) {
+    const pick = CH_DAILY.map(c => [hs(k + c.id), c.id]).sort((a, b) => a[0] - b[0]).slice(0, 3).map(a => a[1]);
+    S.mxDay = { day: k, p: {}, done: {}, pick };
+    save();
+  }
+  return S.mxDay;
+}
+function mxSyncThemes() {                      // в переключатель тем попадают только открытые
+  const own = Object.keys(THEMES).filter(k => S.mxOwn.includes(k));
+  TKEYS.length = 0; own.forEach(k => TKEYS.push(k));
+  if (!S.mxOwn.includes(S.theme)) { S.theme = 'sunset'; }
+}
+function mxPtsShow() { const el = $('#mxPts'); if (el) el.textContent = S.mxPts; }
+function mxAward(c) {
+  S.mxPts += c.pts; save(); mxPtsShow();
+  toast(c.ic, tx('won', { pts: c.pts }) + ' · ' + cn(c)[0], {});
+  sfx('coin');
+}
+function ev(name, arg) {
+  if (!S || S.mxPts === undefined) return;
+  const day = mxDay();
+  const lists = [[CH_MAIN, S.mxC, S.mxDone, null], [CH_DAILY.filter(c => day.pick.includes(c.id)), day.p, day.done, day]];
+  let changed = false;
+  for (const [list, prog, done, store] of lists) {
+    for (const c of list) {
+      if (done[c.id]) continue;
+      let inc = 0;
+      if (name === 'add' && c.ev === 'add') inc = arg.n || 1;
+      if (name === 'add' && c.ev === 'cat' && arg.cat && !S.mxCats.includes(arg.cat)) { S.mxCats.push(arg.cat); prog[c.id] = S.mxCats.length; changed = true; }
+      if (c.ev === name && name !== 'add' && name !== 'cat') inc = 1;
+      if (name === 'open' && c.ev === 'off30' && arg && arg.d >= 30) inc = 1;
+      if (name === 'dopa' && c.ev === 'dopa') { if (arg >= c.need) { done[c.id] = true; changed = true; mxAward(c); } continue; }
+      if (inc) {
+        prog[c.id] = Math.min(c.need, (prog[c.id] || 0) + inc); changed = true;
+        if (prog[c.id] >= c.need) { done[c.id] = true; mxAward(c); }
+      }
+    }
+  }
+  if (changed) { save(); if (DLG_MX.open && mxView === 'ch') mxRender(); }
+}
+// список всех активных челленджей с прогрессом
+function mxList() {
+  const day = mxDay();
+  const main = CH_MAIN.map(c => ({ c, p: S.mxC[c.id] || 0, d: !!S.mxDone[c.id] }));
+  const daily = CH_DAILY.filter(c => day.pick.includes(c.id)).map(c => ({ c, p: day.p[c.id] || 0, d: !!day.done[c.id] }));
+  return { main, daily };
+}
+
+/* ---------- окно механик ---------- */
+const DLG_MX = document.getElementById('dlgMx');
+let mxView = 'ch';
+function mxOpen(v) {
+  mxView = v; mxRender();
+  if (!DLG_MX.open) { try { DLG_MX.showModal(); } catch (e) { DLG_MX.setAttribute('open', ''); } }
+  needRaise = true;
+}
+function mxClose() { if (DLG_MX.open) DLG_MX.close(); }
+DLG_MX.addEventListener('click', e => { if (e.target === DLG_MX) mxClose(); });
+const HELP = {
+  share: { src: 'mx/help-share.mp4', txt: () => tx('helpShare') },
+  ch: { src: 'mx/help-ch.mp4', txt: () => tx('helpCh') },
+  rt: { src: 'mx/help-rt.mp4', txt: () => tx('helpRt') }
+};
+function mxRender() {
+  if (mxView === 'fp' || mxView === 'bill') return fpRender();
+  const head = (title, help) => `<div class="d-head mx-head"><h2>${esc(title)}</h2><div class="mx-hd-r">${help ? `<button class="mx-help" data-mx="help" data-v="${help}" aria-label="${esc(tx('help'))}">?</button>` : ''}<button class="x" data-mx="close" aria-label="${esc(tx('close'))}">${IC.x}</button></div></div>`;
+  if (mxView === 'ch') {
+    const { main, daily } = mxList();
+    const row = (x) => `<li class="mx-ch${x.d ? ' done' : ''}"><span class="mx-ic">${x.c.ic}</span><div class="mx-ct"><b>${esc(cn(x.c)[0])}</b><small>${esc(cn(x.c)[1])}</small><div class="mx-bar"><i style="width:${Math.round(Math.min(1, x.p / x.c.need) * 100)}%"></i></div></div><span class="mx-rw">${x.d ? '✓' : '+' + x.c.pts}</span></li>`;
+    const themes = Object.keys(THEMES).map(k => {
+      const own = S.mxOwn.includes(k), cost = CH_TH[k] || 0;
+      const btn = own ? `<span class="mx-own">${esc(tx('owned'))}</span>`
+        : `<button class="btn btn-main sm" data-mx="buy" data-v="${k}"${S.mxPts >= cost ? '' : ' disabled'}>${esc(tx('buy', { n: cost }))}</button>`;
+      return `<div class="mx-th"><span class="mx-sw" style="--a1:${THEMES[k].a1};--a2:${THEMES[k].a2}"></span><b>${esc(THEMES[k].name)}</b>${btn}</div>`;
+    }).join('');
+    DLG_MX.querySelector('#mxBox').innerHTML = head(tx('chTitle'), 'ch') +
+      `<div class="mx-pts-big"><span>${esc(tx('pts'))}</span><b>⭐ ${S.mxPts}</b></div>
+<h3 class="mx-h">${esc(tx('chDaily'))} <small>${esc(tx('chReset'))}</small></h3><ul class="mx-list">${daily.map(row).join('')}</ul>
+<h3 class="mx-h">${esc(tx('chMain'))}</h3><ul class="mx-list">${main.map(row).join('')}</ul>
+<h3 class="mx-h">${esc(tx('themesShop'))}</h3><div class="mx-themes">${themes}</div>
+<div class="mx-acts"><button class="btn btn-ghost" data-mx="rt">${esc(tx('rtTitle'))}</button></div>`;
+  } else if (mxView === 'share') {
+    const ids = cartIds();
+    if (!ids.length) { DLG_MX.querySelector('#mxBox').innerHTML = head(tx('shareTitle'), 'share') + `<div class="mx-empty"><p>${esc(tx('empty'))}</p></div>`; return; }
+    DLG_MX.querySelector('#mxBox').innerHTML = head(tx('shareTitle'), 'share') +
+      `<p class="mx-sub">${esc(tx('shareSub'))}</p><div class="mx-card-wrap"><canvas id="mxCard" width="1200" height="630"></canvas></div>
+<div class="mx-acts"><button class="btn btn-main" data-mx="dl">${esc(tx('dl'))}</button><button class="btn btn-ghost" data-mx="send">${esc(tx('send'))}</button><button class="btn btn-ghost" data-mx="copy">${esc(tx('copy'))}</button></div>`;
+    mxDrawCard(document.getElementById('mxCard'));
+  } else if (mxView === 'rt') {
+    const me = cartSum().usd, n = cartSum().n;
+    const dk = dayKey();
+    const bots = BOTS.map(b => ({ name: b, usd: 800 + (hs(b + dk) % 60000), me: false }));
+    const rows = bots.concat([{ name: tx('you'), usd: me, me: true }]).sort((a, b) => b.usd - a.usd);
+    const place = rows.findIndex(r => r.me) + 1;
+    DLG_MX.querySelector('#mxBox').innerHTML = head(tx('rtTitle'), 'rt') +
+      `<p class="mx-sub">${esc(tx('rtSub'))}</p>
+<div class="mx-rt-me">${n ? esc(tx('place', { n: place })) : esc(tx('rtEmpty'))}</div>
+<ol class="mx-rt">${rows.map((r, i) => `<li class="${r.me ? 'me' : ''}"><span class="mx-pos">${i + 1}</span><span class="mx-nm">${esc(r.name)}</span><b>${esc(fmt(priceIn(r.usd)))}</b></li>`).join('')}</ol>`;
+  } else if (mxView === 'help') {
+    const h = HELP[mxHelpKey] || HELP.ch;
+    DLG_MX.querySelector('#mxBox').innerHTML = head(tx('help'), '') +
+      `<video class="mx-video" src="${h.src}" autoplay muted loop playsinline controls preload="auto"></video><p class="mx-cap">${esc(h.txt())}</p>
+<div class="mx-acts"><button class="btn btn-ghost" data-mx="back">←</button></div>`;
+  }
+}
+let mxHelpKey = 'ch', mxBackView = 'ch';
+function mxHelp(k) { mxBackView = mxView; mxHelpKey = k; mxView = 'help'; mxRender(); }
+
+/* ---------- корзина: карточка и ссылка ---------- */
+function mxBasketLink() {
+  const parts = cartIds().map(id => id + ':' + S.cart[id]);
+  return location.href.split('#')[0] + '#basket=' + encodeURIComponent(parts.join(','));
+}
+const LUX = { paper: '#F7F3EB', ink: '#1B1917', mute: '#7A7368', gold: '#A8894F', line: '#D9D0BF' };
+function luxFrame(g, W, H, m) {
+  g.fillStyle = LUX.paper; g.fillRect(0, 0, W, H);
+  const q = g.createRadialGradient(W * .8, H * .1, 0, W * .8, H * .1, W * .7); q.addColorStop(0, 'rgba(216,195,154,.35)'); q.addColorStop(1, 'rgba(216,195,154,0)');
+  g.fillStyle = q; g.fillRect(0, 0, W, H);
+  g.strokeStyle = LUX.gold; g.lineWidth = 2; g.strokeRect(m, m, W - 2 * m, H - 2 * m);
+  g.lineWidth = 1; g.strokeRect(m + 10, m + 10, W - 2 * m - 20, H - 2 * m - 20);
+  const c = 34;                                   // corner ornaments
+  [[m, m, 1, 1], [W - m, m, -1, 1], [m, H - m, 1, -1], [W - m, H - m, -1, -1]].forEach(([x, y, sx, sy]) => {
+    g.fillStyle = LUX.paper; g.fillRect(x - 6 * sx - (sx < 0 ? c : 0) + (sx < 0 ? 0 : -0), y - 6 * sy - (sy < 0 ? c : 0), c + 6, c + 6);
+    g.strokeStyle = LUX.gold; g.lineWidth = 2; g.beginPath(); g.arc(x + sx * c, y + sy * c, c, sx > 0 ? (sy > 0 ? Math.PI : Math.PI / 2) : (sy > 0 ? -Math.PI / 2 : 0), sx > 0 ? (sy > 0 ? Math.PI * 1.5 : Math.PI) : (sy > 0 ? 0 : Math.PI / 2)); g.stroke();
+    g.fillStyle = LUX.gold; g.beginPath(); g.arc(x + sx * c * .55, y + sy * c * .55, 3, 0, 7); g.fill();
+  });
+}
+const luxFit = (g, t, w) => { while (g.measureText(t).width > w && t.length > 4) t = t.slice(0, -2) + '…'; return t; };
+function luxSpaced(g, t, x, y, sp, align) {
+  const w = [...t].reduce((s, ch) => s + g.measureText(ch).width + sp, -sp); let cx = align === 'center' ? x - w / 2 : x;
+  g.textAlign = 'left'; for (const ch of t) { g.fillText(ch, cx, y); cx += g.measureText(ch).width + sp; }
+}
+function mxDrawCard(cv) {
+  const g = cv.getContext('2d'), W = 1200, H = 630, ids = cartIds(), sum = cartSum();
+  luxFrame(g, W, H, 28);
+  g.fillStyle = LUX.gold; g.font = '600 20px Onest, sans-serif'; luxSpaced(g, 'DOFAMART', 90, 130, 8);
+  g.fillStyle = LUX.ink; g.font = '500 96px "EB Garamond", Georgia, serif'; g.textAlign = 'left';
+  const tt = tx('cardMy').split(' '); g.fillText(tt[0], 86, 250); if (tt[1]) g.fillText(tt.slice(1).join(' '), 86, 340);
+  g.font = '500 26px Onest, sans-serif'; g.fillStyle = LUX.mute; g.fillText(tx('cardCta'), 90, 410);
+  g.font = '500 22px Onest, sans-serif'; g.fillStyle = LUX.gold; g.fillText('open-sites.io/works/dofamart', 90, H - 84);
+  const x0 = 660, x1 = W - 90; let y = 140;
+  g.strokeStyle = LUX.line; g.lineWidth = 1;
+  ids.slice(0, 5).forEach(id => {
+    const p = PM[id], q = S.cart[id];
+    g.font = '500 24px Onest, sans-serif'; g.fillStyle = LUX.ink; g.textAlign = 'left'; g.fillText(luxFit(g, pn(id)[0], 270) + (q > 1 ? '  ×' + q : ''), x0, y);
+    g.font = '500 20px "JetBrains Mono", monospace'; g.fillStyle = LUX.mute; g.textAlign = 'right'; g.fillText(fmt(priceIn(p.usd) * q), x1, y);
+    g.beginPath(); g.moveTo(x0, y + 22); g.lineTo(x1, y + 22); g.stroke(); y += 58;
+  });
+  g.textAlign = 'left';
+  if (ids.length > 5) { g.font = '500 20px Onest, sans-serif'; g.fillStyle = LUX.mute; g.fillText(tx('fpMore', { n: ids.length - 5 }), x0, y); }
+  g.font = '600 18px Onest, sans-serif'; g.fillStyle = LUX.gold; luxSpaced(g, tx('cardTotal').toUpperCase(), x0, H - 150, 5);
+  g.font = '600 60px "EB Garamond", Georgia, serif'; g.fillStyle = LUX.ink; g.textAlign = 'left'; g.fillText(luxFit(g, fmt(sum.total), x1 - x0), x0, H - 86);
+}
+
+/* ---------- «Оплатит друг»: счёт-розыгрыш ---------- */
+let fpData = null;                                  // snapshot of the cart the bill is drawn from
+function fpSnap() {
+  const ids = cartIds(), sum = cartSum();
+  fpData = { items: ids.map(id => ({ id, q: S.cart[id] })), total: sum.total, no: 'DF-' + String(Math.floor(100000 + Math.random() * 900000)) };
+}
+const fpLink = () => location.href.split('#')[0] + '#bill=' + encodeURIComponent(fpData.items.map(i => i.id + ':' + i.q).join(','));
+const fpText = () => tx('fpMsg', { m: fmt(fpData.total / 12), x: fmt(fpData.total) });
+function fpDraw(cv) {
+  const g = cv.getContext('2d'), W = 1080, H = 1350, d = fpData;
+  luxFrame(g, W, H, 36);
+  g.textAlign = 'center'; g.fillStyle = LUX.ink; g.font = '500 84px "EB Garamond", Georgia, serif'; g.fillText('dofamart', W / 2, 190);
+  g.fillStyle = LUX.gold; g.font = '600 22px Onest, sans-serif'; luxSpaced(g, tx('fpInv'), W / 2, 248, 10, 'center');
+  g.fillStyle = LUX.mute; g.font = '500 20px "JetBrains Mono", monospace'; g.textAlign = 'center'; g.fillText('№ ' + d.no + '  ·  ' + new Date().toLocaleDateString(S.lang === 'ru' ? 'ru-RU' : 'en-GB'), W / 2, 296);
+  const x0 = 120, x1 = W - 120; let y = 400;
+  g.strokeStyle = LUX.line; g.lineWidth = 1; g.beginPath(); g.moveTo(x0, 340); g.lineTo(x1, 340); g.stroke();
+  d.items.slice(0, 6).forEach(it => {
+    const p = PM[it.id]; if (!p) return;
+    g.textAlign = 'left'; g.font = '500 30px Onest, sans-serif'; g.fillStyle = LUX.ink; g.fillText(luxFit(g, pn(it.id)[0], 500), x0, y);
+    g.font = '500 20px Onest, sans-serif'; g.fillStyle = LUX.mute; g.fillText(it.q + ' ' + tx('fpPcs'), x0, y + 30);
+    g.textAlign = 'right'; g.font = '500 26px "JetBrains Mono", monospace'; g.fillStyle = LUX.ink; g.fillText(fmt(priceIn(p.usd) * it.q), x1, y + 6);
+    g.beginPath(); g.moveTo(x0, y + 52); g.lineTo(x1, y + 52); g.stroke(); y += 92;
+  });
+  if (d.items.length > 6) { g.textAlign = 'left'; g.font = '500 22px Onest, sans-serif'; g.fillStyle = LUX.mute; g.fillText(tx('fpMore', { n: d.items.length - 6 }), x0, y - 10); }
+  const by = H - 400;
+  g.textAlign = 'center'; g.fillStyle = LUX.gold; g.font = '600 20px Onest, sans-serif'; luxSpaced(g, tx('fpTotal').toUpperCase(), W / 2, by, 8, 'center');
+  g.fillStyle = LUX.ink; g.font = '600 92px "EB Garamond", Georgia, serif'; g.textAlign = 'center'; g.fillText(luxFit(g, fmt(d.total), x1 - x0), W / 2, by + 96);
+  g.fillStyle = LUX.ink; g.fillRect(x0, by + 140, x1 - x0, 112);
+  g.fillStyle = '#E6D3A8'; g.font = '600 18px Onest, sans-serif'; luxSpaced(g, (tx('fpMonthly') + ' · ' + tx('fpMonths')).toUpperCase(), W / 2, by + 180, 5, 'center');
+  g.fillStyle = LUX.paper; g.font = '500 40px "JetBrains Mono", monospace'; g.textAlign = 'center'; g.fillText(luxFit(g, fmt(d.total / 12), x1 - x0 - 40), W / 2, by + 230);
+  g.fillStyle = LUX.mute; g.font = '500 18px Onest, sans-serif'; g.fillText(tx('fpFine'), W / 2, H - 84);
+}
+async function fpOpen() {
+  if (!cartIds().length) { toast('', tx('empty'), {}); return; }
+  fpSnap();
+  try { await Promise.all(['500 84px "EB Garamond"', '600 22px Onest', '500 20px "JetBrains Mono"'].map(f => document.fonts.load(f))); } catch (e) {}
+  mxOpen('fp');
+}
+function fpRender() {
+  const box = DLG_MX.querySelector('#mxBox'), x = `<button class="x" data-mx="close" aria-label="${esc(tx('close'))}">${IC.x}</button>`;
+  if (mxView === 'bill') {
+    const b = fpBill;
+    box.innerHTML = `<div class="d-head mx-head"><h2>${esc(tx('billTitle'))}</h2><div class="mx-hd-r">${x}</div></div>
+<p class="mx-sub fp-reveal">${esc(tx('billText', { x: fmt(b.total), m: fmt(b.total / 12) }))}</p>
+<div class="mx-acts"><button class="btn btn-main" data-mx="bill-own">${esc(tx('billRevenge'))}</button><button class="btn btn-ghost" data-mx="bill-take">${esc(tx('billTake'))}</button></div>`;
+    return;
+  }
+  const txt = fpText(), link = fpLink(), full = encodeURIComponent(txt + ' ' + link);
+  box.innerHTML = `<div class="d-head mx-head"><h2>${esc(tx('fpTitle'))}</h2><div class="mx-hd-r">${x}</div></div>
+<p class="mx-sub">${esc(tx('fpSub'))}</p>
+<div class="fp-wrap"><canvas id="fpCard" width="1080" height="1350"></canvas></div>
+<blockquote class="fp-msg">${esc(txt)}</blockquote>
+<div class="mx-acts"><button class="btn btn-main" data-mx="fp-send">${esc(tx('fpSend'))}</button>
+<a class="btn btn-ghost" target="_blank" rel="noopener" href="https://t.me/share/url?url=${encodeURIComponent(link)}&text=${encodeURIComponent(txt)}">Telegram</a>
+<a class="btn btn-ghost" target="_blank" rel="noopener" href="https://wa.me/?text=${full}">WhatsApp</a>
+<button class="btn btn-ghost" data-mx="fp-copy">${esc(tx('fpCopy'))}</button><button class="btn btn-ghost" data-mx="fp-dl">${esc(tx('fpDl'))}</button></div>`;
+  fpDraw(document.getElementById('fpCard'));
+}
+function fpBlob(cb) { const cv = document.createElement('canvas'); cv.width = 1080; cv.height = 1350; fpDraw(cv); cv.toBlob(cb, 'image/png'); }
+function fpCopy() {
+  const s = fpText() + ' ' + fpLink(), done = () => toast('', tx('fpCopied'), {});
+  if (navigator.clipboard) navigator.clipboard.writeText(s).then(done, () => { prompt('', s); }); else prompt('', s);
+}
+function fpDownload() {
+  fpBlob(b => { const el = document.createElement('a'); el.href = URL.createObjectURL(b); el.download = 'dofamart-bill.png'; document.body.appendChild(el); el.click(); setTimeout(() => { URL.revokeObjectURL(el.href); el.remove(); }, 1000); });
+}
+function fpSend() {
+  fpBlob(async b => {
+    const file = new File([b], 'dofamart-bill.png', { type: 'image/png' }), data = { title: 'dofamart', text: fpText(), url: fpLink() };
+    try {
+      if (navigator.canShare && navigator.canShare({ files: [file] })) { await navigator.share(Object.assign({ files: [file] }, data)); return; }
+      if (navigator.share) { await navigator.share(data); return; }
+    } catch (e) { if (e && e.name === 'AbortError') return; }
+    fpCopy();
+  });
+}
+// a friend's bill link: #bill=id:qty,... -> reveal the prank
+let fpBill = null;
+function fpFromHash() {
+  const m = location.hash.match(/^#bill=(.+)$/); if (!m) return;
+  const items = []; let total = 0;
+  decodeURIComponent(m[1]).split(',').slice(0, 60).forEach(pair => {
+    const [id, q] = pair.split(':'), qty = Math.min(20, parseInt(q, 10) || 0);
+    if (PM[id] && qty > 0) { items.push({ id, q: qty }); total += priceIn(PM[id].usd) * qty; }
+  });
+  history.replaceState(null, '', location.pathname + location.search);
+  if (!items.length) return;
+  fpBill = { items, total };
+  setTimeout(() => mxOpen('bill'), 500);
+}
+function fpTake() {
+  fpBill.items.forEach(i => { S.cart[i.id] = Math.min(20, (S.cart[i.id] || 0) + i.q); });
+  save(); renderAll(); mxClose(); openDlg('cart');
+}
+async function mxShare() {
+  if (!cartIds().length) { toast('🛒', tx('empty'), {}); return; }
+  ev('share');
+  try { await document.fonts.load('500 96px "EB Garamond"'); await document.fonts.load('500 20px Onest'); } catch (e) {}
+  mxOpen('share');
+}
+function mxCanvasBlob(cb) {
+  const cv = document.createElement('canvas'); cv.width = 1200; cv.height = 630; mxDrawCard(cv);
+  cv.toBlob(cb, 'image/png');
+}
+function mxCopy() {
+  const link = mxBasketLink();
+  const done = () => toast('🔗', tx('copied'), {});
+  if (navigator.clipboard) navigator.clipboard.writeText(link).then(done, () => { prompt('', link); });
+  else prompt('', link);
+}
+function mxDownload() {
+  mxCanvasBlob(b => {
+    const a = document.createElement('a'); a.href = URL.createObjectURL(b); a.download = 'dofamart-basket.png';
+    document.body.appendChild(a); a.click(); setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 1000);
+  });
+}
+function mxSend() {
+  mxCanvasBlob(async b => {
+    const file = new File([b], 'dofamart-basket.png', { type: 'image/png' });
+    const data = { title: 'dofamart', text: tx('cardCta') + ' — dofamart', url: mxBasketLink() };
+    try {
+      if (navigator.canShare && navigator.canShare({ files: [file] })) { await navigator.share(Object.assign({ files: [file] }, data)); return; }
+      if (navigator.share) { await navigator.share(data); return; }
+    } catch (e) { if (e && e.name === 'AbortError') return; }
+    mxCopy();
+  });
+}
+// ссылка от друга: #basket=id:qty,... — кладём в корзину и убираем из адреса
+function mxFromHash() {
+  const m = location.hash.match(/^#basket=(.+)$/); if (!m) return;
+  let n = 0;
+  decodeURIComponent(m[1]).split(',').forEach(pair => {
+    const [id, q] = pair.split(':'); const qty = Math.min(20, parseInt(q, 10) || 0);
+    if (PM[id] && qty > 0) { S.cart[id] = Math.min(20, (S.cart[id] || 0) + qty); n += qty; }
+  });
+  history.replaceState(null, '', location.pathname + location.search);
+  if (n) { save(); renderAll(); setTimeout(() => toast('🛒', tx('friendCart', { n }), {}), 600); }
+}
+
+/* ---------- покупка тем за баллы ---------- */
+function mxBuy(k) {
+  if (S.mxOwn.includes(k)) return;
+  const cost = CH_TH[k] || 0;
+  if (S.mxPts < cost) { toast('⭐', tx('notEnough'), {}); return; }
+  S.mxPts -= cost; S.mxOwn.push(k); mxSyncThemes(); save(); mxPtsShow();
+  toast('🎨', tx('themeBought', { name: THEMES[k].name }), {});
+  sfx('coin'); mxRender();
+}
+
+/* ---------- страница товара ---------- */
+let pdTab = 'desc', pdZoom = 1;
+RENDER.pd = function () {
+  const p = PM[pdId]; if (!p) return;
+  const [nm, ds] = pn(p.id), pr = priceIn(p.usd), cat = t('cats')[p.c] || p.c;
+  const left = p.s <= 5, pct = Math.min(100, Math.round(p.s / 14 * 100));
+  const main = p.img ? photo(p, 900) : '';
+  const thumbs = [1, 1.4, 1.8, 2.2].map((z, i) => `<button class="pd-th${pdZoom === z ? ' on' : ''}" data-mx="zoom" data-v="${z}" aria-label="${esc(tx('pdZoom'))} ${z}×">${p.img ? photo(p, 160) : `<span class="emo">${p.e}</span>`}</button>`).join('');
+  const facts = t('pdFacts').map(([a, b]) => `<div><dt>${esc(a)}</dt><dd>${esc(b)}</dd></div>`).join('');
+  const sim = P.filter(x => x.c === p.c && x.id !== p.id).slice(0, 4).map(x => `<button class="pd-sim" data-mx="open" data-v="${x.id}"><span class="pd-sim-ph">${x.img ? photo(x, 240) : `<span class="emo">${x.e}</span>`}</span><b>${esc(pn(x.id)[0])}</b><small>${esc(fmt(priceIn(x.usd)))}</small></button>`).join('');
+  const body = pdTab === 'facts' ? `<dl class="facts">${facts}</dl>` : pdTab === 'sim' ? `<div class="pd-sims">${sim}</div>` : `<p class="pd-desc">${esc(ds)}</p>`;
+  $('#pdBox').innerHTML = `<button class="x" data-act="close" aria-label="${esc(t('close'))}">${IC.x}</button>
+<div class="pd-grid">
+  <div class="pd-gal"><div class="ph pd-ph" style="--zoom:${pdZoom}">${main}${p.d ? `<span class="disc">−${p.d}%</span>` : ''}</div><div class="pd-ths">${thumbs}</div>${p.img ? `<a class="credit" href="https://unsplash.com/photos/${p.img}" target="_blank" rel="noopener">${esc(t('photos'))}</a>` : ''}</div>
+  <div class="pd-info">
+    <nav class="pd-crumb">${esc(tx('crumbHome'))} / ${esc(cat)}</nav>
+    <h2>${esc(nm)}</h2>
+    <div class="pd-rate"><span class="star">★</span>${rating(p.r)} · ${compact(p.n)}${left ? ` · <span class="hot">${esc(tx('stockLow', { n: p.s }))}</span>` : ''}</div>
+    ${priceHTML(p)}
+    <div class="split">${esc(t('split', { x: '§' })).replace('§', `<b>${esc(fmt(q4(pr)))}</b>`)}</div>
+    <div class="pd-stock" aria-hidden="true"><i style="width:${pct}%"></i></div>
+    <ul class="pd-ship"><li>🛵 ${esc(tx('ship1'))}</li><li>↩ ${esc(tx('ship2'))}</li><li>🛡 ${esc(tx('ship3'))}</li></ul>
+    <div class="pd-buy"><div class="stepper"><button data-act="pd-q" data-v="-1" aria-label="−">−</button><span>${pdQty}</span><button data-act="pd-q" data-v="1" aria-label="+">+</button></div>
+      <button class="btn btn-ghost" data-act="pd-add">${esc(t('toCart'))}</button><button class="btn btn-main" data-act="pd-buy">${esc(t('buyNow'))}</button></div>
+    <div class="pd-tabs" role="tablist">
+      <button role="tab" data-mx="tab" data-v="desc" aria-selected="${pdTab === 'desc'}">${esc(tx('pdTabDesc'))}</button>
+      <button role="tab" data-mx="tab" data-v="facts" aria-selected="${pdTab === 'facts'}">${esc(tx('pdTabFacts'))}</button>
+      <button role="tab" data-mx="tab" data-v="sim" aria-selected="${pdTab === 'sim'}">${esc(tx('pdTabSim'))}</button>
+    </div>
+    ${body}
+  </div>
+</div>`;
+};
+
+/* ---------- корзина: кнопка «отправить другу» ---------- */
+const origCart = RENDER.cart;
+RENDER.cart = function () {
+  origCart();
+  const foot = $('#cartBox .d-foot');
+  if (foot && cartIds().length) foot.insertAdjacentHTML('afterbegin', `<button class="btn btn-ghost full mx-share" data-mx="share">${esc(tx('shareBtn'))}</button>`);
+};
+
+/* ---------- перехват действий (счётчики челленджей) ---------- */
+addToCart = ((f) => function (id, n = 1, src = null) { const r = f.apply(this, arguments); ev('add', { n, cat: PM[id] && PM[id].c }); return r; })(addToCart);
+toggleFav = ((f) => function (id) { const had = S.fav.includes(id); const r = f.apply(this, arguments); if (!had && S.fav.includes(id)) ev('fav'); return r; })(toggleFav);
+openPd = ((f) => function (id) { const r = f.apply(this, arguments); if (PM[id]) ev('open', { d: PM[id].d }); return r; })(openPd);
+setLang = ((f) => function (c) { const r = f.apply(this, arguments); ev('lang'); return r; })(setLang);
+setCur = ((f) => function (c) { const r = f.apply(this, arguments); if (isCoin(c)) ev('crypto'); return r; })(setCur);
+setTheme = ((f) => function (k, manual) { const r = f.apply(this, arguments); if (manual) ev('theme'); mxSyncThemes(); return r; })(setTheme);
+dopaAdd = ((f) => function (n) { const r = f.apply(this, arguments); ev('dopa', Math.round(dopaGet())); return r; })(dopaAdd);
+placeOrder = ((f) => function () { ev('order'); return f.apply(this, arguments); })(placeOrder);
+
+/* ---------- клики ---------- */
+document.addEventListener('click', e => {
+  const el = e.target.closest('[data-mx]'); if (!el) return;
+  const v = el.dataset.v;
+  switch (el.dataset.mx) {
+    case 'ch': mxOpen('ch'); break;
+    case 'rt': mxOpen('rt'); break;
+    case 'share': mxShare(); break;
+    case 'fp': fpOpen(); break;
+    case 'fp-send': fpSend(); break;
+    case 'fp-copy': fpCopy(); break;
+    case 'fp-dl': fpDownload(); break;
+    case 'bill-own': mxClose(); scrollToId('catalog'); break;
+    case 'bill-take': fpTake(); break;
+    case 'help': mxHelp(v); break;
+    case 'back': mxView = mxBackView; mxRender(); break;
+    case 'close': mxClose(); break;
+    case 'dl': mxDownload(); break;
+    case 'send': mxSend(); break;
+    case 'copy': mxCopy(); break;
+    case 'buy': mxBuy(v); break;
+    case 'zoom': pdZoom = parseFloat(v); RENDER.pd(); break;
+    case 'tab': pdTab = v; RENDER.pd(); break;
+    case 'open': openPd(v); break;
+  }
+});
+
+/* ---------- запуск ---------- */
+// кнопка с баллами в шапке — перед переключателем тем
+(function addHeaderPts() {
+  const anchor = document.querySelector('[data-act="theme-next"]');
+  if (anchor) anchor.insertAdjacentHTML('beforebegin', `<button class="pill mx-pts" data-mx="ch" aria-label="${esc(tx('chTitle'))}"><i class="mx-dia"></i><span id="mxPts"></span></button><button class="pill mx-rt" data-mx="rt" aria-label="${esc(tx('rtTitle'))}">Top</button>`);
+  const lg = document.querySelector('.hdr .logo');
+  if (lg) lg.insertAdjacentHTML('afterend', `<a class="pill ak-link" href="akcii/index.html">${esc(tx('akLink'))}</a>`);
+})();
+mxInit();
+mxFromHash();
+fpFromHash();
 
 renderAll();
 })();

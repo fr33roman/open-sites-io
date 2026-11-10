@@ -12,7 +12,7 @@
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"dofamart","applicationCategory":"GameApplication","operatingSystem":"Web","inLanguage":["ru","en","uk","kk","uz","az"],"description":"Игра-магазин для дофамина: покупай всё, не плати ничего.","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"url":"https://open-sites.io/works/dofamart/"}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700;800;900&family=Onest:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700;800&family=Noto+Color+Emoji&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,500;0,600;1,500&family=Onest:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700;800&family=Noto+Color+Emoji&display=swap">
 <style>
 
 :root{
@@ -523,9 +523,12 @@ html:has(dialog[open]){overflow:hidden}
 .flyer img{width:100%;height:100%;object-fit:cover}
 </style>
 
+<link rel="stylesheet" href="mech.css">
+<link rel="stylesheet" href="lux.css">
 <canvas id="race" aria-hidden="true"></canvas>
 <div class="bgv" aria-hidden="true"><video id="v1" muted autoplay loop playsinline webkit-playsinline disablepictureinpicture disableremoteplayback preload="auto"></video><video id="v2" muted autoplay loop playsinline webkit-playsinline disablepictureinpicture disableremoteplayback preload="auto"></video></div>
 <div class="veil" aria-hidden="true"></div>
+<div class="air" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
 
 <header class="hdr">
   <div class="wrap hdr-row">
@@ -574,6 +577,7 @@ html:has(dialog[open]){overflow:hidden}
       </div>
     </section>
 
+    <section class="ak wrap"><a class="ak-box" href="akcii/index.html"><span class="ak-eye">dofamart · invest</span><b class="ak-t">Акции, крипта, металлы</b><span class="ak-s">Симулятор торговли по настоящим курсам. Деньги учебные, результат честный, кошелёк цел.</span><span class="ak-go">Открыть раздел →</span></a></section>
     <section class="catalog wrap" id="catalog">
       <div class="sec-h"><h2 data-i18n="catalog"></h2><span class="count" id="count"></span>
         <label class="sort"><span data-i18n="sortLabel"></span><select id="sort"></select></label></div>
@@ -613,9 +617,11 @@ html:has(dialog[open]){overflow:hidden}
 <template id="tplConsent"><label class="consent"><input type="checkbox" id="coConsent"><span data-i18n="consent"></span></label><button class="btn btn-main grow" data-act="co-pay" disabled></button></template>
 <dialog id="dlgPrefs" class="modal narrow"><div class="m-box pad" id="prefsBox"></div></dialog>
 <dialog id="dlgAch" class="modal"><div class="m-box pad" id="achBox"></div></dialog>
+<dialog id="dlgMx" class="modal mx"><div class="m-box pad" id="mxBox"></div></dialog>
 
 <div id="toasts" class="toasts" popover="manual" aria-live="polite"></div>
 <canvas id="fx" popover="manual" aria-hidden="true"></canvas>
 
 <script src="data.js"></script>
+<script src="data2.js"></script>
 <script src="app.js"></script>

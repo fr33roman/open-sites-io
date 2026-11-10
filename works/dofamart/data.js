@@ -118,11 +118,11 @@ const ORDER = ['superbike', 'phone', 'yacht', 'shawarma', 'sneakers', 'pc', 'moo
   'napoleon', 'quad', 'nails', 'bike', 'camera', 'coat', 'sofa', 'gym', 'motivation'];
 
 const THEMES = {
-  rave:   { name: 'Neon Rave',    bg_v: 'race-rave',   a1: '#FF2BD6', a2: '#22E4FF', a3: '#FFE14D', bg: '#07021A', sky: '#1A0646', hz: '#FF2BD6', sun1: '#FFE95C', sun2: '#FF2B8A', grid: '#FF2BD6' },
-  sunset: { name: 'Miami Sunset', bg_v: 'race-sunset', a1: '#FF8A3D', a2: '#FF2E79', a3: '#FFD166', bg: '#120410', sky: '#33082E', hz: '#FF6A3D', sun1: '#FFE6A3', sun2: '#FF3D6E', grid: '#FF8A3D' },
-  ice:    { name: 'Ice Drive',    bg_v: 'race-ice',    a1: '#3DF5FF', a2: '#8B6BFF', a3: '#E3F6FF', bg: '#020815', sky: '#06164A', hz: '#2E6BFF', sun1: '#F0FCFF', sun2: '#3DF5FF', grid: '#3DF5FF' },
-  solo:   { name: 'Solo Rider',   bg_v: 'solo',        a1: '#2EE6FF', a2: '#FF3DCB', a3: '#FFE36A', bg: '#060318', sky: '#160640', hz: '#C02BFF', sun1: '#FFE95C', sun2: '#FF3DCB', grid: '#2EE6FF' },
-  duo:    { name: 'Golden Hour',  bg_v: 'duo',         a1: '#FFB547', a2: '#FF4F8B', a3: '#FFE6A8', bg: '#120806', sky: '#2A0E1A', hz: '#FF7A3D', sun1: '#FFE6A8', sun2: '#FF6A3D', grid: '#FF4F8B' }
+  rave:   { name: 'Noir',      tone: 'dark',  bg_v: '', a1: '#C8A96A', a2: '#E6D3A8', a3: '#D9BD7E', bg: '#0F0E0D', sky: '#1A1816', hz: '#C8A96A', sun1: '#E6D3A8', sun2: '#C8A96A', grid: '#C8A96A' },
+  sunset: { name: 'Ivory',     tone: 'light', bg_v: '', a1: '#A8894F', a2: '#D8C39A', a3: '#765822', bg: '#F6F2EA', sky: '#EFE8DA', hz: '#A8894F', sun1: '#D8C39A', sun2: '#A8894F', grid: '#A8894F' },
+  ice:    { name: 'Porcelain', tone: 'light', bg_v: '', a1: '#5B7189', a2: '#B4C3D2', a3: '#3F566E', bg: '#F0F3F6', sky: '#E3E9EF', hz: '#5B7189', sun1: '#B4C3D2', sun2: '#5B7189', grid: '#5B7189' },
+  solo:   { name: 'Sage',      tone: 'light', bg_v: '', a1: '#6B7B60', a2: '#BCC7AF', a3: '#4E5D45', bg: '#F1F3EC', sky: '#E5E9DD', hz: '#6B7B60', sun1: '#BCC7AF', sun2: '#6B7B60', grid: '#6B7B60' },
+  duo:    { name: 'Rose',      tone: 'light', bg_v: '', a1: '#A9726A', a2: '#E0BDB6', a3: '#8A4F48', bg: '#F8F0ED', sky: '#F0E2DD', hz: '#A9726A', sun1: '#E0BDB6', sun2: '#A9726A', grid: '#A9726A' }
 };
 
 const I18N = {
@@ -161,11 +161,11 @@ ru: {
   promo: 'Промокод', apply: 'Применить', promoOk: 'Код {c}: скидка {p}%', promoBad: 'Такого кода нет. Попробуйте DOFAMIN',
   checkout: 'Оформить заказ', remove: 'Удалить',
   coSteps: ['Доставка', 'Оплата', 'Чек'], coWhere: 'Куда доставить',
-  dest: { home: ['Домой', 'Подъезд 3, домофон не работает'], office: ['В офис', 'Оставят у охранника'], dacha: ['На дачу', 'Между грядками картошки'], moon: ['На Луну', 'Без доплаты за орбиту'] },
+  dest: { home: ['Домой', 'Курьер до двери'], office: ['В офис', 'На ресепшен'], dacha: ['На дачу', 'За город'], moon: ['На Луну', 'Без доплаты за орбиту'] },
   coSpeed: 'Скорость доставки',
-  speed: { std: ['Обычная', 'Никогда'], exp: ['Экспресс', 'Очень быстро никогда'], tp: ['Телепорт', 'Вчера'] },
+  speed: { std: ['Обычная', '2–3 дня'], exp: ['Экспресс', 'Сегодня'], tp: ['Телепорт', 'Вчера'] },
   next: 'Далее', back: 'Назад', coPay: 'Способ оплаты',
-  pay: { card: ['Дофамин-карта', 'Лимит: бесконечность'], crypto: ['Криптовалюта', '12 монет на выбор'], cash: ['Наличными курьеру', 'Сдачу он тоже не привезёт'], mind: ['Силой мысли', 'Просто очень захотите'] },
+  pay: { card: ['Дофамин-карта', 'Без лимита'], crypto: ['Криптовалюта', '12 монет на выбор'], cash: ['Наличными курьеру', 'При получении'], mind: ['Силой мысли', 'Просто очень захотите'] },
   cardHolder: 'ВЛАДЕЛЕЦ: ВЫ', coinPick: 'Монета', network: 'Сеть', toPay: 'К оплате',
   cryptoNote: 'Адреса кошелька здесь нет и не будет. Ничего никуда не отправляйте: заказ оплатится сам, понарошку.',
   noDataNote: 'Мы не спрашиваем номер карты и не храним платёжные данные.',
@@ -225,11 +225,11 @@ en: {
   promo: 'Promo code', apply: 'Apply', promoOk: 'Code {c}: {p}% off', promoBad: 'No such code. Try DOFAMIN',
   checkout: 'Checkout', remove: 'Remove',
   coSteps: ['Delivery', 'Payment', 'Receipt'], coWhere: 'Deliver to',
-  dest: { home: ['Home', 'Entrance 3, the intercom is broken'], office: ['Office', 'Left with the security guard'], dacha: ['Country house', 'Between the potato beds'], moon: ['The Moon', 'No extra charge for orbit'] },
+  dest: { home: ['Home', 'To your door'], office: ['Office', 'At reception'], dacha: ['Country house', 'Out of town'], moon: ['The Moon', 'No extra charge for orbit'] },
   coSpeed: 'Delivery speed',
-  speed: { std: ['Standard', 'Never'], exp: ['Express', 'Never, but fast'], tp: ['Teleport', 'Yesterday'] },
+  speed: { std: ['Standard', '2–3 days'], exp: ['Express', 'Today'], tp: ['Teleport', 'Yesterday'] },
   next: 'Next', back: 'Back', coPay: 'Payment method',
-  pay: { card: ['Dopamine card', 'Limit: infinity'], crypto: ['Crypto', '12 coins to choose from'], cash: ['Cash to courier', 'He won’t bring change either'], mind: ['Mind power', 'Just want it really hard'] },
+  pay: { card: ['Dopamine card', 'No limit'], crypto: ['Crypto', '12 coins to choose from'], cash: ['Cash to courier', 'On delivery'], mind: ['Mind power', 'Just want it really hard'] },
   cardHolder: 'CARDHOLDER: YOU', coinPick: 'Coin', network: 'Network', toPay: 'Amount due',
   cryptoNote: 'There is no wallet address here and there never will be. Don’t send anything anywhere: the order pays for itself, for pretend.',
   noDataNote: 'We never ask for a card number and store no payment details.',
