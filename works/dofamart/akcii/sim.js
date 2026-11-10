@@ -334,7 +334,7 @@ const NB = ' ';   // narrow no-break space as thousands separator
 
 const T = {
   ru: {
-    nav_money: 'Деньги', nav_market: 'Рынок', nav_wallet: 'Кошелёк', nav_truth: 'Правда', nav_news: 'Новости', snd_aria: 'Звук',
+    nav_money: 'Деньги', nav_market: 'Рынок', nav_wallet: 'Кошелёк', nav_truth: 'Правда', nav_news: 'Новости', snd_aria: 'Звук', skin_aria: 'Стиль', skin_gold: 'Стиль: Золото', skin_sapphire: 'Стиль: Сапфир', skin_amethyst: 'Стиль: Аметист', skin_aurora: 'Стиль: Аврора', skin_platinum: 'Стиль: Платина',
     money_lbl: 'Игровой счёт', money_h: 'Деньги',
     money_sub: 'Внесите любую сумму и торгуйте как в жизни. Деньги игровые: потерять здесь нечего, а результат считается честно.',
     reset: 'Обнулить всё', reset_q: 'Стереть деньги, позиции и всю историю?', reset_yes: 'Да, обнулить', cancel: 'Отмена', reset_done: 'Счёт обнулён',
@@ -387,7 +387,7 @@ const T = {
     ]
   },
   en: {
-    nav_money: 'Money', nav_market: 'Market', nav_wallet: 'Wallet', nav_truth: 'Truth', nav_news: 'News', snd_aria: 'Sound',
+    nav_money: 'Money', nav_market: 'Market', nav_wallet: 'Wallet', nav_truth: 'Truth', nav_news: 'News', snd_aria: 'Sound', skin_aria: 'Style', skin_gold: 'Style: Gold', skin_sapphire: 'Style: Sapphire', skin_amethyst: 'Style: Amethyst', skin_aurora: 'Style: Aurora', skin_platinum: 'Style: Platinum',
     money_lbl: 'Play account', money_h: 'Money',
     money_sub: 'Deposit any amount and trade as you would in real life. The money is play money: nothing to lose, and the result is counted honestly.',
     reset: 'Reset everything', reset_q: 'Erase money, positions and all history?', reset_yes: 'Yes, reset', cancel: 'Cancel', reset_done: 'Account reset',
@@ -757,8 +757,25 @@ function stInfo(sym, big) {
   return [st, s];
 }
 
-const COL = { gold: '#C8A96A', up: '#7FBF9A', down: '#D98A7E', mut: '#A69F93', grid: 'rgba(255,255,255,.06)', txt: '#F3EEE6' };
+const COL = { gold: '#C8A96A', up: '#7FBF9A', down: '#D98A7E', mut: '#A69F93', grid: 'rgba(255,255,255,.06)', txt: '#F3EEE6', bg: '#0E0D0C' };
 const LINES = ['#C8A96A', '#7FBF9A', '#D98A7E', '#9DB4C8'];
+// Skins: the palette lives in sim.css (html[data-skin]); canvases read it from there.
+const SKINS = ['gold', 'sapphire', 'amethyst', 'aurora', 'platinum'];
+function readSkin() {
+  const cs = getComputedStyle(document.documentElement), v = n => (cs.getPropertyValue(n) || '').trim();
+  const hex = (n, d) => /^#[0-9a-f]{6}$/i.test(v(n)) ? v(n) : d;
+  COL.gold = hex('--gold', COL.gold); COL.up = hex('--up', COL.up); COL.down = hex('--down', COL.down);
+  COL.mut = hex('--mut', COL.mut); COL.txt = hex('--txt', COL.txt); COL.bg = hex('--bg', COL.bg);
+  LINES[0] = COL.gold; LINES[1] = COL.up; LINES[2] = COL.down; LINES[3] = hex('--l4', LINES[3]);
+  const m = document.querySelector('meta[name="theme-color"]'); if (m) m.setAttribute('content', COL.bg);
+}
+function curSkin() { const k = document.documentElement.getAttribute('data-skin'); return SKINS.indexOf(k) < 0 ? 'gold' : k; }
+function nextSkin() {
+  const k = SKINS[(SKINS.indexOf(curSkin()) + 1) % SKINS.length];
+  document.documentElement.setAttribute('data-skin', k);
+  try { localStorage.setItem('dofa_sim_skin', k); } catch (e) {}
+  readSkin(); render(); toast(t('skin_' + k));
+}
 function rgba(hex, a) { const n = parseInt(hex.slice(1), 16); return 'rgba(' + (n >> 16) + ',' + (n >> 8 & 255) + ',' + (n & 255) + ',' + a + ')'; }
 
 // Line chart on canvas. series: [{ pts: [[x, y]], color, name, dash }]
@@ -834,7 +851,7 @@ function drawChart(cv, series, o) {
   const px = X(rows[0].p[0]);
   g.strokeStyle = 'rgba(255,255,255,.25)'; g.lineWidth = 1; g.beginPath(); g.moveTo(Math.round(px) + 0.5, T); g.lineTo(Math.round(px) + 0.5, T + ph); g.stroke();
   rows.forEach(r => {
-    g.fillStyle = '#0E0D0C'; g.beginPath(); g.arc(X(r.p[0]), Y(r.p[1]), 4.5, 0, 6.3); g.fill();
+    g.fillStyle = COL.bg; g.beginPath(); g.arc(X(r.p[0]), Y(r.p[1]), 4.5, 0, 6.3); g.fill();
     g.strokeStyle = r.s.color; g.lineWidth = 1.6; g.beginPath(); g.arc(X(r.p[0]), Y(r.p[1]), 4.5, 0, 6.3); g.stroke();
   });
   const head = o.fx ? o.fx(rows[0].p[0], true) : '';
@@ -1370,10 +1387,11 @@ function applyLang() {
 }
 function onClick(e) {
   snd.gesture();
-  const el = e.target && e.target.closest ? e.target.closest('[data-tf],[data-lev],[data-pre],[data-side],[data-close],[data-amt],[data-key],[data-act],[data-ncat],[data-ccat],[data-csym],[data-per],#langBtn,#sndBtn,#modal') : null;
+  const el = e.target && e.target.closest ? e.target.closest('[data-tf],[data-lev],[data-pre],[data-side],[data-close],[data-amt],[data-key],[data-act],[data-ncat],[data-ccat],[data-csym],[data-per],#langBtn,#sndBtn,#skinBtn,#modal') : null;
   if (!el) return;
   const A = k => el.getAttribute(k), has = k => el.hasAttribute(k);
   if (el.id === 'modal') { if (e.target === el) el.hidden = true; return; }
+  if (el.id === 'skinBtn') { nextSkin(); if (S.sound) snd.key(); return; }
   if (el.id === 'langBtn') { S.lang = S.lang === 'en' ? 'ru' : 'en'; save(); applyLang(); render(); return; }
   if (el.id === 'sndBtn') { S.sound = !S.sound; save(); applyLang(); if (S.sound) snd.key(); return; }
   if (has('data-tf')) {
@@ -1418,7 +1436,7 @@ function init() {
   S.cmp.syms = S.cmp.syms.filter((s, i, a) => INS[s] && a.indexOf(s) === i).slice(0, 4);
   if ([7, 30, 90].indexOf(S.cmp.per) < 0) S.cmp.per = 30;
   const r = E.advance(S, M, Date.now());          // time kept going while the tab was closed
-  applyLang(); route();
+  readSkin(); applyLang(); route();
   if (r.liq.length) onLiq(r.liq);
   document.addEventListener('click', onClick);
   document.addEventListener('pointerdown', () => snd.gesture(), { passive: true });

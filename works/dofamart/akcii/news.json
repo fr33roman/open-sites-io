@@ -1,0 +1,485 @@
+{
+ "ts": 1794310152383,
+ "items": [
+  {
+   "cat": "companies",
+   "src": "РБК",
+   "title": "В Минтруде сообщили о рекордном росте числа вакансий для вахтовиков",
+   "sum": "Количество вакансий для работников вахтовым методом в России за два года увеличилось примерно на 100 тыс.",
+   "url": "https://www.rbc.ru/rbcfreenews/6af2fdd24704bd464348ce22",
+   "ts": 1794310015000
+  },
+  {
+   "cat": "companies",
+   "src": "РБК",
+   "title": "На севере Испании при взрыве погиб полицейский. Видео",
+   "sum": "В испанском городе Овьедо, на севере страны, в результате взрыва самодельного устройства погиб сотрудник Национальной полиции, еще один получил тяжелые ранения.",
+   "url": "https://www.rbc.ru/rbcfreenews/6af2f5eb44a3c36494ea842b",
+   "ts": 1794309912000
+  },
+  {
+   "cat": "companies",
+   "src": "РБК",
+   "title": "Где и с чьим участием встречались делегации России и Украины. Карта",
+   "sum": "В Абу-Даби проходят переговоры России, США и Украины. Где ранее делегации Москвы и Киева проводили встречи в рамках попыток урегулирования конфликта – в инфографике РБК",
+   "url": "https://www.rbc.ru/politics/17/02/2026/69737b219a7947eee32bc8a6",
+   "ts": 1794309877000
+  },
+  {
+   "cat": "crypto",
+   "src": "CoinDesk",
+   "title": "Bitcoin lags stock rebound in advance of U.S. inflation report",
+   "sum": "Bitcoin slipped despite a Monday rebound in U.S. stocks, with spot ETFs losing $201 million as traders await October inflation data later today.",
+   "url": "https://www.coindesk.com/markets/2026/11/10/bitcoin-lags-stock-rebound-in-advance-of-u-s-inflation-report",
+   "ts": 1794309850000
+  },
+  {
+   "cat": "companies",
+   "src": "РБК",
+   "title": "В ОДКБ обсудят лишение Армении права голоса",
+   "sum": "Главам государств ОДКБ будет поставлен на рассмотрение проект о лишении Армении права голоса в органах организации из-за задолженности по взносам, сообщил министр иностранных дел России Сергей Лавров.",
+   "url": "https://www.rbc.ru/politics/10/11/2026/6af2fc2d4a9856aa9ac14ce6",
+   "ts": 1794309412000
+  },
+  {
+   "cat": "stocks",
+   "src": "MarketWatch",
+   "title": "Should a widow leave her late partner’s home to her stepkids — or cut off contact with them?",
+   "sum": "“It would be a less drastic step than selling the home now and splitting the proceeds.”",
+   "url": "https://www.marketwatch.com/story/she-can-always-change-her-mind-should-a-widow-leave-the-family-home-to-her-stepchildren-649b06af?mod=mw_rss_topstories",
+   "ts": 1794309300000
+  },
+  {
+   "cat": "companies",
+   "src": "РБК",
+   "title": "Колокольцев объяснил увеличение налогов для мигрантов с семьями",
+   "sum": "С 2027 года дополнительное налогообложение будет распространяться на каждого прибывающего в Россию члена семьи мигранта, заявил глава МВД Владимир Колокольцев, передает корреспондент РБК.",
+   "url": "https://www.rbc.ru/rbcfreenews/6af2fc69c6f945e9b10cd773",
+   "ts": 1794309298000
+  },
+  {
+   "cat": "companies",
+   "src": "РБК",
+   "title": "Колокольцев заявил о снижении преступности среди иностранцев в России",
+   "sum": "Число преступлений, совершенных иностранцами в России, за девять месяцев 2026 года снизилось на 40% по сравнению с аналогичным периодом прошлого года.",
+   "url": "https://www.rbc.ru/rbcfreenews/6af2f83d65199f803e6c8ac1",
+   "ts": 1794308748000
+  },
+  {
+   "cat": "companies",
+   "src": "РБК",
+   "title": "«Т-Технологии» раскрыли детали возможной сделки с «Цианом»",
+   "sum": "«Т-Технологии» заинтересованы в покупке «Циана» только при консолидации пакета от 50% акций, заявили в компании. Но договоренностей с ключевыми акционерами классифайда пока нет",
+   "url": "https://www.rbc.ru/finances/10/11/2026/6af2ef31aa95ce292fb3dd67",
+   "ts": 1794308696000
+  },
+  {
+   "cat": "companies",
+   "src": "РБК",
+   "title": "Трусова прилетела в США для участия в этапе Гран-при ISU",
+   "sum": "Турнир пройдет в Эверетте (штат Вашингтон) с 13 по 15 ноября",
+   "url": "https://www.rbc.ru/sport/10/11/2026/6af2f693ff7b7a9791fe5d26",
+   "ts": 1794308400000
+  },
+  {
+   "cat": "crypto",
+   "src": "Cointelegraph",
+   "title": "Ex-employee sues Ethereum Foundation and Vitalik Buterin over firing",
+   "sum": "Kayleen Fulton alleges she was fired less than two weeks after disclosing a cancer diagnosis and helping organize a staff letter challenging a requirement to endorse the foundation’s new mandate.",
+   "url": "https://cointelegraph.com/news/ex-employee-sues-ethereum-foundation-vitalik-buterin-over-firing?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+   "ts": 1794308211000
+  },
+  {
+   "cat": "crypto",
+   "src": "The Block",
+   "title": "Exodus shares rise 10% ahead of Q3 earnings showing 7% revenue growth, $8.3 million loss",
+   "sum": "Exodus shares rose 10% as the company reported third-quarter revenue of $32.5 million and a net loss of $8.3 million.",
+   "url": "https://www.theblock.co/news/business/2026-11-10-exodus-shares-rise-10-ahead-of-q3-earnings-showing-7-revenue-growth-8-3-million-loss-437012",
+   "ts": 1794308037000
+  },
+  {
+   "cat": "crypto",
+   "src": "CoinDesk",
+   "title": "Bitcoin slips before U.S. inflation report as traders price in Fed rate increase",
+   "sum": "Fed Governor Waller backs December tightening even if inflation cools, while falling oil prices offer some relief and Anthropic withdraws IPO pricing details.",
+   "url": "https://www.coindesk.com/markets/2026/11/10/bitcoin-slips-before-u-s-inflation-report-as-traders-price-in-fed-rate-increase",
+   "ts": 1794307717000
+  },
+  {
+   "cat": "stocks",
+   "src": "MarketWatch",
+   "title": "Anthropic reportedly retracts IPO terms sent to banks by mistake, exposing jitters over AI investments",
+   "sum": "Anthropic reportedly late Monday sent a copy of a securities filing to bankers for an IPO raising up to $69.3 billion before saying that was in error.",
+   "url": "https://www.marketwatch.com/story/anthropic-reportedly-retracts-ipo-terms-sent-to-banks-by-mistake-exposing-jitters-over-ai-investments-6116578d?mod=mw_rss_topstories",
+   "ts": 1794307680000
+  },
+  {
+   "cat": "stocks",
+   "src": "MarketWatch",
+   "title": "‘I’m sick of flying’: I paid for priority boarding, but the overhead bins were full. Was I duped?",
+   "sum": "“Maybe next time I’ll try the other approach: I’ll board whenever I feel like it and drop my suitcase in the first open slot I see.”",
+   "url": "https://www.marketwatch.com/story/im-sick-of-flying-i-paid-for-priority-boarding-but-the-overhead-bins-were-full-was-i-duped-0badcc80?mod=mw_rss_topstories",
+   "ts": 1794307500000
+  },
+  {
+   "cat": "crypto",
+   "src": "CoinDesk",
+   "title": "Live news: Traders price in Fed rate hike for December as bitcoin, gold retreat",
+   "sum": "Markets price in a December Fed rate hike ahead of U.S. inflation data, while bitcoin and gold fall and oil retreats on easing Iran tensions.",
+   "url": "https://www.coindesk.com/markets/2026/11/10/live-news-traders-price-in-fed-rate-hike-for-december-as-bitcoin-and-gold-retreat",
+   "ts": 1794307305000
+  },
+  {
+   "cat": "crypto",
+   "src": "The Block",
+   "title": "Ark Invest trims Block, Bullish and its own bitcoin ETF holdings while buying Nvidia, SoFi",
+   "sum": "Cathie Wood's Ark Invest sold $6.1 million worth of Block shares and $1.13 million worth of Bullish shares through its ETFs on Monday.",
+   "url": "https://www.theblock.co/news/business/2026-11-10-ark-invest-trims-block-bullish-holdings-437003",
+   "ts": 1794307013000
+  },
+  {
+   "cat": "companies",
+   "src": "Коммерсантъ",
+   "title": "Прелюдия к партийным войнам // Чем грозит обернуться сессия «хромой утки» в США",
+   "sum": "9 ноября в Вашингтоне открылась сессия «хромой утки» — так называют период, когда проигравшая партия досиживает последние недели до передачи власти оппонентам. И республиканцы, и демократы заверяют, что готовы работать вместе на благо…",
+   "url": "https://www.kommersant.ru/doc/9093505",
+   "ts": 1794306305000
+  },
+  {
+   "cat": "stocks",
+   "src": "CNBC",
+   "title": "China's goods surplus tops $1 trillion for a second year amid calls for Beijing to rebalance trade",
+   "sum": "China's trade surplus topped $1 trillion as of October, potentially intensifying complaints from trading partners already wary over the glut of cheap Chinese goods.",
+   "url": "https://www.cnbc.com/2026/11/10/china-trade-october-exports-imports-surplus-.html",
+   "ts": 1794306253000
+  },
+  {
+   "cat": "companies",
+   "src": "Коммерсантъ",
+   "title": "«Весь этот скандал — лишь отвлекающий маневр» // Скандал вокруг гендиректора Nvidia Дженсена Хуанга: реакция мировых СМИ",
+   "sum": "Одной из самых обсуждаемых тем в мире остается обвинение Дженсена Хуанга женщиной, которую называют китайской шпионкой. Комментаторы в США видят в истории предупреждение о попытках Китая проникнуть в высшие эшелоны бизнеса в США,…",
+   "url": "https://www.kommersant.ru/doc/9093512",
+   "ts": 1794306149000
+  },
+  {
+   "cat": "crypto",
+   "src": "The Block",
+   "title": "NEAR AI says SGLang vulnerability exposed user account details in security breach",
+   "sum": "NEAR AI explained that it found no indication that stored Private Chat conversations or uploaded files were accessed.",
+   "url": "https://www.theblock.co/news/defi/2026-11-10-near-ai-security-breach-437002",
+   "ts": 1794305833000
+  },
+  {
+   "cat": "stocks",
+   "src": "MarketWatch",
+   "title": "‘The thought of living to 100 terrifies me’: Is Social Security a giant Ponzi scheme?",
+   "sum": "There’s already a demographic ‘run’ on Social Security.",
+   "url": "https://www.marketwatch.com/story/the-thought-of-living-to-100-terrifies-me-is-social-security-a-giant-ponzi-scheme-84a64e7e?mod=mw_rss_topstories",
+   "ts": 1794305700000
+  },
+  {
+   "cat": "crypto",
+   "src": "Cointelegraph",
+   "title": "Bitcoin price eyes $74K as Fed rate-hike bets hit 96% after Waller speech",
+   "sum": "Bitcoin price action and stock futures trended lower after Fed governor Christopher Waller said that he would vote to raise interest rates by 0.25% at the December FOMC meeting.",
+   "url": "https://cointelegraph.com/markets/bitcoin-price-eyes-74k-fed-rate-hike-expected-after-waller-speech?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+   "ts": 1794305302000
+  },
+  {
+   "cat": "stocks",
+   "src": "MarketWatch",
+   "title": "N.Y. Knicks star Josh Hart relists Florida home for $5.7 million",
+   "sum": "New York Knicks star Josh Hart has relisted his sprawling Florida mansion for $5.69 million—just one year after removing the home from the selling block.",
+   "url": "https://www.marketwatch.com/story/n-y-knicks-star-josh-hart-relists-florida-home-for-5-7-million-5fd3f18c?mod=mw_rss_topstories",
+   "ts": 1794304860000
+  },
+  {
+   "cat": "crypto",
+   "src": "CoinDesk",
+   "title": "The crypto wallet that grew up inside Telegram is striking out on its own",
+   "sum": "The app will offer crypto trading, tokenized U.S. stocks and ETFs, and perpetual futures, all already available through Telegram.",
+   "url": "https://www.coindesk.com/business/2026/11/10/the-crypto-wallet-that-grew-up-inside-telegram-is-striking-out-on-its-own",
+   "ts": 1794304757000
+  },
+  {
+   "cat": "stocks",
+   "src": "MarketWatch",
+   "title": "Actor Justin Baldoni quietly sold his L.A. home for $2.1 million after moving to Nashville",
+   "sum": "Actor Justin Baldoni discreetly offloaded his former Los Angeles home months after relocating to Nashville, Tenn., for a “fresh start.”",
+   "url": "https://www.marketwatch.com/story/actor-justin-baldoni-quietly-sold-his-l-a-home-for-2-1-million-after-moving-to-nashville-4cb8041e?mod=mw_rss_topstories",
+   "ts": 1794304680000
+  },
+  {
+   "cat": "stocks",
+   "src": "MarketWatch",
+   "title": "Fed’s Waller puts half-point rate hike into the mix for December",
+   "sum": "Federal Reserve Gov. Chris Waller on Tuesday put the possibility of a half-point rate hike into the mix, depending how hot the consumer price data for October comes in.",
+   "url": "https://www.marketwatch.com/story/feds-waller-puts-half-point-rate-hike-into-the-mix-for-december-1bebdffc?mod=mw_rss_topstories",
+   "ts": 1794303900000
+  },
+  {
+   "cat": "crypto",
+   "src": "The Block",
+   "title": "Walt expands beyond Telegram with standalone crypto trading app",
+   "sum": "Walt launched a standalone app, expanding its crypto investment platform beyond Telegram for the first time.",
+   "url": "https://www.theblock.co/news/ecosystems/2026-11-10-walt-standalone-crypto-trading-app-436981",
+   "ts": 1794303000000
+  },
+  {
+   "cat": "crypto",
+   "src": "CoinDesk",
+   "title": "Coinbase, Kalshi, Kraken parent back CFTC in legal fight over stock perpetual futures",
+   "sum": "The Capital Markets Alliance argues that the products fall under the Securities and Exchange Commission’s jurisdiction.",
+   "url": "https://www.coindesk.com/policy/2026/11/10/coinbase-kalshi-kraken-parent-back-cftc-in-legal-fight-over-stock-perpetual-futures",
+   "ts": 1794302070000
+  },
+  {
+   "cat": "crypto",
+   "src": "Cointelegraph",
+   "title": "BitGo Q3 profit nearly doubles on crypto gains as revenue falls 51%",
+   "sum": "BitGo’s $71 million unrealized gain on its crypto holdings helped nearly double its net income, but revenue and earnings came in below preliminary analyst expectations.",
+   "url": "https://cointelegraph.com/news/bitgo-q3-2026-earnings-crypto-treasury-gains?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+   "ts": 1794301516000
+  },
+  {
+   "cat": "crypto",
+   "src": "The Block",
+   "title": "BitGo revenue falls 51% in Q3 as trading slows; net income rises on treasury gains",
+   "sum": "The revenue decline was driven by continued soft crypto trading environment and a higher mix of lower-margin stablecoin transactions.",
+   "url": "https://www.theblock.co/news/business/2026-11-10-bitgo-revenue-falls-q3-436986",
+   "ts": 1794298853000
+  },
+  {
+   "cat": "crypto",
+   "src": "Cointelegraph",
+   "title": "BlackRock Bitcoin ETF outflows hit $1.66B over seven trading sessions",
+   "sum": "US spot Bitcoin ETFs shed $201 million Monday, with seven straight sessions of net withdrawals from BlackRock’s IBIT totaling $1.66 billion.",
+   "url": "https://cointelegraph.com/markets/blackrock-ibit-bitcoin-etf-outflows?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+   "ts": 1794297725000
+  },
+  {
+   "cat": "crypto",
+   "src": "Cointelegraph",
+   "title": "Securitize agrees to buy River One to expand into asset-backed lending",
+   "sum": "Securitize agreed to buy River One to bring stablecoin funding to asset-backed lending and expects the deal to close in the fourth quarter of 2026.",
+   "url": "https://cointelegraph.com/news/securitize-river-one-asset-backed-lending?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+   "ts": 1794296954000
+  },
+  {
+   "cat": "companies",
+   "src": "Коммерсантъ",
+   "title": "Что известно об атаках БПЛА на регионы России. 10 ноября // За ночь силы ПВО сбили 155 беспилотников над регионами России",
+   "sum": "Минувшей ночью российские средства ПВО сбили 155 украинских БПЛА. В Белгородской области за сутки погибли три человека, еще восемь получили ранения. В Курской области 42 населенных пункта остались без света. Массовые перебои с…",
+   "url": "https://www.kommersant.ru/doc/9093321",
+   "ts": 1794293612000
+  },
+  {
+   "cat": "companies",
+   "src": "Коммерсантъ",
+   "title": "Что известно перед переговорами России, Украины и США в Абу-Даби // ЕК потребовала перемирия на Украине перед переговорами о безопасности Европы",
+   "sum": "10–11 ноября в Абу-Даби проходит встреча представителей России, Украины и США. Переговоры начались в 11:50 по местному времени (10:50 по мск). Главной темой стороны назвали вопросы безопасности. Делегации России и Украины возглавили…",
+   "url": "https://www.kommersant.ru/doc/9093000",
+   "ts": 1794287886000
+  },
+  {
+   "cat": "companies",
+   "src": "Коммерсантъ",
+   "title": "Изменение меры лечения // Экс-функционер «Динамо» Владимир Михалевский взят под стражу",
+   "sum": "Как стало известно «Ъ», Тушинский суд Москвы отправил в СИЗО бывшего первого зампреда московского отделения спортивного общества «Динамо» Владимира Михалевского, обвиняемого в мошенничестве на сумму около 95 млн руб. Изменение меры…",
+   "url": "https://www.kommersant.ru/doc/9093246",
+   "ts": 1794287246000
+  },
+  {
+   "cat": "stocks",
+   "src": "MarketWatch",
+   "title": "‘We had the worst fight’: I want my husband to retire at 65, but I don’t want to lose his $280,000 salary. Is that unreasonable?",
+   "sum": "“We have $2.6 million, most of it in his 401(k) and IRAs, plus $450,000 in a brokerage account.”",
+   "url": "https://www.marketwatch.com/story/we-had-the-worst-fight-weve-ever-had-i-want-my-husband-to-retire-at-65-but-i-dont-want-to-lose-his-280-000-salary-48511469?mod=mw_rss_topstories",
+   "ts": 1794281880000
+  },
+  {
+   "cat": "fintech",
+   "src": "Finextra",
+   "title": "PNC launches stablecoin payments for corporate clients",
+   "sum": "PNC Bank is working with Coinbase to make incoming stablecoin payments available to its corporate and institutional clients.",
+   "url": "https://www.finextra.com/newsarticle/48728/pnc-launches-stablecoin-payments-for-corporate-clients?utm_medium=rssfinextra&utm_source=finextrafeed",
+   "ts": 1794268860000
+  },
+  {
+   "cat": "companies",
+   "src": "CNBC Business",
+   "title": "PepsiCo to cut about 1,000 jobs as North American business struggles",
+   "sum": "PepsiCo plans to cut about 1,000 jobs across North America as it streamlines operations and works to revive sales in its home market.",
+   "url": "https://www.cnbc.com/2026/11/09/pepsico-north-america-job-cuts.html",
+   "ts": 1794267077000
+  },
+  {
+   "cat": "companies",
+   "src": "CNBC Business",
+   "title": "Skydance outlines its $6 billion in planned cost savings. Here's the breakdown",
+   "sum": "The updates came alongside a third-quarter earnings report for the legacy Paramount Skydance.",
+   "url": "https://www.cnbc.com/2026/11/09/skydance-cost-savings-breakdown.html",
+   "ts": 1794266078000
+  },
+  {
+   "cat": "stocks",
+   "src": "CNBC",
+   "title": "3 unexpected reasons the October jobs report was so strong",
+   "sum": "October's jobs report blew past economist forecasts. Here are three reasons.",
+   "url": "https://www.cnbc.com/2026/11/09/october-jobs-report-hiring-by-sector.html",
+   "ts": 1794263036000
+  },
+  {
+   "cat": "stocks",
+   "src": "CNBC",
+   "title": "A key report for where inflation stood in October comes out Tuesday. Here's what to expect",
+   "sum": "The CPI headline reading is expected to show an increase of 0.3% while the core is forecast to increase 0.2%.",
+   "url": "https://www.cnbc.com/2026/11/09/october-cpi-report-2026-inflation.html",
+   "ts": 1794258235000
+  },
+  {
+   "cat": "fintech",
+   "src": "Finextra",
+   "title": "FCA explores use of quantum computing to tackle financial crime",
+   "sum": "The UK's Financial Conduct Authority is bringing together industry players to explore how quantum machine learning could help detect money laundering and fraud",
+   "url": "https://www.finextra.com/newsarticle/48730/fca-explores-use-of-quantum-computing-to-tackle-financial-crime?utm_medium=rssfinextra&utm_source=finextrafeed",
+   "ts": 1794256140000
+  },
+  {
+   "cat": "fintech",
+   "src": "Finextra",
+   "title": "Morgan Stanley agrees to buy transfer agent Vinyl Equity",
+   "sum": "Morgan Stanley has struck a deal to buy Vinyl Equity, a digital-first SEC-registered transfer agent and shareholder recordkeeping platform. Terms of the deal were not disclosed.",
+   "url": "https://www.finextra.com/newsarticle/48727/morgan-stanley-agrees-to-buy-transfer-agent-vinyl-equity?utm_medium=rssfinextra&utm_source=finextrafeed",
+   "ts": 1794239880000
+  },
+  {
+   "cat": "fintech",
+   "src": "Finextra",
+   "title": "Financial intelligence platform geniosAI raises $19.1m",
+   "sum": "AI-powered financial analysis and modelling platform geniosAI has emerged from stealth with $19.1 million in funding led by FactSet.",
+   "url": "https://www.finextra.com/newsarticle/48726/financial-intelligence-platform-geniosai-raises-191m?utm_medium=rssfinextra&utm_source=finextrafeed",
+   "ts": 1794238800000
+  },
+  {
+   "cat": "fintech",
+   "src": "Finextra",
+   "title": "Canada's real-time payments system launches",
+   "sum": "Following years of delays, Canada's Real-Time Rail (RTR) payments system has finally launched.",
+   "url": "https://www.finextra.com/newsarticle/48725/canadas-real-time-payments-system-launches?utm_medium=rssfinextra&utm_source=finextrafeed",
+   "ts": 1794237000000
+  },
+  {
+   "cat": "fintech",
+   "src": "Finextra",
+   "title": "Coinbase gets full US trust charter",
+   "sum": "Crypto exchange Coinbase has secured final approval from US regulators for a national trust bank charter.",
+   "url": "https://www.finextra.com/newsarticle/48724/coinbase-gets-full-us-trust-charter?utm_medium=rssfinextra&utm_source=finextrafeed",
+   "ts": 1794234300000
+  },
+  {
+   "cat": "fintech",
+   "src": "Finextra",
+   "title": "Chase customers can now deposit cash into their accounts at UK PayPoint locations",
+   "sum": "With more than 30,000 PayPoint locations available across the UK and over 99% of the population living within one mile of a PayPoint store, Chase has made it easier for its customers to manage their money.",
+   "url": "https://www.finextra.com/newsarticle/48723/chase-customers-can-now-deposit-cash-into-their-accounts-at-uk-paypoint-locations?utm_medium=rssfinextra&utm_source=finextrafeed",
+   "ts": 1794229620000
+  },
+  {
+   "cat": "fintech",
+   "src": "Finextra",
+   "title": "Embedded finance platform Synctera raises $24.5m",
+   "sum": "Embedded finance and Banking-as-a-Service player Synctera has raised $24.5 million in funding.",
+   "url": "https://www.finextra.com/newsarticle/48720/embedded-finance-platform-synctera-raises-245m?utm_medium=rssfinextra&utm_source=finextrafeed",
+   "ts": 1794229200000
+  },
+  {
+   "cat": "stocks",
+   "src": "CNBC",
+   "title": "China wholesale inflation hits highest in more than four years as consumer measure slows",
+   "sum": "The PPI for October came in at 5.7%, compared to the 5.3% expected by economists polled by Reuters.",
+   "url": "https://www.cnbc.com/2026/11/09/china-wholesale-inflation-rises-consumer.html",
+   "ts": 1794192622000
+  },
+  {
+   "cat": "stocks",
+   "src": "CNBC",
+   "title": "A disturbing employment trend is hiding beneath the latest strong job numbers",
+   "sum": "The average jobless worker's bout of unemployment surpassed 27 weeks in October, the highest outside of the pandemic period in a decade.",
+   "url": "https://www.cnbc.com/2026/11/06/long-term-unemployment-october-jobs-report.html",
+   "ts": 1793995877000
+  },
+  {
+   "cat": "stocks",
+   "src": "CNBC",
+   "title": "U.S. economy added 165,000 jobs in October, way more than expected; unemployment rate slips to 4.1%",
+   "sum": "Nonfarm payrolls were expected to increase by 59,000 in October as the unemployment rate was expected to hold steady at 4.2%.",
+   "url": "https://www.cnbc.com/2026/11/06/jobs-report-october-2026.html",
+   "ts": 1793981219000
+  },
+  {
+   "cat": "stocks",
+   "src": "CNBC",
+   "title": "The October jobs report is out Friday. Here's everything to expect",
+   "sum": "The Bureau of Labor Statistics releases the October nonfarm payrolls report Friday at 8:30 a.m. ET.",
+   "url": "https://www.cnbc.com/2026/11/05/october-jobs-report-preview.html",
+   "ts": 1793914372000
+  },
+  {
+   "cat": "fintech",
+   "src": "TechCrunch",
+   "title": "Revolut’s valuation jumps 53% to $115B in new share sale as it prepares to launch US bank",
+   "sum": "Glade Brook, Coatue, and T. Rowe Price were among the investors that led the share sale.",
+   "url": "https://techcrunch.com/2026/11/04/revoluts-valuation-jumps-53-to-115b-in-new-share-sale-as-it-prepares-to-launch-us-bank/",
+   "ts": 1793801410000
+  },
+  {
+   "cat": "fintech",
+   "src": "TechCrunch",
+   "title": "TechCrunch Founder Summit 2026: Doors open at 9 a.m. ET in Boston",
+   "sum": "Today is the day to join TechCrunch Founder Summit 2026 in Boston's SoWa Power Station. Register now to join this founder-focused conference today.",
+   "url": "https://techcrunch.com/2026/11/04/techcrunch-founder-summit-2026-todays-the-day/",
+   "ts": 1793797200000
+  },
+  {
+   "cat": "fintech",
+   "src": "TechCrunch",
+   "title": "The TechCrunch Founder Summit agenda is only half the reason to be in Boston on November 4",
+   "sum": "On November 4, TechCrunch Founder Summit 2026 brings founders and VCs to Boston's SoWa Power Station for practical insights and connections. Register before prices increase at the door.",
+   "url": "https://techcrunch.com/2026/11/03/the-techcrunch-founder-summit-agenda-is-only-half-the-reason-to-be-in-boston-on-nov-4/",
+   "ts": 1793716200000
+  },
+  {
+   "cat": "fintech",
+   "src": "TechCrunch",
+   "title": "Tomorrow: TechCrunch Founder Summit takes over Boston and when pass rates increase",
+   "sum": "Secure your TechCrunch Founder Summit pass savings before prices increase tomorrow at 9 a.m. ET. Save up to $100 on your pass, and get a second for free.",
+   "url": "https://techcrunch.com/2026/11/03/tomorrow-techcrunch-founder-summit-takes-over-boston-and-when-pass-rates-increase/",
+   "ts": 1793714400000
+  },
+  {
+   "cat": "fintech",
+   "src": "TechCrunch",
+   "title": "2 days till TechCrunch Founder Summit: Boston founders don’t need a Silicon Valley address to build something big",
+   "sum": "TechCrunch Founder Summit happens on November 4 in Boston for a founder-focused agenda and impactful connections. Save up to $100 or get discounts with group passes.",
+   "url": "https://techcrunch.com/2026/11/02/2-days-till-techcrunch-founder-summit-boston-founders-dont-need-a-silicon-valley-address-to-build-something-big/",
+   "ts": 1793628000000
+  },
+  {
+   "cat": "fintech",
+   "src": "TechCrunch",
+   "title": "4 days left: How TechCrunch Founder Summit helps you make more useful connections to scale",
+   "sum": "On November 4 at Boston’s SoWa Power Station, get ready for a full day packed with meaningful networking opportunities, actionable insights, and connections that could change the trajectory of your idea and startup. Register before all…",
+   "url": "https://techcrunch.com/2026/10/31/4-days-left-how-techcrunch-founder-summit-helps-you-make-more-useful-connections-to-scale/",
+   "ts": 1793482567000
+  },
+  {
+   "cat": "fintech",
+   "src": "TechCrunch",
+   "title": "Skip the small talk: Make game-changing connections at TechCrunch Founder Summit with Braindate",
+   "sum": "At TechCrunch Founder Summit 2026, happening November 4 at SoWa Power Station in Boston, networking powered by Braindate is designed to make those conversations easier to find, whether they are in 1:1 or small-group on-site meetings.…",
+   "url": "https://techcrunch.com/2026/10/30/skip-the-small-talk-make-game-changing-connections-at-techcrunch-founder-summit-with-braindate/",
+   "ts": 1793368800000
+  }
+ ]
+}
