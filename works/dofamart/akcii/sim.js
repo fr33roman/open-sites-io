@@ -1428,6 +1428,17 @@ function showTip(el) {
   el.insertAdjacentElement('afterend', b);
 }
 
+// Bottom bar: four main sections and "More" with a slide-up sheet for the rest.
+const MORE = ['news', 'truth', 'compare', 'top'];
+Object.assign(T.ru, { nav_more: 'Ещё', more_title: 'Ещё разделы', more_news: 'Что пишут о рынках за сутки', more_truth: 'Честный итог ваших сделок',
+  more_compare: 'Два графика на одном экране', more_top: 'Лучшие результаты' });
+Object.assign(T.en, { nav_more: 'More', more_title: 'More sections', more_news: 'What the press says today', more_truth: 'The honest result of your trades',
+  more_compare: 'Two charts on one screen', more_top: 'Best results' });
+function moreSheet(open) {
+  const m = $('more'), b = $('moreBtn'); if (!m) return;
+  m.hidden = !open; if (b) b.setAttribute('aria-expanded', open ? 'true' : 'false');
+}
+
 async function loadBets(more) {
   if (betBusy) return;
   betBusy = true;
@@ -1645,6 +1656,7 @@ function route() {
     const on = el.getAttribute('data-nav') === ui.view; el.classList.toggle('on', on);
     if (on) el.setAttribute('aria-current', 'page'); else el.removeAttribute('aria-current');
   });
+  { const mb = $('moreBtn'); if (mb) mb.classList.toggle('on', MORE.indexOf(ui.view) >= 0); moreSheet(false); }
   render();
   try { window.scrollTo(0, 0); } catch (e) {}
 }
@@ -1659,10 +1671,13 @@ function applyLang() {
 }
 function onClick(e) {
   snd.gesture();
-  const el = e.target && e.target.closest ? e.target.closest('[data-tf],[data-lev],[data-pre],[data-side],[data-close],[data-amt],[data-key],[data-act],[data-ncat],[data-ccat],[data-csym],[data-per],[data-bcat],[data-bet],[data-bsell],[data-bpre],[data-tip],#langBtn,#sndBtn,#skinBtn,#modal') : null;
+  const el = e.target && e.target.closest ? e.target.closest('[data-tf],[data-lev],[data-pre],[data-side],[data-close],[data-amt],[data-key],[data-act],[data-ncat],[data-ccat],[data-csym],[data-per],[data-bcat],[data-bet],[data-bsell],[data-bpre],[data-tip],#langBtn,#sndBtn,#skinBtn,#modal,#more,.more-row') : null;
   if (!el) return;
   const A = k => el.getAttribute(k), has = k => el.hasAttribute(k);
   if (has('data-tip')) { showTip(el); return; }
+  if (A('data-act') === 'more') { moreSheet($('more').hidden); vib(8); return; }
+  if (el.id === 'more') { if (e.target === el) moreSheet(false); return; }
+  if (el.classList.contains('more-row')) { moreSheet(false); return; }
   { const tb = document.querySelector('.tipbox'); if (tb) tb.remove(); }
   if (el.id === 'modal') { if (e.target === el) el.hidden = true; return; }
   if (el.id === 'skinBtn') { nextSkin(); if (S.sound) snd.key(); return; }
