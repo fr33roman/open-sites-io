@@ -6,7 +6,7 @@ import { fileURLToPath } from 'node:url';
 import path from 'node:path';
 
 const OUT = path.join(path.dirname(fileURLToPath(import.meta.url)), '..', 'news.json');
-const MAX_TOTAL = 60, PER_FEED = 8, PER_CAT = 15, TIMEOUT = 12000, MAX_BYTES = 3e6, MAX_AGE = 14 * 864e5;
+const MAX_TOTAL = 120, PER_FEED = 8, PER_CAT = 32, TIMEOUT = 12000, MAX_BYTES = 3e6, MAX_AGE = 864e5 /* only the last 24 hours */;
 
 // cat is one of: crypto | stocks | fintech | companies
 const FEEDS = [
@@ -15,12 +15,18 @@ const FEEDS = [
   { cat: 'crypto', src: 'The Block', url: 'https://www.theblock.co/rss.xml' },
   { cat: 'stocks', src: 'CNBC', url: 'https://search.cnbc.com/rs/search/combinedcms/view.xml?partnerId=wrss01&id=20910258' },
   { cat: 'stocks', src: 'MarketWatch', url: 'https://feeds.content.dowjones.io/public/rss/mw_topstories' },
-  { cat: 'stocks', src: 'Yahoo Finance', url: 'https://finance.yahoo.com/news/rssindex' },
+  { cat: 'stocks', src: 'Bloomberg', url: 'https://feeds.bloomberg.com/markets/news.rss' },
+  { cat: 'stocks', src: 'The Wall Street Journal', url: 'https://feeds.content.dowjones.io/public/rss/RSSMarketsMain' },
+  { cat: 'stocks', src: 'Financial Times', url: 'https://www.ft.com/markets?format=rss' },
+  { cat: 'fintech', src: 'The Economist', url: 'https://www.economist.com/finance-and-economics/rss.xml' },
+  { cat: 'companies', src: 'BBC Business', url: 'https://feeds.bbci.co.uk/news/business/rss.xml' },
+  { cat: 'companies', src: 'The New York Times', url: 'https://rss.nytimes.com/services/xml/rss/nyt/Business.xml' },
+  { cat: 'companies', src: 'The Guardian', url: 'https://www.theguardian.com/business/rss' },
   { cat: 'fintech', src: 'Finextra', url: 'https://www.finextra.com/rss/headlines.aspx' },
   { cat: 'fintech', src: 'TechCrunch', url: 'https://techcrunch.com/category/fintech/feed/' },
   { cat: 'companies', src: 'CNBC Business', url: 'https://search.cnbc.com/rs/search/combinedcms/view.xml?partnerId=wrss01&id=10001147' },
   { cat: 'companies', src: 'Коммерсантъ', url: 'https://www.kommersant.ru/RSS/corp.xml' },
-  { cat: 'companies', src: 'РБК', url: 'https://rssexport.rbc.ru/rbcnews/news/30/full.rss' }
+  { cat: 'companies', src: 'Ведомости', url: 'https://www.vedomosti.ru/rss/rubric/business' }
 ];
 
 const ENT = { amp: '&', lt: '<', gt: '>', quot: '"', apos: "'", nbsp: ' ', laquo: '«', raquo: '»', mdash: '—', ndash: '–', hellip: '…', rsquo: '’', lsquo: '‘', ldquo: '“', rdquo: '”' };
@@ -57,7 +63,7 @@ function parse(xml, feed) {
     let ts = Date.parse(text(tag(b, ['pubDate', 'published', 'updated', 'dc:date']), 60));
     if (!Number.isFinite(ts) || ts > now + 36e5) ts = 0;
     if (ts && now - ts > MAX_AGE) continue;
-    let sum = text(tag(b, ['description', 'summary', 'content:encoded', 'content']), 240);
+    let sum = text(tag(b, ['description', 'summary', 'content:encoded', 'content']), 600);
     if (sum === title) sum = '';
     out.push({ cat: feed.cat, src: feed.src, title, sum, url, ts });
     if (out.length >= PER_FEED) break;

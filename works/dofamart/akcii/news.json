@@ -1,29 +1,45 @@
 {
- "ts": 1794310152383,
+ "ts": 1794310975490,
  "items": [
   {
-   "cat": "companies",
-   "src": "РБК",
-   "title": "В Минтруде сообщили о рекордном росте числа вакансий для вахтовиков",
-   "sum": "Количество вакансий для работников вахтовым методом в России за два года увеличилось примерно на 100 тыс.",
-   "url": "https://www.rbc.ru/rbcfreenews/6af2fdd24704bd464348ce22",
-   "ts": 1794310015000
+   "cat": "stocks",
+   "src": "Financial Times",
+   "title": "Oil falls below $90 as Trump pulls back from threat to strike Iran",
+   "sum": "Falling crude prices have supported recovery in global stocks from last week’s sell-off",
+   "url": "https://www.ft.com/content/07bdb58c-4557-4def-b8cb-db9be304fd72?syn-25a6b1a6=1",
+   "ts": 1794310404000
+  },
+  {
+   "cat": "stocks",
+   "src": "Bloomberg",
+   "title": "HSBC's Sels Rotates Away from Semiconductors into Applications and Cloud",
+   "sum": "On semiconductors, HSBC Private Bank's Global CIO Willem Sels says, \"in terms of delays and in thinking about how different parts of the stack react to the delays, therefore do we change our positioning? And I think we do. We have done so: we are much more in the cloud and in the applications.\" He speaks to Bloomberg's Tom Mackenzie, Anna Edwards, and Guy Johnson on \"The Opening Trade.\" (Source: Bloomberg)",
+   "url": "https://www.bloomberg.com/news/videos/2026-11-10/hsbc-s-sels-rotates-away-from-semiconductors-video",
+   "ts": 1794310033000
+  },
+  {
+   "cat": "crypto",
+   "src": "Cointelegraph",
+   "title": "Binance warns iOS flaw could expose crypto wallet keys",
+   "sum": "The exchange urged iPhone users to remove apps installed from untrusted sources, and it is unclear whether Apple’s latest iOS updates fix the flaw.",
+   "url": "https://cointelegraph.com/news/binance-warns-ios-flaw-could-expose-crypto-wallet-keys?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+   "ts": 1794309957000
+  },
+  {
+   "cat": "stocks",
+   "src": "The Wall Street Journal",
+   "title": "CoreWeave Brings AI’s Financing Concern Into Focus",
+   "sum": "Plus, Nvidia’s spy-scandal storm rages, and corporate America braces for investigations.",
+   "url": "https://www.wsj.com/finance/investing/coreweave-brings-ais-financing-concern-into-focus-20f3a19e?mod=rss_markets_main",
+   "ts": 1794309900000
   },
   {
    "cat": "companies",
-   "src": "РБК",
-   "title": "На севере Испании при взрыве погиб полицейский. Видео",
-   "sum": "В испанском городе Овьедо, на севере страны, в результате взрыва самодельного устройства погиб сотрудник Национальной полиции, еще один получил тяжелые ранения.",
-   "url": "https://www.rbc.ru/rbcfreenews/6af2f5eb44a3c36494ea842b",
-   "ts": 1794309912000
-  },
-  {
-   "cat": "companies",
-   "src": "РБК",
-   "title": "Где и с чьим участием встречались делегации России и Украины. Карта",
-   "sum": "В Абу-Даби проходят переговоры России, США и Украины. Где ранее делегации Москвы и Киева проводили встречи в рамках попыток урегулирования конфликта – в инфографике РБК",
-   "url": "https://www.rbc.ru/politics/17/02/2026/69737b219a7947eee32bc8a6",
-   "ts": 1794309877000
+   "src": "The Guardian",
+   "title": "Nvidia hit by shareholder lawsuit over Jensen Huang’s relationship with suspected Chinese spy – business live",
+   "sum": "Rolling coverage of the latest economic and financial news Nvidia and Jensen Huang sued by shareholders over affair with alleged Chinese spy The AI poster boy, the ‘Chinese spy’ and Trump: how an affair may have harmed US security Jensen Huang’s image has been shattered. Could he be pushed out at Nvidia? A senior US central banker is calling for a hike in interest rates next month. Federal Reserve governor Christopher Waller is arguing that the Fed should raise short-term borrowing costs next month even if government data shows inflation cooling. “While I am hoping for an improvement over…",
+   "url": "https://www.theguardian.com/business/live/2026/nov/10/nvidia-shareholder-lawsuit-jensen-huang-relationship-suspected-chinese-spy-fbi-trump-bank-of-england-latest-news-updates",
+   "ts": 1794309878000
   },
   {
    "cat": "crypto",
@@ -34,14 +50,6 @@
    "ts": 1794309850000
   },
   {
-   "cat": "companies",
-   "src": "РБК",
-   "title": "В ОДКБ обсудят лишение Армении права голоса",
-   "sum": "Главам государств ОДКБ будет поставлен на рассмотрение проект о лишении Армении права голоса в органах организации из-за задолженности по взносам, сообщил министр иностранных дел России Сергей Лавров.",
-   "url": "https://www.rbc.ru/politics/10/11/2026/6af2fc2d4a9856aa9ac14ce6",
-   "ts": 1794309412000
-  },
-  {
    "cat": "stocks",
    "src": "MarketWatch",
    "title": "Should a widow leave her late partner’s home to her stepkids — or cut off contact with them?",
@@ -50,35 +58,43 @@
    "ts": 1794309300000
   },
   {
-   "cat": "companies",
-   "src": "РБК",
-   "title": "Колокольцев объяснил увеличение налогов для мигрантов с семьями",
-   "sum": "С 2027 года дополнительное налогообложение будет распространяться на каждого прибывающего в Россию члена семьи мигранта, заявил глава МВД Владимир Колокольцев, передает корреспондент РБК.",
-   "url": "https://www.rbc.ru/rbcfreenews/6af2fc69c6f945e9b10cd773",
-   "ts": 1794309298000
+   "cat": "stocks",
+   "src": "Bloomberg",
+   "title": "Angola’s Bonds Lead Retreat Among Emerging-Market Oil Producers",
+   "sum": "Angola’s eurobonds led the retreat among frontier and emerging market oil-producers after Brent crude tumbled below $90 a barrel for the first time since August.",
+   "url": "https://www.bloomberg.com/news/articles/2026-11-10/angola-s-bonds-lead-retreat-among-emerging-market-oil-producers",
+   "ts": 1794309137000
   },
   {
-   "cat": "companies",
-   "src": "РБК",
-   "title": "Колокольцев заявил о снижении преступности среди иностранцев в России",
-   "sum": "Число преступлений, совершенных иностранцами в России, за девять месяцев 2026 года снизилось на 40% по сравнению с аналогичным периодом прошлого года.",
-   "url": "https://www.rbc.ru/rbcfreenews/6af2f83d65199f803e6c8ac1",
-   "ts": 1794308748000
+   "cat": "stocks",
+   "src": "Bloomberg",
+   "title": "Blackstone to Buy 15.5% of IIFL Finance in $532 Million India Bet",
+   "sum": "Blackstone Inc. will acquire a 15.57% stake in mid-sized Indian shadow lender IIFL Finance Ltd. for about 50 billion rupees ($532 million), deepening its push into the country’s financial sector as global investors increase their exposure to its fast-growing economy.",
+   "url": "https://www.bloomberg.com/news/articles/2026-11-10/blackstone-to-buy-15-5-of-iifl-finance-in-532-million-india-bet",
+   "ts": 1794308830000
   },
   {
-   "cat": "companies",
-   "src": "РБК",
-   "title": "«Т-Технологии» раскрыли детали возможной сделки с «Цианом»",
-   "sum": "«Т-Технологии» заинтересованы в покупке «Циана» только при консолидации пакета от 50% акций, заявили в компании. Но договоренностей с ключевыми акционерами классифайда пока нет",
-   "url": "https://www.rbc.ru/finances/10/11/2026/6af2ef31aa95ce292fb3dd67",
-   "ts": 1794308696000
+   "cat": "stocks",
+   "src": "Bloomberg",
+   "title": "Falling Oil Prices and Bond Yields Offer Investors Some Relief",
+   "sum": "Diplomatic efforts by US, Iran are pushing Brent crude lower.",
+   "url": "https://www.bloomberg.com/news/newsletters/2026-11-10/falling-oil-prices-and-bond-yields-offer-investors-some-relief",
+   "ts": 1794308710000
   },
   {
-   "cat": "companies",
-   "src": "РБК",
-   "title": "Трусова прилетела в США для участия в этапе Гран-при ISU",
-   "sum": "Турнир пройдет в Эверетте (штат Вашингтон) с 13 по 15 ноября",
-   "url": "https://www.rbc.ru/sport/10/11/2026/6af2f693ff7b7a9791fe5d26",
+   "cat": "stocks",
+   "src": "The Wall Street Journal",
+   "title": "The Nvidia Affair Is Terrible Timing for Corporate America",
+   "sum": "Plus: Anthropic’s diminishing returns, energy inflation pass-throughs, and how AI could commodify work.",
+   "url": "https://www.wsj.com/finance/investing/the-nvidia-affair-is-terrible-timing-for-corporate-america-aa3166c2?mod=rss_markets_main",
+   "ts": 1794308700000
+  },
+  {
+   "cat": "stocks",
+   "src": "The Wall Street Journal",
+   "title": "Wall Street Pay Set to Climb After Volatile Markets and IPOs Fuel Bank Profits",
+   "sum": "Traders and investment bankers are set to see among the biggest bumps in bonuses.",
+   "url": "https://www.wsj.com/finance/wall-street-pay-set-to-climb-after-volatile-markets-and-ipos-fuel-bank-profits-94fd9137?mod=rss_markets_main",
    "ts": 1794308400000
   },
   {
@@ -98,6 +114,14 @@
    "ts": 1794308037000
   },
   {
+   "cat": "stocks",
+   "src": "Bloomberg",
+   "title": "Banks Prep £1.8 Billion Debt Financing to Back TDR’s OCU Deal",
+   "sum": "Banks have lined up £1.8 billion ($2.4 billion) of financing to back TDR Capital’s acquisition of energy and infrastructure services provider OCU Group and are preparing to launch a sale.",
+   "url": "https://www.bloomberg.com/news/articles/2026-11-10/banks-prep-1-8-billion-debt-financing-to-back-tdr-s-ocu-deal",
+   "ts": 1794307779000
+  },
+  {
    "cat": "crypto",
    "src": "CoinDesk",
    "title": "Bitcoin slips before U.S. inflation report as traders price in Fed rate increase",
@@ -114,12 +138,36 @@
    "ts": 1794307680000
   },
   {
+   "cat": "companies",
+   "src": "The New York Times",
+   "title": "Here’s why last year’s government shutdown will haunt October’s inflation data.",
+   "sum": "",
+   "url": "https://www.nytimes.com/live/2026/11/10/business/inflation-cpi-report-october/heres-why-last-years-government-shutdown-will-haunt-octobers-inflation-data",
+   "ts": 1794307680000
+  },
+  {
+   "cat": "stocks",
+   "src": "Bloomberg",
+   "title": "French Grocer Casino Agrees Debt Deal With Opposing Creditors",
+   "sum": "French supermarket chain Casino Guichard-Perrachon SA has reached an agreement on restructuring its debt, after facing opposition from a group of lenders to its initial plan.",
+   "url": "https://www.bloomberg.com/news/articles/2026-11-10/french-grocer-casino-agrees-debt-deal-with-opposing-creditors",
+   "ts": 1794307585000
+  },
+  {
    "cat": "stocks",
    "src": "MarketWatch",
    "title": "‘I’m sick of flying’: I paid for priority boarding, but the overhead bins were full. Was I duped?",
    "sum": "“Maybe next time I’ll try the other approach: I’ll board whenever I feel like it and drop my suitcase in the first open slot I see.”",
    "url": "https://www.marketwatch.com/story/im-sick-of-flying-i-paid-for-priority-boarding-but-the-overhead-bins-were-full-was-i-duped-0badcc80?mod=mw_rss_topstories",
    "ts": 1794307500000
+  },
+  {
+   "cat": "companies",
+   "src": "The New York Times",
+   "title": "Here’s the latest.",
+   "sum": "",
+   "url": "https://www.nytimes.com/live/2026/11/10/business/inflation-cpi-report-october/inflation-economy-cpi",
+   "ts": 1794307437000
   },
   {
    "cat": "crypto",
@@ -139,9 +187,33 @@
   },
   {
    "cat": "companies",
+   "src": "Ведомости",
+   "title": "Positive Technologies увеличила отгрузки на 54% за девять месяцев",
+   "sum": "",
+   "url": "https://www.vedomosti.ru/business/news/2026/11/10/1244048-positive-technologies",
+   "ts": 1794306822000
+  },
+  {
+   "cat": "stocks",
+   "src": "The Wall Street Journal",
+   "title": "A Reined In Jensen Huang Is Nvidia’s Best Option",
+   "sum": "A more restrained chief would suit the chip giant well for the next phase of the AI boom.",
+   "url": "https://www.wsj.com/business/a-reined-in-jensen-huang-is-nvidias-best-option-e79cb305?mod=rss_markets_main",
+   "ts": 1794306600000
+  },
+  {
+   "cat": "companies",
+   "src": "The Guardian",
+   "title": "Oil prices fall to lowest since August as Trump says Iran war is ‘effectively over’",
+   "sum": "Brent crude drops below $90 and markets climb after president downplays prospect of further strikes Business live – latest updates Oil prices have fallen to the lowest level since late August while stock markets climbed higher, as markets reacted with relief to Donald Trump saying that the war on Iran is “effectively over” . Brent crude, the global oil benchmark, fell nearly 3% to $89.66, the lowest since 31 August, on Tuesday morning, after the US president downplayed the need for military action against Iran “at this point”. The fall came after a near 6% drop on Monday on signs that the…",
+   "url": "https://www.theguardian.com/business/2026/nov/10/oil-prices-fall-donald-trump-iran-war-ftse-100-markets",
+   "ts": 1794306527000
+  },
+  {
+   "cat": "companies",
    "src": "Коммерсантъ",
    "title": "Прелюдия к партийным войнам // Чем грозит обернуться сессия «хромой утки» в США",
-   "sum": "9 ноября в Вашингтоне открылась сессия «хромой утки» — так называют период, когда проигравшая партия досиживает последние недели до передачи власти оппонентам. И республиканцы, и демократы заверяют, что готовы работать вместе на благо…",
+   "sum": "9 ноября в Вашингтоне открылась сессия «хромой утки» — так называют период, когда проигравшая партия досиживает последние недели до передачи власти оппонентам. И республиканцы, и демократы заверяют, что готовы работать вместе на благо Америки. Но первая же речь лидера победивших на выборах демократов в Палате представителей Хакима Джеффриса обозначила, что легкой жизни у страны в условиях жесткого противостояния двух ветвей власти не будет. В ближайшее время Америку, вероятно, ждут слушания по импичменту главы Пентагона, череда расследований против окружения президента и бюджетные войны с…",
    "url": "https://www.kommersant.ru/doc/9093505",
    "ts": 1794306305000
   },
@@ -157,7 +229,7 @@
    "cat": "companies",
    "src": "Коммерсантъ",
    "title": "«Весь этот скандал — лишь отвлекающий маневр» // Скандал вокруг гендиректора Nvidia Дженсена Хуанга: реакция мировых СМИ",
-   "sum": "Одной из самых обсуждаемых тем в мире остается обвинение Дженсена Хуанга женщиной, которую называют китайской шпионкой. Комментаторы в США видят в истории предупреждение о попытках Китая проникнуть в высшие эшелоны бизнеса в США,…",
+   "sum": "Одной из самых обсуждаемых тем в мире остается обвинение Дженсена Хуанга женщиной, которую называют китайской шпионкой. Комментаторы в США видят в истории предупреждение о попытках Китая проникнуть в высшие эшелоны бизнеса в США, китайские — признак того, что американцы обеспокоены прогрессом китайских технологий в области ИИ. Европа сожалеет о том, насколько зависимой она оказалась от Nvidia. И, наконец, в Индии рассуждают о чрезмерном влиянии боссов технологических компаний на мировую политику.",
    "url": "https://www.kommersant.ru/doc/9093512",
    "ts": 1794306149000
   },
@@ -178,12 +250,60 @@
    "ts": 1794305700000
   },
   {
+   "cat": "stocks",
+   "src": "Financial Times",
+   "title": "The index impact of SpaceX’s record-shattering IPO",
+   "sum": "Revisiting the Operation Overlord of IPO stuffing",
+   "url": "https://www.ft.com/content/141176cd-79ce-4633-9def-eaee96db1762",
+   "ts": 1794305482000
+  },
+  {
    "cat": "crypto",
    "src": "Cointelegraph",
    "title": "Bitcoin price eyes $74K as Fed rate-hike bets hit 96% after Waller speech",
    "sum": "Bitcoin price action and stock futures trended lower after Fed governor Christopher Waller said that he would vote to raise interest rates by 0.25% at the December FOMC meeting.",
    "url": "https://cointelegraph.com/markets/bitcoin-price-eyes-74k-fed-rate-hike-expected-after-waller-speech?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
    "ts": 1794305302000
+  },
+  {
+   "cat": "companies",
+   "src": "The New York Times",
+   "title": "Why U.S. Business Deals Are Unlikely to Get Putin to Give Any Ground",
+   "sum": "President Vladimir V. Putin of Russia has shown a willingness to endure a high price to get what he wants in Ukraine, and he sees little reason to stop fighting now, analysts say.",
+   "url": "https://www.nytimes.com/2026/11/10/world/europe/putin-trump-abu-dhabi-talks.html",
+   "ts": 1794305044000
+  },
+  {
+   "cat": "companies",
+   "src": "The New York Times",
+   "title": "A Fan-Favorite Aquarium Screen Saver Is Leaving Roku",
+   "sum": "The Aquatic Life display, a welcome moment of Zen in the frenzied world of TV streaming, will go dark on Dec. 1 after its designer pulled the license.",
+   "url": "https://www.nytimes.com/2026/11/10/business/roku-aquatic-life-screensaver-fox.html",
+   "ts": 1794305041000
+  },
+  {
+   "cat": "companies",
+   "src": "The New York Times",
+   "title": "Advent Calendars Go Beyond Chocolate, From Pickles to Protein Powder",
+   "sum": "Snacks, drinks and health foods are helping fuel a $2.6 billion industry that serves up a treat a day, from cheese to booze to dog biscuits.",
+   "url": "https://www.nytimes.com/2026/11/10/dining/advent-calendars-food-drinks-snacks.html",
+   "ts": 1794304984000
+  },
+  {
+   "cat": "stocks",
+   "src": "The Wall Street Journal",
+   "title": "Stock Market Today: Oil Prices Fall to $90 a Barrel on Trump Iran Comments; Investors Await CPI Report",
+   "sum": "Nvidia stock on course to recover some losses",
+   "url": "https://www.wsj.com/livecoverage/stock-market-cpi-inflation-11-10-2026?mod=rss_markets_main",
+   "ts": 1794304919000
+  },
+  {
+   "cat": "companies",
+   "src": "The New York Times",
+   "title": "Haaretz Expands US Presence Amid Israel’s Move to the Right",
+   "sum": "Haaretz has more than doubled the size of its American bureau, including hiring correspondents to cover beats like national politics and young American Jews.",
+   "url": "https://www.nytimes.com/2026/11/10/business/media/haaretz-us-expansion.html",
+   "ts": 1794304869000
   },
   {
    "cat": "stocks",
@@ -210,6 +330,14 @@
    "ts": 1794304680000
   },
   {
+   "cat": "companies",
+   "src": "BBC Business",
+   "title": "Kim Kardashian's Skims offers refunds for $148 advent calendar after backlash",
+   "sum": "The contents of the calendar, including hair clips and keychains, have been widely criticised on social media.",
+   "url": "https://www.bbc.co.uk/news/articles/cqp8g8p53x6ko?at_medium=RSS&at_campaign=rss",
+   "ts": 1794304669000
+  },
+  {
    "cat": "stocks",
    "src": "MarketWatch",
    "title": "Fed’s Waller puts half-point rate hike into the mix for December",
@@ -218,12 +346,28 @@
    "ts": 1794303900000
   },
   {
+   "cat": "companies",
+   "src": "Ведомости",
+   "title": "Цена нефти Brent опускалась ниже $90 на фоне переговоров по Украине",
+   "sum": "",
+   "url": "https://www.vedomosti.ru/business/news/2026/11/10/1244039-nefti-brent",
+   "ts": 1794303707000
+  },
+  {
    "cat": "crypto",
    "src": "The Block",
    "title": "Walt expands beyond Telegram with standalone crypto trading app",
    "sum": "Walt launched a standalone app, expanding its crypto investment platform beyond Telegram for the first time.",
    "url": "https://www.theblock.co/news/ecosystems/2026-11-10-walt-standalone-crypto-trading-app-436981",
    "ts": 1794303000000
+  },
+  {
+   "cat": "companies",
+   "src": "BBC Business",
+   "title": "Faisal Islam: What the boss of US tech giant Nvidia told me about China and national security",
+   "sum": "Huang, who is now being investigated over an affair with an alleged Chinese spy, is far more important to the future of the world order than other tech bosses.",
+   "url": "https://www.bbc.co.uk/news/articles/c64g1gzy2vdzo?at_medium=RSS&at_campaign=rss",
+   "ts": 1794302635000
   },
   {
    "cat": "crypto",
@@ -242,6 +386,22 @@
    "ts": 1794301516000
   },
   {
+   "cat": "companies",
+   "src": "The Guardian",
+   "title": "Britons stockpiling water and food tins but not panic buying, figures show",
+   "sum": "Shoppers appear to have taken government’s Be Ready campaign seriously, retail analysts say Business live – latest updates British shoppers have been stocking up on essentials such as bottled water, tinned goods and hand sanitiser, but did not panic buy after the government advised people to prepare for emergencies, shopping data has shown. Sales of essentials jumped in the 10 days after the government launched its Be Ready campaign , which encourages households to prepare for up to three days in the event of disruption to essential services from incidents such as cyber-attacks or extreme…",
+   "url": "https://www.theguardian.com/business/2026/nov/10/britons-stockpiling-water-food-tins-panic-buy-be-ready",
+   "ts": 1794300810000
+  },
+  {
+   "cat": "companies",
+   "src": "BBC Business",
+   "title": "Trump says FBI investigating Nvidia boss's affair with alleged Chinese spy",
+   "sum": "The US president said he spoke with Jensen Huang on Monday and asked him about the affair with the alleged spy.",
+   "url": "https://www.bbc.co.uk/news/articles/cqg7x7dpvym8o?at_medium=RSS&at_campaign=rss",
+   "ts": 1794299001000
+  },
+  {
    "cat": "crypto",
    "src": "The Block",
    "title": "BitGo revenue falls 51% in Q3 as trading slows; net income rises on treasury gains",
@@ -258,6 +418,14 @@
    "ts": 1794297725000
   },
   {
+   "cat": "companies",
+   "src": "Ведомости",
+   "title": "Газпромбанк профинансирует Северный обход Омска на 46 млрд",
+   "sum": "",
+   "url": "https://www.vedomosti.ru/business/news/2026/11/10/1243963-gazprombank-zakril",
+   "ts": 1794297024000
+  },
+  {
    "cat": "crypto",
    "src": "Cointelegraph",
    "title": "Securitize agrees to buy River One to expand into asset-backed lending",
@@ -267,17 +435,97 @@
   },
   {
    "cat": "companies",
+   "src": "Ведомости",
+   "title": "Литий и кобальт подешевели в октябре из-за слабого спроса",
+   "sum": "",
+   "url": "https://www.vedomosti.ru/business/news/2026/11/10/1243956-litii-i-kobalt",
+   "ts": 1794296004000
+  },
+  {
+   "cat": "stocks",
+   "src": "Financial Times",
+   "title": "Too big to fire",
+   "sum": "Should Jensen Huang stay or go?",
+   "url": "https://www.ft.com/content/e1c37583-0b76-48ab-96b7-8e7da453fa88?syn-25a6b1a6=1",
+   "ts": 1794294616000
+  },
+  {
+   "cat": "crypto",
+   "src": "CoinDesk",
+   "title": "An 11-year-old Ethereum wallet moved $4.6 million and dodged a scam set up in minutes",
+   "sum": "Bots spotted a wallet from Ethereum’s 2015 launch the moment it stirred and planted lookalike addresses in its history, but the owner sent the money to the right place anyway.",
+   "url": "https://www.coindesk.com/tech/2026/11/10/an-11-year-old-ethereum-wallet-moved-usd4-6-million-and-dodged-a-scam-set-up-in-minutes",
+   "ts": 1794294066000
+  },
+  {
+   "cat": "companies",
+   "src": "The Guardian",
+   "title": "Author Jojo Moyes among UK travellers at risk of EU ban amid digital border system glitches",
+   "sum": "Errors in entry and exit records leave some Britons wrongly flagged as having overstayed post-Brexit 90-day limit EU sues IBM and two European firms over entry/exit border system The writer Jojo Moyes is facing a two-year EU travel ban and €10,000 (£8,300) fine because of glitches with the bloc’s digital security controls. She is one of a number of UK travellers who say their trips to the EU have not been properly recorded since the introduction of the EU digital entry and exit system (EES) . Continue reading...",
+   "url": "https://www.theguardian.com/business/2026/nov/10/jojo-moyes-uk-travellers-eu-ban-digital-border-system-ees",
+   "ts": 1794294032000
+  },
+  {
+   "cat": "companies",
    "src": "Коммерсантъ",
    "title": "Что известно об атаках БПЛА на регионы России. 10 ноября // За ночь силы ПВО сбили 155 беспилотников над регионами России",
-   "sum": "Минувшей ночью российские средства ПВО сбили 155 украинских БПЛА. В Белгородской области за сутки погибли три человека, еще восемь получили ранения. В Курской области 42 населенных пункта остались без света. Массовые перебои с…",
+   "sum": "Минувшей ночью российские средства ПВО сбили 155 украинских БПЛА. В Белгородской области за сутки погибли три человека, еще восемь получили ранения. В Курской области 42 населенных пункта остались без света. Массовые перебои с электроснабжением также произошли в Луганске и других муниципалитетах ЛНР. Подробнее — в подборке «Ъ».",
    "url": "https://www.kommersant.ru/doc/9093321",
    "ts": 1794293612000
   },
   {
    "cat": "companies",
+   "src": "The New York Times",
+   "title": "Justice Dept. Accuses Lyft of Disability Discrimination in Lawsuit",
+   "sum": "The department said Lyft and its drivers routinely deny rides to people who use stowable wheelchairs or travel with service animals. Lyft disputed the allegations.",
+   "url": "https://www.nytimes.com/2026/11/10/us/lyft-disability-lawsuit-doj.html",
+   "ts": 1794292194000
+  },
+  {
+   "cat": "crypto",
+   "src": "The Block",
+   "title": "Coinbase, Kalshi and Payward backs CFTC in lawsuit over single-stock perp futures",
+   "sum": "The crypto firms moved for leave to file an amicus brief defending the CFTC's authority to regulate single-stock perpetual futures in the US.",
+   "url": "https://www.theblock.co/news/regulation/2026-11-10-coinbase-kalshi-payward-back-cftc-perps-436971",
+   "ts": 1794291550000
+  },
+  {
+   "cat": "companies",
+   "src": "The Guardian",
+   "title": "Young people in UK hit by ‘low-gear economy’, warns Bank of England deputy",
+   "sum": "Exclusive: Iran war has fuelled energy price rise and clouded outlook, driving up unemployment, says Clare Lombardelli Young people in Britain are bearing the brunt of a “low-gear economy” as employers hold back from hiring amid the fallout from the war in the Middle East, a deputy governor of the Bank of England has warned. Clare Lombardelli, the Bank’s deputy governor for monetary policy, said the unfolding conflict, which has triggered a surge in energy prices and clouded the outlook for the economy, was contributing to an increase in youth unemployment. Continue reading...",
+   "url": "https://www.theguardian.com/business/2026/nov/10/young-people-uk-economy-bank-of-england-clare-lombardelli",
+   "ts": 1794290430000
+  },
+  {
+   "cat": "companies",
+   "src": "The Guardian",
+   "title": "EU manufacturers could give up on competing with China by 2030, warns commerce chief",
+   "sum": "Jens Eskelund says Europe may need to allow its companies to become part of Chinese firms’ supply chains Europe’s manufacturers could give up on attempting to compete with their Chinese counterparts by the end of the decade if current trends continue amid fears over mass job losses, the head of the European Union Chamber of Commerce in China has warned. In a case of “if you can’t beat them, join them”, Jens Eskelund said European companies operating in China were now thinking “Made in China for China” could be replaced by a philosophy of “Made in China for the world”. Continue reading...",
+   "url": "https://www.theguardian.com/business/2026/nov/10/eu-manufacturers-china-jens-eskelund",
+   "ts": 1794290430000
+  },
+  {
+   "cat": "crypto",
+   "src": "Cointelegraph",
+   "title": "Here’s what happened in crypto today",
+   "sum": "Need to know what happened in crypto today? Here is the latest news on daily trends and events impacting Bitcoin price, blockchain, DeFi, Web3 and crypto regulation.",
+   "url": "https://cointelegraph.com/news/what-happened-in-crypto-today?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+   "ts": 1794290400000
+  },
+  {
+   "cat": "crypto",
+   "src": "CoinDesk",
+   "title": "Bitcoin miner MARA sold 13,597 BTC for $1.1 billion in six weeks, plans to sell more",
+   "sum": "MARA paid off every loan backed by its bitcoin and says the rest of its coins can fund AI datacenters.",
+   "url": "https://www.coindesk.com/markets/2026/11/10/bitcoin-miner-mara-sold-13-597-btc-for-usd1-1-billion-in-six-weeks-plans-to-sell-more",
+   "ts": 1794287911000
+  },
+  {
+   "cat": "companies",
    "src": "Коммерсантъ",
    "title": "Что известно перед переговорами России, Украины и США в Абу-Даби // ЕК потребовала перемирия на Украине перед переговорами о безопасности Европы",
-   "sum": "10–11 ноября в Абу-Даби проходит встреча представителей России, Украины и США. Переговоры начались в 11:50 по местному времени (10:50 по мск). Главной темой стороны назвали вопросы безопасности. Делегации России и Украины возглавили…",
+   "sum": "10–11 ноября в Абу-Даби проходит встреча представителей России, Украины и США. Переговоры начались в 11:50 по местному времени (10:50 по мск). Главной темой стороны назвали вопросы безопасности. Делегации России и Украины возглавили помощник президента РФ Владимир Мединский и секретарь Совета национальной безопасности и обороны Украины Рустем Умеров. Американской группой руководит Стив Уиткофф и Джаред Кушнер. Неясным остается участие европейцев. В Кремле его исключают, однако Франция и Еврокомиссия заявили о присоединении европейской делегации. Что известно перед началом встречи — в…",
    "url": "https://www.kommersant.ru/doc/9093000",
    "ts": 1794287886000
   },
@@ -285,9 +533,49 @@
    "cat": "companies",
    "src": "Коммерсантъ",
    "title": "Изменение меры лечения // Экс-функционер «Динамо» Владимир Михалевский взят под стражу",
-   "sum": "Как стало известно «Ъ», Тушинский суд Москвы отправил в СИЗО бывшего первого зампреда московского отделения спортивного общества «Динамо» Владимира Михалевского, обвиняемого в мошенничестве на сумму около 95 млн руб. Изменение меры…",
+   "sum": "Как стало известно «Ъ», Тушинский суд Москвы отправил в СИЗО бывшего первого зампреда московского отделения спортивного общества «Динамо» Владимира Михалевского, обвиняемого в мошенничестве на сумму около 95 млн руб. Изменение меры пресечения фигуранту, находившемуся под домашним арестом, произошло после того, как он, не выписавшись из одной частной клиники, отправился в другую.",
    "url": "https://www.kommersant.ru/doc/9093246",
    "ts": 1794287246000
+  },
+  {
+   "cat": "crypto",
+   "src": "Cointelegraph",
+   "title": "Crypto exchanges need hard dollar caps on hot wallets, CertiK says",
+   "sum": "“Cold storage is a useful measure of online exposure, but it is not a standalone security score,” the cybersecurity firm told Cointelegraph.",
+   "url": "https://cointelegraph.com/news/crypto-exchanges-need-dollar-caps-on-hot-wallets-certik?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+   "ts": 1794287158000
+  },
+  {
+   "cat": "stocks",
+   "src": "Financial Times",
+   "title": "Investors pile into defensive stocks amid fears AI bull market may be over",
+   "sum": "Consumer staples and healthcare among sectors to perform strongly as investors fret over future tech earnings",
+   "url": "https://www.ft.com/content/efe9653b-6802-485e-8eae-97fa2e6df770?syn-25a6b1a6=1",
+   "ts": 1794286811000
+  },
+  {
+   "cat": "companies",
+   "src": "The New York Times",
+   "title": "‘We Used to Be a Wealthy City’: Auto Woes Slam German Towns",
+   "sum": "The downturn in the automotive industry has done away with services and benefits that residents of Friedrichshafen, a lakeside city, once enjoyed.",
+   "url": "https://www.nytimes.com/2026/11/10/business/germany-auto-industry-cities.html",
+   "ts": 1794286810000
+  },
+  {
+   "cat": "stocks",
+   "src": "Financial Times",
+   "title": "The fallout of Nvidia’s spying scandal",
+   "sum": "Chief executive’s affair sends shares falling",
+   "url": "https://www.ft.com/content/7cb3bfb9-674d-4fde-a294-d5d31ce3ba71?syn-25a6b1a6=1",
+   "ts": 1794286800000
+  },
+  {
+   "cat": "crypto",
+   "src": "CoinDesk",
+   "title": "XRP Ledger maps out quantum-proof accounts, with no extra fees for users",
+   "sum": "The XRP Ledger Foundation’s design lets owners add a quantum-resistant key and switch off the old one, part of a roadmap that puts the network on track for a full transition by 2028.",
+   "url": "https://www.coindesk.com/tech/2026/11/10/xrp-ledger-maps-out-quantum-proof-accounts-with-no-extra-fees-for-users",
+   "ts": 1794286280000
   },
   {
    "cat": "stocks",
@@ -296,6 +584,54 @@
    "sum": "“We have $2.6 million, most of it in his 401(k) and IRAs, plus $450,000 in a brokerage account.”",
    "url": "https://www.marketwatch.com/story/we-had-the-worst-fight-weve-ever-had-i-want-my-husband-to-retire-at-65-but-i-dont-want-to-lose-his-280-000-salary-48511469?mod=mw_rss_topstories",
    "ts": 1794281880000
+  },
+  {
+   "cat": "crypto",
+   "src": "The Block",
+   "title": "Trump Media swings to $410 million profit in Q3, driven by crypto gains",
+   "sum": "Trump Media and Technology Group reported a net income of $409.7 million in Q3, compared with a net loss of $54.8 million a year earlier.",
+   "url": "https://www.theblock.co/news/business/2026-11-09-trump-media-q3-profit-436964",
+   "ts": 1794281803000
+  },
+  {
+   "cat": "crypto",
+   "src": "The Block",
+   "title": "Securitize shares surge 12% in after-hours trading on Q3 results and River One acquisition agreement",
+   "sum": "The acquisition is expected to add a new layer of financing to Securitize, enabling the platform to offer asset-backed lending.",
+   "url": "https://www.theblock.co/news/business/2026-11-09-securitize-shares-surge-river-one-436955",
+   "ts": 1794276787000
+  },
+  {
+   "cat": "stocks",
+   "src": "The Wall Street Journal",
+   "title": "A New Generation of Traders Is Trapped in Asia’s Market Meltdown",
+   "sum": "From high-school clubs to social-media influencers, Asia’s new stock traders face a brutal reality check.",
+   "url": "https://www.wsj.com/finance/stocks/a-new-generation-of-traders-is-trapped-in-asias-market-meltdown-636d5da4?mod=rss_markets_main",
+   "ts": 1794272400000
+  },
+  {
+   "cat": "stocks",
+   "src": "Financial Times",
+   "title": "ExxonMobil explores return to Venezuela after calling nation ‘uninvestable’",
+   "sum": "US oil major says it has signed a memorandum of understanding with Caracas",
+   "url": "https://www.ft.com/content/cd3b2969-9c58-404a-a80a-c823754899ef?syn-25a6b1a6=1",
+   "ts": 1794270885000
+  },
+  {
+   "cat": "companies",
+   "src": "BBC Business",
+   "title": "I took Vinted to court to get my money back",
+   "sum": "The BBC hears from Vinted sellers who describe difficulties accessing money held in their online wallets.",
+   "url": "https://www.bbc.co.uk/news/articles/cm369e3l15lwo?at_medium=RSS&at_campaign=rss",
+   "ts": 1794270457000
+  },
+  {
+   "cat": "companies",
+   "src": "BBC Business",
+   "title": "The superpower battle over energy – and what it means for your bills",
+   "sum": "A tug-of-war between China and the US could have a big impact on energy costs, but who will win?",
+   "url": "https://www.bbc.co.uk/news/articles/cw62y2z53pg1o?at_medium=RSS&at_campaign=rss",
+   "ts": 1794269308000
   },
   {
    "cat": "fintech",
@@ -322,6 +658,30 @@
    "ts": 1794266078000
   },
   {
+   "cat": "companies",
+   "src": "CNBC Business",
+   "title": "Lucid misses Wall Street’s earnings expectations, expands loan from Saudi Arabia fund",
+   "sum": "The quarterly results are the first since Lucid CEO Silvio Napoli, who started leading the company in June, announced a restructuring plan.",
+   "url": "https://www.cnbc.com/2026/11/09/lucid-group-lcid-earnings-q3-2026.html",
+   "ts": 1794265553000
+  },
+  {
+   "cat": "stocks",
+   "src": "The Wall Street Journal",
+   "title": "Investors Brush Off Election, Selloff and Even Nvidia’s Spy Scandal to Buy Stocks",
+   "sum": "Faith in tech stocks wobbled last week. By Monday, cooler heads had prevailed; eulogies for the AI trade appear “hyperbolic at best right now.”",
+   "url": "https://www.wsj.com/finance/stocks/investors-brush-off-election-selloff-and-even-nvidias-spy-scandal-to-buy-stocks-8f6d406a?mod=rss_markets_main",
+   "ts": 1794265440000
+  },
+  {
+   "cat": "stocks",
+   "src": "Bloomberg",
+   "title": "Latest Oil Market News and Analysis for Nov. 10",
+   "sum": "Brent crude slumped below $90 a barrel for the first time since August, deepening a selloff as traders boosted bets on a resolution to the Middle East war.",
+   "url": "https://www.bloomberg.com/news/articles/2026-11-09/latest-oil-market-news-and-analysis-for-nov-10",
+   "ts": 1794265304000
+  },
+  {
    "cat": "stocks",
    "src": "CNBC",
    "title": "3 unexpected reasons the October jobs report was so strong",
@@ -331,11 +691,27 @@
   },
   {
    "cat": "stocks",
-   "src": "CNBC",
-   "title": "A key report for where inflation stood in October comes out Tuesday. Here's what to expect",
-   "sum": "The CPI headline reading is expected to show an increase of 0.3% while the core is forecast to increase 0.2%.",
-   "url": "https://www.cnbc.com/2026/11/09/october-cpi-report-2026-inflation.html",
-   "ts": 1794258235000
+   "src": "Bloomberg",
+   "title": "US Stock Rebound Stalls as Waller Favors Rate Hike: Markets Wrap",
+   "sum": "A powerful rebound in US stocks ran out of steam after Federal Reserve Governor Christopher Waller backed an interest-rate hike in December just hours before Tuesday’s inflation report.",
+   "url": "https://www.bloomberg.com/news/articles/2026-11-09/stock-market-today-dow-s-p-live-updates",
+   "ts": 1794262613000
+  },
+  {
+   "cat": "companies",
+   "src": "Ведомости",
+   "title": "Лавров: объем перевозок по Севморпути достиг исторического максимума",
+   "sum": "",
+   "url": "https://www.vedomosti.ru/business/news/2026/11/10/1243901-obem-perevozok-po-sevmorputi",
+   "ts": 1794262037000
+  },
+  {
+   "cat": "stocks",
+   "src": "The Wall Street Journal",
+   "title": "Financial Services Roundup: Market Talk",
+   "sum": "Find insight on UniCredit, Credit Agricole, Banco BPM and more in the latest Market Talks covering Financial Services.",
+   "url": "https://www.wsj.com/business/financial-services-roundup-market-talk-cfd812a8?mod=rss_markets_main",
+   "ts": 1794261600000
   },
   {
    "cat": "fintech",
@@ -344,6 +720,14 @@
    "sum": "The UK's Financial Conduct Authority is bringing together industry players to explore how quantum machine learning could help detect money laundering and fraud",
    "url": "https://www.finextra.com/newsarticle/48730/fca-explores-use-of-quantum-computing-to-tackle-financial-crime?utm_medium=rssfinextra&utm_source=finextrafeed",
    "ts": 1794256140000
+  },
+  {
+   "cat": "fintech",
+   "src": "The Economist",
+   "title": "The future of Trumponomics: compromise or failure",
+   "sum": "How the art of the deal may yet prevail over the art of denial",
+   "url": "https://www.economist.com/finance-and-economics/2026/11/09/the-future-of-trumponomics-compromise-or-failure",
+   "ts": 1794251621000
   },
   {
    "cat": "fintech",
@@ -392,94 +776,6 @@
    "sum": "Embedded finance and Banking-as-a-Service player Synctera has raised $24.5 million in funding.",
    "url": "https://www.finextra.com/newsarticle/48720/embedded-finance-platform-synctera-raises-245m?utm_medium=rssfinextra&utm_source=finextrafeed",
    "ts": 1794229200000
-  },
-  {
-   "cat": "stocks",
-   "src": "CNBC",
-   "title": "China wholesale inflation hits highest in more than four years as consumer measure slows",
-   "sum": "The PPI for October came in at 5.7%, compared to the 5.3% expected by economists polled by Reuters.",
-   "url": "https://www.cnbc.com/2026/11/09/china-wholesale-inflation-rises-consumer.html",
-   "ts": 1794192622000
-  },
-  {
-   "cat": "stocks",
-   "src": "CNBC",
-   "title": "A disturbing employment trend is hiding beneath the latest strong job numbers",
-   "sum": "The average jobless worker's bout of unemployment surpassed 27 weeks in October, the highest outside of the pandemic period in a decade.",
-   "url": "https://www.cnbc.com/2026/11/06/long-term-unemployment-october-jobs-report.html",
-   "ts": 1793995877000
-  },
-  {
-   "cat": "stocks",
-   "src": "CNBC",
-   "title": "U.S. economy added 165,000 jobs in October, way more than expected; unemployment rate slips to 4.1%",
-   "sum": "Nonfarm payrolls were expected to increase by 59,000 in October as the unemployment rate was expected to hold steady at 4.2%.",
-   "url": "https://www.cnbc.com/2026/11/06/jobs-report-october-2026.html",
-   "ts": 1793981219000
-  },
-  {
-   "cat": "stocks",
-   "src": "CNBC",
-   "title": "The October jobs report is out Friday. Here's everything to expect",
-   "sum": "The Bureau of Labor Statistics releases the October nonfarm payrolls report Friday at 8:30 a.m. ET.",
-   "url": "https://www.cnbc.com/2026/11/05/october-jobs-report-preview.html",
-   "ts": 1793914372000
-  },
-  {
-   "cat": "fintech",
-   "src": "TechCrunch",
-   "title": "Revolut’s valuation jumps 53% to $115B in new share sale as it prepares to launch US bank",
-   "sum": "Glade Brook, Coatue, and T. Rowe Price were among the investors that led the share sale.",
-   "url": "https://techcrunch.com/2026/11/04/revoluts-valuation-jumps-53-to-115b-in-new-share-sale-as-it-prepares-to-launch-us-bank/",
-   "ts": 1793801410000
-  },
-  {
-   "cat": "fintech",
-   "src": "TechCrunch",
-   "title": "TechCrunch Founder Summit 2026: Doors open at 9 a.m. ET in Boston",
-   "sum": "Today is the day to join TechCrunch Founder Summit 2026 in Boston's SoWa Power Station. Register now to join this founder-focused conference today.",
-   "url": "https://techcrunch.com/2026/11/04/techcrunch-founder-summit-2026-todays-the-day/",
-   "ts": 1793797200000
-  },
-  {
-   "cat": "fintech",
-   "src": "TechCrunch",
-   "title": "The TechCrunch Founder Summit agenda is only half the reason to be in Boston on November 4",
-   "sum": "On November 4, TechCrunch Founder Summit 2026 brings founders and VCs to Boston's SoWa Power Station for practical insights and connections. Register before prices increase at the door.",
-   "url": "https://techcrunch.com/2026/11/03/the-techcrunch-founder-summit-agenda-is-only-half-the-reason-to-be-in-boston-on-nov-4/",
-   "ts": 1793716200000
-  },
-  {
-   "cat": "fintech",
-   "src": "TechCrunch",
-   "title": "Tomorrow: TechCrunch Founder Summit takes over Boston and when pass rates increase",
-   "sum": "Secure your TechCrunch Founder Summit pass savings before prices increase tomorrow at 9 a.m. ET. Save up to $100 on your pass, and get a second for free.",
-   "url": "https://techcrunch.com/2026/11/03/tomorrow-techcrunch-founder-summit-takes-over-boston-and-when-pass-rates-increase/",
-   "ts": 1793714400000
-  },
-  {
-   "cat": "fintech",
-   "src": "TechCrunch",
-   "title": "2 days till TechCrunch Founder Summit: Boston founders don’t need a Silicon Valley address to build something big",
-   "sum": "TechCrunch Founder Summit happens on November 4 in Boston for a founder-focused agenda and impactful connections. Save up to $100 or get discounts with group passes.",
-   "url": "https://techcrunch.com/2026/11/02/2-days-till-techcrunch-founder-summit-boston-founders-dont-need-a-silicon-valley-address-to-build-something-big/",
-   "ts": 1793628000000
-  },
-  {
-   "cat": "fintech",
-   "src": "TechCrunch",
-   "title": "4 days left: How TechCrunch Founder Summit helps you make more useful connections to scale",
-   "sum": "On November 4 at Boston’s SoWa Power Station, get ready for a full day packed with meaningful networking opportunities, actionable insights, and connections that could change the trajectory of your idea and startup. Register before all…",
-   "url": "https://techcrunch.com/2026/10/31/4-days-left-how-techcrunch-founder-summit-helps-you-make-more-useful-connections-to-scale/",
-   "ts": 1793482567000
-  },
-  {
-   "cat": "fintech",
-   "src": "TechCrunch",
-   "title": "Skip the small talk: Make game-changing connections at TechCrunch Founder Summit with Braindate",
-   "sum": "At TechCrunch Founder Summit 2026, happening November 4 at SoWa Power Station in Boston, networking powered by Braindate is designed to make those conversations easier to find, whether they are in 1:1 or small-group on-site meetings.…",
-   "url": "https://techcrunch.com/2026/10/30/skip-the-small-talk-make-game-changing-connections-at-techcrunch-founder-summit-with-braindate/",
-   "ts": 1793368800000
   }
  ]
 }

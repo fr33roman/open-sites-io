@@ -327,7 +327,7 @@ if (typeof document === 'undefined') return;
    2. UI — dictionary, formatting, sound
    ===================================================================== */
 let S, M;
-const ui = { view: 'money', cat: null, sym: null, tf: '5m', lev: 1, ncat: 'all' };
+const ui = { view: 'money', cat: null, sym: null, tf: '5m', lev: 1, ncat: 'all', bcat: 'all', bet: null };
 const $ = id => document.getElementById(id);
 const RM = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
 const NB = ' ';   // narrow no-break space as thousands separator
@@ -1190,7 +1190,7 @@ function cleanNews(o) {
   if (!o || typeof o.title !== 'string' || typeof o.url !== 'string' || NCATS.indexOf(o.cat) < 0) return null;
   if (!/^https:\/\/[a-z0-9][a-z0-9.-]*\.[a-z]{2,}(\/|$)/i.test(o.url)) return null;
   const title = o.title.trim().slice(0, 220); if (!title) return null;
-  return { cat: o.cat, src: String(o.src || '').slice(0, 40), title: title, sum: typeof o.sum === 'string' ? o.sum.slice(0, 320) : '',
+  return { cat: o.cat, src: String(o.src || '').slice(0, 40), title: title, sum: typeof o.sum === 'string' ? o.sum.slice(0, 640) : '',
     url: o.url.slice(0, 600), ts: E.num(o.ts) > 0 ? E.num(o.ts) : 0 };
 }
 async function loadNews() {
@@ -1198,7 +1198,7 @@ async function loadNews() {
   newsBusy = true;
   try {
     const d = await getJSON('news.json');
-    newsData = { ts: E.num(d && d.ts) > 0 ? E.num(d.ts) : 0, items: (d && Array.isArray(d.items) ? d.items : []).map(cleanNews).filter(Boolean).slice(0, 60) };
+    newsData = { ts: E.num(d && d.ts) > 0 ? E.num(d.ts) : 0, items: (d && Array.isArray(d.items) ? d.items : []).map(cleanNews).filter(Boolean).slice(0, 120) };
   } catch (e) { if (!newsData) newsData = { ts: 0, items: [] }; }
   newsAt = Date.now(); newsBusy = false;
   if (ui.view === 'news') fillNews();
@@ -1335,15 +1335,250 @@ function cmpToggle(s) {
 }
 
 /* =====================================================================
+   9b. BETS — live odds from the public Polymarket API (a prediction market: the price of an
+   outcome is its chance, odds = 1 / price). Play money only. Every string that comes from the
+   API is foreign data and reaches the page through textContent only.
+   ===================================================================== */
+Object.assign(T.ru, {
+  nav_bets: 'Ставки', bet_lbl: 'Живые коэффициенты', bet_h: 'Ставки',
+  bet_sub: 'Будущие события со всего мира: спорт, политика, крипта, экономика. Коэффициент считается из живой цены рынка прогнозов Polymarket: 1 / цена исхода. Ставите игровые деньги из того же кошелька.',
+  bc_all: 'Все', bc_sports: 'Спорт', bc_esports: 'Киберспорт', bc_politics: 'Политика', bc_world: 'Мир', bc_crypto: 'Крипта', bc_economy: 'Экономика', bc_finance: 'Финансы', bc_tech: 'Технологии', bc_culture: 'Культура',
+  bet_upd: 'Коэффициенты на {t} · источник Polymarket', bet_load: 'Загружаем коэффициенты…', bet_err: 'Источник коэффициентов сейчас не отвечает. Попробуйте обновить через минуту.',
+  bet_none: 'В этой рубрике сейчас нет открытых событий.', bet_more: 'Показать ещё', bet_refresh: 'Обновить', bet_until: 'до {t}', bet_vol: 'оборот за сутки {v}',
+  bet_yes: 'Да', bet_no: 'Нет', bet_rest: 'ещё исходов: {n}',
+  bet_slip: 'Ваша ставка', bet_amt: 'Сумма, $', bet_cash: 'В кошельке', bet_win: 'Выплата, если сыграет', bet_chance: 'Шанс по рынку', bet_go: 'Поставить', bet_cancel: 'Отмена', bet_max: 'Всё',
+  bet_min: 'Минимальная ставка — $1.', bet_funds: 'В кошельке не хватает денег. Пополнить можно в разделе «Деньги».', bet_closed: 'Приём ставок на этот исход закрыт.', bet_many: 'Открыто слишком много ставок. Дождитесь расчёта или продайте часть.',
+  bet_done: 'Ставка принята, коэффициент {k}', bet_my: 'Мои ставки', bet_my_none: 'Ставок пока нет. Нажмите на коэффициент у любого события.',
+  bet_stake: 'ставка', bet_now: 'сейчас', bet_sell: 'Продать', bet_sold: 'Ставка продана: {v}', bet_settled: 'Ставки рассчитаны: {v}',
+  bet_hist: 'Рассчитанные', how_win: 'сыграла', how_lose: 'не сыграла', how_sold: 'продана', how_void: 'возврат',
+  bs_n: 'Ставок сделано', bs_won: 'Из них в плюс', bs_staked: 'Поставлено', bs_paid: 'Вернулось', bs_open: 'Сейчас в игре', bs_net: 'Итог по ставкам',
+  bet_note: 'Коэффициент здесь честный: в нём нет доли букмекера. У настоящих букмекеров он ниже — в каждую ставку заложена их прибыль, поэтому на длинной дистанции игрок там в минусе. Названия событий приходят на английском, как в источнике. Деньги игровые, вывести их нельзя.'
+});
+Object.assign(T.en, {
+  nav_bets: 'Bets', bet_lbl: 'Live odds', bet_h: 'Bets',
+  bet_sub: 'Upcoming events from around the world: sports, politics, crypto, the economy. Odds come from the live price on the Polymarket prediction market: 1 / outcome price. You bet play money from the same wallet.',
+  bc_all: 'All', bc_sports: 'Sports', bc_esports: 'Esports', bc_politics: 'Politics', bc_world: 'World', bc_crypto: 'Crypto', bc_economy: 'Economy', bc_finance: 'Finance', bc_tech: 'Tech', bc_culture: 'Culture',
+  bet_upd: 'Odds as of {t} · source: Polymarket', bet_load: 'Loading odds…', bet_err: 'The odds source is not responding right now. Try refreshing in a minute.',
+  bet_none: 'No open events in this section right now.', bet_more: 'Show more', bet_refresh: 'Refresh', bet_until: 'until {t}', bet_vol: '24h volume {v}',
+  bet_yes: 'Yes', bet_no: 'No', bet_rest: 'more outcomes: {n}',
+  bet_slip: 'Your bet', bet_amt: 'Amount, $', bet_cash: 'In wallet', bet_win: 'Payout if it wins', bet_chance: 'Market chance', bet_go: 'Place bet', bet_cancel: 'Cancel', bet_max: 'All',
+  bet_min: 'The minimum bet is $1.', bet_funds: 'Not enough money in the wallet. Top up in the Money section.', bet_closed: 'Betting on this outcome is closed.', bet_many: 'Too many open bets. Wait for settlement or sell some.',
+  bet_done: 'Bet placed, odds {k}', bet_my: 'My bets', bet_my_none: 'No bets yet. Tap the odds on any event.',
+  bet_stake: 'stake', bet_now: 'now', bet_sell: 'Sell', bet_sold: 'Bet sold: {v}', bet_settled: 'Bets settled: {v}',
+  bet_hist: 'Settled', how_win: 'won', how_lose: 'lost', how_sold: 'sold', how_void: 'refund',
+  bs_n: 'Bets placed', bs_won: 'Ended in profit', bs_staked: 'Staked', bs_paid: 'Returned', bs_open: 'In play now', bs_net: 'Betting result',
+  bet_note: 'The odds here are fair: there is no bookmaker margin in them. Real bookmakers pay less — their profit is built into every bet, so over a long run the player loses there. Event names come in English, as in the source. This is play money and cannot be withdrawn.'
+});
+const PM = 'https://gamma-api.polymarket.com/markets';
+const BCATS = [['all', 0], ['sports', 1], ['esports', 64], ['politics', 2], ['world', 100265], ['crypto', 21], ['economy', 100328], ['finance', 120], ['tech', 1401], ['culture', 596]];
+const BPAGE = 60, BLO = 0.02, BHI = 0.98;
+let betEv = [], betMk = {}, betAt = 0, betCat = '', betBusy = false, betErr = false, betOff = 0, betMore = false, betChk = false, betChkAt = 0;
+function bst() {
+  if (!Array.isArray(S.bets)) S.bets = [];
+  if (!Array.isArray(S.betHist)) S.betHist = [];
+  if (!S.betAgg || typeof S.betAgg !== 'object') S.betAgg = { n: 0, won: 0, staked: 0, paid: 0 };
+  return S;
+}
+function cleanMk(o) {
+  if (!o || !/^\d{1,12}$/.test(String(o.id)) || typeof o.question !== 'string') return null;
+  let out, pr;
+  try { out = JSON.parse(o.outcomes); pr = JSON.parse(o.outcomePrices).map(Number); } catch (e) { return null; }
+  if (!Array.isArray(out) || out.length !== 2 || !Array.isArray(pr) || pr.length !== 2 || !pr.every(p => p >= 0 && p <= 1)) return null;
+  const ev = Array.isArray(o.events) && o.events[0] ? o.events[0] : {};
+  return { id: String(o.id), q: o.question.trim().slice(0, 200), g: typeof o.groupItemTitle === 'string' ? o.groupItemTitle.trim().slice(0, 80) : '',
+    out: out.map(x => String(x).trim().slice(0, 40)), pr: pr, end: Date.parse(o.endDate) || 0, closed: o.closed === true, vol: +o.volume24hr > 0 ? +o.volume24hr : 0,
+    ev: /^\d{1,12}$/.test(String(ev.id)) ? String(ev.id) : 'm' + o.id, et: typeof ev.title === 'string' ? ev.title.trim().slice(0, 160) : '' };
+}
+const coef = p => { const k = 1 / p; return fixed(k, k >= 10 ? 1 : 2); };
+const chance = p => (p < 0.1 ? (p * 100).toFixed(1) : Math.round(p * 100)) + '%';
+const bvol = v => '$' + (v >= 1e6 ? (v / 1e6).toFixed(1) + 'M' : v >= 1e3 ? Math.round(v / 1e3) + 'K' : Math.round(v));
+function bdate(ms) { const d = new Date(ms); return ms - Date.now() > 2.6e10 ? p2(d.getDate()) + '.' + p2(d.getMonth() + 1) + '.' + d.getFullYear() : stamp(ms); }
+const oname = s => (s === 'Yes' ? t('bet_yes') : s === 'No' ? t('bet_no') : s);
+const mkEl = (tag, cls, txt) => { const e = document.createElement(tag); if (cls) e.className = cls; if (txt != null) e.textContent = txt; return e; };
+
+async function loadBets(more) {
+  if (betBusy) return;
+  betBusy = true;
+  const cat = ui.bcat, tag = (BCATS.filter(c => c[0] === cat)[0] || BCATS[0])[1], off = more ? betOff : 0;
+  if (cat !== betCat) { betEv = []; betAt = 0; betErr = false; fillBets(); }
+  try {
+    const d = await getJSON(PM + '?closed=false&active=true&order=volume24hr&ascending=false&limit=' + BPAGE + '&offset=' + off + (tag ? '&tag_id=' + tag + '&related_tags=true' : ''), 15000);
+    if (cat !== ui.bcat) { betBusy = false; return loadBets(); }
+    const now = Date.now(), raw = Array.isArray(d) ? d : [];
+    const ev = more ? betEv : [];
+    raw.map(cleanMk).filter(m => m && !m.closed && m.end > now && m.pr[0] >= BLO && m.pr[0] <= BHI).forEach(m => {
+      betMk[m.id] = m;
+      let e = ev.filter(x => x.id === m.ev)[0];
+      if (!e) { e = { id: m.ev, t: m.et || m.q, end: m.end, vol: 0, m: [] }; ev.push(e); }
+      if (!e.m.some(x => x.id === m.id)) { e.m.push(m); e.vol += m.vol; if (m.end < e.end) e.end = m.end; }
+    });
+    betEv = ev; betCat = cat; betOff = off + BPAGE; betMore = raw.length >= BPAGE && betOff < 600; betErr = false; betAt = now;
+  } catch (e) { betErr = true; betCat = cat; }
+  betBusy = false;
+  if (ui.view === 'bets') fillBets();
+}
+function renderBets() {
+  bst();
+  $('betsBox').innerHTML = '<div class="vhead"><p class="lbl">' + t('bet_lbl') + '</p><h1>' + t('bet_h') + '</h1><p class="sub">' + t('bet_sub') + '</p></div>' +
+    '<div id="betMine"></div>' +
+    '<div class="chips bcats">' + BCATS.map(c => '<button class="chip' + (c[0] === ui.bcat ? ' on' : '') + '" type="button" data-bcat="' + c[0] + '">' + t('bc_' + c[0]) + '</button>').join('') + '</div>' +
+    '<div class="bet-bar"><p class="news-meta num" id="betMeta"></p><button class="btn-ghost" type="button" data-act="bet-refresh">' + t('bet_refresh') + '</button></div>' +
+    '<div class="bets" id="betList"></div><div class="bet-more" id="betMoreBox"></div>' +
+    '<p class="chart-note">' + t('bet_note') + '</p>';
+  fillMine(); fillBets();
+  if (betCat !== ui.bcat || Date.now() - betAt > 6e4) loadBets();
+  checkBets();
+}
+function fillBets() {
+  const box = $('betList'), meta = $('betMeta'), mb = $('betMoreBox'); if (!box) return;
+  box.textContent = ''; if (mb) mb.textContent = '';
+  if (betCat !== ui.bcat || (!betAt && !betErr)) { setTxt(meta, t('bet_load')); return; }
+  if (betErr && !betEv.length) { setTxt(meta, ''); box.appendChild(mkEl('p', 'empty', t('bet_err'))); return; }
+  setTxt(meta, tf('bet_upd', { t: clock(betAt) }));
+  if (!betEv.length) { box.appendChild(mkEl('p', 'empty', t('bet_none'))); }
+  betEv.forEach(e => {
+    const card = mkEl('article', 'bcard'), top = mkEl('div', 'ncard-top');
+    top.appendChild(mkEl('span', 'lbl', tf('bet_until', { t: bdate(e.end) })));
+    if (e.vol >= 1000) top.appendChild(mkEl('time', '', tf('bet_vol', { v: bvol(e.vol) })));
+    card.appendChild(top); card.appendChild(mkEl('h3', '', e.t));
+    e.m.slice(0, 6).forEach(m => {
+      const row = mkEl('div', 'brow'), lab = m.g || (m.q !== e.t ? m.q : '');
+      if (lab) row.appendChild(mkEl('p', 'bq', lab));
+      const od = mkEl('div', 'bodds');
+      m.out.forEach((o, i) => {
+        const b = mkEl('button', 'odd'); b.type = 'button'; b.setAttribute('data-bet', m.id); b.setAttribute('data-oi', i);
+        b.appendChild(mkEl('span', 'odd-n', oname(o))); b.appendChild(mkEl('b', 'num', coef(m.pr[i]))); b.appendChild(mkEl('i', 'num', chance(m.pr[i])));
+        od.appendChild(b);
+      });
+      row.appendChild(od); card.appendChild(row);
+    });
+    if (e.m.length > 6) card.appendChild(mkEl('p', 'hint', tf('bet_rest', { n: e.m.length - 6 })));
+    box.appendChild(card);
+  });
+  if (mb && betMore) { const b = mkEl('button', 'btn-ghost', t('bet_more')); b.type = 'button'; b.setAttribute('data-act', 'bet-more'); mb.appendChild(b); }
+}
+function fillMine() {
+  const box = $('betMine'); if (!box) return;
+  bst(); box.textContent = '';
+  if (!S.bets.length && !S.betHist.length) return;
+  box.appendChild(mkEl('h2', 'h2 bet-h2', t('bet_my')));
+  const list = mkEl('div', 'bmine');
+  S.bets.forEach(b => {
+    const val = E.round2(b.a / b.p * (b.cur >= 0 ? b.cur : b.p)), row = mkEl('div', 'bm'), l = mkEl('div', 'bm-l'), r = mkEl('div', 'bm-r');
+    l.appendChild(mkEl('p', 'bm-q', b.q));
+    l.appendChild(mkEl('p', 'bm-s num', oname(b.o) + ' · ' + coef(b.p) + ' · ' + t('bet_stake') + ' ' + money(b.a) + ' · ' + tf('bet_until', { t: bdate(b.end) })));
+    r.appendChild(mkEl('span', 'num' + (val > b.a ? ' up' : val < b.a ? ' down' : ''), t('bet_now') + ' ' + money(val)));
+    const s = mkEl('button', 'btn-ghost bm-sell', t('bet_sell')); s.type = 'button'; s.setAttribute('data-bsell', b.id); r.appendChild(s);
+    row.appendChild(l); row.appendChild(r); list.appendChild(row);
+  });
+  if (!S.bets.length) list.appendChild(mkEl('p', 'empty', t('bet_my_none')));
+  box.appendChild(list);
+  if (S.betHist.length) {
+    box.appendChild(mkEl('p', 'lbl bet-hl', t('bet_hist')));
+    const h = mkEl('div', 'bmine');
+    S.betHist.slice(0, 8).forEach(x => {
+      const row = mkEl('div', 'bm done'), l = mkEl('div', 'bm-l'), net = E.round2(x.pay - x.a);
+      l.appendChild(mkEl('p', 'bm-q', x.q));
+      l.appendChild(mkEl('p', 'bm-s num', oname(x.o) + ' · ' + coef(x.p) + ' · ' + t('bet_stake') + ' ' + money(x.a) + ' · ' + t('how_' + x.how)));
+      row.appendChild(l); row.appendChild(mkEl('span', 'num bm-net' + (net > 0 ? ' up' : net < 0 ? ' down' : ''), signed(net)));
+      h.appendChild(row);
+    });
+    box.appendChild(h);
+  }
+  const A = S.betAgg, open = E.round2(S.bets.reduce((s, b) => s + b.a, 0)), net = E.round2(A.paid - (A.staked - open));
+  const sum = mkEl('div', 'panel m-nums bet-sum');
+  [[t('bs_n'), String(A.n), ''], [t('bs_won'), String(A.won), ''], [t('bs_staked'), money(A.staked), ''], [t('bs_paid'), money(A.paid), ''], [t('bs_open'), money(open), ''],
+    [t('bs_net'), signed(net), net > 0 ? ' up' : net < 0 ? ' down' : '']].forEach(a => {
+    const d = mkEl('div'); d.appendChild(mkEl('span', '', a[0])); d.appendChild(mkEl('span', 'num' + a[2], a[1])); sum.appendChild(d);
+  });
+  box.appendChild(sum);
+}
+function betInfo() {
+  const b = ui.bet, m = b && betMk[b.id]; if (!m) return;
+  const a = parseAmt(($('betAmt') || {}).value), p = m.pr[b.oi];
+  setTxt($('betWin'), a > 0 ? money(E.round2(a / p)) : '—');
+  const msg = $('betMsg'); if (msg) msg.textContent = '';
+}
+function openBet(id, oi) {
+  const m = betMk[id]; if (!m || !(oi === 0 || oi === 1)) return;
+  ui.bet = { id: id, oi: oi };
+  const mx = Math.floor(S.cash * 100) / 100;
+  $('modalBody').innerHTML = '<p class="lbl">' + t('bet_slip') + '</p><h2 class="bet-q" id="modalTitle"></h2><p class="bet-pick"><span id="betPick"></span><b class="num" id="betK"></b></p>' +
+    '<input class="bet-inp num" id="betAmt" type="text" inputmode="decimal" autocomplete="off" maxlength="10" placeholder="' + t('bet_amt') + '" aria-label="' + t('bet_amt') + '">' +
+    '<div class="chips eq">' + [10, 50, 100].map(v => '<button class="chip" type="button" data-bpre="' + v + '">$' + v + '</button>').join('') + '<button class="chip" type="button" data-bpre="' + mx + '">' + t('bet_max') + '</button></div>' +
+    '<div class="m-nums"><div><span>' + t('bet_cash') + '</span><span class="num">' + money(S.cash) + '</span></div><div><span>' + t('bet_chance') + '</span><span class="num" id="betCh"></span></div>' +
+    '<div><span>' + t('bet_win') + '</span><span class="num up" id="betWin">—</span></div></div><p class="bet-msg" id="betMsg" role="alert"></p>' +
+    '<div class="m-btns"><button class="btn-gold" type="button" data-act="bet-ok">' + t('bet_go') + '</button><button class="btn-ghost" type="button" data-act="modal-close">' + t('bet_cancel') + '</button></div>';
+  setTxt($('modalTitle'), m.et && m.et !== m.q ? m.et + ' — ' + (m.g || m.q) : m.q);
+  setTxt($('betPick'), oname(m.out[oi])); setTxt($('betK'), coef(m.pr[oi])); setTxt($('betCh'), chance(m.pr[oi]));
+  const inp = $('betAmt'); if (inp && inp.addEventListener) inp.addEventListener('input', betInfo);
+  $('modal').hidden = false;
+}
+function doBet() {
+  const b = ui.bet, m = b && betMk[b.id], msg = $('betMsg'); if (!m) return;
+  bst();
+  const a = E.round2(parseAmt(($('betAmt') || {}).value)), p = m.pr[b.oi];
+  if (!(a >= 1)) { setTxt(msg, t('bet_min')); return; }
+  if (a > S.cash + 1e-9) { setTxt(msg, t('bet_funds')); return; }
+  if (!(p >= BLO && p <= BHI) || m.end <= Date.now()) { setTxt(msg, t('bet_closed')); return; }
+  if (S.bets.length >= 40) { setTxt(msg, t('bet_many')); return; }
+  S.cash = E.round2(S.cash - a);
+  S.bets.unshift({ id: S.nextId++, mk: m.id, q: m.et && m.et !== m.q ? m.et + ' — ' + (m.g || m.q) : m.q, o: m.out[b.oi], oi: b.oi, p: p, cur: p, a: a, at: Date.now(), end: m.end });
+  S.betAgg.n++; S.betAgg.staked = E.round2(S.betAgg.staked + a);
+  save(); $('modal').hidden = true; ui.bet = null; if (S.sound) snd.key(); vib(12);
+  toast(tf('bet_done', { k: coef(p) })); render();
+}
+function closeBet(b, price, how) {
+  const pay = E.round2(b.a / b.p * Math.max(0, Math.min(1, price)));
+  S.cash = E.round2(S.cash + pay); S.betAgg.paid = E.round2(S.betAgg.paid + pay); if (pay > b.a) S.betAgg.won++;
+  S.bets = S.bets.filter(x => x !== b);
+  S.betHist.unshift({ q: b.q, o: b.o, p: b.p, a: b.a, pay: pay, how: how, at: Date.now() });
+  if (S.betHist.length > 60) S.betHist.length = 60;
+  return pay;
+}
+async function checkBets(force) {
+  bst();
+  if (!S.bets.length || betChk || (!force && Date.now() - betChkAt < 6e4)) return;
+  betChk = true; betChkAt = Date.now();
+  const ids = S.bets.map(b => b.mk).filter((x, i, a) => /^\d{1,12}$/.test(x) && a.indexOf(x) === i).slice(0, 40), q = ids.map(i => 'id=' + i).join('&');
+  try {
+    const r = await Promise.all([getJSON(PM + '?' + q + '&limit=100', 15000), getJSON(PM + '?closed=true&' + q + '&limit=100', 15000)]);
+    const got = {}; let total = 0, n = 0;
+    r.forEach(a => (Array.isArray(a) ? a : []).map(cleanMk).filter(Boolean).forEach(m => { got[m.id] = m; }));
+    S.bets.slice().forEach(b => {
+      const m = got[b.mk]; if (!m) return;
+      b.cur = m.pr[b.oi]; if (m.end) b.end = m.end;
+      if (m.closed) { total += closeBet(b, b.cur, b.cur >= 0.99 ? 'win' : b.cur <= 0.01 ? 'lose' : 'void'); n++; }
+    });
+    save();
+    if (n) { toast(tf('bet_settled', { v: money(E.round2(total)) })); sig = ''; }
+    if (ui.view === 'bets') fillMine();
+  } catch (e) {}
+  betChk = false;
+}
+async function sellBet(id) {
+  bst();
+  await checkBets(true);
+  const b = S.bets.filter(x => x.id === id)[0]; if (!b) { if (ui.view === 'bets') fillMine(); return; }
+  const pay = closeBet(b, b.cur >= 0 ? b.cur : b.p, 'sold');
+  save(); toast(tf('bet_sold', { v: money(pay) })); render();
+}
+function betTick() {
+  if (S.bets && S.bets.length) checkBets();
+  if (ui.view === 'bets' && $('modal').hidden && betOff <= BPAGE && Date.now() - betAt > 6e4) loadBets();
+}
+
+/* =====================================================================
    10. ROUTING, EVENTS, TICK
    ===================================================================== */
-const VIEWS = ['money', 'market', 'compare', 'wallet', 'truth', 'news', 'top'];
+const VIEWS = ['money', 'market', 'compare', 'wallet', 'truth', 'news', 'bets', 'top'];
 function render() {
   sig = posSig();
   if (ui.view === 'market') renderMarket();
   else if (ui.view === 'wallet') renderWallet();
   else if (ui.view === 'truth') renderTruth();
   else if (ui.view === 'news') renderNews();
+  else if (ui.view === 'bets') renderBets();
   else if (ui.view === 'top') renderTop();
   else if (ui.view === 'compare') { renderCompare(); cmpLoad(); }
   upd(true); refreshView();
@@ -1387,7 +1622,7 @@ function applyLang() {
 }
 function onClick(e) {
   snd.gesture();
-  const el = e.target && e.target.closest ? e.target.closest('[data-tf],[data-lev],[data-pre],[data-side],[data-close],[data-amt],[data-key],[data-act],[data-ncat],[data-ccat],[data-csym],[data-per],#langBtn,#sndBtn,#skinBtn,#modal') : null;
+  const el = e.target && e.target.closest ? e.target.closest('[data-tf],[data-lev],[data-pre],[data-side],[data-close],[data-amt],[data-key],[data-act],[data-ncat],[data-ccat],[data-csym],[data-per],[data-bcat],[data-bet],[data-bsell],[data-bpre],#langBtn,#sndBtn,#skinBtn,#modal') : null;
   if (!el) return;
   const A = k => el.getAttribute(k), has = k => el.hasAttribute(k);
   if (el.id === 'modal') { if (e.target === el) el.hidden = true; return; }
@@ -1411,6 +1646,11 @@ function onClick(e) {
     ui.ncat = A('data-ncat'); document.querySelectorAll('[data-ncat]').forEach(b => b.classList.toggle('on', b === el)); fillNews();
   } else if (has('data-ccat')) { ui.ccat = A('data-ccat'); renderCompare(); }
   else if (has('data-csym')) { if (INS[A('data-csym')]) cmpToggle(A('data-csym')); }
+  else if (has('data-bcat')) {
+    ui.bcat = A('data-bcat'); document.querySelectorAll('[data-bcat]').forEach(b => b.classList.toggle('on', b === el)); fillBets(); loadBets();
+  } else if (has('data-bet')) openBet(A('data-bet'), +A('data-oi'));
+  else if (has('data-bsell')) sellBet(+A('data-bsell'));
+  else if (has('data-bpre')) { const inp = $('betAmt'); if (inp) { inp.value = String(Math.min(+A('data-bpre'), Math.floor(S.cash * 100) / 100) || ''); betInfo(); } }
   else if (has('data-per')) { S.cmp.per = +A('data-per') === 7 ? 7 : +A('data-per') === 90 ? 90 : 30; save(); renderCompare(); }
   else if (has('data-act')) {
     const a = A('data-act'), rc = $('resetConfirm');
@@ -1420,6 +1660,9 @@ function onClick(e) {
     else if (a === 'reset-yes') { const cm = S.cmp; E.reset(S); S.cmp = cm; save(); if (rc) rc.hidden = true; atmMsg(''); toast(t('reset_done')); ui.pauseAt = 0; render(); }
     else if (a === 'pause') showPause(true);
     else if (a === 'modal-close') $('modal').hidden = true;
+    else if (a === 'bet-ok') doBet();
+    else if (a === 'bet-more') loadBets(true);
+    else if (a === 'bet-refresh') { betAt = 0; betOff = 0; loadBets(); checkBets(true); }
   }
 }
 function tick() {
@@ -1428,6 +1671,7 @@ function tick() {
   if (r.liq.length) onLiq(r.liq);
   pump(now); refresh();
   if (++tickN % 5 === 0) { save(); drawSync(); }
+  if (tickN % 20 === 0) betTick();
 }
 function redrawCharts() { if (ui.view === 'market' && ui.sym) drawIns(); else if (ui.view === 'wallet') drawEq(); else if (ui.view === 'compare') drawCmp(); }
 function init() {
