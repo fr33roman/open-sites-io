@@ -14,30 +14,6 @@
 <script>try{var k=localStorage.getItem("dofa_sim_skin");if(k)document.documentElement.setAttribute("data-skin",k)}catch(e){}</script>
 </head>
 <body>
-<style>
-.osb-top,.osb-bot{display:block;box-sizing:border-box;background:#0a0a0d;color:#ededf0;text-decoration:none;text-align:center;
-  font:500 13px/1.35 system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;letter-spacing:0;text-transform:none}
-.osb-top{position:relative;z-index:2147483000;border-bottom:1px solid rgba(167,139,250,.28)}
-.osb-in{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:4px 12px;max-width:1200px;margin:0 auto;padding:9px 16px}
-.osb-bot .osb-in{padding:20px 16px 22px;font-size:14px}
-.osb-mark{display:inline-flex;align-items:center;gap:7px;font-weight:700;color:#ededf0}
-.osb-dot{width:8px;height:8px;border-radius:50%;background:#a78bfa;flex:none}
-.osb-cta{color:#a78bfa;font-weight:600;white-space:nowrap}
-.osb-top:hover .osb-cta,.osb-bot:hover .osb-cta{text-decoration:underline}
-@media (max-width:560px){.osb-wide{display:none}}
-</style><a class="osb-top" href="https://t.me/opensites_io?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5%21%20%D0%A1%D0%BC%D0%BE%D1%82%D1%80%D1%8E%20%D0%B2%D0%B0%D1%88%D1%83%20%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D1%83%20%C2%ABdofamart%C2%BB%20%D0%BD%D0%B0%20open-sites.io%20%E2%80%94%20%D1%85%D0%BE%D1%87%D1%83%20%D1%82%D0%B0%D0%BA%D0%BE%D0%B9%20%D1%81%D0%B0%D0%B9%D1%82" target="_blank" rel="noopener"><span class="osb-in"><span class="osb-mark"><span class="osb-dot"></span>open-sites.io</span><span class="osb-wide">Этот сайт сделали мы, сделаем и для вашего бизнеса</span><span class="osb-cta">Хочу такой →</span></span></a><script>
-
-(function(){function fix(){var s=document.querySelector('.osb-top');if(!s)return;var h=s.offsetHeight,f=[],pb=0;
-[].forEach.call(document.body.querySelectorAll('*'),function(el){if(s.contains(el))return;var cs=getComputedStyle(el);
-if(cs.position==='fixed'&&Math.abs(parseFloat(cs.bottom)||0)<2&&el.offsetHeight<200&&el.offsetWidth>=innerWidth*.5)pb=Math.max(pb,el.offsetHeight);
-if(el.getAttribute('data-osb'))return;if(cs.position!=='absolute'&&cs.position!=='fixed')return;var r=el.getBoundingClientRect();
-if(r.width<innerWidth*.5||r.height>240)return;if(cs.position==='absolute'){var p=el.offsetParent;
-if((!p||p===document.body||p===document.documentElement)&&r.top+scrollY<h+2){el.setAttribute('data-osb','1');el.style.top=((parseFloat(cs.top)||0)+h)+'px'}}
-else if(Math.abs(parseFloat(cs.top)||0)<2&&r.top>-2){el.setAttribute('data-osb','1');f.push(el)}});
-var b=document.querySelector('.osb-bot');if(b&&pb)b.style.paddingBottom=pb+'px';
-if(f.length){var g=function(){var t=Math.max(0,h-scrollY)+'px';f.forEach(function(el){el.style.top=t})};addEventListener('scroll',g,{passive:true});g()}}
-if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',fix);else fix();addEventListener('load',fix)})();
-</script>
 
 <div class="amb" aria-hidden="true"><i></i><i></i><i></i></div>
 
@@ -71,9 +47,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
     <div class="money-grid">
       <div class="money-txt">
         <div class="vhead">
-          <p class="lbl" data-i18n="money_lbl">Игровой счёт</p>
           <h1 data-i18n="money_h">Деньги</h1>
-          <p class="sub" data-i18n="money_sub">Внесите любую сумму и торгуйте как в жизни. Деньги игровые: потерять здесь нечего, а результат считается честно.</p>
         </div>
         <div class="reset" id="resetBox">
           <button class="link-btn" type="button" data-act="reset-ask" data-i18n="reset">Обнулить всё</button>
@@ -115,7 +89,6 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
 
           <div class="atm-deck">
             <div class="atm-cardbox" aria-hidden="true">
-              <p class="lbl" data-i18n="atm_card">Карта</p>
               <div class="slot"><span class="led"></span></div>
               <div class="card-clip">
                 <div class="card">
@@ -133,7 +106,6 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
           </div>
 
           <div class="atm-cash" aria-hidden="true">
-            <p class="lbl" data-i18n="atm_cash">Купюры</p>
             <div class="cash-slot"></div>
             <div class="cash-lane" id="cashLane"></div>
           </div>
@@ -186,13 +158,12 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
 </nav>
 
 <div class="more" id="more" hidden>
-  <div class="more-card" role="dialog" aria-modal="true" aria-labelledby="moreTitle">
+  <div class="more-card" role="dialog" aria-modal="true" aria-label="Ещё разделы">
     <i class="more-grip" aria-hidden="true"></i>
-    <p class="eyebrow" id="moreTitle" data-i18n="more_title">Ещё разделы</p>
-    <a class="more-row" href="#news" data-nav="news"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5h11v14H6.5A1.5 1.5 0 015 17.5z"/><path d="M16 9h3v8.5a1.5 1.5 0 01-3 0"/><path d="M8 9h5M8 12.5h5M8 16h3"/></svg><span class="more-tx"><b data-i18n="nav_news"></b><i data-i18n="more_news"></i></span><span class="more-go" aria-hidden="true">→</span></a>
-    <a class="more-row" href="#truth" data-nav="truth"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 20V10M12 20V4M19 20v-7"/></svg><span class="more-tx"><b data-i18n="nav_truth"></b><i data-i18n="more_truth"></i></span><span class="more-go" aria-hidden="true">→</span></a>
-    <a class="more-row" href="#compare" data-nav="compare"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 16c4 0 5-9 9-9s5 6 9 6"/><path d="M3 9c4 0 5 8 9 8s5-4 9-4" opacity=".55"/></svg><span class="more-tx"><b data-i18n="nav_compare"></b><i data-i18n="more_compare"></i></span><span class="more-go" aria-hidden="true">→</span></a>
-    <a class="more-row" href="#top" data-nav="top"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4h10v5a5 5 0 01-10 0z"/><path d="M7 6H4v1a3 3 0 003 3M17 6h3v1a3 3 0 01-3 3M12 14v4M8.5 20h7"/></svg><span class="more-tx"><b data-i18n="nav_top"></b><i data-i18n="more_top"></i></span><span class="more-go" aria-hidden="true">→</span></a>
+        <a class="more-row" href="#news" data-nav="news"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5h11v14H6.5A1.5 1.5 0 015 17.5z"/><path d="M16 9h3v8.5a1.5 1.5 0 01-3 0"/><path d="M8 9h5M8 12.5h5M8 16h3"/></svg><span class="more-tx"><b data-i18n="nav_news"></b></span><span class="more-go" aria-hidden="true">→</span></a>
+    <a class="more-row" href="#truth" data-nav="truth"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 20V10M12 20V4M19 20v-7"/></svg><span class="more-tx"><b data-i18n="nav_truth"></b></span><span class="more-go" aria-hidden="true">→</span></a>
+    <a class="more-row" href="#compare" data-nav="compare"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 16c4 0 5-9 9-9s5 6 9 6"/><path d="M3 9c4 0 5 8 9 8s5-4 9-4" opacity=".55"/></svg><span class="more-tx"><b data-i18n="nav_compare"></b></span><span class="more-go" aria-hidden="true">→</span></a>
+    <a class="more-row" href="#top" data-nav="top"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4h10v5a5 5 0 01-10 0z"/><path d="M7 6H4v1a3 3 0 003 3M17 6h3v1a3 3 0 01-3 3M12 14v4M8.5 20h7"/></svg><span class="more-tx"><b data-i18n="nav_top"></b></span><span class="more-go" aria-hidden="true">→</span></a>
   </div>
 </div>
 
@@ -203,6 +174,5 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
 </div>
 
 <script src="sim.js"></script>
-<a class="osb-bot" href="https://t.me/opensites_io?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5%21%20%D0%A1%D0%BC%D0%BE%D1%82%D1%80%D1%8E%20%D0%B2%D0%B0%D1%88%D1%83%20%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D1%83%20%C2%ABdofamart%C2%BB%20%D0%BD%D0%B0%20open-sites.io%20%E2%80%94%20%D1%85%D0%BE%D1%87%D1%83%20%D1%82%D0%B0%D0%BA%D0%BE%D0%B9%20%D1%81%D0%B0%D0%B9%D1%82" target="_blank" rel="noopener"><span class="osb-in"><span>Сделано в <span class="osb-mark"><span class="osb-dot"></span>open-sites.io</span></span><span class="osb-cta">Написать нам →</span></span></a>
 </body>
 </html>

@@ -327,7 +327,7 @@ if (typeof document === 'undefined') return;
    2. UI — dictionary, formatting, sound
    ===================================================================== */
 let S, M;
-const ui = { view: 'money', cat: null, sym: null, tf: '5m', lev: 1, ncat: 'all', bcat: 'all', bet: null };
+const ui = { view: 'money', cat: null, sym: null, tf: '5m', lev: 1, ncat: 'all', bcat: 'all', bet: null, btab: 'sport', sport: 'mma', mineAll: false, histOpen: false };
 const $ = id => document.getElementById(id);
 const RM = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
 const NB = ' ';   // narrow no-break space as thousands separator
@@ -477,9 +477,16 @@ function ago(sec) {
   return '−' + Math.floor(sec / 3600) + t('u_h') + (Math.floor(sec % 3600 / 60) ? ' ' + Math.floor(sec % 3600 / 60) + t('u_m') : '');
 }
 function parseAmt(s) { const n = parseFloat(String(s).replace(/[\s  ]/g, '').replace(',', '.')); return isFinite(n) && n > 0 ? n : 0; }
+const numOf = s => parseFloat(String(s).replace(/[^\d.\-\u2212]/g, '').replace('\u2212', '-'));
 function setTxt(el, text, v) {
   if (!el) return;
-  if (el.textContent !== text) el.textContent = text;
+  if (el.textContent !== text) {
+    const o = el.textContent; el.textContent = text;
+    if (o && el.classList.contains('num') && /^[\u2212+$\d]/.test(o) && /^[\u2212+$\d]/.test(text) && el.closest('.ins-px,.hero,.pos,.stat')) {
+      const x = numOf(o), y = numOf(text);
+      if (isFinite(x) && isFinite(y) && x !== y) { el.classList.remove('nflash-up', 'nflash-dn'); void el.offsetWidth; el.classList.add(y > x ? 'nflash-up' : 'nflash-dn'); }
+    }
+  }
   if (v !== undefined) { el.classList.toggle('up', v > 0); el.classList.toggle('down', v < 0); }
 }
 function vib(p) { try { if (navigator.vibrate) navigator.vibrate(p); } catch (e) {} }
@@ -954,7 +961,7 @@ function renderMarket() {
         '<span class="r-px"><b class="num" data-px="' + s + '"></b><em class="num" data-ch="' + s + '"></em></span></a>').join('') + '</div>';
     return;
   }
-  box.innerHTML = '<div class="vhead"><p class="lbl">' + t('market_lbl') + '</p><h1>' + t('market_h') + '</h1><p class="sub">' + t('market_sub') + '</p></div><div class="cats">' +
+  box.innerHTML = '<div class="vhead"><h1>' + t('market_h') + '</h1></div><div class="cats">' +
     E.CATS.map(c => {
       const n = SYMS.filter(s => INS[s].cat === c.id).length;
       return '<a class="cat" href="#market/' + c.id + '"><i class="cat-glow" aria-hidden="true"></i><span class="cat-ico"><svg viewBox="0 0 24 24" aria-hidden="true">' + ICO[c.id] + '</svg></span>' +
@@ -1099,7 +1106,7 @@ function doDeposit(a) {
 
 function renderWallet() {
   const st = (id, k) => '<div class="stat"><span class="lbl">' + t(k) + '</span><span class="num" id="' + id + '"></span></div>';
-  $('walletBox').innerHTML = '<div class="vhead"><p class="lbl">' + t('wallet_lbl') + '</p><h1>' + t('wallet_h') + '</h1></div>' +
+  $('walletBox').innerHTML = '<div class="vhead"><h1>' + t('wallet_h') + '</h1></div>' +
     '<div class="panel hero"><p class="lbl">' + t('w_real') + '</p><div class="hero-num num" id="wRes"></div><p class="hero-sub"><span class="num" id="wPct"></span> ' + t('w_of_dep') + '</p></div>' +
     '<div class="stats">' + st('wEq', 'w_total') + st('wCash', 'w_cash') + st('wPos', 'w_inpos') + st('wDep', 'w_dep') + '</div>' +
     '<h2 class="h2">' + t('w_curve') + '</h2><div class="panel"><canvas class="chart sm" id="cvEq"></canvas></div>' +
@@ -1138,7 +1145,7 @@ function refreshWallet() {
 function renderTruth() {
   const st = (id, k) => '<div class="stat"><span class="lbl">' + t(k) + '</span><span class="num" id="' + id + '"></span></div>';
   const row = (id, k) => '<div class="cmp-row"><div class="cmp-top"><span>' + t(k) + '</span><span class="num" id="' + id + '"></span></div><div class="bar"><i id="' + id + 'B"></i></div></div>';
-  $('truthBox').innerHTML = '<div class="vhead"><p class="lbl">' + t('truth_lbl') + '</p><h1>' + t('truth_h') + '</h1></div>' +
+  $('truthBox').innerHTML = '<div class="vhead"><h1>' + t('truth_h') + '</h1></div>' +
     '<p class="quote" id="tSum"></p><p class="tnote" id="tOpen"></p><p class="tnote" id="tImp"></p>' +
     '<div class="stats truth-stats">' + st('tN', 't_trades') + st('tWin', 't_winrate') + st('tFees', 't_fees') + st('tMax', 't_maxloss') + st('tImpN', 't_imp') + st('tLiq', 't_liq') + '</div>' +
     '<h2 class="h2">' + t('t_cmp') + '</h2><div class="panel cmp">' + row('cYou', 'cmp_you') + row('cHold', 'cmp_hold') + row('cIdx', 'cmp_index') + '</div>' +
@@ -1167,7 +1174,7 @@ function showPause(manual) {
   const st = E.stats(S, M), k = S.agg.streak; let sum = 0;
   for (let i = 0; i < k && i < S.trades.length; i++) sum += S.trades[i].net;
   const cls = v => (v > 0 ? ' up' : v < 0 ? ' down' : '');
-  $('modalBody').innerHTML = '<p class="lbl">' + t('pause_lbl') + '</p><h2 id="modalTitle">' + (manual || k < 1 ? t('pause_h_manual') : tf('pause_h', { n: k })) + '</h2><p>' + t('pause_p') + '</p>' +
+  $('modalBody').innerHTML = '<h2 id="modalTitle">' + (manual || k < 1 ? t('pause_h_manual') : tf('pause_h', { n: k })) + '</h2><p>' + t('pause_p') + '</p>' +
     '<div class="breath" aria-hidden="true"><i></i><span>' + t('inhale') + '</span><span>' + t('exhale') + '</span></div><div class="m-nums">' +
     (k > 0 ? '<div><span>' + t('pause_streak') + '</span><span class="num' + cls(sum) + '">' + signed(E.round2(sum)) + '</span></div>' : '') +
     '<div><span>' + t('pause_total') + '</span><span class="num' + cls(st.result) + '">' + signed(st.result) + '</span></div></div>' +
@@ -1203,10 +1210,10 @@ async function loadNews() {
   if (ui.view === 'news') fillNews();
 }
 function renderNews() {
-  $('newsBox').innerHTML = '<div class="vhead"><p class="lbl">' + t('news_lbl') + '</p><h1>' + t('news_h') + '</h1><p class="sub">' + t('news_sub') + '</p></div>' +
+  $('newsBox').innerHTML = '<div class="vhead"><h1>' + t('news_h') + '</h1></div>' +
     '<div class="chips">' + ['all'].concat(NCATS).map(c => '<button class="chip' + (c === ui.ncat ? ' on' : '') + '" type="button" data-ncat="' + c + '">' + t('nc_' + c) + '</button>').join('') + '</div>' +
     '<p class="news-meta num" id="newsMeta"></p><div class="news" id="newsList"></div>' +
-    '<h2 class="h2">' + t('learn_h') + '</h2><p class="sub">' + t('learn_sub') + '</p><div class="learn" style="margin-top:16px">' +
+    '<h2 class="h2">' + t('learn_h') + '</h2><div class="learn">' +
     t('learn').map(a => '<div class="lcard"><span class="soon">' + t('soon') + '</span><h3>' + esc(a[0]) + '</h3><p>' + esc(a[1]) + '</p></div>').join('') + '</div>';
   fillNews(); loadNews();
 }
@@ -1252,7 +1259,7 @@ function favCat() {                      // the user's favourite asset class, by
   const k = Object.keys(n).sort((a, b) => n[b] - n[a]); return k.length ? k[0] : null;
 }
 function renderTop() {
-  $('topBox').innerHTML = '<div class="vhead"><p class="lbl">' + t('top_lbl') + '</p><h1>' + t('top_h') + '</h1></div>' +
+  $('topBox').innerHTML = '<div class="vhead"><h1>' + t('top_h') + '</h1></div>' +
     '<p class="demo-note">' + t('top_demo') + '</p><p class="tnote" id="topMe"></p><div class="lb" id="lbList"></div>';
   topHTML = ''; refreshTop();
 }
@@ -1314,7 +1321,7 @@ async function cmpLoad() {
 }
 function renderCompare() {
   const c = S.cmp, cat = E.CAT[ui.ccat] ? ui.ccat : (ui.ccat = 'crypto');
-  $('compareBox').innerHTML = '<div class="vhead"><p class="lbl">' + t('cmp_lbl') + '</p><h1>' + t('cmp_h') + '</h1><p class="sub">' + t('cmp_sub') + '</p></div>' +
+  $('compareBox').innerHTML = '<div class="vhead"><h1>' + t('cmp_h') + '</h1></div>' +
     '<p class="lbl">' + t('cmp_sel') + '</p><div class="chips cmp-sel">' + (c.syms.length ? c.syms.map((s, i) =>
       '<button class="chip on" type="button" data-csym="' + s + '" aria-pressed="true"><i class="dot" style="background:' + LINES[i % 4] + '"></i>' + esc(tk(s)) + '<span class="x" aria-hidden="true">×</span></button>').join('') :
       '<span class="hint">' + t('cmp_none') + '</span>') + '</div>' +
@@ -1339,39 +1346,47 @@ function cmpToggle(s) {
    API is foreign data and reaches the page through textContent only.
    ===================================================================== */
 Object.assign(T.ru, {
-  nav_bets: 'Ставки', bet_lbl: 'Живые коэффициенты', bet_h: 'Ставки',
-  bet_sub: 'Будущие события со всего мира: спорт, политика, крипта, экономика. Коэффициент считается из живой цены рынка прогнозов Polymarket: 1 / цена исхода. Ставите игровые деньги из того же кошелька.',
+  nav_bets: 'Ставки', bet_h: 'Ставки', bt_sport: 'Спорт', bt_pred: 'Прогнозы',
   bc_all: 'Все', bc_sports: 'Спорт', bc_esports: 'Киберспорт', bc_politics: 'Политика', bc_world: 'Мир', bc_crypto: 'Крипта', bc_economy: 'Экономика', bc_finance: 'Финансы', bc_tech: 'Технологии', bc_culture: 'Культура',
-  bet_upd: 'Коэффициенты на {t} · источник Polymarket', bet_load: 'Загружаем коэффициенты…', bet_err: 'Источник коэффициентов сейчас не отвечает. Попробуйте обновить через минуту.',
-  bet_none: 'В этой рубрике сейчас нет открытых событий.', bet_more: 'Показать ещё', bet_refresh: 'Обновить', bet_until: 'до {t}', bet_vol: 'оборот за сутки {v}',
-  bet_yes: 'Да', bet_no: 'Нет', bet_rest: 'ещё исходов: {n}',
-  bet_slip: 'Ваша ставка', bet_amt: 'Сумма, $', bet_cash: 'В кошельке', bet_win: 'Выплата, если сыграет', bet_chance: 'Шанс по рынку', bet_go: 'Поставить', bet_cancel: 'Отмена', bet_max: 'Всё',
-  bet_min: 'Минимальная ставка — $1.', bet_funds: 'В кошельке не хватает денег. Пополнить можно в разделе «Деньги».', bet_closed: 'Приём ставок на этот исход закрыт.', bet_many: 'Открыто слишком много ставок. Дождитесь расчёта или продайте часть.',
-  bet_done: 'Ставка принята, коэффициент {k}', bet_my: 'Мои ставки', bet_my_none: 'Ставок пока нет. Нажмите на коэффициент у любого события.',
-  bet_stake: 'ставка', bet_now: 'сейчас', bet_sell: 'Продать', bet_sold: 'Ставка продана: {v}', bet_settled: 'Ставки рассчитаны: {v}',
-  bet_hist: 'Рассчитанные', how_win: 'сыграла', how_lose: 'не сыграла', how_sold: 'продана', how_void: 'возврат',
+  sp_mma: 'MMA', sp_box: 'Бокс', sp_soc: 'Футбол', sp_ten: 'Теннис', sp_bsk: 'Баскетбол',
+  sp_none: 'Сейчас событий нет.', d_today: 'Сегодня', d_tom: 'Завтра', bet_draw: 'Ничья', x_1: 'П1', x_0: 'Х', x_2: 'П2',
+  bet_upd: 'Обновлено {t}', bet_load: 'Загружаем…', bet_err: 'Источник коэффициентов сейчас не отвечает. Попробуйте обновить через минуту.',
+  bet_none: 'В этой рубрике сейчас нет открытых событий.', bet_more: 'Показать ещё', bet_refresh: 'Обновить', bet_until: 'до {t}', bet_vol: 'оборот {v}',
+  bet_yes: 'Да', bet_no: 'Нет', bet_rest: 'ещё {n}', bet_fold: 'Свернуть',
+  slip_h: 'Купон', slip_empty: 'Купон пуст. Нажмите на коэффициент.', slip_x: 'Закрыть',
+  bet_amt: 'Сумма, $', bet_cash: 'В кошельке', bet_win: 'Выплата', bet_go: 'Поставить', bet_max: 'Всё',
+  bet_min: 'Минимальная ставка — $1.', bet_closed: 'Приём ставок на этот исход закрыт.', bet_many: 'Открыто слишком много ставок. Дождитесь расчёта или продайте часть.',
+  bet_done: 'Ставка принята, коэффициент {k}', bet_my: 'Мои ставки', bet_all: 'Показать все · {n}',
+  bet_stake: 'ставка', bet_sell: 'Продать', bet_sold: 'Ставка продана: {v}', bet_settled: 'Ставки рассчитаны: {v}',
+  bet_hist: 'История', how_win: 'сыграла', how_lose: 'не сыграла', how_sold: 'продана', how_void: 'возврат',
   bs_n: 'Ставок сделано', bs_won: 'Из них в плюс', bs_staked: 'Поставлено', bs_paid: 'Вернулось', bs_open: 'Сейчас в игре', bs_net: 'Итог по ставкам',
-  bet_note: 'Коэффициент здесь честный: в нём нет доли букмекера. У настоящих букмекеров он ниже — в каждую ставку заложена их прибыль, поэтому на длинной дистанции игрок там в минусе. Названия событий приходят на английском, как в источнике. Деньги игровые, вывести их нельзя.'
+  tip_bets: 'Источник — рынок прогнозов Polymarket. Коэффициент = 1 / цена исхода, доли букмекера в нём нет: у настоящих букмекеров он ниже. Названия событий на английском, как в источнике. Деньги игровые, вывести их нельзя.'
 });
 Object.assign(T.en, {
-  nav_bets: 'Bets', bet_lbl: 'Live odds', bet_h: 'Bets',
-  bet_sub: 'Upcoming events from around the world: sports, politics, crypto, the economy. Odds come from the live price on the Polymarket prediction market: 1 / outcome price. You bet play money from the same wallet.',
+  nav_bets: 'Bets', bet_h: 'Bets', bt_sport: 'Sport', bt_pred: 'Predictions',
   bc_all: 'All', bc_sports: 'Sports', bc_esports: 'Esports', bc_politics: 'Politics', bc_world: 'World', bc_crypto: 'Crypto', bc_economy: 'Economy', bc_finance: 'Finance', bc_tech: 'Tech', bc_culture: 'Culture',
-  bet_upd: 'Odds as of {t} · source: Polymarket', bet_load: 'Loading odds…', bet_err: 'The odds source is not responding right now. Try refreshing in a minute.',
-  bet_none: 'No open events in this section right now.', bet_more: 'Show more', bet_refresh: 'Refresh', bet_until: 'until {t}', bet_vol: '24h volume {v}',
-  bet_yes: 'Yes', bet_no: 'No', bet_rest: 'more outcomes: {n}',
-  bet_slip: 'Your bet', bet_amt: 'Amount, $', bet_cash: 'In wallet', bet_win: 'Payout if it wins', bet_chance: 'Market chance', bet_go: 'Place bet', bet_cancel: 'Cancel', bet_max: 'All',
-  bet_min: 'The minimum bet is $1.', bet_funds: 'Not enough money in the wallet. Top up in the Money section.', bet_closed: 'Betting on this outcome is closed.', bet_many: 'Too many open bets. Wait for settlement or sell some.',
-  bet_done: 'Bet placed, odds {k}', bet_my: 'My bets', bet_my_none: 'No bets yet. Tap the odds on any event.',
-  bet_stake: 'stake', bet_now: 'now', bet_sell: 'Sell', bet_sold: 'Bet sold: {v}', bet_settled: 'Bets settled: {v}',
-  bet_hist: 'Settled', how_win: 'won', how_lose: 'lost', how_sold: 'sold', how_void: 'refund',
+  sp_mma: 'MMA', sp_box: 'Boxing', sp_soc: 'Football', sp_ten: 'Tennis', sp_bsk: 'Basketball',
+  sp_none: 'No events right now.', d_today: 'Today', d_tom: 'Tomorrow', bet_draw: 'Draw', x_1: '1', x_0: 'X', x_2: '2',
+  bet_upd: 'Updated {t}', bet_load: 'Loading…', bet_err: 'The odds source is not responding right now. Try refreshing in a minute.',
+  bet_none: 'No open events in this section right now.', bet_more: 'Show more', bet_refresh: 'Refresh', bet_until: 'until {t}', bet_vol: 'volume {v}',
+  bet_yes: 'Yes', bet_no: 'No', bet_rest: '{n} more', bet_fold: 'Collapse',
+  slip_h: 'Bet slip', slip_empty: 'The slip is empty. Tap any odds.', slip_x: 'Close',
+  bet_amt: 'Amount, $', bet_cash: 'In wallet', bet_win: 'Payout', bet_go: 'Place bet', bet_max: 'All',
+  bet_min: 'The minimum bet is $1.', bet_closed: 'Betting on this outcome is closed.', bet_many: 'Too many open bets. Wait for settlement or sell some.',
+  bet_done: 'Bet placed, odds {k}', bet_my: 'My bets', bet_all: 'Show all · {n}',
+  bet_stake: 'stake', bet_sell: 'Sell', bet_sold: 'Bet sold: {v}', bet_settled: 'Bets settled: {v}',
+  bet_hist: 'History', how_win: 'won', how_lose: 'lost', how_sold: 'sold', how_void: 'refund',
   bs_n: 'Bets placed', bs_won: 'Ended in profit', bs_staked: 'Staked', bs_paid: 'Returned', bs_open: 'In play now', bs_net: 'Betting result',
-  bet_note: 'The odds here are fair: there is no bookmaker margin in them. Real bookmakers pay less — their profit is built into every bet, so over a long run the player loses there. Event names come in English, as in the source. This is play money and cannot be withdrawn.'
+  tip_bets: 'Source: the Polymarket prediction market. Odds = 1 / outcome price, with no bookmaker margin: real bookmakers pay less. Event names come in English, as in the source. This is play money and cannot be withdrawn.'
 });
 const PM = 'https://gamma-api.polymarket.com/markets';
 const BCATS = [['all', 0], ['sports', 1], ['esports', 64], ['politics', 2], ['world', 100265], ['crypto', 21], ['economy', 100328], ['finance', 120], ['tech', 1401], ['culture', 596]];
-const BPAGE = 60, BLO = 0.02, BHI = 0.98;
+// Sport lines: the same open Polymarket API, only "who wins" (moneyline) markets with a start time. k = 2 two-way, k = 3 home / draw / away.
+const SPORTS = [{ id: 'mma', tag: 279, k: 2 }, { id: 'box', tag: 683, k: 2, x: 1 }, { id: 'soc', tag: 100350, k: 3 }, { id: 'ten', tag: 864, k: 2 }, { id: 'bsk', tag: 745, k: 2 }];
+const BPAGE = 60, SPAGE = 100, BLO = 0.02, BHI = 0.98;
 let betEv = [], betMk = {}, betAt = 0, betCat = '', betBusy = false, betErr = false, betOff = 0, betMore = false, betChk = false, betChkAt = 0;
+const SP = {}, bOpen = {};
+const sps = id => SP[id] || (SP[id] = { list: [], at: 0, err: false, busy: false, off: 0, more: false, map: {} });
 function bst() {
   if (!Array.isArray(S.bets)) S.bets = [];
   if (!Array.isArray(S.betHist)) S.betHist = [];
@@ -1380,27 +1395,32 @@ function bst() {
 }
 // Pictures: only from Polymarket's own image store, nothing else is ever put into src.
 const bimg = u => (typeof u === 'string' && /^https:\/\/polymarket-upload\.s3\.us-east-2\.amazonaws\.com\/[\w.\-\/%+]{1,200}\.(png|jpe?g|webp)$/i.test(u) ? u : '');
-function badge(name) {
-  const w = String(name).replace(/[^\p{L}\p{N} ]/gu, ' ').trim().split(/\s+/).filter(Boolean);
-  const ini = (w.length > 1 ? w[0][0] + w[1][0] : (w[0] || '?').slice(0, 2)).toUpperCase();
-  let h = 0; for (let i = 0; i < name.length; i++) h = (h * 31 + name.charCodeAt(i)) % 360;
-  const s = mkEl('span', 'tbadge', ini); s.style.setProperty('--h', h); s.setAttribute('aria-hidden', 'true'); return s;
-}
+const pgs = s => { if (typeof s !== 'string') return 0; const d = Date.parse(s.replace(' ', 'T').replace(/\+00(:00)?$/, 'Z')); return d > 0 ? d : 0; };
 function cleanMk(o) {
   if (!o || !/^\d{1,12}$/.test(String(o.id)) || typeof o.question !== 'string') return null;
   let out, pr;
   try { out = JSON.parse(o.outcomes); pr = JSON.parse(o.outcomePrices).map(Number); } catch (e) { return null; }
   if (!Array.isArray(out) || out.length !== 2 || !Array.isArray(pr) || pr.length !== 2 || !pr.every(p => p >= 0 && p <= 1)) return null;
-  const ev = Array.isArray(o.events) && o.events[0] ? o.events[0] : {};
+  const ev = Array.isArray(o.events) && o.events[0] ? o.events[0] : {}, sr = Array.isArray(ev.series) && ev.series[0] && typeof ev.series[0].title === 'string' ? ev.series[0].title.trim().slice(0, 50) : '';
   return { id: String(o.id), q: o.question.trim().slice(0, 200), g: typeof o.groupItemTitle === 'string' ? o.groupItemTitle.trim().slice(0, 80) : '',
-    out: out.map(x => String(x).trim().slice(0, 40)), pr: pr, end: Date.parse(o.endDate) || 0, closed: o.closed === true, vol: +o.volume24hr > 0 ? +o.volume24hr : 0,
-    img: bimg(ev.icon) || bimg(ev.image) || bimg(o.icon) || bimg(o.image),
+    out: out.map(x => String(x).trim().slice(0, 40)), pr: pr, end: Date.parse(o.endDate) || 0, gs: pgs(o.gameStartTime), typ: typeof o.sportsMarketType === 'string' ? o.sportsMarketType : '',
+    closed: o.closed === true, vol: +o.volume24hr > 0 ? +o.volume24hr : 0,
+    img: bimg(ev.icon) || bimg(ev.image) || bimg(o.icon) || bimg(o.image), sr: sr, ss: typeof ev.seriesSlug === 'string' ? ev.seriesSlug.slice(0, 40) : '',
     ev: /^\d{1,12}$/.test(String(ev.id)) ? String(ev.id) : 'm' + o.id, et: typeof ev.title === 'string' ? ev.title.trim().slice(0, 160) : '' };
 }
+// Remember the last price, so an odd that moved can flash for a moment.
+function putMk(m) { const o = betMk[m.id]; m.dp = o && o.pr[0] !== m.pr[0] ? (m.pr[0] > o.pr[0] ? 1 : -1) : 0; betMk[m.id] = m; return m; }
 const coef = p => { const k = 1 / p; return fixed(k, k >= 10 ? 1 : 2); };
-const chance = p => (p < 0.1 ? (p * 100).toFixed(1) : Math.round(p * 100)) + '%';
+const okp = p => p >= BLO && p <= BHI;
 const bvol = v => '$' + (v >= 1e6 ? (v / 1e6).toFixed(1) + 'M' : v >= 1e3 ? Math.round(v / 1e3) + 'K' : Math.round(v));
 function bdate(ms) { const d = new Date(ms); return ms - Date.now() > 2.6e10 ? p2(d.getDate()) + '.' + p2(d.getMonth() + 1) + '.' + d.getFullYear() : stamp(ms); }
+const hhmm = ms => { const d = new Date(ms); return p2(d.getHours()) + ':' + p2(d.getMinutes()); };
+function dayLabel(ms) {
+  const d = new Date(ms), n = new Date(), k = Math.round((new Date(d.getFullYear(), d.getMonth(), d.getDate()) - new Date(n.getFullYear(), n.getMonth(), n.getDate())) / 864e5);
+  if (k <= 0) return t('d_today');
+  if (k === 1) return t('d_tom');
+  return d.toLocaleDateString(S.lang === 'en' ? 'en-GB' : 'ru-RU', { weekday: 'short', day: 'numeric', month: 'short' });
+}
 const oname = s => (s === 'Yes' ? t('bet_yes') : s === 'No' ? t('bet_no') : s);
 const mkEl = (tag, cls, txt) => { const e = document.createElement(tag); if (cls) e.className = cls; if (txt != null) e.textContent = txt; return e; };
 
@@ -1439,18 +1459,19 @@ function moreSheet(open) {
   m.hidden = !open; if (b) b.setAttribute('aria-expanded', open ? 'true' : 'false');
 }
 
+/* ---------- loading: predictions (by section) ---------- */
 async function loadBets(more) {
   if (betBusy) return;
   betBusy = true;
   const cat = ui.bcat, tag = (BCATS.filter(c => c[0] === cat)[0] || BCATS[0])[1], off = more ? betOff : 0;
-  if (cat !== betCat) { betEv = []; betAt = 0; betErr = false; fillBets(); }
+  if (cat !== betCat) { betEv = []; betAt = 0; betErr = false; if (ui.btab === 'pred') fillBets(); }
   try {
     const d = await getJSON(PM + '?closed=false&active=true&order=volume24hr&ascending=false&limit=' + BPAGE + '&offset=' + off + (tag ? '&tag_id=' + tag + '&related_tags=true' : ''), 15000);
     if (cat !== ui.bcat) { betBusy = false; return loadBets(); }
     const now = Date.now(), raw = Array.isArray(d) ? d : [];
     const ev = more ? betEv : [];
     raw.map(cleanMk).filter(m => m && !m.closed && m.end > now && m.pr[0] >= BLO && m.pr[0] <= BHI).forEach(m => {
-      betMk[m.id] = m;
+      putMk(m);
       let e = ev.filter(x => x.id === m.ev)[0];
       if (!e) { e = { id: m.ev, t: m.et || m.q, end: m.end, vol: 0, m: [] }; ev.push(e); }
       if (!e.m.some(x => x.id === m.id)) { e.m.push(m); e.vol += m.vol; if (m.end < e.end) e.end = m.end; }
@@ -1458,122 +1479,259 @@ async function loadBets(more) {
     betEv = ev; betCat = cat; betOff = off + BPAGE; betMore = raw.length >= BPAGE && betOff < 600; betErr = false; betAt = now;
   } catch (e) { betErr = true; betCat = cat; }
   betBusy = false;
-  if (ui.view === 'bets') fillBets();
+  if (ui.view === 'bets' && ui.btab === 'pred') { fillBets(); slipPrices(); }
 }
+
+/* ---------- loading: sport lines ---------- */
+const LEAGUES = { epl: 'Premier League', lal: 'LaLiga', bun: 'Bundesliga', sea: 'Serie A', fl1: 'Ligue 1', ucl: 'Champions League', uel: 'Europa League', uecl: 'Conference League', mls: 'MLS', 'fifa-friendly': 'Friendly', cwc: 'Club World Cup', fifwc: 'World Cup', euc: 'Euro' };
+function leagueOf(m) {
+  if (m.sr) return m.sr;
+  if (LEAGUES[m.ss]) return LEAGUES[m.ss];
+  const w = String(m.ss || '').replace(/-games?$/, '').replace(/-/g, ' ').trim();
+  return w.length > 5 ? w.replace(/\b\w/g, c => c.toUpperCase()) : w.toUpperCase();
+}
+function addSport(sp, m, map) {
+  const t0 = m.gs || m.end;
+  if (m.closed || !t0 || t0 <= Date.now()) return;
+  const yn = m.out[0] === 'Yes' && m.out[1] === 'No', ttl = m.et || m.q;
+  if (m.typ && m.typ !== 'moneyline') return;
+  if (sp.k === 3) {
+    if (!yn || !m.et) return;
+    const tm = m.et.split(/\s+vs\.?\s+/i); if (tm.length !== 2) return;
+    const h = tm[0].trim(), a = tm[1].trim(), g = m.g.toLowerCase(), q = m.q.toLowerCase();
+    const role = /^draw/i.test(m.g) || /end in a draw/i.test(m.q) ? 'x' : (g === h.toLowerCase() || q.indexOf('will ' + h.toLowerCase() + ' win') === 0 ? '1' : (g === a.toLowerCase() || q.indexOf('will ' + a.toLowerCase() + ' win') === 0 ? '2' : ''));
+    if (!role) return;
+    const e = map[m.ev] || (map[m.ev] = { id: m.ev, k: 3, t0: t0, home: h, away: a, lg: leagueOf(m), r: {} });
+    e.r[role] = putMk(m); m.sl = { k: 3, title: h + ' — ' + a, role: role, name: role === '1' ? h : a };
+  } else {
+    if (yn || !/\svs\.?\s/i.test(ttl)) return;
+    const c = /^([^:]{2,40}):/.exec(m.q), w = /\(([^)]{2,60})\)\s*$/.exec(m.q);
+    map[m.id] = { id: m.id, k: 2, t0: t0, m: [putMk(m)], meta: [c ? c[1] : leagueOf(m), w ? w[1] : ''].filter(Boolean).join(' · ') };
+    m.sl = { k: 2, title: ttl.replace(/^[^:]{2,40}:\s*/, '').replace(/\s*\([^)]*\)\s*$/, '') };
+  }
+}
+async function loadSport(more) {
+  const id = ui.sport, sp = SPORTS.filter(x => x.id === id)[0], st = sps(id);
+  if (!sp || st.busy) return;
+  st.busy = true;
+  const off = more ? st.off : 0;
+  try {
+    const url = PM + '?closed=false&active=true&limit=' + SPAGE + '&offset=' + off + '&order=endDate&ascending=true&sports_market_types=moneyline&end_date_min=' + encodeURIComponent(new Date().toISOString()) + '&tag_id=' + sp.tag;
+    const reqs = [getJSON(url, 15000)];
+    if (sp.x && !more) reqs.push(getJSON(PM + '?closed=false&active=true&limit=100&order=volume24hr&ascending=false&tag_id=' + sp.tag, 15000).catch(() => []));
+    const r = await Promise.all(reqs), map = more ? st.map : {};
+    r.forEach(a => (Array.isArray(a) ? a : []).map(cleanMk).filter(Boolean).forEach(m => addSport(sp, m, map)));
+    const raw = Array.isArray(r[0]) ? r[0] : [];
+    st.map = map; st.list = Object.keys(map).map(k => map[k]).filter(e => e.k === 2 || (e.r['1'] && e.r['2'])).sort((a, b) => a.t0 - b.t0);
+    st.off = off + SPAGE; st.more = raw.length >= SPAGE && st.off < 500; st.err = false; st.at = Date.now();
+  } catch (e) { st.err = true; }
+  st.busy = false;
+  if (ui.view === 'bets' && ui.btab === 'sport' && ui.sport === id) { fillBets(); slipPrices(); }
+}
+
+/* ---------- screen ---------- */
 function renderBets() {
   bst();
-  $('betsBox').innerHTML = '<div class="vhead"><p class="lbl">' + t('bet_lbl') + '</p><h1>' + t('bet_h') + '</h1><p class="sub">' + t('bet_sub') + '</p></div>' +
-    '<div id="betMine"></div>' +
-    '<div class="chips bcats">' + BCATS.map(c => '<button class="chip' + (c[0] === ui.bcat ? ' on' : '') + '" type="button" data-bcat="' + c[0] + '">' + t('bc_' + c[0]) + '</button>').join('') + '</div>' +
-    '<div class="bet-bar"><p class="news-meta num" id="betMeta"></p><button class="btn-ghost" type="button" data-act="bet-refresh">' + t('bet_refresh') + '</button></div>' +
-    '<div class="bets" id="betList"></div><div class="bet-more" id="betMoreBox"></div>' +
-    '<p class="chart-note">' + t('bet_note') + '</p>';
-  fillMine(); fillBets();
-  if (betCat !== ui.bcat || Date.now() - betAt > 6e4) loadBets();
+  $('betsBox').innerHTML = '<div class="bt-top"><h1>' + t('bet_h') + '</h1><div class="seg" role="tablist">' +
+    [['sport', 'bt_sport'], ['pred', 'bt_pred']].map(a => '<button type="button" role="tab" class="' + (ui.btab === a[0] ? 'on' : '') + '" aria-selected="' + (ui.btab === a[0]) + '" data-btab="' + a[0] + '">' + t(a[1]) + '</button>').join('') + '</div></div>' +
+    '<div class="bgrid"><div class="bcol"><div id="betMine"></div><div class="chips bcats" id="betChips"></div>' +
+    '<div class="bet-bar"><p class="news-meta num" id="betMeta"></p><span class="qrow">' + qm('tip_bets') + '<button class="btn-ghost" type="button" data-act="bet-refresh">' + t('bet_refresh') + '</button></span></div>' +
+    '<div class="bets" id="betList"></div><div class="bet-more" id="betMoreBox"></div></div>' +
+    '<aside class="slip" id="slip"><div class="slip-card" id="slipBody"></div></aside></div>';
+  fillChips(); fillMine(); fillBets(); fillSlip();
+  if (ui.btab === 'sport') { const st = sps(ui.sport); if (!st.at || Date.now() - st.at > 6e4) loadSport(); }
+  else if (betCat !== ui.bcat || Date.now() - betAt > 6e4) loadBets();
   checkBets();
 }
-function fillBets() {
+function fillChips() {
+  const box = $('betChips'); if (!box) return;
+  box.innerHTML = ui.btab === 'sport'
+    ? SPORTS.map(s => '<button class="chip' + (s.id === ui.sport ? ' on' : '') + '" type="button" data-sp="' + s.id + '">' + t('sp_' + s.id) + '</button>').join('')
+    : BCATS.map(c => '<button class="chip' + (c[0] === ui.bcat ? ' on' : '') + '" type="button" data-bcat="' + c[0] + '">' + t('bc_' + c[0]) + '</button>').join('');
+}
+function fillBets(fresh) { if (ui.btab === 'sport') fillSport(fresh); else fillPred(fresh); }
+function flashCls(m, oi) { const d = (m.dp || 0) * (oi === 0 ? -1 : 1); return d > 0 ? ' fl-up' : d < 0 ? ' fl-dn' : ''; }
+function selOdd(b, m, oi, lab) {
+  b.type = 'button';
+  if (okp(m.pr[oi])) { b.setAttribute('data-bet', m.id); b.setAttribute('data-oi', oi); if (lab) b.setAttribute('aria-label', lab + ' ' + coef(m.pr[oi])); if (ui.bet && ui.bet.id === m.id && ui.bet.oi === oi) b.classList.add('on'); } else b.disabled = true;
+  return okp(m.pr[oi]) ? coef(m.pr[oi]) : '—';
+}
+function fightRow(e) {
+  const m = e.m[0], row = mkEl('div', 'srow two'), bt = mkEl('div', 'sbtns');
+  [0, 1].forEach(i => {
+    const b = mkEl('button', 'od' + (i ? ' r' : '') + flashCls(m, i)), k = mkEl('b', 'num', selOdd(b, m, i, m.out[i])), n = mkEl('span', 'od-n', m.out[i]);
+    if (i) { b.appendChild(k); b.appendChild(n); } else { b.appendChild(n); b.appendChild(k); }
+    bt.appendChild(b);
+  });
+  row.appendChild(bt);
+  const me = mkEl('p', 'smeta'); me.appendChild(mkEl('span', '', e.meta)); me.appendChild(mkEl('time', 'num', hhmm(e.t0))); row.appendChild(me);
+  return row;
+}
+function matchRow(e) {
+  const row = mkEl('div', 'srow three'), tm = mkEl('div', 'steams');
+  tm.appendChild(mkEl('p', 'tm', e.home)); tm.appendChild(mkEl('p', 'tm', e.away));
+  const me = mkEl('p', 'smeta'); me.appendChild(mkEl('time', 'num', hhmm(e.t0))); if (e.lg) me.appendChild(mkEl('span', '', e.lg)); tm.appendChild(me);
+  const bt = mkEl('div', 's3');
+  [['1', '1'], ['x', '0'], ['2', '2']].forEach(a => {
+    const m = e.r[a[0]], b = mkEl('button', 'od3' + (m ? flashCls(m, 0) : '')); b.type = 'button'; b.appendChild(mkEl('i', '', t('x_' + a[1])));
+    b.appendChild(mkEl('b', 'num', m ? selOdd(b, m, 0, t('x_' + a[1])) : (b.disabled = true, '—')));
+    bt.appendChild(b);
+  });
+  row.appendChild(tm); row.appendChild(bt);
+  return row;
+}
+function fillSport(fresh) {
   const box = $('betList'), meta = $('betMeta'), mb = $('betMoreBox'); if (!box) return;
-  box.textContent = ''; if (mb) mb.textContent = '';
+  const st = sps(ui.sport);
+  box.textContent = ''; mb.textContent = ''; box.className = 'bets sp' + (fresh ? ' fresh' : '');
+  if (!st.at && !st.err) { setTxt(meta, t('bet_load')); return; }
+  if (st.err && !st.list.length) { setTxt(meta, ''); box.appendChild(mkEl('p', 'empty', t('bet_err'))); return; }
+  setTxt(meta, tf('bet_upd', { t: clock(st.at) }));
+  if (!st.list.length) { box.appendChild(mkEl('p', 'empty', t('sp_none'))); return; }
+  let key = '', grp = null, gi = 0;
+  st.list.forEach(e => {
+    const d = new Date(e.t0), k = d.getFullYear() + '-' + d.getMonth() + '-' + d.getDate();
+    if (k !== key) { key = k; grp = mkEl('section', 'sgroup'); grp.style.setProperty('--i', Math.min(gi++, 6)); grp.appendChild(mkEl('h3', 'sday', dayLabel(e.t0))); box.appendChild(grp); }
+    grp.appendChild(e.k === 3 ? matchRow(e) : fightRow(e));
+  });
+  if (st.more) { const b = mkEl('button', 'btn-ghost', t('bet_more')); b.type = 'button'; b.setAttribute('data-act', 'bet-more'); mb.appendChild(b); }
+}
+function predBtn(m, oi, lab) {
+  const b = mkEl('button', 'po' + flashCls(m, oi) + (lab === 'Yes' ? ' yes' : lab === 'No' ? ' no' : '')), k = selOdd(b, m, oi, lab);
+  b.appendChild(mkEl('span', 'po-n', oname(lab))); b.appendChild(mkEl('b', 'num', k));
+  return b;
+}
+function fillPred(fresh) {
+  const box = $('betList'), meta = $('betMeta'), mb = $('betMoreBox'); if (!box) return;
+  box.textContent = ''; mb.textContent = ''; box.className = 'bets pred' + (fresh ? ' fresh' : '');
   if (betCat !== ui.bcat || (!betAt && !betErr)) { setTxt(meta, t('bet_load')); return; }
   if (betErr && !betEv.length) { setTxt(meta, ''); box.appendChild(mkEl('p', 'empty', t('bet_err'))); return; }
   setTxt(meta, tf('bet_upd', { t: clock(betAt) }));
-  if (!betEv.length) { box.appendChild(mkEl('p', 'empty', t('bet_none'))); }
-  betEv.forEach(e => {
-    const card = mkEl('article', 'bcard'), top = mkEl('div', 'ncard-top');
-    top.appendChild(mkEl('span', 'lbl', tf('bet_until', { t: bdate(e.end) })));
-    if (e.vol >= 1000) top.appendChild(mkEl('time', '', tf('bet_vol', { v: bvol(e.vol) })));
-    card.appendChild(top);
-    const hd = mkEl('div', 'bhead'), pic = e.m[0] && e.m[0].img;
-    if (pic) { const im = mkEl('img', 'bpic'); im.alt = ''; im.loading = 'lazy'; im.decoding = 'async'; im.referrerPolicy = 'no-referrer'; im.width = 48; im.height = 48; im.onerror = () => im.remove(); im.src = pic; hd.appendChild(im); }
-    hd.appendChild(mkEl('h3', '', e.t)); card.appendChild(hd);
-    e.m.slice(0, 6).forEach(m => {
-      const row = mkEl('div', 'brow'), lab = m.g || (m.q !== e.t ? m.q : '');
-      if (lab) row.appendChild(mkEl('p', 'bq', lab));
-      const od = mkEl('div', 'bodds');
-      m.out.forEach((o, i) => {
-        const b = mkEl('button', 'odd'); b.type = 'button'; b.setAttribute('data-bet', m.id); b.setAttribute('data-oi', i);
-        const yn = o === 'Yes' || o === 'No'; b.appendChild(yn ? mkEl('span', 'tbadge ' + (o === 'Yes' ? 'yes' : 'no'), o === 'Yes' ? '\u2713' : '\u2715') : badge(o)); b.appendChild(mkEl('span', 'odd-n', oname(o))); b.appendChild(mkEl('b', 'num', coef(m.pr[i]))); b.appendChild(mkEl('i', 'num', chance(m.pr[i])));
-        od.appendChild(b);
+  if (!betEv.length) box.appendChild(mkEl('p', 'empty', t('bet_none')));
+  betEv.forEach((e, n) => {
+    const card = mkEl('article', 'pcard' + (bOpen[e.id] ? ' open' : '')), hd = mkEl('div', 'phd'), pic = e.m[0] && e.m[0].img;
+    card.style.setProperty('--i', Math.min(n, 8));
+    if (pic) { const im = mkEl('img', 'bpic'); im.alt = ''; im.loading = 'lazy'; im.decoding = 'async'; im.referrerPolicy = 'no-referrer'; im.width = 40; im.height = 40; im.onerror = () => im.remove(); im.src = pic; hd.appendChild(im); }
+    const tx = mkEl('div', 'pt'), mt = mkEl('p', 'pm');
+    tx.appendChild(mkEl('h3', '', e.m.length === 1 ? e.m[0].q : e.t));
+    mt.appendChild(mkEl('span', '', tf('bet_until', { t: bdate(e.end) }))); if (e.vol >= 1000) mt.appendChild(mkEl('span', 'num', bvol(e.vol)));
+    tx.appendChild(mt); hd.appendChild(tx); card.appendChild(hd);
+    const one = e.m.length === 1, od = mkEl('div', 'pod' + (one ? ' p2' : ''));
+    if (one) e.m[0].out.forEach((o, i) => od.appendChild(predBtn(e.m[0], i, o)));
+    else {
+      const ms = e.m.slice().sort((a, b) => b.pr[0] - a.pr[0]).slice(0, 30);
+      ms.forEach((m, i) => {
+        const b = predBtn(m, 0, m.g || m.q); b.firstChild.textContent = m.g || m.q; if (i >= 3) b.classList.add('xtra'); od.appendChild(b);
       });
-      row.appendChild(od); card.appendChild(row);
-    });
-    if (e.m.length > 6) card.appendChild(mkEl('p', 'hint', tf('bet_rest', { n: e.m.length - 6 })));
-    box.appendChild(card);
+      if (ms.length > 3) {
+        const x = mkEl('button', 'pmore', tf('bet_rest', { n: ms.length - 3 })); x.type = 'button'; x.setAttribute('data-bx', e.id); x.setAttribute('data-more', tf('bet_rest', { n: ms.length - 3 })); x.setAttribute('data-less', t('bet_fold'));
+        if (bOpen[e.id]) x.textContent = t('bet_fold');
+        card.appendChild(od); card.appendChild(x); box.appendChild(card); return;
+      }
+    }
+    card.appendChild(od); box.appendChild(card);
   });
-  if (mb && betMore) { const b = mkEl('button', 'btn-ghost', t('bet_more')); b.type = 'button'; b.setAttribute('data-act', 'bet-more'); mb.appendChild(b); }
+  if (betMore) { const b = mkEl('button', 'btn-ghost', t('bet_more')); b.type = 'button'; b.setAttribute('data-act', 'bet-more'); mb.appendChild(b); }
 }
+
+/* ---------- my bets: a short list, history folded ---------- */
 function fillMine() {
   const box = $('betMine'); if (!box) return;
   bst(); box.textContent = '';
   if (!S.bets.length && !S.betHist.length) return;
-  box.appendChild(mkEl('h2', 'h2 bet-h2', t('bet_my')));
-  const list = mkEl('div', 'bmine');
-  S.bets.forEach(b => {
-    const val = E.round2(b.a / b.p * (b.cur >= 0 ? b.cur : b.p)), row = mkEl('div', 'bm'), l = mkEl('div', 'bm-l'), r = mkEl('div', 'bm-r');
-    l.appendChild(mkEl('p', 'bm-q', b.q));
-    l.appendChild(mkEl('p', 'bm-s num', oname(b.o) + ' · ' + coef(b.p) + ' · ' + t('bet_stake') + ' ' + money(b.a) + ' · ' + tf('bet_until', { t: bdate(b.end) })));
-    r.appendChild(mkEl('span', 'num' + (val > b.a ? ' up' : val < b.a ? ' down' : ''), t('bet_now') + ' ' + money(val)));
-    const s = mkEl('button', 'btn-ghost bm-sell', t('bet_sell')); s.type = 'button'; s.setAttribute('data-bsell', b.id); const sw = mkEl('span', 'qrow'); sw.appendChild(s); sw.insertAdjacentHTML('beforeend', qm('tip_sell')); r.appendChild(sw);
-    row.appendChild(l); row.appendChild(r); list.appendChild(row);
-  });
-  if (!S.bets.length) list.appendChild(mkEl('p', 'empty', t('bet_my_none')));
-  box.appendChild(list);
-  if (S.betHist.length) {
-    box.appendChild(mkEl('p', 'lbl bet-hl', t('bet_hist')));
-    const h = mkEl('div', 'bmine');
-    S.betHist.slice(0, 8).forEach(x => {
-      const row = mkEl('div', 'bm done'), l = mkEl('div', 'bm-l'), net = E.round2(x.pay - x.a);
-      l.appendChild(mkEl('p', 'bm-q', x.q));
-      l.appendChild(mkEl('p', 'bm-s num', oname(x.o) + ' · ' + coef(x.p) + ' · ' + t('bet_stake') + ' ' + money(x.a) + ' · ' + t('how_' + x.how)));
-      row.appendChild(l); row.appendChild(mkEl('span', 'num bm-net' + (net > 0 ? ' up' : net < 0 ? ' down' : ''), signed(net)));
-      h.appendChild(row);
+  const wrap = mkEl('section', 'mine');
+  if (S.bets.length) {
+    const hd = mkEl('div', 'mine-h'); hd.appendChild(mkEl('h2', 'mine-t', t('bet_my'))); hd.appendChild(mkEl('span', 'mine-n num', String(S.bets.length))); hd.insertAdjacentHTML('beforeend', qm('tip_sell'));
+    wrap.appendChild(hd);
+    const list = mkEl('div', 'bmine');
+    S.bets.slice(0, ui.mineAll ? 40 : 3).forEach(b => {
+      const val = E.round2(b.a / b.p * (b.cur >= 0 ? b.cur : b.p)), row = mkEl('div', 'bm'), l = mkEl('div', 'bm-l');
+      l.appendChild(mkEl('p', 'bm-q', b.q));
+      l.appendChild(mkEl('p', 'bm-s num', oname(b.o) + ' · ' + coef(b.p) + ' · ' + money(b.a)));
+      row.appendChild(l);
+      row.appendChild(mkEl('span', 'bm-v num' + (val > b.a ? ' up' : val < b.a ? ' down' : ''), money(val)));
+      const s = mkEl('button', 'btn-ghost bm-sell', t('bet_sell')); s.type = 'button'; s.setAttribute('data-bsell', b.id); row.appendChild(s);
+      list.appendChild(row);
     });
-    box.appendChild(h);
+    wrap.appendChild(list);
+    if (S.bets.length > 3) { const m = mkEl('button', 'mine-all', ui.mineAll ? t('bet_fold') : tf('bet_all', { n: S.bets.length })); m.type = 'button'; m.setAttribute('data-bmine', '1'); wrap.appendChild(m); }
   }
-  const A = S.betAgg, open = E.round2(S.bets.reduce((s, b) => s + b.a, 0)), net = E.round2(A.paid - (A.staked - open));
-  const sum = mkEl('div', 'panel m-nums bet-sum');
-  [[t('bs_n'), String(A.n), ''], [t('bs_won'), String(A.won), ''], [t('bs_staked'), money(A.staked), ''], [t('bs_paid'), money(A.paid), ''], [t('bs_open'), money(open), ''],
-    [t('bs_net'), signed(net), net > 0 ? ' up' : net < 0 ? ' down' : '']].forEach(a => {
-    const d = mkEl('div'); d.appendChild(mkEl('span', '', a[0])); d.appendChild(mkEl('span', 'num' + a[2], a[1])); sum.appendChild(d);
-  });
-  box.appendChild(sum);
+  if (S.betHist.length) {
+    const h = mkEl('button', 'mine-hist' + (ui.histOpen ? ' open' : ''), t('bet_hist') + ' · ' + S.betHist.length); h.type = 'button'; h.setAttribute('data-bhist', '1'); h.setAttribute('aria-expanded', ui.histOpen ? 'true' : 'false'); wrap.appendChild(h);
+    if (ui.histOpen) {
+      const hl = mkEl('div', 'bmine');
+      S.betHist.slice(0, 8).forEach(x => {
+        const row = mkEl('div', 'bm done'), l = mkEl('div', 'bm-l'), net = E.round2(x.pay - x.a);
+        l.appendChild(mkEl('p', 'bm-q', x.q));
+        l.appendChild(mkEl('p', 'bm-s num', oname(x.o) + ' · ' + coef(x.p) + ' · ' + money(x.a) + ' · ' + t('how_' + x.how)));
+        row.appendChild(l); row.appendChild(mkEl('span', 'num bm-net' + (net > 0 ? ' up' : net < 0 ? ' down' : ''), signed(net)));
+        hl.appendChild(row);
+      });
+      wrap.appendChild(hl);
+      const A = S.betAgg, open = E.round2(S.bets.reduce((s, b) => s + b.a, 0)), net = E.round2(A.paid - (A.staked - open));
+      const sum = mkEl('div', 'm-nums bet-sum');
+      [[t('bs_n'), String(A.n), ''], [t('bs_won'), String(A.won), ''], [t('bs_staked'), money(A.staked), ''], [t('bs_paid'), money(A.paid), ''], [t('bs_open'), money(open), ''],
+        [t('bs_net'), signed(net), net > 0 ? ' up' : net < 0 ? ' down' : '']].forEach(a => {
+        const d = mkEl('div'); d.appendChild(mkEl('span', '', a[0])); d.appendChild(mkEl('span', 'num' + a[2], a[1])); sum.appendChild(d);
+      });
+      wrap.appendChild(sum);
+    }
+  }
+  box.appendChild(wrap);
 }
+
+/* ---------- the slip: bottom sheet on a phone, a sticky column on a computer ---------- */
+function pickOf(m, oi) {
+  if (m.sl && m.sl.k === 3) return { title: m.sl.title, lab: m.sl.role === 'x' ? t('bet_draw') : m.sl.name };
+  if (m.sl) return { title: m.sl.title, lab: m.out[oi] };
+  return { title: m.et && m.et !== m.q ? m.et + ' — ' + (m.g || m.q) : m.q, lab: oname(m.out[oi]) };
+}
+function markPick() {
+  document.querySelectorAll('[data-bet]').forEach(b => b.classList.toggle('on', !!ui.bet && b.getAttribute('data-bet') === ui.bet.id && +b.getAttribute('data-oi') === ui.bet.oi));
+}
+function fillSlip() {
+  const slip = $('slip'), box = $('slipBody'); if (!slip || !box) return;
+  const b = ui.bet, m = b && betMk[b.id], keep = ($('betAmt') || {}).value || '';
+  slip.classList.toggle('open', !!m);
+  if (!m) { box.innerHTML = '<div class="slip-h"><h2 class="slip-t">' + t('slip_h') + '</h2></div><p class="slip-empty">' + t('slip_empty') + '</p>'; return; }
+  box.innerHTML = '<div class="slip-h"><h2 class="slip-t">' + t('slip_h') + '</h2><button class="slip-x" type="button" data-act="slip-close" aria-label="' + t('slip_x') + '"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>' +
+    '<p class="slip-q" id="slipQ"></p><div class="slip-pick"><span id="betPick"></span><b class="num" id="betK"></b></div>' +
+    '<input class="bet-inp num" id="betAmt" type="text" inputmode="decimal" autocomplete="off" maxlength="10" placeholder="' + t('bet_amt') + '" aria-label="' + t('bet_amt') + '">' +
+    '<div class="chips eq">' + [10, 50, 100].map(v => '<button class="chip" type="button" data-bpre="' + v + '">' + v + '</button>').join('') + '<button class="chip" type="button" data-bpre="all">' + t('bet_max') + '</button></div>' +
+    '<div class="slip-nums"><div><span>' + t('bet_win') + '</span><span class="num up" id="betWin">—</span></div><div><span>' + t('bet_cash') + '</span><span class="num" id="slipCash"></span></div></div>' +
+    '<p class="bet-msg" id="betMsg" role="alert"></p><button class="btn-gold slip-go" type="button" data-act="bet-ok">' + t('bet_go') + '</button>';
+  const pk = pickOf(m, b.oi);
+  setTxt($('slipQ'), pk.title); setTxt($('betPick'), pk.lab);
+  const inp = $('betAmt'); if (inp) { inp.value = keep; if (inp.addEventListener) inp.addEventListener('input', betInfo); }
+  betInfo();
+}
+function slipPrices() { if (ui.bet && $('betAmt')) betInfo(); }
 function betInfo() {
   const b = ui.bet, m = b && betMk[b.id]; if (!m) return;
   const a = parseAmt(($('betAmt') || {}).value), p = m.pr[b.oi];
-  setTxt($('betWin'), a > 0 ? money(E.round2(a / p)) : '—');
+  setTxt($('betK'), okp(p) ? coef(p) : '—'); setTxt($('slipCash'), money(S.cash));
+  setTxt($('betWin'), a > 0 && okp(p) ? money(E.round2(a / p)) : '—');
   const msg = $('betMsg'); if (!msg) return;
   if (S.cash < 1 || a > S.cash + 1e-9) needMoney(msg); else msg.textContent = '';
 }
 function openBet(id, oi) {
   const m = betMk[id]; if (!m || !(oi === 0 || oi === 1)) return;
   ui.bet = { id: id, oi: oi };
-  const mx = Math.floor(S.cash * 100) / 100;
-  $('modalBody').innerHTML = '<p class="lbl">' + t('bet_slip') + '</p><h2 class="bet-q" id="modalTitle"></h2><p class="bet-pick"><span id="betPick"></span><b class="num" id="betK"></b></p>' +
-    '<input class="bet-inp num" id="betAmt" type="text" inputmode="decimal" autocomplete="off" maxlength="10" placeholder="' + t('bet_amt') + '" aria-label="' + t('bet_amt') + '">' +
-    '<div class="chips eq">' + [10, 50, 100].map(v => '<button class="chip" type="button" data-bpre="' + v + '">$' + v + '</button>').join('') + '<button class="chip" type="button" data-bpre="' + mx + '">' + t('bet_max') + '</button></div>' +
-    '<div class="m-nums"><div><span>' + t('bet_cash') + '</span><span class="num">' + money(S.cash) + '</span></div><div><span>' + t('bet_chance') + '</span><span class="num" id="betCh"></span></div>' +
-    '<div><span>' + t('bet_win') + '</span><span class="num up" id="betWin">—</span></div></div><p class="bet-msg" id="betMsg" role="alert"></p>' +
-    '<div class="m-btns"><button class="btn-gold" type="button" data-act="bet-ok">' + t('bet_go') + '</button><button class="btn-ghost" type="button" data-act="modal-close">' + t('bet_cancel') + '</button></div>';
-  setTxt($('modalTitle'), m.et && m.et !== m.q ? m.et + ' — ' + (m.g || m.q) : m.q);
-  setTxt($('betPick'), oname(m.out[oi])); setTxt($('betK'), coef(m.pr[oi])); setTxt($('betCh'), chance(m.pr[oi]));
-  const inp = $('betAmt'); if (inp && inp.addEventListener) inp.addEventListener('input', betInfo);
-  betInfo();
-  $('modal').hidden = false;
+  fillSlip(); markPick();
 }
+function closeSlip() { ui.bet = null; fillSlip(); markPick(); }
 function doBet() {
   const b = ui.bet, m = b && betMk[b.id], msg = $('betMsg'); if (!m) return;
   bst();
-  const a = E.round2(parseAmt(($('betAmt') || {}).value)), p = m.pr[b.oi];
+  const a = E.round2(parseAmt(($('betAmt') || {}).value)), p = m.pr[b.oi], pk = pickOf(m, b.oi);
   if (S.cash < 1 || a > S.cash + 1e-9) { needMoney(msg); vib(20); return; }
   if (!(a >= 1)) { setTxt(msg, t('bet_min')); return; }
-  if (!(p >= BLO && p <= BHI) || m.end <= Date.now()) { setTxt(msg, t('bet_closed')); return; }
+  if (!(p >= BLO && p <= BHI) || (m.gs || m.end) <= Date.now()) { setTxt(msg, t('bet_closed')); return; }
   if (S.bets.length >= 40) { setTxt(msg, t('bet_many')); return; }
   S.cash = E.round2(S.cash - a);
-  S.bets.unshift({ id: S.nextId++, mk: m.id, q: m.et && m.et !== m.q ? m.et + ' — ' + (m.g || m.q) : m.q, o: m.out[b.oi], oi: b.oi, p: p, cur: p, a: a, at: Date.now(), end: m.end });
+  S.bets.unshift({ id: S.nextId++, mk: m.id, q: pk.title, o: pk.lab, oi: b.oi, p: p, cur: p, a: a, at: Date.now(), end: m.gs || m.end });
   S.betAgg.n++; S.betAgg.staked = E.round2(S.betAgg.staked + a);
-  save(); $('modal').hidden = true; ui.bet = null; if (S.sound) snd.key(); vib(12);
+  save(); ui.bet = null; if (S.sound) snd.key(); vib(12);
   toast(tf('bet_done', { k: coef(p) })); render();
 }
 function closeBet(b, price, how) {
@@ -1595,7 +1753,7 @@ async function checkBets(force) {
     r.forEach(a => (Array.isArray(a) ? a : []).map(cleanMk).filter(Boolean).forEach(m => { got[m.id] = m; }));
     S.bets.slice().forEach(b => {
       const m = got[b.mk]; if (!m) return;
-      b.cur = m.pr[b.oi]; if (m.end) b.end = m.end;
+      b.cur = m.pr[b.oi]; if (m.end) b.end = m.gs || m.end;
       if (m.closed) { total += closeBet(b, b.cur, b.cur >= 0.99 ? 'win' : b.cur <= 0.01 ? 'lose' : 'void'); n++; }
     });
     save();
@@ -1613,7 +1771,9 @@ async function sellBet(id) {
 }
 function betTick() {
   if (S.bets && S.bets.length) checkBets();
-  if (ui.view === 'bets' && $('modal').hidden && betOff <= BPAGE && Date.now() - betAt > 6e4) loadBets();
+  if (ui.view !== 'bets') return;
+  if (ui.btab === 'sport') { const st = sps(ui.sport); if (st.off <= SPAGE && Date.now() - st.at > 6e4) loadSport(); }
+  else if (betOff <= BPAGE && Date.now() - betAt > 6e4) loadBets();
 }
 
 /* =====================================================================
@@ -1671,7 +1831,7 @@ function applyLang() {
 }
 function onClick(e) {
   snd.gesture();
-  const el = e.target && e.target.closest ? e.target.closest('[data-tf],[data-lev],[data-pre],[data-side],[data-close],[data-amt],[data-key],[data-act],[data-ncat],[data-ccat],[data-csym],[data-per],[data-bcat],[data-bet],[data-bsell],[data-bpre],[data-tip],#langBtn,#sndBtn,#skinBtn,#modal,#more,.more-row') : null;
+  const el = e.target && e.target.closest ? e.target.closest('[data-tf],[data-lev],[data-pre],[data-side],[data-close],[data-amt],[data-key],[data-act],[data-ncat],[data-ccat],[data-csym],[data-per],[data-bcat],[data-bet],[data-bsell],[data-bpre],[data-btab],[data-sp],[data-bx],[data-bmine],[data-bhist],[data-tip],#langBtn,#sndBtn,#skinBtn,#modal,#more,#slip,.more-row') : null;
   if (!el) return;
   const A = k => el.getAttribute(k), has = k => el.hasAttribute(k);
   if (has('data-tip')) { showTip(el); return; }
@@ -1680,6 +1840,7 @@ function onClick(e) {
   if (el.classList.contains('more-row')) { moreSheet(false); return; }
   { const tb = document.querySelector('.tipbox'); if (tb) tb.remove(); }
   if (el.id === 'modal') { if (e.target === el) el.hidden = true; return; }
+  if (el.id === 'slip') { if (e.target === el && getComputedStyle(el).position === 'fixed') closeSlip(); return; }
   if (el.id === 'skinBtn') { nextSkin(); if (S.sound) snd.key(); return; }
   if (el.id === 'langBtn') { S.lang = S.lang === 'en' ? 'ru' : 'en'; save(); applyLang(); render(); return; }
   if (el.id === 'sndBtn') { S.sound = !S.sound; save(); applyLang(); if (S.sound) snd.key(); return; }
@@ -1700,11 +1861,23 @@ function onClick(e) {
     ui.ncat = A('data-ncat'); document.querySelectorAll('[data-ncat]').forEach(b => b.classList.toggle('on', b === el)); fillNews();
   } else if (has('data-ccat')) { ui.ccat = A('data-ccat'); renderCompare(); }
   else if (has('data-csym')) { if (INS[A('data-csym')]) cmpToggle(A('data-csym')); }
-  else if (has('data-bcat')) {
-    ui.bcat = A('data-bcat'); document.querySelectorAll('[data-bcat]').forEach(b => b.classList.toggle('on', b === el)); fillBets(); loadBets();
-  } else if (has('data-bet')) openBet(A('data-bet'), +A('data-oi'));
+  else if (has('data-btab')) {
+    ui.btab = A('data-btab') === 'pred' ? 'pred' : 'sport';
+    document.querySelectorAll('[data-btab]').forEach(b => { const on = b === el; b.classList.toggle('on', on); b.setAttribute('aria-selected', on ? 'true' : 'false'); });
+    fillChips(); fillBets(true);
+    if (ui.btab === 'sport') { const st = sps(ui.sport); if (!st.at || Date.now() - st.at > 6e4) loadSport(); } else if (betCat !== ui.bcat || Date.now() - betAt > 6e4) loadBets();
+  } else if (has('data-sp')) {
+    ui.sport = A('data-sp'); document.querySelectorAll('[data-sp]').forEach(b => b.classList.toggle('on', b === el)); fillBets(true);
+    { const st = sps(ui.sport); if (!st.at || Date.now() - st.at > 6e4) loadSport(); }
+  } else if (has('data-bcat')) {
+    ui.bcat = A('data-bcat'); document.querySelectorAll('[data-bcat]').forEach(b => b.classList.toggle('on', b === el)); fillBets(true); loadBets();
+  } else if (has('data-bx')) {
+    const id = A('data-bx'), card = el.closest('.pcard'); bOpen[id] = !bOpen[id]; if (card) card.classList.toggle('open', !!bOpen[id]); el.textContent = bOpen[id] ? A('data-less') : A('data-more');
+  } else if (has('data-bmine')) { ui.mineAll = !ui.mineAll; fillMine(); }
+  else if (has('data-bhist')) { ui.histOpen = !ui.histOpen; fillMine(); }
+  else if (has('data-bet')) openBet(A('data-bet'), +A('data-oi'));
   else if (has('data-bsell')) sellBet(+A('data-bsell'));
-  else if (has('data-bpre')) { const inp = $('betAmt'); if (inp) { inp.value = String(Math.min(+A('data-bpre'), Math.floor(S.cash * 100) / 100) || ''); betInfo(); } }
+  else if (has('data-bpre')) { const inp = $('betAmt'), cash = Math.floor(S.cash * 100) / 100, v = A('data-bpre') === 'all' ? cash : Math.min(+A('data-bpre'), cash); if (inp) { inp.value = v > 0 ? String(v) : ''; betInfo(); } }
   else if (has('data-per')) { S.cmp.per = +A('data-per') === 7 ? 7 : +A('data-per') === 90 ? 90 : 30; save(); renderCompare(); }
   else if (has('data-act')) {
     const a = A('data-act'), rc = $('resetConfirm');
@@ -1715,8 +1888,9 @@ function onClick(e) {
     else if (a === 'pause') showPause(true);
     else if (a === 'modal-close') $('modal').hidden = true;
     else if (a === 'bet-ok') doBet();
-    else if (a === 'bet-more') loadBets(true);
-    else if (a === 'bet-refresh') { betAt = 0; betOff = 0; loadBets(); checkBets(true); }
+    else if (a === 'bet-more') { if (ui.btab === 'sport') loadSport(true); else loadBets(true); }
+    else if (a === 'slip-close') closeSlip();
+    else if (a === 'bet-refresh') { if (ui.btab === 'sport') { const st = sps(ui.sport); st.off = 0; loadSport(); } else { betAt = 0; betOff = 0; loadBets(); } checkBets(true); }
   }
 }
 function tick() {
@@ -1739,7 +1913,7 @@ function init() {
   document.addEventListener('click', onClick);
   document.addEventListener('pointerdown', () => snd.gesture(), { passive: true });
   document.addEventListener('keydown', e => {
-    if (e.key === 'Escape') { const m = $('modal'); if (m) m.hidden = true; }
+    if (e.key === 'Escape') { const m = $('modal'); if (m) m.hidden = true; if (ui.bet) closeSlip(); }
     if (e.key === 'Enter' && e.target && e.target.id === 'atmInp') doDeposit(parseAmt(e.target.value));
   });
   window.addEventListener('hashchange', route);
