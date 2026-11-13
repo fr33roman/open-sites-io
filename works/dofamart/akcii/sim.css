@@ -992,7 +992,7 @@ body::after{content:"";position:fixed;inset:0;z-index:70;pointer-events:none;opa
 .scr-inp{height:52px;padding:0 12px;cursor:default;user-select:none;-webkit-user-select:none}
 .scr-inp>span{font-size:20px}
 .scr-val{flex:1;min-width:0;display:flex;align-items:center;font:500 24px/1 var(--mono);color:var(--gold-l);white-space:nowrap;overflow:hidden}
-.scr-val::after{content:"";width:2px;height:26px;margin-left:3px;background:var(--gold-l);animation:cur 1.05s steps(1) infinite}
+/* 14.11: мигающий курсор убран по слову Романа */
 .scr-val.nul::before{content:attr(data-ph);font:400 15px var(--sans);color:rgba(166,159,147,.7);order:2;margin-left:8px}
 @keyframes cur{50%{opacity:0}}
 .scr-custom .btn-gold{min-height:52px;padding:0 16px;font-size:13px}

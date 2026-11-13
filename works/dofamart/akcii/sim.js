@@ -2708,7 +2708,12 @@ function applyLang() {
 }
 function onClick(e) {
   snd.gesture();
-  const el = e.target && e.target.closest ? e.target.closest('[data-tf],[data-lev],[data-pre],[data-side],[data-close],[data-amt],[data-key],[data-lock],[data-les],[data-ans],[data-lback],[data-loan],[data-noteoff],[data-act],[data-ncat],[data-ccat],[data-csym],[data-per],[data-bcat],[data-bet],[data-bsell],[data-bpre],[data-btab],[data-sp],[data-bx],[data-bmine],[data-bhist],[data-tip],[data-ct],[data-cl],#langBtn,#sndBtn,#skinBtn,#modal,#more,#slip,.more-row') : null;
+  let el = e.target && e.target.closest ? e.target.closest('[data-tf],[data-lev],[data-pre],[data-side],[data-close],[data-amt],[data-key],[data-lock],[data-les],[data-ans],[data-lback],[data-loan],[data-noteoff],[data-act],[data-ncat],[data-ccat],[data-csym],[data-per],[data-bcat],[data-bet],[data-bsell],[data-bpre],[data-btab],[data-sp],[data-bx],[data-bmine],[data-bhist],[data-tip],[data-ct],[data-cl],#langBtn,#sndBtn,#skinBtn,#modal,#more,#slip,.more-row') : null;
+  // 3D quirk: a pressed ATM button shifts and the click lands on its parent — find the button under the finger by its box.
+  if (!el && e.target && e.target.closest && e.target.closest('#atm') && e.clientX != null) {
+    const bs = document.querySelectorAll('#atm button');
+    for (let i = 0; i < bs.length; i++) { const r = bs[i].getBoundingClientRect(); if (e.clientX >= r.left && e.clientX <= r.right && e.clientY >= r.top && e.clientY <= r.bottom) { el = bs[i]; break; } }
+  }
   if (!el) return;
   const A = k => el.getAttribute(k), has = k => el.hasAttribute(k);
   if (has('data-tip')) { showTip(el); return; }
@@ -2738,6 +2743,7 @@ function onClick(e) {
   else if (has('data-close')) doClose(+A('data-close'));
   else if (has('data-amt')) doDeposit(+A('data-amt'));
   else if (has('data-key')) {
+    if (performance.now() - (ui.keyAt || 0) < 700) return;   // already handled on pointerdown
     snd.key(); vib(8); atmKey(A('data-key'));
   } else if (has('data-lock')) { atmMsg(openHint(levelFor(+A('data-lock'))), true); vib(20);
   } else if (has('data-les')) { ui.les = +A('data-les'); ui.ans = null; renderLearn(); try { window.scrollTo(0, 0); } catch (e) {}
@@ -2799,6 +2805,11 @@ function init() {
   readSkin(); applyLang(); route();
   if (r.liq.length) onLiq(r.liq);
   document.addEventListener('click', onClick);
+  // ATM keys fire on press: a pressed key shifts in 3D and the browser then sends the click to its parent, so the digit was lost on phones.
+  document.addEventListener('pointerdown', e => {
+    const k = e.target && e.target.closest ? e.target.closest('#atm [data-key]') : null; if (!k) return;
+    ui.keyAt = performance.now(); snd.gesture(); snd.key(); vib(8); atmKey(k.getAttribute('data-key'));
+  });
   document.addEventListener('input', e => { if (e.target && e.target.id === 'cmpQ') { ui.cq = e.target.value.slice(0, 24); fillCmpPick(false); } });
   fitAtm(); atmTilt();
   document.addEventListener('pointerdown', () => snd.gesture(), { passive: true });
