@@ -773,5 +773,43 @@ body::after{content:"";position:fixed;inset:0;z-index:70;pointer-events:none;opa
 @media (prefers-reduced-motion:reduce){
   .okfx svg{stroke-dashoffset:0}
   .okfx::after,.amb::before{display:none}
-  .atm-body{transform:rotateX(-2deg) rotateY(-17deg)}
+  .atm-body{transform:rotateX(-2deg) rotateY(-7deg)}
 }
+
+/* =====================================================================
+   13.11 (2) · Баланс в шапке, банкомат почти фронтально и толще, купюры заезжают внутрь
+   ===================================================================== */
+.hbal{display:inline-flex;align-items:center;gap:8px;height:36px;margin-right:6px;padding:0 14px 0 11px;border-radius:999px;white-space:nowrap;
+  color:var(--gold-l);border:1px solid rgba(var(--acc),.38);background:linear-gradient(180deg,rgba(var(--acc),.16),rgba(var(--acc),.05));
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.08),0 0 22px -10px rgba(var(--acc),.9);transition:border-color .25s,box-shadow .3s,transform .5s cubic-bezier(.34,1.9,.45,1)}
+.hbal svg{width:17px;height:17px;flex:none;stroke-width:1.7;opacity:.85}
+.hbal b{font:500 14px/1 var(--mono);font-variant-numeric:tabular-nums;letter-spacing:-.01em}
+.hbal:hover{border-color:rgba(var(--acc),.7);box-shadow:inset 0 1px 0 rgba(255,255,255,.1),0 0 26px -8px rgba(var(--acc),1)}
+.hbal:active{transform:scale(.95)}
+@media (max-width:379px){.hbal{padding:0 10px;gap:6px}.hbal svg{display:none}.hbal b{font-size:13px}}
+
+/* банкомат: в покое почти прямо (−7°, за мышью ±4°), на телефоне −3°; толще корпус, фаски, тень на пол */
+.atm{perspective:1700px;perspective-origin:108% -18%;padding-bottom:30px}
+.atm-body{transform:rotateX(calc(-2deg + var(--ty) * 2deg)) rotateY(calc(-7deg + var(--tx) * -4deg))}
+@media (max-width:899px){.atm-body{transform:rotateX(calc(-1.5deg + var(--ty) * 1.5deg)) rotateY(calc(-3deg + var(--tx) * -3deg))}}
+.atm-side{width:64px;top:12px;bottom:12px}
+.atm-side.r{background:linear-gradient(90deg,#040404 0%,color-mix(in srgb,var(--p2) 75%,#000) 30%,var(--p3) 78%,color-mix(in srgb,var(--p3) 70%,#fff) 97%,rgba(var(--accl),.6) 100%)}
+.atm-side.r::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 0 22%,rgba(0,0,0,.45) 22% calc(22% + 2px),transparent calc(22% + 2px) 70%,rgba(0,0,0,.45) 70% calc(70% + 2px),transparent calc(70% + 2px))}
+.atm-side.r::after{inset:28% 34% 36% 38%}
+.atm-top{left:14px;right:14px;height:64px;background:linear-gradient(180deg,#050505,color-mix(in srgb,var(--p3) 85%,#fff))}
+/* фаска по краям лицевой панели: светлый скос слева и сверху, тёмный справа и снизу */
+.atm-sign,.atm-face,.atm-foot{box-shadow:inset 4px 0 0 -1px rgba(255,255,255,.07),inset -4px 0 0 -1px rgba(0,0,0,.45),inset 0 1px 0 rgba(255,255,255,.1)}
+.atm-sign{border-top:1px solid rgba(255,255,255,.14)}
+.atm-foot{height:30px;box-shadow:inset 4px 0 0 -1px rgba(255,255,255,.06),inset -4px 0 0 -1px rgba(0,0,0,.45),inset 0 -6px 10px -6px rgba(0,0,0,.9)}
+.atm-shadow{left:-2%;right:-10%;bottom:2px;height:58px;background:radial-gradient(closest-side,rgba(0,0,0,.85),rgba(0,0,0,.35) 55%,transparent)}
+
+/* купюры: пачка ложится в лоток и по одной заезжает в щель (верхняя первой) */
+.cash-lane{height:104px;clip-path:inset(0 -140px -40px -140px)}
+.cash-lane.in{animation:pileIn .32s cubic-bezier(.2,.8,.2,1) both}
+@keyframes pileIn{from{opacity:0;transform:translateY(18px)}}
+.bill{box-shadow:0 1px 0 rgba(0,0,0,.35),0 6px 10px -6px rgba(0,0,0,.7);animation:billGo .5s cubic-bezier(.55,0,.75,.4) both}
+@keyframes billGo{
+  0%{transform:translate3d(var(--x,0px),var(--y,20px),0) rotate(var(--r,0deg))}
+  30%{transform:translate3d(0,calc(var(--y,20px) - 4px),0) rotate(0)}
+  100%{transform:translate3d(0,-84px,0) rotate(0)}}
+@media (prefers-reduced-motion:reduce) and (max-width:899px){.atm-body{transform:rotateY(-3deg)}}

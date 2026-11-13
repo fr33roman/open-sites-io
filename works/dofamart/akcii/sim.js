@@ -555,10 +555,10 @@ const snd = (function () {
   }
   return {
     gesture() { gest = true; },
-    cash(n) {                                   // quick series of bill rustles, then the tray closing
-      if (!ready()) return; const t0 = ctx.currentTime + 0.02, k = n * 2;
-      for (let i = 0; i < k; i++) burst(t0 + i * 0.052, 0.05, 2400 + Math.random() * 2800, 1.1, 0.42);
-      tone(t0 + k * 0.052 + 0.03, 150, 70, 0.14, 0.3);
+    cash(n, lead, st, d) {                      // 13.11 (2): one rustle per bill as it goes into the slot, then the slot closing
+      if (!ready()) return; const t0 = ctx.currentTime + 0.02 + (lead || 0); st = st || 0.052; d = d || 0;
+      for (let i = 0; i < n; i++) { const tb = t0 + i * st + d * 0.45; burst(tb, 0.05, 2400 + Math.random() * 2800, 1.1, 0.4); burst(tb + 0.03, 0.04, 3200 + Math.random() * 2000, 1.2, 0.22); }
+      tone(t0 + (n - 1) * st + d + 0.04, 150, 70, 0.14, 0.3);
     },
     win() {                                     // coin clinks and a soft "cha-ching"
       if (!ready()) return; const t0 = ctx.currentTime + 0.02;
@@ -1300,32 +1300,37 @@ Object.assign(T.en, {
 });
 
 let sig = '', rollEnd = 0, tickN = 0;
-function refreshMoney() { if (Date.now() >= rollEnd) setTxt($('atmBal'), money(S.cash)); }
+function refreshMoney() { if (!cashQ.busy && !cashQ.pend) rollTo($('atmBal'), S.cash, money); }
+// 13.11 (2): deposit = a stack of bills lies in the tray and goes INTO the slot, top bill first.
+// Bigger amount -> thicker stack and longer animation. A new deposit during the animation waits and runs right after.
+const cashQ = { busy: false, pend: 0 };
+const billsFor = a => (a >= 1e6 ? 24 : a >= 1e5 ? 16 : a >= 1e4 ? 10 : a >= 1e3 ? 6 : 3);
+function cashAnim(a) {
+  if (cashQ.busy) { cashQ.pend += a; return; }
+  const lane = $('cashLane'), n = billsFor(a), T = 0.9 + (n - 3) / 21 * 1.5, D = 0.5, st = (T - D) / Math.max(1, n - 1), lead = RM ? 0 : 0.35;
+  snd.cash(n, lead, st, D);
+  if (!lane || RM) { refreshMoney(); return; }
+  cashQ.busy = true; lane.textContent = ''; lane.classList.remove('in'); void lane.offsetWidth; lane.classList.add('in');
+  for (let i = 0; i < n; i++) {                // i = 0 is the bottom of the stack; the top one (last) goes in first
+    const b = document.createElement('div'); b.className = 'bill';
+    b.style.setProperty('--x', ((Math.random() - 0.5) * 8).toFixed(1) + 'px'); b.style.setProperty('--y', (26 - i * 1.15).toFixed(1) + 'px');
+    b.style.setProperty('--r', ((Math.random() - 0.5) * 5).toFixed(1) + 'deg');
+    b.style.animationDelay = (lead + (n - 1 - i) * st).toFixed(3) + 's'; b.style.animationDuration = D + 's';
+    lane.appendChild(b);
+  }
+  setTimeout(() => {
+    lane.textContent = ''; lane.classList.remove('in'); cashQ.busy = false;
+    if (cashQ.pend) { const p = cashQ.pend; cashQ.pend = 0; cashAnim(p); } else refreshMoney();
+  }, Math.round((lead + T) * 1000) + 80);
+}
 function atmMsg(s, err) { const m = $('atmMsg'); if (m) { m.className = 'scr-msg num' + (err ? ' err' : ''); m.textContent = s; } }
 function doDeposit(a) {
   if (!(a >= 1)) { atmMsg(t('atm_min'), true); vib(20); return; }
-  const before = S.cash;
   if (a > 1e7 || !E.deposit(S, M, a)) { atmMsg(t('atm_max'), true); vib(20); return; }
   save(); atmMsg('+' + money(a)); const inp = $('atmInp'); if (inp) inp.value = '';
-  const n = a >= 5e5 ? 8 : a >= 5e4 ? 6 : a >= 5e3 ? 5 : a >= 500 ? 4 : 3, lane = $('cashLane');
-  snd.cash(n); vib([10, 30, 10, 30, 10]);
-  if (lane && !RM) {
-    lane.textContent = '';
-    for (let i = 0; i < n; i++) {              // 13.11: bills fan out of the tray, each to its own angle
-      const b = document.createElement('div'), f = n > 1 ? i / (n - 1) - 0.5 : 0;
-      b.className = 'bill'; b.style.animationDelay = (i * 0.104) + 's';
-      b.style.setProperty('--r', (f * 26 + (Math.random() - 0.5) * 4).toFixed(1) + 'deg'); b.style.setProperty('--x', (f * 96).toFixed(0) + 'px');
-      lane.appendChild(b);
-    }
-    setTimeout(() => { lane.textContent = ''; }, n * 104 + 1500);
-  }
-  const el = $('atmBal'), to = S.cash, t0 = Date.now(), dur = RM ? 0 : 900;
-  rollEnd = t0 + dur;
-  (function fr() {                      // balance counter rolls up
-    const k = dur ? Math.min(1, (Date.now() - t0) / dur) : 1, e = 1 - Math.pow(1 - k, 3);
-    setTxt(el, money(before + (to - before) * e));
-    if (k < 1 && !document.hidden) requestAnimationFrame(fr);
-  })();
+  vib([10, 30, 10, 30, 10]);
+  cashAnim(a);                          // the ATM balance rolls up when the last bill has gone in
+  hdrBal();
 }
 
 // 13.11: the ATM leans a little toward the mouse (or the phone's tilt, only where no permission prompt is needed).
@@ -1761,11 +1766,11 @@ const oname = s => (s === 'Yes' ? t('bet_yes') : s === 'No' ? t('bet_no') : s);
 const mkEl = (tag, cls, txt) => { const e = document.createElement(tag); if (cls) e.className = cls; if (txt != null) e.textContent = txt; return e; };
 
 // Money is missing or not enough: the same message with a top-up button everywhere.
-Object.assign(T.ru, { topup: 'Пополнить кошелёк', need_more: 'В кошельке не хватает денег.', tip_aria: 'Что это?',
+Object.assign(T.ru, { hbal_aria: 'Кошелёк: стоимость портфеля', topup: 'Пополнить кошелёк', need_more: 'В кошельке не хватает денег.', tip_aria: 'Что это?',
   tip_pause: 'Откроет минуту тишины: дыхание на четыре счёта и ваш общий итог. Сделки не закрывает и торговать не запрещает. Сама появляется после трёх убыточных сделок подряд.',
   tip_lev: 'Плечо умножает и прибыль, и убыток. При ×10 цена, ушедшая против вас на 10%, съедает всю сумму сделки — позицию закроет автоматически.',
   tip_sell: 'Забрать деньги до исхода события по текущему коэффициенту: шанс вырос — вернётся больше ставки, упал — меньше.' });
-Object.assign(T.en, { topup: 'Top up the wallet', need_more: 'Not enough money in the wallet.', tip_aria: 'What is this?',
+Object.assign(T.en, { hbal_aria: 'Wallet: portfolio value', topup: 'Top up the wallet', need_more: 'Not enough money in the wallet.', tip_aria: 'What is this?',
   tip_pause: 'Opens a quiet minute: four-count breathing and your overall result. It does not close trades or block trading. It also appears by itself after three losing trades in a row.',
   tip_lev: 'Leverage multiplies both profit and loss. At ×10 a 10% move against you wipes out the whole amount and the position is closed automatically.',
   tip_sell: 'Take the money back before the event ends at the current odds: more than the stake if the chance went up, less if it went down.' });
@@ -2125,7 +2130,7 @@ function render() {
   else if (ui.view === 'bets') renderBets();
   else if (ui.view === 'top') renderTop();
   else if (ui.view === 'compare') { renderCompare(); cmpLoad(); }
-  upd(true); refreshView();
+  upd(true); refreshView(); hdrBal();
 }
 function refreshView() {
   if (ui.view === 'money') refreshMoney();
@@ -2134,8 +2139,11 @@ function refreshView() {
   else if (ui.view === 'truth') refreshTruth();
   else if (ui.view === 'top') refreshTop();
 }
+// 13.11 (2): header shows the wallet — total portfolio value (cash + positions); tap opens the Wallet.
+function hdrBal() { const el = $('hBalV'); if (el && S) rollTo(el, E.equity(S, M), tight); }
 function refresh() {
   if (!S || document.hidden) return;
+  hdrBal();
   const s = posSig();
   if (s !== sig) { sig = s; renderDyn(); }
   upd(); refreshView();
