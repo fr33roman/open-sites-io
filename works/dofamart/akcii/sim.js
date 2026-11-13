@@ -273,6 +273,7 @@ function chg24(M, sym, now) {
 /* ---------- account ---------- */
 function newState() {
   return { v: 1, lang: 'ru', sound: true, cash: 0, deposited: 0, bench: 0, positions: [], trades: [], curve: [], curveT: 0, nextId: 1,
+    gift: 0, xp: 0, nm: { b: 0, mx: 0 }, qd: {}, les: {}, qx: { cmp: 0, wal: 0, cats: {} }, inv: 0,
     agg: { n: 0, wins: 0, fees: 0, maxLoss: 0, imp: 0, opens: 0, streak: 0, lastActT: 0, lastLossT: 0, liq: 0, realized: 0 } };
 }
 function reset(S) { const k = { lang: S.lang, sound: S.sound }; Object.keys(S).forEach(x => delete S[x]); Object.assign(S, newState(), k); }
@@ -287,13 +288,53 @@ function pushCurve(S, M) {
   S.curve.push([M.t, round2(equity(S, M) - S.deposited)]); S.curveT = M.t;
   if (S.curve.length > 400) S.curve = S.curve.filter((c, i) => i >= 200 || i % 2 === 0);
 }
+// 14.11: deposit limits by level. Rewards are put on the account as "gift": they raise cash and deposited (the result is not touched)
+// but do not eat the limit. Old players keep what they already put in: the level is never lower than what covers their own deposits.
+// Ten levels; the level grows with experience points (xp): quests and lessons now, friends and debts later (server, stage 2).
+// xp = quests and lessons (S.xp) + points for earned money (profitXp of the best net result reached). `net` — a mandatory net profit for the level.
+const LEVELS = [
+  { lim: 1e4, xp: 0, net: 0, ru: 'Ученик', en: 'Apprentice' }, { lim: 25e3, xp: 100, net: 0, ru: 'Счетовод', en: 'Bookkeeper' }, { lim: 5e4, xp: 250, net: 0, ru: 'Купец', en: 'Merchant' },
+  { lim: 1e5, xp: 450, net: 0, ru: 'Стратег', en: 'Strategist' }, { lim: 25e4, xp: 800, net: 0, ru: 'Инвестор', en: 'Investor' }, { lim: 5e5, xp: 1050, net: 0, ru: 'Банкир', en: 'Banker' },
+  { lim: 1e6, xp: 1300, net: 0, ru: 'Финансист', en: 'Financier' }, { lim: 3e6, xp: 1800, net: 1e5, ru: 'Магнат', en: 'Magnate' }, { lim: 7e6, xp: 2500, net: 5e5, ru: 'Мудрец', en: 'Sage' },
+  { lim: 13e6, xp: 3500, net: 2e6, ru: 'Оракул', en: 'Oracle' }];
+// Points for net profit: [net $, points], linear between; 2 300 points at $2M = about 65% of the 3 500 needed for level 10.
+const PROFIT_XP = [[0, 0], [1e3, 60], [5e3, 180], [2e4, 380], [5e4, 600], [1e5, 850], [3e5, 1300], [5e5, 1550], [1e6, 1950], [2e6, 2300]];
+function profitXp(n) {
+  if (!(n > 0)) return 0; const T = PROFIT_XP;
+  for (let i = 1; i < T.length; i++) if (n <= T[i][0]) return T[i - 1][1] + (T[i][1] - T[i - 1][1]) * (n - T[i - 1][0]) / (T[i][0] - T[i - 1][0]);
+  return T[T.length - 1][1];
+}
+// Net result "earned by mind": closed trades (profit minus loss, fees included) + settled bets (payouts minus stakes). Counted from the update:
+// S.nm.b is the starting point, S.nm.mx the best net reached — points go by the best, so a loss must be won back first.
+function earned(S) {
+  const a = S.betAgg, open = (S.bets || []).reduce((x, b) => x + (b && b.a > 0 ? b.a : 0), 0);
+  return round2((S.agg ? S.agg.realized : 0) + (a ? a.paid - a.staked + open : 0));
+}
+function netNow(S) { return round2(earned(S) - (S.nm ? S.nm.b : 0)); }
+function trackNet(S) { if (!S.nm) S.nm = { b: 0, mx: 0 }; const n = netNow(S); if (n > S.nm.mx) S.nm.mx = n; return S.nm.mx; }
+const xpTotal = S => { trackNet(S); return Math.floor((num(S.xp) || 0) + profitXp(S.nm.mx)); };
+const LIMITS = LEVELS.map(l => l.lim);
+const own = S => Math.max(0, round2(S.deposited - (S.gift || 0)));
+// Level = by xp, but never lower than the one whose limit covers what the player has already put in (old players lose nothing).
+function levelOf(S) {
+  let l = 0; const xp = xpTotal(S), o = own(S), mx = S.nm.mx;
+  while (l < LEVELS.length - 1 && LEVELS[l + 1].xp <= xp && LEVELS[l + 1].net <= mx) l++;
+  while (l < LEVELS.length - 1 && o > LEVELS[l].lim + 1e-9) l++;
+  return l;
+}
+const room = S => Math.max(0, round2(LIMITS[levelOf(S)] - own(S)));
 function deposit(S, M, amount) {
   amount = round2(num(amount));
-  if (!(amount >= 1) || amount > 1e7 || S.deposited + amount > 1e9) return false;
+  if (!(amount >= 1) || amount > room(S) + 1e-9) return false;
   S.cash = round2(S.cash + amount); S.deposited = round2(S.deposited + amount);
   S.bench += amount / M.px[BENCH];           // "bought the index and never touched it"
   pushCurve(S, M);
   return true;
+}
+function grant(S, M, amount) {
+  amount = round2(num(amount)); if (!(amount > 0)) return;
+  S.cash = round2(S.cash + amount); S.deposited = round2(S.deposited + amount); S.gift = round2((S.gift || 0) + amount);
+  S.bench += amount / M.px[BENCH];
 }
 // Largest margin that still leaves room for the opening fee.
 function maxAmount(cash, lev) {
@@ -387,12 +428,15 @@ function restore(d, now) {
   SYMS.forEach(s => synthHist(M, s));
   const S = Object.assign(newState(), d); delete S.market;
   S.agg = Object.assign(newState().agg, d.agg);
+  S.qx = Object.assign(newState().qx, d.qx || {}); if (!S.qx.cats) S.qx.cats = {};
+  S.nm = d.nm && typeof d.nm === 'object' ? { b: num(d.nm.b) || 0, mx: num(d.nm.mx) || 0 } : { b: earned(S), mx: 0 };   // old players: count from the update
+  if (!S.qd || typeof S.qd !== 'object') S.qd = {}; if (!S.les || typeof S.les !== 'object') S.les = {};
   S.positions = S.positions.filter(p => p && INS[p.sym]);
   return { S: S, M: M };
 }
 
 Object.assign(E, { KEY, FEE, LEVS, CATS, CAT, INS, SYMS, BENCH, FINE_N, newMarket, status, step, synthHist, setCandles, applyQuote, chg24,
-  newState, reset, pnl, posValue, betValue, betsValue, liqPrice, equity, deposit, maxAmount, open, close, sweep, sweepCandles, advance, stats, restore, num, round2, bridge, gauss });
+  newState, reset, pnl, posValue, betValue, betsValue, liqPrice, equity, deposit, grant, LEVELS, LIMITS, PROFIT_XP, profitXp, earned, netNow, trackNet, xpTotal, own, levelOf, room, maxAmount, open, close, sweep, sweepCandles, advance, stats, restore, num, round2, bridge, gauss });
 if (typeof module !== 'undefined' && module.exports) { module.exports = E; }
 if (typeof document === 'undefined') return;
 
@@ -413,7 +457,7 @@ const T = {
     money_sub: 'Внесите любую сумму и торгуйте как в жизни. Деньги игровые: потерять здесь нечего, а результат считается честно.',
     reset: 'Обнулить всё', reset_q: 'Стереть деньги, позиции и всю историю?', reset_yes: 'Да, обнулить', cancel: 'Отмена', reset_done: 'Счёт обнулён',
     atm_balance: 'Баланс', atm_ph: 'Своя сумма', atm_go: 'Внести', atm_card: 'Карта', atm_cash: 'Купюры',
-    atm_min: 'Минимум $1', atm_max: 'За один раз — до $10 000 000',
+    atm_min: 'Минимум $1', atm_max: 'Сумма не принимается',
     disclaimer: 'Криптовалюты и золото (через токен PAXG) — живые цены биржи Binance. Валюты — справочный курс, обновляется раз в сутки. Акции, индексы, сырьё и остальные металлы — с задержкой из нашего файла котировок. Если источник недоступен, цена моделируется вокруг последней известной и помечается «Модель». Это не инвестиционная рекомендация. Настоящих денег здесь нет.',
     market_lbl: 'Шесть рынков', market_h: 'Рынок', market_sub: 'Выберите класс активов. У каждой цены подписано, откуда она: живая, с задержкой или модель.',
     instr: 'инструментов', back_market: 'Рынок',
@@ -467,7 +511,7 @@ const T = {
     money_sub: 'Deposit any amount and trade as you would in real life. The money is play money: nothing to lose, and the result is counted honestly.',
     reset: 'Reset everything', reset_q: 'Erase money, positions and all history?', reset_yes: 'Yes, reset', cancel: 'Cancel', reset_done: 'Account reset',
     atm_balance: 'Balance', atm_ph: 'Custom amount', atm_go: 'Deposit', atm_card: 'Card', atm_cash: 'Cash',
-    atm_min: 'Minimum is $1', atm_max: 'Up to $10,000,000 at a time',
+    atm_min: 'Minimum is $1', atm_max: 'This amount is not accepted',
     disclaimer: 'Crypto and gold (via the PAXG token) are live Binance prices. Forex is a reference rate updated once a day. Stocks, indices, commodities and other metals are delayed quotes from our quotes file. When a source is unreachable the price is modelled around the last known one and marked “Model”. This is not investment advice. There is no real money here.',
     market_lbl: 'Six markets', market_h: 'Market', market_sub: 'Pick an asset class. Every price says where it comes from: live, delayed or model.',
     instr: 'instruments', back_market: 'Market',
@@ -1322,7 +1366,7 @@ function doTrade(side) {
   const r = E.open(S, M, ui.sym, side, parseAmt(inp.value), ui.lev);
   if (!r.ok) { if (m) { if (r.err === 'funds' || S.cash < 1) needMoney(m, S.cash < 1 ? 'need_money' : 'err_funds'); else m.textContent = t('err_' + r.err); } vib(20); return; }
   if (m) m.textContent = '';
-  inp.value = ''; snd.key(); vib(12);
+  inp.value = ''; snd.key(); vib(12); if (INS[ui.sym]) S.qx.cats[INS[ui.sym].cat] = 1;
   toast(tf('opened', { s: tk(ui.sym) + ' ×' + ui.lev }) + (r.imp ? '. ' + t('imp_note') : ''), 'up', true);
   pulse($('trCash'));
   save(); sig = ''; refresh();
@@ -1404,11 +1448,19 @@ function cashAnim(a) {
 function atmMsg(s, err) { const m = $('atmMsg'); if (m) { m.className = 'scr-msg num' + (err ? ' err' : ''); m.textContent = s; } }
 function doDeposit(a) {
   if (!(a >= 1)) { atmMsg(t('atm_min'), true); vib(20); return; }
-  if (a > 1e7 || !E.deposit(S, M, a)) { atmMsg(t('atm_max'), true); vib(20); return; }
-  save(); atmMsg('+' + money(a)); const inp = $('atmInp'); if (inp) inp.value = '';
+  const lv = E.levelOf(S), cap = E.LIMITS[lv], rm = E.room(S);
+  if (a > rm + 1e-9) {
+    if (lv >= E.LIMITS.length - 1 && rm < 1) atmMsg(tf('full_top', { c: money(cap, 0) }), true);
+    else if (a > cap) atmMsg(openHint(levelFor(a)), true);
+    else if (rm < 1) atmMsg(tf('limit_used', { c: money(cap, 0) }) + ' ' + openHint(lv + 1), true);
+    else atmMsg(tf('room_msg', { x: money(rm, 0) }), true);
+    vib(20); return;
+  }
+  if (!E.deposit(S, M, a)) { atmMsg(t('atm_max'), true); vib(20); return; }
+  save(); atmMsg('+' + money(a)); atmSet('');
   vib([10, 30, 10, 30, 10]);
   cashAnim(a);                          // the ATM balance rolls up when the last bill has gone in
-  hdrBal();
+  hdrBal(); ui.atmSig = ''; fillAtm(); fillNotes();
 }
 
 // 13.11: the ATM leans a little toward the mouse (or the phone's tilt, only where no permission prompt is needed).
@@ -1423,8 +1475,9 @@ function fitAtm() {
     const top = (hdr ? hdr.offsetHeight : 60), bot = mob && tab && tab.offsetParent ? tab.offsetHeight : 0;
     const padTop = mob ? 12 : 30, padBot = mob ? 16 : 30;
     const availH = innerHeight - top - bot - padTop - padBot - (mob ? 8 : 40);
-    const availW = (mob ? box.clientWidth - 30 : box.clientWidth - 50) / (w * 1.16);
-    const sc = Math.max(0.4, Math.min(mob ? 1 : 0.92, availH / h * (mob ? 0.9 : 1), availW));   // 0,9 — запас на перспективу и выступающие полку и цоколь
+    const availW = (mob ? box.clientWidth - 4 : box.clientWidth - 50) / (w * 1.04);
+    // телефон (14.11): сжимаем только ширину; по высоте сейф и цоколь сокращены в CSS, экран и клавиши — полного размера в первом экране
+    const sc = mob ? Math.max(0.5, Math.min(1, availW)) : Math.max(0.4, Math.min(0.92, availH / h, availW));
     const hh = Math.round(padTop + h * sc + padBot) + 'px';
     box.style.setProperty('--sc', sc.toFixed(3)); box.style.paddingTop = padTop + 'px';
     if (box.style.height !== hh) box.style.height = hh;
@@ -2013,7 +2066,7 @@ function showTip(el) {
 }
 
 // Bottom bar: four main sections and "More" with a slide-up sheet for the rest.
-const MORE = ['news', 'truth', 'compare', 'top'];
+const MORE = ['news', 'truth', 'compare', 'top', 'quests', 'learn'];
 Object.assign(T.ru, { nav_more: 'Ещё', more_title: 'Ещё разделы', more_news: 'Что пишут о рынках за сутки', more_truth: 'Честный итог ваших сделок',
   more_compare: 'Два графика на одном экране', more_top: 'Лучшие результаты' });
 Object.assign(T.en, { nav_more: 'More', more_title: 'More sections', more_news: 'What the press says today', more_truth: 'The honest result of your trades',
@@ -2342,9 +2395,260 @@ function betTick() {
 }
 
 /* =====================================================================
+   9c. LEVELS, QUESTS, LEARNING (14.11). Everything is local (localStorage); friends and debts come with the server (stage 2).
+   ===================================================================== */
+const LESSON_XP = 40;
+const LESSONS = [
+  { r: 500, ru: { t: 'Цена и график', p: ['Цена — сколько стоит одна штука актива сегодня. Биткоин стоит $60 000: столько нужно заплатить за один целый биткоин.', 'График — история цены. Слева старое, справа новое, выше — дороже. Одна свеча показывает за выбранный отрезок времени четыре цены: с какой цена началась, чем закончилась, самую высокую и самую низкую.', 'Зелёная свеча — за отрезок цена выросла. Красная — упала.'], q: 'Свеча красная. Что случилось с ценой за этот отрезок?', o: ['Упала', 'Выросла', 'Не изменилась'], ok: 0, e: 'Красная свеча значит, что цена закончила отрезок ниже, чем начала.' },
+    en: { t: 'Price and chart', p: ['Price is what one unit of an asset costs today. Bitcoin costs $60,000: that is what you pay for one whole bitcoin.', 'A chart is the history of the price. Older on the left, newer on the right, higher means more expensive. One candle shows four prices for the chosen period: where the price started, where it ended, the highest and the lowest.', 'A green candle means the price rose over the period. A red one means it fell.'], q: 'The candle is red. What happened to the price over this period?', o: ['It fell', 'It rose', 'It did not change'], ok: 0, e: 'A red candle means the price ended the period lower than it started.' } },
+  { r: 500, ru: { t: 'Купить и продать', p: ['Купить — открыть сделку на рост: вы ждёте, что цена поднимется. Вы купили биткоин на $100 по цене $50 000. Цена стала $55 000, это на 10 % больше. Ваши $100 стали $110.', 'Продать в тренажёре — сделка на падение: вы зарабатываете, когда цена снижается. Закрыть сделку — забрать результат, плюс или минус.'], q: 'Вы купили на $200. Цена выросла на 5 %. Сколько стоит ваша позиция без комиссии?', o: ['$210', '$205', '$190'], ok: 0, e: '5 % от $200 — это $10. Было $200, стало $210.' },
+    en: { t: 'Buy and sell', p: ['To buy is to open a trade on a rise: you expect the price to go up. You bought $100 of bitcoin at $50,000. The price became $55,000, which is 10% more. Your $100 became $110.', 'To sell in the simulator is a trade on a fall: you earn when the price goes down. To close a trade is to take the result, plus or minus.'], q: 'You bought $200 worth. The price rose 5%. What is your position worth before fees?', o: ['$210', '$205', '$190'], ok: 0, e: '5% of $200 is $10. It was $200, now $210.' } },
+  { r: 750, ru: { t: 'Прибыль и убыток', p: ['Прибыль — вы закрыли сделку и забрали больше, чем вложили. Убыток — забрали меньше. Вложили $100, закрыли с $110: прибыль $10. Закрыли с $85: убыток $15.', 'Комиссия — небольшая плата за открытие и закрытие сделки. Пока сделка открыта, результат не зафиксирован: цена ещё может вернуться или уйти дальше.'], q: 'Вы вложили $300 и закрыли сделку с $270. Что получилось?', o: ['Убыток $30', 'Прибыль $30', 'Убыток $270'], ok: 0, e: '$300 минус $270 — вы потеряли $30.' },
+    en: { t: 'Profit and loss', p: ['Profit is when you closed a trade and took out more than you put in. Loss is when you took out less. You put in $100 and closed with $110: profit $10. Closed with $85: loss $15.', 'A fee is a small charge for opening and closing a trade. While the trade is open the result is not fixed: the price can still come back or go further.'], q: 'You put in $300 and closed the trade with $270. What happened?', o: ['A loss of $30', 'A profit of $30', 'A loss of $270'], ok: 0, e: '$300 minus $270: you lost $30.' } },
+  { r: 750, ru: { t: 'Плечо', p: ['Плечо — множитель сделки. При плече ×5 ваши $100 работают как $500. Цена выросла на 10 % — прибыль считается с $500, это $50, половина ваших $100.', 'Убыток растёт так же. Цена упала на 10 % — минус $50. Плечо делает и выигрыш, и проигрыш больше.'], q: 'Плечо ×10, вы вложили $100. Цена упала на 5 %. Сколько вы потеряли?', o: ['$50', '$5', '$100'], ok: 0, e: 'При ×10 ваши $100 работают как $1 000. 5 % от $1 000 — это $50.' },
+    en: { t: 'Leverage', p: ['Leverage multiplies a trade. With ×5 your $100 works like $500. The price rose 10%: profit is counted on $500, that is $50, half of your $100.', 'Loss grows the same way. The price fell 10%: minus $50. Leverage makes both the win and the loss bigger.'], q: 'Leverage ×10, you put in $100. The price fell 5%. How much did you lose?', o: ['$50', '$5', '$100'], ok: 0, e: 'At ×10 your $100 works like $1,000. 5% of $1,000 is $50.' } },
+  { r: 1000, ru: { t: 'Ликвидация', p: ['Ликвидация — принудительное закрытие, когда убыток съел весь ваш залог. Плечо ×10: цена идёт против вас на 10 %, убыток $100 из вложенных $100. Сделка закрывается сама, деньги сгорают.', 'Чем больше плечо, тем ближе цена ликвидации к цене входа. На ×2 цена должна упасть на 50 %, на ×10 хватит 10 %. На графике рынка линия ликвидации красная.'], q: 'При каком плече цена ликвидации ближе всего к цене входа?', o: ['×10', '×2', '×1'], ok: 0, e: 'При ×10 хватит движения на 10 %, при ×2 нужно 50 %, при ×1 сделку почти не ликвидирует.' },
+    en: { t: 'Liquidation', p: ['Liquidation is a forced close when the loss has eaten your whole margin. Leverage ×10: the price goes against you by 10%, the loss is $100 of your $100. The trade closes by itself and the money is gone.', 'The higher the leverage, the closer the liquidation price is to the entry price. At ×2 the price must fall 50%, at ×10 just 10%. On the market chart the liquidation line is red.'], q: 'At which leverage is the liquidation price closest to the entry price?', o: ['×10', '×2', '×1'], ok: 0, e: 'At ×10 a 10% move is enough, at ×2 it takes 50%, at ×1 a trade is almost never liquidated.' } },
+  { r: 1000, ru: { t: 'Стоп: выход по плану', p: ['Стоп — убыток, при котором вы заранее решили выйти. Вложили $100 и сказали себе: теряю не больше $20. Цена идёт против вас, на минусе $20 вы закрываете сделку и не ждёте ликвидации.', 'Решение принимается до сделки, пока вы спокойны. Когда деньги уже в минусе, хочется ждать, и убыток растёт.', 'Сейчас стоп делается руками: следите за позицией и закройте её на своём пороге.'], q: 'Вы решили терять не больше $30 со сделки в $150. Сейчас минус $30. Что делаете?', o: ['Закрываю сделку', 'Жду, вдруг вернётся', 'Докупаю ещё'], ok: 0, e: 'План на то и план: порог достигнут — выходите.' },
+    en: { t: 'Stop: leave by plan', p: ['A stop is the loss at which you decided in advance to leave. You put in $100 and told yourself: I lose $20 at most. The price goes against you, at minus $20 you close the trade and do not wait for liquidation.', 'You decide before the trade, while you are calm. When the money is already down you want to wait, and the loss grows.', 'For now a stop is done by hand: watch the position and close it at your threshold.'], q: 'You decided to lose $30 at most on a $150 trade. It is now minus $30. What do you do?', o: ['Close the trade', 'Wait, it may come back', 'Add more'], ok: 0, e: 'A plan is a plan: the threshold is reached, so you leave.' } },
+  { r: 1000, ru: { t: 'Разные активы', p: ['В тренажёре шесть разделов: криптовалюты, акции, валюты, металлы, сырьё, индексы. Они ведут себя по-разному. За день биткоин может уйти на 5 %, золото обычно на 1 %.', 'Раздел «Сравнить» накладывает графики, все линии начинаются со 100 %, и видно, кто вырос сильнее. Если разделить деньги между активами, неудача в одном не съест всё: $1 000 поровну на два актива, один упал на 50 %, второй не изменился — осталось $750.'], q: 'Вы разделили $1 000 поровну на два актива. Один упал на 50 %, второй не изменился. Сколько всего?', o: ['$750', '$500', '$1 000'], ok: 0, e: 'Упавшая половина стала $250, вторая осталась $500: вместе $750.' },
+    en: { t: 'Different assets', p: ['The simulator has six sections: crypto, stocks, currencies, metals, commodities, indices. They behave differently. In a day bitcoin can move 5%, gold usually 1%.', 'The “Compare” section lays the charts on top of each other, every line starts at 100%, and you see which grew more. If you split money between assets, a failure in one does not eat everything: $1,000 split in two, one fell 50%, the other did not change: $750 left.'], q: 'You split $1,000 equally between two assets. One fell 50%, the other did not change. How much in total?', o: ['$750', '$500', '$1,000'], ok: 0, e: 'The fallen half became $250, the other stayed $500: $750 together.' } },
+  { r: 1500, ru: { t: 'Ставки и коэффициент', p: ['Коэффициент показывает, сколько вы получите за каждый доллар ставки, если исход сбудется. Коэффициент 2,5 и ставка $10: при победе выплата $25, прибыль $15. Не сбылось — $10 пропали.', 'Коэффициент связан с шансом: единица, делённая на коэффициент. Коэффициент 2,5 — это шанс 40 % по оценке рынка.'], q: 'Ставка $20 при коэффициенте 3. Исход сбылся. Какая выплата?', o: ['$60', '$23', '$40'], ok: 0, e: '$20 умножить на 3 — выплата $60, из них $40 прибыли.' },
+    en: { t: 'Bets and odds', p: ['Odds show how much you get for each dollar of the stake if the outcome happens. Odds 2.5 and a $10 stake: if you win the payout is $25, profit $15. If not, the $10 is gone.', 'Odds are tied to chance: one divided by the odds. Odds 2.5 mean a 40% chance by the market’s estimate.'], q: 'A $20 stake at odds 3. The outcome happened. What is the payout?', o: ['$60', '$23', '$40'], ok: 0, e: '$20 times 3 is a $60 payout, $40 of it profit.' } },
+  { r: 2000, ru: { t: 'Главное правило', p: ['Вкладывайте только ту часть денег, потерю которой переживёте. Если в одной сделке весь счёт, одна ошибка заканчивает игру. Если в сделке десятая часть, нужно десять ошибок подряд.', 'Свободные деньги держите про запас: с ними можно спокойно закрыть убыточную сделку и открыть новую, когда появится возможность.', 'Когда свободных денег меньше 10 % от внесённого, тренажёр подсказывает остановиться и подумать.', 'Очки уровня больше всего дают за чистый заработок: прибыль закрытых сделок и выигрыши по ставкам минус убытки. Заработали $500, потеряли $300 — чистый итог $200. Проигрыш съедает заработанное, а за ставки наугад очков нет. Выгоднее разобраться, чем гадать.'], q: 'На счёте $1 000. Какая сделка разумнее?', o: ['$100 с плечом ×2', '$1 000 с плечом ×10', '$900 с плечом ×5'], ok: 0, e: 'Малая доля счёта и небольшое плечо: ошибка стоит дорого, но игру не заканчивает.' },
+    en: { t: 'The main rule', p: ['Put in only the part of your money whose loss you can live with. If one trade holds the whole account, one mistake ends the game. If a trade holds a tenth, it takes ten mistakes in a row.', 'Keep free money in reserve: with it you can calmly close a losing trade and open a new one when a chance appears.', 'When free money drops below 10% of what you put in, the simulator suggests you stop and think.', 'Level points come mostly for net earnings: profit of closed trades and won bets minus losses. You earned $500 and lost $300: the net result is $200. A loss eats what you earned, and guessing bets give no points. Understanding pays better than guessing.'], q: 'The account holds $1,000. Which trade is more sensible?', o: ['$100 at ×2', '$1,000 at ×10', '$900 at ×5'], ok: 0, e: 'A small share of the account and a low leverage: a mistake hurts but does not end the game.' } }
+];
+const lesN = () => Object.keys(S.les || {}).length;
+const hasCat = c => (S.qx.cats && S.qx.cats[c]) || S.positions.some(p => INS[p.sym] && INS[p.sym].cat === c);
+const holdMin = () => { let m = 0; S.positions.forEach(p => { m = Math.max(m, M.t - p.t); }); S.trades.forEach(x => { m = Math.max(m, x.t - x.t0); }); return Math.floor(m / 6e4); };
+// One table: id, xp (level points), r (reward in $), n (target), p (progress now). Names and hints — T.ru/T.en keys q_<id>, q_<id>_d.
+const QUESTS = [
+  { id: 'les1', xp: 30, r: 500, n: 1, p: () => Math.min(1, lesN()) },
+  { id: 'buy', xp: 40, r: 1000, n: 1, p: () => Math.min(1, S.agg.opens) },
+  { id: 'close', xp: 50, r: 1500, n: 1, p: () => Math.min(1, S.agg.n) },
+  { id: 'early', xp: 60, r: 2000, n: 1, p: () => Math.min(1, S.trades.filter(x => !x.liq && x.net < 0 && -x.net <= x.margin * 0.5).length) },
+  { id: 'cmp', xp: 40, r: 1500, n: 1, p: () => (S.qx.cmp ? 1 : 0) },
+  { id: 'wal', xp: 30, r: 1000, n: 1, p: () => (S.qx.wal ? 1 : 0) },
+  { id: 'win', xp: 80, r: 5000, n: 1, p: () => Math.min(1, S.agg.wins) },
+  { id: 'bet', xp: 60, r: 5000, n: 1, p: () => Math.min(1, (S.bets || []).length + (S.betHist || []).length) },
+  { id: 'hold', xp: 120, r: 10000, n: 60, p: () => Math.min(60, holdMin()) },
+  { id: 'course', xp: 150, r: 15000, n: LESSONS.length, p: () => Math.min(LESSONS.length, lesN()) },
+  { id: 'wins3', xp: 150, r: 50000, n: 3, p: () => Math.min(3, S.agg.wins) },
+  { id: 'mix', xp: 180, r: 100000, n: 3, p: () => Math.min(3, E.CATS.filter(c => hasCat(c.id)).length) }
+];
+const FUTURE = ['fut_friends', 'fut_debt_back', 'fut_debt_give'];
+Object.assign(T.ru, {
+  nav_quests: 'Задания', nav_learn: 'Обучение', quests_h: 'Задания', learn_h2: 'Обучение',
+  q_les1: 'Урок 1', q_les1_d: 'Пройдите первый урок обучения', q_buy: 'Первая покупка', q_buy_d: 'Откройте любую сделку на рынке',
+  q_close: 'Закрыть сделку', q_close_d: 'Закройте любую открытую позицию', q_early: 'Выйти вовремя', q_early_d: 'Закройте сделку, пока убыток не больше половины залога',
+  q_cmp: 'Сравнить два актива', q_cmp_d: 'Откройте «Сравнить» с двумя активами', q_wal: 'Заглянуть в кошелёк', q_wal_d: 'Откройте раздел «Кошелёк»',
+  q_win: 'Сделка в плюс', q_win_d: 'Закройте сделку с прибылью', q_bet: 'Сделать ставку', q_bet_d: 'Поставьте игровые деньги в разделе «Ставки»',
+  q_hold: 'Держать позицию час', q_hold_d: 'Одна позиция остаётся открытой 60 минут', q_course: 'Пройти всё обучение', q_course_d: 'Ответьте верно во всех уроках',
+  q_wins3: 'Три сделки в плюс', q_wins3_d: 'Закройте в плюс три сделки', q_mix: 'Портфель из трёх разделов', q_mix_d: 'Торгуйте активами из трёх разных разделов рынка',
+  lvl_of: 'Уровень {n} из {m}', lvl_limit: 'Можно вносить всего до {x}', lvl_next: 'До уровня «{name}» ещё {x} очков', lvl_next_open: 'Откроет лимит {x}', lvl_max: 'Высший уровень. Потолок — {x}.',
+  xp_short: 'оч.', xp_h: 'Как растёт уровень', xp_quests: 'Задания и уроки', xp_now: 'сейчас', xp_soon: 'скоро',
+  fut_friends: 'Приглашённые друзья', fut_debt_back: 'Долг, возвращённый вовремя', fut_debt_give: 'Выданный долг',
+  xp_profit: 'Чистая прибыль: сделки и ставки', xp_main: 'основная часть', net_h: 'Заработано умом', net_now: 'Чистый итог сейчас', net_best: 'Лучший итог', net_need: 'Нужно заработать ещё {x} чистой прибыли', net_note: 'Прибыль закрытых сделок и выигрыши по ставкам минус убытки, считается с момента обновления. Очки дают за лучший достигнутый итог: убытки сначала нужно отыграть.',
+  fut_note: 'Друзья и долги между игроками тоже дадут очки, когда появится сервер. Для уровней «Магнат», «Мудрец» и «Оракул» нужна чистая прибыль.',
+  q_done: 'Готово', q_next: 'Следующее задание', q_all_done: 'Все задания выполнены',
+  q_toast: 'Задание «{n}»: +{r} и {x} оч.', q_toast_many: 'Выполнено заданий: {k}. +{r} и {x} оч.', lvl_up: 'Новый уровень: «{name}». Лимит пополнения {x}',
+  lock_msg: 'Откроется на уровне «{name}». Ближайшее задание: «{q}» (+{x} оч.)', lock_msg2: 'Откроется на уровне «{name}»',
+  room_msg: 'Сейчас можно внести ещё до {x}', full_msg: 'Лимит {c} внесён. Откроется на уровне «{name}». Ближайшее задание: «{q}»', full_top: 'Достигнут потолок {c}',
+  lim_line: 'Лимит {c} · осталось {r}', limit_used: 'Лимит {c} внесён.',
+  les_n: 'Урок {n} из {m}', les_done: 'Пройден', les_back: 'К урокам', les_next: 'Следующий урок', les_ok: 'Верно', les_bad: 'Не совсем. Выберите другой ответ.',
+  les_reward: 'За верный ответ: +{r} и {x} оч.', les_got: 'Награда получена: +{r} и {x} оч.', les_q: 'Вопрос', les_again: 'Награда за этот урок уже получена',
+  inv_h: 'Начните с урока 1', inv_p: 'Короткие уроки простыми словами, с примерами на деньгах. За каждый — игровые деньги и очки уровня.', inv_go: 'Начать', inv_later: 'Позже',
+  inv_note: 'Начните с урока 1: за него +$500', low_t: 'Свободных денег меньше 10 % от внесённого. Можно попросить в долг у друга.', low_btn: 'Попросить у друга',
+  soon_h: 'Скоро', soon_p: 'Переводы и долги между игроками появятся вместе с сервером. Друг сможет одолжить игровые деньги, а вы вернёте их позже. Пока деньги приносят задания.', soon_ok: 'Понятно',
+  close_aria: 'Закрыть', lvbadge_aria: 'Уровень и задания', atm_key_bk: 'Стереть цифру'
+});
+Object.assign(T.en, {
+  nav_quests: 'Quests', nav_learn: 'Learn', quests_h: 'Quests', learn_h2: 'Learning',
+  q_les1: 'Lesson 1', q_les1_d: 'Pass the first lesson', q_buy: 'First buy', q_buy_d: 'Open any trade on the market',
+  q_close: 'Close a trade', q_close_d: 'Close any open position', q_early: 'Leave in time', q_early_d: 'Close a trade while the loss is at most half the margin',
+  q_cmp: 'Compare two assets', q_cmp_d: 'Open “Compare” with two assets', q_wal: 'Look into the wallet', q_wal_d: 'Open the Wallet',
+  q_win: 'A winning trade', q_win_d: 'Close a trade with a profit', q_bet: 'Place a bet', q_bet_d: 'Stake play money in “Bets”',
+  q_hold: 'Hold a position for an hour', q_hold_d: 'One position stays open for 60 minutes', q_course: 'Finish all lessons', q_course_d: 'Answer correctly in every lesson',
+  q_wins3: 'Three winning trades', q_wins3_d: 'Close three trades with a profit', q_mix: 'A portfolio of three sections', q_mix_d: 'Trade assets from three different market sections',
+  lvl_of: 'Level {n} of {m}', lvl_limit: 'You can deposit up to {x} in total', lvl_next: 'To level “{name}”: {x} more xp', lvl_next_open: 'Opens the limit {x}', lvl_max: 'Top level. The ceiling is {x}.',
+  xp_short: 'xp', xp_h: 'How the level grows', xp_quests: 'Quests and lessons', xp_now: 'now', xp_soon: 'soon',
+  fut_friends: 'Invited friends', fut_debt_back: 'A debt returned on time', fut_debt_give: 'A debt you lent',
+  xp_profit: 'Net profit: trades and bets', xp_main: 'the main part', net_h: 'Earned by mind', net_now: 'Net result now', net_best: 'Best result', net_need: 'Earn {x} more of net profit', net_note: 'Profit of closed trades and won bets minus losses, counted from the update. Points go by the best result reached: losses must be won back first.',
+  fut_note: 'Friends and debts between players will also give points once the server arrives. The levels Magnate, Sage and Oracle need net profit.',
+  q_done: 'Done', q_next: 'Next quest', q_all_done: 'All quests done',
+  q_toast: 'Quest “{n}”: +{r} and {x} xp', q_toast_many: 'Quests done: {k}. +{r} and {x} xp', lvl_up: 'New level: “{name}”. Deposit limit {x}',
+  lock_msg: 'Opens at level “{name}”. Nearest quest: “{q}” (+{x} xp)', lock_msg2: 'Opens at level “{name}”',
+  room_msg: 'You can deposit up to {x} more right now', full_msg: 'The {c} limit is used. Opens at level “{name}”. Nearest quest: “{q}”', full_top: 'The {c} ceiling is reached',
+  lim_line: 'Limit {c} · {r} left', limit_used: 'The {c} limit is used.',
+  les_n: 'Lesson {n} of {m}', les_done: 'Passed', les_back: 'To lessons', les_next: 'Next lesson', les_ok: 'Correct', les_bad: 'Not quite. Pick another answer.',
+  les_reward: 'For a correct answer: +{r} and {x} xp', les_got: 'Reward received: +{r} and {x} xp', les_q: 'Question', les_again: 'The reward for this lesson is already received',
+  inv_h: 'Start with lesson 1', inv_p: 'Short lessons in plain words, with examples in money. Each gives play money and level points.', inv_go: 'Start', inv_later: 'Later',
+  inv_note: 'Start with lesson 1: it pays +$500', low_t: 'Free money is below 10% of what you put in. You can ask a friend for a loan.', low_btn: 'Ask a friend',
+  soon_h: 'Soon', soon_p: 'Transfers and debts between players arrive with the server. A friend will be able to lend play money and you will return it later. For now quests bring money.', soon_ok: 'Got it',
+  close_aria: 'Close', lvbadge_aria: 'Level and quests', atm_key_bk: 'Delete a digit'
+});
+const lvName = i => E.LEVELS[i][S.lang === 'en' ? 'en' : 'ru'];
+const xpNow = () => E.xpTotal(S);
+const qName = q => t('q_' + q.id);
+const qDone = q => !!S.qd[q.id];
+const nextQuest = () => QUESTS.filter(q => !qDone(q))[0] || null;
+function addXp(n) { S.xp = (E.num(S.xp) || 0) + n; }
+function levelFor(a) { let l = 0; while (l < E.LEVELS.length - 1 && E.LEVELS[l].lim < a) l++; return l; }
+function openHint(l) {
+  const q = nextQuest(), L = E.LEVELS[l], need = L.net > S.nm.mx ? ' ' + tf('net_need', { x: money(L.net - S.nm.mx, 0) }) + '.' : '';
+  return (q && L.xp > xpNow() ? tf('lock_msg', { name: lvName(l), q: qName(q), x: q.xp }) : tf('lock_msg2', { name: lvName(l) })) + need;
+}
+function checkQuests() {
+  if (!S || !S.qd) return;
+  const lv0 = E.levelOf(S); let got = 0, sum = 0, xp = 0, last = null;
+  QUESTS.forEach(q => {
+    if (qDone(q) || q.p() < q.n) return;
+    S.qd[q.id] = 1; E.grant(S, M, q.r); addXp(q.xp); got++; sum += q.r; xp += q.xp; last = q;
+  });
+  if (!got) return;
+  save(); snd.win(); vib([12, 40, 12]);
+  toast(got === 1 ? tf('q_toast', { n: qName(last), r: money(sum, 0), x: xp }) : tf('q_toast_many', { k: got, r: money(sum, 0), x: xp }), 'up', true);
+  afterXp(lv0);
+}
+function afterXp(lv0) {
+  const lv = E.levelOf(S);
+  if (lv > lv0) setTimeout(() => toast(tf('lvl_up', { name: lvName(lv), x: money(E.LIMITS[lv], 0) }), 'up', true), 3400);
+  ui.atmSig = ''; fillAtm(); fillNotes(true); fillBadge(); hdrBal();
+  if (ui.view === 'quests') fillQuests(true);
+  if (ui.view === 'learn') renderLearn();
+}
+// ---------- ATM input as a line of the screen (no system keyboard) ----------
+const atmVal = () => { const el = $('atmInp'); return el ? el.getAttribute('data-v') || '' : ''; };
+function atmSet(v) {
+  const el = $('atmInp'); if (!el) return false;
+  v = String(v).replace(/\D/g, '').replace(/^0+/, '').slice(0, 8);
+  if (+v > E.LIMITS[E.LIMITS.length - 1]) return false;
+  el.setAttribute('data-v', v); el.textContent = v ? grp(v) : ''; el.classList.toggle('nul', !v); return true;
+}
+function atmKey(k) {
+  if (k === 'c') { atmSet(''); atmMsg(''); } else if (k === 'bk') { atmSet(atmVal().slice(0, -1)); atmMsg(''); }
+  else if (k === 'ok') doDeposit(+atmVal() || 0);
+  else { const v = atmVal(); if (!(v === '' && k === '0')) { if (!atmSet(v + k)) vib(20); else atmMsg(''); } }
+}
+const PRE = [1e3, 1e4, 25e3, 1e5, 5e5, 1e6, 3e6, 13e6];
+const preTxt = a => (a >= 1e6 ? a / 1e6 + 'M' : a / 1e3 + 'K');
+const LOCK_SVG = '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 018 0v3"/></svg>';
+function fillAtm() {
+  const box = $('atmPre'); if (!box) return;
+  const lv = E.levelOf(S), cap = E.LIMITS[lv], rm = E.room(S), key = lv + '|' + rm + '|' + S.lang;
+  const ph = $('atmInp'); if (ph) ph.setAttribute('data-ph', t('atm_ph'));
+  if (ui.atmSig === key) return; ui.atmSig = key;
+  box.textContent = '';
+  PRE.forEach(a => {
+    const b = mkEl('button', a > cap ? 'lock' : a > rm ? 'dim' : '', ''); b.type = 'button';
+    if (a > cap) { b.setAttribute('data-lock', String(a)); b.setAttribute('aria-disabled', 'true'); b.innerHTML = LOCK_SVG; b.appendChild(document.createTextNode(preTxt(a))); }
+    else { b.setAttribute('data-amt', String(a)); b.textContent = preTxt(a); }
+    box.appendChild(b);
+  });
+  setTxt($('atmLim'), tf('lim_line', { c: money(cap, 0), r: money(rm, 0) }));
+}
+function fillBadge() {
+  if (!$('lvBadge') || !S) return; const lv = E.levelOf(S);
+  setTxt($('lvNum'), String(lv + 1)); setTxt($('lvName'), lvName(lv));
+}
+function soonModal() {
+  $('modalBody').innerHTML = '<h2 id="modalTitle">' + t('soon_h') + '</h2><p>' + t('soon_p') + '</p><div class="m-btns"><button class="btn-gold" type="button" data-act="modal-close">' + t('soon_ok') + '</button></div>';
+  $('modal').hidden = false;
+}
+function inviteModal() {
+  $('modalBody').innerHTML = '<h2 id="modalTitle">' + t('inv_h') + '</h2><p>' + t('inv_p') + '</p><div class="m-btns"><a class="btn-gold" href="#learn" data-act="modal-close">' + t('inv_go') + '</a><button class="btn-ghost" type="button" data-act="modal-close">' + t('inv_later') + '</button></div>';
+  $('modal').hidden = false;
+}
+// ---------- notes: low money (all views) and the plaque on the money page ----------
+const lowMoney = () => S.deposited > 0 && S.cash < S.deposited * 0.1;
+function fillNotes(force) {
+  const low = lowMoney(), q = nextQuest(), lv = E.levelOf(S);
+  if (!low) ui.loanOff = false;
+  const sig = [low && !ui.loanOff, lesN() > 0, q ? q.id + ':' + q.p() : 'x', lv, S.lang].join('|');
+  if (!force && sig === ui.noteSig) return; ui.noteSig = sig;
+  const n = $('note');
+  if (n) {
+    n.hidden = !(low && !ui.loanOff);
+    if (!n.hidden) n.innerHTML = '<span class="note-t">' + t('low_t') + '</span><button class="btn-gold" type="button" data-loan="1">' + t('low_btn') + '</button><button class="note-x" type="button" data-noteoff="1" aria-label="' + t('close_aria') + '">×</button>';
+  }
+  const mn = $('moneyNotes');
+  if (mn) {
+    let h = '';
+    if (lesN() === 0) h += '<a class="panel qn qn-inv" href="#learn"><b>' + t('inv_note') + '</b><span class="qn-go">' + t('inv_go') + ' →</span></a>';
+    if (q) {
+      const w = Math.round(q.p() / q.n * 100);
+      h += '<a class="panel qn" href="#quests"><span class="lbl">' + t('q_next') + '</span><b>' + qName(q) + '</b><span class="qn-d">' + t('q_' + q.id + '_d') + '</span>' +
+        '<span class="bar"><i style="width:' + w + '%"></i></span><span class="qn-r num">+' + money(q.r, 0) + ' · ' + q.xp + ' ' + t('xp_short') + '</span></a>';
+    } else h += '<a class="panel qn" href="#quests"><b>' + t('q_all_done') + '</b></a>';
+    mn.innerHTML = h;
+  }
+}
+// ---------- Quests view: level, bar to the next level, quests, future sources of xp ----------
+function renderQuests() { ui.qsSig = ''; fillQuests(true); }
+function fillQuests(force) {
+  const box = $('questsBox'); if (!box) return;
+  const lv = E.levelOf(S), xp = xpNow(), L = E.LEVELS;
+  const sig = [lv, xp, E.netNow(S), S.lang, Object.keys(S.qd).length, QUESTS.map(q => q.p()).join(','), E.room(S)].join('|');
+  if (!force && sig === ui.qsSig) return; ui.qsSig = sig;
+  const nxt = L[lv + 1], ln = S.lang === 'en' ? 'en' : 'ru', mx = S.nm.mx, nn = E.netNow(S);
+  const pct = nxt ? Math.max(0, Math.min(100, (xp - L[lv].xp) / (nxt.xp - L[lv].xp) * 100)) : 100;
+  const short = v => (v >= 1e6 ? v / 1e6 + 'M' : v / 1e3 + 'K');
+  box.innerHTML = '<div class="vhead"><h1>' + t('quests_h') + '</h1></div>' +
+    '<div class="panel lvcard"><div class="lv-top"><span class="lv-ic num">' + (lv + 1) + '</span><div><span class="lbl">' + tf('lvl_of', { n: lv + 1, m: L.length }) + '</span><b class="lv-name">' + L[lv][ln] + '</b></div>' +
+    '<span class="lv-xp num">' + xp + ' ' + t('xp_short') + '</span></div>' +
+    '<p class="lv-lim">' + tf('lvl_limit', { x: '<b class="num">' + money(L[lv].lim, 0) + '</b>' }) + '</p>' +
+    '<div class="bar lv-bar"><i style="width:' + pct.toFixed(1) + '%"></i></div>' +
+    '<p class="lv-next">' + (nxt ? (nxt.xp > xp ? tf('lvl_next', { name: nxt[ln], x: nxt.xp - xp }) + ' · ' : '') + tf('lvl_next_open', { x: '<b class="num">' + money(nxt.lim, 0) + '</b>' }) : tf('lvl_max', { x: money(L[lv].lim, 0) })) + '</p>' +
+    (nxt && nxt.net > mx ? '<p class="lv-need">' + tf('net_need', { x: '<b class="num">' + money(nxt.net - mx, 0) + '</b>' }) + '</p>' : '') +
+    '<ol class="lv-steps">' + L.map((l, i) => '<li class="' + (i < lv ? 'past' : i === lv ? 'now' : '') + '"><i class="num">' + (i + 1) + '</i><span>' + l[ln] + '</span><em class="num">' + short(l.lim) + '</em></li>').join('') + '</ol></div>' +
+    '<div class="qgrid">' + QUESTS.map(q => {
+      const d = qDone(q), pr = q.p(), w = Math.round(pr / q.n * 100);
+      return '<div class="panel qc' + (d ? ' done' : '') + '"><div class="qc-t"><b>' + qName(q) + '</b>' + (d ? '<span class="qc-ok">' + t('q_done') + '</span>' : '') + '</div>' +
+        '<p>' + t('q_' + q.id + '_d') + '</p><div class="bar"><i style="width:' + w + '%"></i></div>' +
+        '<div class="qc-f"><span class="num">' + pr + ' / ' + q.n + '</span><span class="num">+' + money(q.r, 0) + ' · ' + q.xp + ' ' + t('xp_short') + '</span></div></div>';
+    }).join('') + '</div>' +
+    '<h2 class="h2">' + t('net_h') + '</h2><div class="panel xps"><div class="xp-r"><span>' + t('net_now') + '</span><span class="num ' + (nn > 0 ? 'up' : nn < 0 ? 'down' : '') + '">' + signed(nn) + '</span></div>' +
+    '<div class="xp-r"><span>' + t('net_best') + '</span><span class="num">' + money(mx, 0) + '</span></div><p class="xp-note">' + t('net_note') + '</p></div>' +
+    '<h2 class="h2">' + t('xp_h') + '</h2><div class="panel xps"><div class="xp-r"><span>' + t('xp_quests') + '</span><span class="num">' + t('xp_now') + '</span></div>' +
+    '<div class="xp-r"><span>' + t('xp_profit') + '</span><span class="num">' + t('xp_main') + '</span></div>' +
+    FUTURE.map(k => '<div class="xp-r soon"><span>' + t(k) + '</span><span>' + t('xp_soon') + '</span></div>').join('') + '<p class="xp-note">' + t('fut_note') + '</p></div>';
+}
+// ---------- Learning view ----------
+const lesText = i => LESSONS[i][S.lang === 'en' ? 'en' : 'ru'];
+function renderLearn() {
+  const box = $('learnBox'); if (!box) return;
+  if (ui.les == null) {
+    box.innerHTML = '<div class="vhead"><h1>' + t('learn_h2') + '</h1></div><div class="lgrid">' + LESSONS.map((L0, i) => {
+      const d = !!S.les[i + 1], x = lesText(i);
+      return '<button type="button" class="panel lcc' + (d ? ' done' : '') + '" data-les="' + i + '"><span class="lc-n num">' + (i + 1) + '</span><span class="lc-t"><b>' + x.t + '</b><small class="num">' + (d ? t('les_done') : '+' + money(L0.r, 0) + ' · ' + LESSON_XP + ' ' + t('xp_short')) + '</small></span><span class="lc-go" aria-hidden="true">' + (d ? '✓' : '→') + '</span></button>';
+    }).join('') + '</div>';
+    return;
+  }
+  const i = ui.les, L0 = LESSONS[i], x = lesText(i), a = ui.ans, done = !!S.les[i + 1];
+  let h = '<div class="vhead"><button type="button" class="link-btn" data-lback="1">← ' + t('les_back') + '</button><span class="lbl les-n">' + tf('les_n', { n: i + 1, m: LESSONS.length }) + '</span><h1>' + x.t + '</h1></div>' +
+    '<div class="panel les-body">' + x.p.map(s => '<p>' + s + '</p>').join('') + '</div>' +
+    '<div class="panel les-q"><span class="lbl">' + t('les_q') + '</span><p class="les-qt">' + x.q + '</p><div class="les-opts">' +
+    x.o.map((o, k) => '<button type="button" class="opt' + (a && a.i === k ? (a.ok ? ' ok' : ' bad') : '') + '" data-ans="' + k + '">' + o + '</button>').join('') + '</div>';
+  if (a && a.ok) h += '<p class="les-fb ok"><b>' + t('les_ok') + '.</b> ' + x.e + '</p><p class="les-rw num">' + (a.fresh ? tf('les_got', { r: money(L0.r, 0), x: LESSON_XP }) : t('les_again')) + '</p>' +
+    '<div class="m-btns">' + (i + 1 < LESSONS.length ? '<button class="btn-gold" type="button" data-les="' + (i + 1) + '">' + t('les_next') + '</button>' : '') + '<button class="btn-ghost" type="button" data-lback="1">' + t('les_back') + '</button></div>';
+  else if (a) h += '<p class="les-fb bad">' + t('les_bad') + '</p>';
+  else h += '<p class="les-rw num">' + (done ? t('les_again') : tf('les_reward', { r: money(L0.r, 0), x: LESSON_XP })) + '</p>';
+  box.innerHTML = h + '</div>';
+}
+function answer(k) {
+  const i = ui.les; if (i == null) return; const ok = k === LESSONS[i].ru.ok;
+  if (ok && !S.les[i + 1]) {
+    const lv0 = E.levelOf(S); S.les[i + 1] = 1; E.grant(S, M, LESSONS[i].r); addXp(LESSON_XP); save(); snd.win(); vib([12, 40, 12]);
+    ui.ans = { i: k, ok: true, fresh: true }; renderLearn(); checkQuests(); afterXp(lv0); return;
+  }
+  if (ok) snd.win();
+  ui.ans = { i: k, ok: ok, fresh: false }; renderLearn();
+}
+
+/* =====================================================================
    10. ROUTING, EVENTS, TICK
    ===================================================================== */
-const VIEWS = ['money', 'market', 'compare', 'wallet', 'truth', 'news', 'bets', 'top'];
+const VIEWS = ['money', 'market', 'compare', 'wallet', 'truth', 'news', 'bets', 'top', 'quests', 'learn'];
 function render() {
   sig = posSig(); chartsKill();
   if (ui.view === 'market') renderMarket();
@@ -2353,8 +2657,12 @@ function render() {
   else if (ui.view === 'news') renderNews();
   else if (ui.view === 'bets') renderBets();
   else if (ui.view === 'top') renderTop();
+  else if (ui.view === 'quests') renderQuests();
+  else if (ui.view === 'learn') renderLearn();
   else if (ui.view === 'compare') { renderCompare(); cmpLoad(); }
-  upd(true); refreshView(); hdrBal();
+  if (ui.view === 'wallet') S.qx.wal = 1;
+  if (ui.view === 'compare' && S.cmp.syms.length >= 2) S.qx.cmp = 1;
+  upd(true); refreshView(); hdrBal(); ui.atmSig = ''; fillAtm(); fillBadge(); fillNotes(true); checkQuests();
 }
 function refreshView() {
   if (ui.view === 'money') refreshMoney();
@@ -2362,6 +2670,7 @@ function refreshView() {
   else if (ui.view === 'wallet') refreshWallet();
   else if (ui.view === 'truth') refreshTruth();
   else if (ui.view === 'top') refreshTop();
+  else if (ui.view === 'quests') fillQuests();
 }
 // 13.11 (2): header shows the wallet — total portfolio value (cash + positions); tap opens the Wallet.
 function hdrBal() { const el = $('hBalV'); if (el && S) rollTo(el, E.equity(S, M), tight); }
@@ -2370,11 +2679,11 @@ function refresh() {
   hdrBal();
   const s = posSig();
   if (s !== sig) { sig = s; renderDyn(); }
-  upd(); refreshView();
+  upd(); refreshView(); fillNotes(); checkQuests();
 }
 function route() {
   const a = String(location.hash || '').replace(/^#/, '').split('/');
-  ui.view = VIEWS.indexOf(a[0]) >= 0 ? a[0] : 'money'; ui.cat = null; ui.sym = null;
+  ui.view = VIEWS.indexOf(a[0]) >= 0 ? a[0] : 'money'; ui.cat = null; ui.sym = null; if (ui.view === 'learn') { ui.les = null; ui.ans = null; }
   if (ui.view === 'market') {
     if (E.CAT[a[1]]) ui.cat = a[1];
     if (ui.cat && INS[a[2]] && INS[a[2]].cat === ui.cat) ui.sym = a[2];
@@ -2399,7 +2708,7 @@ function applyLang() {
 }
 function onClick(e) {
   snd.gesture();
-  const el = e.target && e.target.closest ? e.target.closest('[data-tf],[data-lev],[data-pre],[data-side],[data-close],[data-amt],[data-key],[data-act],[data-ncat],[data-ccat],[data-csym],[data-per],[data-bcat],[data-bet],[data-bsell],[data-bpre],[data-btab],[data-sp],[data-bx],[data-bmine],[data-bhist],[data-tip],[data-ct],[data-cl],#langBtn,#sndBtn,#skinBtn,#modal,#more,#slip,.more-row') : null;
+  const el = e.target && e.target.closest ? e.target.closest('[data-tf],[data-lev],[data-pre],[data-side],[data-close],[data-amt],[data-key],[data-lock],[data-les],[data-ans],[data-lback],[data-loan],[data-noteoff],[data-act],[data-ncat],[data-ccat],[data-csym],[data-per],[data-bcat],[data-bet],[data-bsell],[data-bpre],[data-btab],[data-sp],[data-bx],[data-bmine],[data-bhist],[data-tip],[data-ct],[data-cl],#langBtn,#sndBtn,#skinBtn,#modal,#more,#slip,.more-row') : null;
   if (!el) return;
   const A = k => el.getAttribute(k), has = k => el.hasAttribute(k);
   if (has('data-tip')) { showTip(el); return; }
@@ -2429,8 +2738,13 @@ function onClick(e) {
   else if (has('data-close')) doClose(+A('data-close'));
   else if (has('data-amt')) doDeposit(+A('data-amt'));
   else if (has('data-key')) {
-    const k = A('data-key'), inp = $('atmInp'); snd.key(); vib(8); if (!inp) return;
-    if (k === 'c') { inp.value = ''; atmMsg(''); } else if (k === 'ok') doDeposit(parseAmt(inp.value)); else if (inp.value.length < 10) inp.value += k;
+    snd.key(); vib(8); atmKey(A('data-key'));
+  } else if (has('data-lock')) { atmMsg(openHint(levelFor(+A('data-lock'))), true); vib(20);
+  } else if (has('data-les')) { ui.les = +A('data-les'); ui.ans = null; renderLearn(); try { window.scrollTo(0, 0); } catch (e) {}
+  } else if (has('data-ans')) { answer(+A('data-ans'));
+  } else if (has('data-lback')) { ui.les = null; ui.ans = null; renderLearn(); try { window.scrollTo(0, 0); } catch (e) {}
+  } else if (has('data-loan')) { soonModal();
+  } else if (has('data-noteoff')) { ui.loanOff = true; fillNotes(true);
   } else if (has('data-ncat')) {
     ui.ncat = A('data-ncat'); document.querySelectorAll('[data-ncat]').forEach(b => b.classList.toggle('on', b === el)); fillNews();
   } else if (has('data-ccat')) { ui.ccat = A('data-ccat'); ui.cq = ''; const qi = $('cmpQ'); if (qi) qi.value = ''; fillCmpPick(false); }
@@ -2455,7 +2769,7 @@ function onClick(e) {
   else if (has('data-per')) { cmpSetPer(A('data-per')); }
   else if (has('data-act')) {
     const a = A('data-act'), rc = $('resetConfirm');
-    if (a === 'deposit') doDeposit(parseAmt($('atmInp').value));
+    if (a === 'deposit') doDeposit(+atmVal() || 0);
     else if (a === 'reset-ask') { if (rc) rc.hidden = false; }
     else if (a === 'reset-no') { if (rc) rc.hidden = true; }
     else if (a === 'reset-yes') { const cm = S.cmp; E.reset(S); S.cmp = cm; save(); if (rc) rc.hidden = true; atmMsg(''); toast(t('reset_done')); ui.pauseAt = 0; render(); }
@@ -2490,9 +2804,16 @@ function init() {
   document.addEventListener('pointerdown', () => snd.gesture(), { passive: true });
   document.addEventListener('keydown', e => {
     if (e.key === 'Escape') { const m = $('modal'); if (m) m.hidden = true; if (ui.bet) closeSlip(); }
-    if (e.key === 'Enter' && e.target && e.target.id === 'atmInp') doDeposit(parseAmt(e.target.value));
+    // 14.11: digits, Backspace, Delete and Enter of a real keyboard work like the ATM keys
+    const m = $('modal'), tg = e.target, tag = tg && tg.tagName;
+    if (ui.view !== 'money' || (m && !m.hidden) || e.ctrlKey || e.metaKey || e.altKey || tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT') return;
+    if (/^\d$/.test(e.key)) { e.preventDefault(); snd.key(); atmKey(e.key); }
+    else if (e.key === 'Backspace') { e.preventDefault(); atmKey('bk'); }
+    else if (e.key === 'Delete') { e.preventDefault(); atmKey('c'); }
+    else if (e.key === 'Enter' && tag !== 'BUTTON' && tag !== 'A') { e.preventDefault(); atmKey('ok'); }
   });
   window.addEventListener('hashchange', route);
+  if (!S.inv && lesN() === 0 && S.deposited === 0) { S.inv = 1; save(); setTimeout(() => { if (ui.view === 'money') inviteModal(); }, 900); }
   let rz = 0; window.addEventListener('resize', () => { clearTimeout(rz); rz = setTimeout(redrawCharts, 150); });
   document.addEventListener('visibilitychange', () => {
     document.body.classList.toggle('paused', document.hidden);
