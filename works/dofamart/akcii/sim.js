@@ -327,7 +327,8 @@ if (typeof document === 'undefined') return;
    2. UI — dictionary, formatting, sound
    ===================================================================== */
 let S, M;
-const ui = { view: 'money', cat: null, sym: null, tf: '5m', lev: 1, ncat: 'all', bcat: 'all', bet: null, btab: 'sport', sport: 'mma', mineAll: false, histOpen: false };
+const ui = { view: 'money', cat: null, sym: null, tf: '5m', lev: 1, ncat: 'all', bcat: 'all', bet: null, btab: 'sport', sport: 'mma', mineAll: false, histOpen: false, ct: 'candle', cmpOff: {} };
+try { if (localStorage.getItem('dofa_sim_ct') === 'line') ui.ct = 'line'; } catch (e) {}
 const $ = id => document.getElementById(id);
 const RM = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
 const NB = ' ';   // narrow no-break space as thousands separator
@@ -489,6 +490,30 @@ function setTxt(el, text, v) {
   }
   if (v !== undefined) { el.classList.toggle('up', v > 0); el.classList.toggle('down', v < 0); }
 }
+// 13.11: numbers roll to the new value (one shared rAF loop, stops by itself) and flash up/down.
+const RL = new Map(); let rlOn = false;
+function rlStep(now) {
+  RL.forEach((r, el) => {
+    const k = Math.min(1, (now - r.t0) / r.d), e = 1 - Math.pow(1 - k, 3);
+    r.cur = r.a + (r.to - r.a) * e; el.textContent = r.fmt(k >= 1 ? r.to : r.cur);
+    if (k >= 1) RL.delete(el);
+  });
+  if (RL.size && !document.hidden) requestAnimationFrame(rlStep);
+  else { RL.forEach((r, el) => { el.textContent = r.fmt(r.to); }); RL.clear(); rlOn = false; }
+}
+function rollTo(el, v, fmt, sgn) {
+  if (!el) return;
+  if (sgn !== undefined) { el.classList.toggle('up', sgn > 0); el.classList.toggle('down', sgn < 0); }
+  const from = el._rv, txt = fmt(v);
+  el._rv = v;
+  if (RM || from == null || !isFinite(from) || document.hidden || !el.isConnected) { RL.delete(el); if (el.textContent !== txt) el.textContent = txt; return; }
+  if (from === v || el.textContent === txt && !RL.has(el)) return;
+  const r = RL.get(el), a = r ? r.cur : from;
+  RL.set(el, { a: a, to: v, cur: a, t0: performance.now(), d: 650, fmt: fmt });
+  el.classList.remove('nflash-up', 'nflash-dn'); void el.offsetWidth; el.classList.add(v > from ? 'nflash-up' : 'nflash-dn');
+  if (!rlOn) { rlOn = true; requestAnimationFrame(rlStep); }
+}
+function pulse(el) { if (!el || RM) return; el.classList.remove('pulse'); void el.offsetWidth; el.classList.add('pulse'); }
 function vib(p) { try { if (navigator.vibrate) navigator.vibrate(p); } catch (e) {} }
 
 /* ---------- storage ---------- */
@@ -748,9 +773,13 @@ async function histDaily(sym) {
 const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const tk = sym => INS[sym].tk || sym;
 let toastTo = 0;
-function toast(msg, cls) {
+function toast(msg, cls, ok) {
   const el = $('toast'); if (!el) return;
-  el.textContent = msg; el.className = 'toast on' + (cls ? ' ' + cls : '');
+  el.textContent = msg; el.className = 'toast on' + (cls ? ' ' + cls : '') + (ok ? ' ok' : '');
+  if (ok) {                                   // 13.11: a short "done" mark next to the amount
+    const k = document.createElement('i'); k.className = 'okfx'; k.setAttribute('aria-hidden', 'true');
+    k.innerHTML = '<svg viewBox="0 0 24 24"><path d="M6 12.5l4 4 8-9"/></svg>'; el.insertBefore(k, el.firstChild);
+  }
   clearTimeout(toastTo); toastTo = setTimeout(() => { el.className = 'toast'; }, 3200);
 }
 function stInfo(sym, big) {
@@ -896,6 +925,86 @@ function sparkPts(a, w, h) {
   return v.map((y, i) => (i / (n - 1) * w).toFixed(1) + ',' + (2 + (hi - y) / d * (h - 4)).toFixed(1)).join(' ');
 }
 function sparkData(sym) { return (M.coarse[sym] || []).concat([M.px[sym]]); }
+function cvIn(el) { let cv = el.querySelector('canvas'); if (!cv) { cv = document.createElement('canvas'); cv.className = 'chart'; el.appendChild(cv); } return cv; }
+
+/* ---------- 13.11 · charts on TradingView Lightweight Charts 4.2.3 (vendor/, Apache 2.0) ----------
+   The library draws only when data changes or the user touches the chart. Times go in as local
+   wall-clock seconds so the axis shows the user's own clock. The TradingView logo stays (licence). */
+Object.assign(T.ru, {
+  ct_candle: 'Свечи', ct_line: 'Линия', lg_o: 'Откр', lg_h: 'Макс', lg_l: 'Мин', lg_c: 'Закр', lg_act: 'Активность',
+  bar_2: 'свеча 2 с', bar_10: 'свеча 10 с', bar_120: 'свеча 2 мин', bar_480: 'свеча 8 мин', bar_3600: 'свеча 1 ч',
+  mk_buy: 'Покупка', mk_sell: 'Продажа', mk_exit: 'Выход', mk_liq: 'Ликвидация', pl_entry: 'Вход', pl_liq: 'Ликвидация',
+  pos_line: 'Вход {e} · ликвидация {l}, до неё {d}', pos_line1: 'Вход {e} · без плеча',
+  tip_act: 'Столбики внизу — насколько активно двигалась цена внутри свечи. Настоящего объёма торгов у нас нет, поэтому это оценка по самой цене.',
+  p_size: 'Размер', p_entry: 'Цена входа', p_mark: 'Текущая цена', p_margin: 'Залог', p_lev: 'Плечо', p_fee: 'Комиссия',
+  p_liq: 'Цена ликвидации', p_liq_far: 'запас до ликвидации {p}', p_noliq: 'нет: без плеча',
+  tip_size: 'Сколько актива вы держите в долларах по текущей цене: залог × плечо плюс результат.',
+  tip_entry: 'Цена, по которой вы вошли. Если докупали, это средняя цена всех покупок.',
+  tip_mark: 'Цена сейчас. По ней считается результат.',
+  tip_pnl: 'Результат, если закрыть сейчас, до комиссии за закрытие. Процент — от вашего залога.',
+  tip_margin: 'Ваши деньги в сделке. Больше этой суммы по позиции потерять нельзя.',
+  tip_liq: 'При этой цене убыток съест весь залог и позицию закроет принудительно. Полоска — сколько запаса осталось.',
+  tip_fee: 'Комиссия 0.1% от размера: взятая при открытии плюс та, что возьмут при закрытии.',
+  w_alloc: 'Из чего состоит портфель', al_cash: 'Свободные деньги', al_total: 'всего', al_empty: 'Внесите деньги в банкомате — здесь появится раскладка по классам активов.',
+  w_sum: 'Итоги сделок', a_n: 'Всего сделок', a_win: 'Доля прибыльных', a_avgw: 'Средняя прибыль', a_avgl: 'Средний убыток', a_best: 'Лучшая сделка',
+  a_worst: 'Худшая сделка', a_fees: 'Комиссии всего', a_dd: 'Макс. просадка', a_wl: 'в плюс {w} · в минус {l}', a_none_l: 'убыточных не было', a_none_w: 'прибыльных не было',
+  a_empty: 'Сделок пока нет — откройте первую', a_empty_p: 'После первой закрытой сделки здесь появятся доля прибыльных, средний результат и просадка.', a_go: 'На рынок',
+  tip_win: 'Сколько закрытых сделок принесли деньги после всех комиссий.',
+  tip_avg: 'Средний итог одной прибыльной и одной убыточной сделки после комиссий.',
+  tip_dd: 'Самое большое падение результата от лучшего значения до худшего после него.',
+  tip_fees_all: 'Все комиссии за открытие и закрытие, включая открытые сейчас позиции.',
+  cmp_tap: 'Нажмите на строку, чтобы скрыть или показать линию.', foot_lw: 'Графики — TradingView Lightweight Charts.'
+});
+Object.assign(T.en, {
+  ct_candle: 'Candles', ct_line: 'Line', lg_o: 'O', lg_h: 'H', lg_l: 'L', lg_c: 'C', lg_act: 'Activity',
+  bar_2: '2 s candle', bar_10: '10 s candle', bar_120: '2 min candle', bar_480: '8 min candle', bar_3600: '1 h candle',
+  mk_buy: 'Buy', mk_sell: 'Sell', mk_exit: 'Exit', mk_liq: 'Liquidated', pl_entry: 'Entry', pl_liq: 'Liquidation',
+  pos_line: 'Entry {e} · liquidation {l}, {d} away', pos_line1: 'Entry {e} · no leverage',
+  tip_act: 'The bars at the bottom show how actively the price moved inside each candle. We have no real trading volume, so this is an estimate from the price itself.',
+  p_size: 'Size', p_entry: 'Entry price', p_mark: 'Mark price', p_margin: 'Margin', p_lev: 'Leverage', p_fee: 'Fees',
+  p_liq: 'Liquidation price', p_liq_far: '{p} left before liquidation', p_noliq: 'none: no leverage',
+  tip_size: 'How much of the asset you hold in dollars at the current price: margin × leverage plus the result.',
+  tip_entry: 'The price you got in at. If you added to the position, it is the average of all buys.',
+  tip_mark: 'The price right now. The result is counted from it.',
+  tip_pnl: 'What you get if you close now, before the closing fee. The percentage is of your margin.',
+  tip_margin: 'Your money in the trade. You cannot lose more than this on the position.',
+  tip_liq: 'At this price the loss eats the whole margin and the position is force-closed. The bar shows how much room is left.',
+  tip_fee: 'A 0.1% fee of the size: the one taken on opening plus the one taken on closing.',
+  w_alloc: 'What the portfolio is made of', al_cash: 'Available cash', al_total: 'total', al_empty: 'Deposit at the ATM and the split by asset class appears here.',
+  w_sum: 'Trade summary', a_n: 'Total trades', a_win: 'Win rate', a_avgw: 'Average win', a_avgl: 'Average loss', a_best: 'Best trade',
+  a_worst: 'Worst trade', a_fees: 'Total fees', a_dd: 'Max drawdown', a_wl: '{w} in profit · {l} in loss', a_none_l: 'no losing trades', a_none_w: 'no winning trades',
+  a_empty: 'No trades yet — open your first one', a_empty_p: 'After the first closed trade you will see the win rate, the average result and the drawdown here.', a_go: 'To the market',
+  tip_win: 'How many closed trades made money after all fees.',
+  tip_avg: 'The average result of one winning and one losing trade after fees.',
+  tip_dd: 'The largest fall of the result from its best value to the worst one after it.',
+  tip_fees_all: 'All opening and closing fees, including positions open right now.',
+  cmp_tap: 'Tap a row to hide or show its line.', foot_lw: 'Charts: TradingView Lightweight Charts.'
+});
+const LWC = () => window.LightweightCharts || null;
+const SH = -new Date().getTimezoneOffset() * 60;
+const lt = ms => Math.floor(ms / 1000) + SH;
+const CH = {};
+function chartKill(k) { const c = CH[k]; if (c) { try { c.chart.remove(); } catch (e) {} delete CH[k]; } }
+function chartsKill() { Object.keys(CH).forEach(chartKill); }
+function u2(tm) { const d = new Date(tm * 1000); return { d: p2(d.getUTCDate()) + '.' + p2(d.getUTCMonth() + 1), h: p2(d.getUTCHours()) + ':' + p2(d.getUTCMinutes()), s: p2(d.getUTCSeconds()) }; }
+function lwChart(el, o) {
+  o = o || {};
+  const soft = a => rgba(COL.txt, a), ch = { color: rgba(COL.gold, 0.5), width: 1, style: 3, labelBackgroundColor: COL.gold };
+  const base = {
+    autoSize: true,
+    layout: { background: { type: 'solid', color: 'rgba(0,0,0,0)' }, textColor: COL.mut, fontSize: 11, fontFamily: '"JetBrains Mono", ui-monospace, Consolas, monospace', attributionLogo: true },
+    grid: { vertLines: { color: soft(0.035) }, horzLines: { color: soft(0.05) } },
+    rightPriceScale: { borderVisible: false, scaleMargins: { top: 0.12, bottom: 0.1 } },
+    timeScale: { borderVisible: false, timeVisible: true, secondsVisible: false, rightOffset: 2, lockVisibleTimeRangeOnResize: true },
+    crosshair: { mode: 0, vertLine: ch, horzLine: ch },
+    handleScroll: { mouseWheel: false, pressedMouseMove: true, horzTouchDrag: true, vertTouchDrag: false },
+    handleScale: { mouseWheel: false, pinch: true, axisPressedMouseMove: true, axisDoubleClickReset: true },
+    localization: { locale: S.lang === 'en' ? 'en-US' : 'ru-RU', timeFormatter: tm => { const x = u2(tm); return x.d + ' ' + x.h + (o.sec ? ':' + x.s : ''); } }
+  };
+  if (o.time === false) { base.timeScale.timeVisible = false; base.localization.timeFormatter = tm => u2(tm).d + '.' + new Date(tm * 1000).getUTCFullYear(); }
+  return LWC().createChart(el, base);
+}
+const pctFmt = v => (v > 0 ? '+' : v < 0 ? '−' : '') + Math.abs(v).toFixed(Math.abs(v) >= 100 ? 0 : Math.abs(v) >= 10 ? 1 : 2) + '%';
 
 /* ---------- generic in-place updater (no re-render on tick, so taps are never lost) ---------- */
 let sparkN = 0;
@@ -909,9 +1018,16 @@ function upd(force) {
   });
   q('[data-pos]').forEach(el => {
     const p = S.positions.find(x => String(x.id) === el.getAttribute('data-pos')); if (!p) return;
-    const pr = M.px[p.sym], g = E.pnl(p, pr);
-    setTxt(el.querySelector('[data-f="val"]'), money(E.posValue(p, pr)));
-    setTxt(el.querySelector('[data-f="pnl"]'), signed(g) + ' · ' + pct(g / p.margin), g);
+    const pr = M.px[p.sym], g = E.pnl(p, pr), f = k => el.querySelector('[data-f="' + k + '"]'), size = p.qty * pr;
+    rollTo(f('pnl'), g, signed, g);
+    setTxt(f('roe'), pct(g / p.margin), g);
+    setTxt(f('size'), money(size)); setTxt(f('mark'), price(p.sym, pr)); setTxt(f('fee'), money(p.fee + size * E.FEE));
+    const bar = f('lbar');
+    if (bar) {
+      const lq = E.liqPrice(p.entry, p.side, p.lev), dist = Math.max(0, p.side > 0 ? (pr - lq) / pr : (lq - pr) / pr), k = Math.max(0, Math.min(1, dist * p.lev));
+      bar.style.transform = 'scaleX(' + k.toFixed(3) + ')'; bar.className = k > 0.5 ? 'ok' : k > 0.2 ? 'mid' : 'low';
+      setTxt(f('ldist'), tf('p_liq_far', { p: (dist * 100).toFixed(2) + '%' }));
+    }
   });
   if (force || sparkN++ % 5 === 0) q('[data-spark]').forEach(el => {
     const s = el.getAttribute('data-spark'); if (!INS[s]) return;
@@ -932,15 +1048,18 @@ const ICO = {
   commod: '<path d="M12 3.5c3 4 5.5 6.8 5.5 10a5.5 5.5 0 01-11 0c0-3.200 2.500-6 5.500-10z"/><path d="M9.5 14a2.5 2.5 0 002.5 2.5"/>',
   index: '<circle cx="12" cy="12" r="8.5"/><path d="M12 3.500V12l6 6"/><path d="M12 12H3.500"/>'
 };
+// 13.11: the position card reads like an exchange position panel — result first, then size, prices, liquidation room.
 function posHTML(p) {
-  const I = INS[p.sym];
+  const I = INS[p.sym], noLiq = p.side > 0 && p.lev === 1;
+  const cell = (k, tip, f, v) => '<div class="pc"><span class="lbl qrow">' + t(k) + (tip ? qm(tip) : '') + '</span><span class="num"' + (f ? ' data-f="' + f + '"' : '') + '>' + (v || '') + '</span></div>';
   return '<div class="pos" data-pos="' + p.id + '"><div class="pos-top"><a href="#market/' + I.cat + '/' + p.sym + '"><b>' + esc(tk(p.sym)) + '</b>' +
     '<span class="badge ' + (p.side > 0 ? 'up' : 'down') + '">' + t(p.side > 0 ? 'side_up' : 'side_down') + ' ×' + p.lev + '</span></a>' +
-    '<button class="btn-ghost" type="button" data-close="' + p.id + '">' + t('p_close') + '</button></div>' +
-    '<div class="pos-grid"><div><span class="lbl">' + t('p_qty') + '</span><span class="num">' + qty(p.qty) + '</span></div>' +
-    '<div><span class="lbl">' + t('p_avg') + '</span><span class="num">' + price(p.sym, p.entry) + '</span></div>' +
-    '<div><span class="lbl">' + t('p_val') + '</span><span class="num" data-f="val"></span></div>' +
-    '<div><span class="lbl">' + t('p_pnl') + '</span><span class="num" data-f="pnl"></span></div></div></div>';
+    '<div class="pos-pnl"><span class="lbl qrow">' + t('p_pnl') + qm('tip_pnl') + '</span><b class="num" data-f="pnl"></b><span class="num roe" data-f="roe"></span></div></div>' +
+    '<div class="pos-grid">' + cell('p_size', 'tip_size', 'size') + cell('p_entry', 'tip_entry', '', price(p.sym, p.entry)) + cell('p_mark', 'tip_mark', 'mark') +
+    cell('p_margin', 'tip_margin', '', money(p.margin)) + cell('p_lev', 'tip_lev', '', '×' + p.lev) + cell('p_fee', 'tip_fee', 'fee') + '</div>' +
+    '<div class="pos-liq"><div class="pl-top"><span class="lbl qrow">' + t('p_liq') + qm('tip_liq') + '</span><span class="num">' + (noLiq ? t('p_noliq') : price(p.sym, E.liqPrice(p.entry, p.side, p.lev))) + '</span></div>' +
+    (noLiq ? '' : '<div class="pl-bar"><i data-f="lbar"></i></div><span class="pl-d num" data-f="ldist"></span>') + '</div>' +
+    '<button class="btn-ghost pos-close" type="button" data-close="' + p.id + '">' + t('p_close') + '</button></div>';
 }
 const posSig = () => S.positions.map(p => p.id + ':' + p.qty.toPrecision(8)).join('|') + '#' + S.trades.length + '#' + (S.cash > 0);
 function posList(el, list, emptyKey) {
@@ -971,29 +1090,128 @@ function renderMarket() {
     }).join('') + '</div>';
 }
 
-const TFS = { '1m': ['fine', 60, 1], '5m': ['fine', 300, 1], '1h': ['coarse', 60, 60], '4h': ['coarse', 240, 60], '24h': ['day', 24, 3600] };
-function insSeries() {
-  const s = ui.sym, d = TFS[ui.tf] || TFS['5m'];
-  let a = (M[d[0]][s] || []).slice(-d[1]);
-  if (d[0] !== 'fine') a = a.concat([M.px[s]]);
-  const n = a.length;
-  return a.map((v, i) => [-(n - 1 - i) * d[2], v]);
+// period -> [history array, points, candle seconds]. Candles are grouped from the points we already keep.
+const TFS = { '1m': ['fine', 60, 2], '5m': ['fine', 300, 10], '1h': ['coarse', 60, 120], '4h': ['coarse', 240, 480], '24h': ['day', 24, 3600] };
+const STEP = { fine: 1e3, coarse: 6e4, day: 36e5 };
+function insPts() {
+  const s = ui.sym, d = TFS[ui.tf] || TFS['5m'], a = (M[d[0]][s] || []).slice(-d[1]), st = STEP[d[0]];
+  const end = d[0] === 'fine' ? M.t : Math.floor(M.t / st) * st, n = a.length, out = a.map((v, i) => [end - (n - 1 - i) * st, v]);
+  if (d[0] !== 'fine') out.push([M.t, M.px[s]]);
+  return out;
 }
-function drawIns() {
-  const cv = $('cv'); if (!cv || !ui.sym) return;
-  const pts = insSeries(), up = pts.length > 1 && pts[pts.length - 1][1] >= pts[0][1], s = ui.sym;
-  drawChart(cv, [{ pts: pts, color: up ? COL.up : COL.down }], { area: true, fy: v => price(s, v), fx: x => ago(Math.round(-x)) });
-  const real = M.hk[s] === 'real' && TFS[ui.tf][0] !== 'fine' || E.status(M, s, Date.now()) === 'live' && TFS[ui.tf][0] === 'fine';
-  setTxt($('cvNote'), t(real ? 'chart_real' : 'chart_synth'));
+// Open = previous close, so the candles join up; a = how much the price travelled inside (our "activity").
+function toBars(pts, B) {
+  const out = []; let cur = null, prev = pts.length ? pts[0][1] : 0;
+  for (let i = 0; i < pts.length; i++) {
+    const v = pts[i][1], b = Math.floor(pts[i][0] / 1000 / B) * B + SH;
+    if (!cur || b !== cur.time) { if (cur) out.push(cur); cur = { time: b, open: prev, high: Math.max(prev, v), low: Math.min(prev, v), close: v, a: 0 }; }
+    else { if (v > cur.high) cur.high = v; if (v < cur.low) cur.low = v; cur.close = v; }
+    cur.a += Math.abs(v - prev) / (prev || 1); prev = v;
+  }
+  if (cur) out.push(cur);
+  return out;
+}
+const volBar = b => ({ time: b.time, value: b.a * 1e4, color: rgba(b.close >= b.open ? COL.up : COL.down, 0.32) });
+function insSeriesMake(c) {
+  const ch = c.chart, s = ui.sym, dec = pdec(s, M.px[s]);
+  if (c.main) { try { ch.removeSeries(c.main); } catch (e) {} }
+  if (c.vol) { try { ch.removeSeries(c.vol); } catch (e) {} }
+  const fmt = { type: 'price', precision: dec, minMove: Math.pow(10, -dec) };
+  const auto = orig => { const r = orig(); if (r && c.inc && c.inc.length) { c.inc.forEach(v => { r.priceRange.minValue = Math.min(r.priceRange.minValue, v); r.priceRange.maxValue = Math.max(r.priceRange.maxValue, v); }); } return r; };
+  c.vol = ch.addHistogramSeries({ priceScaleId: 'act', priceFormat: { type: 'custom', formatter: v => v.toFixed(0) }, lastValueVisible: false, priceLineVisible: false });
+  ch.priceScale('act').applyOptions({ scaleMargins: { top: 0.82, bottom: 0 }, visible: false });
+  c.main = ui.ct === 'line'
+    ? ch.addAreaSeries({ lineColor: COL.gold, topColor: rgba(COL.gold, 0.22), bottomColor: rgba(COL.gold, 0), lineWidth: 2, priceFormat: fmt, autoscaleInfoProvider: auto, priceLineColor: rgba(COL.gold, 0.6), crosshairMarkerBackgroundColor: COL.gold })
+    : ch.addCandlestickSeries({ upColor: COL.up, downColor: COL.down, borderUpColor: COL.up, borderDownColor: COL.down, wickUpColor: rgba(COL.up, 0.85), wickDownColor: rgba(COL.down, 0.85), priceFormat: fmt, autoscaleInfoProvider: auto, priceLineColor: rgba(COL.gold, 0.6) });
+  c.main.priceScale().applyOptions({ scaleMargins: { top: 0.1, bottom: 0.24 } });
+  c.ct = ui.ct; c.lines = []; c.msig = '';
+}
+// Player's trades on the chart: arrows where they went in and out, lines for the open position.
+function insMarks(c) {
+  const s = ui.sym, B = TFS[ui.tf][2], bt = ms => Math.floor(ms / 1000 / B) * B + SH, lo = c.t0, hi = c.last.time;
+  const ps = S.positions.filter(p => p.sym === s), msig = posSig() + '|' + c.key + '|' + lo;
+  c.inc = ps.map(p => p.entry);
+  if (msig === c.msig) return; c.msig = msig;
+  const mk = [], add = (ms, m) => { const tm = bt(ms); if (tm >= lo && tm <= hi) mk.push(Object.assign({ time: tm }, m)); };
+  const openM = (side, lev) => side > 0 ? { position: 'belowBar', color: COL.up, shape: 'arrowUp', text: t('mk_buy') + ' ×' + lev } : { position: 'aboveBar', color: COL.down, shape: 'arrowDown', text: t('mk_sell') + ' ×' + lev };
+  S.trades.forEach(tr => {
+    if (tr.sym !== s) return;
+    add(tr.t0, openM(tr.side, tr.lev));
+    add(tr.t, tr.liq ? { position: tr.side > 0 ? 'belowBar' : 'aboveBar', color: COL.down, shape: 'circle', text: t('mk_liq') }
+      : { position: tr.side > 0 ? 'aboveBar' : 'belowBar', color: tr.net >= 0 ? COL.up : COL.down, shape: tr.side > 0 ? 'arrowDown' : 'arrowUp', text: t('mk_exit') + ' ' + signed(tr.net) });
+  });
+  ps.forEach(p => add(p.t, openM(p.side, p.lev)));
+  mk.sort((a, b) => a.time - b.time);
+  try { c.main.setMarkers(mk); } catch (e) {}
+  c.lines.forEach(l => { try { c.main.removePriceLine(l); } catch (e) {} }); c.lines = [];
+  ps.forEach(p => {
+    c.lines.push(c.main.createPriceLine({ price: p.entry, color: COL.gold, lineWidth: 1, lineStyle: 2, axisLabelVisible: true, title: t('pl_entry') + ' ×' + p.lev }));
+    if (!(p.side > 0 && p.lev === 1)) c.lines.push(c.main.createPriceLine({ price: E.liqPrice(p.entry, p.side, p.lev), color: COL.down, lineWidth: 1, lineStyle: 1, axisLabelVisible: true, title: t('pl_liq') }));
+  });
+}
+function insLegend(p) {
+  const c = CH.ins, el = $('cvLeg'); if (!c || !el || !c.last) return;
+  let b = null;
+  if (p && p.time != null && p.seriesData) {
+    const v = p.seriesData.get(c.main);
+    if (v) b = c.bars.find(x => x.time === p.time) || (v.open != null ? v : { time: p.time, open: v.value, high: v.value, low: v.value, close: v.value });
+  }
+  c.hover = !!b; if (!b) b = c.last;
+  const s = ui.sym, x = u2(b.time), fine = TFS[ui.tf][0] === 'fine', ch = b.open ? b.close / b.open - 1 : 0;
+  const it = (k, v) => '<span><i>' + t(k) + '</i>' + price(s, v) + '</span>';
+  el.innerHTML = '<span class="lg-t">' + x.d + ' ' + x.h + (fine ? ':' + x.s : '') + '</span>' +
+    (ui.ct === 'line' ? it('lg_c', b.close) : it('lg_o', b.open) + it('lg_h', b.high) + it('lg_l', b.low) + it('lg_c', b.close)) +
+    '<b class="' + (ch > 0 ? 'up' : ch < 0 ? 'down' : '') + '">' + pct(ch) + '</b>';
+}
+function insPosLine() {
+  const el = $('cvPos'); if (!el) return;
+  const s = ui.sym, pr = M.px[s];
+  setTxt(el, S.positions.filter(p => p.sym === s).map(p => {
+    if (p.side > 0 && p.lev === 1) return tf('pos_line1', { e: price(s, p.entry) });
+    const lq = E.liqPrice(p.entry, p.side, p.lev);
+    return tf('pos_line', { e: price(s, p.entry), l: price(s, lq), d: (Math.abs(lq - pr) / pr * 100).toFixed(2) + '%' });
+  }).join('  ·  '));
+}
+function drawIns(full) {
+  const el = $('cv'); if (!el || !ui.sym) return;
+  const s = ui.sym, d = TFS[ui.tf] || TFS['5m'];
+  const real = M.hk[s] === 'real' && d[0] !== 'fine' || E.status(M, s, Date.now()) === 'live' && d[0] === 'fine';
+  setTxt($('cvNote'), t('bar_' + d[2]) + ' · ' + t(real ? 'chart_real' : 'chart_synth'));
+  insPosLine();
+  const bars = toBars(insPts(), d[2]); if (!bars.length) return;
+  if (!LWC()) {                               // library did not load: the old canvas line
+    const pts = bars.map(b => [b.time, b.close]), up = bars[bars.length - 1].close >= bars[0].open;
+    drawChart(cvIn(el), [{ pts: pts, color: up ? COL.up : COL.down }], { area: true, fy: v => price(s, v), fx: x => { const u = u2(x); return u.h; } });
+    return;
+  }
+  let c = CH.ins;
+  if (!c || c.el !== el) { chartKill('ins'); c = CH.ins = { el: el, chart: lwChart(el, { sec: true }) }; c.chart.subscribeCrosshairMove(insLegend); full = true; }
+  const key = s + '|' + ui.tf + '|' + ui.ct, src = M[d[0]][s];
+  if (c.key !== key || c.src !== src || !c.last) full = true;
+  const row = b => (ui.ct === 'line' ? { time: b.time, value: b.close } : b);
+  if (full) {
+    if (!c.main || c.ct !== ui.ct || c.sym !== s) { insSeriesMake(c); c.sym = s; }
+    c.chart.applyOptions({ timeScale: { secondsVisible: d[0] === 'fine' } });
+    c.main.setData(bars.map(row)); c.vol.setData(bars.map(volBar));
+    c.chart.timeScale().fitContent();
+    c.key = key; c.src = src; c.t0 = bars[0].time; c.msig = '';
+  } else {
+    bars.slice(-2).forEach(b => { if (b.time >= c.last.time) { try { c.main.update(row(b)); c.vol.update(volBar(b)); } catch (e) {} } });
+  }
+  c.last = bars[bars.length - 1]; c.bars = bars;
+  insMarks(c);
+  if (!c.hover) insLegend();
 }
 function renderIns(box) {
   const s = ui.sym, I = INS[s], c = E.CAT[I.cat];
   box.innerHTML = '<a class="crumb" href="#market/' + I.cat + '"><span aria-hidden="true">←</span> ' + esc(L(c)) + '</a>' +
     '<div class="ins-head"><div><p class="lbl">' + esc(tk(s)) + '</p><h1>' + esc(L(I)) + '</h1><span class="st big" data-stt="' + s + '"></span></div>' +
     '<div class="ins-px"><b class="num" data-px="' + s + '"></b><em><span class="num" data-ch="' + s + '"></span> ' + t('ch24') + '</em></div></div>' +
-    '<div class="ins-grid"><div class="panel"><div class="chips">' +
+    '<div class="ins-grid"><div class="panel ch-panel"><div class="ch-bar"><div class="chips tfs">' +
     Object.keys(TFS).map(k => '<button class="chip' + (k === ui.tf ? ' on' : '') + '" type="button" data-tf="' + k + '">' + t('tf_' + k) + '</button>').join('') +
-    '</div><canvas class="chart" id="cv"></canvas><p class="chart-note" id="cvNote"></p></div>' +
+    '</div><div class="seg ctype" role="tablist">' + ['candle', 'line'].map(k => '<button type="button" role="tab" data-ct="' + k + '" class="' + (ui.ct === k ? 'on' : '') + '" aria-selected="' + (ui.ct === k) + '">' + t('ct_' + k) + '</button>').join('') + '</div></div>' +
+    '<div class="ch-leg num" id="cvLeg"></div><div class="chart lw" id="cv"></div>' +
+    '<p class="ch-pos num" id="cvPos"></p><p class="chart-note qrow" id="cvNoteRow"><span id="cvNote"></span>' + qm('tip_act') + '</p></div>' +
     '<div class="panel trade"><p class="lbl">' + t('tr_amount') + '</p>' +
     '<label class="field"><span>$</span><input id="amt" type="text" inputmode="decimal" autocomplete="off" maxlength="12" aria-label="' + t('tr_amount') + '"></label>' +
     '<div class="chips eq">' + [10, 25, 50, 100].map(p => '<button class="chip" type="button" data-pre="' + p + '">' + (p === 100 ? t('tr_all') : p + '%') + '</button>').join('') + '</div>' +
@@ -1007,8 +1225,8 @@ function renderIns(box) {
     '<h2 class="h2">' + t('ins_pos') + '</h2><div class="poslist" id="insPos"></div>';
   posList($('insPos'), S.positions.filter(p => p.sym === s), 'pos_none');
   const inp = $('amt'); if (inp && inp.addEventListener) inp.addEventListener('input', tradeInfo);
-  bindHover($('cv'), drawIns);
-  tradeInfo(); drawIns();
+  chartKill('ins'); if (!LWC()) bindHover(cvIn($('cv')), drawIns);
+  tradeInfo(); drawIns(true);
   loadCandles(s, '1h', 24); loadCandles(s, '1s', 300);
 }
 function tradeInfo() {
@@ -1017,7 +1235,7 @@ function tradeInfo() {
   setTxt($('trCash'), money(S.cash));
   setTxt($('feeLine'), tf('tr_fee', { f: money(E.round2(a * l * E.FEE)), v: money(a * l) }));
   const w = $('levWarn');
-  if (w) { w.hidden = l === 1; if (l > 1) setTxt(w, tf('lev_warn', { l: l, p: (100 / l).toFixed(0) })); }
+  if (w) { w.hidden = l === 1; if (l > 1) { const pr = M.px[ui.sym]; setTxt(w, tf('lev_warn', { l: l, p: (100 / l).toFixed(0), a: price(ui.sym, pr * (1 - 1 / l)), b: price(ui.sym, pr * (1 + 1 / l)) })); } }
   const m = $('trMsg');
   if (m && S.cash < 1 && !m.querySelector('.topup')) {
     needMoney(m);
@@ -1029,13 +1247,14 @@ function doTrade(side) {
   if (!r.ok) { if (m) { if (r.err === 'funds' || S.cash < 1) needMoney(m, S.cash < 1 ? 'need_money' : 'err_funds'); else m.textContent = t('err_' + r.err); } vib(20); return; }
   if (m) m.textContent = '';
   inp.value = ''; snd.key(); vib(12);
-  toast(tf('opened', { s: tk(ui.sym) + ' ×' + ui.lev }) + (r.imp ? '. ' + t('imp_note') : ''));
+  toast(tf('opened', { s: tk(ui.sym) + ' ×' + ui.lev }) + (r.imp ? '. ' + t('imp_note') : ''), 'up', true);
+  pulse($('trCash'));
   save(); sig = ''; refresh();
 }
 function doClose(id) {
   const tr = E.close(S, M, id, false); if (!tr) return;
   if (tr.net > 0) { snd.win(); vib([12, 40, 12]); } else { snd.loss(); vib(40); }
-  toast(tk(tr.sym) + ': ' + signed(tr.net), tr.net > 0 ? 'up' : tr.net < 0 ? 'down' : '');
+  toast(tk(tr.sym) + ': ' + signed(tr.net), tr.net > 0 ? 'up' : tr.net < 0 ? 'down' : '', true);
   save(); sig = ''; refresh(); checkPause();
 }
 function onLiq(list) {
@@ -1092,8 +1311,13 @@ function doDeposit(a) {
   snd.cash(n); vib([10, 30, 10, 30, 10]);
   if (lane && !RM) {
     lane.textContent = '';
-    for (let i = 0; i < n; i++) { const b = document.createElement('div'); b.className = 'bill'; b.style.animationDelay = (i * 0.104) + 's'; lane.appendChild(b); }
-    setTimeout(() => { lane.textContent = ''; }, n * 104 + 700);
+    for (let i = 0; i < n; i++) {              // 13.11: bills fan out of the tray, each to its own angle
+      const b = document.createElement('div'), f = n > 1 ? i / (n - 1) - 0.5 : 0;
+      b.className = 'bill'; b.style.animationDelay = (i * 0.104) + 's';
+      b.style.setProperty('--r', (f * 26 + (Math.random() - 0.5) * 4).toFixed(1) + 'deg'); b.style.setProperty('--x', (f * 96).toFixed(0) + 'px');
+      lane.appendChild(b);
+    }
+    setTimeout(() => { lane.textContent = ''; }, n * 104 + 1500);
   }
   const el = $('atmBal'), to = S.cash, t0 = Date.now(), dur = RM ? 0 : 900;
   rollEnd = t0 + dur;
@@ -1104,16 +1328,81 @@ function doDeposit(a) {
   })();
 }
 
+// 13.11: the ATM leans a little toward the mouse (or the phone's tilt, only where no permission prompt is needed).
+function atmTilt() {
+  const el = $('atmBody'); if (!el || RM) return;
+  let tx = 0, ty = 0, raf = 0;
+  const apply = () => { raf = 0; el.style.setProperty('--tx', tx.toFixed(3)); el.style.setProperty('--ty', ty.toFixed(3)); };
+  const set = (x, y) => {
+    x = Math.max(-1, Math.min(1, x)); y = Math.max(-1, Math.min(1, y));
+    if (Math.abs(x - tx) < 0.01 && Math.abs(y - ty) < 0.01) return;
+    tx = x; ty = y; if (!raf) raf = requestAnimationFrame(apply);
+  };
+  window.addEventListener('pointermove', e => { if (ui.view !== 'money' || e.pointerType !== 'mouse' || document.hidden) return; set(e.clientX / innerWidth * 2 - 1, e.clientY / innerHeight * 2 - 1); }, { passive: true });
+  if (window.DeviceOrientationEvent && typeof DeviceOrientationEvent.requestPermission !== 'function') {
+    window.addEventListener('deviceorientation', e => { if (ui.view !== 'money' || e.gamma == null || document.hidden) return; set(e.gamma / 35, ((e.beta || 45) - 45) / 35); }, { passive: true });
+  }
+}
 function renderWallet() {
   const st = (id, k) => '<div class="stat"><span class="lbl">' + t(k) + '</span><span class="num" id="' + id + '"></span></div>';
   $('walletBox').innerHTML = '<div class="vhead"><h1>' + t('wallet_h') + '</h1></div>' +
     '<div class="panel hero"><p class="lbl">' + t('w_real') + '</p><div class="hero-num num" id="wRes"></div><p class="hero-sub"><span class="num" id="wPct"></span> ' + t('w_of_dep') + '</p></div>' +
     '<div class="stats">' + st('wEq', 'w_total') + st('wCash', 'w_cash') + st('wPos', 'w_inpos') + st('wDep', 'w_dep') + '</div>' +
-    '<h2 class="h2">' + t('w_curve') + '</h2><div class="panel"><canvas class="chart sm" id="cvEq"></canvas></div>' +
+    '<h2 class="h2">' + t('w_curve') + '</h2><div class="panel ch-panel"><div class="chart sm lw" id="cvEq"></div><p class="ch-empty" id="cvEqE" hidden>' + t('curve_empty') + '</p></div>' +
+    '<div class="w-ana"><section class="w-al"><h2 class="h2">' + t('w_alloc') + '</h2><div class="panel alloc" id="wAlloc"></div></section>' +
+    '<section class="w-sum"><h2 class="h2">' + t('w_sum') + '</h2><div class="acards" id="aCards"></div></section></div>' +
     '<h2 class="h2">' + t('w_open') + '</h2><div class="poslist" id="wPosList"></div>' +
     '<h2 class="h2">' + t('w_hist') + '</h2><div id="wHist"></div>';
-  bindHover($('cvEq'), drawEq);
+  chartKill('eq'); if (!LWC()) bindHover(cvIn($('cvEq')), drawEq);
+  ui.alSig = ''; ui.aSig = '';
   renderDyn();
+}
+// Portfolio split by asset class: open positions at their value now, plus free cash.
+const CATC = { crypto: 'var(--gold)', stocks: 'var(--l4)', metals: 'var(--gold-l)', forex: 'rgb(var(--acc2))', commod: 'color-mix(in srgb,var(--gold) 45%,var(--l4))', index: 'color-mix(in srgb,rgb(var(--acc2)) 50%,var(--txt))' };
+function fillAlloc() {
+  const box = $('wAlloc'); if (!box) return;
+  const by = {}; let tot = Math.max(0, S.cash);
+  S.positions.forEach(p => { const v = E.posValue(p, M.px[p.sym]), c = INS[p.sym].cat; by[c] = (by[c] || 0) + v; tot += v; });
+  const seg = E.CATS.filter(c => by[c.id] > 0).map(c => ({ n: L(c), v: by[c.id], col: CATC[c.id] }));
+  if (S.cash > 0) seg.push({ n: t('al_cash'), v: S.cash, col: 'rgba(var(--accl),.3)' });
+  const sig = S.lang + seg.map(x => x.n + (x.v / tot).toFixed(3)).join('|') + compact(tot);
+  if (sig === ui.alSig) return; ui.alSig = sig;
+  if (!(tot > 0)) { box.innerHTML = '<p class="al-empty">' + t('al_empty') + '</p>'; return; }
+  const intro = !box.firstChild || box.querySelector('.al-empty'); box.classList.toggle('intro', !!intro);
+  const R = 46, C = 2 * Math.PI * R, gap = seg.length > 1 ? 1.6 : 0; let off = 0;
+  const arcs = seg.map((x, i) => {
+    const len = Math.max(0.6, x.v / tot * C - gap), a = '<circle r="' + R + '" cx="60" cy="60" style="stroke:' + x.col + ';--i:' + i + '" stroke-dasharray="' + len.toFixed(2) + ' ' + (C - len).toFixed(2) + '" stroke-dashoffset="' + (-off).toFixed(2) + '"/>';
+    off += x.v / tot * C; return a;
+  }).join('');
+  box.innerHTML = '<div class="donut"><svg viewBox="0 0 120 120" aria-hidden="true"><circle class="d-bg" r="' + R + '" cx="60" cy="60"/><g class="d-arcs">' + arcs + '</g></svg>' +
+    '<div class="d-mid"><b class="num">' + compact(tot) + '</b><span>' + t('al_total') + '</span></div></div>' +
+    '<div class="al-leg">' + seg.map(x => '<div class="al-row"><i style="background:' + x.col + '"></i><span>' + esc(x.n) + '</span><b class="num">' + (x.v / tot * 100).toFixed(1) + '%</b><small class="num">' + compact(x.v) + '</small></div>').join('') + '</div>';
+}
+// Trade summary cards from the trades we already store; drawdown from the stored result curve.
+function anaStats() {
+  const tr = S.trades.filter(x => INS[x.sym]), w = tr.filter(x => x.net > 0), l = tr.filter(x => x.net < 0), sum = a => a.reduce((s, x) => s + x.net, 0);
+  let best = null, worst = null; tr.forEach(x => { if (!best || x.net > best.net) best = x; if (!worst || x.net < worst.net) worst = x; });
+  const pts = S.curve.map(c => c[1]).concat([E.round2(E.equity(S, M) - S.deposited)]); let pk = -Infinity, dd = 0;
+  pts.forEach(v => { if (v > pk) pk = v; if (pk - v > dd) dd = pk - v; });
+  return { n: S.agg.n, wins: S.agg.wins, loss: S.agg.n - S.agg.wins, wr: S.agg.n ? S.agg.wins / S.agg.n : 0, aw: w.length ? sum(w) / w.length : null, al: l.length ? sum(l) / l.length : null, best: best, worst: worst, fees: S.agg.fees, dd: E.round2(dd) };
+}
+function fillCards() {
+  const box = $('aCards'); if (!box) return;
+  const a = anaStats(), sig = S.lang + a.n + '|' + a.fees + '|' + Math.round(a.dd) + '|' + S.trades.length;
+  if (sig === ui.aSig) return; ui.aSig = sig;
+  if (!a.n) { box.innerHTML = '<div class="acard a-empty"><b>' + t('a_empty') + '</b><p>' + t('a_empty_p') + '</p><a class="btn-gold" href="#market">' + t('a_go') + '</a></div>'; return; }
+  const cls = v => (v > 0 ? 'up' : v < 0 ? 'down' : '');
+  const card = (k, tip, v, sub, c, x) => '<div class="acard' + (x || '') + '"><span class="lbl qrow">' + t(k) + (tip ? qm(tip) : '') + '</span><b class="num ' + (c || '') + '">' + v + '</b>' + (sub ? '<small>' + sub + '</small>' : '') + '</div>';
+  const tw = x => x ? esc(tk(x.sym)) + ' ×' + x.lev + ' · ' + stamp(x.t) : '';
+  box.innerHTML =
+    card('a_n', '', String(a.n), tf('a_wl', { w: a.wins, l: a.loss })) +
+    '<div class="acard a-wr"><span class="lbl qrow">' + t('a_win') + qm('tip_win') + '</span><b class="num">' + Math.round(a.wr * 100) + '%</b><div class="wr-bar"><i style="transform:scaleX(' + a.wr.toFixed(3) + ')"></i></div></div>' +
+    card('a_avgw', 'tip_avg', a.aw == null ? '—' : signed(E.round2(a.aw)), a.aw == null ? t('a_none_w') : '', a.aw == null ? '' : 'up') +
+    card('a_avgl', '', a.al == null ? '—' : signed(E.round2(a.al)), a.al == null ? t('a_none_l') : '', a.al == null ? '' : 'down') +
+    card('a_best', '', a.best ? signed(a.best.net) : '—', tw(a.best), a.best ? cls(a.best.net) : '') +
+    card('a_worst', '', a.worst ? signed(a.worst.net) : '—', tw(a.worst), a.worst ? cls(a.worst.net) : '') +
+    card('a_fees', 'tip_fees_all', money(a.fees), '') +
+    card('a_dd', 'tip_dd', a.dd > 0 ? '−' + money(a.dd) : money(0), '', a.dd > 0 ? 'down' : '');
 }
 function histHTML() {
   if (!S.trades.length) return '<p class="empty">' + t('hist_none') + '</p>';
@@ -1123,23 +1412,44 @@ function histHTML() {
     '<span class="num ' + (tr.net > 0 ? 'up' : tr.net < 0 ? 'down' : '') + '">' + signed(tr.net) + '</span></div>' : '').join('') + '</div>';
 }
 function renderDyn() {
-  if (ui.view === 'wallet') { posList($('wPosList'), S.positions, 'pos_none_all'); const h = $('wHist'); if (h) h.innerHTML = histHTML(); }
+  if (ui.view === 'wallet') { posList($('wPosList'), S.positions, 'pos_none_all'); const h = $('wHist'); if (h) h.innerHTML = histHTML(); fillCards(); fillAlloc(); }
   if (ui.view === 'market' && ui.sym) posList($('insPos'), S.positions.filter(p => p.sym === ui.sym), 'pos_none');
 }
+// Result curve: a baseline area — green above zero, red below, like the PnL chart on an exchange.
+function eqPts() {
+  const out = [], put = (tm, v) => { const n = out.length; if (n && tm < out[n - 1].time) return; if (n && tm === out[n - 1].time) out[n - 1].value = v; else out.push({ time: tm, value: v }); };
+  S.curve.forEach(c => put(lt(c[0]), c[1]));
+  if (out.length) put(lt(M.t), E.round2(E.equity(S, M) - S.deposited));
+  return out;
+}
 function drawEq() {
-  const cv = $('cvEq'); if (!cv) return;
-  const pts = S.curve.map(c => [c[0], c[1]]);
-  if (pts.length) pts.push([M.t, E.round2(E.equity(S, M) - S.deposited)]);
-  const last = pts.length ? pts[pts.length - 1][1] : 0;
-  drawChart(cv, [{ pts: pts, color: last >= 0 ? COL.up : COL.down }], { base: 0, area: false, glow: true, fy: v => compact(v), fx: x => stamp(x), tip: (s, p) => signed(p[1]), empty: t('curve_empty') });
+  const el = $('cvEq'); if (!el) return;
+  const pts = eqPts(), emp = $('cvEqE');
+  if (emp) emp.hidden = pts.length > 1;
+  if (!LWC()) { drawChart(cvIn(el), [{ pts: pts.map(p => [p.time, p.value]), color: COL.up }], { base: 0, fy: v => compact(v), fx: x => u2(x).d, empty: '' }); return; }
+  let c = CH.eq;
+  if (!c || c.el !== el) {
+    chartKill('eq'); c = CH.eq = { el: el, chart: lwChart(el), n: -1 };
+    c.s = c.chart.addBaselineSeries({ baseValue: { type: 'price', price: 0 }, lineWidth: 2,
+      topLineColor: COL.up, topFillColor1: rgba(COL.up, 0.3), topFillColor2: rgba(COL.up, 0.02),
+      bottomLineColor: COL.down, bottomFillColor1: rgba(COL.down, 0.02), bottomFillColor2: rgba(COL.down, 0.3),
+      priceFormat: { type: 'custom', formatter: v => compact(v), minMove: 0.01 }, priceLineVisible: false,
+      autoscaleInfoProvider: orig => { const r = orig(); if (r) { r.priceRange.minValue = Math.min(r.priceRange.minValue, 0); r.priceRange.maxValue = Math.max(r.priceRange.maxValue, 0); } return r; } });
+    c.s.createPriceLine({ price: 0, color: rgba(COL.txt, 0.25), lineWidth: 1, lineStyle: 2, axisLabelVisible: false });
+  }
+  if (pts.length < 2) { if (c.n !== 0) { c.s.setData([]); c.n = 0; } return; }
+  if (c.n !== S.curve.length) { c.chart.applyOptions({ timeScale: { secondsVisible: pts[pts.length - 1].time - pts[0].time < 900 } }); c.s.setData(pts); c.n = S.curve.length; c.chart.timeScale().fitContent(); }
+  else { try { c.s.update(pts[pts.length - 1]); } catch (e) { c.n = -1; } }
 }
 function refreshWallet() {
   const st = E.stats(S, M);
-  setTxt($('wRes'), tightS(st.result), st.result);
+  rollTo($('wRes'), st.result, tightS, st.result);
   setTxt($('wPct'), pct(S.deposited > 0 ? st.result / S.deposited : null), st.result);
-  setTxt($('wEq'), money(st.equity)); setTxt($('wCash'), money(S.cash));
-  setTxt($('wPos'), money(st.equity - S.cash)); setTxt($('wDep'), money(S.deposited));
+  rollTo($('wEq'), st.equity, money); rollTo($('wCash'), S.cash, money);
+  rollTo($('wPos'), st.equity - S.cash, money); rollTo($('wDep'), S.deposited, money);
   drawEq();
+  if (tickN % 5 === 0 || !ui.alSig) fillAlloc();
+  fillCards();
 }
 
 function renderTruth() {
@@ -1292,17 +1602,43 @@ function cmpSeries() {
   }).filter(Boolean);
 }
 const dm = x => { const d = new Date(x); return p2(d.getDate()) + '.' + p2(d.getMonth() + 1); };
+// Lines start at 0% (the first day of the period); a tap on a legend row hides or shows its line.
 function drawCmp() {
-  const cv = $('cvCmp'); if (!cv) return;
-  const n = S.cmp.syms.length;
-  drawChart(cv, n >= 2 ? cmpSeries() : [], { base: 100, smooth: true, glow: true, fy: v => v.toFixed(v >= 1000 ? 0 : 1) + '%', fx: dm,
-    tip: (s, p) => pct(p[1] / 100 - 1), empty: t(n < 2 ? 'cmp_need' : cmpBusy ? 'cmp_load' : 'cmp_need') });
+  const el = $('cvCmp'); if (!el) return;
+  const n = S.cmp.syms.length, ser = n >= 2 ? cmpSeries() : [], emp = $('cvCmpE');
+  if (emp) { emp.hidden = ser.length >= 2; emp.textContent = t(n >= 2 && cmpBusy ? 'cmp_load' : 'cmp_need'); }
+  if (!LWC()) { drawChart(cvIn(el), ser, { base: 100, smooth: true, fy: v => v.toFixed(1) + '%', fx: dm, empty: '' }); return; }
+  let c = CH.cmp;
+  if (!c || c.el !== el) { chartKill('cmp'); c = CH.cmp = { el: el, chart: lwChart(el, { time: false }), ls: {}, sig: '' }; c.chart.subscribeCrosshairMove(cmpLegend); }
+  const sig = ser.map(s => s.sym + ':' + s.pts.length + ':' + s.pts[0][0] + ':' + s.pts[s.pts.length - 1][1].toFixed(4) + ':' + (s.real ? 1 : 0)).join('|') + '|' + S.cmp.per;
+  if (sig !== c.sig) {
+    Object.keys(c.ls).forEach(k => { try { c.chart.removeSeries(c.ls[k]); } catch (e) {} }); c.ls = {}; c.sig = sig;
+    ser.forEach((s, i) => {
+      const l = c.chart.addLineSeries({ color: s.color, lineWidth: 2, lineStyle: s.real ? 0 : 2, priceFormat: { type: 'custom', formatter: pctFmt, minMove: 0.01 },
+        priceLineVisible: false, lastValueVisible: true, crosshairMarkerRadius: 4, crosshairMarkerBorderColor: COL.bg, crosshairMarkerBackgroundColor: s.color });
+      const d = []; s.pts.forEach(p => { const tm = lt(p[0]), v = p[1] - 100; if (d.length && tm <= d[d.length - 1].time) { if (tm === d[d.length - 1].time) d[d.length - 1].value = v; return; } d.push({ time: tm, value: v }); });
+      l.setData(d);
+      if (!i) l.createPriceLine({ price: 0, color: rgba(COL.txt, 0.28), lineWidth: 1, lineStyle: 2, axisLabelVisible: false });
+      c.ls[s.sym] = l;
+    });
+    c.chart.timeScale().fitContent();
+  }
+  Object.keys(c.ls).forEach(k => c.ls[k].applyOptions({ visible: !ui.cmpOff[k] }));
+}
+function cmpLegend(p) {
+  const c = CH.cmp; if (!c) return;
+  document.querySelectorAll('[data-lgv]').forEach(el => {
+    const k = el.getAttribute('data-lgv'), l = c.ls[k]; let v = null;
+    if (p && p.time != null && p.seriesData && l) { const d = p.seriesData.get(l); if (d && d.value != null) v = d.value; }
+    if (v == null) v = +el.getAttribute('data-res') * 100;
+    setTxt(el, pct(v / 100), v);
+  });
 }
 function fillCmp() {
   const ser = S.cmp.syms.length >= 2 ? cmpSeries() : [], lg = $('cmpLegend'), tb = $('cmpTable');
-  if (lg) lg.innerHTML = ser.map(s => '<div class="lg-row"><i class="dot" style="background:' + s.color + '"></i><span class="lg-name"><b class="num">' + esc(s.name) + '</b><small>' + esc(L(INS[s.sym])) + '</small>' +
+  if (lg) lg.innerHTML = ser.map(s => '<button type="button" class="lg-row' + (ui.cmpOff[s.sym] ? ' off' : '') + '" data-cl="' + s.sym + '" aria-pressed="' + !ui.cmpOff[s.sym] + '"><i class="dot" style="background:' + s.color + '"></i><span class="lg-name"><b class="num">' + esc(s.name) + '</b><small>' + esc(L(INS[s.sym])) + '</small>' +
     '<span class="st" data-st="' + (s.real ? 'delayed' : 'model') + '">' + t(s.real ? 'cmp_real' : 'cmp_model') + '</span></span>' +
-    '<b class="num ' + (s.res > 0 ? 'up' : s.res < 0 ? 'down' : '') + '">' + pct(s.res) + '</b></div>').join('');
+    '<b class="num ' + (s.res > 0 ? 'up' : s.res < 0 ? 'down' : '') + '" data-lgv="' + s.sym + '" data-res="' + s.res + '">' + pct(s.res) + '</b></button>').join('') + (ser.length ? '<p class="lg-tap">' + t('cmp_tap') + '</p>' : '');
   if (!tb) return;
   if (ser.length < 2) { tb.innerHTML = ''; return; }
   const so = ser.slice().sort((a, b) => b.res - a.res), best = so[0], worst = so[so.length - 1];
@@ -1326,12 +1662,12 @@ function renderCompare() {
       '<button class="chip on" type="button" data-csym="' + s + '" aria-pressed="true"><i class="dot" style="background:' + LINES[i % 4] + '"></i>' + esc(tk(s)) + '<span class="x" aria-hidden="true">×</span></button>').join('') :
       '<span class="hint">' + t('cmp_none') + '</span>') + '</div>' +
     '<div class="chips per">' + [7, 30, 90].map(p => '<button class="chip' + (p === c.per ? ' on' : '') + '" type="button" data-per="' + p + '">' + t('per_' + p) + '</button>').join('') + '</div>' +
-    '<div class="panel cmp-panel"><canvas class="chart" id="cvCmp"></canvas><div class="legend" id="cmpLegend"></div></div>' +
+    '<div class="panel cmp-panel ch-panel"><div class="chart lw" id="cvCmp"></div><p class="ch-empty" id="cvCmpE" hidden></p><div class="legend" id="cmpLegend"></div></div>' +
     '<div id="cmpTable" class="cmp-table"></div>' +
     '<h2 class="h2">' + t('cmp_add') + '</h2><div class="chips">' + E.CATS.map(k => '<button class="chip' + (k.id === cat ? ' on' : '') + '" type="button" data-ccat="' + k.id + '">' + esc(L(k)) + '</button>').join('') + '</div>' +
     '<div class="chips cmp-pick">' + SYMS.filter(s => INS[s].cat === cat).map(s => '<button class="chip' + (c.syms.indexOf(s) >= 0 ? ' on' : '') + '" type="button" data-csym="' + s + '" title="' + esc(L(INS[s])) + '">' + esc(tk(s)) + '</button>').join('') + '</div>' +
     '<p class="chart-note">' + t('cmp_note') + '</p>';
-  bindHover($('cvCmp'), drawCmp);
+  chartKill('cmp'); if (!LWC()) bindHover(cvIn($('cvCmp')), drawCmp);
   drawCmp(); fillCmp();
 }
 function cmpToggle(s) {
@@ -1781,7 +2117,7 @@ function betTick() {
    ===================================================================== */
 const VIEWS = ['money', 'market', 'compare', 'wallet', 'truth', 'news', 'bets', 'top'];
 function render() {
-  sig = posSig();
+  sig = posSig(); chartsKill();
   if (ui.view === 'market') renderMarket();
   else if (ui.view === 'wallet') renderWallet();
   else if (ui.view === 'truth') renderTruth();
@@ -1831,7 +2167,7 @@ function applyLang() {
 }
 function onClick(e) {
   snd.gesture();
-  const el = e.target && e.target.closest ? e.target.closest('[data-tf],[data-lev],[data-pre],[data-side],[data-close],[data-amt],[data-key],[data-act],[data-ncat],[data-ccat],[data-csym],[data-per],[data-bcat],[data-bet],[data-bsell],[data-bpre],[data-btab],[data-sp],[data-bx],[data-bmine],[data-bhist],[data-tip],#langBtn,#sndBtn,#skinBtn,#modal,#more,#slip,.more-row') : null;
+  const el = e.target && e.target.closest ? e.target.closest('[data-tf],[data-lev],[data-pre],[data-side],[data-close],[data-amt],[data-key],[data-act],[data-ncat],[data-ccat],[data-csym],[data-per],[data-bcat],[data-bet],[data-bsell],[data-bpre],[data-btab],[data-sp],[data-bx],[data-bmine],[data-bhist],[data-tip],[data-ct],[data-cl],#langBtn,#sndBtn,#skinBtn,#modal,#more,#slip,.more-row') : null;
   if (!el) return;
   const A = k => el.getAttribute(k), has = k => el.hasAttribute(k);
   if (has('data-tip')) { showTip(el); return; }
@@ -1844,8 +2180,14 @@ function onClick(e) {
   if (el.id === 'skinBtn') { nextSkin(); if (S.sound) snd.key(); return; }
   if (el.id === 'langBtn') { S.lang = S.lang === 'en' ? 'ru' : 'en'; save(); applyLang(); render(); return; }
   if (el.id === 'sndBtn') { S.sound = !S.sound; save(); applyLang(); if (S.sound) snd.key(); return; }
-  if (has('data-tf')) {
-    ui.tf = A('data-tf'); document.querySelectorAll('[data-tf]').forEach(b => b.classList.toggle('on', b === el)); drawIns();
+  if (has('data-ct')) {
+    ui.ct = A('data-ct') === 'line' ? 'line' : 'candle'; try { localStorage.setItem('dofa_sim_ct', ui.ct); } catch (e) {}
+    document.querySelectorAll('[data-ct]').forEach(b => { const on = b === el; b.classList.toggle('on', on); b.setAttribute('aria-selected', String(on)); }); drawIns(true); vib(8);
+  } else if (has('data-cl')) {
+    const k = A('data-cl'); ui.cmpOff[k] = !ui.cmpOff[k]; el.classList.toggle('off', !!ui.cmpOff[k]); el.setAttribute('aria-pressed', String(!ui.cmpOff[k]));
+    const c = CH.cmp; if (c && c.ls[k]) c.ls[k].applyOptions({ visible: !ui.cmpOff[k] }); vib(8);
+  } else if (has('data-tf')) {
+    ui.tf = A('data-tf'); document.querySelectorAll('[data-tf]').forEach(b => b.classList.toggle('on', b === el)); drawIns(true);
   } else if (has('data-lev')) {
     ui.lev = +A('data-lev'); document.querySelectorAll('[data-lev]').forEach(b => b.classList.toggle('on', b === el)); tradeInfo();
   } else if (has('data-pre')) {
@@ -1911,6 +2253,7 @@ function init() {
   readSkin(); applyLang(); route();
   if (r.liq.length) onLiq(r.liq);
   document.addEventListener('click', onClick);
+  atmTilt();
   document.addEventListener('pointerdown', () => snd.gesture(), { passive: true });
   document.addEventListener('keydown', e => {
     if (e.key === 'Escape') { const m = $('modal'); if (m) m.hidden = true; if (ui.bet) closeSlip(); }

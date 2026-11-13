@@ -10,7 +10,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,500;0,600;1,500&family=JetBrains+Mono:wght@400;500&family=Onest:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="sim.css?v=1111b">
+<link rel="stylesheet" href="sim.css?v=1113a">
 <script>try{var k=localStorage.getItem("dofa_sim_skin");if(k)document.documentElement.setAttribute("data-skin",k)}catch(e){}</script>
 </head>
 <body>
@@ -62,9 +62,12 @@
       </div>
 
       <div class="atm" id="atm">
+       <div class="atm-body" id="atmBody">
+        <i class="atm-side l" aria-hidden="true"></i><i class="atm-side r" aria-hidden="true"></i><i class="atm-top" aria-hidden="true"></i>
         <div class="atm-sign"><span>DOFA</span><i></i><span>PRIVATE BANK</span></div>
         <div class="atm-face">
           <div class="atm-bezel">
+            <i class="atm-hood" aria-hidden="true"></i>
             <div class="atm-screen">
               <div class="scr-top">
                 <span class="lbl" data-i18n="atm_balance">Баланс</span>
@@ -111,6 +114,8 @@
           </div>
         </div>
         <div class="atm-foot"></div>
+       </div>
+       <i class="atm-shadow" aria-hidden="true"></i>
       </div>
     </div>
   </section>
@@ -131,6 +136,7 @@
 
   <footer class="foot">
     <p data-i18n="disclaimer">Криптовалюты и золото (через токен PAXG) — живые цены биржи Binance. Валюты — справочный курс, обновляется раз в сутки. Акции, индексы, сырьё и остальные металлы — с задержкой из нашего файла котировок. Если источник недоступен, цена моделируется вокруг последней известной и помечается «Модель». Это не инвестиционная рекомендация. Настоящих денег здесь нет.</p>
+    <p class="foot-lw" data-i18n="foot_lw">Графики — TradingView Lightweight Charts.</p>
   </footer>
 </main>
 
@@ -173,6 +179,7 @@
   <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modalTitle" id="modalBody"></div>
 </div>
 
-<script src="sim.js?v=1111b"></script>
+<script src="vendor/lightweight-charts.js?v=423" defer></script>
+<script src="sim.js?v=1113a" defer></script>
 </body>
 </html>
