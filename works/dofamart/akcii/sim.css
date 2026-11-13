@@ -813,3 +813,88 @@ body::after{content:"";position:fixed;inset:0;z-index:70;pointer-events:none;opa
   30%{transform:translate3d(0,calc(var(--y,20px) - 4px),0) rotate(0)}
   100%{transform:translate3d(0,-84px,0) rotate(0)}}
 @media (prefers-reduced-motion:reduce) and (max-width:899px){.atm-body{transform:rotateY(-3deg)}}
+
+/* =====================================================================
+   13.11 (3) · Банкомат-тумба: напольный корпус с глубиной (образец — NCR SelfServ 6622, берём форму, не цвет).
+   Сверху вниз: шапка с логотипом → экран в нише под козырьком → выступающая полка (карта, клавиши, лоток) →
+   шкаф-сейф с дверцей → цоколь шире корпуса. Левый бок и верх — отдельные грани (rotateY/rotateX 90°).
+   ===================================================================== */
+.atm{--fw:340px;--sc:.68;--ry:23deg;max-width:none;width:100%;height:720px;padding:34px 0 0;perspective:1700px;perspective-origin:0% 0%;display:flex;justify-content:flex-end}
+.atm-body{--d:calc(var(--fw) * .66);width:var(--fw);flex:none;margin-right:6px;transform-origin:50% 0;
+  transform:scale(var(--sc)) rotateX(calc(-6deg + var(--ty) * 2deg)) rotateY(calc(var(--ry) + var(--tx) * 4deg))}
+.money-grid{align-items:start}
+@media (min-width:900px){.money-grid{grid-template-columns:1fr 470px;gap:48px;align-items:center}}
+@media (min-width:1700px){.atm{--sc:.72;height:750px}}
+/* бок корпуса: сплошной металл с шлифовкой, швы на уровне шапки, полки и сейфа */
+.atm-flank{position:absolute;left:0;top:0;bottom:26px;width:var(--d);transform-origin:left center;transform:rotateY(90deg);pointer-events:none;
+  background:
+    linear-gradient(180deg,transparent 0 56px,rgba(0,0,0,.6) 56px 58px,rgba(255,255,255,.05) 58px 59px,transparent 59px calc(100% - 228px),rgba(0,0,0,.6) calc(100% - 228px) calc(100% - 226px),rgba(255,255,255,.05) calc(100% - 226px) calc(100% - 225px),transparent calc(100% - 225px)),
+    linear-gradient(90deg,rgba(var(--accl),.22) 0,rgba(255,255,255,.05) 2px,transparent 18%,rgba(0,0,0,.18) 70%,rgba(0,0,0,.55) 100%),
+    repeating-linear-gradient(0deg,rgba(255,255,255,.028) 0 1px,transparent 1px 3px),
+    linear-gradient(180deg,color-mix(in srgb,var(--p3) 80%,#fff) 0%,var(--p3) 22%,var(--p2) 60%,color-mix(in srgb,var(--p2) 70%,#000) 100%)}
+.atm-flank::after{content:"";position:absolute;left:38%;right:26%;top:30%;height:84px;border-radius:4px;background:repeating-linear-gradient(180deg,rgba(0,0,0,.6) 0 3px,rgba(255,255,255,.04) 3px 4px,transparent 4px 9px)}
+.atm-roof{position:absolute;left:0;right:0;top:0;height:var(--d);transform-origin:top center;transform:rotateX(-90deg);pointer-events:none;
+  background:linear-gradient(0deg,color-mix(in srgb,var(--p3) 75%,#fff),var(--p3) 30%,color-mix(in srgb,var(--p2) 70%,#000))}
+/* шапка с логотипом */
+.atm-sign{height:56px;border-radius:6px 6px 0 0;border:0;border-bottom:1px solid rgba(0,0,0,.6);font-size:10.5px}
+/* верхний блок: экран в глубокой нише под козырьком */
+.atm-upper{padding:20px 16px 18px;transform-style:preserve-3d;border:0;
+  background:linear-gradient(180deg,color-mix(in srgb,var(--p3) 92%,#fff),var(--p2) 70%)}
+.atm-upper .atm-bezel{margin-top:0;padding:13px;transform-style:preserve-3d;border-radius:12px;
+  box-shadow:inset 0 10px 18px #000,inset 6px 0 10px -4px #000,inset -6px 0 10px -4px #000,0 1px 0 rgba(255,255,255,.08)}
+.atm-hood{left:-12px;right:-12px;top:-18px;height:22px;transform:translateZ(18px);clip-path:polygon(0 0,100% 0,96% 100%,4% 100%);
+  background:linear-gradient(180deg,color-mix(in srgb,var(--p3) 80%,#fff),var(--p3) 40%,#050505)}
+/* полка: выступает вперёд на 30 px, своя толщина (бок и верх) */
+.atm-shelf{position:relative;margin:0 -8px;padding:16px 22px 18px;transform-style:preserve-3d;transform:translateZ(30px);border-radius:4px;
+  background:linear-gradient(180deg,color-mix(in srgb,var(--p3) 86%,#fff) 0%,var(--p3) 18%,var(--p2) 100%);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.14),inset 0 -2px 0 rgba(0,0,0,.5),0 18px 26px -14px rgba(0,0,0,.9)}
+.shelf-flank{position:absolute;left:0;top:0;bottom:0;width:30px;transform-origin:left center;transform:rotateY(90deg);pointer-events:none;
+  background:linear-gradient(90deg,rgba(var(--accl),.25),color-mix(in srgb,var(--p3) 85%,#fff) 8%,var(--p2))}
+.shelf-top{position:absolute;left:0;right:0;top:0;height:30px;transform-origin:top center;transform:rotateX(-90deg);pointer-events:none;
+  background:linear-gradient(0deg,color-mix(in srgb,var(--p3) 70%,#fff),var(--p3))}
+.atm-shelf .atm-deck{margin-top:0}
+.atm-shelf .atm-cash{margin-top:16px}
+.atm-shelf .cash-lane{height:92px}
+/* шкаф-сейф с дверцей: швы, ручка, замок, вентиляция */
+.atm-safe{position:relative;height:212px;background:linear-gradient(180deg,color-mix(in srgb,var(--p2) 85%,#000),var(--p2) 25%,color-mix(in srgb,var(--p2) 75%,#000));
+  box-shadow:inset 0 10px 14px -8px rgba(0,0,0,.9),inset 4px 0 0 -1px rgba(255,255,255,.06),inset -4px 0 0 -1px rgba(0,0,0,.45)}
+.safe-door{position:absolute;inset:22px 20px 16px;border-radius:6px;
+  background:linear-gradient(160deg,color-mix(in srgb,var(--p3) 92%,#fff),var(--p2) 55%,color-mix(in srgb,var(--p2) 80%,#000));
+  box-shadow:0 0 0 1px rgba(0,0,0,.75),inset 1px 1px 0 rgba(255,255,255,.08),inset -1px -1px 0 rgba(0,0,0,.5),0 0 0 3px rgba(255,255,255,.025)}
+.safe-vent{position:absolute;left:16%;right:22%;top:16px;height:30px;border-radius:3px;background:repeating-linear-gradient(180deg,rgba(0,0,0,.75) 0 3px,rgba(255,255,255,.05) 3px 4px,transparent 4px 8px)}
+.safe-vent.b{top:auto;bottom:16px}
+.safe-handle{position:absolute;right:16px;top:50%;width:9px;height:64px;margin-top:-32px;border-radius:5px;
+  background:linear-gradient(90deg,color-mix(in srgb,var(--p3) 60%,#fff),var(--p3) 45%,#050505);box-shadow:-2px 3px 6px rgba(0,0,0,.7)}
+.safe-lock{position:absolute;right:13px;top:22%;width:15px;height:15px;border-radius:50%;background:radial-gradient(circle,#050505 30%,var(--p3) 34%,color-mix(in srgb,var(--p3) 60%,#fff) 70%);box-shadow:0 0 0 1px rgba(var(--acc),.45),0 0 10px -2px rgba(var(--acc),.7)}
+/* цоколь шире корпуса */
+.atm-plinth{position:relative;height:26px;margin:0 -12px;transform-style:preserve-3d;transform:translateZ(12px);border-radius:3px;
+  background:linear-gradient(180deg,color-mix(in srgb,var(--p2) 80%,#fff 4%),#050505);box-shadow:inset 0 1px 0 rgba(255,255,255,.1)}
+.plinth-flank{position:absolute;left:0;top:0;bottom:0;width:calc(var(--d) + 24px);transform-origin:left center;transform:rotateY(90deg);background:linear-gradient(90deg,#141210,#050505)}
+.atm-shadow{left:-30%;right:4%;bottom:-18px;top:auto;height:80px;
+  background:radial-gradient(closest-side,rgba(0,0,0,.85),rgba(0,0,0,.35) 55%,transparent)}
+/* телефон: вид спереди с лёгким ракурсом, клавиши и экран — полный размер */
+@media (max-width:899px){
+  .atm{--fw:min(372px,calc(100vw - 92px));--sc:1;--ry:11deg;height:auto;padding:16px 0 30px;justify-content:center}
+  .atm-body{margin:0 0 0 52px;transform:rotateX(calc(-3deg + var(--ty) * 1.5deg)) rotateY(calc(var(--ry) + var(--tx) * 3deg))}
+  .atm-shadow{top:auto;bottom:6px;left:-10%;right:0}
+}
+@media (prefers-reduced-motion:reduce){.atm-body{transform:scale(var(--sc)) rotateX(-6deg) rotateY(var(--ry))}}
+@media (prefers-reduced-motion:reduce) and (max-width:899px){.atm-body{transform:rotateX(-3deg) rotateY(var(--ry))}}
+/* 13.11 (4) · Роман: «повёрнут влево, а нужно как было — слегка вправо и почти прямо». Зеркалим: видна правая грань, поворот −8° (телефон −5°). */
+.atm{--ry:-8deg;perspective-origin:100% 0%}
+.atm-body{margin-right:44px}
+.atm-flank,.shelf-flank,.plinth-flank{left:auto;right:0;transform-origin:right center;transform:rotateY(-90deg)}
+.atm-flank{background:
+    linear-gradient(180deg,transparent 0 56px,rgba(0,0,0,.6) 56px 58px,rgba(255,255,255,.05) 58px 59px,transparent 59px calc(100% - 228px),rgba(0,0,0,.6) calc(100% - 228px) calc(100% - 226px),rgba(255,255,255,.05) calc(100% - 226px) calc(100% - 225px),transparent calc(100% - 225px)),
+    linear-gradient(270deg,rgba(var(--accl),.22) 0,rgba(255,255,255,.05) 2px,transparent 18%,rgba(0,0,0,.18) 70%,rgba(0,0,0,.55) 100%),
+    repeating-linear-gradient(0deg,rgba(255,255,255,.028) 0 1px,transparent 1px 3px),
+    linear-gradient(180deg,color-mix(in srgb,var(--p3) 80%,#fff) 0%,var(--p3) 22%,var(--p2) 60%,color-mix(in srgb,var(--p2) 70%,#000) 100%)}
+.atm-flank::after{left:26%;right:38%}
+.shelf-flank{background:linear-gradient(270deg,rgba(var(--accl),.25),color-mix(in srgb,var(--p3) 85%,#fff) 8%,var(--p2))}
+.plinth-flank{background:linear-gradient(270deg,#141210,#050505)}
+.atm-shadow{left:4%;right:-30%}
+@media (max-width:899px){
+  .atm{--ry:-5deg}
+  .atm-body{margin:0 30px 0 0}
+  .atm-shadow{left:0;right:-10%}
+}

@@ -10,7 +10,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,500;0,600;1,500&family=JetBrains+Mono:wght@400;500&family=Onest:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="sim.css?v=1113b">
+<link rel="stylesheet" href="sim.css?v=1113d">
 <script>try{var k=localStorage.getItem("dofa_sim_skin");if(k)document.documentElement.setAttribute("data-skin",k)}catch(e){}</script>
 </head>
 <body>
@@ -63,9 +63,9 @@
 
       <div class="atm" id="atm">
        <div class="atm-body" id="atmBody">
-        <i class="atm-side l" aria-hidden="true"></i><i class="atm-side r" aria-hidden="true"></i><i class="atm-top" aria-hidden="true"></i>
+        <i class="atm-flank" aria-hidden="true"></i><i class="atm-roof" aria-hidden="true"></i>
         <div class="atm-sign"><span>DOFA</span><i></i><span>PRIVATE BANK</span></div>
-        <div class="atm-face">
+        <div class="atm-face atm-upper">
           <div class="atm-bezel">
             <i class="atm-hood" aria-hidden="true"></i>
             <div class="atm-screen">
@@ -89,7 +89,9 @@
               <p class="scr-msg num" id="atmMsg" role="status" aria-live="polite"></p>
             </div>
           </div>
-
+        </div>
+        <div class="atm-shelf">
+          <i class="shelf-flank" aria-hidden="true"></i><i class="shelf-top" aria-hidden="true"></i>
           <div class="atm-deck">
             <div class="atm-cardbox" aria-hidden="true">
               <div class="slot"><span class="led"></span></div>
@@ -113,7 +115,10 @@
             <div class="cash-lane" id="cashLane"></div>
           </div>
         </div>
-        <div class="atm-foot"></div>
+        <div class="atm-safe" aria-hidden="true">
+          <div class="safe-door"><i class="safe-vent"></i><i class="safe-handle"></i><i class="safe-lock"></i><i class="safe-vent b"></i></div>
+        </div>
+        <div class="atm-plinth" aria-hidden="true"><i class="plinth-flank"></i></div>
        </div>
        <i class="atm-shadow" aria-hidden="true"></i>
       </div>
@@ -180,6 +185,6 @@
 </div>
 
 <script src="vendor/lightweight-charts.js?v=423" defer></script>
-<script src="sim.js?v=1113b" defer></script>
+<script src="sim.js?v=1113d" defer></script>
 </body>
 </html>
