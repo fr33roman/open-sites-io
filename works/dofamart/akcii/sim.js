@@ -1334,6 +1334,27 @@ function doDeposit(a) {
 }
 
 // 13.11: the ATM leans a little toward the mouse (or the phone's tilt, only where no permission prompt is needed).
+// 13.11 (5): масштаб банкомата под окно — на телефоне целиком в один экран (между шапкой и нижней панелью), на компьютере крупно, но не выше окна.
+function fitAtm() {
+  const box = $('atm'), body = $('atmBody'); if (!box || !body) return;
+  const fit = () => {
+    let h = 0; for (const k of body.children) if (getComputedStyle(k).position !== 'absolute') h += k.offsetHeight;   // высота корпуса по частям (у .atm-body своя высота 0)
+    const w = body.offsetWidth; if (!h || !w) return;
+    const mob = innerWidth < 900;
+    const hdr = document.querySelector('.hdr'), tab = document.querySelector('.tabbar');
+    const top = (hdr ? hdr.offsetHeight : 60), bot = mob && tab && tab.offsetParent ? tab.offsetHeight : 0;
+    const padTop = mob ? 12 : 30, padBot = mob ? 16 : 30;
+    const availH = innerHeight - top - bot - padTop - padBot - (mob ? 8 : 40);
+    const availW = (mob ? box.clientWidth - 30 : box.clientWidth - 50) / (w * 1.16);
+    const sc = Math.max(0.4, Math.min(mob ? 1 : 0.92, availH / h * (mob ? 0.9 : 1), availW));   // 0,9 — запас на перспективу и выступающие полку и цоколь
+    const hh = Math.round(padTop + h * sc + padBot) + 'px';
+    box.style.setProperty('--sc', sc.toFixed(3)); box.style.paddingTop = padTop + 'px';
+    if (box.style.height !== hh) box.style.height = hh;
+  };
+  fit();
+  if (window.ResizeObserver) new ResizeObserver(() => requestAnimationFrame(fit)).observe(box);
+  window.addEventListener('resize', () => requestAnimationFrame(fit), { passive: true });
+}
 function atmTilt() {
   const el = $('atmBody'); if (!el || RM) return;
   let tx = 0, ty = 0, raf = 0;
@@ -2261,7 +2282,7 @@ function init() {
   readSkin(); applyLang(); route();
   if (r.liq.length) onLiq(r.liq);
   document.addEventListener('click', onClick);
-  atmTilt();
+  fitAtm(); atmTilt();
   document.addEventListener('pointerdown', () => snd.gesture(), { passive: true });
   document.addEventListener('keydown', e => {
     if (e.key === 'Escape') { const m = $('modal'); if (m) m.hidden = true; if (ui.bet) closeSlip(); }

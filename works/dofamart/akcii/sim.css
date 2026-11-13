@@ -898,3 +898,21 @@ body::after{content:"";position:fixed;inset:0;z-index:70;pointer-events:none;opa
   .atm-body{margin:0 30px 0 0}
   .atm-shadow{left:0;right:-10%}
 }
+/* 13.11 (5) · Роман: «на ПК банкомат стал узким и маленьким — шире; поворот при наведении — к минимуму; на телефоне — целиком в один экран».
+   Корпус шире (лицо 430 px), масштаб --sc считает fitAtm() в sim.js по высоте окна; поворот за мышью ±1°. */
+@media (min-width:900px){
+  .money-grid{grid-template-columns:1fr 540px;gap:40px}
+  .atm{--fw:430px;height:auto;justify-content:flex-end}
+  .atm-body{margin-right:40px;transform-origin:100% 0;
+    transform:scale(var(--sc)) rotateX(calc(-5deg + var(--ty) * .5deg)) rotateY(calc(var(--ry) + var(--tx) * 1deg))}
+}
+@media (max-width:899px){
+  .atm{height:auto;justify-content:center}
+  .atm-body{margin:0 22px 0 0;transform-origin:50% 0;
+    transform:scale(var(--sc)) rotateX(-3deg) rotateY(calc(var(--ry) + var(--tx) * .6deg))}
+}
+@media (prefers-reduced-motion:reduce){.atm-body{transform:scale(var(--sc)) rotateX(-4deg) rotateY(var(--ry))}}
+@media (max-width:899px){
+  .atm{perspective-origin:50% 0;overflow-x:clip;overflow-y:visible}
+  .atm-body{margin:0 14px 0 0}
+}
