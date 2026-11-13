@@ -916,3 +916,64 @@ body::after{content:"";position:fixed;inset:0;z-index:70;pointer-events:none;opa
   .atm{perspective-origin:50% 0;overflow-x:clip;overflow-y:visible}
   .atm-body{margin:0 14px 0 0}
 }
+
+/* ---------- 13.11 (f) · Сравнение: график и выбор в одном блоке; ставки в кошельке ---------- */
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+/* кошелёк: пять плашек, «Стоимость портфеля» на всю ширину на телефоне */
+.stats.w5{grid-template-columns:1fr 1fr}
+.stats.w5>.stat:first-child{grid-column:1/-1}
+@media (min-width:900px){.stats.w5{grid-template-columns:repeat(5,1fr)}.stats.w5>.stat:first-child{grid-column:auto}}
+/* кошелёк: блок «Ставки» */
+.wb{margin-top:8px}
+.wb-h{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:36px 0 0}
+.wb-h .h2{margin:0}
+.wb-go{min-height:44px;padding:0 16px;display:inline-flex;align-items:center;font-size:13px;flex:none}
+.wb>.empty{margin-top:12px}
+.wb-sum{margin-top:12px}
+.wb-list{display:grid;gap:8px;margin-top:12px}
+.wb-row{display:flex;align-items:center;gap:12px;padding:12px 14px;border:1px solid var(--line);border-radius:14px;background:var(--sur);min-height:60px}
+.wb-l{flex:1;min-width:0}
+.wb-r{flex:0 0 auto;text-align:right;display:grid;gap:2px}
+.wb-r b{font-size:15px;font-weight:500}
+.wb-r small{color:var(--mut);font-size:11px}
+.wb-list.done .wb-row{opacity:.82;min-height:52px}
+.wb-hl{margin-top:18px}
+@media (min-width:900px){.wb-list{grid-template-columns:1fr 1fr}}
+/* сравнение: периоды */
+.per{gap:6px}
+.per .chip{flex:1 1 30%;min-width:0;padding:0 8px}
+@media (min-width:900px){.per .chip{flex:0 1 auto;min-width:96px}}
+/* сравнение: один блок — график слева, выбор позиций справа (на телефоне выбор под графиком) */
+.cmp-block{margin-top:16px;display:grid;gap:18px;padding:14px}
+.cmp-main{min-width:0}
+.cmp-block .legend{margin-top:10px}
+.cmp-side{min-width:0;display:flex;flex-direction:column;gap:10px;border-top:1px solid var(--line);padding-top:14px}
+.cs-top{display:flex;align-items:center;justify-content:space-between}
+.cs-n{color:var(--mut);font-size:12px}
+.cmp-side .cmp-sel{margin-top:0;min-height:44px}
+.cs-q{display:block}
+.cs-q input{width:100%;min-height:44px;padding:0 14px;border-radius:12px;border:1px solid var(--line);background:rgba(255,255,255,.03);color:var(--txt);font:500 14px var(--sans)}
+.cs-q input::placeholder{color:var(--mut)}
+.cs-q input:focus-visible{outline:none;border-color:rgba(var(--acc),.6);box-shadow:0 0 0 3px rgba(var(--acc),.12)}
+.cs-tabs{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding:2px 0}
+.cs-tabs::-webkit-scrollbar{display:none}
+.cs-tabs .chip{flex:0 0 auto;min-height:40px;font-family:var(--sans)}
+.cs-tabs .chip small{opacity:.6;margin-left:4px;font-size:11px}
+.cs-list{max-height:312px;overflow-y:auto;overscroll-behavior:contain;display:grid;gap:4px;align-content:start;scrollbar-width:thin;padding-right:2px}
+.cs-list>.empty{padding:14px}
+.cp-item{display:flex;align-items:center;gap:10px;min-height:48px;padding:0 12px;border-radius:12px;border:1px solid transparent;text-align:left;color:inherit;width:100%;transition:background .2s,border-color .2s}
+.cp-item .dot{width:10px;height:10px;border-radius:50%;flex:none;box-shadow:inset 0 0 0 1.5px var(--mut)}
+.cp-item.on .dot{box-shadow:none}
+.cp-item.on{background:rgba(var(--acc),.08);border-color:rgba(var(--acc),.4)}
+.cp-t{flex:1;min-width:0;display:grid}
+.cp-t b{font-size:13px;font-weight:500}
+.cp-t small{color:var(--mut);font-size:11.5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.cp-m{color:var(--mut);font-size:16px;flex:none}
+.cp-item.on .cp-m{color:var(--gold-l)}
+@media (min-width:900px){
+  .cmp-block{grid-template-columns:minmax(0,1.6fr) minmax(300px,.9fr);gap:26px;padding:22px;align-items:start}
+  .cmp-side{border-top:0;padding-top:0;border-left:1px solid var(--line);padding-left:22px;position:sticky;top:84px}
+  .cs-list{max-height:min(420px,calc(100dvh - 360px));min-height:220px}
+  .cmp-block .legend{grid-template-columns:1fr}
+}
+.wb-l .bm-s{white-space:normal}

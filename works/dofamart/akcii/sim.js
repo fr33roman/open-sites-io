@@ -37,61 +37,131 @@ function def(cat, rows) {
   });
 }
 def('crypto', [
-  ['BTC', 'Биткоин', 'Bitcoin', 68400, { bn: 'BTCUSDT', cg: 'bitcoin' }],
-  ['ETH', 'Эфириум', 'Ethereum', 3520, { bn: 'ETHUSDT', cg: 'ethereum' }],
-  ['SOL', 'Солана', 'Solana', 162, { bn: 'SOLUSDT', cg: 'solana', vm: 1.2 }],
-  ['TON', 'Тонкоин', 'Toncoin', 5.4, { bn: 'TONUSDT', cg: 'the-open-network', vm: 1.2 }],
-  ['BNB', 'BNB', 'BNB', 590, { bn: 'BNBUSDT', cg: 'binancecoin' }],
-  ['XRP', 'XRP', 'XRP', 0.62, { bn: 'XRPUSDT', cg: 'ripple', vm: 1.2 }],
-  ['DOGE', 'Догикоин', 'Dogecoin', 0.158, { bn: 'DOGEUSDT', cg: 'dogecoin', vm: 1.5 }],
-  ['ADA', 'Кардано', 'Cardano', 0.46, { bn: 'ADAUSDT', cg: 'cardano', vm: 1.3 }],
-  ['AVAX', 'Аваланч', 'Avalanche', 34.5, { bn: 'AVAXUSDT', cg: 'avalanche-2', vm: 1.3 }],
-  ['LINK', 'Чейнлинк', 'Chainlink', 15.2, { bn: 'LINKUSDT', cg: 'chainlink', vm: 1.3 }]
+  ['BTC', 'Биткоин', 'Bitcoin', 69250, { bn: 'BTCUSDT', cg: 'bitcoin' }],
+  ['ETH', 'Эфириум', 'Ethereum', 1963, { bn: 'ETHUSDT', cg: 'ethereum' }],
+  ['SOL', 'Солана', 'Solana', 81.4, { bn: 'SOLUSDT', cg: 'solana', vm: 1.2 }],
+  ['TON', 'Тонкоин', 'Toncoin', 1.6, { bn: 'TONUSDT', cg: 'the-open-network', vm: 1.2 }],
+  ['BNB', 'BNB', 'BNB', 641, { bn: 'BNBUSDT', cg: 'binancecoin' }],
+  ['XRP', 'XRP', 'XRP', 1.03, { bn: 'XRPUSDT', cg: 'ripple', vm: 1.2 }],
+  ['DOGE', 'Догикоин', 'Dogecoin', 0.066, { bn: 'DOGEUSDT', cg: 'dogecoin', vm: 1.5 }],
+  ['ADA', 'Кардано', 'Cardano', 0.1735, { bn: 'ADAUSDT', cg: 'cardano', vm: 1.3 }],
+  ['AVAX', 'Аваланч', 'Avalanche', 8.5, { bn: 'AVAXUSDT', cg: 'avalanche-2', vm: 1.3 }],
+  ['LINK', 'Чейнлинк', 'Chainlink', 10.1, { bn: 'LINKUSDT', cg: 'chainlink', vm: 1.3 }],
+  ['DOT', 'Полкадот', 'Polkadot', 0.84, { bn: 'DOTUSDT', cg: 'polkadot', vm: 1.3 }],
+  ['LTC', 'Лайткоин', 'Litecoin', 49.8, { bn: 'LTCUSDT', cg: 'litecoin' }],
+  ['TRX', 'Трон', 'TRON', 0.3137, { bn: 'TRXUSDT', cg: 'tron' }],
+  ['SHIB', 'Шиба-ину', 'Shiba Inu', 0.00000434, { bn: 'SHIBUSDT', cg: 'shiba-inu', vm: 1.6 }],
+  ['BCH', 'Биткоин-кэш', 'Bitcoin Cash', 227, { bn: 'BCHUSDT', cg: 'bitcoin-cash', vm: 1.2 }],
+  ['UNI', 'Юнисвап', 'Uniswap', 5.92, { bn: 'UNIUSDT', cg: 'uniswap', vm: 1.4 }],
+  ['ATOM', 'Космос', 'Cosmos', 1.42, { bn: 'ATOMUSDT', cg: 'cosmos', vm: 1.3 }],
+  ['NEAR', 'Near', 'NEAR Protocol', 3.57, { bn: 'NEARUSDT', cg: 'near', vm: 1.4 }],
+  ['APT', 'Аптос', 'Aptos', 0.555, { bn: 'APTUSDT', cg: 'aptos', vm: 1.4 }],
+  ['ARB', 'Арбитрум', 'Arbitrum', 0.1488, { bn: 'ARBUSDT', cg: 'arbitrum', vm: 1.5 }],
+  ['OP', 'Оптимизм', 'Optimism', 0.0957, { bn: 'OPUSDT', cg: 'optimism', vm: 1.5 }],
+  ['FIL', 'Файлкоин', 'Filecoin', 0.741, { bn: 'FILUSDT', cg: 'filecoin', vm: 1.4 }],
+  ['ETC', 'Эфириум классик', 'Ethereum Classic', 6.6, { bn: 'ETCUSDT', cg: 'ethereum-classic', vm: 1.2 }],
+  ['XLM', 'Стеллар', 'Stellar', 0.15, { bn: 'XLMUSDT', cg: 'stellar', vm: 1.2 }],
+  ['SUI', 'Суй', 'Sui', 0.82, { bn: 'SUIUSDT', cg: 'sui', vm: 1.5 }],
+  ['PEPE', 'Пепе', 'Pepe', 0.00000456, { bn: 'PEPEUSDT', cg: 'pepe', vm: 1.8 }],
+  ['AAVE', 'Ааве', 'Aave', 114, { bn: 'AAVEUSDT', cg: 'aave', vm: 1.4 }],
+  ['INJ', 'Инджектив', 'Injective', 8.19, { bn: 'INJUSDT', cg: 'injective-protocol', vm: 1.5 }],
+  ['HBAR', 'Хедера', 'Hedera', 0.064, { bn: 'HBARUSDT', cg: 'hedera-hashgraph', vm: 1.4 }],
+  ['ICP', 'Интернет-компьютер', 'Internet Computer', 2.64, { bn: 'ICPUSDT', cg: 'internet-computer', vm: 1.4 }]
 ]);
 def('stocks', [
   ['AAPL', 'Apple', 'Apple', 228], ['NVDA', 'Nvidia', 'Nvidia', 135, { vm: 1.6 }],
   ['TSLA', 'Tesla', 'Tesla', 248, { vm: 1.8 }], ['MSFT', 'Microsoft', 'Microsoft', 428],
   ['AMZN', 'Amazon', 'Amazon', 196], ['GOOGL', 'Alphabet', 'Alphabet', 172],
   ['META', 'Meta', 'Meta', 565, { vm: 1.2 }], ['NFLX', 'Netflix', 'Netflix', 705, { vm: 1.2 }],
-  ['AMD', 'AMD', 'AMD', 158, { vm: 1.6 }], ['KO', 'Coca-Cola', 'Coca-Cola', 64, { vm: 0.6 }]
+  ['AMD', 'AMD', 'AMD', 158, { vm: 1.6 }], ['KO', 'Coca-Cola', 'Coca-Cola', 64, { vm: 0.6 }],
+  ['JPM', 'JPMorgan', 'JPMorgan', 235, { vm: 0.8 }], ['V', 'Visa', 'Visa', 305, { vm: 0.7 }],
+  ['WMT', 'Walmart', 'Walmart', 88, { vm: 0.6 }], ['DIS', 'Disney', 'Disney', 98],
+  ['NKE', 'Nike', 'Nike', 76], ['INTC', 'Intel', 'Intel', 24, { vm: 1.4 }],
+  ['ORCL', 'Oracle', 'Oracle', 175, { vm: 1.1 }], ['ADBE', 'Adobe', 'Adobe', 480],
+  ['CRM', 'Salesforce', 'Salesforce', 300], ['BA', 'Boeing', 'Boeing', 160, { vm: 1.2 }],
+  ['PFE', 'Pfizer', 'Pfizer', 27, { vm: 0.7 }], ['XOM', 'ExxonMobil', 'ExxonMobil', 115, { vm: 0.8 }],
+  ['MCD', "McDonald's", "McDonald's", 295, { vm: 0.6 }], ['PYPL', 'PayPal', 'PayPal', 78, { vm: 1.3 }],
+  ['UBER', 'Uber', 'Uber', 75, { vm: 1.3 }], ['SBUX', 'Starbucks', 'Starbucks', 95],
+  ['COST', 'Costco', 'Costco', 900, { vm: 0.8 }]
 ]);
 def('metals', [
-  ['XAU', 'Золото, унция', 'Gold, oz', 2650, { bn: 'PAXGUSDT', cg: 'pax-gold', proxy: 'PAXG' }],
+  ['XAU', 'Золото, унция', 'Gold, oz', 3875, { bn: 'PAXGUSDT', cg: 'pax-gold', proxy: 'PAXG' }],
   ['XAG', 'Серебро, унция', 'Silver, oz', 31.2, { vm: 1.6 }],
   ['XPT', 'Платина, унция', 'Platinum, oz', 985, { vm: 1.3 }],
   ['XPD', 'Палладий, унция', 'Palladium, oz', 1040, { vm: 1.8 }],
+  ['RH', 'Родий, унция', 'Rhodium, oz', 4800, { vm: 1.6 }],
   ['HG', 'Медь, фунт', 'Copper, lb', 4.35, { vm: 1.3 }],
   ['ALI', 'Алюминий, тонна', 'Aluminium, t', 2520],
   ['NI', 'Никель, тонна', 'Nickel, t', 16400, { vm: 1.5 }],
-  ['ZN', 'Цинк, тонна', 'Zinc, t', 2950, { vm: 1.2 }]
+  ['ZN', 'Цинк, тонна', 'Zinc, t', 2950, { vm: 1.2 }],
+  ['PB', 'Свинец, тонна', 'Lead, t', 2050],
+  ['SN', 'Олово, тонна', 'Tin, t', 31500, { vm: 1.4 }],
+  ['CO', 'Кобальт, тонна', 'Cobalt, t', 24500, { vm: 1.2 }],
+  ['LI', 'Литий, тонна', 'Lithium, t', 9800, { vm: 1.6 }],
+  ['FE', 'Железная руда, тонна', 'Iron ore, t', 104, { vm: 1.2 }],
+  ['UR', 'Уран, фунт', 'Uranium, lb', 74, { vm: 1.3 }]
 ]);
 // fx: function of a "units per 1 USD" rates table
 const inv = c => r => 1 / r[c], dir = c => r => r[c];
+const fxp = (id, ru, en, base, tk, f, vm) => [id, ru, en, base, { tk: tk, plain: 1, fx: f, vm: vm }];
 def('forex', [
-  ['EURUSD', 'Евро / доллар', 'Euro / US dollar', 1.085, { tk: 'EUR/USD', plain: 1, fx: inv('EUR') }],
-  ['GBPUSD', 'Фунт / доллар', 'Pound / US dollar', 1.295, { tk: 'GBP/USD', plain: 1, fx: inv('GBP') }],
-  ['USDJPY', 'Доллар / иена', 'US dollar / yen', 151.4, { tk: 'USD/JPY', plain: 1, fx: dir('JPY') }],
-  ['USDCHF', 'Доллар / франк', 'US dollar / franc', 0.884, { tk: 'USD/CHF', plain: 1, fx: dir('CHF') }],
-  ['USDCNY', 'Доллар / юань', 'US dollar / yuan', 7.12, { tk: 'USD/CNY', plain: 1, fx: dir('CNY') }],
-  ['USDTRY', 'Доллар / лира', 'US dollar / lira', 34.2, { tk: 'USD/TRY', plain: 1, fx: dir('TRY') }],
-  ['USDRUB', 'Доллар / рубль', 'US dollar / rouble', 96.5, { tk: 'USD/RUB', plain: 1, vm: 2, fx: dir('RUB') }],
-  ['USDKZT', 'Доллар / тенге', 'US dollar / tenge', 492, { tk: 'USD/KZT', plain: 1, fx: dir('KZT') }],
-  ['USDGEL', 'Доллар / лари', 'US dollar / lari', 2.72, { tk: 'USD/GEL', plain: 1, fx: dir('GEL') }],
-  ['EURGBP', 'Евро / фунт', 'Euro / pound', 0.838, { tk: 'EUR/GBP', plain: 1, fx: r => r.GBP / r.EUR }]
+  fxp('EURUSD', 'Евро / доллар', 'Euro / US dollar', 1.108, 'EUR/USD', inv('EUR')),
+  fxp('GBPUSD', 'Фунт / доллар', 'Pound / US dollar', 1.325, 'GBP/USD', inv('GBP')),
+  fxp('AUDUSD', 'Австралийский доллар', 'Australian dollar', 0.682, 'AUD/USD', inv('AUD')),
+  fxp('NZDUSD', 'Новозеландский доллар', 'New Zealand dollar', 0.556, 'NZD/USD', inv('NZD')),
+  fxp('USDJPY', 'Доллар / иена', 'US dollar / yen', 159.7, 'USD/JPY', dir('JPY')),
+  fxp('USDCHF', 'Доллар / франк', 'US dollar / franc', 0.833, 'USD/CHF', dir('CHF')),
+  fxp('USDCAD', 'Доллар / канадский доллар', 'US dollar / Canadian dollar', 1.425, 'USD/CAD', dir('CAD')),
+  fxp('USDCNY', 'Доллар / юань', 'US dollar / yuan', 6.67, 'USD/CNY', dir('CNY')),
+  fxp('USDHKD', 'Доллар / гонконгский доллар', 'US dollar / HK dollar', 7.845, 'USD/HKD', dir('HKD'), 0.3),
+  fxp('USDSGD', 'Доллар / сингапурский доллар', 'US dollar / Singapore dollar', 1.286, 'USD/SGD', dir('SGD')),
+  fxp('USDINR', 'Доллар / рупия', 'US dollar / rupee', 94, 'USD/INR', dir('INR')),
+  fxp('USDKRW', 'Доллар / вона', 'US dollar / won', 1334, 'USD/KRW', dir('KRW')),
+  fxp('USDTRY', 'Доллар / лира', 'US dollar / lira', 50.3, 'USD/TRY', dir('TRY')),
+  fxp('USDMXN', 'Доллар / песо', 'US dollar / peso', 18.7, 'USD/MXN', dir('MXN'), 1.3),
+  fxp('USDBRL', 'Доллар / реал', 'US dollar / real', 5.62, 'USD/BRL', dir('BRL'), 1.3),
+  fxp('USDZAR', 'Доллар / рэнд', 'US dollar / rand', 16.7, 'USD/ZAR', dir('ZAR'), 1.4),
+  fxp('USDSEK', 'Доллар / шведская крона', 'US dollar / Swedish krona', 9.98, 'USD/SEK', dir('SEK')),
+  fxp('USDNOK', 'Доллар / норвежская крона', 'US dollar / Norwegian krone', 9.53, 'USD/NOK', dir('NOK')),
+  fxp('USDDKK', 'Доллар / датская крона', 'US dollar / Danish krone', 6.75, 'USD/DKK', dir('DKK')),
+  fxp('USDPLN', 'Доллар / злотый', 'US dollar / zloty', 3.98, 'USD/PLN', dir('PLN')),
+  fxp('USDCZK', 'Доллар / чешская крона', 'US dollar / Czech koruna', 22, 'USD/CZK', dir('CZK')),
+  fxp('USDHUF', 'Доллар / форинт', 'US dollar / forint', 329, 'USD/HUF', dir('HUF')),
+  fxp('USDILS', 'Доллар / шекель', 'US dollar / shekel', 3.2, 'USD/ILS', dir('ILS')),
+  fxp('USDTHB', 'Доллар / бат', 'US dollar / baht', 33.8, 'USD/THB', dir('THB')),
+  fxp('USDRUB', 'Доллар / рубль', 'US dollar / rouble', 96.5, 'USD/RUB', dir('RUB'), 2),
+  fxp('USDKZT', 'Доллар / тенге', 'US dollar / tenge', 492, 'USD/KZT', dir('KZT')),
+  fxp('USDGEL', 'Доллар / лари', 'US dollar / lari', 2.72, 'USD/GEL', dir('GEL')),
+  fxp('EURGBP', 'Евро / фунт', 'Euro / pound', 0.838, 'EUR/GBP', r => r.GBP / r.EUR),
+  fxp('EURJPY', 'Евро / иена', 'Euro / yen', 177, 'EUR/JPY', r => r.JPY / r.EUR),
+  fxp('GBPJPY', 'Фунт / иена', 'Pound / yen', 211.7, 'GBP/JPY', r => r.JPY / r.GBP),
+  fxp('EURCHF', 'Евро / франк', 'Euro / franc', 0.923, 'EUR/CHF', r => r.CHF / r.EUR)
 ]);
 def('commod', [
   ['BRENT', 'Нефть Brent', 'Brent crude', 74.8, { vm: 1.2 }], ['WTI', 'Нефть WTI', 'WTI crude', 70.9, { vm: 1.2 }],
   ['NG', 'Природный газ', 'Natural gas', 2.85, { vm: 2 }], ['COFFEE', 'Кофе, фунт', 'Coffee, lb', 2.62, { vm: 1.4 }],
   ['WHEAT', 'Пшеница, бушель', 'Wheat, bu', 5.85], ['CORN', 'Кукуруза, бушель', 'Corn, bu', 4.28],
   ['SUGAR', 'Сахар, фунт', 'Sugar, lb', 0.215], ['COCOA', 'Какао, тонна', 'Cocoa, t', 7850, { vm: 1.8 }],
-  ['COTTON', 'Хлопок, фунт', 'Cotton, lb', 0.72]
+  ['COTTON', 'Хлопок, фунт', 'Cotton, lb', 0.72],
+  ['HEAT', 'Мазут, галлон', 'Heating oil, gal', 2.35, { vm: 1.2 }], ['GASO', 'Бензин, галлон', 'Gasoline, gal', 2.1, { vm: 1.3 }],
+  ['SOY', 'Соя, бушель', 'Soybeans, bu', 10.4], ['SOYOIL', 'Соевое масло, фунт', 'Soybean oil, lb', 0.42, { vm: 1.2 }],
+  ['OATS', 'Овёс, бушель', 'Oats, bu', 3.6], ['RICE', 'Рис, центнер', 'Rice, cwt', 13.2],
+  ['CATTLE', 'Скот живой, фунт', 'Live cattle, lb', 2.3, { vm: 0.7 }], ['HOGS', 'Свинина, фунт', 'Lean hogs, lb', 0.84, { vm: 1.1 }],
+  ['OJ', 'Апельсиновый сок, фунт', 'Orange juice, lb', 2.2, { vm: 1.8 }], ['LUMBER', 'Лес, тыс. досковых футов', 'Lumber, mbf', 560, { vm: 1.3 }],
+  ['PALM', 'Пальмовое масло, тонна', 'Palm oil, t', 1050, { vm: 1.2 }]
 ]);
 def('index', [
   ['SPX', 'S&P 500', 'S&P 500', 5830, { plain: 1 }], ['NDX', 'Nasdaq 100', 'Nasdaq 100', 20350, { plain: 1, vm: 1.3 }],
   ['DJI', 'Dow Jones', 'Dow Jones', 42800, { plain: 1 }], ['DAX', 'DAX 40', 'DAX 40', 19450, { plain: 1 }],
   ['FTSE', 'FTSE 100', 'FTSE 100', 8280, { plain: 1 }], ['N225', 'Nikkei 225', 'Nikkei 225', 38900, { plain: 1, vm: 1.2 }],
   ['HSI', 'Hang Seng', 'Hang Seng', 20600, { plain: 1, vm: 1.4 }],
-  ['VOO', 'Фонд на S&P 500', 'S&P 500 fund', 535], ['QQQ', 'Фонд на Nasdaq 100', 'Nasdaq 100 fund', 495, { vm: 1.3 }]
+  ['CAC', 'CAC 40', 'CAC 40', 7600, { plain: 1 }], ['STOXX', 'Euro Stoxx 50', 'Euro Stoxx 50', 4950, { plain: 1 }],
+  ['RUT', 'Russell 2000', 'Russell 2000', 2250, { plain: 1, vm: 1.2 }], ['KOSPI', 'KOSPI', 'KOSPI', 2600, { plain: 1, vm: 1.2 }],
+  ['SSEC', 'Shanghai Composite', 'Shanghai Composite', 3300, { plain: 1, vm: 1.1 }],
+  ['VOO', 'Фонд на S&P 500', 'S&P 500 fund', 535], ['QQQ', 'Фонд на Nasdaq 100', 'Nasdaq 100 fund', 495, { vm: 1.3 }],
+  ['SPY', 'Фонд SPDR S&P 500', 'SPDR S&P 500 fund', 583], ['VTI', 'Фонд на весь рынок США', 'Total US market fund', 285],
+  ['IWM', 'Фонд на малые компании', 'Small-cap fund', 225, { vm: 1.2 }], ['GLD', 'Фонд на золото', 'Gold fund', 245, { vm: 0.9 }],
+  ['TLT', 'Фонд на длинные облигации', 'Long bond fund', 92, { vm: 0.9 }], ['EEM', 'Фонд на развивающиеся рынки', 'Emerging markets fund', 43, { vm: 1.1 }]
 ]);
 const SYMS = Object.keys(INS);
 
@@ -209,7 +279,10 @@ function reset(S) { const k = { lang: S.lang, sound: S.sound }; Object.keys(S).f
 const pnl = (p, price) => p.side * p.qty * (price - p.entry);
 const posValue = (p, price) => Math.max(0, p.margin + pnl(p, price));
 const liqPrice = (entry, side, lev) => entry * (1 - side / lev);
-function equity(S, M) { let v = S.cash; S.positions.forEach(p => { v += posValue(p, M.px[p.sym]); }); return v; }
+// Open bets are money in play: stake x (current price / price at the bet), i.e. what a sale would pay now.
+const betValue = b => round2(b.a / b.p * (b.cur >= 0 ? b.cur : b.p));
+function betsValue(S) { let v = 0; (S.bets || []).forEach(b => { if (b && b.p > 0 && b.a > 0) v += betValue(b); }); return round2(v); }
+function equity(S, M) { let v = S.cash + betsValue(S); S.positions.forEach(p => { v += posValue(p, M.px[p.sym]); }); return v; }
 function pushCurve(S, M) {
   S.curve.push([M.t, round2(equity(S, M) - S.deposited)]); S.curveT = M.t;
   if (S.curve.length > 400) S.curve = S.curve.filter((c, i) => i >= 200 || i % 2 === 0);
@@ -319,7 +392,7 @@ function restore(d, now) {
 }
 
 Object.assign(E, { KEY, FEE, LEVS, CATS, CAT, INS, SYMS, BENCH, FINE_N, newMarket, status, step, synthHist, setCandles, applyQuote, chg24,
-  newState, reset, pnl, posValue, liqPrice, equity, deposit, maxAmount, open, close, sweep, sweepCandles, advance, stats, restore, num, round2, bridge, gauss });
+  newState, reset, pnl, posValue, betValue, betsValue, liqPrice, equity, deposit, maxAmount, open, close, sweep, sweepCandles, advance, stats, restore, num, round2, bridge, gauss });
 if (typeof module !== 'undefined' && module.exports) { module.exports = E; }
 if (typeof document === 'undefined') return;
 
@@ -357,7 +430,8 @@ const T = {
     p_qty: 'Количество', p_avg: 'Средняя цена', p_val: 'Сейчас стоит', p_pnl: 'Результат', p_close: 'Закрыть',
     side_up: 'Рост', side_down: 'Падение', liq_badge: 'ликвидация', liq_toast: '{s}: позиция ликвидирована, {x}', away_liq: 'Пока вас не было, ликвидировано позиций: {n}',
     wallet_lbl: 'Портфель', wallet_h: 'Кошелёк', w_real: 'Если бы это были реальные деньги', w_of_dep: 'от внесённого',
-    w_total: 'Стоимость портфеля', w_cash: 'Свободные деньги', w_inpos: 'В позициях', w_dep: 'Всего внесено',
+    w_total: 'Стоимость портфеля', w_cash: 'Свободные деньги', w_inpos: 'В позициях', w_inbets: 'В ставках', w_dep: 'Всего внесено',
+    w_bets: 'Ставки', w_bets_go: 'К ставкам', w_bets_none: 'Ставок пока нет. Поставьте первую — она появится здесь.', w_bet_coef: 'коэф.', w_bet_win: 'выплата', w_bets_more: 'Ещё ставок: {n}. Все — в разделе «Ставки».', al_bets: 'В ставках',
     w_curve: 'Результат во времени', curve_empty: 'Кривая появится после первых сделок', w_open: 'Открытые позиции', w_hist: 'История сделок', hist_none: 'Закрытых сделок пока нет.',
     truth_lbl: 'Честная статистика', truth_h: 'Правда',
     sum_none: 'Сделок пока нет. После первой закрытой сделки здесь появится честный итог.',
@@ -410,7 +484,8 @@ const T = {
     p_qty: 'Quantity', p_avg: 'Average price', p_val: 'Worth now', p_pnl: 'Result', p_close: 'Close',
     side_up: 'Long', side_down: 'Short', liq_badge: 'liquidated', liq_toast: '{s}: position liquidated, {x}', away_liq: 'While you were away, positions liquidated: {n}',
     wallet_lbl: 'Portfolio', wallet_h: 'Wallet', w_real: 'If this were real money', w_of_dep: 'of deposits',
-    w_total: 'Portfolio value', w_cash: 'Available cash', w_inpos: 'In positions', w_dep: 'Total deposited',
+    w_total: 'Portfolio value', w_cash: 'Available cash', w_inpos: 'In positions', w_inbets: 'In bets', w_dep: 'Total deposited',
+    w_bets: 'Bets', w_bets_go: 'To bets', w_bets_none: 'No bets yet. Place the first one and it will show up here.', w_bet_coef: 'odds', w_bet_win: 'payout', w_bets_more: '{n} more bets. All of them are in the Bets section.', al_bets: 'In bets',
     w_curve: 'Result over time', curve_empty: 'The curve appears after your first trades', w_open: 'Open positions', w_hist: 'Trade history', hist_none: 'No closed trades yet.',
     truth_lbl: 'Honest statistics', truth_h: 'Truth',
     sum_none: 'No trades yet. After the first closed trade an honest summary appears here.',
@@ -465,7 +540,7 @@ function compact(v) {
 const tight = v => (Math.abs(v) >= 1e8 ? compact(v) : money(v));       // for the big hero number
 const tightS = v => (v > 0 ? '+' : '') + tight(v);
 function pct(v) { return v == null || !isFinite(v) ? '—' : (v > 0 ? '+' : v < 0 ? '−' : '') + Math.abs(v * 100).toFixed(2) + '%'; }
-function pdec(sym, p) { return INS[sym].cat === 'forex' ? (p < 10 ? 5 : 3) : (p >= 100 ? 2 : p >= 1 ? 3 : 5); }
+function pdec(sym, p) { return INS[sym].cat === 'forex' ? (p < 10 ? 5 : 3) : (p >= 100 ? 2 : p >= 1 ? 3 : p >= 0.01 ? 5 : 8); }
 function price(sym, p) { return (INS[sym].plain ? '' : '$') + fixed(p, pdec(sym, p)); }
 function qty(v) { return fixed(v, v >= 1000 ? 2 : v >= 1 ? 4 : 6); }
 const p2 = n => (n < 10 ? '0' : '') + n;
@@ -579,8 +654,9 @@ const snd = (function () {
    only our own symbol keys are read, nothing from the network reaches innerHTML.
    ===================================================================== */
 const BN = ['https://data-api.binance.vision', 'https://api.binance.com'];
-const FXC = ['EUR', 'GBP', 'JPY', 'CHF', 'CNY', 'TRY', 'RUB', 'KZT', 'GEL'];
-const ECB = ['EUR', 'GBP', 'JPY', 'CHF', 'CNY', 'TRY'];           // what the frankfurter (ECB) source covers
+const ECB = ['AUD', 'BGN', 'BRL', 'CAD', 'CHF', 'CNY', 'CZK', 'DKK', 'EUR', 'GBP', 'HKD', 'HUF', 'IDR', 'ILS', 'INR', 'ISK', 'JPY', 'KRW', 'MXN', 'MYR', 'NOK', 'NZD', 'PHP', 'PLN', 'RON', 'SEK', 'SGD', 'THB', 'TRY', 'ZAR'];   // what the frankfurter (ECB) source covers
+const FXC = ECB.concat(['RUB', 'KZT', 'GEL']);                    // ...plus three currencies only the daily-rate source has (no ECB history for them)
+const FRANK = 'https://api.frankfurter.dev/v1/';                    // ECB reference rates, open, no key
 let bnHost = 0, bnLive = false, cgAt = 0, seeded = false;
 const fileHist = {};                                               // sym -> daily history from quotes.json
 
@@ -642,7 +718,7 @@ async function runFx() {
     const d = await getJSON('https://open.er-api.com/v6/latest/USD');
     if (!d || d.result !== 'success' || !applyRates(d.rates, E.num(d.time_last_update_unix) * 1000)) throw new Error('shape');
   } catch (e) {
-    const d = await getJSON('https://api.frankfurter.app/latest?from=USD');
+    const d = await getJSON(FRANK + 'latest?from=USD');
     const qt = Date.parse(String(d && d.date).slice(0, 10) + 'T15:00:00Z');
     if (!d || !applyRates(d.rates, qt)) throw new Error('shape');
   }
@@ -738,7 +814,7 @@ async function histDaily(sym) {
     } else if (I.fx) {
       if (!fxSeries || now - fxSeries.at > 36e5) {
         const from = new Date(now - 95 * 864e5).toISOString().slice(0, 10);
-        const d = await getJSON('https://api.frankfurter.app/' + from + '..?from=USD&to=' + ECB.join(','));
+        const d = await getJSON(FRANK + from + '..?from=USD&to=' + ECB.join(','));
         fxSeries = { at: now, rates: d && typeof d.rates === 'object' && d.rates ? d.rates : {} };
       }
       const pts = [];
@@ -1274,10 +1350,11 @@ Object.assign(T.ru, {
   cmp_sub: 'Выберите от двух до четырёх активов из любых разделов. Все линии начинаются со 100% — видно, кто вырос, а кто упал за период.',
   cmp_sel: 'Выбрано', cmp_add: 'Добавить из раздела', cmp_none: 'Ничего не выбрано', cmp_need: 'Выберите хотя бы два актива',
   cmp_max: 'Не больше четырёх активов', cmp_load: 'Загружаю историю…',
-  per_7: '7 дней', per_30: 'Месяц', per_90: '3 месяца',
-  cmp_real: 'Реальная история', cmp_model: 'Модель: настоящей истории нет',
+  per_1h: '1 час', per_1d: '1 день', per_3d: '3 дня', per_7d: '7 дней', per_30d: 'Месяц', per_90d: '3 месяца',
+  cmp_real: 'Реальная история', cmp_model: 'Модель: настоящей истории нет', cmp_daily: 'Реальные данные только по дням', cmp_nointra: 'Модель: внутри дня данных нет',
+  cmp_search: 'Найти: BTC, Apple, евро', cmp_nofound: 'Ничего не найдено', cmp_pick: 'Что сравнить',
   cmp_best: 'Лучший', cmp_worst: 'Худший', cmp_1000: 'Что стало бы с $1 000', cmp_res: 'За период',
-  cmp_note: 'Криптовалюты и золото — дневные свечи Binance. Валюты — курсы ЕЦБ (frankfurter.app). Акции, индексы, сырьё — из нашего файла котировок. Пунктир и метка «Модель» — настоящей истории нет, линия смоделирована и ничего не доказывает.',
+  cmp_note: 'Криптовалюты и золото — свечи Binance: за час минутные, за день 5-минутные, за 3 дня 15-минутные, за неделю часовые, за месяц 4-часовые, дальше дневные. Валюты — курсы ЕЦБ по дням (рубль, тенге и лари в ЕЦБ нет). Акции, индексы, сырьё — из нашего файла котировок, тоже по дням. Внутри дня у них источника нет. Пунктир и метка «Модель» — настоящей истории нет, линия смоделирована и ничего не доказывает.',
   top_lbl: 'Рейтинг месяца', top_h: 'Топ игроков',
   top_demo: 'Демо-рейтинг: игроки и результаты вымышлены, настоящий рейтинг появится позже.',
   top_you: 'Вы', top_you_note: 'Ваша строка настоящая: это результат вашего кошелька за всё время.',
@@ -1289,10 +1366,11 @@ Object.assign(T.en, {
   cmp_sub: 'Pick two to four assets from any section. Every line starts at 100%, so you can see what rose and what fell over the period.',
   cmp_sel: 'Selected', cmp_add: 'Add from section', cmp_none: 'Nothing selected', cmp_need: 'Pick at least two assets',
   cmp_max: 'Four assets at most', cmp_load: 'Loading history…',
-  per_7: '7 days', per_30: 'Month', per_90: '3 months',
-  cmp_real: 'Real history', cmp_model: 'Model: no real history',
+  per_1h: '1 hour', per_1d: '1 day', per_3d: '3 days', per_7d: '7 days', per_30d: 'Month', per_90d: '3 months',
+  cmp_real: 'Real history', cmp_model: 'Model: no real history', cmp_daily: 'Real data, daily only', cmp_nointra: 'Model: no intraday data',
+  cmp_search: 'Search: BTC, Apple, euro', cmp_nofound: 'Nothing found', cmp_pick: 'What to compare',
   cmp_best: 'Best', cmp_worst: 'Worst', cmp_1000: 'What $1,000 would have become', cmp_res: 'Over the period',
-  cmp_note: 'Crypto and gold: Binance daily candles. Currencies: ECB rates (frankfurter.app). Stocks, indices, commodities: our quotes file. A dashed line with the “Model” label means there is no real history; the line is simulated and proves nothing.',
+  cmp_note: 'Crypto and gold: Binance candles, 1-minute for an hour, 5-minute for a day, 15-minute for 3 days, hourly for a week, 4-hour for a month, daily beyond that. Currencies: ECB daily rates (the ruble, tenge and lari are not in the ECB set). Stocks, indices, commodities: our quotes file, also daily. They have no intraday source. A dashed line with the “Model” label means there is no real history; the line is simulated and proves nothing.',
   top_lbl: 'Monthly ranking', top_h: 'Top players',
   top_demo: 'Demo ranking: players and results are fictional, a real ranking will come later.',
   top_you: 'You', top_you_note: 'Your row is real: it is your wallet result for all time.',
@@ -1373,23 +1451,25 @@ function renderWallet() {
   const st = (id, k) => '<div class="stat"><span class="lbl">' + t(k) + '</span><span class="num" id="' + id + '"></span></div>';
   $('walletBox').innerHTML = '<div class="vhead"><h1>' + t('wallet_h') + '</h1></div>' +
     '<div class="panel hero"><p class="lbl">' + t('w_real') + '</p><div class="hero-num num" id="wRes"></div><p class="hero-sub"><span class="num" id="wPct"></span> ' + t('w_of_dep') + '</p></div>' +
-    '<div class="stats">' + st('wEq', 'w_total') + st('wCash', 'w_cash') + st('wPos', 'w_inpos') + st('wDep', 'w_dep') + '</div>' +
+    '<div class="stats w5">' + st('wEq', 'w_total') + st('wCash', 'w_cash') + st('wPos', 'w_inpos') + st('wBetV', 'w_inbets') + st('wDep', 'w_dep') + '</div>' +
     '<h2 class="h2">' + t('w_curve') + '</h2><div class="panel ch-panel"><div class="chart sm lw" id="cvEq"></div><p class="ch-empty" id="cvEqE" hidden>' + t('curve_empty') + '</p></div>' +
     '<div class="w-ana"><section class="w-al"><h2 class="h2">' + t('w_alloc') + '</h2><div class="panel alloc" id="wAlloc"></div></section>' +
     '<section class="w-sum"><h2 class="h2">' + t('w_sum') + '</h2><div class="acards" id="aCards"></div></section></div>' +
     '<h2 class="h2">' + t('w_open') + '</h2><div class="poslist" id="wPosList"></div>' +
+    '<section class="wb" id="wBets"></section>' +
     '<h2 class="h2">' + t('w_hist') + '</h2><div id="wHist"></div>';
   chartKill('eq'); if (!LWC()) bindHover(cvIn($('cvEq')), drawEq);
-  ui.alSig = ''; ui.aSig = '';
+  ui.alSig = ''; ui.aSig = ''; ui.wbSig = '';
   renderDyn();
 }
 // Portfolio split by asset class: open positions at their value now, plus free cash.
 const CATC = { crypto: 'var(--gold)', stocks: 'var(--l4)', metals: 'var(--gold-l)', forex: 'rgb(var(--acc2))', commod: 'color-mix(in srgb,var(--gold) 45%,var(--l4))', index: 'color-mix(in srgb,rgb(var(--acc2)) 50%,var(--txt))' };
 function fillAlloc() {
   const box = $('wAlloc'); if (!box) return;
-  const by = {}; let tot = Math.max(0, S.cash);
+  const by = {}, bv = E.betsValue(S); let tot = Math.max(0, S.cash) + bv;
   S.positions.forEach(p => { const v = E.posValue(p, M.px[p.sym]), c = INS[p.sym].cat; by[c] = (by[c] || 0) + v; tot += v; });
   const seg = E.CATS.filter(c => by[c.id] > 0).map(c => ({ n: L(c), v: by[c.id], col: CATC[c.id] }));
+  if (bv > 0) seg.push({ n: t('al_bets'), v: bv, col: 'color-mix(in srgb,rgb(var(--acc2)) 70%,var(--gold))' });
   if (S.cash > 0) seg.push({ n: t('al_cash'), v: S.cash, col: 'rgba(var(--accl),.3)' });
   const sig = S.lang + seg.map(x => x.n + (x.v / tot).toFixed(3)).join('|') + compact(tot);
   if (sig === ui.alSig) return; ui.alSig = sig;
@@ -1438,7 +1518,7 @@ function histHTML() {
     '<span class="num ' + (tr.net > 0 ? 'up' : tr.net < 0 ? 'down' : '') + '">' + signed(tr.net) + '</span></div>' : '').join('') + '</div>';
 }
 function renderDyn() {
-  if (ui.view === 'wallet') { posList($('wPosList'), S.positions, 'pos_none_all'); const h = $('wHist'); if (h) h.innerHTML = histHTML(); fillCards(); fillAlloc(); }
+  if (ui.view === 'wallet') { posList($('wPosList'), S.positions, 'pos_none_all'); const h = $('wHist'); if (h) h.innerHTML = histHTML(); fillCards(); fillAlloc(); fillWBets(); }
   if (ui.view === 'market' && ui.sym) posList($('insPos'), S.positions.filter(p => p.sym === ui.sym), 'pos_none');
 }
 // Result curve: a baseline area — green above zero, red below, like the PnL chart on an exchange.
@@ -1467,15 +1547,58 @@ function drawEq() {
   if (c.n !== S.curve.length) { c.chart.applyOptions({ timeScale: { secondsVisible: pts[pts.length - 1].time - pts[0].time < 900 } }); c.s.setData(pts); c.n = S.curve.length; c.chart.timeScale().fitContent(); }
   else { try { c.s.update(pts[pts.length - 1]); } catch (e) { c.n = -1; } }
 }
+// 13.11: open bets in the wallet as their own block: what is in play, what it is worth now, what it pays if it wins.
+function fillWBets() {
+  const box = $('wBets'); if (!box) return;
+  bst();
+  const A = S.betAgg, open = E.betsValue(S), net = E.round2(A.paid + open - A.staked);
+  const sig = S.lang + '|' + S.bets.map(b => b.id + ':' + (b.cur >= 0 ? b.cur : b.p)).join(',') + '|' + S.betHist.length + '|' + A.paid + '|' + A.staked;
+  if (sig === ui.wbSig) return; ui.wbSig = sig;
+  box.textContent = '';
+  const cls = v => (v > 0 ? ' up' : v < 0 ? ' down' : '');
+  const hd = mkEl('div', 'wb-h'); hd.appendChild(mkEl('h2', 'h2', t('w_bets')));
+  const go = mkEl('a', 'btn-ghost wb-go', t('w_bets_go')); go.href = '#bets'; hd.appendChild(go); box.appendChild(hd);
+  if (!S.bets.length && !S.betHist.length) { box.appendChild(mkEl('p', 'empty', t('w_bets_none'))); return; }
+  const sum = mkEl('div', 'stats wb-sum');
+  [[t('bs_open'), money(open), ''], [t('bs_staked'), money(A.staked), ''], [t('bs_paid'), money(A.paid), ''], [t('bs_net'), signed(net), cls(net)]].forEach(a => {
+    const d = mkEl('div', 'stat'); d.appendChild(mkEl('span', 'lbl', a[0])); d.appendChild(mkEl('span', 'num' + a[2], a[1])); sum.appendChild(d);
+  });
+  box.appendChild(sum);
+  if (S.bets.length) {
+    const list = mkEl('div', 'wb-list');
+    S.bets.slice(0, 12).forEach(b => {
+      const val = E.betValue(b), win = E.round2(b.a / b.p), row = mkEl('div', 'wb-row'), l = mkEl('div', 'wb-l');
+      l.appendChild(mkEl('p', 'bm-q', b.q));
+      l.appendChild(mkEl('p', 'bm-s num', oname(b.o) + ' · ×' + coef(b.p) + ' · ' + money(b.a)));
+      const r = mkEl('div', 'wb-r'); r.appendChild(mkEl('b', 'num' + (val > b.a ? ' up' : val < b.a ? ' down' : ''), money(val)));
+      r.appendChild(mkEl('small', 'num', t('w_bet_win') + ' ' + money(win)));
+      row.appendChild(l); row.appendChild(r); list.appendChild(row);
+    });
+    box.appendChild(list);
+    if (S.bets.length > 12) box.appendChild(mkEl('p', 'empty', tf('w_bets_more', { n: S.bets.length - 12 })));
+  }
+  if (S.betHist.length) {
+    box.appendChild(mkEl('p', 'lbl wb-hl', t('bet_hist')));
+    const hl = mkEl('div', 'wb-list done');
+    S.betHist.slice(0, 5).forEach(x => {
+      const row = mkEl('div', 'wb-row'), l = mkEl('div', 'wb-l'), d = E.round2(x.pay - x.a);
+      l.appendChild(mkEl('p', 'bm-q', x.q));
+      l.appendChild(mkEl('p', 'bm-s num', oname(x.o) + ' · ' + coef(x.p) + ' · ' + money(x.a) + ' · ' + t('how_' + x.how)));
+      const r = mkEl('div', 'wb-r'); r.appendChild(mkEl('b', 'num' + cls(d), signed(d))); row.appendChild(l); row.appendChild(r); hl.appendChild(row);
+    });
+    box.appendChild(hl);
+  }
+}
 function refreshWallet() {
   const st = E.stats(S, M);
   rollTo($('wRes'), st.result, tightS, st.result);
   setTxt($('wPct'), pct(S.deposited > 0 ? st.result / S.deposited : null), st.result);
   rollTo($('wEq'), st.equity, money); rollTo($('wCash'), S.cash, money);
-  rollTo($('wPos'), st.equity - S.cash, money); rollTo($('wDep'), S.deposited, money);
+  const bv = E.betsValue(S);
+  rollTo($('wPos'), E.round2(st.equity - S.cash - bv), money); rollTo($('wBetV'), bv, money); rollTo($('wDep'), S.deposited, money);
   drawEq();
   if (tickN % 5 === 0 || !ui.alSig) fillAlloc();
-  fillCards();
+  fillCards(); fillWBets();
 }
 
 function renderTruth() {
@@ -1617,26 +1740,65 @@ function refreshTop() {
    9. COMPARE — 2–4 assets normalised to 100% at the start of the period
    ===================================================================== */
 let cmpData = {}, cmpTok = 0, cmpBusy = false;
+/* 13.11: periods. Inside a day the candles are Binance's (1m / 5m / 15m / 1h / 4h by period). Where there is no intraday source
+   (everything except crypto and gold) the line is either the real daily history, or an honest model with a label. */
+const PERS = {
+  '1h': { ms: 36e5, iv: '1m', n: 61 }, '1d': { ms: 864e5, iv: '5m', n: 289 }, '3d': { ms: 3 * 864e5, iv: '15m', n: 289 },
+  '7d': { ms: 7 * 864e5, iv: '1h', n: 169 }, '30d': { ms: 30 * 864e5, iv: '4h', n: 181 }, '90d': { ms: 90 * 864e5, iv: '1d', n: 92 }
+};
+const PER_KEYS = Object.keys(PERS);
+const perKey = v => (PERS[v] ? v : v === 7 ? '7d' : v === 90 ? '90d' : '30d');
+const kcache = {};                                // sym|period -> { at, out }
+async function klinesTry(sym, iv, n) {
+  for (let k = 0; k < BN.length; k++) {
+    try { const h = (bnHost + k) % BN.length, a = await getJSON(BN[h] + '/api/v3/klines?symbol=' + INS[sym].bn + '&interval=' + iv + '&limit=' + n); bnHost = h; return a; } catch (e) { /* next host */ }
+  }
+  return null;
+}
+function modelIntra(sym, P) {
+  const I = INS[sym], p = M.px[sym], now = Date.now(), st = P.ms / (P.n - 1), sig = I.vol * Math.sqrt(st / 1000) * 0.6;
+  const b = E.bridge(P.n, p * Math.exp(I.vol * Math.sqrt(P.ms / 1000) * 0.3 * E.gauss()), p, sig);
+  return { at: now, real: false, kind: 'nointra', pts: b.map((v, i) => [now - (P.n - 1 - i) * st, v]) };
+}
+// One series for one instrument and period: { real, kind: 'real' | 'daily' | 'model' | 'nointra', intra, pts: [[ms, value]] }.
+async function histFor(sym, pk) {
+  const P = PERS[pk], I = INS[sym], now = Date.now(), key = sym + '|' + pk, c = kcache[key];
+  if (I.bn && P.iv !== '1d') {
+    if (c && now - c.at < (P.ms <= 864e5 ? 3e4 : 3e5)) return c.out;
+    const a = await klinesTry(sym, P.iv, P.n);
+    const pts = Array.isArray(a) ? a.filter(Array.isArray).map(k => [E.num(k[0]), E.num(k[4])]).filter(k => k[0] > 0 && k[1] > 0) : [];
+    const out = pts.length > 5 ? { at: now, real: true, kind: 'real', intra: true, pts: pts } : (c ? c.out : modelIntra(sym, P));
+    kcache[key] = { at: now, out: out }; return out;
+  }
+  if (!I.bn && P.ms < 3 * 864e5) {                // no intraday source for stocks, currencies, commodities, indices
+    if (c && now - c.at < 3e5) return c.out;
+    const out = modelIntra(sym, P); kcache[key] = { at: now, out: out }; return out;
+  }
+  const d = await histDaily(sym);
+  return Object.assign({}, d, { kind: d.real ? (I.bn || P.ms >= 30 * 864e5 ? 'real' : 'daily') : 'model' });
+}
 function cmpSeries() {
-  const cut = Date.now() - S.cmp.per * 864e5;
+  const P = PERS[perKey(S.cmp.per)], cut = Date.now() - P.ms;
   return S.cmp.syms.map((s, i) => {
     const h = cmpData[s]; if (!h) return null;
     let k = 0; for (let j = 0; j < h.pts.length; j++) if (h.pts[j][0] <= cut) k = j;
     const a = h.pts.slice(k); if (a.length < 2) return null;
     const b = a[0][1];
-    return { sym: s, real: h.real, color: LINES[i % 4], dash: !h.real, name: tk(s), pts: a.map(p => [p[0], p[1] / b * 100]), res: a[a.length - 1][1] / b - 1 };
+    return { sym: s, real: h.real, kind: h.kind || (h.real ? 'real' : 'model'), intra: !!h.intra, color: LINES[i % 4], dash: !h.real, name: tk(s), pts: a.map(p => [p[0], p[1] / b * 100]), res: a[a.length - 1][1] / b - 1 };
   }).filter(Boolean);
 }
 const dm = x => { const d = new Date(x); return p2(d.getDate()) + '.' + p2(d.getMonth() + 1); };
-// Lines start at 0% (the first day of the period); a tap on a legend row hides or shows its line.
+const hm = x => { const d = new Date(x); return p2(d.getHours()) + ':' + p2(d.getMinutes()); };
+// Lines start at 0% (the first point of the period); a tap on a legend row hides or shows its line.
 function drawCmp() {
   const el = $('cvCmp'); if (!el) return;
-  const n = S.cmp.syms.length, ser = n >= 2 ? cmpSeries() : [], emp = $('cvCmpE');
+  const n = S.cmp.syms.length, ser = n >= 2 ? cmpSeries() : [], emp = $('cvCmpE'), intra = ser.some(s => s.intra);
   if (emp) { emp.hidden = ser.length >= 2; emp.textContent = t(n >= 2 && cmpBusy ? 'cmp_load' : 'cmp_need'); }
-  if (!LWC()) { drawChart(cvIn(el), ser, { base: 100, smooth: true, fy: v => v.toFixed(1) + '%', fx: dm, empty: '' }); return; }
+  if (!LWC()) { drawChart(cvIn(el), ser, { base: 100, smooth: true, fy: v => v.toFixed(1) + '%', fx: intra ? hm : dm, empty: '' }); return; }
   let c = CH.cmp;
-  if (!c || c.el !== el) { chartKill('cmp'); c = CH.cmp = { el: el, chart: lwChart(el, { time: false }), ls: {}, sig: '' }; c.chart.subscribeCrosshairMove(cmpLegend); }
-  const sig = ser.map(s => s.sym + ':' + s.pts.length + ':' + s.pts[0][0] + ':' + s.pts[s.pts.length - 1][1].toFixed(4) + ':' + (s.real ? 1 : 0)).join('|') + '|' + S.cmp.per;
+  if (c && (c.el !== el || (ser.length && c.intra !== intra))) { chartKill('cmp'); c = null; }
+  if (!c) { c = CH.cmp = { el: el, chart: lwChart(el, { time: intra }), ls: {}, sig: '', intra: intra }; c.chart.subscribeCrosshairMove(cmpLegend); }
+  const sig = ser.map(s => s.sym + ':' + s.pts.length + ':' + s.pts[0][0] + ':' + s.pts[s.pts.length - 1][1].toFixed(4) + ':' + s.kind).join('|') + '|' + perKey(S.cmp.per);
   if (sig !== c.sig) {
     Object.keys(c.ls).forEach(k => { try { c.chart.removeSeries(c.ls[k]); } catch (e) {} }); c.ls = {}; c.sig = sig;
     ser.forEach((s, i) => {
@@ -1660,10 +1822,11 @@ function cmpLegend(p) {
     setTxt(el, pct(v / 100), v);
   });
 }
+const KIND_TXT = { real: 'cmp_real', daily: 'cmp_daily', model: 'cmp_model', nointra: 'cmp_nointra' };
 function fillCmp() {
   const ser = S.cmp.syms.length >= 2 ? cmpSeries() : [], lg = $('cmpLegend'), tb = $('cmpTable');
   if (lg) lg.innerHTML = ser.map(s => '<button type="button" class="lg-row' + (ui.cmpOff[s.sym] ? ' off' : '') + '" data-cl="' + s.sym + '" aria-pressed="' + !ui.cmpOff[s.sym] + '"><i class="dot" style="background:' + s.color + '"></i><span class="lg-name"><b class="num">' + esc(s.name) + '</b><small>' + esc(L(INS[s.sym])) + '</small>' +
-    '<span class="st" data-st="' + (s.real ? 'delayed' : 'model') + '">' + t(s.real ? 'cmp_real' : 'cmp_model') + '</span></span>' +
+    '<span class="st" data-st="' + (s.real ? 'delayed' : 'model') + '">' + t(KIND_TXT[s.kind] || 'cmp_model') + '</span></span>' +
     '<b class="num ' + (s.res > 0 ? 'up' : s.res < 0 ? 'down' : '') + '" data-lgv="' + s.sym + '" data-res="' + s.res + '">' + pct(s.res) + '</b></button>').join('') + (ser.length ? '<p class="lg-tap">' + t('cmp_tap') + '</p>' : '');
   if (!tb) return;
   if (ser.length < 2) { tb.innerHTML = ''; return; }
@@ -1673,33 +1836,72 @@ function fillCmp() {
     so.map(s => '<div class="hrow"><div><b>' + esc(s.name) + '</b><small>$1' + NB + '000 →' + (s.real ? '' : ' · ' + t('st_model')) + '</small></div><span class="num ' + (s.res > 0 ? 'up' : s.res < 0 ? 'down' : '') + '">' + money(1000 * (1 + s.res)) + '</span></div>').join('') + '</div>';
 }
 async function cmpLoad() {
-  const tok = ++cmpTok, syms = S.cmp.syms.slice();
+  const tok = ++cmpTok, syms = S.cmp.syms.slice(), pk = perKey(S.cmp.per);
   cmpBusy = true; drawCmp();
   const out = {};
-  for (let i = 0; i < syms.length; i++) { try { out[syms[i]] = await histDaily(syms[i]); } catch (e) { out[syms[i]] = modelDaily(syms[i]); } }
+  await Promise.all(syms.map(async s => { try { out[s] = await histFor(s, pk); } catch (e) { out[s] = PERS[pk].ms < 3 * 864e5 ? modelIntra(s, PERS[pk]) : modelDaily(s); } }));
   if (tok !== cmpTok) return;
   cmpData = out; cmpBusy = false;
   if (ui.view === 'compare') { drawCmp(); fillCmp(); }
 }
+// The picker beside the chart: chosen ones on top (one tap removes), search, section tabs, a scrolling list.
+function cmpSelHTML() {
+  const c = S.cmp;
+  return c.syms.length ? c.syms.map((s, i) => '<button class="chip on" type="button" data-csym="' + s + '" aria-pressed="true" title="' + esc(L(INS[s])) + '"><i class="dot" style="background:' + LINES[i % 4] + '"></i>' + esc(tk(s)) + '<span class="x" aria-hidden="true">×</span></button>').join('') :
+    '<span class="hint">' + t('cmp_none') + '</span>';
+}
+function cmpListHTML() {
+  const q = (ui.cq || '').trim().toLowerCase(), cat = E.CAT[ui.ccat] ? ui.ccat : 'crypto', c = S.cmp;
+  const list = SYMS.filter(s => {
+    const I = INS[s]; if (!q) return I.cat === cat;
+    return s.toLowerCase().indexOf(q) >= 0 || I.tk.toLowerCase().indexOf(q) >= 0 || I.ru.toLowerCase().indexOf(q) >= 0 || I.en.toLowerCase().indexOf(q) >= 0;
+  });
+  if (!list.length) return '<p class="empty">' + t('cmp_nofound') + '</p>';
+  return list.map(s => {
+    const i = c.syms.indexOf(s), on = i >= 0, I = INS[s];
+    return '<button class="cp-item' + (on ? ' on' : '') + '" type="button" data-csym="' + s + '" aria-pressed="' + on + '"><i class="dot" style="' + (on ? 'background:' + LINES[i % 4] : '') + '"></i>' +
+      '<span class="cp-t"><b class="num">' + esc(tk(s)) + '</b><small>' + esc(L(I)) + (q ? ' · ' + esc(L(E.CAT[I.cat])) : '') + '</small></span>' +
+      '<span class="cp-m" aria-hidden="true">' + (on ? '✓' : '+') + '</span></button>';
+  }).join('');
+}
+function cmpTabsHTML() {
+  const q = (ui.cq || '').trim(), cat = E.CAT[ui.ccat] ? ui.ccat : 'crypto';
+  return E.CATS.map(k => '<button class="chip' + (!q && k.id === cat ? ' on' : '') + '" type="button" data-ccat="' + k.id + '">' + esc(L(k)) + ' <small class="num">' + SYMS.filter(s => INS[s].cat === k.id).length + '</small></button>').join('');
+}
+function fillCmpPick(keepScroll) {
+  const sel = $('cmpSel'), ls = $('cmpList'), tabs = $('cmpTabs'); if (!ls) return;
+  if (sel) sel.innerHTML = cmpSelHTML();
+  if (tabs) tabs.innerHTML = cmpTabsHTML();
+  const y = ls.scrollTop; ls.innerHTML = cmpListHTML(); ls.scrollTop = keepScroll ? y : 0;
+  setTxt($('cmpCount'), S.cmp.syms.length + ' / 4');
+}
 function renderCompare() {
   const c = S.cmp, cat = E.CAT[ui.ccat] ? ui.ccat : (ui.ccat = 'crypto');
   $('compareBox').innerHTML = '<div class="vhead"><h1>' + t('cmp_h') + '</h1></div>' +
-    '<p class="lbl">' + t('cmp_sel') + '</p><div class="chips cmp-sel">' + (c.syms.length ? c.syms.map((s, i) =>
-      '<button class="chip on" type="button" data-csym="' + s + '" aria-pressed="true"><i class="dot" style="background:' + LINES[i % 4] + '"></i>' + esc(tk(s)) + '<span class="x" aria-hidden="true">×</span></button>').join('') :
-      '<span class="hint">' + t('cmp_none') + '</span>') + '</div>' +
-    '<div class="chips per">' + [7, 30, 90].map(p => '<button class="chip' + (p === c.per ? ' on' : '') + '" type="button" data-per="' + p + '">' + t('per_' + p) + '</button>').join('') + '</div>' +
-    '<div class="panel cmp-panel ch-panel"><div class="chart lw" id="cvCmp"></div><p class="ch-empty" id="cvCmpE" hidden></p><div class="legend" id="cmpLegend"></div></div>' +
+    '<div class="chips per" role="group">' + PER_KEYS.map(p => '<button class="chip' + (p === perKey(c.per) ? ' on' : '') + '" type="button" data-per="' + p + '">' + t('per_' + p) + '</button>').join('') + '</div>' +
+    '<div class="panel cmp-block">' +
+      '<div class="cmp-main"><div class="ch-panel"><div class="chart lw" id="cvCmp"></div><p class="ch-empty" id="cvCmpE" hidden></p></div><div class="legend" id="cmpLegend"></div></div>' +
+      '<div class="cmp-side"><div class="cs-top"><span class="lbl">' + t('cmp_sel') + '</span><span class="cs-n num" id="cmpCount"></span></div>' +
+        '<div class="chips cmp-sel" id="cmpSel"></div>' +
+        '<label class="cs-q"><span class="sr">' + t('cmp_search') + '</span><input id="cmpQ" type="search" inputmode="search" autocomplete="off" autocapitalize="off" spellcheck="false" maxlength="24" placeholder="' + esc(t('cmp_search')) + '" value="' + esc(ui.cq || '') + '"></label>' +
+        '<div class="cs-tabs" id="cmpTabs"></div>' +
+        '<div class="cs-list" id="cmpList"></div></div>' +
+    '</div>' +
     '<div id="cmpTable" class="cmp-table"></div>' +
-    '<h2 class="h2">' + t('cmp_add') + '</h2><div class="chips">' + E.CATS.map(k => '<button class="chip' + (k.id === cat ? ' on' : '') + '" type="button" data-ccat="' + k.id + '">' + esc(L(k)) + '</button>').join('') + '</div>' +
-    '<div class="chips cmp-pick">' + SYMS.filter(s => INS[s].cat === cat).map(s => '<button class="chip' + (c.syms.indexOf(s) >= 0 ? ' on' : '') + '" type="button" data-csym="' + s + '" title="' + esc(L(INS[s])) + '">' + esc(tk(s)) + '</button>').join('') + '</div>' +
     '<p class="chart-note">' + t('cmp_note') + '</p>';
   chartKill('cmp'); if (!LWC()) bindHover(cvIn($('cvCmp')), drawCmp);
-  drawCmp(); fillCmp();
+  fillCmpPick(false); drawCmp(); fillCmp();
 }
 function cmpToggle(s) {
   const a = S.cmp.syms, i = a.indexOf(s);
   if (i >= 0) a.splice(i, 1); else if (a.length >= 4) { toast(t('cmp_max')); return; } else a.push(s);
-  save(); renderCompare(); cmpLoad();
+  save(); fillCmpPick(true); cmpLoad();
+}
+function cmpSetPer(pk) {
+  if (!PERS[pk]) return;
+  S.cmp.per = pk; save(); cmpData = {};
+  document.querySelectorAll('.per [data-per]').forEach(el => el.classList.toggle('on', el.getAttribute('data-per') === pk));
+  chartKill('cmp'); fillCmp(); cmpLoad();
 }
 
 /* =====================================================================
@@ -2121,6 +2323,7 @@ async function checkBets(force) {
     save();
     if (n) { toast(tf('bet_settled', { v: money(E.round2(total)) })); sig = ''; }
     if (ui.view === 'bets') fillMine();
+    if (ui.view === 'wallet') fillWBets();
   } catch (e) {}
   betChk = false;
 }
@@ -2230,7 +2433,7 @@ function onClick(e) {
     if (k === 'c') { inp.value = ''; atmMsg(''); } else if (k === 'ok') doDeposit(parseAmt(inp.value)); else if (inp.value.length < 10) inp.value += k;
   } else if (has('data-ncat')) {
     ui.ncat = A('data-ncat'); document.querySelectorAll('[data-ncat]').forEach(b => b.classList.toggle('on', b === el)); fillNews();
-  } else if (has('data-ccat')) { ui.ccat = A('data-ccat'); renderCompare(); }
+  } else if (has('data-ccat')) { ui.ccat = A('data-ccat'); ui.cq = ''; const qi = $('cmpQ'); if (qi) qi.value = ''; fillCmpPick(false); }
   else if (has('data-csym')) { if (INS[A('data-csym')]) cmpToggle(A('data-csym')); }
   else if (has('data-btab')) {
     ui.btab = A('data-btab') === 'pred' ? 'pred' : 'sport';
@@ -2249,7 +2452,7 @@ function onClick(e) {
   else if (has('data-bet')) openBet(A('data-bet'), +A('data-oi'));
   else if (has('data-bsell')) sellBet(+A('data-bsell'));
   else if (has('data-bpre')) { const inp = $('betAmt'), cash = Math.floor(S.cash * 100) / 100, v = A('data-bpre') === 'all' ? cash : Math.min(+A('data-bpre'), cash); if (inp) { inp.value = v > 0 ? String(v) : ''; betInfo(); } }
-  else if (has('data-per')) { S.cmp.per = +A('data-per') === 7 ? 7 : +A('data-per') === 90 ? 90 : 30; save(); renderCompare(); }
+  else if (has('data-per')) { cmpSetPer(A('data-per')); }
   else if (has('data-act')) {
     const a = A('data-act'), rc = $('resetConfirm');
     if (a === 'deposit') doDeposit(parseAmt($('atmInp').value));
@@ -2275,13 +2478,14 @@ function tick() {
 function redrawCharts() { if (ui.view === 'market' && ui.sym) drawIns(); else if (ui.view === 'wallet') drawEq(); else if (ui.view === 'compare') drawCmp(); }
 function init() {
   load();
-  if (!S.cmp || !Array.isArray(S.cmp.syms)) S.cmp = { syms: ['BTC', 'SPX'], per: 30 };
+  if (!S.cmp || !Array.isArray(S.cmp.syms)) S.cmp = { syms: ['BTC', 'SPX'], per: '30d' };
   S.cmp.syms = S.cmp.syms.filter((s, i, a) => INS[s] && a.indexOf(s) === i).slice(0, 4);
-  if ([7, 30, 90].indexOf(S.cmp.per) < 0) S.cmp.per = 30;
+  S.cmp.per = perKey(S.cmp.per);
   const r = E.advance(S, M, Date.now());          // time kept going while the tab was closed
   readSkin(); applyLang(); route();
   if (r.liq.length) onLiq(r.liq);
   document.addEventListener('click', onClick);
+  document.addEventListener('input', e => { if (e.target && e.target.id === 'cmpQ') { ui.cq = e.target.value.slice(0, 24); fillCmpPick(false); } });
   fitAtm(); atmTilt();
   document.addEventListener('pointerdown', () => snd.gesture(), { passive: true });
   document.addEventListener('keydown', e => {
