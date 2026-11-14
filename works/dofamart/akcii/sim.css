@@ -3,8 +3,8 @@
   --bg:#0E0D0C; --bgc:14,13,12; --gold:#C8A96A; --acc:200,169,106; --gold-l:#E6D3A8; --accl:230,211,168; --acc2:214,150,110; --up:#7FBF9A; --upc:127,191,154; --down:#D98A7E; --dnc:217,138,126; --txt:#F3EEE6; --mut:#A69F93; --l4:#9DB4C8; --on-acc:#17130B; --grid:0;
   --sur:rgba(255,255,255,.04); --sur2:rgba(255,255,255,.07); --line:rgba(255,255,255,.08);
   --p2:color-mix(in srgb,var(--bg) 95%,#fff); --p3:color-mix(in srgb,var(--bg) 91%,#fff); --p4:color-mix(in srgb,var(--bg) 82%,var(--gold));
-  --serif:"EB Garamond",Georgia,serif; --sans:"Onest",system-ui,-apple-system,"Segoe UI",sans-serif;
-  --mono:"JetBrains Mono",ui-monospace,Consolas,monospace;
+  --serif:"IBM Plex Serif",Georgia,serif; --sans:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Consolas,monospace;
   --r:16px; --sab:env(safe-area-inset-bottom,0px); --sat:env(safe-area-inset-top,0px);
 }
 *{box-sizing:border-box;margin:0;padding:0}
@@ -1159,3 +1159,6 @@ html[data-skin="quantum"] .amb i:nth-child(3){left:-20vmax;bottom:-70vmax;backgr
 html[data-skin="quantum"] body{background:transparent}
 /* 14.11: кнопка-ссылка (окно «Начните с урока 1») — надпись по центру, как у обычной кнопки */
 a.btn-gold,a.btn-ghost{display:inline-flex;align-items:center;justify-content:center;text-decoration:none}
+/* 15.11: «← dofamart» — только стрелка; на компьютере у самого левого края окна */
+.back{font-size:0;gap:0;min-width:44px;justify-content:center}.back span{font-size:20px}
+@media (min-width:900px){.back{position:absolute;left:10px;top:var(--sat);height:68px;z-index:1}}

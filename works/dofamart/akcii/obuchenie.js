@@ -404,14 +404,14 @@ function Inst(host, li, api) {
     } else if (kind === 'multi') {
       const colr = { UM: cols.dn, UZ: cols.gold, UA: cols.up };
       cs.forEach(a => { const s = WK[a], n = s.length; c.strokeStyle = colr[a]; c.lineWidth = 2; c.beginPath(); s.forEach((v, i) => { const x = pad + i * (w - pad * 2) / (n - 1), y = Y(v); i ? c.lineTo(x, y) : c.moveTo(x, y); }); c.stroke(); });
-      c.fillStyle = cols.mut; c.font = '11px ' + 'JetBrains Mono, monospace'; c.fillText('100 %', 6, Y(100) - 4);
+      c.fillStyle = cols.mut; c.font = '11px ' + '"IBM Plex Mono", monospace'; c.fillText('100 %', 6, Y(100) - 4);
     } else {
       const n = series.length, st = (w - pad * 2) / Math.max(1, n - 1), up = series[n - 1] >= series[0];
       c.strokeStyle = up ? cols.up : cols.dn; c.lineWidth = 2; c.lineJoin = 'round'; c.beginPath();
       series.forEach((v, i) => { const x = pad + i * st, y = Y(v); i ? c.lineTo(x, y) : c.moveTo(x, y); }); c.stroke();
       const lx = pad + (n - 1) * st, ly = Y(series[n - 1]); c.fillStyle = up ? cols.up : cols.dn; c.beginPath(); c.arc(lx, ly, 3.5, 0, 6.3); c.fill();
     }
-    c.font = '11px JetBrains Mono, monospace';
+    c.font = '11px "IBM Plex Mono", monospace';
     lk.forEach(x => { const y = Y(x.v); c.strokeStyle = x.c; c.lineWidth = 1.2; c.setLineDash([5, 4]); c.beginPath(); c.moveTo(0, y); c.lineTo(w, y); c.stroke(); c.setLineDash([]); c.fillStyle = x.c; c.fillText(x.l, 6, Math.max(11, y - 4)); });
   }
 

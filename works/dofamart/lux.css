@@ -9,7 +9,7 @@
   --panel:color-mix(in srgb,var(--bg) 55%,#fff); --panel-2:color-mix(in srgb,var(--bg) 86%,var(--fg));
   --paper:#FFFFFF; --paper-ink:#1B1917; --paper-line:#D9D0BF;
   --ok:#4E7A5A; --warn:#A8483F; --black:var(--bg);
-  --f-display:"EB Garamond","Times New Roman",Georgia,serif;
+  --f-display:"IBM Plex Serif","Times New Roman",Georgia,serif;
   --r-s:6px; --r-m:10px; --r-l:14px;
   --grad:linear-gradient(var(--fg),var(--fg));
   --grad-3:linear-gradient(var(--a1),var(--a1));

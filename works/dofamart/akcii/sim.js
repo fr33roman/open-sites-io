@@ -943,10 +943,10 @@ function drawChart(cv, series, o) {
   if (cv.width !== Math.round(w * dpr) || cv.height !== Math.round(h * dpr)) { cv.width = Math.round(w * dpr); cv.height = Math.round(h * dpr); }
   const g = cv.getContext('2d'); if (!g) return;
   g.setTransform(dpr, 0, 0, dpr, 0, 0); g.clearRect(0, 0, w, h);
-  g.font = '10px "JetBrains Mono", monospace'; g.textBaseline = 'middle';
+  g.font = '10px "IBM Plex Mono", monospace'; g.textBaseline = 'middle';
   series = series.filter(s => s.pts && s.pts.length > 1);
   if (!series.length) {
-    g.fillStyle = COL.mut; g.textAlign = 'center'; g.font = '13px Onest, sans-serif'; g.fillText(o.empty || '', w / 2, h / 2); return;
+    g.fillStyle = COL.mut; g.textAlign = 'center'; g.font = '13px "IBM Plex Sans", sans-serif'; g.fillText(o.empty || '', w / 2, h / 2); return;
   }
   let x0 = Infinity, x1 = -Infinity, y0 = Infinity, y1 = -Infinity;
   series.forEach(s => s.pts.forEach(p => { if (p[0] < x0) x0 = p[0]; if (p[0] > x1) x1 = p[0]; if (p[1] < y0) y0 = p[1]; if (p[1] > y1) y1 = p[1]; }));
@@ -1012,7 +1012,7 @@ function drawChart(cv, series, o) {
   });
   const head = o.fx ? o.fx(rows[0].p[0], true) : '';
   const txt = rows.map(r => (r.s.name ? r.s.name + '  ' : '') + (o.tip ? o.tip(r.s, r.p) : o.fy(r.p[1])));
-  g.font = '11px "JetBrains Mono", monospace';
+  g.font = '11px "IBM Plex Mono", monospace';
   let bw = g.measureText(head).width; txt.forEach(s => { bw = Math.max(bw, g.measureText(s).width + (rows.length > 1 ? 12 : 0)); });
   bw += 20; const bh = 12 + 16 * (txt.length + (head ? 1 : 0));
   let bx = px + 12; if (bx + bw > w - 4) bx = px - 12 - bw; if (bx < 4) bx = 4;
@@ -1112,7 +1112,7 @@ function lwChart(el, o) {
   const soft = a => rgba(COL.txt, a), ch = { color: rgba(COL.gold, 0.5), width: 1, style: 3, labelBackgroundColor: COL.gold };
   const base = {
     autoSize: true,
-    layout: { background: { type: 'solid', color: 'rgba(0,0,0,0)' }, textColor: COL.mut, fontSize: 11, fontFamily: '"JetBrains Mono", ui-monospace, Consolas, monospace', attributionLogo: true },
+    layout: { background: { type: 'solid', color: 'rgba(0,0,0,0)' }, textColor: COL.mut, fontSize: 11, fontFamily: '"IBM Plex Mono", ui-monospace, Consolas, monospace', attributionLogo: true },
     grid: { vertLines: { color: soft(0.035) }, horzLines: { color: soft(0.05) } },
     rightPriceScale: { borderVisible: false, scaleMargins: { top: 0.12, bottom: 0.1 } },
     timeScale: { borderVisible: false, timeVisible: true, secondsVisible: false, rightOffset: 2, lockVisibleTimeRangeOnResize: true },

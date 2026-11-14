@@ -1145,23 +1145,23 @@ function luxSpaced(g, t, x, y, sp, align) {
 function mxDrawCard(cv) {
   const g = cv.getContext('2d'), W = 1200, H = 630, ids = cartIds(), sum = cartSum();
   luxFrame(g, W, H, 28);
-  g.fillStyle = LUX.gold; g.font = '600 20px Onest, sans-serif'; luxSpaced(g, 'DOFAMART', 90, 130, 8);
-  g.fillStyle = LUX.ink; g.font = '500 96px "EB Garamond", Georgia, serif'; g.textAlign = 'left';
+  g.fillStyle = LUX.gold; g.font = '600 20px "IBM Plex Sans", sans-serif'; luxSpaced(g, 'DOFAMART', 90, 130, 8);
+  g.fillStyle = LUX.ink; g.font = '500 96px "IBM Plex Serif", Georgia, serif'; g.textAlign = 'left';
   const tt = tx('cardMy').split(' '); g.fillText(tt[0], 86, 250); if (tt[1]) g.fillText(tt.slice(1).join(' '), 86, 340);
-  g.font = '500 26px Onest, sans-serif'; g.fillStyle = LUX.mute; g.fillText(tx('cardCta'), 90, 410);
-  g.font = '500 22px Onest, sans-serif'; g.fillStyle = LUX.gold; g.fillText('open-sites.io/works/dofamart', 90, H - 84);
+  g.font = '500 26px "IBM Plex Sans", sans-serif'; g.fillStyle = LUX.mute; g.fillText(tx('cardCta'), 90, 410);
+  g.font = '500 22px "IBM Plex Sans", sans-serif'; g.fillStyle = LUX.gold; g.fillText('open-sites.io/works/dofamart', 90, H - 84);
   const x0 = 660, x1 = W - 90; let y = 140;
   g.strokeStyle = LUX.line; g.lineWidth = 1;
   ids.slice(0, 5).forEach(id => {
     const p = PM[id], q = S.cart[id];
-    g.font = '500 24px Onest, sans-serif'; g.fillStyle = LUX.ink; g.textAlign = 'left'; g.fillText(luxFit(g, pn(id)[0], 270) + (q > 1 ? '  ×' + q : ''), x0, y);
-    g.font = '500 20px "JetBrains Mono", monospace'; g.fillStyle = LUX.mute; g.textAlign = 'right'; g.fillText(fmt(priceIn(p.usd) * q), x1, y);
+    g.font = '500 24px "IBM Plex Sans", sans-serif'; g.fillStyle = LUX.ink; g.textAlign = 'left'; g.fillText(luxFit(g, pn(id)[0], 270) + (q > 1 ? '  ×' + q : ''), x0, y);
+    g.font = '500 20px "IBM Plex Mono", monospace'; g.fillStyle = LUX.mute; g.textAlign = 'right'; g.fillText(fmt(priceIn(p.usd) * q), x1, y);
     g.beginPath(); g.moveTo(x0, y + 22); g.lineTo(x1, y + 22); g.stroke(); y += 58;
   });
   g.textAlign = 'left';
-  if (ids.length > 5) { g.font = '500 20px Onest, sans-serif'; g.fillStyle = LUX.mute; g.fillText(tx('fpMore', { n: ids.length - 5 }), x0, y); }
-  g.font = '600 18px Onest, sans-serif'; g.fillStyle = LUX.gold; luxSpaced(g, tx('cardTotal').toUpperCase(), x0, H - 150, 5);
-  g.font = '600 60px "EB Garamond", Georgia, serif'; g.fillStyle = LUX.ink; g.textAlign = 'left'; g.fillText(luxFit(g, fmt(sum.total), x1 - x0), x0, H - 86);
+  if (ids.length > 5) { g.font = '500 20px "IBM Plex Sans", sans-serif'; g.fillStyle = LUX.mute; g.fillText(tx('fpMore', { n: ids.length - 5 }), x0, y); }
+  g.font = '600 18px "IBM Plex Sans", sans-serif'; g.fillStyle = LUX.gold; luxSpaced(g, tx('cardTotal').toUpperCase(), x0, H - 150, 5);
+  g.font = '600 60px "IBM Plex Serif", Georgia, serif'; g.fillStyle = LUX.ink; g.textAlign = 'left'; g.fillText(luxFit(g, fmt(sum.total), x1 - x0), x0, H - 86);
 }
 
 /* ---------- «Оплатит друг»: счёт-розыгрыш ---------- */
@@ -1175,31 +1175,31 @@ const fpText = () => tx('fpMsg', { m: fmt(fpData.total / 12), x: fmt(fpData.tota
 function fpDraw(cv) {
   const g = cv.getContext('2d'), W = 1080, H = 1350, d = fpData;
   luxFrame(g, W, H, 36);
-  g.textAlign = 'center'; g.fillStyle = LUX.ink; g.font = '500 84px "EB Garamond", Georgia, serif'; g.fillText('dofamart', W / 2, 190);
-  g.fillStyle = LUX.gold; g.font = '600 22px Onest, sans-serif'; luxSpaced(g, tx('fpInv'), W / 2, 248, 10, 'center');
-  g.fillStyle = LUX.mute; g.font = '500 20px "JetBrains Mono", monospace'; g.textAlign = 'center'; g.fillText('№ ' + d.no + '  ·  ' + new Date().toLocaleDateString(S.lang === 'ru' ? 'ru-RU' : 'en-GB'), W / 2, 296);
+  g.textAlign = 'center'; g.fillStyle = LUX.ink; g.font = '500 84px "IBM Plex Serif", Georgia, serif'; g.fillText('dofamart', W / 2, 190);
+  g.fillStyle = LUX.gold; g.font = '600 22px "IBM Plex Sans", sans-serif'; luxSpaced(g, tx('fpInv'), W / 2, 248, 10, 'center');
+  g.fillStyle = LUX.mute; g.font = '500 20px "IBM Plex Mono", monospace'; g.textAlign = 'center'; g.fillText('№ ' + d.no + '  ·  ' + new Date().toLocaleDateString(S.lang === 'ru' ? 'ru-RU' : 'en-GB'), W / 2, 296);
   const x0 = 120, x1 = W - 120; let y = 400;
   g.strokeStyle = LUX.line; g.lineWidth = 1; g.beginPath(); g.moveTo(x0, 340); g.lineTo(x1, 340); g.stroke();
   d.items.slice(0, 6).forEach(it => {
     const p = PM[it.id]; if (!p) return;
-    g.textAlign = 'left'; g.font = '500 30px Onest, sans-serif'; g.fillStyle = LUX.ink; g.fillText(luxFit(g, pn(it.id)[0], 500), x0, y);
-    g.font = '500 20px Onest, sans-serif'; g.fillStyle = LUX.mute; g.fillText(it.q + ' ' + tx('fpPcs'), x0, y + 30);
-    g.textAlign = 'right'; g.font = '500 26px "JetBrains Mono", monospace'; g.fillStyle = LUX.ink; g.fillText(fmt(priceIn(p.usd) * it.q), x1, y + 6);
+    g.textAlign = 'left'; g.font = '500 30px "IBM Plex Sans", sans-serif'; g.fillStyle = LUX.ink; g.fillText(luxFit(g, pn(it.id)[0], 500), x0, y);
+    g.font = '500 20px "IBM Plex Sans", sans-serif'; g.fillStyle = LUX.mute; g.fillText(it.q + ' ' + tx('fpPcs'), x0, y + 30);
+    g.textAlign = 'right'; g.font = '500 26px "IBM Plex Mono", monospace'; g.fillStyle = LUX.ink; g.fillText(fmt(priceIn(p.usd) * it.q), x1, y + 6);
     g.beginPath(); g.moveTo(x0, y + 52); g.lineTo(x1, y + 52); g.stroke(); y += 92;
   });
-  if (d.items.length > 6) { g.textAlign = 'left'; g.font = '500 22px Onest, sans-serif'; g.fillStyle = LUX.mute; g.fillText(tx('fpMore', { n: d.items.length - 6 }), x0, y - 10); }
+  if (d.items.length > 6) { g.textAlign = 'left'; g.font = '500 22px "IBM Plex Sans", sans-serif'; g.fillStyle = LUX.mute; g.fillText(tx('fpMore', { n: d.items.length - 6 }), x0, y - 10); }
   const by = H - 400;
-  g.textAlign = 'center'; g.fillStyle = LUX.gold; g.font = '600 20px Onest, sans-serif'; luxSpaced(g, tx('fpTotal').toUpperCase(), W / 2, by, 8, 'center');
-  g.fillStyle = LUX.ink; g.font = '600 92px "EB Garamond", Georgia, serif'; g.textAlign = 'center'; g.fillText(luxFit(g, fmt(d.total), x1 - x0), W / 2, by + 96);
+  g.textAlign = 'center'; g.fillStyle = LUX.gold; g.font = '600 20px "IBM Plex Sans", sans-serif'; luxSpaced(g, tx('fpTotal').toUpperCase(), W / 2, by, 8, 'center');
+  g.fillStyle = LUX.ink; g.font = '600 92px "IBM Plex Serif", Georgia, serif'; g.textAlign = 'center'; g.fillText(luxFit(g, fmt(d.total), x1 - x0), W / 2, by + 96);
   g.fillStyle = LUX.ink; g.fillRect(x0, by + 140, x1 - x0, 112);
-  g.fillStyle = '#E6D3A8'; g.font = '600 18px Onest, sans-serif'; luxSpaced(g, (tx('fpMonthly') + ' · ' + tx('fpMonths')).toUpperCase(), W / 2, by + 180, 5, 'center');
-  g.fillStyle = LUX.paper; g.font = '500 40px "JetBrains Mono", monospace'; g.textAlign = 'center'; g.fillText(luxFit(g, fmt(d.total / 12), x1 - x0 - 40), W / 2, by + 230);
-  g.fillStyle = LUX.mute; g.font = '500 18px Onest, sans-serif'; g.fillText(tx('fpFine'), W / 2, H - 84);
+  g.fillStyle = '#E6D3A8'; g.font = '600 18px "IBM Plex Sans", sans-serif'; luxSpaced(g, (tx('fpMonthly') + ' · ' + tx('fpMonths')).toUpperCase(), W / 2, by + 180, 5, 'center');
+  g.fillStyle = LUX.paper; g.font = '500 40px "IBM Plex Mono", monospace'; g.textAlign = 'center'; g.fillText(luxFit(g, fmt(d.total / 12), x1 - x0 - 40), W / 2, by + 230);
+  g.fillStyle = LUX.mute; g.font = '500 18px "IBM Plex Sans", sans-serif'; g.fillText(tx('fpFine'), W / 2, H - 84);
 }
 async function fpOpen() {
   if (!cartIds().length) { toast('', tx('empty'), {}); return; }
   fpSnap();
-  try { await Promise.all(['500 84px "EB Garamond"', '600 22px Onest', '500 20px "JetBrains Mono"'].map(f => document.fonts.load(f))); } catch (e) {}
+  try { await Promise.all(['500 84px "IBM Plex Serif"', '600 22px "IBM Plex Sans"', '500 20px "IBM Plex Mono"'].map(f => document.fonts.load(f))); } catch (e) {}
   mxOpen('fp');
 }
 function fpRender() {
@@ -1261,7 +1261,7 @@ function fpTake() {
 async function mxShare() {
   if (!cartIds().length) { toast('🛒', tx('empty'), {}); return; }
   ev('share');
-  try { await document.fonts.load('500 96px "EB Garamond"'); await document.fonts.load('500 20px Onest'); } catch (e) {}
+  try { await document.fonts.load('500 96px "IBM Plex Serif"'); await document.fonts.load('500 20px "IBM Plex Sans"'); } catch (e) {}
   mxOpen('share');
 }
 function mxCanvasBlob(cb) {
