@@ -1,0 +1,167 @@
+/* dofamart · Акции — кабинет, «Отправить другу», чек, долги (14.11). Подключается из kabinet.js только при включённом сервере.
+   Цвета и шрифты — переменные страницы, поэтому все пять стилей работают сами. Классы только с префиксом kab-. */
+
+/* ---------- кнопки на странице ---------- */
+.kab-hbtn{position:relative;flex:none}
+.kab-hbtn svg{width:22px;height:22px}
+.kab-dot{position:absolute;top:8px;right:8px;width:9px;height:9px;border-radius:50%;background:var(--gold);box-shadow:0 0 10px rgba(var(--acc),.9);border:2px solid var(--bg)}
+.kab-dot.red{background:var(--down);box-shadow:0 0 10px rgba(var(--dnc),.9)}
+.kab-hsend{display:none}
+.kab-fab{position:fixed;left:14px;bottom:calc(78px + var(--sab));z-index:31;display:inline-flex;align-items:center;gap:8px;height:48px;padding:0 18px 0 14px;border-radius:999px;
+  background:var(--gold);color:var(--on-acc);font:600 13px var(--sans);letter-spacing:.04em;box-shadow:0 12px 30px -10px rgba(var(--acc),.85),0 2px 0 rgba(255,255,255,.25) inset;transition:transform .35s cubic-bezier(.34,1.9,.45,1),box-shadow .3s}
+.kab-fab svg{width:20px;height:20px;flex:none}
+.kab-fab:active{transform:scale(.94)}
+body.kab-open .kab-fab{opacity:0;pointer-events:none}
+.kab-more svg{flex:0 0 auto}
+.kab-more{width:100%;text-align:left;background:none;border:1px solid transparent;margin-bottom:4px}
+@media (max-width:379px){.kab-fab span{display:none}.kab-fab{padding:0 14px;width:48px;justify-content:center}}
+@media (min-width:900px){
+  .kab-fab{display:none}
+  .kab-hsend{display:inline-flex;align-items:center;gap:8px;height:36px;margin-right:6px;padding:0 14px 0 11px;border-radius:999px;white-space:nowrap;background:var(--gold);color:var(--on-acc);font:600 12.5px var(--sans);letter-spacing:.04em;
+    box-shadow:0 8px 22px -10px rgba(var(--acc),.9);transition:transform .3s cubic-bezier(.34,1.9,.45,1),box-shadow .3s}
+  .kab-hsend svg{width:17px;height:17px}
+  .kab-hsend:hover{box-shadow:0 10px 28px -8px rgba(var(--acc),1)}
+  .kab-hsend:active{transform:scale(.95)}
+}
+@media (min-width:900px) and (max-width:1239px){.kab-hsend span{display:none}.kab-hsend{padding:0 11px}}
+@media (max-width:420px){.kab-hbtn{width:38px}}
+
+/* ---------- окно ---------- */
+.kab-ov{z-index:60;align-items:flex-end;padding:0}
+.kab-card{max-width:520px;max-height:94dvh;padding:18px 18px calc(22px + var(--sab));border-radius:22px 22px 0 0;text-align:left;overscroll-behavior:contain;outline:none}
+@media (min-width:900px){.kab-ov{align-items:center;padding:20px}.kab-card{border-radius:22px;max-height:calc(100dvh - 40px);padding:22px 24px 26px}}
+.kab-card h2{font:500 26px/1.15 var(--serif);margin:0}
+.kab-card h3{font:600 12px/1.3 var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--mut);margin:0}
+.kab-top{display:grid;grid-template-columns:44px 1fr 44px;align-items:center;margin:-6px -8px 10px}
+.kab-top h2{text-align:center}
+.kab-x{width:44px;height:44px;border-radius:12px;color:var(--mut);font:400 26px/1 var(--sans)}
+.kab-x:hover{color:var(--txt)}
+.kab-sub,.kab-note{color:var(--mut);font-size:13.5px;line-height:1.5;margin:8px 0 0}
+.kab-sub{text-align:center;margin:0 0 14px}
+.kab-card .btn-gold,.kab-card .btn-ghost{font-size:12.5px}
+.kab-wide{width:100%;margin-top:14px}
+.kab-card button.busy{opacity:.6;pointer-events:none}
+.kab-card button:disabled{opacity:.5}
+.kab-err{margin-top:12px;padding:10px 12px;border-radius:12px;border:1px solid rgba(var(--dnc),.4);background:rgba(var(--dnc),.08);color:var(--down);font-size:13.5px}
+.kab-link{color:var(--gold-l);font:500 13px var(--sans);text-decoration:underline;text-underline-offset:3px;min-height:36px;padding:0 4px}
+.kab-alt{display:flex;flex-direction:column;gap:10px;margin-top:16px;align-items:stretch}
+.kab-alt .kab-wide{margin-top:0}
+.kab-alt .kab-link{align-self:center;margin-top:4px}
+.kab-soon em{font-style:normal;margin-left:6px;padding:2px 7px;border-radius:8px;background:var(--sur2);font-size:11px;letter-spacing:.06em;text-transform:none}
+.kab-gift{margin-top:12px;padding:11px 13px;border-radius:12px;border:1px solid rgba(var(--acc),.35);background:rgba(var(--acc),.08);color:var(--gold-l);font-size:13.5px}
+.kab-warn{display:flex;gap:12px;align-items:center;justify-content:space-between;margin-top:12px;padding:11px 13px;border-radius:12px;border:1px solid rgba(var(--acc),.3);background:rgba(var(--acc),.06);font-size:13px;line-height:1.5}
+.kab-warn.red{border-color:rgba(var(--dnc),.45);background:rgba(var(--dnc),.08);color:var(--down)}
+.kab-warn .btn-ghost{flex:none;min-height:38px}
+
+/* ---------- поля ---------- */
+.kab-form{display:block}
+.kab-f{display:block;margin-top:14px}
+.kab-f>span{display:flex;justify-content:space-between;gap:8px;font:500 11px/1.3 var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--mut);margin-bottom:7px}
+.kab-f em{font-style:normal;font-family:var(--mono);letter-spacing:0}
+.kab-card input[type=text],.kab-card input[type=password],.kab-card input:not([type]){width:100%;min-height:48px;padding:0 14px;border-radius:12px;border:1px solid var(--line);background:rgba(0,0,0,.28);color:var(--txt);font:500 16px var(--sans)}
+.kab-card input:focus{outline:none;border-color:rgba(var(--acc),.7);box-shadow:0 0 0 3px rgba(var(--acc),.15)}
+.kab-card input::placeholder{color:var(--mut);opacity:.7}
+.kab-num{font-family:var(--mono)!important;letter-spacing:0}
+.kab-num.big{font-size:26px!important;min-height:58px!important}
+.kab-pw{display:flex;gap:8px;align-items:center;position:relative;letter-spacing:0;text-transform:none;margin:0}
+.kab-pw input{padding-right:84px}
+.kab-eye{position:absolute;right:4px;top:4px;bottom:4px;padding:0 12px;border-radius:9px;color:var(--gold-l);font:500 12px var(--sans);letter-spacing:.04em;text-transform:none}
+.kab-inl{display:flex;gap:8px;margin-top:10px}.kab-inl input{flex:1;min-width:0}.kab-inl .btn-gold,.kab-inl .btn-ghost{flex:none}
+.kab-lbl{margin-top:14px;font:500 11px/1.3 var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--mut);display:flex;justify-content:space-between;gap:8px}
+.kab-lbl b{color:var(--gold-l);font-family:var(--mono);letter-spacing:0;font-weight:500}
+
+/* ---------- кнопки-выбор ---------- */
+.kab-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:9px}
+.kab-chip{min-height:38px;padding:0 13px;border-radius:11px;border:1px solid var(--line);background:var(--sur);color:var(--txt);font:500 13px var(--sans);transition:color .2s,background .2s,border-color .2s,transform .3s cubic-bezier(.34,1.9,.45,1)}
+.kab-chip:hover{border-color:rgba(var(--acc),.5)}
+.kab-chip:active{transform:scale(.95)}
+.kab-chip.on{background:var(--gold);color:var(--on-acc);border-color:transparent;box-shadow:0 6px 16px -8px rgba(var(--acc),.9)}
+.kab-chips.opts{max-height:236px;overflow:auto;padding:2px;margin-right:-2px}
+.kab-chips.days .kab-chip{min-width:40px;padding:0 6px;text-align:center}
+.kab-seg{display:grid;grid-auto-flow:column;grid-auto-columns:1fr;gap:2px;padding:3px;border-radius:14px;border:1px solid var(--line);background:rgba(0,0,0,.28)}
+.kab-seg button{min-height:44px;padding:0 6px;border-radius:11px;font:600 12.5px var(--sans);color:var(--mut);transition:color .2s,background .25s,box-shadow .25s;line-height:1.15}
+.kab-seg button.on{color:var(--on-acc);background:var(--gold);box-shadow:0 8px 20px -10px rgba(var(--acc),.95)}
+
+/* ---------- вопросы ---------- */
+.kab-qs{display:flex;flex-direction:column;gap:6px;margin-top:9px}
+.kab-q{border:1px solid var(--line);border-radius:14px;background:var(--sur);overflow:hidden}
+.kab-q.on{border-color:rgba(var(--acc),.5);background:rgba(var(--acc),.05)}
+.kab-qh{display:flex;align-items:center;gap:11px;width:100%;min-height:50px;padding:8px 12px;text-align:left;font:500 14px/1.3 var(--sans)}
+.kab-qh em{font-style:normal;font-size:11px;padding:1px 6px;border-radius:7px;background:var(--sur2);color:var(--gold-l);margin-left:4px}
+.kab-ck{flex:none;width:22px;height:22px;border-radius:7px;border:1px solid var(--line);display:inline-flex;align-items:center;justify-content:center;font-style:normal;font-size:13px;color:var(--on-acc)}
+.kab-q.on .kab-ck{background:var(--gold);border-color:transparent}
+.kab-set{margin-left:auto;flex:none;font:500 11px var(--sans);color:var(--up);letter-spacing:.04em}
+.kab-qa{padding:0 12px 12px}
+.kab-qa input{max-width:150px}
+
+/* ---------- кабинет ---------- */
+.kab-adr{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:8px;padding:14px;border-radius:16px;border:1px solid transparent;background:linear-gradient(var(--p3),var(--p3)) padding-box,linear-gradient(150deg,rgba(var(--accl),.5),rgba(255,255,255,.05) 50%,rgba(var(--acc),.25)) border-box}
+.kab-adr .lbl{flex:1 0 100%}
+.kab-adr b{flex:1;font:500 30px/1 var(--mono);letter-spacing:.01em;color:var(--gold-l);overflow-wrap:anywhere}
+.kab-adr .btn-ghost{min-height:40px}
+.kab-lv{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin-top:12px}
+.kab-lv b{font:500 18px var(--serif)}
+.kab-xp{color:var(--mut);font-size:12px;margin-left:auto}
+.kab-sec{margin-top:22px;padding-top:16px;border-top:1px solid var(--line)}
+.kab-sh{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.kab-wal{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
+.kab-wal>div{padding:12px;border-radius:14px;background:var(--sur);border:1px solid var(--line)}
+.kab-wal>div:nth-child(3){grid-column:1 / -1}
+.kab-wal b{display:block;font:500 22px/1.2 var(--mono);margin-top:4px}
+.kab-wal i{display:block;font-style:normal;font-size:12px;color:var(--mut);margin-top:3px}
+.kab-game{display:flex;justify-content:space-between;gap:10px;align-items:baseline;margin-top:10px;padding:10px 12px;border-radius:12px;border:1px dashed var(--line);color:var(--mut);font-size:13px}
+.kab-game b{font:500 14px var(--mono);color:var(--txt)}
+.kab-ra{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.kab-ra>*{flex:1 1 auto}
+.kab-ra .kab-link{flex:none}
+.kab-ra.end{justify-content:space-between;align-items:center}
+.kab-ra.end>*{flex:none}
+.kab-ra.stack{flex-direction:column}.kab-ra.stack .kab-wide{margin-top:0}
+.kab-none{color:var(--mut);font-size:13.5px;margin-top:10px}
+.kab-debt,.kab-chk{margin-top:10px;padding:12px;border-radius:14px;background:var(--sur);border:1px solid var(--line)}
+.kab-debt.late{border-color:rgba(var(--dnc),.5);background:rgba(var(--dnc),.07)}
+.kab-dh{display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+.kab-dh b{font-weight:500;font-size:15px}
+.kab-dsum{font-size:20px;color:var(--gold-l)}
+.kab-dm{display:flex;flex-wrap:wrap;gap:4px 14px;margin-top:5px;font-size:12.5px;color:var(--mut)}
+.kab-dm .bad{color:var(--down);font-weight:600}
+.kab-nt{display:flex;justify-content:space-between;gap:12px;padding:10px 12px;margin-top:6px;border-radius:12px;border:1px solid var(--line);font-size:13.5px;line-height:1.45}
+.kab-nt time{flex:none;color:var(--mut);font-size:12px;white-space:nowrap}
+.kab-nt.new{border-color:rgba(var(--acc),.45);background:rgba(var(--acc),.06)}
+.kab-nt.late{border-color:rgba(var(--dnc),.55);background:rgba(var(--dnc),.1);color:var(--down);font-weight:500}
+.kab-two{display:grid;gap:10px;margin-top:6px}
+.kab-two>div{padding:14px;border-radius:14px;background:var(--sur);border:1px solid var(--line)}
+.kab-two p{margin-top:8px;color:var(--mut);font-size:13.5px;line-height:1.55}
+@media (min-width:640px){.kab-two{grid-template-columns:1fr 1fr}}
+
+/* ---------- отправка и чек ---------- */
+.kab-due{display:flex;justify-content:space-between;align-items:baseline;margin-top:14px;padding:10px 12px;border-radius:12px;background:var(--sur);border:1px solid var(--line);font-size:13px;color:var(--mut)}
+.kab-due b{font:500 15px var(--mono);color:var(--txt)}
+.kab-img{margin-top:6px;border-radius:14px;overflow:hidden;border:1px solid var(--line);background:var(--p3);aspect-ratio:1200/630}
+.kab-img img{display:block;width:100%;height:100%;object-fit:cover}
+.kab-img.nofile{display:none}
+.kab-link-box{display:flex;gap:8px;margin-top:12px}
+.kab-link-box input{flex:1;min-width:0;font:400 12.5px var(--mono)!important}
+.kab-link-box .btn-ghost{flex:none}
+.kab-chips.share{margin-top:10px}.kab-chips.share .kab-chip{flex:1 1 auto;justify-content:center}
+
+/* ---------- чек получателя ---------- */
+.kab-chek{position:relative;margin-top:4px;padding:26px 20px 22px;border-radius:20px;text-align:center;border:1px solid transparent;overflow:hidden;
+  background:radial-gradient(120% 90% at 50% 0,rgba(var(--acc),.2),transparent 62%) padding-box,linear-gradient(var(--p3),var(--p3)) padding-box,linear-gradient(150deg,rgba(var(--accl),.6),rgba(255,255,255,.06) 45%,rgba(var(--acc),.3)) border-box;
+  box-shadow:0 24px 50px -26px rgba(var(--acc),.7)}
+.kab-chek::before,.kab-chek::after{content:"";position:absolute;top:calc(50% + 28px);width:16px;height:16px;border-radius:50%;background:var(--p2);border:1px solid rgba(var(--acc),.25)}
+.kab-chek::before{left:-9px}.kab-chek::after{right:-9px}
+.kab-ck-l{display:block;font:500 11px var(--sans);letter-spacing:.32em;text-transform:uppercase;color:var(--gold)}
+.kab-chek h3{font:500 25px/1.2 var(--serif)!important;letter-spacing:0!important;text-transform:none!important;color:var(--txt)!important;margin-top:12px!important}
+.kab-chek h3 b{display:block;font-size:44px;line-height:1.1;color:var(--gold-l);font-weight:500;margin-top:4px}
+.kab-ck-from{margin-top:10px;color:var(--mut);font-size:13px}.kab-ck-from b{color:var(--txt);font-weight:500}
+.kab-chek blockquote{margin:16px 6px 0;padding:12px 4px 0;border-top:1px dashed rgba(var(--acc),.35);font:italic 500 18px/1.4 var(--serif);color:var(--txt);overflow-wrap:anywhere}
+.kab-ck-rows{margin-top:16px;display:grid;gap:7px;text-align:left}
+.kab-ck-rows>div{display:flex;justify-content:space-between;gap:10px;padding:8px 12px;border-radius:10px;background:rgba(0,0,0,.25);font-size:13px;color:var(--mut)}
+.kab-ck-rows b{font-weight:500;color:var(--txt)}
+.kab-done{display:flex;flex-direction:column;align-items:center;gap:10px;padding:26px 0 6px;text-align:center}
+.kab-done i{width:72px;height:72px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:rgba(var(--upc),.14);color:var(--up);border:1px solid rgba(var(--upc),.4)}
+.kab-done svg{width:34px;height:34px;stroke-width:2}
+.kab-done p{color:var(--mut)}
+@media (prefers-reduced-motion:reduce){.kab-fab,.kab-chip,.kab-hsend{transition:none}}
+body.kab-open{overflow:hidden}

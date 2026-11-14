@@ -2416,7 +2416,11 @@ const LESSONS = [
   { r: 1500, ru: { t: 'Ставки и коэффициент', p: ['Коэффициент показывает, сколько вы получите за каждый доллар ставки, если исход сбудется. Коэффициент 2,5 и ставка $10: при победе выплата $25, прибыль $15. Не сбылось — $10 пропали.', 'Коэффициент связан с шансом: единица, делённая на коэффициент. Коэффициент 2,5 — это шанс 40 % по оценке рынка.'], q: 'Ставка $20 при коэффициенте 3. Исход сбылся. Какая выплата?', o: ['$60', '$23', '$40'], ok: 0, e: '$20 умножить на 3 — выплата $60, из них $40 прибыли.' },
     en: { t: 'Bets and odds', p: ['Odds show how much you get for each dollar of the stake if the outcome happens. Odds 2.5 and a $10 stake: if you win the payout is $25, profit $15. If not, the $10 is gone.', 'Odds are tied to chance: one divided by the odds. Odds 2.5 mean a 40% chance by the market’s estimate.'], q: 'A $20 stake at odds 3. The outcome happened. What is the payout?', o: ['$60', '$23', '$40'], ok: 0, e: '$20 times 3 is a $60 payout, $40 of it profit.' } },
   { r: 2000, ru: { t: 'Главное правило', p: ['Вкладывайте только ту часть денег, потерю которой переживёте. Если в одной сделке весь счёт, одна ошибка заканчивает игру. Если в сделке десятая часть, нужно десять ошибок подряд.', 'Свободные деньги держите про запас: с ними можно спокойно закрыть убыточную сделку и открыть новую, когда появится возможность.', 'Когда свободных денег меньше 10 % от внесённого, тренажёр подсказывает остановиться и подумать.', 'Очки уровня больше всего дают за чистый заработок: прибыль закрытых сделок и выигрыши по ставкам минус убытки. Заработали $500, потеряли $300 — чистый итог $200. Проигрыш съедает заработанное, а за ставки наугад очков нет. Выгоднее разобраться, чем гадать.'], q: 'На счёте $1 000. Какая сделка разумнее?', o: ['$100 с плечом ×2', '$1 000 с плечом ×10', '$900 с плечом ×5'], ok: 0, e: 'Малая доля счёта и небольшое плечо: ошибка стоит дорого, но игру не заканчивает.' },
-    en: { t: 'The main rule', p: ['Put in only the part of your money whose loss you can live with. If one trade holds the whole account, one mistake ends the game. If a trade holds a tenth, it takes ten mistakes in a row.', 'Keep free money in reserve: with it you can calmly close a losing trade and open a new one when a chance appears.', 'When free money drops below 10% of what you put in, the simulator suggests you stop and think.', 'Level points come mostly for net earnings: profit of closed trades and won bets minus losses. You earned $500 and lost $300: the net result is $200. A loss eats what you earned, and guessing bets give no points. Understanding pays better than guessing.'], q: 'The account holds $1,000. Which trade is more sensible?', o: ['$100 at ×2', '$1,000 at ×10', '$900 at ×5'], ok: 0, e: 'A small share of the account and a low leverage: a mistake hurts but does not end the game.' } }
+    en: { t: 'The main rule', p: ['Put in only the part of your money whose loss you can live with. If one trade holds the whole account, one mistake ends the game. If a trade holds a tenth, it takes ten mistakes in a row.', 'Keep free money in reserve: with it you can calmly close a losing trade and open a new one when a chance appears.', 'When free money drops below 10% of what you put in, the simulator suggests you stop and think.', 'Level points come mostly for net earnings: profit of closed trades and won bets minus losses. You earned $500 and lost $300: the net result is $200. A loss eats what you earned, and guessing bets give no points. Understanding pays better than guessing.'], q: 'The account holds $1,000. Which trade is more sensible?', o: ['$100 at ×2', '$1,000 at ×10', '$900 at ×5'], ok: 0, e: 'A small share of the account and a low leverage: a mistake hurts but does not end the game.' } },
+  { r: 1000, ru: { t: 'Цель: когда забрать прибыль', p: ['Цель — прибыль, при которой вы заранее решили закрыть сделку. Вложили $100 и решили: хватит $10. Цена дошла, вы закрыли и забрали $10.', 'Жадность превращает плюс в минус. Цена на пике не стоит: пока вы ждёте ещё, она может развернуться и вернуть всё. Цель, как и стоп, решается заранее, пока вы спокойны.', 'Цель не значит, что цена обязательно пойдёт дальше или упадёт. Это правило для вас: достигли — забрали.'], q: 'Вы поставили цель +$10, и цена её достигла. Что разумнее?', o: ['Закрыть сделку и забрать $10', 'Ждать ещё большего роста', 'Докупить ещё'], ok: 0, e: 'Цель задана заранее: достигли — забираем. Ждать большего значит рисковать уже заработанным.' },
+    en: { t: 'Target: when to take profit', p: ['A target is the profit at which you decided in advance to close a trade. You put in $100 and decided: $10 is enough. The price got there, you closed and took $10.', 'Greed turns a plus into a minus. The price does not stand at its peak: while you wait for more it can turn and give everything back. A target, like a stop, is decided in advance while you are calm.', 'A target does not mean the price must go further or fall. It is a rule for you: reached it, took it.'], q: 'You set a target of +$10 and the price reached it. What is more sensible?', o: ['Close the trade and take $10', 'Wait for an even bigger rise', 'Add more'], ok: 0, e: 'The target was set in advance: reached it, take it. Waiting for more means risking what you already earned.' } },
+  { r: 1000, ru: { t: 'Комиссия и частые сделки', p: ['Комиссия — плата за каждую сделку: за открытие и за закрытие. В тренажёре это 0,1 % от размера позиции с каждой стороны, всего 0,2 %.', 'Если цена выросла всего на 0,2 %, весь рост уходит на комиссию, и результат сделки — ноль. Десять коротких сделок с маленьким плюсом могут закончиться минусом.', 'Поэтому сделки открывают с причиной, а не ради самого действия: каждая лишняя сделка стоит денег.'], q: 'Позиция $1 000, комиссия 0,1 % при открытии и при закрытии. Сколько комиссии за одну сделку?', o: ['$2', '$1', '$0,10'], ok: 0, e: '0,1 % от $1 000 — это $1 при открытии и ещё $1 при закрытии: всего $2.' },
+    en: { t: 'Fees and frequent trades', p: ['A fee is a charge for every trade: for opening and for closing. In the simulator it is 0.1% of the position size on each side, 0.2% in total.', 'If the price rose just 0.2%, the whole rise goes to fees and the result of the trade is zero. Ten short trades with a small plus can end in a minus.', 'So trades are opened for a reason, not for the action itself: every extra trade costs money.'], q: 'A $1,000 position, a fee of 0.1% on opening and on closing. How much is the fee for one trade?', o: ['$2', '$1', '$0.10'], ok: 0, e: '0.1% of $1,000 is $1 on opening and another $1 on closing: $2 in total.' } }
 ];
 const lesN = () => Object.keys(S.les || {}).length;
 const hasCat = c => (S.qx.cats && S.qx.cats[c]) || S.positions.some(p => INS[p.sym] && INS[p.sym].cat === c);
@@ -2618,25 +2622,35 @@ const lesText = i => LESSONS[i][S.lang === 'en' ? 'en' : 'ru'];
 function renderLearn() {
   const box = $('learnBox'); if (!box) return;
   if (ui.les == null) {
+    if (window.DofaObu) DofaObu.stop();
+    const nxt = LESSONS.findIndex((L1, j) => !S.les[j + 1]);
     box.innerHTML = '<div class="vhead"><h1>' + t('learn_h2') + '</h1></div><div class="lgrid">' + LESSONS.map((L0, i) => {
       const d = !!S.les[i + 1], x = lesText(i);
-      return '<button type="button" class="panel lcc' + (d ? ' done' : '') + '" data-les="' + i + '"><span class="lc-n num">' + (i + 1) + '</span><span class="lc-t"><b>' + x.t + '</b><small class="num">' + (d ? t('les_done') : '+' + money(L0.r, 0) + ' · ' + LESSON_XP + ' ' + t('xp_short')) + '</small></span><span class="lc-go" aria-hidden="true">' + (d ? '✓' : '→') + '</span></button>';
+      return '<button type="button" class="panel lcc' + (d ? ' done' : '') + (i === nxt ? ' nxt' : '') + '" data-les="' + i + '"><span class="lc-n num">' + (i + 1) + '</span><span class="lc-t"><b>' + x.t + '</b><small class="num">' + (d ? t('les_done') : '+' + money(L0.r, 0) + ' · ' + LESSON_XP + ' ' + t('xp_short')) + '</small></span><span class="lc-go" aria-hidden="true">' + (d ? '✓' : '→') + '</span></button>';
     }).join('') + '</div>';
     return;
   }
   const i = ui.les, L0 = LESSONS[i], x = lesText(i), a = ui.ans, done = !!S.les[i + 1];
+  const obuOn = !!(window.DofaObu && DofaObu.has(i)), locked = obuOn && !done && !(ui.obu && ui.obu[i]);
   let h = '<div class="vhead"><button type="button" class="link-btn" data-lback="1">← ' + t('les_back') + '</button><span class="lbl les-n">' + tf('les_n', { n: i + 1, m: LESSONS.length }) + '</span><h1>' + x.t + '</h1></div>' +
     '<div class="panel les-body">' + x.p.map(s => '<p>' + s + '</p>').join('') + '</div>' +
-    '<div class="panel les-q"><span class="lbl">' + t('les_q') + '</span><p class="les-qt">' + x.q + '</p><div class="les-opts">' +
-    x.o.map((o, k) => '<button type="button" class="opt' + (a && a.i === k ? (a.ok ? ' ok' : ' bad') : '') + '" data-ans="' + k + '">' + o + '</button>').join('') + '</div>';
+    (obuOn ? '<div class="obu-host" id="obuHost"></div>' : '') +
+    '<div class="panel les-q' + (locked ? ' les-lock' : '') + '"><span class="lbl">' + t('les_q') + '</span><p class="les-qt">' + x.q + '</p><div class="les-opts">' +
+    (locked ? '<p class="les-lk">' + DofaObu.text('lock', S.lang) + '</p>' : '') + x.o.map((o, k) => '<button type="button" class="opt' + (a && a.i === k ? (a.ok ? ' ok' : ' bad') : '') + '" data-ans="' + k + '">' + o + '</button>').join('') + '</div>';
   if (a && a.ok) h += '<p class="les-fb ok"><b>' + t('les_ok') + '.</b> ' + x.e + '</p><p class="les-rw num">' + (a.fresh ? tf('les_got', { r: money(L0.r, 0), x: LESSON_XP }) : t('les_again')) + '</p>' +
     '<div class="m-btns">' + (i + 1 < LESSONS.length ? '<button class="btn-gold" type="button" data-les="' + (i + 1) + '">' + t('les_next') + '</button>' : '') + '<button class="btn-ghost" type="button" data-lback="1">' + t('les_back') + '</button></div>';
   else if (a) h += '<p class="les-fb bad">' + t('les_bad') + '</p>';
   else h += '<p class="les-rw num">' + (done ? t('les_again') : tf('les_reward', { r: money(L0.r, 0), x: LESSON_XP })) + '</p>';
   box.innerHTML = h + '</div>';
+  if (obuOn) DofaObu.mount($('obuHost'), i, obuApi());
+}
+// 14.11: interactive practice (obuchenie.js). It never writes trades, quests, points or money: only "practice passed" for this session.
+function obuApi() {
+  return { lang: () => S.lang, t: k => t(k), money: (v, d) => money(v, d), passed: i => !!(S.les[i + 1] || (ui.obu && ui.obu[i])),
+    pass: i => { ui.obu = ui.obu || {}; ui.obu[i] = 1; const q = document.querySelector('.les-q'); if (q) { q.classList.remove('les-lock'); const lk = q.querySelector('.les-lk'); if (lk) lk.remove(); } try { snd.win(); vib([12, 40, 12]); } catch (e) {} } };
 }
 function answer(k) {
-  const i = ui.les; if (i == null) return; const ok = k === LESSONS[i].ru.ok;
+  const i = ui.les; if (i == null) return; if (window.DofaObu && DofaObu.has(i) && !S.les[i + 1] && !(ui.obu && ui.obu[i])) return; const ok = k === LESSONS[i].ru.ok;
   if (ok && !S.les[i + 1]) {
     const lv0 = E.levelOf(S); S.les[i + 1] = 1; E.grant(S, M, LESSONS[i].r); addXp(LESSON_XP); save(); snd.win(); vib([12, 40, 12]);
     ui.ans = { i: k, ok: true, fresh: true }; renderLearn(); checkQuests(); afterXp(lv0); return;
@@ -2651,6 +2665,7 @@ function answer(k) {
 const VIEWS = ['money', 'market', 'compare', 'wallet', 'truth', 'news', 'bets', 'top', 'quests', 'learn'];
 function render() {
   sig = posSig(); chartsKill();
+  if (ui.view !== 'learn' && window.DofaObu) DofaObu.stop();
   if (ui.view === 'market') renderMarket();
   else if (ui.view === 'wallet') renderWallet();
   else if (ui.view === 'truth') renderTruth();
@@ -2703,6 +2718,7 @@ function applyLang() {
   document.querySelectorAll('[data-i18n-ph]').forEach(el => { el.setAttribute('placeholder', t(el.getAttribute('data-i18n-ph'))); });
   document.querySelectorAll('[data-i18n-aria]').forEach(el => { el.setAttribute('aria-label', t(el.getAttribute('data-i18n-aria'))); });
   setTxt($('langBtn'), S.lang === 'en' ? 'RU' : 'EN');
+  try { document.dispatchEvent(new Event('dofa-lang')); } catch (e) {}
   const sb = $('sndBtn'); if (sb) { sb.classList.toggle('off', !S.sound); sb.setAttribute('aria-pressed', S.sound ? 'true' : 'false'); }
   drawSync();
 }
@@ -2749,7 +2765,7 @@ function onClick(e) {
   } else if (has('data-les')) { ui.les = +A('data-les'); ui.ans = null; renderLearn(); try { window.scrollTo(0, 0); } catch (e) {}
   } else if (has('data-ans')) { answer(+A('data-ans'));
   } else if (has('data-lback')) { ui.les = null; ui.ans = null; renderLearn(); try { window.scrollTo(0, 0); } catch (e) {}
-  } else if (has('data-loan')) { soonModal();
+  } else if (has('data-loan')) { if (!(window.DofaKab && window.DofaKab.loan && window.DofaKab.loan())) soonModal();
   } else if (has('data-noteoff')) { ui.loanOff = true; fillNotes(true);
   } else if (has('data-ncat')) {
     ui.ncat = A('data-ncat'); document.querySelectorAll('[data-ncat]').forEach(b => b.classList.toggle('on', b === el)); fillNews();
@@ -2808,7 +2824,7 @@ function init() {
   // ATM keys fire on press: a pressed key shifts in 3D and the browser then sends the click to its parent, so the digit was lost on phones.
   document.addEventListener('pointerdown', e => {
     const k = e.target && e.target.closest ? e.target.closest('#atm [data-key]') : null; if (!k) return;
-    ui.keyAt = performance.now(); snd.gesture(); snd.key(); vib(8); atmKey(k.getAttribute('data-key'));
+    ui.keyAt = performance.now(); snd.gesture(); snd.key(); vib(8); atmKey(k.getAttribute('data-key')); ui.keyAt = performance.now();   // 14.11: stamp again after the slow first sound start, so the following click is still skipped
   });
   document.addEventListener('input', e => { if (e.target && e.target.id === 'cmpQ') { ui.cq = e.target.value.slice(0, 24); fillCmpPick(false); } });
   fitAtm(); atmTilt();
@@ -2835,6 +2851,11 @@ function init() {
   setInterval(tick, 1000);
   pump(Date.now());
 }
+// 14.11 (kabinet.js): a read-only window for the cabinet code; nothing here runs unless the cabinet script asks.
+window.DofaSim = {
+  lang: () => (S ? S.lang : 'ru'), cash: () => (S ? S.cash : 0), level: () => (S ? E.levelOf(S) : 0), levelName: i => lvName(i),
+  quests: () => (S && S.qd ? QUESTS.filter(q => S.qd[q.id]).map(q => q.id) : []), toast: (m, c, ok) => toast(m, c, ok), vib: p => vib(p)
+};
 if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
 
 })();
