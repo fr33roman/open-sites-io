@@ -452,7 +452,7 @@ const NB = ' ';   // narrow no-break space as thousands separator
 
 const T = {
   ru: {
-    nav_money: 'Деньги', nav_market: 'Рынок', nav_wallet: 'Кошелёк', nav_truth: 'Правда', nav_news: 'Новости', snd_aria: 'Звук', skin_aria: 'Стиль', skin_gold: 'Стиль: Золото', skin_sapphire: 'Стиль: Сапфир', skin_amethyst: 'Стиль: Аметист', skin_aurora: 'Стиль: Аврора', skin_platinum: 'Стиль: Платина',
+    nav_money: 'Деньги', nav_market: 'Рынок', nav_wallet: 'Кошелёк', nav_truth: 'Правда', nav_news: 'Новости', snd_aria: 'Звук', skin_aria: 'Стиль', skin_quantum: 'Стиль: Квант', slogan: 'Твоя виртуальная экономическая вселенная', skin_gold: 'Стиль: Золото', skin_sapphire: 'Стиль: Сапфир', skin_amethyst: 'Стиль: Аметист', skin_aurora: 'Стиль: Аврора', skin_platinum: 'Стиль: Платина',
     money_lbl: 'Игровой счёт', money_h: 'Деньги',
     money_sub: 'Внесите любую сумму и торгуйте как в жизни. Деньги игровые: потерять здесь нечего, а результат считается честно.',
     reset: 'Обнулить всё', reset_q: 'Стереть деньги, позиции и всю историю?', reset_yes: 'Да, обнулить', cancel: 'Отмена', reset_done: 'Счёт обнулён',
@@ -506,7 +506,7 @@ const T = {
     ]
   },
   en: {
-    nav_money: 'Money', nav_market: 'Market', nav_wallet: 'Wallet', nav_truth: 'Truth', nav_news: 'News', snd_aria: 'Sound', skin_aria: 'Style', skin_gold: 'Style: Gold', skin_sapphire: 'Style: Sapphire', skin_amethyst: 'Style: Amethyst', skin_aurora: 'Style: Aurora', skin_platinum: 'Style: Platinum',
+    nav_money: 'Money', nav_market: 'Market', nav_wallet: 'Wallet', nav_truth: 'Truth', nav_news: 'News', snd_aria: 'Sound', skin_aria: 'Style', skin_quantum: 'Style: Quantum', slogan: 'Your virtual economic universe', skin_gold: 'Style: Gold', skin_sapphire: 'Style: Sapphire', skin_amethyst: 'Style: Amethyst', skin_aurora: 'Style: Aurora', skin_platinum: 'Style: Platinum',
     money_lbl: 'Play account', money_h: 'Money',
     money_sub: 'Deposit any amount and trade as you would in real life. The money is play money: nothing to lose, and the result is counted honestly.',
     reset: 'Reset everything', reset_q: 'Erase money, positions and all history?', reset_yes: 'Yes, reset', cancel: 'Cancel', reset_done: 'Account reset',
@@ -916,7 +916,7 @@ function stInfo(sym, big) {
 const COL = { gold: '#C8A96A', up: '#7FBF9A', down: '#D98A7E', mut: '#A69F93', grid: 'rgba(255,255,255,.06)', txt: '#F3EEE6', bg: '#0E0D0C' };
 const LINES = ['#C8A96A', '#7FBF9A', '#D98A7E', '#9DB4C8'];
 // Skins: the palette lives in sim.css (html[data-skin]); canvases read it from there.
-const SKINS = ['gold', 'sapphire', 'amethyst', 'aurora', 'platinum'];
+const SKINS = ['gold', 'sapphire', 'amethyst', 'aurora', 'platinum', 'quantum'];
 function readSkin() {
   const cs = getComputedStyle(document.documentElement), v = n => (cs.getPropertyValue(n) || '').trim();
   const hex = (n, d) => /^#[0-9a-f]{6}$/i.test(v(n)) ? v(n) : d;

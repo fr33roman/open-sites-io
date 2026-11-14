@@ -73,7 +73,7 @@ var TX = {
     q_pick: 'Вопросы', q_chosen: 'Выбрано {n} из 3', q_answer: 'Ваш ответ', q_need: 'Ответьте на все три вопроса.', q_num_need: 'Нужен хотя бы один вопрос с числом.',
     q_dom_ph: '0–999', q_month: 'Месяц', q_day: 'День', q_set: 'ответ задан',
     saved_h: 'Кабинет создан', saved_adres: 'Ваш номер кабинета', saved_p: 'Запишите номер и пароль. Номер нужен при каждом входе, друзья отправляют деньги на него.',
-    saved_gift: 'Подарок 100 000 $ зачислен: торговать можно сразу, переводить — после трёх заданий.', saved_go: 'Открыть кабинет', saved_store: 'Сохранить в браузере', saved_stored: 'Браузер получил пару номер + пароль',
+    saved_gift: 'Подарок 100 000 $ зачислен: торговать можно сразу, переводить — после трёх заданий.', saved_go: 'Открыть кабинет', saved_chek: 'Открыть чек', saved_store: 'Сохранить в браузере', saved_stored: 'Браузер получил пару номер + пароль',
     rec_h: 'Восстановление доступа', rec_p: 'Введите номер кабинета, ответьте на три вопроса, выбранных при регистрации, и задайте новый пароль.',
     rec_honest: 'Новый пароль заработает через 24 часа, и ещё сутки после этого переводы и долги будут закрыты. Весь этот день в кабинете висит предупреждение «Это не я» — владелец может отменить заявку. Старый пароль до того времени работает.',
     rec_next: 'Показать вопросы', rec_q_intro: 'Ответьте на эти три вопроса — их выбрали при регистрации.', rec_go: 'Отправить заявку', rec_ok_h: 'Заявка принята', rec_ok: 'Новый пароль заработает {t}. До тех пор входите по старому.',
@@ -155,7 +155,7 @@ var TX = {
     q_pick: 'Questions', q_chosen: 'Chosen {n} of 3', q_answer: 'Your answer', q_need: 'Answer all three questions.', q_num_need: 'At least one question with a number is required.',
     q_dom_ph: '0–999', q_month: 'Month', q_day: 'Day', q_set: 'answered',
     saved_h: 'Account created', saved_adres: 'Your account number', saved_p: 'Write down the number and the password. You need the number to sign in; friends send money to it.',
-    saved_gift: 'The $100,000 gift is credited: trade with it at once, send it after three quests.', saved_go: 'Open the account', saved_store: 'Save in browser', saved_stored: 'The browser got the number + password pair',
+    saved_gift: 'The $100,000 gift is credited: trade with it at once, send it after three quests.', saved_go: 'Open the account', saved_chek: 'Open the check', saved_store: 'Save in browser', saved_stored: 'The browser got the number + password pair',
     rec_h: 'Access recovery', rec_p: 'Enter the account number, answer the three questions chosen at sign-up and set a new password.',
     rec_honest: 'The new password starts working in 24 hours, and for a further day transfers and debts stay closed. All that time the account shows a “Not me” warning: the owner can cancel the request. The old password works until then.',
     rec_next: 'Show questions', rec_q_intro: 'Answer these three questions, they were chosen at sign-up.', rec_go: 'Send the request', rec_ok_h: 'Request accepted', rec_ok: 'The new password starts working {t}. Until then use the old one.',
@@ -408,7 +408,7 @@ function vSaved() {
     '<button class="btn-ghost" type="button" data-kb="copy" data-v="' + esc(st.adres) + '">' + x('copy') + '</button></div><p class="kab-note">' + x('saved_p') + '</p>' +
     (st.podarok ? '<p class="kab-gift">' + x('saved_gift') + '</p>' : '') +
     (window.PasswordCredential ? '<button class="btn-ghost kab-wide" type="button" data-kb="store">' + x('saved_store') + '</button>' : '') +
-    '<button class="btn-gold kab-wide" type="button" data-kb="open-cab" data-enter>' + x('saved_go') + '</button>';
+    (st.tok ? '<button class="btn-gold kab-wide" type="button" data-kb="to-chek" data-enter>' + x('saved_chek') + '</button>' : '<button class="btn-gold kab-wide" type="button" data-kb="open-cab" data-enter>' + x('saved_go') + '</button>');
 }
 function qFixedHtml(s) {
   var h = '<p class="kab-note">' + x('rec_q_intro') + '</p><div class="kab-qs">';
@@ -638,6 +638,7 @@ function act(a, b, e) {
     case 'to-reg': st = { step: 1, qa: newQa(), inv: st.inv }; scr = 'reg'; render(true); return;
     case 'to-rec': st = { adres: st.adres || '', qa: newQa() }; scr = 'rec'; render(true); return;
     case 'reg-back': st.step = 1; render(true); return;
+    case 'to-chek': { var tk0 = st.tok; pending = null; openIncoming(tk0); return; }
     case 'open-cab': scr = 'cab'; st = {}; render(true); refreshMe(); return;
     case 'two': scr = 'two'; render(true); return;
     case 'fill': scr = 'fill'; st = {}; render(true); return;
@@ -676,7 +677,7 @@ function act(a, b, e) {
       api('POST', '/registraciya', body).then(function (r) {
         setBusy(b, 0);
         if (!r.ok) { showErr(errText(r)); return; }
-        st = { adres: r.d.adres, podarok: r.d.podarok, pw: st.parol };
+        st = { adres: r.d.adres, podarok: r.d.podarok, pw: st.parol, tok: pending ? incTok : null }; /* пришёл по ссылке-чеку: с экрана «Кабинет создан» ведём обратно к чеку */
         refreshMe(true).then(function () { scr = 'saved'; render(true); startPoll(); });
       });
       return;
