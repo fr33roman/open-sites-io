@@ -1157,3 +1157,5 @@ html[data-skin="quantum"] .amb i:nth-child(3){left:-20vmax;bottom:-70vmax;backgr
 @media (prefers-reduced-motion:reduce){html[data-skin="quantum"] .amb i{animation:none}}
 /* фон body закрывал слой .amb (он под ним, z-index:-1) — в «Кванте» body прозрачный, цвет держит html */
 html[data-skin="quantum"] body{background:transparent}
+/* 14.11: кнопка-ссылка (окно «Начните с урока 1») — надпись по центру, как у обычной кнопки */
+a.btn-gold,a.btn-ghost{display:inline-flex;align-items:center;justify-content:center;text-decoration:none}
