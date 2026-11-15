@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 230" fill="none" aria-label="Мини-группа и разговорная практика Tamarjoba">
+  <rect width="360" height="230" rx="18" fill="#FFFFFF"/>
+  <line x1="28" y1="202" x2="332" y2="202" stroke="#000000" stroke-width="2" stroke-linecap="round"/>
+  <!-- Center Teacher in red sweater -->
+  <g stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M148 56c0-18 14-30 32-30s32 12 32 30c0 22 6 38 10 52h-84c4-14 10-30 10-52z" fill="#000000"/>
+    <path d="M144 92c10-6 22-8 36-8s26 2 36 8l8 50h-88l8-50z" fill="#fc0304"/>
+    <circle cx="180" cy="56" r="15" fill="#FFFFFF"/>
+    <circle cx="174" cy="55" r="4" fill="none" stroke-width="1.5"/>
+    <circle cx="186" cy="55" r="4" fill="none" stroke-width="1.5"/>
+    <path d="M177 63c2 2 5 2 7 0"/>
+    <path d="M150 142h60l8 60h-76l8-60z" fill="#FFFFFF"/>
+  </g>
+  <!-- Left Student with red books -->
+  <g stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="102" cy="112" r="14" fill="#FFFFFF"/>
+    <path d="M84 136c8-6 18-8 30-8s22 4 26 14l8 60H76l8-66z" fill="#FFFFFF"/>
+    <!-- Red open book -->
+    <path d="M84 156l24 8 24-8v28l-24 8-24-8v-28z" fill="#fc0304"/>
+    <line x1="108" y1="164" x2="108" y2="192" stroke="#FFFFFF" stroke-width="2"/>
+    <!-- Stack of red books -->
+    <rect x="56" y="186" width="48" height="14" rx="3" fill="#fc0304"/>
+  </g>
+  <!-- Right Student assembling Red Georgian Puzzle -->
+  <g stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="256" cy="112" r="14" fill="#FFFFFF"/>
+    <path d="M226 138c8-8 20-10 34-10 18 0 32 10 36 28l6 46h-82l6-64z" fill="#fc0304"/>
+    <!-- Red & White Puzzle Blocks -->
+    <rect x="208" y="154" width="24" height="24" rx="3" fill="#fc0304"/>
+    <rect x="232" y="154" width="24" height="24" rx="3" fill="#FFFFFF"/>
+    <rect x="208" y="178" width="24" height="24" rx="3" fill="#fc0304"/>
+    <rect x="232" y="178" width="24" height="24" rx="3" fill="#fc0304"/>
+    <text x="215" y="171" fill="#FFFFFF" font-family="'Sylfaen', serif" font-size="15" stroke="none">გ</text>
+    <text x="239" y="171" fill="#000000" font-family="'Sylfaen', serif" font-size="15" stroke="none">ა</text>
+  </g>
+</svg>
