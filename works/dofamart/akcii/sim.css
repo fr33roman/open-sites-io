@@ -1162,3 +1162,25 @@ a.btn-gold,a.btn-ghost{display:inline-flex;align-items:center;justify-content:ce
 /* 15.11: «← dofamart» — только стрелка; на компьютере у самого левого края окна */
 .back{font-size:0;gap:0;min-width:44px;justify-content:center}.back span{font-size:20px}
 @media (min-width:900px){.back{position:absolute;left:10px;top:var(--sat);height:68px;z-index:1}}
+/* 16.11: корпус банкомата растягивался на высоту уже сжатой рамки (.atm — flex), и боковая стенка доходила только до середины. Высота корпуса — по его частям. */
+.atm-body{align-self:flex-start}
+/* боковая стенка у низа почти чёрная и сливалась с тёмным фоном: тонкая светлая кромка, в «Кванте» стенка светлее */
+.atm-flank{box-shadow:inset 0 0 0 1px rgba(var(--accl),.16)}
+html[data-skin="quantum"] .atm-flank,html[data-skin="quantum"] .shelf-flank{filter:brightness(1.7)}
+/* 16.11: слоган — главный заголовок первого экрана (слово Романа: «красивым шрифтом, большими буквами, это наша главная страница»); «Деньги» — маленькая подпись над ним */
+#v-money .vhead h1{font:600 12px/1 var(--mono);letter-spacing:.24em;text-transform:uppercase;color:var(--gold);text-shadow:none;margin:0}
+#v-money .slogan{margin:14px 0 0;font:600 clamp(26px,2.55vw,48px)/1.08 var(--serif);letter-spacing:.01em;text-transform:uppercase;color:var(--txt);max-width:100%;padding-right:.1em}
+#v-money .slogan::before{display:none}
+html[data-skin="quantum"] #v-money .slogan{font-family:var(--sans);font-weight:700;letter-spacing:.02em;background:linear-gradient(100deg,#EAF6FF 0%,var(--gold) 55%,#8C7BFF 100%);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 0 22px rgba(var(--acc),.35))}
+html[data-skin="quantum"] #v-money .vhead h1{font-family:var(--mono)}
+@media (max-width:899px){#v-money .slogan{font-size:clamp(22px,6.6vw,34px)}}
+/* 16.11 (2): слова «Деньги» на первом экране нет (остаётся только для чтения с экрана); слоган выше; на телефоне слоган над банкоматом, по центру */
+#v-money .vhead h1{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+#v-money .slogan{margin-top:0}
+@media (min-width:900px){#v-money .money-txt{align-self:start;padding-top:clamp(28px,7vh,84px)}#v-money .vhead{margin-bottom:34px}}
+@media (max-width:899px){
+  #v-money .money-txt{display:contents}
+  #v-money .vhead{order:-2;margin:6px 0 4px;text-align:center}
+  #v-money .atm{order:-1}
+  #v-money .slogan{font-size:clamp(20px,6vw,30px);line-height:1.12;text-wrap:balance;padding:0 6px}
+}

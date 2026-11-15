@@ -854,7 +854,7 @@ async function histDaily(sym) {
       for (let k = 0; k < BN.length && !kl; k++) {
         try { bnHost = (bnHost + k) % BN.length; kl = await candles(sym, '1d', 92); } catch (e) { kl = null; }
       }
-      if (kl && kl.length > 5) out = { real: true, pts: kl.map(k => [k.t, k.c]) };
+      if (kl && kl.length > 5 && now - kl[kl.length - 1].t < 4 * 864e5) out = { real: true, pts: kl.map(k => [k.t, k.c]) };   // старая история (пара снята с торгов) — не берём
     } else if (I.fx) {
       if (!fxSeries || now - fxSeries.at > 36e5) {
         const from = new Date(now - 95 * 864e5).toISOString().slice(0, 10);
@@ -1820,7 +1820,9 @@ async function histFor(sym, pk) {
     if (c && now - c.at < (P.ms <= 864e5 ? 3e4 : 3e5)) return c.out;
     const a = await klinesTry(sym, P.iv, P.n);
     const pts = Array.isArray(a) ? a.filter(Array.isArray).map(k => [E.num(k[0]), E.num(k[4])]).filter(k => k[0] > 0 && k[1] > 0) : [];
-    const out = pts.length > 5 ? { at: now, real: true, kind: 'real', intra: true, pts: pts } : (c ? c.out : modelIntra(sym, P));
+    // 16.11: биржа может отдать старую историю (пара TONUSDT кончается 30.06) — такие свечи не годятся, берём модель
+    const fresh = pts.length > 5 && now - pts[pts.length - 1][0] < Math.max(P.ms * 0.25, 6 * 36e5);
+    const out = fresh ? { at: now, real: true, kind: 'real', intra: true, pts: pts } : (c && c.out.real ? c.out : modelIntra(sym, P));
     kcache[key] = { at: now, out: out }; return out;
   }
   if (!I.bn && P.ms < 3 * 864e5) {                // no intraday source for stocks, currencies, commodities, indices
