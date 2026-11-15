@@ -2615,7 +2615,7 @@ function fillQuests(force) {
     '<div class="xp-r"><span>' + t('net_best') + '</span><span class="num">' + money(mx, 0) + '</span></div><p class="xp-note">' + t('net_note') + '</p></div>' +
     '<h2 class="h2">' + t('xp_h') + '</h2><div class="panel xps"><div class="xp-r"><span>' + t('xp_quests') + '</span><span class="num">' + t('xp_now') + '</span></div>' +
     '<div class="xp-r"><span>' + t('xp_profit') + '</span><span class="num">' + t('xp_main') + '</span></div>' +
-    FUTURE.map(k => '<div class="xp-r soon"><span>' + t(k) + '</span><span>' + t('xp_soon') + '</span></div>').join('') + '<p class="xp-note">' + t('fut_note') + '</p></div>';
+    FUTURE.map(k => '<div class="xp-r fut"><span>' + t(k) + '</span><span>' + t('xp_soon') + '</span></div>').join('') + '<p class="xp-note">' + t('fut_note') + '</p></div>';
 }
 // ---------- Learning view ----------
 const lesText = i => LESSONS[i][S.lang === 'en' ? 'en' : 'ru'];
