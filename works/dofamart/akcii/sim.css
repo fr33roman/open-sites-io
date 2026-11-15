@@ -1184,3 +1184,7 @@ html[data-skin="quantum"] #v-money .vhead h1{font-family:var(--mono)}
   #v-money .atm{order:-1}
   #v-money .slogan{font-size:clamp(20px,6vw,30px);line-height:1.12;text-wrap:balance;padding:0 6px}
 }
+/* 16.11: выбор срока у «Что стало бы с $1 000» — в рамке, 9 кнопок */
+.per1000{display:grid;grid-template-columns:repeat(9,1fr);gap:4px;margin:0 0 12px;padding:5px;border-radius:14px;border:1px solid rgba(var(--acc),.32);background:linear-gradient(180deg,rgba(var(--acc),.07),rgba(var(--acc),.015));box-shadow:inset 0 0 22px -14px rgba(var(--acc),.8)}
+.per1000 .chip{min-height:40px;min-width:0;padding:0 4px;font-size:12.5px;justify-content:center}
+@media (max-width:600px){.per1000{grid-template-columns:repeat(5,1fr)}}

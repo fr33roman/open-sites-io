@@ -841,8 +841,8 @@ const dayCache = {};                           // sym -> { at, pts: [[ms, value]
 let fxSeries = null;
 function modelDaily(sym) {
   const I = INS[sym], p = M.px[sym], sig = I.vol * Math.sqrt(86400) * 0.3, now = Date.now();
-  const b = E.bridge(91, p * Math.exp(sig * Math.sqrt(90) * 0.5 * E.gauss()), p, sig);
-  return { at: now, real: false, pts: b.map((v, i) => [now - (90 - i) * 864e5, v]) };
+  const b = E.bridge(561, p * Math.exp(sig * Math.sqrt(560) * 0.5 * E.gauss()), p, sig);
+  return { at: now, real: false, pts: b.map((v, i) => [now - (560 - i) * 864e5, v]) };
 }
 async function histDaily(sym) {
   const c = dayCache[sym], now = Date.now(), I = INS[sym];
@@ -852,7 +852,7 @@ async function histDaily(sym) {
     if (I.bn) {
       let kl = null;
       for (let k = 0; k < BN.length && !kl; k++) {
-        try { bnHost = (bnHost + k) % BN.length; kl = await candles(sym, '1d', 92); } catch (e) { kl = null; }
+        try { bnHost = (bnHost + k) % BN.length; kl = await candles(sym, '1d', 560); } catch (e) { kl = null; }
       }
       if (kl && kl.length > 5 && now - kl[kl.length - 1].t < 4 * 864e5) out = { real: true, pts: kl.map(k => [k.t, k.c]) };   // старая история (пара снята с торгов) — не берём
     } else if (I.fx) {
@@ -1394,7 +1394,7 @@ Object.assign(T.ru, {
   cmp_sub: 'Выберите от двух до четырёх активов из любых разделов. Все линии начинаются со 100% — видно, кто вырос, а кто упал за период.',
   cmp_sel: 'Выбрано', cmp_add: 'Добавить из раздела', cmp_none: 'Ничего не выбрано', cmp_need: 'Выберите хотя бы два актива',
   cmp_max: 'Не больше четырёх активов', cmp_load: 'Загружаю историю…',
-  per_1h: '1 час', per_1d: '1 день', per_3d: '3 дня', per_7d: '7 дней', per_30d: 'Месяц', per_90d: '3 месяца',
+  per_1h: '1 час', per_1d: '1 день', per_3d: '3 дня', per_7d: '7 дней', per_30d: 'Месяц', per_90d: '3 месяца', p1_1d: '1 д', p1_3d: '3 д', p1_7d: '7 д', p1_14d: '14 д', p1_30d: '30 д', p1_90d: '3 мес', p1_180d: '6 мес', p1_365d: '12 мес', p1_540d: '18 мес', per_14d: '14 дней', per_180d: '6 месяцев', per_365d: '12 месяцев', per_540d: '18 месяцев',
   cmp_real: 'Реальная история', cmp_model: 'Модель: настоящей истории нет', cmp_daily: 'Реальные данные только по дням', cmp_nointra: 'Модель: внутри дня данных нет',
   cmp_search: 'Найти: BTC, Apple, евро', cmp_nofound: 'Ничего не найдено', cmp_pick: 'Что сравнить',
   cmp_best: 'Лучший', cmp_worst: 'Худший', cmp_1000: 'Что стало бы с $1 000', cmp_res: 'За период',
@@ -1410,7 +1410,7 @@ Object.assign(T.en, {
   cmp_sub: 'Pick two to four assets from any section. Every line starts at 100%, so you can see what rose and what fell over the period.',
   cmp_sel: 'Selected', cmp_add: 'Add from section', cmp_none: 'Nothing selected', cmp_need: 'Pick at least two assets',
   cmp_max: 'Four assets at most', cmp_load: 'Loading history…',
-  per_1h: '1 hour', per_1d: '1 day', per_3d: '3 days', per_7d: '7 days', per_30d: 'Month', per_90d: '3 months',
+  per_1h: '1 hour', per_1d: '1 day', per_3d: '3 days', per_7d: '7 days', per_30d: 'Month', per_90d: '3 months', p1_1d: '1 d', p1_3d: '3 d', p1_7d: '7 d', p1_14d: '14 d', p1_30d: '30 d', p1_90d: '3 mo', p1_180d: '6 mo', p1_365d: '12 mo', p1_540d: '18 mo', per_14d: '14 days', per_180d: '6 months', per_365d: '12 months', per_540d: '18 months',
   cmp_real: 'Real history', cmp_model: 'Model: no real history', cmp_daily: 'Real data, daily only', cmp_nointra: 'Model: no intraday data',
   cmp_search: 'Search: BTC, Apple, euro', cmp_nofound: 'Nothing found', cmp_pick: 'What to compare',
   cmp_best: 'Best', cmp_worst: 'Worst', cmp_1000: 'What $1,000 would have become', cmp_res: 'Over the period',
@@ -1797,9 +1797,11 @@ let cmpData = {}, cmpTok = 0, cmpBusy = false;
    (everything except crypto and gold) the line is either the real daily history, or an honest model with a label. */
 const PERS = {
   '1h': { ms: 36e5, iv: '1m', n: 61 }, '1d': { ms: 864e5, iv: '5m', n: 289 }, '3d': { ms: 3 * 864e5, iv: '15m', n: 289 },
-  '7d': { ms: 7 * 864e5, iv: '1h', n: 169 }, '30d': { ms: 30 * 864e5, iv: '4h', n: 181 }, '90d': { ms: 90 * 864e5, iv: '1d', n: 92 }
+  '7d': { ms: 7 * 864e5, iv: '1h', n: 169 }, '14d': { ms: 14 * 864e5, iv: '2h', n: 169 }, '30d': { ms: 30 * 864e5, iv: '4h', n: 181 }, '90d': { ms: 90 * 864e5, iv: '1d', n: 92 },
+  '180d': { ms: 180 * 864e5, iv: '1d', n: 181 }, '365d': { ms: 365 * 864e5, iv: '1d', n: 366 }, '540d': { ms: 540 * 864e5, iv: '1d', n: 541 }
 };
-const PER_KEYS = Object.keys(PERS);
+const PER_KEYS = ['1h', '1d', '3d', '7d', '30d', '90d'];                       // ряд над графиком
+const PER_1000 = ['1d', '3d', '7d', '14d', '30d', '90d', '180d', '365d', '540d'];   // 16.11: ряд у «Что стало бы с $1 000»
 const perKey = v => (PERS[v] ? v : v === 7 ? '7d' : v === 90 ? '90d' : '30d');
 const kcache = {};                                // sym|period -> { at, out }
 async function klinesTry(sym, iv, n) {
@@ -1829,7 +1831,8 @@ async function histFor(sym, pk) {
     if (c && now - c.at < 3e5) return c.out;
     const out = modelIntra(sym, P); kcache[key] = { at: now, out: out }; return out;
   }
-  const d = await histDaily(sym);
+  const d0 = await histDaily(sym);
+  const d = d0.real && d0.pts.length && d0.pts[0][0] > now - P.ms * 0.9 ? Object.assign(modelDaily(sym), { real: false }) : d0;   // настоящей истории на такой срок нет
   return Object.assign({}, d, { kind: d.real ? (I.bn || P.ms >= 30 * 864e5 ? 'real' : 'daily') : 'model' });
 }
 function cmpSeries() {
@@ -1887,7 +1890,7 @@ function fillCmp() {
   if (ser.length < 2) { tb.innerHTML = ''; return; }
   const so = ser.slice().sort((a, b) => b.res - a.res), best = so[0], worst = so[so.length - 1];
   const r = (k, s) => '<div class="hrow"><div><b>' + t(k) + '</b><small>' + esc(s.name) + ' · ' + esc(L(INS[s.sym])) + (s.real ? '' : ' · ' + t('st_model')) + '</small></div><span class="num ' + (s.res > 0 ? 'up' : s.res < 0 ? 'down' : '') + '">' + pct(s.res) + '</span></div>';
-  tb.innerHTML = '<div class="hist">' + r('cmp_best', best) + r('cmp_worst', worst) + '</div><h2 class="h2">' + t('cmp_1000') + '</h2><div class="hist">' +
+  tb.innerHTML = '<div class="hist">' + r('cmp_best', best) + r('cmp_worst', worst) + '</div><h2 class="h2">' + t('cmp_1000') + '</h2><div class="chips per per1000" role="group">' + PER_1000.map(p => '<button class="chip' + (p === perKey(S.cmp.per) ? ' on' : '') + '" type="button" data-per="' + p + '">' + t('p1_' + p) + '</button>').join('') + '</div><div class="hist">' +
     so.map(s => '<div class="hrow"><div><b>' + esc(s.name) + '</b><small>$1' + NB + '000 →' + (s.real ? '' : ' · ' + t('st_model')) + '</small></div><span class="num ' + (s.res > 0 ? 'up' : s.res < 0 ? 'down' : '') + '">' + money(1000 * (1 + s.res)) + '</span></div>').join('') + '</div>';
 }
 async function cmpLoad() {
@@ -1943,7 +1946,7 @@ function renderCompare() {
         '<div class="cs-list" id="cmpList"></div></div>' +
     '</div>' +
     '<div id="cmpTable" class="cmp-table"></div>' +
-    '<p class="chart-note">' + t('cmp_note') + '</p>';
+    '';   // 16.11: сноски про источники убраны по слову Романа (как подвал)
   chartKill('cmp'); if (!LWC()) bindHover(cvIn($('cvCmp')), drawCmp);
   fillCmpPick(false); drawCmp(); fillCmp();
 }
