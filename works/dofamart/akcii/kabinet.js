@@ -64,7 +64,7 @@ var TX = {
     f_adres: 'Номер кабинета', f_adres_ph: 'id1001', f_parol: 'Пароль', f_parol2: 'Пароль ещё раз', f_new_parol: 'Новый пароль', show: 'Показать', hide: 'Скрыть',
     login_go: 'Войти', to_reg: 'Создать кабинет', to_login: 'У меня уже есть кабинет', forgot: 'Забыли пароль?', tg_go: 'Войти через Telegram', g_go: 'Войти через Google', g_soon: 'скоро',
     tg_off: 'Вход через Telegram сейчас выключен на сервере.',
-    reg_h: 'Новый кабинет', reg_p1: 'Шаг 1 из 2 · пароль', reg_p2: 'Шаг 2 из 2 · три контрольных вопроса',
+    reg_h: 'Новый кабинет', reg_p1: 'Шаг 1 из 2 · пароль. Номер кабинета (id) выдадим сами после регистрации', reg_p2: 'Шаг 2 из 2 · три контрольных вопроса',
     reg_pw_hint: 'От 10 знаков. Лучше — длинная фраза, которую легко запомнить. Браузер предложит сохранить пароль — согласитесь.',
     reg_warn_h: 'Сохраните пароль', reg_warn: 'Мы не знаем ни почты, ни телефона. Забыли пароль и ответы на вопросы, а Telegram не подключён — кабинет не вернуть.',
     reg_next: 'Дальше', reg_go: 'Создать кабинет', reg_gift: 'Вам подарок 100 000 $ за регистрацию по ссылке друга. Торговать им можно сразу, переводить — после трёх заданий.',
@@ -146,7 +146,7 @@ var TX = {
     f_adres: 'Account number', f_adres_ph: 'id1001', f_parol: 'Password', f_parol2: 'Password again', f_new_parol: 'New password', show: 'Show', hide: 'Hide',
     login_go: 'Sign in', to_reg: 'Create an account', to_login: 'I already have an account', forgot: 'Forgot the password?', tg_go: 'Sign in with Telegram', g_go: 'Sign in with Google', g_soon: 'soon',
     tg_off: 'Telegram sign-in is switched off on the server.',
-    reg_h: 'New account', reg_p1: 'Step 1 of 2 · password', reg_p2: 'Step 2 of 2 · three security questions',
+    reg_h: 'New account', reg_p1: 'Step 1 of 2 · password. Your account number (id) is given automatically after sign-up', reg_p2: 'Step 2 of 2 · three security questions',
     reg_pw_hint: '10+ characters. A long phrase you can remember is best. Your browser will offer to save it: accept.',
     reg_warn_h: 'Save the password', reg_warn: 'We know no email and no phone. If you lose the password and the answers, and Telegram is not linked, the account cannot be restored.',
     reg_next: 'Next', reg_go: 'Create account', reg_gift: 'A gift of $100,000 for signing up by a friend’s link. You can trade with it at once; sending opens after three quests.',
@@ -310,8 +310,10 @@ function ensureOv() {
   if (ov) return;
   ov = el('<div class="modal kab-ov" hidden><div class="modal-card kab-card" role="dialog" aria-modal="true" tabindex="-1"></div></div>');
   card = ov.firstElementChild; document.body.appendChild(ov);
+  var downOv = false;   // 16.11: выделили пароль мышью и отпустили за окном — это не «закрыть»
+  ov.addEventListener('pointerdown', function (e) { downOv = e.target === ov; });
   ov.addEventListener('click', function (e) {
-    if (e.target === ov && !st.lock) { closeOv(); return; }
+    if (e.target === ov && downOv && !st.lock) { closeOv(); return; }
     var b = e.target.closest ? e.target.closest('[data-kb]') : null;
     if (b && !b.disabled) act(b.getAttribute('data-kb'), b, e);
   });
