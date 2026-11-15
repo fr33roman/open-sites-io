@@ -52,7 +52,7 @@ var TX = {
     copy: 'Копировать', copied: 'Скопировано', cp_fail: 'Не удалось скопировать',
     more_cab: 'Личный кабинет', more_cab_s: 'Адрес, долги, уведомления',
     err_set: 'Нет связи со службой кабинета. Попробуйте позже.', err_sboy: 'Сбой, попробуйте позже.', err_zapros: 'Страница не принята службой.', err_vhod: 'Неверный номер или пароль.',
-    err_mnogo: 'Слишком много попыток, подождите.', err_parol_dlina: 'Пароль — от 10 знаков.', err_parol_chastyy: 'Этот пароль слишком частый, возьмите другой.',
+    err_mnogo: 'Слишком много попыток, подождите.', err_parol_dlina: 'Пароль — от 6 знаков.', err_parol_chastyy: 'Этот пароль слишком частый, возьмите другой.',
     err_voprosy: 'Выберите три разных вопроса, один из них — с числом.', err_ne_sovpalo: 'Ответы не подошли.', err_vosst_pauza: 'Следующая попытка — {do}.',
     err_telegram: 'Вход через Telegram сейчас недоступен.', err_summa: 'Проверьте сумму.', err_procent: 'Процент — от 0 до 30.', err_podpis: 'Проверьте подпись.',
     err_ne_hvataet: 'Не хватает свободных денег кабинета.', err_limit: 'На вашем уровне можно внести ещё {mozhno}.', err_potolok: 'Достигнут потолок 13 млн $.',
@@ -61,14 +61,14 @@ var TX = {
     err_nuzhen_vhod: 'Войдите в кабинет.', err_skoro: 'Скоро.', err_obshchee: 'Не получилось. Попробуйте ещё раз.',
     /* вход */
     login_h: 'Вход в кабинет', login_p: 'Номер кабинета и пароль. Кабинет нужен, чтобы отправлять деньги друзьям и брать в долг; торговля остаётся на этой странице.',
-    f_adres: 'Номер кабинета', f_adres_ph: 'id1001', f_parol: 'Пароль', f_parol2: 'Пароль ещё раз', f_new_parol: 'Новый пароль', show: 'Показать', hide: 'Скрыть',
+    f_adres: 'Номер кабинета', f_adres_ph: 'id01', f_parol: 'Пароль', f_parol2: 'Пароль ещё раз', f_new_parol: 'Новый пароль', show: 'Показать', hide: 'Скрыть',
     login_go: 'Войти', to_reg: 'Создать кабинет', to_login: 'У меня уже есть кабинет', forgot: 'Забыли пароль?', tg_go: 'Войти через Telegram', g_go: 'Войти через Google', g_soon: 'скоро',
     tg_off: 'Вход через Telegram сейчас выключен на сервере.',
-    reg_h: 'Новый кабинет', reg_p1: 'Шаг 1 из 2 · пароль. Номер кабинета (id) выдадим сами после регистрации', reg_p2: 'Шаг 2 из 2 · три контрольных вопроса',
-    reg_pw_hint: 'От 10 знаков. Лучше — длинная фраза, которую легко запомнить. Браузер предложит сохранить пароль — согласитесь.',
+    reg_h: 'Новый кабинет', reg_p1: 'Шаг 1 из 2 · пароль. Номер (id) выдадим сами', reg_p2: 'Шаг 2 из 2 · три контрольных вопроса',
+    reg_pw_hint: 'От 6 знаков: буквы и цифры.',
     reg_warn_h: 'Сохраните пароль', reg_warn: 'Мы не знаем ни почты, ни телефона. Забыли пароль и ответы на вопросы, а Telegram не подключён — кабинет не вернуть.',
     reg_next: 'Дальше', reg_go: 'Создать кабинет', reg_gift: 'Вам подарок 100 000 $ за регистрацию по ссылке друга. Торговать им можно сразу, переводить — после трёх заданий.',
-    pw_mismatch: 'Пароли не совпадают.', pw_short: 'Пароль — от 10 знаков.',
+    pw_mismatch: 'Пароли не совпадают.', pw_short: 'Пароль — от 6 знаков.',
     q_intro: 'Выберите три разных вопроса и ответьте на них кнопками. Один вопрос — обязательно с числом (дом или день рождения мамы). Ответы нужны, если забудете пароль; запомните, какие вопросы выбрали.',
     q_pick: 'Вопросы', q_chosen: 'Выбрано {n} из 3', q_answer: 'Ваш ответ', q_need: 'Ответьте на все три вопроса.', q_num_need: 'Нужен хотя бы один вопрос с числом.',
     q_dom_ph: '0–999', q_month: 'Месяц', q_day: 'День', q_set: 'ответ задан',
@@ -135,7 +135,7 @@ var TX = {
     copy: 'Copy', copied: 'Copied', cp_fail: 'Could not copy',
     more_cab: 'Personal account', more_cab_s: 'Address, debts, notifications',
     err_set: 'No connection to the account service. Try again later.', err_sboy: 'Something broke, try again later.', err_zapros: 'The service rejected this page.', err_vhod: 'Wrong number or password.',
-    err_mnogo: 'Too many attempts, please wait.', err_parol_dlina: 'Password: 10 characters or more.', err_parol_chastyy: 'This password is too common, pick another.',
+    err_mnogo: 'Too many attempts, please wait.', err_parol_dlina: 'Password: 6 characters or more.', err_parol_chastyy: 'This password is too common, pick another.',
     err_voprosy: 'Pick three different questions, at least one with a number.', err_ne_sovpalo: 'The answers did not match.', err_vosst_pauza: 'Next attempt: {do}.',
     err_telegram: 'Telegram sign-in is unavailable right now.', err_summa: 'Check the amount.', err_procent: 'Interest: 0 to 30.', err_podpis: 'Check the note.',
     err_ne_hvataet: 'Not enough free money in the account.', err_limit: 'At your level you can add {mozhno} more.', err_potolok: 'The $13M cap is reached.',
@@ -143,14 +143,14 @@ var TX = {
     err_net: 'Not found.', err_sebe: 'Not to yourself.', err_chek_used: 'This cheque is already used or void.', err_mnogo_chekov: '20 open cheques: wait or cancel some.',
     err_nuzhen_vhod: 'Please sign in.', err_skoro: 'Coming soon.', err_obshchee: 'Did not work. Try again.',
     login_h: 'Sign in', login_p: 'Account number and password. The account is for sending money to friends and borrowing; trading stays on this page.',
-    f_adres: 'Account number', f_adres_ph: 'id1001', f_parol: 'Password', f_parol2: 'Password again', f_new_parol: 'New password', show: 'Show', hide: 'Hide',
+    f_adres: 'Account number', f_adres_ph: 'id01', f_parol: 'Password', f_parol2: 'Password again', f_new_parol: 'New password', show: 'Show', hide: 'Hide',
     login_go: 'Sign in', to_reg: 'Create an account', to_login: 'I already have an account', forgot: 'Forgot the password?', tg_go: 'Sign in with Telegram', g_go: 'Sign in with Google', g_soon: 'soon',
     tg_off: 'Telegram sign-in is switched off on the server.',
     reg_h: 'New account', reg_p1: 'Step 1 of 2 · password. Your account number (id) is given automatically after sign-up', reg_p2: 'Step 2 of 2 · three security questions',
-    reg_pw_hint: '10+ characters. A long phrase you can remember is best. Your browser will offer to save it: accept.',
+    reg_pw_hint: '6+ characters: letters and digits.',
     reg_warn_h: 'Save the password', reg_warn: 'We know no email and no phone. If you lose the password and the answers, and Telegram is not linked, the account cannot be restored.',
     reg_next: 'Next', reg_go: 'Create account', reg_gift: 'A gift of $100,000 for signing up by a friend’s link. You can trade with it at once; sending opens after three quests.',
-    pw_mismatch: 'Passwords do not match.', pw_short: 'Password: 10 characters or more.',
+    pw_mismatch: 'Passwords do not match.', pw_short: 'Password: 6 characters or more.',
     q_intro: 'Pick three different questions and answer with buttons. One must be a number question (house or mother’s birthday). The answers are needed if you forget the password; remember which questions you chose.',
     q_pick: 'Questions', q_chosen: 'Chosen {n} of 3', q_answer: 'Your answer', q_need: 'Answer all three questions.', q_num_need: 'At least one question with a number is required.',
     q_dom_ph: '0–999', q_month: 'Month', q_day: 'Day', q_set: 'answered',
@@ -346,7 +346,7 @@ var errHtml = '<p class="kab-err" role="alert" hidden></p>';
 
 /* ---------- login / registration / recovery ---------- */
 function pwField(id, label, ac, extra) {
-  return '<label class="kab-f"><span>' + label + '</span><span class="kab-pw"><input id="' + id + '" type="password" autocomplete="' + ac + '" minlength="10" maxlength="128" ' + (extra || '') + ' value="' + esc(st[id] || '') + '"><button type="button" class="kab-eye" data-kb="eye" data-for="' + id + '">' + x('show') + '</button></span></label>';
+  return '<label class="kab-f"><span>' + label + '</span><span class="kab-pw"><input id="' + id + '" type="password" autocomplete="' + ac + '" minlength="6" maxlength="128" ' + (extra || '') + ' value="' + esc(st[id] || '') + '"><button type="button" class="kab-eye" data-kb="eye" data-for="' + id + '">' + x('show') + '</button></span></label>';
 }
 function tgAvail() { try { return !!(window.Telegram && Telegram.WebApp && Telegram.WebApp.initData); } catch (e) { return false; } }
 function vLogin() {
@@ -659,7 +659,7 @@ function act(a, b, e) {
     }
     case 'reg-next': {
       var p1 = q('parol').value, p2 = q('parol2').value; st.parol = p1; st.parol2 = p2;
-      if (p1.length < 10) { showErr(x('pw_short')); return; }
+      if (p1.length < 6) { showErr(x('pw_short')); return; }
       if (p1 !== p2) { showErr(x('pw_mismatch')); return; }
       st.step = 2; render(true); return;
     }
@@ -700,7 +700,7 @@ function act(a, b, e) {
     }
     case 'rec-go': {
       var ad2 = (q('adres').value || '').trim().toLowerCase(), np = q('parol').value; st.adres = ad2;
-      var pr = qaPayload(st.qa); if (!ad2) { showErr(x('err_vhod')); return; } if (pr.err) { showErr(pr.err); return; } if (np.length < 10) { showErr(x('pw_short')); return; }
+      var pr = qaPayload(st.qa); if (!ad2) { showErr(x('err_vhod')); return; } if (pr.err) { showErr(pr.err); return; } if (np.length < 6) { showErr(x('pw_short')); return; }
       setBusy(b, 1);
       api('POST', '/vosstanovlenie', { adres: ad2, otvety: pr.otvety, novyy_parol: np }).then(function (r) { setBusy(b, 0); if (r.ok) { st = { at: r.d.aktiven_s }; scr = 'recok'; render(true); } else showErr(errText(r)); });
       return;
