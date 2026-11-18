@@ -5,76 +5,229 @@
 'use strict';
 
 /* ============ 1. ДАННЫЕ И РАСЧЁТ ============ */
-const HOUR = 3600e3, CAP_H = 8, CAP_BANK_H = 12, HALL_BONUS = 1.05, MAXL = 5, LES_FROM = 4;
+// 19.11 «большая карта»: поле MW×MD клеток, здания ставит игрок; у каждого типа площадь w×d, правило места и предел числа.
+const HOUR = 3600e3, CAP_H = 8, CAP_BANK_H = 12, HALL_BONUS = 1.05, MAXL = 5, LES_FROM = 4, NB_CAP = 0.5, NB_STEP = 0.2;
 const UPK = [1, 0.8, 1.4, 2.2, 3.2];   // цена ступени k = цена здания × UPK[k-1]
-// lvl — уровень игрока (1…10), с которого здание открыто; inc — доход в час по ступеням 1…5;
-// les — урок (0…10), который надо пройти для ступеней 4 и 5; perk — особенность (hall: +5 % ко всему доходу, bank: копилка 12 ч).
+const MW = 36, MD = 30, HILL_H = 0.4;
+// lvl — уровень игрока (1…10), с которого здание открыто; inc — доход в час по ступеням 1…5; les — урок (0…10) для ступеней 4 и 5;
+// w×d — площадь в клетках; rule — место: road (касается дороги), water (у воды), hill (на холме), plaza (на площади), free (где угодно, без дороги);
+// lim — предел числа штук (растёт с уровнем игрока: 1 + уровень − lvl); nb — прибавка соседям: p (доля на ступени 1, +20 % за ступень) в радиусе r клеток (r=0 — всему району);
+// perk: hall — +5 % ко всему доходу, bank — копилка 12 ч. Первые 10 строк — прежние здания в прежнем порядке (по ним уровни в sim.js).
 const B = [
-  { id: 'kiosk', lvl: 1, price: 500, inc: [5, 8, 14, 24, 40], les: 0, ru: 'Киоск данных', en: 'Data Kiosk' },
-  { id: 'exch', lvl: 2, price: 2000, inc: [18, 30, 50, 84, 140], les: 1, ru: 'Обменный пункт', en: 'Exchange Office' },
-  { id: 'dc', lvl: 3, price: 6000, inc: [50, 83, 140, 230, 380], les: 2, ru: 'Дата-центр', en: 'Data Center' },
-  { id: 'hall', lvl: 4, price: 15000, inc: [110, 180, 310, 510, 850], les: 3, perk: 'hall', ru: 'Биржевой зал', en: 'Trading Floor' },
-  { id: 'bank', lvl: 5, price: 40000, inc: [280, 460, 770, 1300, 2100], les: 8, perk: 'bank', ru: 'Банк', en: 'Bank' },
-  { id: 'lab', lvl: 6, price: 90000, inc: [600, 990, 1600, 2700, 4500], les: 6, ru: 'Аналитический центр', en: 'Analytics Center' },
-  { id: 'fund', lvl: 7, price: 200000, inc: [1300, 2200, 3600, 5900, 9800], les: 5, ru: 'Фонд', en: 'Fund' },
-  { id: 'tower', lvl: 8, price: 500000, inc: [3200, 5300, 8800, 15000, 24000], les: 4, ru: 'Башня «Магнат»', en: '“Magnate” Tower' },
-  { id: 'inst', lvl: 9, price: 1500000, inc: [9000, 15000, 25000, 41000, 68000], les: 9, ru: 'Институт «Мудрец»', en: '“Sage” Institute' },
-  { id: 'obs', lvl: 10, price: 5000000, inc: [28000, 46000, 77000, 130000, 210000], les: 10, ru: 'Обсерватория «Оракул»', en: '“Oracle” Observatory' }
+  { id: 'kiosk', cat: 'inc', lvl: 1, price: 500, inc: [5, 8, 14, 24, 40], les: 0, w: 1, d: 1, rule: 'road', lim: 4, ru: 'Киоск данных', en: 'Data Kiosk' },
+  { id: 'exch', cat: 'inc', lvl: 2, price: 2000, inc: [18, 30, 50, 84, 140], les: 1, w: 2, d: 2, rule: 'road', lim: 3, ru: 'Обменный пункт', en: 'Exchange Office' },
+  { id: 'dc', cat: 'inc', lvl: 3, price: 6000, inc: [50, 83, 140, 230, 380], les: 2, w: 2, d: 2, rule: 'road', lim: 2, ru: 'Дата-центр', en: 'Data Center' },
+  { id: 'hall', cat: 'inc', lvl: 4, price: 15000, inc: [110, 180, 310, 510, 850], les: 3, w: 3, d: 3, rule: 'plaza', lim: 1, perk: 'hall', ru: 'Биржевой зал', en: 'Trading Floor' },
+  { id: 'bank', cat: 'inc', lvl: 5, price: 40000, inc: [280, 460, 770, 1300, 2100], les: 8, w: 3, d: 2, rule: 'road', lim: 1, perk: 'bank', ru: 'Банк', en: 'Bank' },
+  { id: 'lab', cat: 'inc', lvl: 6, price: 90000, inc: [600, 990, 1600, 2700, 4500], les: 6, w: 2, d: 2, rule: 'road', lim: 1, ru: 'Аналитический центр', en: 'Analytics Center' },
+  { id: 'fund', cat: 'inc', lvl: 7, price: 200000, inc: [1300, 2200, 3600, 5900, 9800], les: 5, w: 3, d: 2, rule: 'road', lim: 1, ru: 'Фонд', en: 'Fund' },
+  { id: 'tower', cat: 'inc', lvl: 8, price: 500000, inc: [3200, 5300, 8800, 15000, 24000], les: 4, w: 2, d: 2, rule: 'road', lim: 1, ru: 'Башня «Магнат»', en: '“Magnate” Tower' },
+  { id: 'inst', cat: 'inc', lvl: 9, price: 1500000, inc: [9000, 15000, 25000, 41000, 68000], les: 9, w: 3, d: 3, rule: 'road', lim: 1, ru: 'Институт «Мудрец»', en: '“Sage” Institute' },
+  { id: 'obs', cat: 'inc', lvl: 10, price: 5000000, inc: [28000, 46000, 77000, 130000, 210000], les: 10, w: 3, d: 3, rule: 'hill', lim: 1, ru: 'Обсерватория «Оракул»', en: '“Oracle” Observatory' },
+  // 19.11: ещё 12 типов — доходные (между прежними по цене)
+  { id: 'vend', cat: 'inc', lvl: 2, price: 1200, inc: [10, 16, 27, 45, 75], les: 1, w: 2, d: 1, rule: 'road', lim: 3, ru: 'Робо-автомат', en: 'Robo Vendor' },
+  { id: 'atm', cat: 'inc', lvl: 3, price: 3800, inc: [31, 52, 87, 145, 240], les: 2, w: 2, d: 2, rule: 'road', lim: 3, ru: 'Сеть банкоматов', en: 'ATM Network' },
+  { id: 'pay', cat: 'inc', lvl: 4, price: 9000, inc: [75, 125, 210, 350, 580], les: 3, w: 2, d: 2, rule: 'road', lim: 2, ru: 'Платёжный шлюз', en: 'Payment Gate' },
+  { id: 'broker', cat: 'inc', lvl: 6, price: 62000, inc: [430, 710, 1190, 1980, 3300], les: 7, w: 3, d: 2, rule: 'road', lim: 2, ru: 'Брокерский дом', en: 'Brokerage House' },
+  { id: 'vc', cat: 'inc', lvl: 8, price: 330000, inc: [2300, 3800, 6300, 10400, 17000], les: 7, w: 2, d: 2, rule: 'road', lim: 1, ru: 'Венчурный хаб', en: 'Venture Hub' },
+  // жильё и сервис: сами почти не платят, но дают прибавку соседям
+  { id: 'home', cat: 'home', lvl: 2, price: 1500, inc: [2, 3, 5, 8, 12], les: 1, w: 2, d: 2, rule: 'road', lim: 6, nb: { r: 3, p: 0.06 }, ru: 'Жилой модуль', en: 'Living Module' },
+  { id: 'cowork', cat: 'home', lvl: 3, price: 4500, inc: [6, 10, 17, 28, 47], les: 2, w: 2, d: 2, rule: 'road', lim: 4, nb: { r: 3, p: 0.08 }, ru: 'Коворкинг «Улей»', en: '“Hive” Coworking' },
+  { id: 'mall', cat: 'home', lvl: 5, price: 30000, inc: [30, 50, 83, 140, 230], les: 8, w: 3, d: 2, rule: 'road', lim: 2, nb: { r: 4, p: 0.10 }, ru: 'Торговый пассаж', en: 'Shopping Arcade' },
+  // парки и украшения: дешёвые, 1×1 или 2×2, дорога не нужна
+  { id: 'park', cat: 'park', lvl: 1, price: 300, inc: [0, 0, 0, 0, 0], les: 0, w: 1, d: 1, rule: 'free', lim: 12, nb: { r: 2, p: 0.04 }, ru: 'Сквер', en: 'Pocket Park' },
+  { id: 'fountain', cat: 'park', lvl: 3, price: 4000, inc: [0, 0, 0, 0, 0], les: 3, w: 2, d: 2, rule: 'free', lim: 4, nb: { r: 3, p: 0.07 }, ru: 'Неоновый фонтан', en: 'Neon Fountain' },
+  // особые
+  { id: 'port', cat: 'spec', lvl: 5, price: 60000, inc: [420, 700, 1170, 1950, 3250], les: 6, w: 3, d: 2, rule: 'water', lim: 2, ru: 'Порт «Лазурный»', en: '“Azure” Port' },
+  { id: 'maglev', cat: 'spec', lvl: 7, price: 250000, inc: [0, 0, 0, 0, 0], les: 5, w: 3, d: 2, rule: 'road', lim: 2, nb: { r: 0, p: 0.10 }, ru: 'Маглев-станция', en: 'Maglev Station' }
 ];
 const BY = {}; B.forEach(b => { BY[b.id] = b; });
+const CATS = ['inc', 'home', 'park', 'spec'];
+// районы: клетки внутри прямоугольника (дороги открыты всегда); 0 — стартовый
+const DIST = [
+  { id: 0, x0: 0, z0: 8, x1: 22, z1: 14, lvl: 1, price: 0, ru: 'Центр', en: 'Downtown' },
+  { id: 1, x0: 0, z0: 0, x1: 22, z1: 6, lvl: 3, price: 8000, ru: 'Северный квартал', en: 'North Quarter' },
+  { id: 2, x0: 0, z0: 16, x1: 22, z1: 23, lvl: 4, price: 25000, ru: 'Южный квартал', en: 'South Quarter' },
+  { id: 3, x0: 0, z0: 25, x1: 35, z1: 26, lvl: 5, price: 60000, ru: 'Набережная', en: 'Waterfront' },
+  { id: 4, x0: 24, z0: 0, x1: 35, z1: 14, lvl: 6, price: 150000, ru: 'Холм', en: 'The Hill' },
+  { id: 5, x0: 24, z0: 16, x1: 35, z1: 23, lvl: 8, price: 600000, ru: 'Восточный сектор', en: 'East Sector' }
+];
+// карта: 0 земля · 1 дорога · 2 вода · 3 холм · 4 площадь
+const T = new Uint8Array(MW * MD), DM = new Int8Array(MW * MD).fill(-1);
+(function () {
+  const RX = [11, 23], RZ = [7, 15, 24];
+  for (let z = 0; z < MD; z++) for (let x = 0; x < MW; x++) {
+    const i = z * MW + x;
+    const t = z >= 27 ? 2 : ((RX.indexOf(x) >= 0 && z <= 24) || RZ.indexOf(z) >= 0) ? 1 : (x >= 28 && x <= 33 && z >= 1 && z <= 5) ? 3 : (x >= 12 && x <= 18 && z >= 8 && z <= 14) ? 4 : 0;
+    T[i] = t;
+    if (t !== 1 && t !== 2) DM[i] = DIST.findIndex(d => x >= d.x0 && x <= d.x1 && z >= d.z0 && z <= d.z1);
+  }
+})();
+const MAP = { W: MW, D: MD, T: T, DM: DM, DIST: DIST, HILL_H: HILL_H, START: { x: 11, z: 11 } };
 const r2 = v => Math.round(v * 100) / 100;
+const fp = (b, r) => (r ? { w: b.d, d: b.w } : { w: b.w, d: b.d });
+const rectOf = it => { const f = fp(BY[it.id], it.r); return { x: it.x, y: it.y, w: f.w, d: f.d }; };
+const distOf = it => DM[it.y * MW + it.x];
 
-function norm(S) {                                   // привести состояние к форме города; старые игроки получают пустой город
+// --- проверка места ---
+function occOf(c, ign) {
+  const o = new Int32Array(MW * MD);
+  c.p.forEach(it => { if (it.s || it.u === ign) return; const q = rectOf(it); for (let j = 0; j < q.d; j++) for (let i = 0; i < q.w; i++) o[(q.y + j) * MW + q.x + i] = it.u; });
+  return o;
+}
+// '' — можно; иначе причина: bounds, blocked, closed, taken, reserved, road, water, hill, plaza
+function check(c, b, x, y, r, o) {
+  const f = fp(b, r);
+  if (x < 0 || y < 0 || x + f.w > MW || y + f.d > MD) return 'bounds';
+  let allHill = true, allPlaza = true;
+  for (let j = 0; j < f.d; j++) for (let i = 0; i < f.w; i++) {
+    const k = (y + j) * MW + x + i, t = T[k];
+    if (t === 1 || t === 2) return 'blocked';
+    if (c.d.indexOf(DM[k]) < 0) return 'closed';
+    if (o[k]) return 'taken';
+    if (t !== 3) allHill = false; if (t !== 4) allPlaza = false;
+    if ((t === 3 || t === 4) && b.rule !== 'free' && b.rule !== 'hill' && b.rule !== 'plaza') return 'reserved';
+  }
+  if (b.rule === 'hill') return allHill ? '' : 'hill';
+  if (b.rule === 'plaza') return allPlaza ? '' : 'plaza';
+  if (b.rule === 'free') return '';
+  const want = b.rule === 'water' ? 2 : 1; let near = false;
+  for (let j = -1; j <= f.d && !near; j++) for (let i = -1; i <= f.w; i++) {
+    if ((j === -1 || j === f.d) === (i === -1 || i === f.w)) continue;       // только клетки сбоку, без углов
+    const xx = x + i, yy = y + j; if (xx < 0 || yy < 0 || xx >= MW || yy >= MD) continue;
+    if (T[yy * MW + xx] === want) { near = true; break; }
+  }
+  return near ? '' : b.rule;
+}
+function availMask(c, b, r, ign) {           // клетки, которые входят хотя бы в одну допустимую расстановку
+  const o = occOf(c, ign), m = new Uint8Array(MW * MD), f = fp(b, r);
+  for (let y = 0; y + f.d <= MD; y++) for (let x = 0; x + f.w <= MW; x++) if (!check(c, b, x, y, r, o)) for (let j = 0; j < f.d; j++) for (let i = 0; i < f.w; i++) m[(y + j) * MW + x + i] = 1;
+  return m;
+}
+function findSpot(c, b, near, ign) {          // ближайшее допустимое место к точке near {x,z}; поворот 0 или 1
+  const o = occOf(c, ign); let best = null, bd = 1e18; near = near || MAP.START;
+  for (let r = 0; r < (b.w === b.d ? 1 : 2); r++) { const f = fp(b, r);
+    for (let y = 0; y + f.d <= MD; y++) for (let x = 0; x + f.w <= MW; x++) {
+      const dd = Math.pow(x + f.w / 2 - near.x, 2) + Math.pow(y + f.d / 2 - near.z, 2) + r * 0.01;
+      if (dd < bd && !check(c, b, x, y, r, o)) { bd = dd; best = { x: x, y: y, r: r }; } } }
+  return best;
+}
+const count = (c, id) => c.p.reduce((n, it) => n + (it.id === id ? 1 : 0), 0);
+const limOf = (b, lvl) => (lvl < b.lvl ? 0 : Math.min(b.lim, 1 + lvl - b.lvl));
+const itOf = (c, u) => { for (let i = 0; i < c.p.length; i++) if (c.p[i].u === u) return c.p[i]; return null; };
+const cellsTotal = c => { let n = 0; for (let i = 0; i < MW * MD; i++) if ((T[i] === 0 || T[i] === 3 || T[i] === 4) && c.d.indexOf(DM[i]) >= 0) n++; return n; };
+const cellsUsed = c => c.p.reduce((n, it) => { if (it.s) return n; const f = fp(BY[it.id], it.r); return n + f.w * f.d; }, 0);
+
+function migrate(c) {                                  // старое сохранение (по одному зданию каждого вида в c.b) → список c.p с авторасстановкой
+  const old = c.b && typeof c.b === 'object' ? c.b : {};
+  c.p = []; c.n = 1; c.d = [0];
+  B.forEach(b => { const x = old[b.id]; if (!x || !(x.l >= 1)) return;
+    const it = { u: c.n++, id: b.id, l: Math.min(MAXL, Math.floor(x.l)), t: +x.t || 0, x: -1, y: -1, r: 0, s: 1 }; c.p.push(it);
+    let sp = findSpot(c, b);
+    if (!sp) for (let k = 0; k < DIST.length && !sp; k++) { if (c.d.indexOf(k) >= 0) continue; c.d.push(k); sp = findSpot(c, b); if (!sp) c.d.pop(); }   // здание старого города не потеряется: нужный район открывается бесплатно
+    if (sp) { it.x = sp.x; it.y = sp.y; it.r = sp.r; it.s = 0; }
+  });
+  delete c.b; c.v = 2;
+}
+function norm(S) {                                   // привести состояние к форме города; старый город переносится автоматически
   const c = S.city && typeof S.city === 'object' ? S.city : (S.city = {});
-  if (!c.b || typeof c.b !== 'object') c.b = {};
-  Object.keys(c.b).forEach(id => { const x = c.b[id]; if (!BY[id] || !x || !(x.l >= 1)) delete c.b[id]; else { x.l = Math.min(MAXL, Math.floor(x.l)); x.t = +x.t || 0; } });
   c['in'] = +c['in'] || 0; c.out = +c.out || 0; c.streak = +c.streak || 0; c.last = c.last == null ? -1 : +c.last;
+  if (c.v !== 2 || !Array.isArray(c.p)) migrate(c);
+  if (!Array.isArray(c.d) || c.d.indexOf(0) < 0) c.d = [0].concat(Array.isArray(c.d) ? c.d.filter(k => k > 0 && k < DIST.length) : []);
+  const seen = {}; c.n = Math.max(+c.n || 1, 1);
+  c.p = c.p.filter(it => it && BY[it.id] && it.l >= 1).map(it => {
+    it.l = Math.min(MAXL, Math.floor(it.l)); it.t = +it.t || 0; it.r = it.r ? 1 : 0;
+    if (!(it.u >= 1) || seen[it.u]) it.u = c.n++; seen[it.u] = 1; if (it.u >= c.n) c.n = it.u + 1;
+    if (!it.s) { const q = fp(BY[it.id], it.r); it.x = Math.floor(+it.x); it.y = Math.floor(+it.y); if (!(it.x >= 0 && it.y >= 0 && it.x + q.w <= MW && it.y + q.d <= MD)) it.s = 1; }
+    if (it.s) { it.s = 1; it.x = it.y = -1; }
+    return it;
+  });
   return c;
 }
-const owned = c => Object.keys(c.b).length;
-const capH = c => (c.b.bank ? CAP_BANK_H : CAP_H);
-const bonus = c => (c.b.hall ? HALL_BONUS : 1);
-const rate = (c, id) => (c.b[id] ? r2(BY[id].inc[c.b[id].l - 1] * bonus(c)) : 0);           // $ в час
-const rateAll = c => r2(Object.keys(c.b).reduce((s, id) => s + rate(c, id), 0));
-const hoursOf = (c, id, now) => (c.b[id] ? Math.min(capH(c), Math.max(0, now - c.b[id].t) / HOUR) : 0);
-const pend = (c, id, now) => r2(hoursOf(c, id, now) * rate(c, id));                          // накоплено в копилке здания
-const pendAll = (c, now) => r2(Object.keys(c.b).reduce((s, id) => s + pend(c, id, now), 0));
+const owned = c => c.p.length;
+const placed = c => c.p.filter(it => !it.s);
+const hasPerk = (c, k) => c.p.some(it => !it.s && BY[it.id].perk === k);
+const capH = c => (hasPerk(c, 'bank') ? CAP_BANK_H : CAP_H);
+const bonus = c => (hasPerk(c, 'hall') ? HALL_BONUS : 1);
+function nbOf(c, it) {                               // прибавка соседства 0…0.5 для здания it
+  if (it.s) return 0; const me = rectOf(it), dm = distOf(it); let s = 0;
+  c.p.forEach(o => { if (o === it || o.s) return; const b = BY[o.id]; if (!b.nb) return; const p = b.nb.p * (1 + NB_STEP * (o.l - 1));
+    if (b.nb.r > 0) { const q = rectOf(o), gx = Math.max(me.x - (q.x + q.w), q.x - (me.x + me.w), 0), gy = Math.max(me.y - (q.y + q.d), q.y - (me.y + me.d), 0); if (Math.max(gx, gy) <= b.nb.r) s += p; }
+    else if (distOf(o) === dm) s += p; });
+  return Math.min(NB_CAP, s);
+}
+const rate = (c, u) => { const it = typeof u === 'object' ? u : itOf(c, u); return it && !it.s ? r2(BY[it.id].inc[it.l - 1] * bonus(c) * (1 + nbOf(c, it))) : 0; };      // $ в час
+const rateAll = c => r2(c.p.reduce((s, it) => s + rate(c, it), 0));
+const hoursOf = (c, u, now) => { const it = typeof u === 'object' ? u : itOf(c, u); return it && !it.s ? Math.min(capH(c), Math.max(0, now - it.t) / HOUR) : 0; };
+const pend = (c, u, now) => { const it = typeof u === 'object' ? u : itOf(c, u); return it ? r2(hoursOf(c, it, now) * rate(c, it)) : 0; };                 // накоплено в копилке здания
+const pendAll = (c, now) => r2(c.p.reduce((s, it) => s + pend(c, it, now), 0));
 const poolMax = c => r2(rateAll(c) * capH(c));                                                // сколько вместит копилка всего
 const stepCost = (id, step) => Math.round(BY[id].price * UPK[step - 1]);
-const maxStep = c => Object.keys(c.b).reduce((m, id) => Math.max(m, c.b[id].l), 0);
+const maxStep = c => c.p.reduce((m, it) => Math.max(m, it.l), 0);
 const dayOf = now => Math.floor((now - new Date(now).getTimezoneOffset() * 6e4) / 864e5);     // номер дня по местному времени
 const streakNow = (c, now) => (c.last >= dayOf(now) - 1 ? c.streak : 0);
 
 // lvl — уровень игрока 1…10; les(i) — пройден ли урок i. Деньги — тот же S.cash. Доход города в результат торговли не входит (S.city.in / S.city.out).
-function buy(S, id, lvl, now) {
-  const c = norm(S), b = BY[id];
-  if (!b) return { ok: false, err: 'unknown' };
-  if (c.b[id]) return { ok: false, err: 'owned' };
-  if (lvl < b.lvl) return { ok: false, err: 'level' };
-  if (S.cash + 1e-9 < b.price) return { ok: false, err: 'funds' };
-  S.cash = r2(S.cash - b.price); c.out = r2(c.out + b.price); c.b[id] = { l: 1, t: now };
-  return { ok: true, cost: b.price };
+function precheck(S, c, id, lvl) {
+  const b = BY[id]; if (!b) return 'unknown';
+  if (lvl < b.lvl) return 'level';
+  if (count(c, id) >= limOf(b, lvl)) return 'limit';
+  if (S.cash + 1e-9 < b.price) return 'funds';
+  return '';
 }
-function settle(S, id, now) {                         // забрать копилку одного здания в деньги (без учёта серии дней)
-  const c = norm(S), g = pend(c, id, now);
+function pay(S, c, b, now, spot) {
+  S.cash = r2(S.cash - b.price); c.out = r2(c.out + b.price);
+  const it = { u: c.n++, id: b.id, l: 1, t: now, x: spot ? spot.x : -1, y: spot ? spot.y : -1, r: spot ? spot.r : 0, s: spot ? 0 : 1 }; c.p.push(it); return it;
+}
+function place(S, id, lvl, now, x, y, rot) {         // купить новое здание и поставить на клетки (x, y — левый верхний угол)
+  const c = norm(S), b = BY[id], e = precheck(S, c, id, lvl);
+  if (e) return { ok: false, err: e };
+  const g = check(c, b, x, y, rot ? 1 : 0, occOf(c, 0)); if (g) return { ok: false, err: g };
+  const it = pay(S, c, b, now, { x: x, y: y, r: rot ? 1 : 0 }); return { ok: true, cost: b.price, u: it.u };
+}
+function buy(S, id, lvl, now) {                      // купить без выбора места — на первое подходящее (вид «Список»)
+  const c = norm(S), b = BY[id], e = precheck(S, c, id, lvl);
+  if (e) return { ok: false, err: e === 'limit' ? 'owned' : e };
+  const sp = findSpot(c, b); if (!sp) return { ok: false, err: 'space' };
+  const it = pay(S, c, b, now, sp); return { ok: true, cost: b.price, u: it.u };
+}
+function move(S, u, x, y, rot, now) {                // перенос бесплатный; здание со склада ставится тем же вызовом
+  const c = norm(S), it = itOf(c, u); if (!it) return { ok: false, err: 'none' };
+  const b = BY[it.id], r = rot ? 1 : 0, g = check(c, b, x, y, r, occOf(c, u)); if (g) return { ok: false, err: g };
+  if (it.s) it.t = now;                              // на складе доход не копится
+  it.x = x; it.y = y; it.r = r; it.s = 0; return { ok: true };
+}
+function settle(S, u, now) {                         // забрать копилку одного здания в деньги (без учёта серии дней)
+  const c = norm(S), it = typeof u === 'object' ? u : itOf(c, u); if (!it) return 0;
+  const g = pend(c, it, now);
   if (g > 0) { S.cash = r2(S.cash + g); c['in'] = r2(c['in'] + g); }
-  if (c.b[id]) c.b[id].t = now;
-  return g;
+  it.t = now; return g;
 }
-function upgrade(S, id, lesDone, now) {
-  const c = norm(S), b = BY[id], x = c.b[id];
-  if (!b || !x) return { ok: false, err: 'none' };
-  if (x.l >= MAXL) return { ok: false, err: 'max' };
-  const step = x.l + 1, cost = stepCost(id, step);
+function store(S, u, now) {                          // убрать на склад: накопленное уходит в кошелёк, ступень сохраняется
+  const c = norm(S), it = itOf(c, u); if (!it || it.s) return { ok: false, err: 'none' };
+  const got = settle(S, it, now); it.s = 1; it.x = it.y = -1; return { ok: true, got: got };
+}
+function openDist(S, k, lvl) {
+  const c = norm(S), d = DIST[k]; if (!d) return { ok: false, err: 'none' };
+  if (c.d.indexOf(k) >= 0) return { ok: false, err: 'open' };
+  if (lvl < d.lvl) return { ok: false, err: 'level' };
+  if (S.cash + 1e-9 < d.price) return { ok: false, err: 'funds', cost: d.price };
+  S.cash = r2(S.cash - d.price); c.out = r2(c.out + d.price); c.d.push(k); return { ok: true, cost: d.price };
+}
+function upgrade(S, u, lesDone, now) {
+  const c = norm(S), it = itOf(c, u); if (!it) return { ok: false, err: 'none' };
+  const b = BY[it.id];
+  if (it.l >= MAXL) return { ok: false, err: 'max' };
+  const step = it.l + 1, cost = stepCost(it.id, step);
   if (step >= LES_FROM && !(lesDone && lesDone(b.les))) return { ok: false, err: 'lesson', les: b.les };
   if (S.cash + 1e-9 < cost) return { ok: false, err: 'funds', cost: cost };
-  const got = settle(S, id, now);                     // накопленное по старой ставке — в кошелёк, дальше считается по новой
-  S.cash = r2(S.cash - cost); c.out = r2(c.out + cost); x.l = step;
+  const got = settle(S, it, now);                     // накопленное по старой ставке — в кошелёк, дальше считается по новой
+  S.cash = r2(S.cash - cost); c.out = r2(c.out + cost); it.l = step;
   return { ok: true, cost: cost, step: step, got: got };
 }
-function collect(S, id, now) {                        // id пусто — «Собрать всё»
+function collect(S, u, now) {                         // u пусто — «Собрать всё»
   const c = norm(S); let got = 0;
-  (id ? [id] : Object.keys(c.b)).forEach(k => { got += settle(S, k, now); });
+  (u ? [itOf(c, u)] : c.p.slice()).forEach(it => { if (it) got += settle(S, it, now); });
   got = r2(got);
   if (got > 0) {
     const d = dayOf(now);
@@ -83,7 +236,8 @@ function collect(S, id, now) {                        // id пусто — «С�
   return { ok: got > 0, got: got, err: got > 0 ? '' : 'empty' };
 }
 
-const API = { B, BY, UPK, CAP_H, CAP_BANK_H, HALL_BONUS, MAXL, LES_FROM, norm, owned, capH, bonus, rate, rateAll, hoursOf, pend, pendAll, poolMax, stepCost, maxStep, dayOf, streakNow, buy, settle, upgrade, collect };
+const API = { B, BY, UPK, CATS, MAP, DIST, CAP_H, CAP_BANK_H, HALL_BONUS, MAXL, LES_FROM, NB_CAP, norm, owned, placed, capH, bonus, rate, rateAll, hoursOf, pend, pendAll, poolMax, stepCost, maxStep, dayOf, streakNow,
+  fp, rectOf, occOf, check, availMask, findSpot, count, limOf, itOf, nbOf, cellsTotal, cellsUsed, place, buy, move, store, openDist, settle, upgrade, collect };
 root.DofaGorod = API;
 if (typeof module !== 'undefined' && module.exports) { module.exports = API; }
 if (typeof document === 'undefined') return;
@@ -161,45 +315,225 @@ function fig(id, l, big) {
   return '<svg class="gr-fig' + (big ? ' big' : '') + '" viewBox="0 0 64 64" aria-hidden="true" style="--gl:' + (l / MAXL).toFixed(2) + '"><g class="gr-ln">' + (SH[id] || '') + extra + '</g></svg>';
 }
 const defs = '<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><linearGradient id="grg" gradientUnits="userSpaceOnUse" x1="6" y1="8" x2="58" y2="58"><stop offset="0" stop-color="rgb(var(--acc))"/><stop offset="1" stop-color="rgb(var(--acc2))"/></linearGradient></defs></svg>';
+// 19.11: новые строки большой карты
+Object.assign(D.ru, {
+  hint3: 'Тяните — сдвиг карты · два пальца или правая кнопка — поворот · колесо или щипок — масштаб',
+  build: 'Строить', close_rib: 'Свернуть', stash: 'Склад', cat_inc: 'Доход', cat_home: 'Жильё и сервис', cat_park: 'Парки', cat_spec: 'Особые',
+  cells: 'Занято {a} из {b} клеток', tip: 'Выберите здание → поставьте на зелёные клетки у дороги', tip_ok: 'Понятно',
+  pm_ok: 'Поставить', pm_ok_mv: 'Готово', pm_rot: 'Повернуть', pm_cancel: 'Отмена', pm_move: 'Переставить', pm_store: 'На склад', pm_free: 'бесплатно', pm_good: 'Можно ставить', pm_pick: 'Нажмите на клетку, чтобы поставить здание',
+  full: 'Во весь экран', unfull: 'Выйти', zin: 'Ближе', zout: 'Дальше', rl: 'Повернуть влево', rr: 'Повернуть вправо', home: 'К началу', sclose: 'Закрыть',
+  rule_road: 'У дороги', rule_water: 'У воды', rule_hill: 'На холме', rule_plaza: 'На площади', rule_free: 'Где угодно',
+  e_taken: 'Клетки заняты', e_blocked: 'Здесь дорога или вода', e_closed: 'Район закрыт — откройте его', e_road: 'Здание должно касаться дороги', e_water: 'Нужен берег моря', e_hill: 'Только на холме', e_plaza: 'Только на площади',
+  e_bounds: 'За краем карты', e_reserved: 'Холм и площадь — для особых зданий', e_limit: 'Предел числа сейчас: {n} (растёт с уровнем)', e_space: 'Нет подходящего места', e_unknown: '', e_none: '',
+  t_placed: 'Поставлено: {n}', t_moved: 'Переставлено: {n}', t_stored: 'На складе: {n}', t_opened: 'Район «{n}» открыт',
+  m_size: 'Площадь', m_rule: 'Место', m_nb: 'Соседям', nb_r: '+{p}% в радиусе {r}', nb_d: '+{p}% всему району', m_got_nb: 'Прибавка от соседей', size_s: '{w}×{d}', cnt_s: '{a}/{b}',
+  d_h: 'Район «{n}»', d_cond: 'Откроется на уровне {n} «{name}» за {x}', d_open: 'Открыть · {x}', d_have: 'Район открыт', d_lvl: 'Нужен уровень {n}', lvl_s: 'ур. {n}', mine: 'Мои здания', shop: 'Купить', no_stash: 'Склад пуст', mv: 'Переставить',
+  st_hint: 'Здание уходит со склада на поле без потери ступени', own_s: 'Ступень {n} из 5'
+});
+Object.assign(D.en, {
+  hint3: 'Drag to pan · two fingers or right button to rotate · wheel or pinch to zoom',
+  build: 'Build', close_rib: 'Hide', stash: 'Storage', cat_inc: 'Income', cat_home: 'Housing & services', cat_park: 'Parks', cat_spec: 'Special',
+  cells: 'Used {a} of {b} cells', tip: 'Pick a building → place it on green cells next to a road', tip_ok: 'Got it',
+  pm_ok: 'Place', pm_ok_mv: 'Done', pm_rot: 'Rotate', pm_cancel: 'Cancel', pm_move: 'Move', pm_store: 'To storage', pm_free: 'free', pm_good: 'Good to place', pm_pick: 'Tap a cell to place the building',
+  full: 'Full screen', unfull: 'Exit', zin: 'Zoom in', zout: 'Zoom out', rl: 'Rotate left', rr: 'Rotate right', home: 'Home', sclose: 'Close',
+  rule_road: 'Next to a road', rule_water: 'By the water', rule_hill: 'On the hill', rule_plaza: 'On the plaza', rule_free: 'Anywhere',
+  e_taken: 'Cells are taken', e_blocked: 'Road or water is here', e_closed: 'District is closed — open it first', e_road: 'The building must touch a road', e_water: 'Needs the seashore', e_hill: 'Hill only', e_plaza: 'Plaza only',
+  e_bounds: 'Outside the map', e_reserved: 'Hill and plaza are for special buildings', e_limit: 'Limit right now: {n} (grows with level)', e_space: 'No suitable place', e_unknown: '', e_none: '',
+  t_placed: 'Placed: {n}', t_moved: 'Moved: {n}', t_stored: 'In storage: {n}', t_opened: 'District “{n}” opened',
+  m_size: 'Size', m_rule: 'Place', m_nb: 'To neighbours', nb_r: '+{p}% within {r} cells', nb_d: '+{p}% to the whole district', m_got_nb: 'Neighbour bonus', size_s: '{w}×{d}', cnt_s: '{a}/{b}',
+  d_h: 'District “{n}”', d_cond: 'Opens at level {n} “{name}” for {x}', d_open: 'Open · {x}', d_have: 'District is open', d_lvl: 'Level {n} needed', lvl_s: 'lv {n}', mine: 'My buildings', shop: 'Buy', no_stash: 'Storage is empty', mv: 'Move',
+  st_hint: 'The building returns from storage to the field with its step kept', own_s: 'Step {n} of 5'
+});
+Object.assign(SH, {
+  vend: '<rect x="14" y="32" width="36" height="22"/><path d="M10 32h44"/><rect x="20" y="38" width="16" height="10"/><path d="M42 38v10"/>',
+  atm: '<rect x="20" y="16" width="24" height="38"/><rect x="25" y="22" width="14" height="9"/><path d="M26 40h12M26 47h12"/>',
+  pay: '<path d="M16 54V24M48 54V24M12 24h40"/><circle cx="32" cy="40" r="8"/><path d="M28 40h8"/>',
+  broker: '<rect x="10" y="38" width="44" height="16"/><rect x="18" y="14" width="18" height="24"/><path d="M22 20h10M22 26h10M22 32h10M42 46h8"/>',
+  vc: '<rect x="20" y="40" width="24" height="14"/><rect x="23" y="28" width="18" height="12"/><rect x="26" y="18" width="12" height="10"/><path d="M32 18V8"/>',
+  home: '<rect x="14" y="32" width="18" height="22"/><rect x="34" y="20" width="16" height="34"/><path d="M18 40h6M18 47h6M38 28h8M38 36h8M38 44h8"/>',
+  cowork: '<path d="M10 34L32 20l22 14"/><rect x="14" y="34" width="36" height="20"/><path d="M22 42h8M34 42h8M22 48h8"/>',
+  mall: '<rect x="8" y="30" width="48" height="24"/><path d="M14 30a18 12 0 0136 0"/><path d="M16 42h10M38 42h10"/>',
+  park: '<path d="M32 56V40"/><path d="M32 10l12 16H20z"/><path d="M32 22l14 20H18z"/>',
+  fountain: '<ellipse cx="32" cy="46" rx="22" ry="8"/><path d="M32 46V22M32 22c-6 2-8 8-8 12M32 22c6 2 8 8 8 12"/>',
+  port: '<path d="M8 50h48M10 56h44"/><rect x="14" y="38" width="12" height="12"/><path d="M42 50V14l12 8M42 22H28"/>',
+  maglev: '<path d="M6 54h52"/><path d="M12 44h40l4-8H18z"/><path d="M20 44v10M44 44v10"/>'
+});
 
-let openId = null, gSig = '';
-function plotHTML(b) {
-  const c = city(), x = c.b[b.id], lv = myLvl(), now = H.now();
-  if (x) {
-    return '<button type="button" class="gr-plot own" data-g="open" data-id="' + b.id + '">' + fig(b.id, x.l) +
-      '<b class="gr-n">' + esc(bn(b.id)) + '</b><span class="gr-s num">' + g('own_step', { n: x.l }) + ' · ' + g('per_h', { x: short(rate(c, b.id)) }) + '</span>' +
-      '<i class="gr-pip" aria-hidden="true">' + [1, 2, 3, 4, 5].map(n => '<u' + (n <= x.l ? ' class="on"' : '') + '></u>').join('') + '</i>' +
-      '<em class="gr-pd num" data-gp="' + b.id + '">+' + short(pend(c, b.id, now)) + '</em></button>';
-  }
-  if (lv < b.lvl) return '<button type="button" class="gr-plot lock" data-g="open" data-id="' + b.id + '">' + fig(b.id, 1) + lockSvg + '<b class="gr-n">' + esc(bn(b.id)) + '</b><span class="gr-s num">' + g('lock_lv', { n: b.lvl, x: short(b.price) }) + '</span></button>';
-  return '<button type="button" class="gr-plot can" data-g="open" data-id="' + b.id + '">' + fig(b.id, 1) + '<b class="gr-n">' + esc(bn(b.id)) + '</b><span class="gr-s num">' + g('buy_for', { x: short(b.price) }) + '</span></button>';
-}
-/* 3D-вид (gorod3d.js): по умолчанию, если есть WebGL и не включён режим «меньше движения»; «Список» — прежняя сетка карточек */
+/* ---- состояние экрана: выбранное здание / район, режим стройки, лента, полный экран ---- */
+let openId = null, selU = 0, selD = -1, pm = null, ribOpen = false, ribCat = 'inc', ribWhy = '', full = false, nativeFs = false, fullPushed = false, boxKey = '';
+const MWc = MAP.W, MDc = MAP.D, clampN = (v, a, b) => Math.max(a, Math.min(b, v));
+const dName = d => d[L()];
+const whyType = b => { const c = city(), lv = myLvl(); if (lv < b.lvl) return 'level'; if (count(c, b.id) >= limOf(b, lv)) return 'limit'; if (H.S().cash + 1e-9 < b.price) return 'funds'; return ''; };
+const whyText = (b, w) => (w === 'level' ? g('e_level', { n: b.lvl }) : w === 'limit' ? g('e_limit', { n: limOf(b, myLvl()) }) : w === 'funds' ? g('e_funds', { x: mny(b.price, 0) }) : '');
+const nbTxt = b => (b.nb ? (b.nb.r > 0 ? g('nb_r', { p: Math.round(b.nb.p * 100), r: b.nb.r }) : g('nb_d', { p: Math.round(b.nb.p * 100) })) : '');
+
+/* 3D-вид (gorod3d.js): по умолчанию, если есть WebGL и не включён режим «меньше движения»; «Список» — запасной вид */
 let fail3d = false;
 const G3 = () => root.DofaGorod3D || null;
 const reduced = () => !!(root.matchMedia && root.matchMedia('(prefers-reduced-motion:reduce)').matches);
 const can3 = () => !!(G3() && !fail3d && !reduced() && G3().supported());
 const use3d = () => { let m = ''; try { m = localStorage.getItem('dofa_gr_mode') || ''; } catch (e) { /* ничего */ } return can3() && m !== 'list'; };
-function states3() {
-  const c = city(), now = H.now(), lv = myLvl();
-  return B.map(b => { const x = c.b[b.id]; return x ? { id: b.id, k: 'own', l: x.l, txt: '+' + short(pend(c, b.id, now)) } : { id: b.id, k: lv < b.lvl ? 'lock' : 'can', l: 1, txt: '' }; });
+const sync = () => { if (G3() && G3().alive()) G3().update(); };
+
+function items3() {
+  const c = city(), now = H.now();
+  return c.p.filter(it => !it.s).map(it => { const f = fp(BY[it.id], it.r), p = pend(c, it, now); return { u: it.u, id: it.id, l: it.l, x: it.x, y: it.y, r: it.r, w: f.w, d: f.d, txt: p >= 1 ? '+' + short(p) : '', sel: it.u === selU }; });
 }
+function dists3() { const c = city(); return DIST.map(d => ({ id: d.id, open: c.d.indexOf(d.id) >= 0, name: dName(d), cond: myLvl() < d.lvl ? g('lock_lv', { n: d.lvl, x: short(d.price) }) : short(d.price) })); }
+function ghost3() { if (!pm) return null; const f = fp(BY[pm.id], pm.r); return { id: pm.id, x: pm.x, y: pm.y, r: pm.r, w: f.w, d: f.d, ok: pm.ok }; }
+function radiusMark(m, b, rect, dmId) {
+  if (!b.nb) return;
+  if (b.nb.r > 0) { for (let z = Math.max(0, rect.y - b.nb.r); z < Math.min(MDc, rect.y + rect.d + b.nb.r); z++) for (let x = Math.max(0, rect.x - b.nb.r); x < Math.min(MWc, rect.x + rect.w + b.nb.r); x++) { const t = MAP.T[z * MWc + x]; if (t !== 1 && t !== 2) m[z * MWc + x] = 2; } }
+  else for (let i = 0; i < MWc * MDc; i++) if (MAP.DM[i] === dmId && MAP.T[i] !== 1) m[i] = 2;
+}
+const ovKey = () => { const c = city(); return (pm ? [pm.id, pm.x, pm.y, pm.r, pm.u, pm.ok ? 1 : 0].join(',') : '-') + '|' + selU + '|' + c.d.join('') + '|' + c.p.map(it => it.u + it.x + ',' + it.y + it.r + it.s + it.l).join(';');
+};
+let ovMemo = { k: '', m: null };
+function ovData() {
+  const k = ovKey(); if (ovMemo.k === k) return ovMemo.m;
+  const c = city(), m = new Uint8Array(MWc * MDc);
+  if (pm) {
+    const b = BY[pm.id], av = availMask(c, b, pm.r, pm.u || 0), f = fp(b, pm.r);
+    for (let i = 0; i < m.length; i++) if (av[i]) m[i] = 1;
+    radiusMark(m, b, { x: pm.x, y: pm.y, w: f.w, d: f.d }, MAP.DM[clampN(pm.y, 0, MDc - 1) * MWc + clampN(pm.x, 0, MWc - 1)]);
+    for (let j = 0; j < f.d; j++) for (let i = 0; i < f.w; i++) { const x = pm.x + i, y = pm.y + j; if (x >= 0 && y >= 0 && x < MWc && y < MDc) m[y * MWc + x] = pm.ok ? 3 : 4; }
+  } else if (selU) {
+    const it = itOf(c, selU); if (it && !it.s) { const q = rectOf(it), b = BY[it.id]; radiusMark(m, b, q, distOfCell(q)); for (let j = 0; j < q.d; j++) for (let i = 0; i < q.w; i++) m[(q.y + j) * MWc + q.x + i] = 5; }
+  }
+  ovMemo = { k: k, m: m }; return m;
+}
+const distOfCell = q => MAP.DM[q.y * MWc + q.x];
 function api3() {
-  return { lang: L, label: g('lbl3'), loading: g('ld3'), hint: g('hint3'), states: states3, name: bn, pick: id => act('open', id),
-    fail: () => { fail3d = true; if (G3()) G3().dispose(); const bx = $('gorodBox'); if (bx && !$('v-gorod').hidden) render(bx); } };
+  return { lang: L, label: g('lbl3'), loading: g('ld3'), hint: g('hint3'), map: MAP, items: items3, districts: dists3, overlay: ovData, ovSig: ovKey, ghost: ghost3, placing: () => !!pm, name: bn,
+    cell: pmCell, tapItem: u => selectItem(u), tapCell: (cx, cz) => tapCell(cx, cz),
+    fail: () => { fail3d = true; if (G3()) G3().dispose(); const bx = $('gorodBox'); if (bx && !$('v-gorod').hidden) { boxKey = ''; render(bx); } } };
+}
+
+/* ---- режим стройки ---- */
+function pmCheck() { const c = city(), b = BY[pm.id]; pm.err = check(c, b, pm.x, pm.y, pm.r, occOf(c, pm.u || 0)); pm.ok = !pm.err; }
+function startPlace(id, u) {
+  const c = city(), b = BY[id], it = u ? itOf(c, u) : null, cen = (G3() && G3().center()) || { cx: MAP.START.x, cz: MAP.START.z };
+  pm = { id: id, u: u || 0, r: it ? it.r : 0, x: cen.cx, y: cen.cz, ok: false, err: '' };
+  const sp = findSpot(c, b, { x: cen.cx, z: cen.cz }, u || 0);
+  if (sp) { pm.x = sp.x; pm.y = sp.y; pm.r = sp.r; pmCheck(); if (G3() && G3().alive()) G3().focus(sp.x + 1, sp.y + 1); } else { pmCheck(); H.toast(g('e_space'), 'down', false); }
+  ribOpen = false; selU = 0; selD = -1; hud(); sync();
+}
+function pmCell(cx, cz, confirm) {
+  if (!pm) return; const b = BY[pm.id], f = fp(b, pm.r);
+  const x = clampN(cx - ((f.w - 1) >> 1), 0, MWc - f.w), y = clampN(cz - ((f.d - 1) >> 1), 0, MDc - f.d), same = x === pm.x && y === pm.y;
+  pm.x = x; pm.y = y; pmCheck();
+  if (confirm && same && pm.ok) { pmConfirm(); return; }
+  hudPm(); sync();
+}
+function pmRot() { if (!pm) return; const b = BY[pm.id]; if (b.w === b.d) return; pm.r ^= 1; const f = fp(b, pm.r); pm.x = clampN(pm.x, 0, MWc - f.w); pm.y = clampN(pm.y, 0, MDc - f.d); pmCheck(); hudPm(); sync(); }
+function pmConfirm() {
+  if (!pm) return; if (!pm.ok) { H.vib(20); hudPm(); return; }
+  const S = H.S(), now = H.now(), id = pm.id; let r;
+  if (pm.u) r = move(S, pm.u, pm.x, pm.y, pm.r, now); else r = place(S, id, myLvl(), now, pm.x, pm.y, pm.r);
+  if (!r.ok) { H.vib(20); const m = r.err === 'funds' ? g('e_funds', { x: mny(BY[id].price, 0) }) : r.err === 'limit' ? g('e_limit', { n: limOf(BY[id], myLvl()) }) : r.err === 'level' ? g('e_level', { n: BY[id].lvl }) : g('e_' + r.err); H.toast(m, 'down', false); pm.err = r.err; hudPm(); return; }
+  H.save(); H.snd(); H.vib([10, 30, 10]); H.toast(g(pm.u ? 't_moved' : 't_placed', { n: bn(id) }), 'up', true);
+  selU = 0; pm = null; H.render(); hud(); sync();
+}
+function pmCancel() { pm = null; hud(); sync(); }
+function selectItem(u) { if (pm) return; selU = u; selD = -1; ribOpen = false; hud(); sync(); const it = itOf(city(), u); if (it && G3() && G3().alive()) { const f = fp(BY[it.id], it.r); G3().focus(it.x + f.w / 2, it.y + f.d / 2); } }
+function tapCell(cx, cz) {
+  if (pm) return; selU = 0; selD = -1;
+  if (cx >= 0) { const d = MAP.DM[cz * MWc + cx]; if (d >= 0 && city().d.indexOf(d) < 0) selD = d; }
+  hud(); sync();
+}
+
+/* ---- панели внутри карты: лента построек, окно здания, окно района, строка стройки ---- */
+const pips = l => '<span class="gr-pip" aria-hidden="true">' + [1, 2, 3, 4, 5].map(n => '<u' + (n <= l ? ' class="on"' : '') + '></u>').join('') + '</span>';
+function cardHTML(b) {
+  const w = whyType(b), c = city(), n = count(c, b.id), lm = limOf(b, myLvl());
+  return '<button type="button" class="gr3-card' + (w ? ' off' : '') + (w === 'level' ? ' lock' : '') + '" data-g="pick" data-id="' + b.id + '" data-why="' + w + '">' + fig(b.id, 1) +
+    '<b>' + esc(bn(b.id)) + '</b><small class="num">' + short(b.price) + ' · ' + g('size_s', { w: b.w, d: b.d }) + '</small>' +
+    '<em class="num">' + (w === 'level' ? g('lvl_s', { n: b.lvl }) : g('cnt_s', { a: n, b: lm })) + '</em>' + (w === 'level' ? lockSvg : '') + '</button>';
+}
+function stashCard(it) { const b = BY[it.id]; return '<button type="button" class="gr3-card" data-g="unst" data-u="' + it.u + '">' + fig(it.id, it.l) + '<b>' + esc(bn(it.id)) + '</b><small class="num">' + g('own_s', { n: it.l }) + '</small><em class="num">' + g('size_s', { w: b.w, d: b.d }) + '</em></button>'; }
+function ribHTML() {
+  const c = city(), stash = c.p.filter(it => it.s), cats = CATS.map(k => '<button type="button" class="chip' + (ribCat === k ? ' on' : '') + '" data-g="cat" data-k="' + k + '">' + g('cat_' + k) + '</button>').join('') +
+    '<button type="button" class="chip' + (ribCat === 'stash' ? ' on' : '') + '" data-g="cat" data-k="stash">' + g('stash') + (stash.length ? ' · ' + stash.length : '') + '</button>';
+  const cards = ribCat === 'stash' ? (stash.length ? stash.map(stashCard).join('') : '<p class="gr3-empty">' + g('no_stash') + '</p>') : B.filter(b => b.cat === ribCat).map(cardHTML).join('');
+  return '<div class="gr3-rib"><div class="gr3-cats">' + cats + '<span class="gr3-cnt num" id="grCnt">' + g('cells', { a: cellsUsed(c), b: cellsTotal(c) }) + '</span><button type="button" class="gr3-x" data-g="rib" aria-label="' + g('close_rib') + '">×</button></div>' +
+    '<p class="gr3-why" id="grWhy">' + esc(ribWhy) + '</p><div class="gr3-cards">' + cards + '</div></div>';
+}
+function sheetHTML() {
+  const c = city(), now = H.now(), it = itOf(c, selU), b = it && BY[it.id], lv = myLvl(), perH = L() === 'en' ? 'h' : 'ч';
+  if (!it) return '';
+  const row = (k, v, id) => '<div class="grm-r"><span>' + k + '</span><b class="num"' + (id ? ' id="' + id + '"' : '') + '>' + v + '</b></div>';
+  const nb = nbOf(c, it), step = it.l, need = step < MAXL && step + 1 >= LES_FROM && !H.lesDone(b.les);
+  let rows = '';
+  if (b.inc[0] > 0) rows += row(g('m_rate'), mny(rate(c, it)) + '/' + perH) + row(g('m_pend'), mny(pend(c, it, now)), 'grsPend');
+  if (nb > 0) rows += row(g('m_got_nb'), '+' + Math.round(nb * 100) + '%');
+  if (b.nb) rows += row(g('m_nb'), nbTxt(b));
+  rows += row(g('m_rule'), g('rule_' + b.rule) + ' · ' + g('size_s', { w: b.w, d: b.d }));
+  const btns = (b.inc[0] > 0 ? '<button type="button" class="gr-btn" id="grsCol" data-g="col" data-u="' + it.u + '">' + g('collect') + '</button>' : '') +
+    (step < MAXL ? '<button type="button" class="gr-btn alt" data-g="up" data-u="' + it.u + '"' + (need ? ' data-need="1"' : '') + '>' + g('up', { n: step + 1 }) + ' · ' + short(stepCost(it.id, step + 1)) + '</button>' : '') +
+    '<button type="button" class="gr-btn alt" data-g="mv" data-u="' + it.u + '">' + g('pm_move') + '</button><button type="button" class="gr-btn alt" data-g="st" data-u="' + it.u + '">' + g('pm_store') + '</button>';
+  return '<div class="gr3-sheet"><button type="button" class="gr3-x" data-g="sclose" aria-label="' + g('sclose') + '">×</button><div class="grm-top">' + fig(it.id, it.l) + '<div><h2>' + esc(bn(it.id)) + '</h2><p class="grm-st num">' + g('own_s', { n: it.l }) + pips(it.l) + '</p></div></div>' +
+    '<div class="grm-rows">' + rows + '</div>' + (need ? '<p class="grm-note">' + g('m_need_les', { name: esc(H.lesTitle(b.les)) }) + ' <a href="#learn" data-g="sclose">' + g('m_les_go') + '</a></p>' : '') + (b.perk ? '<p class="grm-note perk">' + g('perk_' + b.perk) + '</p>' : '') +
+    '<p class="grm-err" id="grsErr" role="status"></p><div class="m-btns">' + btns + '</div></div>';
+}
+function distSheetHTML() {
+  const d = DIST[selD]; if (!d) return ''; const lv = myLvl(), can = lv >= d.lvl;
+  return '<div class="gr3-sheet"><button type="button" class="gr3-x" data-g="sclose" aria-label="' + g('sclose') + '">×</button><h2>' + g('d_h', { n: esc(dName(d)) }) + '</h2>' +
+    '<p class="grm-note">' + (can ? g('d_open', { x: mny(d.price, 0) }) : g('d_cond', { n: d.lvl, name: esc(H.levelName(d.lvl - 1)), x: mny(d.price, 0) })) + '</p><p class="grm-err" id="grsErr" role="status"></p>' +
+    '<div class="m-btns"><button type="button" class="gr-btn" data-g="dopen" data-id="' + d.id + '"' + (can ? '' : ' data-need="1"') + '>' + g('d_open', { x: short(d.price) }) + '</button></div></div>';
+}
+function pmBarHTML() {
+  const b = BY[pm.id], mv = !!pm.u;
+  return '<div class="gr3-pm"><div class="pm-t"><b>' + esc(bn(pm.id)) + '</b><span id="pmMsg" class="' + (pm.ok ? 'ok' : 'bad') + '">' + pmMsg() + '</span></div><div class="pm-b">' +
+    (b.w !== b.d ? '<button type="button" class="gr-btn alt" data-g="pmrot">↻ ' + g('pm_rot') + '</button>' : '') + '<button type="button" class="gr-btn" id="pmOk" data-g="pmok"' + (pm.ok ? '' : ' data-off="1"') + '>' + (mv ? g('pm_ok_mv') : g('pm_ok') + ' · ' + short(b.price)) + '</button><button type="button" class="gr-btn alt" data-g="pmx">' + g('pm_cancel') + '</button></div></div>';
+}
+const pmMsg = () => (pm.ok ? g('pm_good') + ' · ' + g('size_s', { w: fp(BY[pm.id], pm.r).w, d: fp(BY[pm.id], pm.r).d }) : (pm.err ? g('e_' + pm.err) : g('pm_pick')));
+function hudPm() { const m = $('pmMsg'), ok = $('pmOk'); if (m && pm) { m.textContent = pmMsg(); m.className = pm.ok ? 'ok' : 'bad'; } if (ok && pm) ok.toggleAttribute('data-off', !pm.ok); if (!m) hud(); }
+function hud() {
+  const low = $('gr3low'), el = $('gr3'); if (!low || !el) return;
+  low.innerHTML = pm ? pmBarHTML() : selU ? sheetHTML() : selD >= 0 ? distSheetHTML() : ribOpen ? ribHTML() : '';
+  el.classList.toggle('has-low', !!low.innerHTML); el.classList.toggle('placing', !!pm);
+  const bb = $('gr3b'); if (bb) bb.hidden = !!pm || ribOpen || !!selU || selD >= 0;
+  const cn = $('gr3cnt'); if (cn) cn.textContent = g('cells', { a: cellsUsed(city()), b: cellsTotal(city()) });
+}
+function hudTop() {
+  return '<div class="gr3-top"><div class="gr3-tp"><span class="lbl">' + g('pool') + '</span><b class="num" id="grPool2"></b></div><button type="button" class="gr-btn" id="grAll2" data-g="all">' + g('coll_all') + '</button><button type="button" class="gr3-ex" data-g="unfull" aria-label="' + g('unfull') + '">' + g('unfull') + ' ×</button></div>';
+}
+const ICON = { full: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg>', unfull: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 4v5H4M15 4v5h5M9 20v-5H4M15 20v-5h5"/></svg>' };
+function toolsHTML() {
+  const t = (a, ic, l) => '<button type="button" class="gr3-b" data-g="' + a + '" aria-label="' + l + '" title="' + l + '">' + ic + '</button>';
+  return '<div class="gr3-tools">' + t(full ? 'unfull' : 'full', full ? ICON.unfull : ICON.full, full ? g('unfull') : g('full')) + t('zin', '+', g('zin')) + t('zout', '−', g('zout')) + t('rl', '⟲', g('rl')) + t('rr', '⟳', g('rr')) + t('home', '⌂', g('home')) + '</div>';
 }
 function render(box) {
   if (!H || !box) return;
-  const c = city(), now = H.now(), u3 = use3d();
+  const c = city(), u3 = use3d(), key = L() + '|' + u3, shell = $('gr3');
+  if (u3 && shell && boxKey === key && box.contains(shell) && G3() && G3().alive()) { refresh(); hud(); sync(); return; }   // уже собрано: обновить значения, не пересоздавая сцену
+  boxKey = key; if (!u3) { pm = null; selU = 0; selD = -1; if (full) setFull(false); }
+  let tip = false; try { tip = localStorage.getItem('dofa_gr_tip') !== '1'; } catch (e) { /* ничего */ }
   box.innerHTML = defs + '<div class="vhead"><h1>' + g('h') + '</h1><p class="slogan">' + g('sub') + '</p></div>' +
     '<div class="gr-sum panel"><div class="gr-st"><span class="lbl">' + g('pool') + '</span><b class="num gr-big" id="grPool"></b><small class="num" id="grCap"></small></div>' +
     '<div class="gr-st"><span class="lbl">' + g('rate') + '</span><b class="num gr-mid" id="grRate"></b></div>' +
     '<button type="button" class="gr-btn" id="grAll" data-g="all">' + g('coll_all') + '</button></div>' +
     (can3() ? '<div class="gr-mode" role="group" aria-label="' + g('h') + '"><button type="button" class="chip' + (u3 ? ' on' : '') + '" data-g="mode" data-m="3d" aria-pressed="' + u3 + '">' + g('m3d') + '</button><button type="button" class="chip' + (u3 ? '' : ' on') + '" data-g="mode" data-m="list" aria-pressed="' + !u3 + '">' + g('mlist') + '</button></div>' : '') +
-    (u3 ? '<div class="gr3" id="gr3"></div>' : '<div class="gr-grid">' + B.map(plotHTML).join('') + '<div class="gr-plot empty" aria-hidden="true"><b class="gr-n">' + g('free') + '</b><span class="gr-s">' + g('soon') + '</span></div>' +
-    '<div class="gr-plot empty" aria-hidden="true"><b class="gr-n">' + g('free') + '</b><span class="gr-s">' + g('soon') + '</span></div></div>');
-  if (u3) G3().mount($('gr3'), api3()); else if (G3()) G3().dispose();
+    (u3 ? '<div class="gr3" id="gr3"><div class="gr3-view" id="gr3v"></div>' + hudTop() + toolsHTML() + '<button type="button" class="gr3-build" id="gr3b" data-g="rib">' + g('build') + '</button><span class="gr3-cn num" id="gr3cnt"></span>' +
+        (tip ? '<p class="gr3-tip" id="gr3tip"><span>' + g('tip') + '</span><button type="button" data-g="tipx">' + g('tip_ok') + '</button></p>' : '') + '<div class="gr3-low" id="gr3low"></div></div>'
+      : listHTML(c));
+  if (u3) { G3().mount($('gr3v'), api3()); hud(); } else if (G3()) G3().dispose();
   refresh();
+}
+function listHTML(c) {
+  const mine = c.p.map(plotHTML).join(''), lv = myLvl();
+  return '<h2 class="h2">' + g('mine') + '</h2><div class="gr-grid">' + (mine || '<div class="gr-plot empty" aria-hidden="true"><b class="gr-n">' + g('free') + '</b></div>') + '</div><h2 class="h2">' + g('shop') + '</h2><div class="gr-grid">' + B.map(b => typeHTML(b, lv)).join('') + '</div>';
+}
+function plotHTML(it) {
+  const c = city(), now = H.now();
+  return '<button type="button" class="gr-plot own" data-g="open" data-u="' + it.u + '">' + fig(it.id, it.l) +
+    '<b class="gr-n">' + esc(bn(it.id)) + '</b><span class="gr-s num">' + (it.s ? g('stash') : g('own_step', { n: it.l }) + ' · ' + g('per_h', { x: short(rate(c, it)) })) + '</span>' +
+    pips(it.l).replace('class="gr-pip"', 'class="gr-pip" style="display:inline-flex"') + '<em class="gr-pd num" data-gp="' + it.u + '">+' + short(pend(c, it, now)) + '</em></button>';
+}
+function typeHTML(b, lv) {
+  const w = whyType(b);
+  return '<button type="button" class="gr-plot ' + (w === 'level' ? 'lock' : 'can') + '" data-g="open" data-id="' + b.id + '">' + fig(b.id, 1) + (w === 'level' ? lockSvg : '') + '<b class="gr-n">' + esc(bn(b.id)) + '</b><span class="gr-s num">' +
+    (w === 'level' ? g('lock_lv', { n: b.lvl, x: short(b.price) }) : g('buy_for', { x: short(b.price) }) + ' · ' + count(city(), b.id) + '/' + limOf(b, lv)) + '</span></button>';
 }
 function refresh() {
   if (!H) return;
@@ -208,38 +542,42 @@ function refresh() {
     $('grPool').textContent = mny(all); $('grRate').textContent = mny(rateAll(c)) + '/' + (L() === 'en' ? 'h' : 'ч');
     $('grCap').textContent = g('cap', { h: capH(c) }) + (rateAll(c) > 0 ? ' · ' + mny(poolMax(c), 0) : '');
     if (bt) { bt.disabled = !(all >= 0.01); bt.title = all >= 0.01 ? '' : g('nothing'); }
-    Object.keys(c.b).forEach(id => { const e = document.querySelector('[data-gp="' + id + '"]'); if (e) e.textContent = '+' + short(pend(c, id, now)); });
+    if ($('grPool2')) { $('grPool2').textContent = mny(all); const b2 = $('grAll2'); if (b2) b2.disabled = !(all >= 0.01); }
+    c.p.forEach(it => { const e = document.querySelector('[data-gp="' + it.u + '"]'); if (e) e.textContent = '+' + short(pend(c, it, now)); });
     if (G3() && G3().alive()) G3().update();
   }
+  if (selU && $('grsPend')) { const it = itOf(c, selU); if (it) { const p = pend(c, it, now); $('grsPend').textContent = mny(p); const cb = $('grsCol'); if (cb) cb.disabled = !(p >= 0.01); } }
   if (openId && !$('modal').hidden && $('grmPend')) {
-    const p = pend(c, openId, now); $('grmPend').textContent = mny(p); const cb = $('grmCol'); if (cb) cb.disabled = !(p >= 0.01);
+    const p = pend(c, openId.u ? openId.u : 0, now); $('grmPend').textContent = mny(p); const cb = $('grmCol'); if (cb) cb.disabled = !(p >= 0.01);
   }
   walletRefresh();
 }
 
-/* окно здания (общее окно страницы #modal) */
-function modal(id) {
-  openId = id; const b = BY[id], c = city(), x = c.b[id], now = H.now(), lv = myLvl(), box = $('modalBody');
+/* окно здания или типа в виде «Список» (общее окно страницы #modal) */
+function modal(o) {
+  openId = o; const c = city(), now = H.now(), lv = myLvl(), box = $('modalBody'), it = o.u ? itOf(c, o.u) : null, b = it ? BY[it.id] : BY[o.id];
+  if (!b) return;
   let rows = '', btns = '', note = '';
-  const row = (k, v, cls) => '<div class="grm-r"><span>' + k + '</span><b class="num ' + (cls || '') + '">' + v + '</b></div>';
-  if (x) {
-    const step = x.l, nxt = step < MAXL ? Math.round(b.inc[step] * bonus(c)) : 0;
-    rows = row(g('m_rate'), mny(rate(c, id)) + '/' + (L() === 'en' ? 'h' : 'ч')) + (step < MAXL ? row(g('m_next'), mny(nxt, 0) + '/' + (L() === 'en' ? 'h' : 'ч')) : '') +
-      '<div class="grm-r"><span>' + g('m_pend') + '</span><b class="num" id="grmPend">' + mny(pend(c, id, now)) + '</b></div>';
-    btns = '<button type="button" class="gr-btn" id="grmCol" data-g="col" data-id="' + id + '">' + g('collect') + '</button>';
+  const row = (k, v, cls) => '<div class="grm-r"><span>' + k + '</span><b class="num ' + (cls || '') + '">' + v + '</b></div>', perH = L() === 'en' ? 'h' : 'ч';
+  if (it) {
+    const step = it.l, nxt = step < MAXL ? Math.round(b.inc[step] * bonus(c)) : 0;
+    rows = (b.inc[0] > 0 ? row(g('m_rate'), mny(rate(c, it)) + '/' + perH) + (step < MAXL ? row(g('m_next'), mny(nxt, 0) + '/' + perH) : '') + '<div class="grm-r"><span>' + g('m_pend') + '</span><b class="num" id="grmPend">' + mny(pend(c, it, now)) + '</b></div>' : '') + (b.nb ? row(g('m_nb'), nbTxt(b)) : '');
+    if (b.inc[0] > 0) btns = '<button type="button" class="gr-btn" id="grmCol" data-g="col" data-u="' + it.u + '">' + g('collect') + '</button>';
     if (step < MAXL) {
       const need = step + 1 >= LES_FROM && !H.lesDone(b.les);
-      btns += '<button type="button" class="gr-btn alt" data-g="up" data-id="' + id + '"' + (need ? ' data-need="1"' : '') + '>' + g('up', { n: step + 1 }) + ' · ' + short(stepCost(id, step + 1)) + '</button>';
+      btns += '<button type="button" class="gr-btn alt" data-g="up" data-u="' + it.u + '"' + (need ? ' data-need="1"' : '') + '>' + g('up', { n: step + 1 }) + ' · ' + short(stepCost(it.id, step + 1)) + '</button>';
       if (need) note = '<p class="grm-note">' + g('m_need_les', { name: esc(H.lesTitle(b.les)) }) + ' <a href="#learn" data-g="close">' + g('m_les_go') + '</a></p>';
     } else btns += '<p class="grm-note">' + g('maxed') + '</p>';
+    if (it.s) btns += '<button type="button" class="gr-btn alt" data-g="unst" data-u="' + it.u + '">' + g('pm_move') + '</button>';
   } else {
-    rows = row(g('m_rate'), mny(b.inc[0], 0) + '/' + (L() === 'en' ? 'h' : 'ч')) + row(g('m_cost'), mny(b.price, 0));
-    if (lv < b.lvl) note = '<p class="grm-note">' + g('m_need_lv', { n: b.lvl, name: esc(H.levelName(b.lvl - 1)) }) + '</p>';
-    else btns = '<button type="button" class="gr-btn" data-g="buy" data-id="' + id + '">' + g('buy') + ' · ' + short(b.price) + '</button>';
+    rows = row(g('m_rate'), mny(b.inc[0], 0) + '/' + perH) + row(g('m_cost'), mny(b.price, 0)) + row(g('m_size'), g('size_s', { w: b.w, d: b.d })) + row(g('m_rule'), g('rule_' + b.rule)) + (b.nb ? row(g('m_nb'), nbTxt(b)) : '');
+    const w = whyType(b);
+    if (w === 'level') note = '<p class="grm-note">' + g('m_need_lv', { n: b.lvl, name: esc(H.levelName(b.lvl - 1)) }) + '</p>';
+    else if (w === 'limit') note = '<p class="grm-note">' + whyText(b, w) + '</p>';
+    else btns = '<button type="button" class="gr-btn" data-g="buy" data-id="' + b.id + '">' + g('buy') + ' · ' + short(b.price) + '</button>';
   }
   if (b.perk) note += '<p class="grm-note perk">' + g('perk_' + b.perk) + '</p>';
-  box.innerHTML = '<div class="grm"><div class="grm-top">' + fig(id, x ? x.l : 1, true) + '<div><h2 id="modalTitle">' + esc(bn(id)) + '</h2><p class="grm-st num">' + (x ? g('own_step', { n: x.l }) : '') +
-    '<span class="gr-pip" aria-hidden="true">' + [1, 2, 3, 4, 5].map(n => '<u' + (x && n <= x.l ? ' class="on"' : '') + '></u>').join('') + '</span></p></div></div>' +
+  box.innerHTML = '<div class="grm"><div class="grm-top">' + fig(b.id, it ? it.l : 1, true) + '<div><h2 id="modalTitle">' + esc(bn(b.id)) + '</h2><p class="grm-st num">' + (it ? g('own_step', { n: it.l }) + pips(it.l) : '') + '</p></div></div>' +
     '<div class="grm-rows">' + rows + '</div>' + note + '<p class="grm-err" id="grmErr" role="status"></p><div class="m-btns">' + btns + '<button type="button" class="btn-ghost" data-g="close">' + g('close') + '</button></div></div>';
   $('modal').hidden = false;
 }
@@ -247,27 +585,69 @@ function errMsg(r, b) {
   if (r.err === 'funds') return g('e_funds', { x: mny(r.cost != null ? r.cost : b.price, 0) });
   if (r.err === 'level') return g('e_level', { n: b.lvl });
   if (r.err === 'lesson') return g('e_lesson', { name: H.lesTitle(b.les) });
-  return '';
+  if (r.err === 'owned' || r.err === 'limit') return g('e_limit', { n: limOf(b, myLvl()) });
+  return g('e_' + r.err);
 }
-function act(a, id) {
-  const now = H.now(), b = id ? BY[id] : null; let r;
-  if (a === 'close') { $('modal').hidden = true; openId = null; return; }
-  if (a === 'open') { modal(id); H.vib(8); return; }
-  if (a === 'all') {
-    r = collect(H.S(), '', now); if (!r.ok) { H.vib(20); return; }
-    H.save(); H.snd(); H.vib([10, 30, 10]); H.toast(g('t_got', { x: mny(r.got) }), 'up', true); H.render(); return;
+function setFull(on) {
+  const el = $('gr3'); on = !!on && !!el; if (full === on) return; full = on;
+  if (el) el.classList.toggle('full', on); document.documentElement.classList.toggle('gr-lock', on);
+  if (on) {
+    try { const d = document.documentElement; if (d.requestFullscreen) d.requestFullscreen().catch(() => { /* слой на весь экран остаётся */ }); } catch (e) { /* ничего */ }
+    try { history.pushState({ gr: 1 }, ''); fullPushed = true; } catch (e) { fullPushed = false; }
+  } else {
+    if (document.fullscreenElement && document.exitFullscreen) { try { document.exitFullscreen().catch(() => { /* ничего */ }); } catch (e) { /* ничего */ } }
+    if (fullPushed) { fullPushed = false; try { if (history.state && history.state.gr) history.back(); } catch (e) { /* ничего */ } }
   }
-  if (a === 'col') {
-    r = collect(H.S(), id, now); if (!r.ok) { H.vib(20); return; }
-    H.save(); H.snd(); H.vib([10, 30, 10]); H.toast(g('t_got', { x: mny(r.got) }), 'up', true); H.render(); modal(id); return;
+  const tl = el && el.querySelector('.gr3-tools'); if (tl) tl.outerHTML = toolsHTML();
+  const tp = el && el.querySelector('.gr3-top'); if (tp && !tp.querySelector('#grPool2')) tp.outerHTML = hudTop();
+  refresh(); if (G3() && G3().alive()) setTimeout(() => G3().update(), 60);
+}
+function act(a, id, u, el) {
+  const now = H.now(), S = H.S(), c = city(); let r, b = id ? BY[id] : null; u = +u || 0; const it = u ? itOf(c, u) : null; if (it) b = BY[it.id];
+  switch (a) {
+    case 'close': $('modal').hidden = true; openId = null; return;
+    case 'open': modal(u ? { u: u } : { id: id }); H.vib(8); return;
+    case 'rib': ribOpen = !ribOpen; selU = 0; selD = -1; ribWhy = ''; hud(); sync(); return;
+    case 'cat': ribCat = el.getAttribute('data-k'); ribWhy = ''; hud(); return;
+    case 'pick': { const w = whyType(b); if (w) { ribWhy = whyText(b, w); const e = $('grWhy'); if (e) e.textContent = ribWhy; H.vib(15); return; } startPlace(id, 0); return; }
+    case 'unst': if (!it) return; if ($('modal') && !$('modal').hidden) { $('modal').hidden = true; } startPlace(it.id, it.u); return;
+    case 'mv': if (!it) return; startPlace(it.id, it.u); return;
+    case 'st': r = store(S, u, now); if (!r.ok) return; H.save(); H.snd(); H.vib(10); H.toast(g('t_stored', { n: bn(it.id) }), 'up', true); selU = 0; H.render(); hud(); sync(); return;
+    case 'pmok': pmConfirm(); return;
+    case 'pmrot': pmRot(); return;
+    case 'pmx': pmCancel(); return;
+    case 'sclose': selU = 0; selD = -1; hud(); sync(); return;
+    case 'tag': selectItem(u); return;
+    case 'dist': selD = +id; selU = 0; ribOpen = false; hud(); sync(); return;
+    case 'dopen': {
+      const k = +id; r = openDist(S, k, myLvl());
+      if (!r.ok) { const e = $('grsErr'); if (e) e.textContent = r.err === 'level' ? g('d_lvl', { n: DIST[k].lvl }) : r.err === 'funds' ? g('e_funds', { x: mny(DIST[k].price, 0) }) : ''; H.vib(20); return; }
+      H.save(); H.snd(); H.vib([10, 30, 10]); H.toast(g('t_opened', { n: dName(DIST[k]) }), 'up', true); selD = -1; H.render(); hud(); sync(); return;
+    }
+    case 'full': setFull(true); return;
+    case 'unfull': setFull(false); return;
+    case 'zin': if (G3()) G3().zoom(0.78); return;
+    case 'zout': if (G3()) G3().zoom(1.28); return;
+    case 'rl': if (G3()) G3().rot(-Math.PI / 4); return;
+    case 'rr': if (G3()) G3().rot(Math.PI / 4); return;
+    case 'home': if (G3()) G3().home(); return;
+    case 'tipx': try { localStorage.setItem('dofa_gr_tip', '1'); } catch (e) { /* ничего */ } { const t = $('gr3tip'); if (t) t.remove(); } return;
+    case 'all':
+      r = collect(S, '', now); if (!r.ok) { H.vib(20); return; }
+      H.save(); H.snd(); H.vib([10, 30, 10]); H.toast(g('t_got', { x: mny(r.got) }), 'up', true); H.render(); return;
+    case 'col':
+      r = collect(S, u, now); if (!r.ok) { H.vib(20); return; }
+      H.save(); H.snd(); H.vib([10, 30, 10]); H.toast(g('t_got', { x: mny(r.got) }), 'up', true); H.render(); if (openId && openId.u === u) modal(openId); hud(); return;
+    case 'buy': r = buy(S, id, myLvl(), now); break;
+    case 'up': r = upgrade(S, u, H.lesDone, now); break;
+    default: return;
   }
-  if (a === 'buy') r = buy(H.S(), id, myLvl(), now);
-  else if (a === 'up') r = upgrade(H.S(), id, H.lesDone, now);
-  else return;
-  if (!r.ok) { const e = $('grmErr'); if (e) e.textContent = errMsg(r, b); H.vib(20); return; }
+  if (!r.ok) { const e = $('grmErr') && !$('modal').hidden ? $('grmErr') : $('grsErr'); if (e) e.textContent = errMsg(r, b); H.vib(20); return; }
   H.save(); H.snd(); H.vib([10, 30, 10]);
-  H.toast(a === 'buy' ? g('t_bought', { n: bn(id) }) : g('t_up', { n: bn(id), s: r.step }), 'up', true);
-  H.render(); modal(id);
+  H.toast(a === 'buy' ? g('t_bought', { n: bn(id) }) : g('t_up', { n: bn(b.id), s: r.step }), 'up', true);
+  H.render();
+  if (!$('modal').hidden) { if (a === 'buy') { openId = { u: r.u }; } modal(openId); }
+  hud(); sync();
 }
 
 /* ============ 3. КОШЕЛЁК: «Доход города» и «Мой результат» ============ */
@@ -425,13 +805,17 @@ function init(host) {
     const el = e.target.closest && e.target.closest('[data-g]'); if (!el || !H) return;
     const a = el.getAttribute('data-g');
     if (a === 'days') { rcDays = +el.getAttribute('data-d'); document.querySelectorAll('.rc-seg .chip').forEach(b => b.classList.toggle('on', +b.getAttribute('data-d') === rcDays)); drawCard(); return; }
-    if (a === 'mode') { try { localStorage.setItem('dofa_gr_mode', el.getAttribute('data-m')); } catch (er) { /* ничего */ } const bx = $('gorodBox'); if (bx) render(bx); return; }
+    if (a === 'mode') { try { localStorage.setItem('dofa_gr_mode', el.getAttribute('data-m')); } catch (er) { /* ничего */ } const bx = $('gorodBox'); if (bx) { boxKey = ''; render(bx); } return; }
     if (a === 'share') { shareCard(false); return; }
     if (a === 'save') { shareCard(true); return; }
     if (el.disabled) return;
-    if (el.tagName === 'A' && a === 'close') { $('modal').hidden = true; openId = null; return; }
-    e.preventDefault(); act(a, el.getAttribute('data-id'));
+    if (el.tagName === 'A' && (a === 'close' || a === 'sclose')) { $('modal').hidden = true; openId = null; if (a === 'sclose') { selU = 0; selD = -1; hud(); sync(); } return; }
+    e.preventDefault(); act(a, el.getAttribute('data-id'), el.getAttribute('data-u'), el);
   });
+  document.addEventListener('fullscreenchange', () => { nativeFs = !!document.fullscreenElement; if (!nativeFs && full) setFull(false); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') { if (pm) pmCancel(); else if (full) setFull(false); } });
+  window.addEventListener('popstate', () => { if (full) { fullPushed = false; setFull(false); } });
+  window.addEventListener('hashchange', () => { if (full) setFull(false); });
 }
-Object.assign(API, { init, render, refresh, mountWallet, walletRefresh, drawCard, periodData, paintCard, nav: () => g('nav'), tx: g });
+Object.assign(API, { init, render, refresh, mountWallet, walletRefresh, drawCard, periodData, paintCard, nav: () => g('nav'), tx: g, dbg: () => ({ pm: pm && { id: pm.id, x: pm.x, y: pm.y, r: pm.r, ok: pm.ok, err: pm.err }, selU: selU, selD: selD, full: full }) });
 })(typeof window !== 'undefined' ? window : globalThis);

@@ -1131,12 +1131,9 @@ body::after{content:"";position:fixed;inset:0;z-index:70;pointer-events:none;opa
 
 /* ---------- skin "quantum" (14.11): высокотехнологичный вид — мелкая сетка, угловые метки на панелях, моноширинные заголовки; всё статичное, без blur ---------- */
 html[data-skin="quantum"] .amb::after{background-size:28px 28px;background-image:linear-gradient(rgba(var(--acc),.07) 1px,transparent 1px),linear-gradient(90deg,rgba(var(--acc),.07) 1px,transparent 1px)}
-html[data-skin="quantum"] .panel{border-color:rgba(var(--acc),.2);
-  background:
-    linear-gradient(var(--gold),var(--gold)) left top/14px 1px no-repeat,linear-gradient(var(--gold),var(--gold)) left top/1px 14px no-repeat,
-    linear-gradient(var(--gold),var(--gold)) right bottom/14px 1px no-repeat,linear-gradient(var(--gold),var(--gold)) right bottom/1px 14px no-repeat,
-    linear-gradient(180deg,rgba(var(--acc),.06),rgba(var(--acc),.015) 40%,rgba(255,255,255,.012));
-  box-shadow:inset 0 0 28px -18px rgba(var(--acc),.7)}
+html[data-skin="quantum"] .panel{border:1px solid transparent;
+  background:linear-gradient(180deg,rgba(var(--acc),.06),rgba(var(--acc),.015) 40%,rgba(255,255,255,.012)) padding-box,linear-gradient(160deg,rgba(var(--acc),.42),rgba(var(--acc2),.16) 55%,rgba(var(--acc),.28)) border-box;
+  box-shadow:inset 0 0 28px -18px rgba(var(--acc),.7)}   /* 19.11: ровная тонкая мягкая кромка по всему контуру со скруглением, без угловых меток и разрывов */
 html[data-skin="quantum"] h1,html[data-skin="quantum"] .h2,html[data-skin="quantum"] .ins-head h1{font-family:var(--mono);font-weight:600;letter-spacing:.04em;text-transform:uppercase}
 html[data-skin="quantum"] h1{text-shadow:0 0 22px rgba(var(--acc),.45)}
 html[data-skin="quantum"] .hdr{border-bottom-color:rgba(var(--acc),.28);box-shadow:0 1px 0 rgba(var(--acc),.12),0 10px 30px -22px rgba(var(--acc),.9)}
@@ -1198,3 +1195,14 @@ html[data-skin="quantum"] #v-money .vhead h1{font-family:var(--mono)}
 @media (min-width:900px){.hdr>.wrap{max-width:none;width:auto;padding-left:64px;padding-right:24px}.topnav a{padding:0 10px;font-size:11.5px}}
 @media (min-width:900px) and (max-width:1399px){.topnav a{padding:0 6px;font-size:10.5px}}
 @media (min-width:900px) and (max-width:1099px){.topnav a{padding:0 4px;font-size:9.5px;letter-spacing:.03em}.hbal{display:none}}
+
+/* 19.11: подсказка «?» — плашка поверх страницы */
+body>.tipbox{position:fixed;z-index:60;margin:0;flex:none;width:max-content;max-width:min(300px,86vw);pointer-events:none;animation:fade .15s ease}
+.sides.lev1 .side small{display:none}
+.side-hint{margin:8px 0 0;color:var(--mut);font:500 12.5px/1.45 var(--sans)}
+.sec-chips{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 10px}.sec-chips .chip{min-height:40px}
+.sec-q{display:block;width:100%;max-width:420px;min-height:44px;margin:0 0 6px;padding:0 14px;border-radius:12px;border:1px solid rgba(var(--acc),.35);background:rgba(var(--acc),.05);color:var(--txt);font:500 14px var(--sans)}
+.sec-q:focus{outline:2px solid rgb(var(--accl));outline-offset:1px}
+.sec-note{margin:0 0 12px;color:var(--mut);font:500 12px var(--sans)}
+.row .r-id small{overflow-wrap:anywhere}
+.live-on{color:#FF8CA6;font-weight:700}.live-on::before{content:'';display:inline-block;width:7px;height:7px;margin-right:5px;border-radius:50%;background:#FF5C8A;box-shadow:0 0 8px #FF5C8A}

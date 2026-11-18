@@ -33,7 +33,7 @@ function def(cat, rows) {
   rows.forEach(r => {
     const o = r[4] || {};
     INS[r[0]] = { sym: r[0], cat: cat, ru: r[1], en: r[2], base: r[3], tk: o.tk || r[0],
-      vol: CAT[cat].vol * (o.vm || 1), plain: !!o.plain, bn: o.bn || null, cg: o.cg || null, fx: o.fx || null, proxy: o.proxy || null };
+      vol: CAT[cat].vol * (o.vm || 1), plain: !!o.plain, bn: o.bn || null, cg: o.cg || null, fx: o.fx || null, proxy: o.proxy || null, sec: o.sec || null, kr: o.kr || '', ke: o.ke || '' };
   });
 }
 def('crypto', [
@@ -100,6 +100,49 @@ def('stocks', [
   ['PLTR', 'Palantir', 'Palantir', 75, { vm: 1.8 }], ['COIN', 'Coinbase', 'Coinbase', 250, { vm: 1.8 }],
   ['AVGO', 'Broadcom', 'Broadcom', 170, { vm: 1.3 }], ['LLY', 'Eli Lilly', 'Eli Lilly', 800, { vm: 1 }]
 ]);
+// 19.11: ещё 36 публичных компаний по отраслям. Цены — «Модель» (стартовая цена для расчёта, не котировка): настоящих котировок в quotes.json для них нет.
+// sec — отрасль для фильтра, kr/ke — «чем известна» по-русски и по-английски (поиск идёт и по ним, поэтому там названия брендов).
+const stk = (sym, ru, en, base, sec, kr, ke, vm) => [sym, ru, en, base, { sec: sec, kr: kr, ke: ke, vm: vm || 1 }];
+def('stocks', [
+  stk('TTWO', 'Take-Two', 'Take-Two', 235, 'games', 'GTA, Red Dead, NBA 2K, студия Rockstar', 'GTA, Red Dead, NBA 2K, Rockstar studio', 1.2),
+  stk('EA', 'Electronic Arts', 'Electronic Arts', 150, 'games', 'FC (FIFA), The Sims, Battlefield, Apex', 'FC (FIFA), The Sims, Battlefield, Apex', 0.9),
+  stk('RBLX', 'Roblox', 'Roblox', 70, 'games', 'платформа игр Roblox', 'the Roblox game platform', 1.8),
+  stk('U', 'Unity', 'Unity', 25, 'games', 'движок Unity для игр', 'the Unity game engine', 1.8),
+  stk('SONY', 'Sony', 'Sony', 22, 'games', 'PlayStation, кино Sony Pictures, музыка', 'PlayStation, Sony Pictures, music', 1.1),
+  stk('NTDOY', 'Nintendo', 'Nintendo', 14, 'games', 'Mario, Zelda, Pokémon, консоль Switch', 'Mario, Zelda, Pokémon, Switch console', 1.1),
+  stk('SPOT', 'Spotify', 'Spotify', 650, 'media', 'музыка и подкасты по подписке', 'music and podcasts by subscription', 1.2),
+  stk('WBD', 'Warner Bros. Discovery', 'Warner Bros. Discovery', 11, 'media', 'Warner Bros, HBO, Max, Discovery', 'Warner Bros, HBO, Max, Discovery', 1.4),
+  stk('CMCSA', 'Comcast', 'Comcast', 35, 'media', 'NBCUniversal, Universal Pictures, Peacock', 'NBCUniversal, Universal Pictures, Peacock', 0.8),
+  stk('ROKU', 'Roku', 'Roku', 90, 'media', 'приставки и платформа стриминга', 'streaming players and platform', 1.5),
+  stk('LYV', 'Live Nation', 'Live Nation', 140, 'media', 'концерты и Ticketmaster', 'concerts and Ticketmaster', 1.1),
+  stk('IMAX', 'IMAX', 'IMAX', 28, 'media', 'кинотеатры с огромными экранами', 'giant-screen cinemas', 1.2),
+  stk('FOXA', 'Fox Corporation', 'Fox Corporation', 55, 'media', 'Fox News, Fox Sports, Tubi', 'Fox News, Fox Sports, Tubi', 0.9),
+  stk('LULU', 'Lululemon', 'Lululemon', 300, 'fashion', 'одежда для йоги и спорта', 'yoga and athletic wear', 1.2),
+  stk('RL', 'Ralph Lauren', 'Ralph Lauren', 270, 'fashion', 'Polo Ralph Lauren', 'Polo Ralph Lauren', 1),
+  stk('TPR', 'Tapestry', 'Tapestry', 90, 'fashion', 'сумки Coach и Kate Spade', 'Coach and Kate Spade bags', 1.1),
+  stk('EL', 'Estée Lauder', 'Estée Lauder', 70, 'fashion', 'косметика Clinique, MAC, La Mer', 'Clinique, MAC, La Mer cosmetics', 1.2),
+  stk('DECK', 'Deckers', 'Deckers', 180, 'fashion', 'обувь UGG и HOKA', 'UGG and HOKA shoes', 1.3),
+  stk('UA', 'Under Armour', 'Under Armour', 7, 'fashion', 'спортивная одежда Under Armour', 'Under Armour sportswear', 1.5),
+  stk('PEP', 'PepsiCo', 'PepsiCo', 145, 'food', "Pepsi, Lay's, Doritos, Gatorade", "Pepsi, Lay's, Doritos, Gatorade", 0.6),
+  stk('MDLZ', 'Mondelez', 'Mondelez', 60, 'food', 'Oreo, Milka, Toblerone', 'Oreo, Milka, Toblerone', 0.7),
+  stk('KHC', 'Kraft Heinz', 'Kraft Heinz', 28, 'food', 'кетчуп Heinz, сыр Kraft', 'Heinz ketchup, Kraft cheese', 0.7),
+  stk('CMG', 'Chipotle', 'Chipotle', 55, 'food', 'сеть Chipotle (буррито)', 'Chipotle burrito chain', 1.1),
+  stk('YUM', 'Yum! Brands', 'Yum! Brands', 145, 'food', 'KFC, Pizza Hut, Taco Bell', 'KFC, Pizza Hut, Taco Bell', 0.7),
+  stk('MNST', 'Monster Beverage', 'Monster Beverage', 65, 'food', 'энергетик Monster', 'Monster Energy drinks', 1),
+  stk('HSY', 'Hershey', 'Hershey', 170, 'food', "шоколад Hershey's, Reese's", "Hershey's and Reese's chocolate", 0.7),
+  stk('DPZ', "Domino's", "Domino's", 450, 'food', "пицца Domino's", "Domino's pizza", 0.9),
+  stk('KDP', 'Keurig Dr Pepper', 'Keurig Dr Pepper', 33, 'food', 'Dr Pepper, кофемашины Keurig', 'Dr Pepper, Keurig coffee makers', 0.7),
+  stk('F', 'Ford', 'Ford', 11, 'auto', 'Mustang, F-150', 'Mustang, F-150', 1.1),
+  stk('GM', 'General Motors', 'General Motors', 55, 'auto', 'Chevrolet, Cadillac, GMC', 'Chevrolet, Cadillac, GMC', 1),
+  stk('RACE', 'Ferrari', 'Ferrari', 450, 'auto', 'суперкары Ferrari', 'Ferrari supercars', 0.9),
+  stk('TM', 'Toyota', 'Toyota', 180, 'auto', 'Toyota, Lexus', 'Toyota, Lexus', 0.8),
+  stk('ABNB', 'Airbnb', 'Airbnb', 125, 'travel', 'аренда жилья по всему миру', 'home rentals worldwide', 1.3),
+  stk('BKNG', 'Booking Holdings', 'Booking Holdings', 5000, 'travel', 'Booking.com, Agoda, Kayak', 'Booking.com, Agoda, Kayak', 1),
+  stk('MAR', 'Marriott', 'Marriott', 270, 'travel', 'отели Marriott, Ritz-Carlton, W', 'Marriott, Ritz-Carlton, W hotels', 0.9),
+  stk('CCL', 'Carnival', 'Carnival', 25, 'travel', 'круизные лайнеры', 'cruise ships', 1.5)
+]);
+const SEC0 = { tech: ['AAPL', 'NVDA', 'MSFT', 'AMZN', 'GOOGL', 'META', 'AMD', 'INTC', 'ORCL', 'ADBE', 'CRM', 'AVGO', 'PLTR'], media: ['NFLX', 'DIS'], food: ['KO', 'MCD', 'SBUX', 'COST', 'WMT'], fashion: ['NKE'], finance: ['JPM', 'V', 'PYPL', 'COIN'], auto: ['TSLA'], travel: ['UBER'] };
+Object.keys(SEC0).forEach(k => SEC0[k].forEach(sy => { if (INS[sy]) INS[sy].sec = k; }));
 def('metals', [
   ['XAU', 'Золото, унция', 'Gold, oz', 3875, { bn: 'PAXGUSDT', cg: 'pax-gold', proxy: 'PAXG' }],
   ['XAG', 'Серебро, унция', 'Silver, oz', 31.2, { vm: 1.6 }],
@@ -486,11 +529,11 @@ const T = {
     atm_min: 'Минимум $1', atm_max: 'Сумма не принимается',
     disclaimer: 'Криптовалюты и золото (через токен PAXG) — живые цены биржи Binance. Валюты — справочный курс, обновляется раз в сутки. Акции, индексы, сырьё и остальные металлы — с задержкой из нашего файла котировок. Если источник недоступен, цена моделируется вокруг последней известной и помечается «Модель». Это не инвестиционная рекомендация. Настоящих денег здесь нет.',
     market_lbl: 'Шесть рынков', market_h: 'Рынок', market_sub: 'Выберите класс активов. У каждой цены подписано, откуда она: живая, с задержкой или модель.',
-    instr: 'инструментов', back_market: 'Рынок',
+    instr: 'инструментов', back_market: 'Рынок', sec_all: 'Все', sec_tech: 'Технологии', sec_games: 'Игры', sec_media: 'Кино и стриминг', sec_fashion: 'Бренды и мода', sec_food: 'Еда и напитки', sec_auto: 'Авто', sec_travel: 'Путешествия', sec_finance: 'Финансы', sec_search: 'Найти: GTA, Nike, пицца', sec_none: 'Ничего не найдено', sec_note: 'Цены новых компаний — модель, не биржевая котировка.',
     st_live: 'Live', st_delayed: 'Задержка', st_model: 'Модель', st_near: 'около цены от', st_proxy: 'через',
     tf_1m: '1м', tf_5m: '5м', tf_1h: '1ч', tf_4h: '4ч', tf_24h: '24ч', u_s: 'с', u_m: 'м', u_h: 'ч', now: 'сейчас', ch24: 'за 24 ч',
     chart_real: 'График: реальные свечи Binance.', chart_synth: 'График смоделирован вокруг последней известной цены.',
-    tr_amount: 'Сумма', tr_all: 'Всё', tr_lev: 'Плечо', tr_buy: 'Купить', tr_buy_s: 'на рост', tr_sell: 'Продать', tr_sell_s: 'на падение',
+    tr_amount: 'Сумма', tr_all: 'Всё', tr_lev: 'Плечо', tr_buy: 'Купить', tr_buy_s: 'на рост', tr_sell: 'Продать', tr_sell_s: 'на падение', tr_side_hint: 'Купили — в плюсе, если цена вырастет. Продали — в плюсе, если упадёт. Срока нет: закрываете сами.',
     tr_cash: 'Свободно', tr_fee: 'Комиссия 0.1%: {f} · объём позиции: {v}',
     lev_warn: 'Плечо ×{l} умножает и прибыль, и убыток. Позиция закроется принудительно, когда убыток дойдёт до залога — при движении цены на {p}% против вас: покупка — ниже {a}, продажа — выше {b}.',
     err_min: 'Минимальная сумма — $1', err_funds: 'Не хватает свободных денег с учётом комиссии', err_bad: 'Не получилось открыть позицию',
@@ -540,11 +583,11 @@ const T = {
     atm_min: 'Minimum is $1', atm_max: 'This amount is not accepted',
     disclaimer: 'Crypto and gold (via the PAXG token) are live Binance prices. Forex is a reference rate updated once a day. Stocks, indices, commodities and other metals are delayed quotes from our quotes file. When a source is unreachable the price is modelled around the last known one and marked “Model”. This is not investment advice. There is no real money here.',
     market_lbl: 'Six markets', market_h: 'Market', market_sub: 'Pick an asset class. Every price says where it comes from: live, delayed or model.',
-    instr: 'instruments', back_market: 'Market',
+    instr: 'instruments', back_market: 'Market', sec_all: 'All', sec_tech: 'Tech', sec_games: 'Games', sec_media: 'Film & streaming', sec_fashion: 'Brands & fashion', sec_food: 'Food & drink', sec_auto: 'Auto', sec_travel: 'Travel', sec_finance: 'Finance', sec_search: 'Search: GTA, Nike, pizza', sec_none: 'Nothing found', sec_note: 'Prices of the new companies are a model, not an exchange quote.',
     st_live: 'Live', st_delayed: 'Delayed', st_model: 'Model', st_near: 'around the price of', st_proxy: 'via',
     tf_1m: '1m', tf_5m: '5m', tf_1h: '1h', tf_4h: '4h', tf_24h: '24h', u_s: 's', u_m: 'm', u_h: 'h', now: 'now', ch24: '24 h',
     chart_real: 'Chart: real Binance candles.', chart_synth: 'Chart is modelled around the last known price.',
-    tr_amount: 'Amount', tr_all: 'All', tr_lev: 'Leverage', tr_buy: 'Buy', tr_buy_s: 'price goes up', tr_sell: 'Sell', tr_sell_s: 'price goes down',
+    tr_amount: 'Amount', tr_all: 'All', tr_lev: 'Leverage', tr_buy: 'Buy', tr_buy_s: 'price goes up', tr_sell: 'Sell', tr_sell_s: 'price goes down', tr_side_hint: 'Buy: you profit if the price rises. Sell: you profit if it falls. No deadline: you close it yourself.',
     tr_cash: 'Available', tr_fee: 'Fee 0.1%: {f} · position size: {v}',
     lev_warn: 'Leverage ×{l} multiplies losses as well as gains. The position is force-closed when the loss reaches your margin — a {p}% move against you: buy — below {a}, sell — above {b}.',
     err_min: 'Minimum amount is $1', err_funds: 'Not enough available cash including the fee', err_bad: 'Could not open the position',
@@ -890,7 +933,11 @@ function drawSync() {
 async function candles(sym, kind, limit) {
   const a = await getJSON(BN[bnHost] + '/api/v3/klines?symbol=' + INS[sym].bn + '&interval=' + kind + '&limit=' + limit);
   if (!Array.isArray(a)) throw new Error('shape');
-  return a.filter(Array.isArray).map(k => ({ t: E.num(k[0]), h: E.num(k[2]), l: E.num(k[3]), c: E.num(k[4]) })).filter(k => k.c > 0 && k.t > 0);
+  const out = a.filter(Array.isArray).map(k => ({ t: E.num(k[0]), h: E.num(k[2]), l: E.num(k[3]), c: E.num(k[4]) })).filter(k => k.c > 0 && k.t > 0);
+  // 19.11: пара снята с торгов (TONUSDT кончается 30.06) — биржа отдаёт старые свечи; их не рисуем как настоящие, график остаётся модельным от живой цены
+  const ivms = { '1s': 1e3, '1m': 6e4, '5m': 3e5, '15m': 9e5, '1h': 36e5, '4h': 144e5, '1d': 864e5 }[kind] || 36e5;
+  if (!out.length || Date.now() - out[out.length - 1].t > Math.max(ivms * 5, 6 * 36e5)) throw new Error('stale');
+  return out;
 }
 async function loadCandles(sym, kind, limit) {
   if (!INS[sym].bn || !bnLive) return;
@@ -1273,15 +1320,20 @@ function setView(v) {
   document.querySelectorAll('.rows, .cs-list, #betList').forEach(el => el.classList.toggle('tile', S.vw === 'tile'));
   upd(true);
 }
+// 19.11: отрасли и поиск по бренду в разделе «Акции»
+const SECS = ['all', 'tech', 'games', 'media', 'fashion', 'food', 'auto', 'travel', 'finance'];
+const secOk = s => { if (ui.cat !== 'stocks') return true; const I = INS[s], q = (ui.secQ || '').trim().toLowerCase(); if (ui.sec && ui.sec !== 'all' && I.sec !== ui.sec) return false; return !q || (s + ' ' + I.ru + ' ' + I.en + ' ' + I.kr + ' ' + I.ke).toLowerCase().indexOf(q) >= 0; };
+const secBar = () => (ui.cat !== 'stocks' ? '' : '<div class="chips sec-chips" role="group">' + SECS.map(k => '<button class="chip' + ((ui.sec || 'all') === k ? ' on' : '') + '" type="button" data-sec="' + k + '">' + t('sec_' + k) + '</button>').join('') + '</div>' +
+  '<input class="sec-q" id="secQ" type="search" autocomplete="off" placeholder="' + esc(t('sec_search')) + '" value="' + esc(ui.secQ || '') + '"><p class="sec-note">' + t('sec_note') + '</p>');
 function renderMarket() {
   const box = $('marketBox'); if (!box) return;
   if (ui.sym) return renderIns(box);
   if (ui.cat) {
     const c = E.CAT[ui.cat];
     box.innerHTML = '<a class="crumb" href="#market"><span aria-hidden="true">←</span> ' + t('back_market') + '</a>' +
-      '<div class="vhead"><h1>' + esc(L(c)) + '</h1></div>' + vtog() + '<div class="rows' + tileCls() + '">' +
-      SYMS.filter(s => INS[s].cat === ui.cat).map(s =>
-        '<a class="row" href="#market/' + ui.cat + '/' + s + '"><span class="r-id"><b>' + esc(tk(s)) + ' <i class="st" data-stt="' + s + '"></i></b><small>' + esc(L(INS[s])) + '</small></span>' +
+      '<div class="vhead"><h1>' + esc(L(c)) + '</h1></div>' + secBar() + vtog() + '<div class="rows' + tileCls() + '" id="secRows">' +
+      SYMS.filter(s => INS[s].cat === ui.cat && secOk(s)).map(s =>
+        '<a class="row" href="#market/' + ui.cat + '/' + s + '"><span class="r-id"><b>' + esc(tk(s)) + ' <i class="st" data-stt="' + s + '"></i></b><small>' + esc(L(INS[s])) + (INS[s].kr ? ' · ' + esc(S.lang === 'en' ? INS[s].ke : INS[s].kr) : '') + '</small></span>' +
         '<svg class="r-spark" viewBox="0 0 60 26" preserveAspectRatio="none" aria-hidden="true"><polyline data-spark="' + s + '"/></svg>' +
         '<span class="r-px"><b class="num" data-px="' + s + '"></b><em class="num" data-ch="' + s + '"></em></span></a>').join('') + '</div>';
     return;
@@ -1425,8 +1477,8 @@ function renderIns(box) {
     '<p class="lbl mt qrow">' + t('tr_lev') + qm('tip_lev') + '</p><div class="chips eq">' +
     E.LEVS.map(l => '<button class="chip' + (l === ui.lev ? ' on' : '') + '" type="button" data-lev="' + l + '">×' + l + '</button>').join('') + '</div>' +
     '<div class="warn" id="levWarn" hidden></div><p class="fee num" id="feeLine"></p>' +
-    '<div class="sides"><button class="side buy" type="button" data-side="1"><b>' + t('tr_buy') + '</b><small>' + t('tr_buy_s') + '</small></button>' +
-    '<button class="side sell" type="button" data-side="-1"><b>' + t('tr_sell') + '</b><small>' + t('tr_sell_s') + '</small></button></div>' +
+    '<div class="sides' + (ui.lev > 1 ? '' : ' lev1') + '"><button class="side buy" type="button" data-side="1"><b>' + t('tr_buy') + '</b><small>' + t('tr_buy_s') + '</small></button>' +
+    '<button class="side sell" type="button" data-side="-1"><b>' + t('tr_sell') + '</b><small>' + t('tr_sell_s') + '</small></button></div><p class="side-hint">' + t('tr_side_hint') + '</p>' +
     '<p class="msg" id="trMsg" role="status" aria-live="polite"></p></div></div>' +
     '<h2 class="h2">' + t('ins_pos') + '</h2><div class="poslist" id="insPos"></div>';
   posList($('insPos'), S.positions.filter(p => p.sym === s), 'pos_none');
@@ -1478,7 +1530,7 @@ Object.assign(T.ru, {
   nav_compare: 'Сравнить', nav_top: 'Топ',
   cmp_lbl: 'Два — четыре актива', cmp_h: 'Сравнение',
   cmp_sub: 'Выберите от двух до четырёх активов из любых разделов. Все линии начинаются со 100% — видно, кто вырос, а кто упал за период.',
-  cmp_sel: 'Выбрано', cmp_add: 'Добавить из раздела', cmp_none: 'Ничего не выбрано', cmp_need: 'Выберите хотя бы два актива',
+  cmp_sel: 'Выбрано', cmp_add: 'Добавить из раздела', cmp_none: 'Ничего не выбрано', cmp_need: 'Выберите актив',
   cmp_max: 'Не больше четырёх активов', cmp_load: 'Загружаю историю…',
   per_1h: '1 час', per_1d: '1 день', per_3d: '3 дня', per_7d: '7 дней', per_30d: 'Месяц', per_90d: '3 месяца', p1_1d: '1 д', p1_3d: '3 д', p1_7d: '7 д', p1_14d: '14 д', p1_30d: '30 д', p1_90d: '3 мес', p1_180d: '6 мес', p1_365d: '12 мес', p1_540d: '18 мес', per_14d: '14 дней', per_180d: '6 месяцев', per_365d: '12 месяцев', per_540d: '18 месяцев',
   cmp_real: 'Реальная история', cmp_model: 'Модель: настоящей истории нет', cmp_daily: 'Реальные данные только по дням', cmp_nointra: 'Модель: внутри дня данных нет',
@@ -1494,7 +1546,7 @@ Object.assign(T.en, {
   nav_compare: 'Compare', nav_top: 'Top',
   cmp_lbl: 'Two to four assets', cmp_h: 'Compare',
   cmp_sub: 'Pick two to four assets from any section. Every line starts at 100%, so you can see what rose and what fell over the period.',
-  cmp_sel: 'Selected', cmp_add: 'Add from section', cmp_none: 'Nothing selected', cmp_need: 'Pick at least two assets',
+  cmp_sel: 'Selected', cmp_add: 'Add from section', cmp_none: 'Nothing selected', cmp_need: 'Pick an asset',
   cmp_max: 'Four assets at most', cmp_load: 'Loading history…',
   per_1h: '1 hour', per_1d: '1 day', per_3d: '3 days', per_7d: '7 days', per_30d: 'Month', per_90d: '3 months', p1_1d: '1 d', p1_3d: '3 d', p1_7d: '7 d', p1_14d: '14 d', p1_30d: '30 d', p1_90d: '3 mo', p1_180d: '6 mo', p1_365d: '12 mo', p1_540d: '18 mo', per_14d: '14 days', per_180d: '6 months', per_365d: '12 months', per_540d: '18 months',
   cmp_real: 'Real history', cmp_model: 'Model: no real history', cmp_daily: 'Real data, daily only', cmp_nointra: 'Model: no intraday data',
@@ -1932,8 +1984,8 @@ const hm = x => { const d = new Date(x); return p2(d.getHours()) + ':' + p2(d.ge
 // Lines start at 0% (the first point of the period); a tap on a legend row hides or shows its line.
 function drawCmp() {
   const el = $('cvCmp'); if (!el) return;
-  const n = S.cmp.syms.length, ser = n >= 2 ? cmpSeries() : [], emp = $('cvCmpE'), intra = ser.some(s => s.intra);
-  if (emp) { emp.hidden = ser.length >= 2; emp.textContent = t(n >= 2 && cmpBusy ? 'cmp_load' : 'cmp_need'); }
+  const n = S.cmp.syms.length, ser = n >= 1 ? cmpSeries() : [], emp = $('cvCmpE'), intra = ser.some(s => s.intra);
+  if (emp) { emp.hidden = ser.length >= 1; emp.textContent = t(n >= 1 && cmpBusy ? 'cmp_load' : 'cmp_need'); }
   if (!LWC()) { drawChart(cvIn(el), ser, { base: 100, smooth: true, fy: v => v.toFixed(1) + '%', fx: intra ? hm : dm, empty: '' }); return; }
   let c = CH.cmp;
   if (c && (c.el !== el || (ser.length && c.intra !== intra))) { chartKill('cmp'); c = null; }
@@ -1964,15 +2016,15 @@ function cmpLegend(p) {
 }
 const KIND_TXT = { real: 'cmp_real', daily: 'cmp_daily', model: 'cmp_model', nointra: 'cmp_nointra' };
 function fillCmp() {
-  const ser = S.cmp.syms.length >= 2 ? cmpSeries() : [], lg = $('cmpLegend'), tb = $('cmpTable');
+  const ser = S.cmp.syms.length >= 1 ? cmpSeries() : [], lg = $('cmpLegend'), tb = $('cmpTable');
   if (lg) lg.innerHTML = ser.map(s => '<button type="button" class="lg-row' + (ui.cmpOff[s.sym] ? ' off' : '') + '" data-cl="' + s.sym + '" aria-pressed="' + !ui.cmpOff[s.sym] + '"><i class="dot" style="background:' + s.color + '"></i><span class="lg-name"><b class="num">' + esc(s.name) + '</b><small>' + esc(L(INS[s.sym])) + '</small>' +
     '<span class="st" data-st="' + (s.real ? 'delayed' : 'model') + '">' + t(KIND_TXT[s.kind] || 'cmp_model') + '</span></span>' +
     '<b class="num ' + (s.res > 0 ? 'up' : s.res < 0 ? 'down' : '') + '" data-lgv="' + s.sym + '" data-res="' + s.res + '">' + pct(s.res) + '</b></button>').join('') + (ser.length ? '<p class="lg-tap">' + t('cmp_tap') + '</p>' : '');
   if (!tb) return;
-  if (ser.length < 2) { tb.innerHTML = ''; return; }
-  const so = ser.slice().sort((a, b) => b.res - a.res), best = so[0], worst = so[so.length - 1];
+  if (ser.length < 1) { tb.innerHTML = ''; return; }
+  const so = ser.slice().sort((a, b) => b.res - a.res), best = so[0], worst = so[so.length - 1], two = ser.length >= 2;
   const r = (k, s) => '<div class="hrow"><div><b>' + t(k) + '</b><small>' + esc(s.name) + ' · ' + esc(L(INS[s.sym])) + (s.real ? '' : ' · ' + t('st_model')) + '</small></div><span class="num ' + (s.res > 0 ? 'up' : s.res < 0 ? 'down' : '') + '">' + pct(s.res) + '</span></div>';
-  tb.innerHTML = '<div class="hist">' + r('cmp_best', best) + r('cmp_worst', worst) + '</div><h2 class="h2">' + t('cmp_1000') + '</h2><div class="chips per per1000" role="group">' + PER_1000.map(p => '<button class="chip' + (p === perKey(S.cmp.per) ? ' on' : '') + '" type="button" data-per="' + p + '">' + t('p1_' + p) + '</button>').join('') + '</div><div class="hist">' +
+  tb.innerHTML = (two ? '<div class="hist">' + r('cmp_best', best) + r('cmp_worst', worst) + '</div>' : '') + '<h2 class="h2">' + t('cmp_1000') + '</h2><div class="chips per per1000" role="group">' + PER_1000.map(p => '<button class="chip' + (p === perKey(S.cmp.per) ? ' on' : '') + '" type="button" data-per="' + p + '">' + t('p1_' + p) + '</button>').join('') + '</div><div class="hist">' +
     so.map(s => '<div class="hrow"><div><b>' + esc(s.name) + '</b><small>$1' + NB + '000 →' + (s.real ? '' : ' · ' + t('st_model')) + '</small></div><span class="num ' + (s.res > 0 ? 'up' : s.res < 0 ? 'down' : '') + '">' + money(1000 * (1 + s.res)) + '</span></div>').join('') + '</div>';
 }
 async function cmpLoad() {
@@ -2050,7 +2102,7 @@ function cmpSetPer(pk) {
    API is foreign data and reaches the page through textContent only.
    ===================================================================== */
 Object.assign(T.ru, {
-  nav_bets: 'Ставки', bet_h: 'Ставки', bt_sport: 'Спорт', bt_pred: 'Прогнозы',
+  nav_bets: 'Ставки', bet_h: 'Ставки', bt_sport: 'Спорт', bt_pred: 'Прогнозы', bc_live: 'Лайв', bet_live_on: 'идёт сейчас', bet_live_left: 'до итога {n} ч', bet_live_left_m: 'до итога {n} мин',
   bc_all: 'Все', bc_sports: 'Спорт', bc_esports: 'Киберспорт', bc_politics: 'Политика', bc_world: 'Мир', bc_crypto: 'Крипта', bc_economy: 'Экономика', bc_finance: 'Финансы', bc_tech: 'Технологии', bc_culture: 'Культура',
   sp_mma: 'MMA', sp_box: 'Бокс', sp_soc: 'Футбол', sp_ten: 'Теннис', sp_bsk: 'Баскетбол',
   sp_none: 'Сейчас событий нет.', d_today: 'Сегодня', d_tom: 'Завтра', bet_draw: 'Ничья', x_1: 'П1', x_0: 'Х', x_2: 'П2',
@@ -2067,7 +2119,7 @@ Object.assign(T.ru, {
   tip_bets: 'Источник — рынок прогнозов Polymarket. Коэффициент = 1 / цена исхода, доли букмекера в нём нет: у настоящих букмекеров он ниже. Названия событий на английском, как в источнике. Деньги игровые, вывести их нельзя.'
 });
 Object.assign(T.en, {
-  nav_bets: 'Bets', bet_h: 'Bets', bt_sport: 'Sport', bt_pred: 'Predictions',
+  nav_bets: 'Bets', bet_h: 'Bets', bt_sport: 'Sport', bt_pred: 'Predictions', bc_live: 'Live', bet_live_on: 'in play now', bet_live_left: '{n} h to result', bet_live_left_m: '{n} min to result',
   bc_all: 'All', bc_sports: 'Sports', bc_esports: 'Esports', bc_politics: 'Politics', bc_world: 'World', bc_crypto: 'Crypto', bc_economy: 'Economy', bc_finance: 'Finance', bc_tech: 'Tech', bc_culture: 'Culture',
   sp_mma: 'MMA', sp_box: 'Boxing', sp_soc: 'Football', sp_ten: 'Tennis', sp_bsk: 'Basketball',
   sp_none: 'No events right now.', d_today: 'Today', d_tom: 'Tomorrow', bet_draw: 'Draw', x_1: '1', x_0: 'X', x_2: '2',
@@ -2084,7 +2136,7 @@ Object.assign(T.en, {
   tip_bets: 'Source: the Polymarket prediction market. Odds = 1 / outcome price, with no bookmaker margin: real bookmakers pay less. Event names come in English, as in the source. This is play money and cannot be withdrawn.'
 });
 const PM = 'https://gamma-api.polymarket.com/markets';
-const BCATS = [['all', 0], ['sports', 1], ['esports', 64], ['politics', 2], ['world', 100265], ['crypto', 21], ['economy', 100328], ['finance', 120], ['tech', 1401], ['culture', 596]];
+const BCATS = [['live', -1], ['all', 0], ['sports', 1], ['esports', 64], ['politics', 2], ['world', 100265], ['crypto', 21], ['economy', 100328], ['finance', 120], ['tech', 1401], ['culture', 596]];
 // Sport lines: the same open Polymarket API, only "who wins" (moneyline) markets with a start time. k = 2 two-way, k = 3 home / draw / away.
 const SPORTS = [{ id: 'mma', tag: 279, k: 2 }, { id: 'box', tag: 683, k: 2, x: 1 }, { id: 'soc', tag: 100350, k: 3 }, { id: 'ten', tag: 864, k: 2 }, { id: 'bsk', tag: 745, k: 2 }];
 const BPAGE = 60, SPAGE = 100, BLO = 0.02, BHI = 0.98;
@@ -2144,12 +2196,27 @@ function needMoney(el, key) {
   const a = mkEl('a', 'btn-gold topup', t('topup')); a.href = '#money'; a.setAttribute('data-act', 'modal-close'); el.appendChild(a);
 }
 const qm = k => '<button class="qm" type="button" data-tip="' + k + '" aria-label="' + t('tip_aria') + '">?</button>';
-function showTip(el) {
-  const old = document.querySelector('.tipbox'), mine = old && old.previousElementSibling === el;
-  if (old) old.remove();
-  if (mine) return;
-  const b = mkEl('span', 'tipbox', t(el.getAttribute('data-tip'))); b.setAttribute('role', 'note');
-  el.insertAdjacentElement('afterend', b);
+// 19.11: подсказка «?» — всплывающая плашка поверх страницы (не раздвигает карточку); компьютер: наведение и фокус, прячется при уходе; телефон: касание, закрытие касанием в любом месте или через 4 с
+let tipTimer = 0, tipAt = 0;
+function hideTip() { clearTimeout(tipTimer); document.querySelectorAll('.tipbox').forEach(n => n.remove()); }
+function showTip(el, keep) {
+  const old = document.querySelector('.tipbox'), mine = old && old.__for === el;
+  if (mine && !keep && Date.now() - tipAt < 600) { clearTimeout(tipTimer); tipTimer = setTimeout(hideTip, 4000); return; }      // касание уже показало подсказку через фокус
+  hideTip();
+  if (mine && !keep) return;
+  const b = mkEl('span', 'tipbox', t(el.getAttribute('data-tip'))); b.setAttribute('role', 'note'); b.__for = el; tipAt = Date.now(); document.body.appendChild(b);
+  const r = el.getBoundingClientRect(), w = b.offsetWidth, h = b.offsetHeight, vw = document.documentElement.clientWidth;
+  let x = Math.max(8, Math.min(vw - w - 8, r.left + r.width / 2 - w / 2)), y = r.bottom + 8; if (y + h > innerHeight - 8) y = Math.max(8, r.top - h - 8);
+  b.style.left = x + 'px'; b.style.top = y + 'px';
+  if (!keep) tipTimer = setTimeout(hideTip, 4000);
+}
+if (typeof document !== 'undefined') {
+  const qmOf = e => (e.target && e.target.closest ? e.target.closest('.qm[data-tip]') : null);
+  document.addEventListener('mouseover', e => { if (e.pointerType === 'touch') return; const q = qmOf(e); if (q && matchMedia('(hover:hover)').matches) showTip(q, true); });
+  document.addEventListener('mouseout', e => { const q = qmOf(e); if (q && matchMedia('(hover:hover)').matches && !(e.relatedTarget && q.contains(e.relatedTarget))) hideTip(); });
+  document.addEventListener('focusin', e => { const q = qmOf(e); if (q) showTip(q, true); });
+  document.addEventListener('focusout', e => { if (qmOf(e)) hideTip(); });
+  document.addEventListener('scroll', hideTip, { passive: true, capture: true });
 }
 
 // Bottom bar: four main sections and "More" with a slide-up sheet for the rest.
@@ -2170,7 +2237,8 @@ async function loadBets(more) {
   const cat = ui.bcat, tag = (BCATS.filter(c => c[0] === cat)[0] || BCATS[0])[1], off = more ? betOff : 0;
   if (cat !== betCat) { betEv = []; betAt = 0; betErr = false; if (ui.btab === 'pred') fillBets(); }
   try {
-    const d = await getJSON(PM + '?closed=false&active=true&order=volume24hr&ascending=false&limit=' + BPAGE + '&offset=' + off + (tag ? '&tag_id=' + tag + '&related_tags=true' : ''), 15000);
+    const live = cat === 'live', nowIso = new Date().toISOString(), endIso = new Date(Date.now() + 864e5).toISOString();   // 19.11 «Лайв»: рынки, которые решаются в ближайшие 24 часа
+    const d = await getJSON(PM + '?closed=false&active=true&limit=' + BPAGE + '&offset=' + off + (live ? '&order=endDate&ascending=true&end_date_min=' + encodeURIComponent(nowIso) + '&end_date_max=' + encodeURIComponent(endIso) : '&order=volume24hr&ascending=false' + (tag ? '&tag_id=' + tag + '&related_tags=true' : '')), 15000);
     if (cat !== ui.bcat) { betBusy = false; return loadBets(); }
     const now = Date.now(), raw = Array.isArray(d) ? d : [];
     const ev = more ? betEv : [];
@@ -2318,7 +2386,8 @@ function fillPred(fresh) {
     if (pic) { const im = mkEl('img', 'bpic'); im.alt = ''; im.loading = 'lazy'; im.decoding = 'async'; im.referrerPolicy = 'no-referrer'; im.width = 40; im.height = 40; im.onerror = () => im.remove(); im.src = pic; hd.appendChild(im); }
     const tx = mkEl('div', 'pt'), mt = mkEl('p', 'pm');
     tx.appendChild(mkEl('h3', '', e.m.length === 1 ? e.m[0].q : e.t));
-    mt.appendChild(mkEl('span', '', tf('bet_until', { t: bdate(e.end) }))); if (e.vol >= 1000) mt.appendChild(mkEl('span', 'num', bvol(e.vol)));
+    if (ui.bcat === 'live') { const left = e.end - Date.now(), on = e.m[0] && e.m[0].gs && e.m[0].gs < Date.now(); if (on) mt.appendChild(mkEl('span', 'live-on', t('bet_live_on'))); mt.appendChild(mkEl('span', 'num', left >= 36e5 ? tf('bet_live_left', { n: Math.round(left / 36e5 * 10) / 10 }) : tf('bet_live_left_m', { n: Math.max(1, Math.round(left / 6e4)) }))); }
+    else mt.appendChild(mkEl('span', '', tf('bet_until', { t: bdate(e.end) }))); if (e.vol >= 1000) mt.appendChild(mkEl('span', 'num', bvol(e.vol)));
     tx.appendChild(mt); hd.appendChild(tx); card.appendChild(hd);
     const one = e.m.length === 1, od = mkEl('div', 'pod' + (one ? ' p2' : ''));
     if (one) e.m[0].out.forEach((o, i) => od.appendChild(predBtn(e.m[0], i, o)));
@@ -2474,11 +2543,12 @@ async function sellBet(id) {
   const pay = closeBet(b, b.cur >= 0 ? b.cur : b.p, 'sold');
   save(); toast(tf('bet_sold', { v: money(pay) })); render();
 }
+setInterval(() => { if (typeof document !== 'undefined' && !document.hidden && ui.view === 'bets' && ui.btab === 'pred' && ui.bcat === 'live') { betOff = 0; loadBets(); } }, 15000);
 function betTick() {
   if (S.bets && S.bets.length) checkBets();
   if (ui.view !== 'bets') return;
   if (ui.btab === 'sport') { const st = sps(ui.sport); if (st.off <= SPAGE && Date.now() - st.at > 6e4) loadSport(); }
-  else if (betOff <= BPAGE && Date.now() - betAt > 6e4) loadBets();
+  else if (betOff <= BPAGE && Date.now() - betAt > (ui.bcat === 'live' ? 14e3 : 6e4)) loadBets();
 }
 
 /* =====================================================================
@@ -2489,7 +2559,7 @@ const COURSE_GIFT = 2e7;  // 18.11: за весь курс в запас лож�
 const LESSONS = [
   { r: 500, ru: { t: 'Цена и график', p: ['Цена — сколько стоит одна штука актива сегодня. Биткоин стоит $60 000: столько нужно заплатить за один целый биткоин.', 'График — история цены. Слева старое, справа новое, выше — дороже. Одна свеча показывает за выбранный отрезок времени четыре цены: с какой цена началась, чем закончилась, самую высокую и самую низкую.', 'Зелёная свеча — за отрезок цена выросла. Красная — упала.'], q: 'Свеча красная. Что случилось с ценой за этот отрезок?', o: ['Упала', 'Выросла', 'Не изменилась'], ok: 0, e: 'Красная свеча значит, что цена закончила отрезок ниже, чем начала.' },
     en: { t: 'Price and chart', p: ['Price is what one unit of an asset costs today. Bitcoin costs $60,000: that is what you pay for one whole bitcoin.', 'A chart is the history of the price. Older on the left, newer on the right, higher means more expensive. One candle shows four prices for the chosen period: where the price started, where it ended, the highest and the lowest.', 'A green candle means the price rose over the period. A red one means it fell.'], q: 'The candle is red. What happened to the price over this period?', o: ['It fell', 'It rose', 'It did not change'], ok: 0, e: 'A red candle means the price ended the period lower than it started.' } },
-  { r: 500, ru: { t: 'Купить и продать', p: ['Купить — открыть сделку на рост: вы ждёте, что цена поднимется. Вы купили биткоин на $100 по цене $50 000. Цена стала $55 000, это на 10 % больше. Ваши $100 стали $110.', 'Продать в тренажёре — сделка на падение: вы зарабатываете, когда цена снижается. Закрыть сделку — забрать результат, плюс или минус.'], q: 'Вы купили на $200. Цена выросла на 5 %. Сколько стоит ваша позиция без комиссии?', o: ['$210', '$205', '$190'], ok: 0, e: '5 % от $200 — это $10. Было $200, стало $210.' },
+  { r: 500, ru: { t: 'Купить и продать', p: ['Купить — открыть сделку на рост: вы ждёте, что цена поднимется. Вы купили биткоин на $100 по цене $50 000. Цена стала $55 000, это на 10 % больше. Ваши $100 стали $110.', 'Продать в тренажёре — сделка на падение: вы зарабатываете, когда цена снижается. Закрыть сделку — забрать результат, плюс или минус. Срока у сделки нет: закрываете, когда захотите.'], q: 'Вы купили на $200. Цена выросла на 5 %. Сколько стоит ваша позиция без комиссии?', o: ['$210', '$205', '$190'], ok: 0, e: '5 % от $200 — это $10. Было $200, стало $210.' },
     en: { t: 'Buy and sell', p: ['To buy is to open a trade on a rise: you expect the price to go up. You bought $100 of bitcoin at $50,000. The price became $55,000, which is 10% more. Your $100 became $110.', 'To sell in the simulator is a trade on a fall: you earn when the price goes down. To close a trade is to take the result, plus or minus.'], q: 'You bought $200 worth. The price rose 5%. What is your position worth before fees?', o: ['$210', '$205', '$190'], ok: 0, e: '5% of $200 is $10. It was $200, now $210.' } },
   { r: 750, ru: { t: 'Прибыль и убыток', p: ['Прибыль — вы закрыли сделку и забрали больше, чем вложили. Убыток — забрали меньше. Вложили $100, закрыли с $110: прибыль $10. Закрыли с $85: убыток $15.', 'Комиссия — небольшая плата за открытие и закрытие сделки. Пока сделка открыта, результат не зафиксирован: цена ещё может вернуться или уйти дальше.'], q: 'Вы вложили $300 и закрыли сделку с $270. Что получилось?', o: ['Убыток $30', 'Прибыль $30', 'Убыток $270'], ok: 0, e: '$300 минус $270 — вы потеряли $30.' },
     en: { t: 'Profit and loss', p: ['Profit is when you closed a trade and took out more than you put in. Loss is when you took out less. You put in $100 and closed with $110: profit $10. Closed with $85: loss $15.', 'A fee is a small charge for opening and closing a trade. While the trade is open the result is not fixed: the price can still come back or go further.'], q: 'You put in $300 and closed the trade with $270. What happened?', o: ['A loss of $30', 'A profit of $30', 'A loss of $270'], ok: 0, e: '$300 minus $270: you lost $30.' } },
@@ -2832,7 +2902,7 @@ function applyLang() {
 }
 function onClick(e) {
   snd.gesture();
-  let el = e.target && e.target.closest ? e.target.closest('[data-tf],[data-lev],[data-pre],[data-side],[data-close],[data-amt],[data-key],[data-lock],[data-les],[data-ans],[data-lback],[data-loan],[data-noteoff],[data-act],[data-ncat],[data-ccat],[data-csym],[data-per],[data-bcat],[data-bet],[data-bsell],[data-bpre],[data-btab],[data-sp],[data-bx],[data-bmine],[data-bhist],[data-tip],[data-ct],[data-cl],#langBtn,#sndBtn,#skinBtn,#modal,#more,#slip,.more-row') : null;
+  let el = e.target && e.target.closest ? e.target.closest('[data-tf],[data-sec],[data-lev],[data-pre],[data-side],[data-close],[data-amt],[data-key],[data-lock],[data-les],[data-ans],[data-lback],[data-loan],[data-noteoff],[data-act],[data-ncat],[data-ccat],[data-csym],[data-per],[data-bcat],[data-bet],[data-bsell],[data-bpre],[data-btab],[data-sp],[data-bx],[data-bmine],[data-bhist],[data-tip],[data-ct],[data-cl],#langBtn,#sndBtn,#skinBtn,#modal,#more,#slip,.more-row') : null;
   // 3D quirk: a pressed ATM button shifts and the click lands on its parent — find the button under the finger by its box.
   if (!el && e.target && e.target.closest && e.target.closest('#atm') && e.clientX != null) {
     const bs = document.querySelectorAll('#atm button');
@@ -2840,11 +2910,11 @@ function onClick(e) {
   }
   if (!el) return;
   const A = k => el.getAttribute(k), has = k => el.hasAttribute(k);
-  if (has('data-tip')) { showTip(el); return; }
+  if (has('data-tip')) { if (matchMedia('(hover:hover)').matches && document.querySelector('.tipbox')) { showTip(el, true); return; } showTip(el); return; }
   if (A('data-act') === 'more') { moreSheet($('more').hidden); vib(8); return; }
   if (el.id === 'more') { if (e.target === el) moreSheet(false); return; }
   if (el.classList.contains('more-row')) { moreSheet(false); return; }
-  { const tb = document.querySelector('.tipbox'); if (tb) tb.remove(); }
+  hideTip();
   if (el.id === 'modal') { if (e.target === el) el.hidden = true; return; }
   if (el.id === 'slip') { if (e.target === el && getComputedStyle(el).position === 'fixed') closeSlip(); return; }
   if (el.id === 'skinBtn') { nextSkin(); if (S.sound) snd.key(); return; }
@@ -2859,7 +2929,7 @@ function onClick(e) {
   } else if (has('data-tf')) {
     ui.tf = A('data-tf'); document.querySelectorAll('[data-tf]').forEach(b => b.classList.toggle('on', b === el)); drawIns(true);
   } else if (has('data-lev')) {
-    ui.lev = +A('data-lev'); document.querySelectorAll('[data-lev]').forEach(b => b.classList.toggle('on', b === el)); tradeInfo();
+    ui.lev = +A('data-lev'); { const sd = document.querySelector('.sides'); if (sd) sd.classList.toggle('lev1', ui.lev <= 1); } document.querySelectorAll('[data-lev]').forEach(b => b.classList.toggle('on', b === el)); tradeInfo();
   } else if (has('data-pre')) {
     const inp = $('amt'), p = +A('data-pre'), mx = E.maxAmount(S.cash, ui.lev);
     if (inp) { inp.value = mx > 0 ? String(p >= 100 ? mx : Math.floor(mx * p) / 100) : ''; const m = $('trMsg'); if (m && S.cash >= 1) m.textContent = ''; tradeInfo(); }
@@ -2875,6 +2945,8 @@ function onClick(e) {
   } else if (has('data-lback')) { ui.les = null; ui.ans = null; renderLearn(); try { window.scrollTo(0, 0); } catch (e) {}
   } else if (has('data-loan')) { if (!(window.DofaKab && window.DofaKab.loan && window.DofaKab.loan())) soonModal();
   } else if (has('data-noteoff')) { ui.loanOff = true; fillNotes(true);
+  } else if (has('data-sec')) {
+    ui.sec = A('data-sec'); renderMarket(); upd(true);
   } else if (has('data-ncat')) {
     ui.ncat = A('data-ncat'); document.querySelectorAll('[data-ncat]').forEach(b => b.classList.toggle('on', b === el)); fillNews();
   } else if (has('data-ccat')) { ui.ccat = A('data-ccat'); ui.cq = ''; const qi = $('cmpQ'); if (qi) qi.value = ''; fillCmpPick(false); }
@@ -2941,6 +3013,7 @@ function init() {
     const k = e.target && e.target.closest ? e.target.closest('#atm [data-key]') : null; if (!k) return;
     ui.keyAt = performance.now(); snd.gesture(); snd.key(); vib(8); atmKey(k.getAttribute('data-key')); ui.keyAt = performance.now();   // 14.11: stamp again after the slow first sound start, so the following click is still skipped
   });
+  document.addEventListener('input', e => { if (e.target && e.target.id === 'secQ') { ui.secQ = e.target.value.slice(0, 30); const pos = e.target.selectionStart; renderMarket(); upd(true); const n = $('secQ'); if (n) { n.focus(); try { n.setSelectionRange(pos, pos); } catch (er) { /* ничего */ } } } });
   document.addEventListener('input', e => { if (e.target && e.target.id === 'cmpQ') { ui.cq = e.target.value.slice(0, 24); fillCmpPick(false); } });
   fitAtm(); atmTilt();
   document.addEventListener('pointerdown', () => snd.gesture(), { passive: true });
