@@ -258,7 +258,9 @@ const D = {
     w_h: 'Доход города', w_got: 'Собрано всего', w_wait: 'В копилках сейчас', w_note: 'Не входит в результат торговли и не даёт очков уровня', w_go: 'В город', w_empty: 'Город пока пустой',
     b_h: 'Разбивка по вложениям', b_bets: 'Ставки', b_more: 'ещё {n}', b_open: 'в работе', b_tr: '{n} сд.', b_none: 'За срок нет закрытых сделок и ставок', b_wk: 'В работе сейчас: {n} · {x}',
     r_h: 'Мой результат', r_d1: '1 д', r_d3: '3 д', r_d5: '5 д', r_d7: '7 д', r_d14: '14 д', r_d30: '30 д',
-    r_share: 'Поделиться', r_save: 'Скачать картинку', r_none: 'Нет данных за срок: кривая результата появится после первых вложений и сделок.',
+    r_share: 'Поделиться', r_save: 'Скачать картинку', s_h: 'Отправить результат', s_ig: 'Истории Instagram', s_copy: 'Скопировать картинку', s_more: 'Другое приложение',
+    s_txt: 'Мой результат за {d} в dofamart · Акции: {x}', s_note: 'Telegram и WhatsApp откроются с готовым текстом, а картинка уже в буфере — вставьте её в сообщение.', s_note2: 'Сохраните картинку и приложите её к сообщению.',
+    s_copied: 'Картинка скопирована — вставьте её в сообщение', s_ig_pc: 'Картинка скачана. Откройте Instagram на телефоне и добавьте её в историю.', s_nocopy: 'Не вышло скопировать — скачайте картинку', r_none: 'Нет данных за срок: кривая результата появится после первых вложений и сделок.',
     r_part: 'Игре меньше {d}: показан весь срок — {s}', r_hold: 'Нажмите на картинку и удерживайте, чтобы сохранить', r_ok: 'Картинка сохранена', r_fail: 'Не вышло сохранить картинку',
     c_slogan: 'Твоя виртуальная экономическая вселенная', c_for: 'РЕЗУЛЬТАТ ЗА {d}', c_pct: 'к внесённому', c_play: 'игровые деньги',
     c_trades: 'Сделок', c_win: 'В плюс', c_best: 'Лучшая сделка', c_level: 'Уровень {n}', c_nodata: 'нет данных', c_chart: 'Результат во времени',
@@ -278,7 +280,9 @@ const D = {
     w_h: 'City income', w_got: 'Collected in total', w_wait: 'In stashes now', w_note: 'Not part of the trading result and gives no level points', w_go: 'To the city', w_empty: 'The city is empty yet',
     b_h: 'Breakdown by holdings', b_bets: 'Bets', b_more: '{n} more', b_open: 'in play', b_tr: '{n} tr.', b_none: 'No closed trades or bets in this period', b_wk: 'In play now: {n} · {x}',
     r_h: 'My result', r_d1: '1 d', r_d3: '3 d', r_d5: '5 d', r_d7: '7 d', r_d14: '14 d', r_d30: '30 d',
-    r_share: 'Share', r_save: 'Download image', r_none: 'No data for this period: the result curve appears after your first deposits and trades.',
+    r_share: 'Share', r_save: 'Download image', s_h: 'Send your result', s_ig: 'Instagram Stories', s_copy: 'Copy image', s_more: 'Another app',
+    s_txt: 'My {d} result in dofamart · Stocks: {x}', s_note: 'Telegram and WhatsApp open with the text ready, and the image is already copied — paste it into the message.', s_note2: 'Save the image and attach it to your message.',
+    s_copied: 'Image copied — paste it into the message', s_ig_pc: 'Image downloaded. Open Instagram on your phone and add it to a story.', s_nocopy: 'Could not copy — download the image', r_none: 'No data for this period: the result curve appears after your first deposits and trades.',
     r_part: 'The game is younger than {d}: the whole period is shown — {s}', r_hold: 'Press and hold the image to save it', r_ok: 'Image saved', r_fail: 'Could not save the image',
     c_slogan: 'Your virtual economic universe', c_for: 'RESULT FOR {d}', c_pct: 'of deposited', c_play: 'play money',
     c_trades: 'Trades', c_win: 'Winning', c_best: 'Best trade', c_level: 'Level {n}', c_nodata: 'no data', c_chart: 'Result over time',
@@ -799,6 +803,44 @@ async function shareCard(save) {
   rcBusy = false;
 }
 
+// 19.11: своё окно отправки карточки вместо системного (слово Романа: «нужна нормальная карточка отправки этой карточки»)
+let shBlob = null, shFile = null, shTxt = '', shUrl = '';
+const shSys = () => !!(shFile && navigator.canShare && navigator.canShare({ files: [shFile] }) && navigator.share);
+const shTouch = () => !!(root.matchMedia && root.matchMedia('(pointer:coarse)').matches);
+async function openShare() {
+  const cv = $('rcCv'); if (!cv || rcBusy) return; rcBusy = true;
+  try {
+    const b = await blobOf(cv); if (!b) throw new Error('blob');
+    shBlob = b; shFile = new File([b], 'dofamart-result-' + rcDays + 'd.png', { type: 'image/png' });
+    const d = periodData(rcDays);
+    shTxt = g('s_txt', { d: g('d' + rcDays), x: d.none ? '' : (d.res >= 0 ? '+' : '−') + mny(Math.abs(d.res)) }).replace(/:\s*$/, '');
+    if (shUrl) URL.revokeObjectURL(shUrl); shUrl = URL.createObjectURL(b);
+    const canCopy = !!(navigator.clipboard && navigator.clipboard.write && root.ClipboardItem), bt = (k, t, c) => '<button type="button" class="' + c + '" data-g="' + k + '">' + t + '</button>';
+    $('modalBody').innerHTML = '<div class="grm rc-sh"><h2 id="modalTitle">' + g('s_h') + '</h2><img class="rc-img" alt="" src="' + shUrl + '">' +
+      '<div class="rc-apps">' + bt('sh-tg', 'Telegram', 'btn-gold') + bt('sh-wa', 'WhatsApp', 'btn-gold') + bt('sh-ig', g('s_ig'), 'btn-gold') + '</div>' +
+      '<div class="rc-acts">' + (canCopy ? bt('sh-copy', g('s_copy'), 'btn-ghost') : '') + bt('save', g('r_save'), 'btn-ghost') + (shSys() ? bt('sh-sys', g('s_more'), 'btn-ghost') : '') + '</div>' +
+      '<p class="grm-note" id="rcShNote">' + g(inTg() ? 'r_hold' : canCopy ? 's_note' : 's_note2') + '</p>' +
+      '<div class="m-btns"><button type="button" class="btn-ghost" data-g="close">' + g('close') + '</button></div></div>';
+    $('modal').hidden = false;
+  } catch (e) { H.toast(g('r_fail'), 'down', false); }
+  rcBusy = false;
+}
+async function shCopy(quiet) {
+  try { await navigator.clipboard.write([new root.ClipboardItem({ 'image/png': shBlob })]); if (!quiet) H.toast(g('s_copied'), 'up', true); return true; }
+  catch (e) { if (!quiet) H.toast(g('s_nocopy'), 'down', false); return false; }
+}
+function shDl() { const a = document.createElement('a'); a.href = shUrl; a.download = shFile.name; document.body.appendChild(a); a.click(); setTimeout(() => a.remove(), 1500); }
+async function shSend(kind) {
+  if (!shBlob) return;
+  if (kind === 'sys' || (shTouch() && shSys())) { try { await navigator.share({ files: [shFile], title: 'dofamart', text: shTxt }); } catch (e) { /* закрыл окно */ } return; }   // телефон: системное окно само отдаёт картинку в Telegram, WhatsApp, истории
+  const link = location.origin + location.pathname, note = $('rcShNote');
+  if (kind === 'ig') { shDl(); if (note) note.textContent = g('s_ig_pc'); return; }
+  const ok = await shCopy(true);
+  if (note) note.textContent = g(ok ? 's_copied' : 's_note2'); if (!ok) shDl();
+  const t = encodeURIComponent(shTxt), u = encodeURIComponent(link);
+  root.open(kind === 'tg' ? 'https://t.me/share/url?url=' + u + '&text=' + t : 'https://wa.me/?text=' + t + '%20' + u, '_blank', 'noopener');
+}
+
 function init(host) {
   H = host;
   document.addEventListener('click', e => {
@@ -806,7 +848,9 @@ function init(host) {
     const a = el.getAttribute('data-g');
     if (a === 'days') { rcDays = +el.getAttribute('data-d'); document.querySelectorAll('.rc-seg .chip').forEach(b => b.classList.toggle('on', +b.getAttribute('data-d') === rcDays)); drawCard(); return; }
     if (a === 'mode') { try { localStorage.setItem('dofa_gr_mode', el.getAttribute('data-m')); } catch (er) { /* ничего */ } const bx = $('gorodBox'); if (bx) { boxKey = ''; render(bx); } return; }
-    if (a === 'share') { shareCard(false); return; }
+    if (a === 'share') { openShare(); return; }
+    if (a === 'sh-tg') { shSend('tg'); return; } if (a === 'sh-wa') { shSend('wa'); return; } if (a === 'sh-ig') { shSend('ig'); return; }
+    if (a === 'sh-sys') { shSend('sys'); return; } if (a === 'sh-copy') { shCopy(false); return; }
     if (a === 'save') { shareCard(true); return; }
     if (el.disabled) return;
     if (el.tagName === 'A' && (a === 'close' || a === 'sclose')) { $('modal').hidden = true; openId = null; if (a === 'sclose') { selU = 0; selD = -1; hud(); sync(); } return; }

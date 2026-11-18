@@ -1206,3 +1206,7 @@ body>.tipbox{position:fixed;z-index:60;margin:0;flex:none;width:max-content;max-
 .sec-note{margin:0 0 12px;color:var(--mut);font:500 12px var(--sans)}
 .row .r-id small{overflow-wrap:anywhere}
 .live-on{color:#FF8CA6;font-weight:700}.live-on::before{content:'';display:inline-block;width:7px;height:7px;margin-right:5px;border-radius:50%;background:#FF5C8A;box-shadow:0 0 8px #FF5C8A}
+/* 19.11: полосы прокрутки в окнах и списках — тонкие, в цвет темы (были белые системные) */
+*{scrollbar-width:thin;scrollbar-color:rgba(var(--acc),.38) transparent}
+::-webkit-scrollbar{width:8px;height:8px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:rgba(var(--acc),.38);border-radius:8px}
+.modal-card{overflow-x:hidden}

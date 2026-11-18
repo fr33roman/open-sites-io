@@ -209,3 +209,13 @@ html.gr-lock .tabbar{display:none}
   .gr3-top{padding-top:6px;padding-bottom:6px}.gr3-top .gr-btn,.gr3-ex{min-height:36px}
 }
 @media (prefers-reduced-motion:reduce){.gr3-amt{animation:none}}
+/* 19.11: окно отправки карточки результата */
+.rc-sh .rc-img{width:min(100%,230px);max-height:46vh;object-fit:contain;box-shadow:0 18px 50px -22px rgba(var(--acc),.9)}
+.rc-apps{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px}
+.rc-apps .btn-gold{min-height:48px;padding:0 8px;letter-spacing:.02em;text-transform:none;font-size:13.5px;background:linear-gradient(100deg,var(--gold),#8C7BFF);white-space:nowrap}
+.rc-acts{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:8px}
+.rc-acts .btn-ghost{flex:1 1 auto;min-height:44px;padding:0 12px;font-size:13px}
+@media (max-width:420px){.rc-apps{grid-template-columns:1fr 1fr}.rc-apps .btn-gold:last-child{grid-column:1/-1}}
+.rc-apps{grid-template-columns:repeat(3,minmax(0,1fr))}
+.rc-apps .btn-gold{min-width:0;white-space:normal;line-height:1.15;letter-spacing:0;font-size:13px}
+.rc-sh .rc-img{max-height:40vh}
