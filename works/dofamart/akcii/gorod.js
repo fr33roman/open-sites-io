@@ -91,6 +91,7 @@ if (typeof document === 'undefined') return;
 /* ============ 2. ЭКРАН «ГОРОД» ============ */
 const D = {
   ru: {
+    m3d: '3D', mlist: 'Список', ld3: 'Загружаю 3D-город…', hint3: 'Тяните — поворот · колесо или щипок — масштаб · нажмите на участок', lbl3: 'Город в 3D',
     nav: 'Город', h: 'Город', sub: 'Здания приносят деньги, даже когда вас нет',
     pool: 'Накоплено', rate: 'Доход в час', cap: 'Копилка до {h} ч', coll_all: 'Собрать всё', nothing: 'Пока нечего собирать',
     own_step: 'Ступень {n} из 5', per_h: '{x}/ч', lock_lv: 'Уровень {n} · {x}', buy_for: 'Купить · {x}', free: 'Свободный участок', soon: 'Скоро',
@@ -101,6 +102,7 @@ const D = {
     e_funds: 'Не хватает денег: нужно {x}', e_level: 'Здание откроется на уровне {n}', e_lesson: 'Сначала пройдите урок «{name}»',
     t_bought: 'Куплено: {n}', t_up: '{n}: ступень {s}', t_got: 'Собрано {x}', t_got_up: 'Собрано {x}',
     w_h: 'Доход города', w_got: 'Собрано всего', w_wait: 'В копилках сейчас', w_note: 'Не входит в результат торговли и не даёт очков уровня', w_go: 'В город', w_empty: 'Город пока пустой',
+    b_h: 'Разбивка по вложениям', b_bets: 'Ставки', b_more: 'ещё {n}', b_open: 'в работе', b_tr: '{n} сд.', b_none: 'За срок нет закрытых сделок и ставок', b_wk: 'В работе сейчас: {n} · {x}',
     r_h: 'Мой результат', r_d1: '1 д', r_d3: '3 д', r_d5: '5 д', r_d7: '7 д', r_d14: '14 д', r_d30: '30 д',
     r_share: 'Поделиться', r_save: 'Скачать картинку', r_none: 'Нет данных за срок: кривая результата появится после первых вложений и сделок.',
     r_part: 'Игре меньше {d}: показан весь срок — {s}', r_hold: 'Нажмите на картинку и удерживайте, чтобы сохранить', r_ok: 'Картинка сохранена', r_fail: 'Не вышло сохранить картинку',
@@ -109,6 +111,7 @@ const D = {
     d1: '1 день', d3: '3 дня', d5: '5 дней', d7: '7 дней', d14: '14 дней', d30: '30 дней', h_s: '{n} ч', d_s: '{n} д', m_s: '{n} мин'
   },
   en: {
+    m3d: '3D', mlist: 'List', ld3: 'Loading the 3D city…', hint3: 'Drag to rotate · wheel or pinch to zoom · tap a plot', lbl3: 'City in 3D',
     nav: 'City', h: 'City', sub: 'Buildings earn money even when you are away',
     pool: 'Accrued', rate: 'Income per hour', cap: 'Stash up to {h} h', coll_all: 'Collect all', nothing: 'Nothing to collect yet',
     own_step: 'Step {n} of 5', per_h: '{x}/h', lock_lv: 'Level {n} · {x}', buy_for: 'Buy · {x}', free: 'Empty plot', soon: 'Soon',
@@ -119,6 +122,7 @@ const D = {
     e_funds: 'Not enough money: {x} needed', e_level: 'The building opens at level {n}', e_lesson: 'Finish the lesson “{name}” first',
     t_bought: 'Bought: {n}', t_up: '{n}: step {s}', t_got: 'Collected {x}', t_got_up: 'Collected {x}',
     w_h: 'City income', w_got: 'Collected in total', w_wait: 'In stashes now', w_note: 'Not part of the trading result and gives no level points', w_go: 'To the city', w_empty: 'The city is empty yet',
+    b_h: 'Breakdown by holdings', b_bets: 'Bets', b_more: '{n} more', b_open: 'in play', b_tr: '{n} tr.', b_none: 'No closed trades or bets in this period', b_wk: 'In play now: {n} · {x}',
     r_h: 'My result', r_d1: '1 d', r_d3: '3 d', r_d5: '5 d', r_d7: '7 d', r_d14: '14 d', r_d30: '30 d',
     r_share: 'Share', r_save: 'Download image', r_none: 'No data for this period: the result curve appears after your first deposits and trades.',
     r_part: 'The game is younger than {d}: the whole period is shown — {s}', r_hold: 'Press and hold the image to save it', r_ok: 'Image saved', r_fail: 'Could not save the image',
@@ -170,15 +174,31 @@ function plotHTML(b) {
   if (lv < b.lvl) return '<button type="button" class="gr-plot lock" data-g="open" data-id="' + b.id + '">' + fig(b.id, 1) + lockSvg + '<b class="gr-n">' + esc(bn(b.id)) + '</b><span class="gr-s num">' + g('lock_lv', { n: b.lvl, x: short(b.price) }) + '</span></button>';
   return '<button type="button" class="gr-plot can" data-g="open" data-id="' + b.id + '">' + fig(b.id, 1) + '<b class="gr-n">' + esc(bn(b.id)) + '</b><span class="gr-s num">' + g('buy_for', { x: short(b.price) }) + '</span></button>';
 }
+/* 3D-вид (gorod3d.js): по умолчанию, если есть WebGL и не включён режим «меньше движения»; «Список» — прежняя сетка карточек */
+let fail3d = false;
+const G3 = () => root.DofaGorod3D || null;
+const reduced = () => !!(root.matchMedia && root.matchMedia('(prefers-reduced-motion:reduce)').matches);
+const can3 = () => !!(G3() && !fail3d && !reduced() && G3().supported());
+const use3d = () => { let m = ''; try { m = localStorage.getItem('dofa_gr_mode') || ''; } catch (e) { /* ничего */ } return can3() && m !== 'list'; };
+function states3() {
+  const c = city(), now = H.now(), lv = myLvl();
+  return B.map(b => { const x = c.b[b.id]; return x ? { id: b.id, k: 'own', l: x.l, txt: '+' + short(pend(c, b.id, now)) } : { id: b.id, k: lv < b.lvl ? 'lock' : 'can', l: 1, txt: '' }; });
+}
+function api3() {
+  return { lang: L, label: g('lbl3'), loading: g('ld3'), hint: g('hint3'), states: states3, name: bn, pick: id => act('open', id),
+    fail: () => { fail3d = true; if (G3()) G3().dispose(); const bx = $('gorodBox'); if (bx && !$('v-gorod').hidden) render(bx); } };
+}
 function render(box) {
   if (!H || !box) return;
-  const c = city(), now = H.now();
+  const c = city(), now = H.now(), u3 = use3d();
   box.innerHTML = defs + '<div class="vhead"><h1>' + g('h') + '</h1><p class="slogan">' + g('sub') + '</p></div>' +
     '<div class="gr-sum panel"><div class="gr-st"><span class="lbl">' + g('pool') + '</span><b class="num gr-big" id="grPool"></b><small class="num" id="grCap"></small></div>' +
     '<div class="gr-st"><span class="lbl">' + g('rate') + '</span><b class="num gr-mid" id="grRate"></b></div>' +
     '<button type="button" class="gr-btn" id="grAll" data-g="all">' + g('coll_all') + '</button></div>' +
-    '<div class="gr-grid">' + B.map(plotHTML).join('') + '<div class="gr-plot empty" aria-hidden="true"><b class="gr-n">' + g('free') + '</b><span class="gr-s">' + g('soon') + '</span></div>' +
-    '<div class="gr-plot empty" aria-hidden="true"><b class="gr-n">' + g('free') + '</b><span class="gr-s">' + g('soon') + '</span></div></div>';
+    (can3() ? '<div class="gr-mode" role="group" aria-label="' + g('h') + '"><button type="button" class="chip' + (u3 ? ' on' : '') + '" data-g="mode" data-m="3d" aria-pressed="' + u3 + '">' + g('m3d') + '</button><button type="button" class="chip' + (u3 ? '' : ' on') + '" data-g="mode" data-m="list" aria-pressed="' + !u3 + '">' + g('mlist') + '</button></div>' : '') +
+    (u3 ? '<div class="gr3" id="gr3"></div>' : '<div class="gr-grid">' + B.map(plotHTML).join('') + '<div class="gr-plot empty" aria-hidden="true"><b class="gr-n">' + g('free') + '</b><span class="gr-s">' + g('soon') + '</span></div>' +
+    '<div class="gr-plot empty" aria-hidden="true"><b class="gr-n">' + g('free') + '</b><span class="gr-s">' + g('soon') + '</span></div></div>');
+  if (u3) G3().mount($('gr3'), api3()); else if (G3()) G3().dispose();
   refresh();
 }
 function refresh() {
@@ -189,6 +209,7 @@ function refresh() {
     $('grCap').textContent = g('cap', { h: capH(c) }) + (rateAll(c) > 0 ? ' · ' + mny(poolMax(c), 0) : '');
     if (bt) { bt.disabled = !(all >= 0.01); bt.title = all >= 0.01 ? '' : g('nothing'); }
     Object.keys(c.b).forEach(id => { const e = document.querySelector('[data-gp="' + id + '"]'); if (e) e.textContent = '+' + short(pend(c, id, now)); });
+    if (G3() && G3().alive()) G3().update();
   }
   if (openId && !$('modal').hidden && $('grmPend')) {
     const p = pend(c, openId, now); $('grmPend').textContent = mny(p); const cb = $('grmCol'); if (cb) cb.disabled = !(p >= 0.01);
@@ -262,15 +283,29 @@ function periodData(days) {
   if (pts.length < 2 || now - t0 < 6e4) return { none: true };
   const tr = (S.trades || []).filter(x => x.t >= (partial ? 0 : cut)), wins = tr.filter(x => x.net > 0).length;
   let best = null; tr.forEach(x => { if (best == null || x.net > best) best = x.net; });
-  return { none: false, res: Math.round((cur - base) * 100) / 100, pct: S.deposited > 0 ? (cur - base) / S.deposited : null, pts: pts, n: tr.length, wins: wins, best: best, partial: partial, span: now - t0 };
+  const cutT = partial ? 0 : cut, by = {};
+  tr.forEach(x => { const o = by[x.sym] || (by[x.sym] = { k: x.sym, net: 0, n: 0 }); o.net += x.net; o.n++; });
+  const bh = (S.betHist || []).filter(x => x.at >= cutT); if (bh.length) by['*bets'] = { k: '', bets: true, net: bh.reduce((q, x) => q + (x.pay - x.a), 0), n: bh.length };
+  const rows = Object.keys(by).map(k => { by[k].net = r2(by[k].net); return by[k]; }).sort((a, b) => Math.abs(b.net) - Math.abs(a.net));
+  const opn = { n: (S.positions || []).length + (S.bets || []).filter(b => b && b.a > 0).length, amt: r2((S.positions || []).reduce((q, p) => q + (+p.margin || 0), 0) + (S.bets || []).reduce((q, b) => q + (b && b.a > 0 ? b.a : 0), 0)) };
+  return { rows: rows, open: opn, none: false, res: Math.round((cur - base) * 100) / 100, pct: S.deposited > 0 ? (cur - base) / S.deposited : null, pts: pts, n: tr.length, wins: wins, best: best, partial: partial, span: now - t0 };
 }
 const spanTxt = ms => (ms >= 864e5 ? g('d_s', { n: Math.round(ms / 864e5 * 10) / 10 }) : ms >= HOUR ? g('h_s', { n: Math.round(ms / HOUR * 10) / 10 }) : g('m_s', { n: Math.max(1, Math.round(ms / 6e4)) }));
 
+const sgn = v => (v > 0 ? '+' : v < 0 ? '−' : '') + '$' + Math.round(Math.abs(v)).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+const rowName = o => (o.bets ? g('b_bets') : o.k);
+function bdHTML(d) {
+  if (d.none) return '';
+  const rows = d.rows || [], cap = 10, open = d.open && d.open.n > 0 ? '<div class="rc-bd-r wk"><span>' + g('b_open') + ' · ' + d.open.n + '</span><b class="num">' + mny(d.open.amt, 0) + '</b></div>' : '';
+  if (!rows.length) return '<p class="rc-bd-h">' + g('b_h') + '</p><p class="rc-bd-e">' + g('b_none') + '</p>' + open;
+  return '<p class="rc-bd-h">' + g('b_h') + '</p>' + rows.slice(0, cap).map(o => '<div class="rc-bd-r"><span><b>' + esc(rowName(o)) + '</b> <small>' + g('b_tr', { n: o.n }) + '</small></span><b class="num ' + (o.net > 0 ? 'up' : o.net < 0 ? 'dn' : '') + '">' + sgn(o.net) + '</b></div>').join('') +
+    (rows.length > cap ? '<p class="rc-bd-e">' + g('b_more', { n: rows.length - cap }) + '</p>' : '') + open;
+}
 function mountWallet(box) {
   if (!H || !box) return;
   box.innerHTML = '<div class="gr-wl panel" id="grWl"></div><h2 class="h2">' + g('r_h') + '</h2><div class="panel rc">' +
     '<div class="rc-seg" role="group" aria-label="' + g('r_h') + '">' + DAYS.map(d => '<button type="button" class="chip' + (d === rcDays ? ' on' : '') + '" data-g="days" data-d="' + d + '">' + g('r_d' + d) + '</button>').join('') + '</div>' +
-    '<p class="rc-msg" id="rcMsg" role="status"></p><div class="rc-cv"><canvas id="rcCv" width="1080" height="1920" aria-label="' + g('r_h') + '"></canvas></div>' +
+    '<p class="rc-msg" id="rcMsg" role="status"></p><div class="rc-bd" id="rcBd"></div><div class="rc-cv"><canvas id="rcCv" width="1080" height="1920" aria-label="' + g('r_h') + '"></canvas></div>' +
     '<div class="rc-btns"><button type="button" class="gr-btn" data-g="share" id="rcShare">' + g('r_share') + '</button><button type="button" class="gr-btn alt" data-g="save" id="rcSave">' + g('r_save') + '</button></div></div>';
   walletRefresh(); drawCard();
 }
@@ -313,7 +348,7 @@ function paintCard(cv, d, dayWord) {
   cx.fillText(pc, 90, 870);
   cx.font = '500 34px ' + SANS; cx.fillStyle = 'rgba(234,246,255,.6)'; cx.fillText(g('c_play'), 90, 925);
   // график
-  const px = 90, py = 990, pw = 900, ph = 470;
+  const px = 90, py = 975, pw = 900, ph = 330;
   rrect(cx, px, py, pw, ph, 36); cx.fillStyle = 'rgba(8,16,30,.72)'; cx.fill(); cx.strokeStyle = 'rgba(34,227,255,.35)'; cx.lineWidth = 3; cx.stroke();
   cx.font = '600 30px ' + MONO; cx.fillStyle = 'rgba(184,246,255,.7)'; cx.fillText(g('c_chart'), px + 36, py + 62);
   if (!d.none && d.pts.length > 1) {
@@ -332,21 +367,31 @@ function paintCard(cv, d, dayWord) {
   const cells = [[g('c_trades'), d.none ? '—' : String(d.n)], [g('c_win'), d.none || !d.n ? '—' : Math.round(d.wins / d.n * 100) + '%'],
     [g('c_best'), d.none || d.best == null ? '—' : (d.best > 0 ? '+' : d.best < 0 ? '−' : '') + '$' + Math.round(Math.abs(d.best)).toLocaleString('en-US').replace(/,/g, ' ')]];
   cells.forEach((c, i) => {
-    const x = 90 + i * 306, w = 288; rrect(cx, x, 1500, w, 150, 28); cx.fillStyle = 'rgba(8,16,30,.72)'; cx.fill(); cx.strokeStyle = 'rgba(124,92,255,.4)'; cx.lineWidth = 3; cx.stroke();
-    cx.font = '500 28px ' + SANS; cx.fillStyle = 'rgba(234,246,255,.6)'; cx.fillText(c[0], x + 26, 1550);
-    let f = 52; cx.font = '700 ' + f + 'px ' + MONO; while (cx.measureText(c[1]).width > w - 40 && f > 26) { f -= 3; cx.font = '700 ' + f + 'px ' + MONO; }
-    cx.fillStyle = '#EAF6FF'; cx.fillText(c[1], x + 26, 1618);
+    const x = 90 + i * 306, w = 288; rrect(cx, x, 1325, w, 120, 28); cx.fillStyle = 'rgba(8,16,30,.72)'; cx.fill(); cx.strokeStyle = 'rgba(124,92,255,.4)'; cx.lineWidth = 3; cx.stroke();
+    cx.font = '500 28px ' + SANS; cx.fillStyle = 'rgba(234,246,255,.6)'; cx.fillText(c[0], x + 26, 1371);
+    let f = 46; cx.font = '700 ' + f + 'px ' + MONO; while (cx.measureText(c[1]).width > w - 40 && f > 26) { f -= 3; cx.font = '700 ' + f + 'px ' + MONO; }
+    cx.fillStyle = '#EAF6FF'; cx.fillText(c[1], x + 26, 1424);
   });
+  // разбивка по вложениям
+  { const by0 = 1470, bh = 275; rrect(cx, 90, by0, 900, bh, 30); cx.fillStyle = 'rgba(8,16,30,.72)'; cx.fill(); cx.strokeStyle = 'rgba(34,227,255,.3)'; cx.lineWidth = 3; cx.stroke();
+    cx.font = '600 28px ' + MONO; cx.fillStyle = 'rgba(184,246,255,.7)'; cx.fillText(g('b_h'), 124, by0 + 46);
+    const rows = d.none ? [] : (d.rows || []), shown = rows.slice(0, 5), more = rows.length - shown.length, op = !d.none && d.open && d.open.n > 0 ? d.open : null;
+    if (!shown.length) { cx.font = '500 28px ' + SANS; cx.fillStyle = 'rgba(234,246,255,.5)'; cx.fillText(d.none ? g('c_nodata') : g('b_none'), 124, by0 + 100); }
+    shown.forEach((o, i) => { const y = by0 + 90 + i * 32; cx.font = '700 27px ' + MONO; cx.fillStyle = '#EAF6FF'; cx.textAlign = 'left'; cx.fillText(rowName(o), 124, y);
+      cx.font = '500 22px ' + SANS; cx.fillStyle = 'rgba(234,246,255,.5)'; cx.fillText(g('b_tr', { n: o.n }), 330, y);
+      cx.font = '700 27px ' + MONO; cx.fillStyle = o.net >= 0 ? UP : DN; cx.textAlign = 'right'; cx.fillText(sgn(o.net), 956, y); cx.textAlign = 'left'; });
+    if (more > 0 || op) { const y = by0 + 90 + 5 * 32, t = (more > 0 ? g('b_more', { n: more }) : '') + (more > 0 && op ? ' · ' : '') + (op ? g('b_open') + ' ' + op.n + ' · ' + mny(op.amt, 0) : ''); cx.font = '500 24px ' + SANS; cx.fillStyle = 'rgba(184,246,255,.6)'; cx.fillText(t, 124, y); } }
   // уровень
   const lv = H.level() + 1, ltxt = g('c_level', { n: lv }) + ' · ' + H.levelName(lv - 1);
   cx.font = '600 40px ' + MONO; const lw = cx.measureText(ltxt).width + 80;
-  rrect(cx, 90, 1710, lw, 96, 48); const bg = cx.createLinearGradient(90, 0, 90 + lw, 0); bg.addColorStop(0, 'rgba(34,227,255,.9)'); bg.addColorStop(1, 'rgba(120,110,255,.9)'); cx.fillStyle = bg; cx.fill();
-  cx.fillStyle = '#03060C'; cx.fillText(ltxt, 130, 1773);
+  rrect(cx, 90, 1770, lw, 90, 45); const bg = cx.createLinearGradient(90, 0, 90 + lw, 0); bg.addColorStop(0, 'rgba(34,227,255,.9)'); bg.addColorStop(1, 'rgba(120,110,255,.9)'); cx.fillStyle = bg; cx.fill();
+  cx.fillStyle = '#03060C'; cx.fillText(ltxt, 130, 1827);
 }
 let fontsOk = false;
 function drawCard() {
   const cv = $('rcCv'); if (!cv || !H) return;
   const d = periodData(rcDays), msg = $('rcMsg'), dw = g('d' + rcDays);
+  const bd = $('rcBd'); if (bd) bd.innerHTML = bdHTML(d);
   if (msg) msg.textContent = d.none ? g('r_none') : d.partial ? g('r_part', { d: dw, s: spanTxt(d.span) }) : '';
   const go = () => { fontsOk = true; if ($('rcCv') === cv) paintCard(cv, d, dw); };
   if (fontsOk || !document.fonts || !document.fonts.load) { go(); return; }
@@ -380,6 +425,7 @@ function init(host) {
     const el = e.target.closest && e.target.closest('[data-g]'); if (!el || !H) return;
     const a = el.getAttribute('data-g');
     if (a === 'days') { rcDays = +el.getAttribute('data-d'); document.querySelectorAll('.rc-seg .chip').forEach(b => b.classList.toggle('on', +b.getAttribute('data-d') === rcDays)); drawCard(); return; }
+    if (a === 'mode') { try { localStorage.setItem('dofa_gr_mode', el.getAttribute('data-m')); } catch (er) { /* ничего */ } const bx = $('gorodBox'); if (bx) render(bx); return; }
     if (a === 'share') { shareCard(false); return; }
     if (a === 'save') { shareCard(true); return; }
     if (el.disabled) return;

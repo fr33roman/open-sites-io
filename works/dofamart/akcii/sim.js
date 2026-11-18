@@ -2944,6 +2944,13 @@ function init() {
   document.addEventListener('input', e => { if (e.target && e.target.id === 'cmpQ') { ui.cq = e.target.value.slice(0, 24); fillCmpPick(false); } });
   fitAtm(); atmTilt();
   document.addEventListener('pointerdown', () => snd.gesture(), { passive: true });
+  // 19.11: ряд вкладок разделов в сравнении — колесо мыши листает вбок, мышь тянется как лента
+  document.addEventListener('wheel', e => { const tb = e.target && e.target.closest ? e.target.closest('.cs-tabs') : null; if (!tb || tb.scrollWidth <= tb.clientWidth + 2 || Math.abs(e.deltaX) > Math.abs(e.deltaY)) return; e.preventDefault(); tb.scrollLeft += e.deltaY; }, { passive: false });
+  { let tb = null, x0 = 0, s0 = 0, mv = 0;
+    document.addEventListener('pointerdown', e => { if (e.pointerType !== 'mouse') return; tb = e.target && e.target.closest ? e.target.closest('.cs-tabs') : null; if (tb) { x0 = e.clientX; s0 = tb.scrollLeft; mv = 0; } });
+    document.addEventListener('pointermove', e => { if (!tb) return; const dx = e.clientX - x0; if (Math.abs(dx) > 4) { mv = 1; tb.classList.add('drag'); } if (mv) tb.scrollLeft = s0 - dx; });
+    document.addEventListener('pointerup', () => { if (tb) { tb.classList.remove('drag'); } tb = null; });
+    document.addEventListener('click', e => { if (mv && e.target && e.target.closest && e.target.closest('.cs-tabs')) { e.stopPropagation(); e.preventDefault(); } mv = 0; }, true); }
   document.addEventListener('keydown', e => {
     if (e.key === 'Escape') { const m = $('modal'); if (m) m.hidden = true; if (ui.bet) closeSlip(); }
     // 14.11: digits, Backspace, Delete and Enter of a real keyboard work like the ATM keys

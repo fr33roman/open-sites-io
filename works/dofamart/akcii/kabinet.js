@@ -19,7 +19,7 @@ function base() {
 var BASE = base();
 if (!BASE) return;
 
-var VER = '1118a';
+var VER = '1119a';
 (function () { var l = document.createElement('link'); l.rel = 'stylesheet'; l.href = 'kabinet.css?v=' + VER; document.head.appendChild(l); })();
 
 /* ---------- small helpers ---------- */
@@ -98,7 +98,7 @@ var TX = {
     closed_until: 'Переводы и долги закрыты до {t} (после восстановления доступа).',
     name_h: 'Имя кошелька', name_p: 'Короткое имя вместо номера: чем короче, тем дороже. Покупается один раз, навсегда. Игровые доллары за настоящие деньги не продаются.',
     name_price: 'цена была бы {p} $', pr_korotkoe: 'Введите имя: от 4 до 24 знаков', pr_rezerv: 'Имена из 1–3 знаков в резерве', pr_dlinnoe: 'Слишком длинное: не больше 24 знаков', pr_znaki: 'Только a–z, 0–9 и дефис, не с краёв', pr_zapret: 'Такое имя нельзя',
-    name_ph: 'например, neon', name_free: 'Свободно · {p} $', name_busy: 'Занято', name_buy: 'Купить — скоро', name_soon: 'Покупка имён скоро откроется.',
+    name_ph: 'например, bankir', name_free: 'Свободно · {p} $', name_busy: 'Занято', name_buy: 'Купить — скоро', name_soon: 'Покупка имён скоро откроется.',
     logout: 'Выйти', logout_all: 'Выйти на всех устройствах', logged_out: 'Вы вышли из кабинета',
     /* отправка */
     send_h: 'Отправить другу', t_perevod: 'Отправить', t_zaym: 'Дать в долг', t_prosba: 'Попросить в долг', f_summa: 'Сумма, $', f_podpis: 'Подпись (по желанию)', f_podpis_ph: 'Например, «На кофе»',
@@ -179,7 +179,7 @@ var TX = {
     closed_until: 'Transfers and debts are closed until {t} (after access recovery).',
     name_h: 'Wallet name', name_p: 'A short name instead of the number: the shorter, the pricier. Bought once, forever. Play dollars are never sold for real money.',
     name_price: 'it would cost ${p}', pr_korotkoe: 'Enter a name: 4 to 24 characters', pr_rezerv: 'Names of 1–3 characters are reserved', pr_dlinnoe: 'Too long: 24 characters at most', pr_znaki: 'Only a–z, 0–9 and hyphen, not at the edges', pr_zapret: 'This name is not allowed',
-    name_ph: 'e.g. neon', name_free: 'Free · ${p}', name_busy: 'Taken', name_buy: 'Buy — soon', name_soon: 'Name sales open soon.',
+    name_ph: 'e.g. bankir', name_free: 'Free · ${p}', name_busy: 'Taken', name_buy: 'Buy — soon', name_soon: 'Name sales open soon.',
     logout: 'Sign out', logout_all: 'Sign out everywhere', logged_out: 'Signed out',
     send_h: 'Send to a friend', t_perevod: 'Send', t_zaym: 'Lend', t_prosba: 'Ask for a loan', f_summa: 'Amount, $', f_podpis: 'Note (optional)', f_podpis_ph: 'e.g. “For coffee”',
     f_procent: 'Interest', f_srok: 'Due', srok_note: 'A loan lasts 30 days, interest is added at once, one time.',
@@ -751,14 +751,14 @@ function act(a, b, e) {
       setBusy(b, 1);
       // 16.11: в кабинете не хватает — берём недостающее с игрового счёта страницы (слово Романа: «на счету 14 тыс., а 10 тыс. отправить нельзя»)
       var free = me && me.koshelek ? me.koshelek.svobodno : 0, need = cents - free, S2 = window.DofaSim, moved = 0;
-      var pre = need > 0 && S2 && S2.take && S2.take(need / 100)
+      var pre = sf.vid !== 'prosba' && need > 0 && S2 && S2.take && S2.take(need / 100)
         ? api('POST', '/bankomat', { summa: need, klyuch: idempotent('auto' + need + ':' + Date.now()) }).then(function (r0) { if (r0.ok) moved = need; else S2.give(need / 100); return r0; })
         : Promise.resolve({ ok: true });
       pre.then(function () { return api('POST', '/chek', body3); }).then(function (r) {
         setBusy(b, 0);
         if (r.ok) { st = { res: r.d }; scr = 'ready'; render(true); refreshMe(true); }
         else if (r.d.oshibka === 'ne_hvataet') showErr(x('low_free')); else showErr(errText(r));
-      });
+      }).catch(function () { setBusy(b, 0); showErr(x('err_set') || 'Не получилось. Попробуйте ещё раз.'); });
       return;
     }
     case 'share': {

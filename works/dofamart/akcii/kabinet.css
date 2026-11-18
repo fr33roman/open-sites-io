@@ -170,3 +170,5 @@ body.kab-open{overflow:hidden}
 .kab-total b{font-size:30px;color:var(--txt)}
 /* шапка: кнопка «Отправить другу» без текста, пока меню разделов не помещается целиком */
 @media (min-width:900px) and (max-width:1599px){.kab-hsend span{display:none}.kab-hsend{padding:0 11px}}
+/* 18.11: в шапке на компьютере у «Отправить другу» только значок — меню разделов (с «Городом») должно помещаться целиком */
+@media (min-width:900px){.kab-hsend span{display:none}.kab-hsend{padding:0 11px}}
