@@ -66,7 +66,21 @@ def('crypto', [
   ['AAVE', 'Ааве', 'Aave', 114, { bn: 'AAVEUSDT', cg: 'aave', vm: 1.4 }],
   ['INJ', 'Инджектив', 'Injective', 8.19, { bn: 'INJUSDT', cg: 'injective-protocol', vm: 1.5 }],
   ['HBAR', 'Хедера', 'Hedera', 0.064, { bn: 'HBARUSDT', cg: 'hedera-hashgraph', vm: 1.4 }],
-  ['ICP', 'Интернет-компьютер', 'Internet Computer', 2.64, { bn: 'ICPUSDT', cg: 'internet-computer', vm: 1.4 }]
+  ['ICP', 'Интернет-компьютер', 'Internet Computer', 2.64, { bn: 'ICPUSDT', cg: 'internet-computer', vm: 1.4 }],
+  // 18.11: ещё 13 криптовалют с живым источником (Binance, запас — CoinGecko)
+  ['POL', 'Полигон', 'Polygon', 0.2, { bn: 'POLUSDT', cg: 'polygon-ecosystem-token', vm: 1.4 }],
+  ['RENDER', 'Рендер', 'Render', 4, { bn: 'RENDERUSDT', cg: 'render-token', vm: 1.5 }],
+  ['FET', 'Фетч', 'Fetch.ai', 0.7, { bn: 'FETUSDT', cg: 'fetch-ai', vm: 1.6 }],
+  ['GRT', 'Зе-граф', 'The Graph', 0.1, { bn: 'GRTUSDT', cg: 'the-graph', vm: 1.5 }],
+  ['ALGO', 'Алгоранд', 'Algorand', 0.2, { bn: 'ALGOUSDT', cg: 'algorand', vm: 1.3 }],
+  ['VET', 'Вечейн', 'VeChain', 0.02, { bn: 'VETUSDT', cg: 'vechain', vm: 1.4 }],
+  ['SAND', 'Сэндбокс', 'The Sandbox', 0.3, { bn: 'SANDUSDT', cg: 'the-sandbox', vm: 1.5 }],
+  ['CRV', 'Кёрв', 'Curve', 0.5, { bn: 'CRVUSDT', cg: 'curve-dao-token', vm: 1.5 }],
+  ['LDO', 'Лидо', 'Lido DAO', 0.9, { bn: 'LDOUSDT', cg: 'lido-dao', vm: 1.5 }],
+  ['IMX', 'Иммутабл', 'Immutable', 1.2, { bn: 'IMXUSDT', cg: 'immutable-x', vm: 1.5 }],
+  ['TIA', 'Селестия', 'Celestia', 2, { bn: 'TIAUSDT', cg: 'celestia', vm: 1.6 }],
+  ['SEI', 'Сей', 'Sei', 0.2, { bn: 'SEIUSDT', cg: 'sei-network', vm: 1.6 }],
+  ['STX', 'Стэкс', 'Stacks', 0.8, { bn: 'STXUSDT', cg: 'blockstack', vm: 1.5 }]
 ]);
 def('stocks', [
   ['AAPL', 'Apple', 'Apple', 228], ['NVDA', 'Nvidia', 'Nvidia', 135, { vm: 1.6 }],
@@ -82,7 +96,9 @@ def('stocks', [
   ['PFE', 'Pfizer', 'Pfizer', 27, { vm: 0.7 }], ['XOM', 'ExxonMobil', 'ExxonMobil', 115, { vm: 0.8 }],
   ['MCD', "McDonald's", "McDonald's", 295, { vm: 0.6 }], ['PYPL', 'PayPal', 'PayPal', 78, { vm: 1.3 }],
   ['UBER', 'Uber', 'Uber', 75, { vm: 1.3 }], ['SBUX', 'Starbucks', 'Starbucks', 95],
-  ['COST', 'Costco', 'Costco', 900, { vm: 0.8 }]
+  ['COST', 'Costco', 'Costco', 900, { vm: 0.8 }],
+  ['PLTR', 'Palantir', 'Palantir', 75, { vm: 1.8 }], ['COIN', 'Coinbase', 'Coinbase', 250, { vm: 1.8 }],
+  ['AVGO', 'Broadcom', 'Broadcom', 170, { vm: 1.3 }], ['LLY', 'Eli Lilly', 'Eli Lilly', 800, { vm: 1 }]
 ]);
 def('metals', [
   ['XAU', 'Золото, унция', 'Gold, oz', 3875, { bn: 'PAXGUSDT', cg: 'pax-gold', proxy: 'PAXG' }],
@@ -135,7 +151,10 @@ def('forex', [
   fxp('EURGBP', 'Евро / фунт', 'Euro / pound', 0.838, 'EUR/GBP', r => r.GBP / r.EUR),
   fxp('EURJPY', 'Евро / иена', 'Euro / yen', 177, 'EUR/JPY', r => r.JPY / r.EUR),
   fxp('GBPJPY', 'Фунт / иена', 'Pound / yen', 211.7, 'GBP/JPY', r => r.JPY / r.GBP),
-  fxp('EURCHF', 'Евро / франк', 'Euro / franc', 0.923, 'EUR/CHF', r => r.CHF / r.EUR)
+  fxp('EURCHF', 'Евро / франк', 'Euro / franc', 0.923, 'EUR/CHF', r => r.CHF / r.EUR),
+  fxp('USDPHP', 'Доллар / песо Филиппин', 'US dollar / Philippine peso', 58, 'USD/PHP', dir('PHP')),
+  fxp('USDMYR', 'Доллар / ринггит', 'US dollar / ringgit', 4.5, 'USD/MYR', dir('MYR')),
+  fxp('AUDJPY', 'Австралийский доллар / иена', 'Australian dollar / yen', 105, 'AUD/JPY', r => r.JPY / r.AUD)
 ]);
 def('commod', [
   ['BRENT', 'Нефть Brent', 'Brent crude', 74.8, { vm: 1.2 }], ['WTI', 'Нефть WTI', 'WTI crude', 70.9, { vm: 1.2 }],
@@ -273,7 +292,7 @@ function chg24(M, sym, now) {
 /* ---------- account ---------- */
 function newState() {
   return { v: 1, lang: 'ru', sound: true, cash: 0, deposited: 0, bench: 0, positions: [], trades: [], curve: [], curveT: 0, nextId: 1,
-    gift: 0, xp: 0, nm: { b: 0, mx: 0 }, qd: {}, les: {}, qx: { cmp: 0, wal: 0, cats: {} }, inv: 0,
+    gift: 0, xp: 0, nm: { b: 0, mx: 0 }, qd: {}, les: {}, qx: { cmp: 0, wal: 0, cats: {} }, inv: 0, vw: 'list', vault: 1e7, cb: 0, city: { b: {}, 'in': 0, out: 0, streak: 0, last: -1 },
     agg: { n: 0, wins: 0, fees: 0, maxLoss: 0, imp: 0, opens: 0, streak: 0, lastActT: 0, lastLossT: 0, liq: 0, realized: 0 } };
 }
 function reset(S) { const k = { lang: S.lang, sound: S.sound }; Object.keys(S).forEach(x => delete S[x]); Object.assign(S, newState(), k); }
@@ -284,8 +303,10 @@ const liqPrice = (entry, side, lev) => entry * (1 - side / lev);
 const betValue = b => round2(b.a / b.p * (b.cur >= 0 ? b.cur : b.p));
 function betsValue(S) { let v = 0; (S.bets || []).forEach(b => { if (b && b.p > 0 && b.a > 0) v += betValue(b); }); return round2(v); }
 function equity(S, M) { let v = S.cash + betsValue(S); S.positions.forEach(p => { v += posValue(p, M.px[p.sym]); }); return v; }
+// 18.11 «Город»: деньги города (доход и траты на здания) в результат торговли не входят — вычитаем их из итога.
+const cityAdj = S => (S.city ? round2((+S.city['in'] || 0) - (+S.city.out || 0)) : 0);
 function pushCurve(S, M) {
-  S.curve.push([M.t, round2(equity(S, M) - S.deposited)]); S.curveT = M.t;
+  S.curve.push([M.t, round2(equity(S, M) - S.deposited - cityAdj(S))]); S.curveT = M.t;
   if (S.curve.length > 400) S.curve = S.curve.filter((c, i) => i >= 200 || i % 2 === 0);
 }
 // 14.11: deposit limits by level. Rewards are put on the account as "gift": they raise cash and deposited (the result is not touched)
@@ -293,9 +314,9 @@ function pushCurve(S, M) {
 // Ten levels; the level grows with experience points (xp): quests and lessons now, friends and debts later (server, stage 2).
 // xp = quests and lessons (S.xp) + points for earned money (profitXp of the best net result reached). `net` — a mandatory net profit for the level.
 const LEVELS = [
-  { lim: 1e4, xp: 0, net: 0, ru: 'Ученик', en: 'Apprentice' }, { lim: 25e3, xp: 100, net: 0, ru: 'Счетовод', en: 'Bookkeeper' }, { lim: 5e4, xp: 250, net: 0, ru: 'Купец', en: 'Merchant' },
-  { lim: 1e5, xp: 450, net: 0, ru: 'Стратег', en: 'Strategist' }, { lim: 25e4, xp: 800, net: 0, ru: 'Инвестор', en: 'Investor' }, { lim: 5e5, xp: 1050, net: 0, ru: 'Банкир', en: 'Banker' },
-  { lim: 1e6, xp: 1300, net: 0, ru: 'Финансист', en: 'Financier' }, { lim: 3e6, xp: 1800, net: 1e5, ru: 'Магнат', en: 'Magnate' }, { lim: 7e6, xp: 2500, net: 5e5, ru: 'Мудрец', en: 'Sage' },
+  { lim: 1e5, xp: 0, net: 0, ru: 'Ученик', en: 'Apprentice' }, { lim: 25e4, xp: 100, net: 0, ru: 'Счетовод', en: 'Bookkeeper' }, { lim: 5e5, xp: 250, net: 0, ru: 'Купец', en: 'Merchant' },
+  { lim: 1e6, xp: 450, net: 0, ru: 'Стратег', en: 'Strategist' }, { lim: 2e6, xp: 800, net: 0, ru: 'Инвестор', en: 'Investor' }, { lim: 3e6, xp: 1050, net: 0, ru: 'Банкир', en: 'Banker' },
+  { lim: 5e6, xp: 1300, net: 0, ru: 'Финансист', en: 'Financier' }, { lim: 7e6, xp: 1800, net: 1e5, ru: 'Магнат', en: 'Magnate' }, { lim: 1e7, xp: 2500, net: 5e5, ru: 'Мудрец', en: 'Sage' },
   { lim: 13e6, xp: 3500, net: 2e6, ru: 'Оракул', en: 'Oracle' }];
 // Points for net profit: [net $, points], linear between; 2 300 points at $2M = about 65% of the 3 500 needed for level 10.
 const PROFIT_XP = [[0, 0], [1e3, 60], [5e3, 180], [2e4, 380], [5e4, 600], [1e5, 850], [3e5, 1300], [5e5, 1550], [1e6, 1950], [2e6, 2300]];
@@ -319,13 +340,17 @@ const own = S => Math.max(0, round2(S.deposited - (S.gift || 0)));
 function levelOf(S) {
   let l = 0; const xp = xpTotal(S), o = own(S), mx = S.nm.mx;
   while (l < LEVELS.length - 1 && LEVELS[l + 1].xp <= xp && LEVELS[l + 1].net <= mx) l++;
-  while (l < LEVELS.length - 1 && o > LEVELS[l].lim + 1e-9) l++;
+  // 18.11: пределов пополнения по уровням больше нет (слово Романа) — уровень только по очкам и чистой прибыли
   return l;
 }
-const room = S => Math.max(0, round2(LIMITS[levelOf(S)] - own(S)));
+// 18.11: запас — деньги в хранилище кошелька: на счёт попадают только через банкомат, торговать ими нельзя, в результат они не входят.
+const VAULT0 = 1e7;
+const vaultOf = S => Math.max(0, round2(num(S.vault)));
+const room = S => vaultOf(S);   // 18.11: внести можно всё, что осталось в запасе
 function deposit(S, M, amount) {
   amount = round2(num(amount));
-  if (!(amount >= 1) || amount > room(S) + 1e-9) return false;
+  if (!(amount >= 1) || amount > room(S) + 1e-9 || amount > vaultOf(S) + 1e-9) return false;
+  S.vault = round2(vaultOf(S) - amount);
   S.cash = round2(S.cash + amount); S.deposited = round2(S.deposited + amount);
   S.bench += amount / M.px[BENCH];           // "bought the index and never touched it"
   pushCurve(S, M);
@@ -414,7 +439,7 @@ function advance(S, M, now) {
 function stats(S, M) {
   const a = S.agg, eq = equity(S, M), bv = S.bench * M.px[BENCH];
   return { n: a.n, wins: a.wins, winRate: a.n ? a.wins / a.n : null, fees: a.fees, maxLoss: a.maxLoss, imp: a.imp, opens: a.opens,
-    liq: a.liq, streak: a.streak, realized: a.realized, equity: eq, result: round2(eq - S.deposited), bench: round2(bv - S.deposited) };
+    liq: a.liq, streak: a.streak, realized: a.realized, equity: eq, result: round2(eq - S.deposited - cityAdj(S)), bench: round2(bv - S.deposited) };
 }
 // Rebuild market from saved data (history is never stored — it is refetched or re-modelled).
 function restore(d, now) {
@@ -431,12 +456,13 @@ function restore(d, now) {
   S.qx = Object.assign(newState().qx, d.qx || {}); if (!S.qx.cats) S.qx.cats = {};
   S.nm = d.nm && typeof d.nm === 'object' ? { b: num(d.nm.b) || 0, mx: num(d.nm.mx) || 0 } : { b: earned(S), mx: 0 };   // old players: count from the update
   if (!S.qd || typeof S.qd !== 'object') S.qd = {}; if (!S.les || typeof S.les !== 'object') S.les = {};
+  if (d.vault == null) S.vault = Math.max(0, round2(VAULT0 - own(S)));   // играющие раньше: 10 млн минус уже внесённое
   S.positions = S.positions.filter(p => p && INS[p.sym]);
   return { S: S, M: M };
 }
 
 Object.assign(E, { KEY, FEE, LEVS, CATS, CAT, INS, SYMS, BENCH, FINE_N, newMarket, status, step, synthHist, setCandles, applyQuote, chg24,
-  newState, reset, pnl, posValue, betValue, betsValue, liqPrice, equity, deposit, grant, LEVELS, LIMITS, PROFIT_XP, profitXp, earned, netNow, trackNet, xpTotal, own, levelOf, room, maxAmount, open, close, sweep, sweepCandles, advance, stats, restore, num, round2, bridge, gauss });
+  newState, reset, cityAdj, vaultOf, VAULT0, pnl, posValue, betValue, betsValue, liqPrice, equity, deposit, grant, LEVELS, LIMITS, PROFIT_XP, profitXp, earned, netNow, trackNet, xpTotal, own, levelOf, room, maxAmount, open, close, sweep, sweepCandles, advance, stats, restore, num, round2, bridge, gauss });
 if (typeof module !== 'undefined' && module.exports) { module.exports = E; }
 if (typeof document === 'undefined') return;
 
@@ -452,7 +478,7 @@ const NB = ' ';   // narrow no-break space as thousands separator
 
 const T = {
   ru: {
-    nav_money: 'Деньги', nav_market: 'Рынок', nav_wallet: 'Кошелёк', nav_truth: 'Правда', nav_news: 'Новости', snd_aria: 'Звук', skin_aria: 'Стиль', skin_quantum: 'Стиль: Квант', slogan: 'Твоя виртуальная экономическая вселенная', skin_gold: 'Стиль: Золото', skin_sapphire: 'Стиль: Сапфир', skin_amethyst: 'Стиль: Аметист', skin_aurora: 'Стиль: Аврора', skin_platinum: 'Стиль: Платина',
+    nav_money: 'Деньги', nav_market: 'Рынок', nav_wallet: 'Кошелёк', nav_gorod: 'Город', nav_truth: 'Правда', nav_news: 'Новости', snd_aria: 'Звук', skin_aria: 'Стиль', skin_quantum: 'Стиль: Квант', slogan: 'Твоя виртуальная экономическая вселенная', skin_gold: 'Стиль: Золото', skin_sapphire: 'Стиль: Сапфир', skin_amethyst: 'Стиль: Аметист', skin_aurora: 'Стиль: Аврора', skin_platinum: 'Стиль: Платина',
     money_lbl: 'Игровой счёт', money_h: 'Деньги',
     money_sub: 'Внесите любую сумму и торгуйте как в жизни. Деньги игровые: потерять здесь нечего, а результат считается честно.',
     reset: 'Обнулить всё', reset_q: 'Стереть деньги, позиции и всю историю?', reset_yes: 'Да, обнулить', cancel: 'Отмена', reset_done: 'Счёт обнулён',
@@ -506,7 +532,7 @@ const T = {
     ]
   },
   en: {
-    nav_money: 'Money', nav_market: 'Market', nav_wallet: 'Wallet', nav_truth: 'Truth', nav_news: 'News', snd_aria: 'Sound', skin_aria: 'Style', skin_quantum: 'Style: Quantum', slogan: 'Your virtual economic universe', skin_gold: 'Style: Gold', skin_sapphire: 'Style: Sapphire', skin_amethyst: 'Style: Amethyst', skin_aurora: 'Style: Aurora', skin_platinum: 'Style: Platinum',
+    nav_money: 'Money', nav_market: 'Market', nav_wallet: 'Wallet', nav_gorod: 'City', nav_truth: 'Truth', nav_news: 'News', snd_aria: 'Sound', skin_aria: 'Style', skin_quantum: 'Style: Quantum', slogan: 'Your virtual economic universe', skin_gold: 'Style: Gold', skin_sapphire: 'Style: Sapphire', skin_amethyst: 'Style: Amethyst', skin_aurora: 'Style: Aurora', skin_platinum: 'Style: Platinum',
     money_lbl: 'Play account', money_h: 'Money',
     money_sub: 'Deposit any amount and trade as you would in real life. The money is play money: nothing to lose, and the result is counted honestly.',
     reset: 'Reset everything', reset_q: 'Erase money, positions and all history?', reset_yes: 'Yes, reset', cancel: 'Cancel', reset_done: 'Account reset',
@@ -697,7 +723,7 @@ const snd = (function () {
    Every response is untrusted data: numbers go through num()/applyQuote(),
    only our own symbol keys are read, nothing from the network reaches innerHTML.
    ===================================================================== */
-const BN = ['https://data-api.binance.vision', 'https://api.binance.com'];
+const BN = ['https://data-api.binance.vision', 'https://api.binance.com', 'https://api1.binance.com', 'https://api-gcp.binance.com'];   // 18.11: два запасных адреса
 const ECB = ['AUD', 'BGN', 'BRL', 'CAD', 'CHF', 'CNY', 'CZK', 'DKK', 'EUR', 'GBP', 'HKD', 'HUF', 'IDR', 'ILS', 'INR', 'ISK', 'JPY', 'KRW', 'MXN', 'MYR', 'NOK', 'NZD', 'PHP', 'PLN', 'RON', 'SEK', 'SGD', 'THB', 'TRY', 'ZAR'];   // what the frankfurter (ECB) source covers
 const FXC = ECB.concat(['RUB', 'KZT', 'GEL']);                    // ...plus three currencies only the daily-rate source has (no ECB history for them)
 const FRANK = 'https://api.frankfurter.dev/v1/';                    // ECB reference rates, open, no key
@@ -713,38 +739,84 @@ async function getJSON(url, ms) {
   } finally { clearTimeout(to); }
 }
 const BNS = SYMS.filter(s => INS[s].bn);
-
+const bnBad = {};                                   // пары, которые биржа не знает (ответ 400): выбрасываем, остальным не мешаем
+const bnList = () => BNS.filter(s => !bnBad[s]);
+const STALE_MS = 6 * 36e5;                          // последняя сделка по паре старше 6 часов: пара не торгуется, цена не живая
+async function probeBn() {                          // одна неизвестная пара ломает весь запрос — находим её по одной
+  const h = BN[bnHost % BN.length];
+  await Promise.all(BNS.map(s => getJSON(h + '/api/v3/ticker/price?symbol=' + INS[s].bn, 6000).catch(e => { if (String(e.message) === 'http 400') bnBad[s] = 1; })));
+}
+async function cgFor(list) {                        // CoinGecko (открытый адрес без ключа), не чаще раза в минуту
+  if (!list.length || Date.now() - cgAt < 6e4) return 0;
+  cgAt = Date.now();
+  const d = await getJSON('https://api.coingecko.com/api/v3/simple/price?ids=' + list.map(s => INS[s].cg).join(',') + '&vs_currencies=usd&include_24hr_change=true&include_last_updated_at=true');
+  const now = Date.now(), res = { liq: [] }; let n = 0;
+  list.forEach(s => { const o = d && d[INS[s].cg]; if (o && E.applyQuote(S, M, s, { p: o.usd, ch: E.num(o.usd_24h_change) / 100, qt: now, src: 'cg' }, now, res)) n++; });
+  onLiq(res.liq); return n;
+}
+let cgStaleAt = 0;
+const ws = { sock: null, host: 0, fails: 0, at: 0, open: false, buf: {}, skip: 0, tm: 0, flush: 0 };
 async function runCrypto() {
-  const list = encodeURIComponent(JSON.stringify(BNS.map(s => INS[s].bn)));
+  if (ws.open && Date.now() - ws.at < 10e3 && (++ws.skip % 5)) return;      // живой поток идёт: опрос нужен лишь раз в минуту (суточное изменение, проверка пар)
+  let list = bnList(), probed = false;
   for (let k = 0; k < BN.length; k++) {
     const h = (bnHost + k) % BN.length;
     try {
-      const a = await getJSON(BN[h] + '/api/v3/ticker/24hr?symbols=' + list);
+      const a = await getJSON(BN[h] + '/api/v3/ticker/24hr?symbols=' + encodeURIComponent(JSON.stringify(list.map(s => INS[s].bn))));
       if (!Array.isArray(a)) throw new Error('shape');
       const by = {}; a.forEach(o => { if (o && typeof o.symbol === 'string') by[o.symbol] = o; });
-      const now = Date.now(), res = { liq: [] }; let n = 0;
-      BNS.forEach(s => {
-        const o = by[INS[s].bn];
-        if (o && E.applyQuote(S, M, s, { p: o.lastPrice, ch: E.num(o.priceChangePercent) / 100, qt: now, src: 'bn' }, now, res)) n++;
+      const now = Date.now(), res = { liq: [] }, stale = []; let n = 0;
+      list.forEach(s => {
+        const o = by[INS[s].bn]; if (!o) { stale.push(s); return; }
+        const ct = E.num(o.closeTime);
+        if (ct > 0 && now - ct > STALE_MS) { stale.push(s); return; }          // пара снята с торгов: остаётся моделью или берётся у CoinGecko
+        if (E.applyQuote(S, M, s, { p: o.lastPrice, ch: E.num(o.priceChangePercent) / 100, qt: now, src: 'bn' }, now, res)) n++;
       });
       if (!n) throw new Error('empty');
       bnHost = h; bnLive = true; onLiq(res.liq);
       if (!seeded) { seeded = true; seedCandles(); }
+      if (stale.length && Date.now() > cgStaleAt) { cgStaleAt = Date.now() + 3e5; cgFor(stale).catch(() => { cgStaleAt = Date.now() + 18e5; }); }   // снятые с торгов пары (например TON) — у CoinGecko, не чаще раза в 5 минут
       return;
-    } catch (e) { /* try the next host */ }
+    } catch (e) {
+      if (!probed && String(e.message) === 'http 400') { probed = true; await probeBn(); list = bnList(); if (list.length) { k = -1; continue; } }
+    }
   }
   bnLive = false;
-  if (Date.now() - cgAt < 6e4) throw new Error('wait');             // CoinGecko fallback, at most once a minute
-  cgAt = Date.now();
-  const d = await getJSON('https://api.coingecko.com/api/v3/simple/price?ids=' + BNS.map(s => INS[s].cg).join(',') +
-    '&vs_currencies=usd&include_24hr_change=true&include_last_updated_at=true');
+  if (!(await cgFor(list))) throw new Error('empty');
+}
+// 18.11: живой поток Binance, «miniTicker» всех пар одним соединением; цена обновляется раз в секунду, при обрыве повтор с нарастающей паузой
+// и другим адресом; на скрытой вкладке соединение закрыто (почти ноль работы). Без потока работает опрос раз в 12 секунд.
+const WS_URL = ['wss://data-stream.binance.vision/stream?streams=', 'wss://stream.binance.com:9443/stream?streams='];
+function wsFlush() {
   const now = Date.now(), res = { liq: [] }; let n = 0;
-  BNS.forEach(s => {
-    const o = d && d[INS[s].cg];
-    if (o && E.applyQuote(S, M, s, { p: o.usd, ch: E.num(o.usd_24h_change) / 100, qt: now, src: 'cg' }, now, res)) n++;
-  });
-  if (!n) throw new Error('empty');
-  onLiq(res.liq);
+  Object.keys(ws.buf).forEach(s => { const q = ws.buf[s]; if (E.applyQuote(S, M, s, { p: q.p, ch: q.ch, qt: now, src: 'bn' }, now, res)) n++; });
+  ws.buf = {}; if (!n) return;
+  bnLive = true; onLiq(res.liq);
+  if (!seeded) { seeded = true; seedCandles(); }
+}
+function wsStop() {
+  clearTimeout(ws.tm); clearInterval(ws.flush); ws.flush = 0; ws.open = false;
+  const k = ws.sock; ws.sock = null;
+  if (k) { k.onclose = k.onerror = k.onmessage = k.onopen = null; try { k.close(); } catch (e) {} }
+}
+function wsRetry() { ws.fails++; ws.host = ws.fails % 2; clearTimeout(ws.tm); ws.tm = setTimeout(wsStart, Math.min(6e4, 2000 * Math.pow(2, Math.min(ws.fails, 5)))); }
+function wsStart() {
+  if (ws.sock || typeof WebSocket === 'undefined' || document.hidden) return;
+  const list = bnList(), map = {}; list.forEach(s => { map[INS[s].bn] = s; });
+  let k; try { k = new WebSocket(WS_URL[ws.host % WS_URL.length] + list.map(s => INS[s].bn.toLowerCase() + '@miniTicker').join('/')); } catch (e) { wsRetry(); return; }
+  ws.sock = k;
+  k.onopen = () => {
+    ws.open = true; ws.fails = 0; ws.at = Date.now(); clearInterval(ws.flush);
+    ws.flush = setInterval(() => { if (ws.sock && Date.now() - ws.at > 25e3) { wsStop(); wsRetry(); } else wsFlush(); }, 1000);
+  };
+  k.onmessage = ev => {
+    let m; try { m = JSON.parse(ev.data); } catch (e) { return; }
+    const d = m && m.data, s = d && typeof d.s === 'string' ? map[d.s] : null; if (!s) return;
+    const c = E.num(d.c), o = E.num(d.o); if (!(c > 0)) return;
+    ws.buf[s] = { p: c, ch: o > 0 ? c / o - 1 : null }; ws.at = Date.now();
+  };
+  k.onerror = () => {};
+  k.onclose = () => { wsStop(); wsRetry(); };
 }
 
 function applyRates(rates, qt) {
@@ -1187,13 +1259,27 @@ function posList(el, list, emptyKey) {
   el.innerHTML = list.length ? list.map(posHTML).join('') : '<p class="empty">' + t(emptyKey) + '</p>';
 }
 
+// 18.11: второй вид длинных списков — «Плитка» (компактные карточки в несколько колонок); выбор хранится в S.vw
+const isTile = () => !!S && S.vw === 'tile';
+const tileCls = () => (isTile() ? ' tile' : '');
+function vtog() {
+  return '<div class="vtog-row"><div class="vtog" role="group" aria-label="' + esc(t('vw_aria')) + '">' +
+    '<button type="button" data-vw="list" class="' + (isTile() ? '' : 'on') + '" aria-pressed="' + !isTile() + '"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg><span>' + t('vw_list') + '</span></button>' +
+    '<button type="button" data-vw="tile" class="' + (isTile() ? 'on' : '') + '" aria-pressed="' + isTile() + '"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="6.5" height="6.5" rx="1.4"/><rect x="13.5" y="4" width="6.5" height="6.5" rx="1.4"/><rect x="4" y="13.5" width="6.5" height="6.5" rx="1.4"/><rect x="13.5" y="13.5" width="6.5" height="6.5" rx="1.4"/></svg><span>' + t('vw_tile') + '</span></button></div></div>';
+}
+function setView(v) {
+  S.vw = v === 'tile' ? 'tile' : 'list'; save();
+  document.querySelectorAll('.vtog [data-vw]').forEach(b => { const on = b.getAttribute('data-vw') === S.vw; b.classList.toggle('on', on); b.setAttribute('aria-pressed', on ? 'true' : 'false'); });
+  document.querySelectorAll('.rows, .cs-list, #betList').forEach(el => el.classList.toggle('tile', S.vw === 'tile'));
+  upd(true);
+}
 function renderMarket() {
   const box = $('marketBox'); if (!box) return;
   if (ui.sym) return renderIns(box);
   if (ui.cat) {
     const c = E.CAT[ui.cat];
     box.innerHTML = '<a class="crumb" href="#market"><span aria-hidden="true">←</span> ' + t('back_market') + '</a>' +
-      '<div class="vhead"><h1>' + esc(L(c)) + '</h1></div><div class="rows">' +
+      '<div class="vhead"><h1>' + esc(L(c)) + '</h1></div>' + vtog() + '<div class="rows' + tileCls() + '">' +
       SYMS.filter(s => INS[s].cat === ui.cat).map(s =>
         '<a class="row" href="#market/' + ui.cat + '/' + s + '"><span class="r-id"><b>' + esc(tk(s)) + ' <i class="st" data-stt="' + s + '"></i></b><small>' + esc(L(INS[s])) + '</small></span>' +
         '<svg class="r-spark" viewBox="0 0 60 26" preserveAspectRatio="none" aria-hidden="true"><polyline data-spark="' + s + '"/></svg>' +
@@ -1448,14 +1534,7 @@ function cashAnim(a) {
 function atmMsg(s, err) { const m = $('atmMsg'); if (m) { m.className = 'scr-msg num' + (err ? ' err' : ''); m.textContent = s; } }
 function doDeposit(a) {
   if (!(a >= 1)) { atmMsg(t('atm_min'), true); vib(20); return; }
-  const lv = E.levelOf(S), cap = E.LIMITS[lv], rm = E.room(S);
-  if (a > rm + 1e-9) {
-    if (lv >= E.LIMITS.length - 1 && rm < 1) atmMsg(tf('full_top', { c: money(cap, 0) }), true);
-    else if (a > cap) atmMsg(openHint(levelFor(a)), true);
-    else if (rm < 1) atmMsg(tf('limit_used', { c: money(cap, 0) }) + ' ' + openHint(lv + 1), true);
-    else atmMsg(tf('room_msg', { x: money(rm, 0) }), true);
-    vib(20); return;
-  }
+  if (a > E.vaultOf(S) + 1e-9) { atmMsg(tf('vault_msg', { x: money(E.vaultOf(S), 0) }), true); vib(20); return; }
   if (!E.deposit(S, M, a)) { atmMsg(t('atm_max'), true); vib(20); return; }
   save(); atmMsg('+' + money(a)); atmSet('');
   vib([10, 30, 10, 30, 10]);
@@ -1504,6 +1583,8 @@ function renderWallet() {
   const st = (id, k) => '<div class="stat"><span class="lbl">' + t(k) + '</span><span class="num" id="' + id + '"></span></div>';
   $('walletBox').innerHTML = '<div class="vhead"><h1>' + t('wallet_h') + '</h1></div>' +
     '<div class="panel hero"><p class="lbl">' + t('w_real') + '</p><div class="hero-num num" id="wRes"></div><p class="hero-sub"><span class="num" id="wPct"></span> ' + t('w_of_dep') + '</p></div>' +
+    '<div class="panel vault-p"><div><span class="lbl">' + t('w_vault') + '</span><b class="num" id="wVault"></b><small>' + t('w_vault_p') + '</small></div><a class="btn-ghost" href="#money">' + t('w_vault_go') + '</a></div>' +
+    '<section class="rc-box" id="resBox"></section>' +
     '<div class="stats w5">' + st('wEq', 'w_total') + st('wCash', 'w_cash') + st('wPos', 'w_inpos') + st('wBetV', 'w_inbets') + st('wDep', 'w_dep') + '</div>' +
     '<h2 class="h2">' + t('w_curve') + '</h2><div class="panel ch-panel"><div class="chart sm lw" id="cvEq"></div><p class="ch-empty" id="cvEqE" hidden>' + t('curve_empty') + '</p></div>' +
     '<div class="w-ana"><section class="w-al"><h2 class="h2">' + t('w_alloc') + '</h2><div class="panel alloc" id="wAlloc"></div></section>' +
@@ -1512,6 +1593,7 @@ function renderWallet() {
     '<section class="wb" id="wBets"></section>' +
     '<h2 class="h2">' + t('w_hist') + '</h2><div id="wHist"></div>';
   chartKill('eq'); if (!LWC()) bindHover(cvIn($('cvEq')), drawEq);
+  if (window.DofaGorod) DofaGorod.mountWallet($('resBox'));
   ui.alSig = ''; ui.aSig = ''; ui.wbSig = '';
   renderDyn();
 }
@@ -1541,7 +1623,7 @@ function fillAlloc() {
 function anaStats() {
   const tr = S.trades.filter(x => INS[x.sym]), w = tr.filter(x => x.net > 0), l = tr.filter(x => x.net < 0), sum = a => a.reduce((s, x) => s + x.net, 0);
   let best = null, worst = null; tr.forEach(x => { if (!best || x.net > best.net) best = x; if (!worst || x.net < worst.net) worst = x; });
-  const pts = S.curve.map(c => c[1]).concat([E.round2(E.equity(S, M) - S.deposited)]); let pk = -Infinity, dd = 0;
+  const pts = S.curve.map(c => c[1]).concat([E.round2(E.equity(S, M) - S.deposited - E.cityAdj(S))]); let pk = -Infinity, dd = 0;
   pts.forEach(v => { if (v > pk) pk = v; if (pk - v > dd) dd = pk - v; });
   return { n: S.agg.n, wins: S.agg.wins, loss: S.agg.n - S.agg.wins, wr: S.agg.n ? S.agg.wins / S.agg.n : 0, aw: w.length ? sum(w) / w.length : null, al: l.length ? sum(l) / l.length : null, best: best, worst: worst, fees: S.agg.fees, dd: E.round2(dd) };
 }
@@ -1578,7 +1660,7 @@ function renderDyn() {
 function eqPts() {
   const out = [], put = (tm, v) => { const n = out.length; if (n && tm < out[n - 1].time) return; if (n && tm === out[n - 1].time) out[n - 1].value = v; else out.push({ time: tm, value: v }); };
   S.curve.forEach(c => put(lt(c[0]), c[1]));
-  if (out.length) put(lt(M.t), E.round2(E.equity(S, M) - S.deposited));
+  if (out.length) put(lt(M.t), E.round2(E.equity(S, M) - S.deposited - E.cityAdj(S)));
   return out;
 }
 function drawEq() {
@@ -1649,7 +1731,7 @@ function refreshWallet() {
   rollTo($('wEq'), st.equity, money); rollTo($('wCash'), S.cash, money);
   const bv = E.betsValue(S);
   rollTo($('wPos'), E.round2(st.equity - S.cash - bv), money); rollTo($('wBetV'), bv, money); rollTo($('wDep'), S.deposited, money);
-  drawEq();
+  drawEq(); setTxt($('wVault'), money(E.vaultOf(S), 0)); if (window.DofaGorod) DofaGorod.walletRefresh();
   if (tickN % 5 === 0 || !ui.alSig) fillAlloc();
   fillCards(); fillWBets();
 }
@@ -1940,10 +2022,10 @@ function renderCompare() {
     '<div class="panel cmp-block">' +
       '<div class="cmp-main"><div class="ch-panel"><div class="chart lw" id="cvCmp"></div><p class="ch-empty" id="cvCmpE" hidden></p></div><div class="legend" id="cmpLegend"></div></div>' +
       '<div class="cmp-side"><div class="cs-top"><span class="lbl">' + t('cmp_sel') + '</span><span class="cs-n num" id="cmpCount"></span></div>' +
-        '<div class="chips cmp-sel" id="cmpSel"></div>' +
+        '<div class="chips cmp-sel" id="cmpSel"></div>' + vtog() +
         '<label class="cs-q"><span class="sr">' + t('cmp_search') + '</span><input id="cmpQ" type="search" inputmode="search" autocomplete="off" autocapitalize="off" spellcheck="false" maxlength="24" placeholder="' + esc(t('cmp_search')) + '" value="' + esc(ui.cq || '') + '"></label>' +
         '<div class="cs-tabs" id="cmpTabs"></div>' +
-        '<div class="cs-list" id="cmpList"></div></div>' +
+        '<div class="cs-list' + tileCls() + '" id="cmpList"></div></div>' +
     '</div>' +
     '<div id="cmpTable" class="cmp-table"></div>' +
     '';   // 16.11: сноски про источники убраны по слову Романа (как подвал)
@@ -2071,7 +2153,7 @@ function showTip(el) {
 }
 
 // Bottom bar: four main sections and "More" with a slide-up sheet for the rest.
-const MORE = ['news', 'truth', 'compare', 'top', 'quests', 'learn'];
+const MORE = ['wallet', 'news', 'truth', 'compare', 'top', 'quests', 'learn'];
 Object.assign(T.ru, { nav_more: 'Ещё', more_title: 'Ещё разделы', more_news: 'Что пишут о рынках за сутки', more_truth: 'Честный итог ваших сделок',
   more_compare: 'Два графика на одном экране', more_top: 'Лучшие результаты' });
 Object.assign(T.en, { nav_more: 'More', more_title: 'More sections', more_news: 'What the press says today', more_truth: 'The honest result of your trades',
@@ -2158,7 +2240,7 @@ function renderBets() {
     [['sport', 'bt_sport'], ['pred', 'bt_pred']].map(a => '<button type="button" role="tab" class="' + (ui.btab === a[0] ? 'on' : '') + '" aria-selected="' + (ui.btab === a[0]) + '" data-btab="' + a[0] + '">' + t(a[1]) + '</button>').join('') + '</div></div>' +
     '<div class="bgrid"><div class="bcol"><div id="betMine"></div><div class="chips bcats" id="betChips"></div>' +
     '<div class="bet-bar"><p class="news-meta num" id="betMeta"></p><span class="qrow">' + qm('tip_bets') + '<button class="btn-ghost" type="button" data-act="bet-refresh">' + t('bet_refresh') + '</button></span></div>' +
-    '<div class="bets" id="betList"></div><div class="bet-more" id="betMoreBox"></div></div>' +
+    vtog() + '<div class="bets' + tileCls() + '" id="betList"></div><div class="bet-more" id="betMoreBox"></div></div>' +
     '<aside class="slip" id="slip"><div class="slip-card" id="slipBody"></div></aside></div>';
   fillChips(); fillMine(); fillBets(); fillSlip();
   if (ui.btab === 'sport') { const st = sps(ui.sport); if (!st.at || Date.now() - st.at > 6e4) loadSport(); }
@@ -2205,7 +2287,7 @@ function matchRow(e) {
 function fillSport(fresh) {
   const box = $('betList'), meta = $('betMeta'), mb = $('betMoreBox'); if (!box) return;
   const st = sps(ui.sport);
-  box.textContent = ''; mb.textContent = ''; box.className = 'bets sp' + (fresh ? ' fresh' : '');
+  box.textContent = ''; mb.textContent = ''; box.className = 'bets sp' + tileCls() + (fresh ? ' fresh' : '');
   if (!st.at && !st.err) { setTxt(meta, t('bet_load')); return; }
   if (st.err && !st.list.length) { setTxt(meta, ''); box.appendChild(mkEl('p', 'empty', t('bet_err'))); return; }
   setTxt(meta, tf('bet_upd', { t: clock(st.at) }));
@@ -2225,7 +2307,7 @@ function predBtn(m, oi, lab) {
 }
 function fillPred(fresh) {
   const box = $('betList'), meta = $('betMeta'), mb = $('betMoreBox'); if (!box) return;
-  box.textContent = ''; mb.textContent = ''; box.className = 'bets pred' + (fresh ? ' fresh' : '');
+  box.textContent = ''; mb.textContent = ''; box.className = 'bets pred' + tileCls() + (fresh ? ' fresh' : '');
   if (betCat !== ui.bcat || (!betAt && !betErr)) { setTxt(meta, t('bet_load')); return; }
   if (betErr && !betEv.length) { setTxt(meta, ''); box.appendChild(mkEl('p', 'empty', t('bet_err'))); return; }
   setTxt(meta, tf('bet_upd', { t: clock(betAt) }));
@@ -2402,7 +2484,8 @@ function betTick() {
 /* =====================================================================
    9c. LEVELS, QUESTS, LEARNING (14.11). Everything is local (localStorage); friends and debts come with the server (stage 2).
    ===================================================================== */
-const LESSON_XP = 40;
+const LESSON_XP = 140;   // 18.11: было 40; весь курс из 11 уроков = 1 540 очков (+ задание «Пройти всё обучение» 400)
+const COURSE_GIFT = 2e7;  // 18.11: за весь курс в запас ложится ещё $20 млн
 const LESSONS = [
   { r: 500, ru: { t: 'Цена и график', p: ['Цена — сколько стоит одна штука актива сегодня. Биткоин стоит $60 000: столько нужно заплатить за один целый биткоин.', 'График — история цены. Слева старое, справа новое, выше — дороже. Одна свеча показывает за выбранный отрезок времени четыре цены: с какой цена началась, чем закончилась, самую высокую и самую низкую.', 'Зелёная свеча — за отрезок цена выросла. Красная — упала.'], q: 'Свеча красная. Что случилось с ценой за этот отрезок?', o: ['Упала', 'Выросла', 'Не изменилась'], ok: 0, e: 'Красная свеча значит, что цена закончила отрезок ниже, чем начала.' },
     en: { t: 'Price and chart', p: ['Price is what one unit of an asset costs today. Bitcoin costs $60,000: that is what you pay for one whole bitcoin.', 'A chart is the history of the price. Older on the left, newer on the right, higher means more expensive. One candle shows four prices for the chosen period: where the price started, where it ended, the highest and the lowest.', 'A green candle means the price rose over the period. A red one means it fell.'], q: 'The candle is red. What happened to the price over this period?', o: ['It fell', 'It rose', 'It did not change'], ok: 0, e: 'A red candle means the price ended the period lower than it started.' } },
@@ -2441,12 +2524,21 @@ const QUESTS = [
   { id: 'win', xp: 80, r: 5000, n: 1, p: () => Math.min(1, S.agg.wins) },
   { id: 'bet', xp: 60, r: 5000, n: 1, p: () => Math.min(1, (S.bets || []).length + (S.betHist || []).length) },
   { id: 'hold', xp: 120, r: 10000, n: 60, p: () => Math.min(60, holdMin()) },
-  { id: 'course', xp: 150, r: 15000, n: LESSONS.length, p: () => Math.min(LESSONS.length, lesN()) },
+  { id: 'course', xp: 400, r: 15000, n: LESSONS.length, p: () => Math.min(LESSONS.length, lesN()) },
   { id: 'wins3', xp: 150, r: 50000, n: 3, p: () => Math.min(3, S.agg.wins) },
-  { id: 'mix', xp: 180, r: 100000, n: 3, p: () => Math.min(3, E.CATS.filter(c => hasCat(c.id)).length) }
+  { id: 'mix', xp: 180, r: 100000, n: 3, p: () => Math.min(3, E.CATS.filter(c => hasCat(c.id)).length) },
+  // 18.11 «Город»
+  { id: 'gbuy', xp: 40, r: 1000, n: 1, p: () => (window.DofaGorod ? Math.min(1, DofaGorod.owned(DofaGorod.norm(S))) : 0) },
+  { id: 'gcol', xp: 80, r: 3000, n: 3, p: () => (window.DofaGorod ? Math.min(3, DofaGorod.streakNow(DofaGorod.norm(S), Date.now())) : 0) },
+  { id: 'gup', xp: 100, r: 5000, n: 3, p: () => (window.DofaGorod ? Math.min(3, DofaGorod.maxStep(DofaGorod.norm(S))) : 0) }
 ];
 const FUTURE = ['fut_friends', 'fut_debt_back', 'fut_debt_give'];
 Object.assign(T.ru, {
+  vw_list: 'Список', vw_tile: 'Плитка', vw_aria: 'Вид списка',
+  vault_msg: 'В запасе осталось {x}', vault_line: 'В запасе: {x}', w_vault: 'В запасе', w_vault_p: 'Деньги из запаса на счёт переносит банкомат: внести можно не больше предела уровня.', w_vault_go: 'К банкомату',
+  course_gift: 'Курс пройден: в запас добавлено {x}', xp_up: '',
+  q_gbuy: 'Первое здание', q_gbuy_d: 'Купите любое здание в разделе «Город»', q_gcol: 'Доход три дня подряд', q_gcol_d: 'Соберите доход города три дня подряд',
+  q_gup: 'Здание третьей ступени', q_gup_d: 'Улучшите любое здание до ступени 3',
   nav_quests: 'Задания', nav_learn: 'Обучение', quests_h: 'Задания', learn_h2: 'Обучение',
   q_les1: 'Урок 1', q_les1_d: 'Пройдите первый урок обучения', q_buy: 'Первая покупка', q_buy_d: 'Откройте любую сделку на рынке',
   q_close: 'Закрыть сделку', q_close_d: 'Закройте любую открытую позицию', q_early: 'Выйти вовремя', q_early_d: 'Закройте сделку, пока убыток не больше половины залога',
@@ -2454,13 +2546,13 @@ Object.assign(T.ru, {
   q_win: 'Сделка в плюс', q_win_d: 'Закройте сделку с прибылью', q_bet: 'Сделать ставку', q_bet_d: 'Поставьте игровые деньги в разделе «Ставки»',
   q_hold: 'Держать позицию час', q_hold_d: 'Одна позиция остаётся открытой 60 минут', q_course: 'Пройти всё обучение', q_course_d: 'Ответьте верно во всех уроках',
   q_wins3: 'Три сделки в плюс', q_wins3_d: 'Закройте в плюс три сделки', q_mix: 'Портфель из трёх разделов', q_mix_d: 'Торгуйте активами из трёх разных разделов рынка',
-  lvl_of: 'Уровень {n} из {m}', lvl_limit: 'Можно вносить всего до {x}', lvl_next: 'До уровня «{name}» ещё {x} очков', lvl_next_open: 'Откроет лимит {x}', lvl_max: 'Высший уровень. Потолок — {x}.',
+  lvl_of: 'Уровень {n} из {m}', lvl_limit: 'В запасе: {x}', lvl_next: 'До уровня «{name}» ещё {x} очков', lvl_next_open: 'Откроет новое здание в «Городе»', lvl_max: 'Высший уровень.',
   xp_short: 'оч.', xp_h: 'Как растёт уровень', xp_quests: 'Задания и уроки', xp_now: 'сейчас', xp_soon: 'скоро',
   fut_friends: 'Приглашённые друзья', fut_debt_back: 'Долг, возвращённый вовремя', fut_debt_give: 'Выданный долг',
   xp_profit: 'Чистая прибыль: сделки и ставки', xp_main: 'основная часть', net_h: 'Заработано умом', net_now: 'Чистый итог сейчас', net_best: 'Лучший итог', net_need: 'Нужно заработать ещё {x} чистой прибыли', net_note: 'Прибыль закрытых сделок и выигрыши по ставкам минус убытки, считается с момента обновления. Очки дают за лучший достигнутый итог: убытки сначала нужно отыграть.',
   fut_note: 'Друзья и долги между игроками тоже дадут очки, когда появится сервер. Для уровней «Магнат», «Мудрец» и «Оракул» нужна чистая прибыль.',
   q_done: 'Готово', q_next: 'Следующее задание', q_all_done: 'Все задания выполнены',
-  q_toast: 'Задание «{n}»: +{r} и {x} оч.', q_toast_many: 'Выполнено заданий: {k}. +{r} и {x} оч.', lvl_up: 'Новый уровень: «{name}». Лимит пополнения {x}',
+  q_toast: 'Задание «{n}»: +{r} и {x} оч.', q_toast_many: 'Выполнено заданий: {k}. +{r} и {x} оч.', lvl_up: 'Новый уровень: «{name}»',
   lock_msg: 'Откроется на уровне «{name}». Ближайшее задание: «{q}» (+{x} оч.)', lock_msg2: 'Откроется на уровне «{name}»',
   room_msg: 'Сейчас можно внести ещё до {x}', full_msg: 'Лимит {c} внесён. Откроется на уровне «{name}». Ближайшее задание: «{q}»', full_top: 'Достигнут потолок {c}',
   lim_line: 'Лимит {c} · осталось {r}', limit_used: 'Лимит {c} внесён.',
@@ -2472,6 +2564,11 @@ Object.assign(T.ru, {
   close_aria: 'Закрыть', lvbadge_aria: 'Уровень и задания', atm_key_bk: 'Стереть цифру'
 });
 Object.assign(T.en, {
+  vw_list: 'List', vw_tile: 'Tiles', vw_aria: 'List view',
+  vault_msg: 'Only {x} left in the reserve', vault_line: 'In reserve: {x}', w_vault: 'In reserve', w_vault_p: 'The ATM moves money from the reserve to your account: up to the level limit.', w_vault_go: 'To the ATM',
+  course_gift: 'Course complete: {x} added to the reserve', xp_up: '',
+  q_gbuy: 'First building', q_gbuy_d: 'Buy any building in the “City” section', q_gcol: 'Income three days in a row', q_gcol_d: 'Collect the city income three days in a row',
+  q_gup: 'A step-3 building', q_gup_d: 'Upgrade any building to step 3',
   nav_quests: 'Quests', nav_learn: 'Learn', quests_h: 'Quests', learn_h2: 'Learning',
   q_les1: 'Lesson 1', q_les1_d: 'Pass the first lesson', q_buy: 'First buy', q_buy_d: 'Open any trade on the market',
   q_close: 'Close a trade', q_close_d: 'Close any open position', q_early: 'Leave in time', q_early_d: 'Close a trade while the loss is at most half the margin',
@@ -2479,13 +2576,13 @@ Object.assign(T.en, {
   q_win: 'A winning trade', q_win_d: 'Close a trade with a profit', q_bet: 'Place a bet', q_bet_d: 'Stake play money in “Bets”',
   q_hold: 'Hold a position for an hour', q_hold_d: 'One position stays open for 60 minutes', q_course: 'Finish all lessons', q_course_d: 'Answer correctly in every lesson',
   q_wins3: 'Three winning trades', q_wins3_d: 'Close three trades with a profit', q_mix: 'A portfolio of three sections', q_mix_d: 'Trade assets from three different market sections',
-  lvl_of: 'Level {n} of {m}', lvl_limit: 'You can deposit up to {x} in total', lvl_next: 'To level “{name}”: {x} more xp', lvl_next_open: 'Opens the limit {x}', lvl_max: 'Top level. The ceiling is {x}.',
+  lvl_of: 'Level {n} of {m}', lvl_limit: 'In reserve: {x}', lvl_next: 'To level “{name}”: {x} more xp', lvl_next_open: 'Unlocks a new building in the City', lvl_max: 'Top level.',
   xp_short: 'xp', xp_h: 'How the level grows', xp_quests: 'Quests and lessons', xp_now: 'now', xp_soon: 'soon',
   fut_friends: 'Invited friends', fut_debt_back: 'A debt returned on time', fut_debt_give: 'A debt you lent',
   xp_profit: 'Net profit: trades and bets', xp_main: 'the main part', net_h: 'Earned by mind', net_now: 'Net result now', net_best: 'Best result', net_need: 'Earn {x} more of net profit', net_note: 'Profit of closed trades and won bets minus losses, counted from the update. Points go by the best result reached: losses must be won back first.',
   fut_note: 'Friends and debts between players will also give points once the server arrives. The levels Magnate, Sage and Oracle need net profit.',
   q_done: 'Done', q_next: 'Next quest', q_all_done: 'All quests done',
-  q_toast: 'Quest “{n}”: +{r} and {x} xp', q_toast_many: 'Quests done: {k}. +{r} and {x} xp', lvl_up: 'New level: “{name}”. Deposit limit {x}',
+  q_toast: 'Quest “{n}”: +{r} and {x} xp', q_toast_many: 'Quests done: {k}. +{r} and {x} xp', lvl_up: 'New level: “{name}”',
   lock_msg: 'Opens at level “{name}”. Nearest quest: “{q}” (+{x} xp)', lock_msg2: 'Opens at level “{name}”',
   room_msg: 'You can deposit up to {x} more right now', full_msg: 'The {c} limit is used. Opens at level “{name}”. Nearest quest: “{q}”', full_top: 'The {c} ceiling is reached',
   lim_line: 'Limit {c} · {r} left', limit_used: 'The {c} limit is used.',
@@ -2521,7 +2618,7 @@ function checkQuests() {
 }
 function afterXp(lv0) {
   const lv = E.levelOf(S);
-  if (lv > lv0) setTimeout(() => toast(tf('lvl_up', { name: lvName(lv), x: money(E.LIMITS[lv], 0) }), 'up', true), 3400);
+  if (lv > lv0) setTimeout(() => toast(tf('lvl_up', { name: lvName(lv) }), 'up', true), 3400);
   ui.atmSig = ''; fillAtm(); fillNotes(true); fillBadge(); hdrBal();
   if (ui.view === 'quests') fillQuests(true);
   if (ui.view === 'learn') renderLearn();
@@ -2531,7 +2628,7 @@ const atmVal = () => { const el = $('atmInp'); return el ? el.getAttribute('data
 function atmSet(v) {
   const el = $('atmInp'); if (!el) return false;
   v = String(v).replace(/\D/g, '').replace(/^0+/, '').slice(0, 8);
-  if (+v > E.LIMITS[E.LIMITS.length - 1]) return false;
+  if (+v > E.vaultOf(S) + 1e-9) return false;
   el.setAttribute('data-v', v); el.textContent = v ? grp(v) : ''; el.classList.toggle('nul', !v); return true;
 }
 function atmKey(k) {
@@ -2539,22 +2636,21 @@ function atmKey(k) {
   else if (k === 'ok') doDeposit(+atmVal() || 0);
   else { const v = atmVal(); if (!(v === '' && k === '0')) { if (!atmSet(v + k)) vib(20); else atmMsg(''); } }
 }
-const PRE = [1e3, 1e4, 25e3, 1e5, 5e5, 1e6, 3e6, 13e6];
-const preTxt = a => (a >= 1e6 ? a / 1e6 + 'M' : a / 1e3 + 'K');
+const PRE = [1e3, 1e4, 25e3, 1e5, 5e5, 1e6, 3e6, 13e6];   // 18.11: пределы по слову Романа («100 000 я имел в виду»)
+const preTxt = a => (a >= 1e6 ? a / 1e6 + 'M' : a >= 1e3 ? a / 1e3 + 'K' : String(a));
 const LOCK_SVG = '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 018 0v3"/></svg>';
 function fillAtm() {
   const box = $('atmPre'); if (!box) return;
-  const lv = E.levelOf(S), cap = E.LIMITS[lv], rm = E.room(S), key = lv + '|' + rm + '|' + S.lang;
+  const lv = E.levelOf(S), cap = E.LIMITS[lv], rm = E.room(S), key = lv + '|' + rm + '|' + S.lang + '|' + E.vaultOf(S);
   const ph = $('atmInp'); if (ph) ph.setAttribute('data-ph', t('atm_ph'));
   if (ui.atmSig === key) return; ui.atmSig = key;
   box.textContent = '';
   PRE.forEach(a => {
-    const b = mkEl('button', a > cap ? 'lock' : a > rm ? 'dim' : '', ''); b.type = 'button';
-    if (a > cap) { b.setAttribute('data-lock', String(a)); b.setAttribute('aria-disabled', 'true'); b.innerHTML = LOCK_SVG; b.appendChild(document.createTextNode(preTxt(a))); }
-    else { b.setAttribute('data-amt', String(a)); b.textContent = preTxt(a); }
+    const b = mkEl('button', a > rm ? 'dim' : '', ''); b.type = 'button';
+    b.setAttribute('data-amt', String(a)); b.textContent = preTxt(a);
     box.appendChild(b);
   });
-  setTxt($('atmLim'), tf('lim_line', { c: money(cap, 0), r: money(rm, 0) }));
+  setTxt($('atmLim'), ''); setTxt($('atmVault'), tf('vault_line', { x: money(E.vaultOf(S), 0) }));
 }
 function fillBadge() {
   if (!$('lvBadge') || !S) return; const lv = E.levelOf(S);
@@ -2601,15 +2697,15 @@ function fillQuests(force) {
   if (!force && sig === ui.qsSig) return; ui.qsSig = sig;
   const nxt = L[lv + 1], ln = S.lang === 'en' ? 'en' : 'ru', mx = S.nm.mx, nn = E.netNow(S);
   const pct = nxt ? Math.max(0, Math.min(100, (xp - L[lv].xp) / (nxt.xp - L[lv].xp) * 100)) : 100;
-  const short = v => (v >= 1e6 ? v / 1e6 + 'M' : v / 1e3 + 'K');
+  const short = v => (v >= 1e6 ? v / 1e6 + 'M' : v >= 1e3 ? v / 1e3 + 'K' : String(v));
   box.innerHTML = '<div class="vhead"><h1>' + t('quests_h') + '</h1></div>' +
     '<div class="panel lvcard"><div class="lv-top"><span class="lv-ic num">' + (lv + 1) + '</span><div><span class="lbl">' + tf('lvl_of', { n: lv + 1, m: L.length }) + '</span><b class="lv-name">' + L[lv][ln] + '</b></div>' +
     '<span class="lv-xp num">' + xp + ' ' + t('xp_short') + '</span></div>' +
-    '<p class="lv-lim">' + tf('lvl_limit', { x: '<b class="num">' + money(L[lv].lim, 0) + '</b>' }) + '</p>' +
+    '<p class="lv-lim">' + tf('lvl_limit', { x: '<b class="num">' + money(E.vaultOf(S), 0) + '</b>' }) + '</p>' +
     '<div class="bar lv-bar"><i style="width:' + pct.toFixed(1) + '%"></i></div>' +
-    '<p class="lv-next">' + (nxt ? (nxt.xp > xp ? tf('lvl_next', { name: nxt[ln], x: nxt.xp - xp }) + ' · ' : '') + tf('lvl_next_open', { x: '<b class="num">' + money(nxt.lim, 0) + '</b>' }) : tf('lvl_max', { x: money(L[lv].lim, 0) })) + '</p>' +
+    '<p class="lv-next">' + (nxt ? (nxt.xp > xp ? tf('lvl_next', { name: nxt[ln], x: nxt.xp - xp }) + ' · ' : '') + t('lvl_next_open') : t('lvl_max')) + '</p>' +
     (nxt && nxt.net > mx ? '<p class="lv-need">' + tf('net_need', { x: '<b class="num">' + money(nxt.net - mx, 0) + '</b>' }) + '</p>' : '') +
-    '<ol class="lv-steps">' + L.map((l, i) => '<li class="' + (i < lv ? 'past' : i === lv ? 'now' : '') + '"><i class="num">' + (i + 1) + '</i><span>' + l[ln] + '</span><em class="num">' + short(l.lim) + '</em></li>').join('') + '</ol></div>' +
+    '<ol class="lv-steps">' + L.map((l, i) => '<li class="' + (i < lv ? 'past' : i === lv ? 'now' : '') + '"><i class="num">' + (i + 1) + '</i><span>' + l[ln] + '</span><em class="num">' + (window.DofaGorod && DofaGorod.B[i] ? short(DofaGorod.B[i].price) : '') + '</em></li>').join('') + '</ol></div>' +
     '<div class="qgrid">' + QUESTS.map(q => {
       const d = qDone(q), pr = q.p(), w = Math.round(pr / q.n * 100);
       return '<div class="panel qc' + (d ? ' done' : '') + '"><div class="qc-t"><b>' + qName(q) + '</b>' + (d ? '<span class="qc-ok">' + t('q_done') + '</span>' : '') + '</div>' +
@@ -2654,10 +2750,15 @@ function obuApi() {
   return { lang: () => S.lang, t: k => t(k), money: (v, d) => money(v, d), passed: i => !!(S.les[i + 1] || (ui.obu && ui.obu[i])),
     pass: i => { ui.obu = ui.obu || {}; ui.obu[i] = 1; const q = document.querySelector('.les-q'); if (q) { q.classList.remove('les-lock'); const lk = q.querySelector('.les-lk'); if (lk) lk.remove(); } try { snd.win(); vib([12, 40, 12]); } catch (e) {} } };
 }
+function courseGift(quiet) {   // 18.11: весь курс пройден — разово +$20 млн в запас
+  if (S.cb || lesN() < LESSONS.length) return;
+  S.cb = 1; S.vault = E.round2(E.vaultOf(S) + COURSE_GIFT); save();
+  if (!quiet) setTimeout(() => toast(tf('course_gift', { x: money(COURSE_GIFT, 0) }), 'up', true), 1800);
+}
 function answer(k) {
   const i = ui.les; if (i == null) return; if (window.DofaObu && DofaObu.has(i) && !S.les[i + 1] && !(ui.obu && ui.obu[i])) return; const ok = k === LESSONS[i].ru.ok;
   if (ok && !S.les[i + 1]) {
-    const lv0 = E.levelOf(S); S.les[i + 1] = 1; E.grant(S, M, LESSONS[i].r); addXp(LESSON_XP); save(); snd.win(); vib([12, 40, 12]);
+    const lv0 = E.levelOf(S); S.les[i + 1] = 1; E.grant(S, M, LESSONS[i].r); addXp(LESSON_XP); courseGift(false); save(); snd.win(); vib([12, 40, 12]);
     ui.ans = { i: k, ok: true, fresh: true }; renderLearn(); checkQuests(); afterXp(lv0); return;
   }
   if (ok) snd.win();
@@ -2667,7 +2768,7 @@ function answer(k) {
 /* =====================================================================
    10. ROUTING, EVENTS, TICK
    ===================================================================== */
-const VIEWS = ['money', 'market', 'compare', 'wallet', 'truth', 'news', 'bets', 'top', 'quests', 'learn'];
+const VIEWS = ['money', 'market', 'gorod', 'compare', 'wallet', 'truth', 'news', 'bets', 'top', 'quests', 'learn'];
 function render() {
   sig = posSig(); chartsKill();
   if (ui.view !== 'learn' && window.DofaObu) DofaObu.stop();
@@ -2678,6 +2779,7 @@ function render() {
   else if (ui.view === 'bets') renderBets();
   else if (ui.view === 'top') renderTop();
   else if (ui.view === 'quests') renderQuests();
+  else if (ui.view === 'gorod') { if (window.DofaGorod) DofaGorod.render($('gorodBox')); }
   else if (ui.view === 'learn') renderLearn();
   else if (ui.view === 'compare') { renderCompare(); cmpLoad(); }
   if (ui.view === 'wallet') S.qx.wal = 1;
@@ -2691,6 +2793,7 @@ function refreshView() {
   else if (ui.view === 'truth') refreshTruth();
   else if (ui.view === 'top') refreshTop();
   else if (ui.view === 'quests') fillQuests();
+  else if (ui.view === 'gorod') { if (window.DofaGorod) DofaGorod.refresh(); }
 }
 // 13.11 (2): header shows the wallet — total portfolio value (cash + positions); tap opens the Wallet.
 function hdrBal() { const el = $('hBalV'); if (el && S) rollTo(el, E.equity(S, M), tight); }
@@ -2823,9 +2926,16 @@ function init() {
   S.cmp.syms = S.cmp.syms.filter((s, i, a) => INS[s] && a.indexOf(s) === i).slice(0, 4);
   S.cmp.per = perKey(S.cmp.per);
   const r = E.advance(S, M, Date.now());          // time kept going while the tab was closed
+  if (!S.xpv) { S.xpv = 1; S.xp = (E.num(S.xp) || 0) + lesN() * (LESSON_XP - 40) + (S.qd && S.qd.course ? 250 : 0); }   // 18.11: прежние уроки пересчитаны по новым очкам (было 40 за урок)
+  courseGift(true); save();
+  if (window.DofaGorod) DofaGorod.init({   // 18.11: мост для «Города» и карточки результата (gorod.js)
+    S: () => S, lang: () => S.lang, money: (v, d) => money(v, d), now: () => Date.now(), save: () => save(), render: () => render(),
+    toast: (m, c, ok) => toast(m, c, ok), snd: () => snd.win(), vib: p => vib(p), level: () => E.levelOf(S), levelName: i => lvName(i),
+    lesDone: i => !!(S.les[i + 1]), lesTitle: i => (LESSONS[i] ? LESSONS[i][S.lang === 'en' ? 'en' : 'ru'].t : ''), result: () => E.stats(S, M).result });
   readSkin(); applyLang(); route();
   if (r.liq.length) onLiq(r.liq);
   document.addEventListener('click', onClick);
+  document.addEventListener('click', e => { const b = e.target && e.target.closest ? e.target.closest('[data-vw]') : null; if (b) setView(b.getAttribute('data-vw')); });
   // ATM keys fire on press: a pressed key shifts in 3D and the browser then sends the click to its parent, so the digit was lost on phones.
   document.addEventListener('pointerdown', e => {
     const k = e.target && e.target.closest ? e.target.closest('#atm [data-key]') : null; if (!k) return;
@@ -2849,17 +2959,21 @@ function init() {
   let rz = 0; window.addEventListener('resize', () => { clearTimeout(rz); rz = setTimeout(redrawCharts, 150); });
   document.addEventListener('visibilitychange', () => {
     document.body.classList.toggle('paused', document.hidden);
-    if (document.hidden) save(); else tick();
+    if (document.hidden) { save(); wsStop(); } else { tick(); ws.fails = 0; wsStart(); }
   });
   window.addEventListener('pagehide', save);
   if (document.fonts && document.fonts.ready && document.fonts.ready.then) document.fonts.ready.then(redrawCharts);
   setInterval(tick, 1000);
-  pump(Date.now());
+  pump(Date.now()); wsStart();
 }
 // 14.11 (kabinet.js): a read-only window for the cabinet code; nothing here runs unless the cabinet script asks.
 window.DofaSim = {
   lang: () => (S ? S.lang : 'ru'), cash: () => (S ? S.cash : 0), level: () => (S ? E.levelOf(S) : 0), levelName: i => lvName(i),
-  quests: () => (S && S.qd ? QUESTS.filter(q => S.qd[q.id]).map(q => q.id) : []), toast: (m, c, ok) => toast(m, c, ok), vib: p => vib(p)
+  quests: () => (S && S.qd ? QUESTS.filter(q => S.qd[q.id]).map(q => q.id) : []),
+  // 16.11: отправить другу можно из денег на странице — кабинет списывает отсюда недостающее
+  take: usd => { if (!S || !(usd > 0) || S.cash + 1e-9 < usd) return false; S.cash = Math.round((S.cash - usd) * 100) / 100; save(); render(); return true; },
+  give: usd => { if (!S || !(usd > 0)) return; S.cash = Math.round((S.cash + usd) * 100) / 100; save(); render(); },
+  toast: (m, c, ok) => toast(m, c, ok), vib: p => vib(p)
 };
 if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
 

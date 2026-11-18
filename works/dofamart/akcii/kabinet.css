@@ -165,3 +165,8 @@ body.kab-open .kab-fab{opacity:0;pointer-events:none}
 .kab-done p{color:var(--mut)}
 @media (prefers-reduced-motion:reduce){.kab-fab,.kab-chip,.kab-hsend{transition:none}}
 body.kab-open{overflow:hidden}
+/* 16.11: одна сумма денег вместо четырёх плиток */
+.kab-total{display:flex;align-items:baseline;justify-content:space-between;gap:12px;padding:16px 18px;border-radius:16px;border:1px solid rgba(var(--acc),.35);background:linear-gradient(180deg,rgba(var(--acc),.08),rgba(var(--acc),.02))}
+.kab-total b{font-size:30px;color:var(--txt)}
+/* шапка: кнопка «Отправить другу» без текста, пока меню разделов не помещается целиком */
+@media (min-width:900px) and (max-width:1599px){.kab-hsend span{display:none}.kab-hsend{padding:0 11px}}

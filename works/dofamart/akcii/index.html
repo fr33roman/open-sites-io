@@ -10,9 +10,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:ital,wght@0,500;0,600;1,500&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="sim.css?v=1116h"><link rel="stylesheet" href="obuchenie.css?v=1114e">
+<link rel="stylesheet" href="sim.css?v=1118e"><link rel="stylesheet" href="obuchenie.css?v=1114e"><link rel="stylesheet" href="gorod.css?v=1118e">
 <script> window.DOFA_KAB="";</script>
-<script>try{var k=localStorage.getItem("dofa_sim_skin");if(k)document.documentElement.setAttribute("data-skin",k)}catch(e){}</script>
+<script> try{var k=localStorage.getItem("dofa_sim_skin")||"quantum";document.documentElement.setAttribute("data-skin",k)}catch(e){document.documentElement.setAttribute("data-skin","quantum")}</script>
 </head>
 <body>
 
@@ -25,6 +25,7 @@
       <a href="#money" data-nav="money" data-i18n="nav_money">Деньги</a>
       <a href="#market" data-nav="market" data-i18n="nav_market">Рынок</a>
       <a href="#compare" data-nav="compare" data-i18n="nav_compare">Сравнить</a>
+      <a href="#gorod" data-nav="gorod" data-i18n="nav_gorod">Город</a>
       <a href="#wallet" data-nav="wallet" data-i18n="nav_wallet">Кошелёк</a>
       <a href="#truth" data-nav="truth" data-i18n="nav_truth">Правда</a>
       <a href="#news" data-nav="news" data-i18n="nav_news">Новости</a>
@@ -81,6 +82,7 @@
                 <span class="scr-lim num" id="atmLim"></span>
               </div>
               <div class="scr-bal num" id="atmBal">$0.00</div>
+              <p class="scr-vault num" id="atmVault"></p>
               <div class="scr-presets" id="atmPre"></div>
               <div class="scr-custom">
                 <div class="scr-inp" role="textbox" aria-readonly="true" aria-label="Своя сумма" data-i18n-aria="atm_ph"><span>$</span><b class="scr-val num nul" id="atmInp" data-v="" data-ph="Своя сумма"></b></div>
@@ -127,6 +129,8 @@
 
   <section class="view" id="v-market" hidden><div id="marketBox"></div></section>
 
+  <section class="view" id="v-gorod" hidden><div id="gorodBox"></div></section>
+
   <section class="view" id="v-wallet" hidden><div id="walletBox"></div></section>
 
   <section class="view" id="v-truth" hidden><div id="truthBox"></div></section>
@@ -157,9 +161,9 @@
     <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8a2 2 0 012-2h12a2 2 0 012 2v2a2 2 0 000 4v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2a2 2 0 000-4z"/><path d="M14 6v12" stroke-dasharray="2 2.5"/></svg>
     <span data-i18n="nav_bets">Ставки</span>
   </a>
-  <a href="#wallet" data-nav="wallet">
-    <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="6" width="18" height="13" rx="2.5"/><path d="M3 10h18"/><circle cx="16.5" cy="14.5" r="1"/></svg>
-    <span data-i18n="nav_wallet">Кошелёк</span>
+  <a href="#gorod" data-nav="gorod">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V10l5-3v13M9 20V5l6-2v17M15 20v-8l5 2v6M3 20h18"/></svg>
+    <span data-i18n="nav_gorod">Город</span>
   </a>
   <button type="button" data-act="more" id="moreBtn" aria-haspopup="dialog" aria-expanded="false">
     <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="6.5" height="6.5" rx="1.6"/><rect x="13.5" y="4" width="6.5" height="6.5" rx="1.6"/><rect x="4" y="13.5" width="6.5" height="6.5" rx="1.6"/><rect x="13.5" y="13.5" width="6.5" height="6.5" rx="1.6"/></svg>
@@ -171,6 +175,7 @@
   <div class="more-card" role="dialog" aria-modal="true" aria-label="Ещё разделы">
     <i class="more-grip" aria-hidden="true"></i>
         <a class="more-row" href="#news" data-nav="news"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5h11v14H6.5A1.5 1.5 0 015 17.5z"/><path d="M16 9h3v8.5a1.5 1.5 0 01-3 0"/><path d="M8 9h5M8 12.5h5M8 16h3"/></svg><span class="more-tx"><b data-i18n="nav_news"></b></span><span class="more-go" aria-hidden="true">→</span></a>
+    <a class="more-row" href="#wallet" data-nav="wallet"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="6" width="18" height="13" rx="2.5"/><path d="M3 10h18"/><circle cx="16.5" cy="14.5" r="1"/></svg><span class="more-tx"><b data-i18n="nav_wallet"></b></span><span class="more-go" aria-hidden="true">→</span></a>
     <a class="more-row" href="#truth" data-nav="truth"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 20V10M12 20V4M19 20v-7"/></svg><span class="more-tx"><b data-i18n="nav_truth"></b></span><span class="more-go" aria-hidden="true">→</span></a>
     <a class="more-row" href="#compare" data-nav="compare"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 16c4 0 5-9 9-9s5 6 9 6"/><path d="M3 9c4 0 5 8 9 8s5-4 9-4" opacity=".55"/></svg><span class="more-tx"><b data-i18n="nav_compare"></b></span><span class="more-go" aria-hidden="true">→</span></a>
     <a class="more-row" href="#top" data-nav="top"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4h10v5a5 5 0 01-10 0z"/><path d="M7 6H4v1a3 3 0 003 3M17 6h3v1a3 3 0 01-3 3M12 14v4M8.5 20h7"/></svg><span class="more-tx"><b data-i18n="nav_top"></b></span><span class="more-go" aria-hidden="true">→</span></a>
@@ -187,7 +192,8 @@
 
 <script src="vendor/lightweight-charts.js?v=423" defer></script>
 <script src="obuchenie.js?v=1115a" defer></script>
-<script src="sim.js?v=1116h" defer></script>
-<script src="kabinet.js?v=1116g" defer></script>
+<script src="gorod.js?v=1118e" defer></script>
+<script src="sim.js?v=1118e" defer></script>
+<script src="kabinet.js?v=1118a" defer></script>
 </body>
 </html>

@@ -19,7 +19,7 @@ function base() {
 var BASE = base();
 if (!BASE) return;
 
-var VER = '1114c';
+var VER = '1118a';
 (function () { var l = document.createElement('link'); l.rel = 'stylesheet'; l.href = 'kabinet.css?v=' + VER; document.head.appendChild(l); })();
 
 /* ---------- small helpers ---------- */
@@ -79,7 +79,7 @@ var TX = {
     rec_next: 'Показать вопросы', rec_q_intro: 'Ответьте на эти три вопроса — их выбрали при регистрации.', rec_go: 'Отправить заявку', rec_ok_h: 'Заявка принята', rec_ok: 'Новый пароль заработает {t}. До тех пор входите по старому.',
     /* кабинет */
     cab_h: 'Личный кабинет', level: 'Уровень', xp: '{x} оч.', next_at: 'до следующего: {x}', your_adres: 'Ваш номер кабинета', adres_s: 'Друзья отправляют деньги на него',
-    w_h: 'Деньги кабинета', w_free: 'Свободно', w_hold: 'Под чеками', w_gift: 'Подарок новичку', w_gift_net: 'нет', w_gift_zakryt: 'торговать можно, переводить — после трёх заданий', w_gift_otkryt: 'открыт, стал обычными деньгами',
+    w_h: 'Деньги кабинета', w_total: 'Ваши деньги', w_free: 'Свободно', w_hold: 'Под чеками', w_gift: 'Подарок новичку', w_gift_net: 'нет', w_gift_zakryt: 'торговать можно, переводить — после трёх заданий', w_gift_otkryt: 'открыт, стал обычными деньгами',
     w_game: 'Игровой счёт (на этой странице)', two_h: 'Два кошелька — чем отличаются', two_btn: 'Как это устроено',
     two_game_h: 'Игровой счёт', two_game: 'Живёт в этом браузере. Им торгуют акциями, золотом и криптой на странице. Деньги игровые, поэтому он никуда не переводится и в долг не даётся.',
     two_cab_h: 'Кошелёк кабинета', two_cab: 'Живёт на сервере под вашим номером. Им отправляют деньги друзьям и берут в долг. Из торговли в кабинет деньги не попадают, из кабинета в торговлю тоже.',
@@ -105,7 +105,7 @@ var TX = {
     f_procent: 'Процент', f_srok: 'Вернуть до', srok_note: 'Срок долга — 30 дней, процент начисляется сразу и один раз.',
     prosba_note: 'Процент назначит тот, кто даёт в долг. Вы увидите его и согласитесь или откажетесь. Деньги пока не двигаются.',
     perevod_note: 'Сумма сразу замораживается. Не заберут за 7 дней — вернётся к вам.', zaym_note: 'Сумма замораживается до ответа.',
-    avail: 'Свободно в кабинете: {a}', low_free: 'Не хватает свободных денег. Пополните кабинет.', make: 'Создать чек', ready_h: 'Чек готов', ready_p: 'Отправьте ссылку другу. Она сработает один раз и живёт 7 дней.',
+    avail: 'Свободно: {a}', low_free: 'Не хватает денег: ни в кабинете, ни на счёте.', make: 'Создать чек', ready_h: 'Чек готов', ready_p: 'Отправьте ссылку другу. Она сработает один раз и живёт 7 дней.',
     share: 'Поделиться', share_tg: 'Telegram', share_wa: 'WhatsApp', share_copy: 'Копировать ссылку', share_ig: 'Instagram: скопируйте ссылку и вставьте в сообщение или историю.', share_text: 'dofamart: вам чек',
     sum_ph: 'Сумма', chek_alt: 'Карточка-чек',
     /* получатель */
@@ -161,7 +161,7 @@ var TX = {
     rec_next: 'Show questions', rec_q_intro: 'Answer these three questions, they were chosen at sign-up.', rec_go: 'Send the request', rec_ok_h: 'Request accepted', rec_ok: 'The new password starts working {t}. Until then use the old one.',
     cab_h: 'Personal account', level: 'Level', xp: '{x} pts', next_at: 'next level: {x}', your_adres: 'Your account number', adres_s: 'Friends send money to it',
     w_h: 'Account money', w_free: 'Free', w_hold: 'Held in cheques', w_gift: 'Newcomer gift', w_gift_net: 'none', w_gift_zakryt: 'tradable now, sendable after three quests', w_gift_otkryt: 'open, now ordinary money',
-    w_game: 'Game balance (on this page)', two_h: 'Two wallets: what differs', two_btn: 'How it works',
+    w_game: 'Game balance (on this page)', w_total: 'Your money', two_h: 'Two wallets: what differs', two_btn: 'How it works',
     two_game_h: 'Game balance', two_game: 'Lives in this browser. You trade stocks, gold and crypto with it on this page. It is play money, so it is never sent or lent.',
     two_cab_h: 'Account wallet', two_cab: 'Lives on the server under your number. You send money to friends and borrow with it. Nothing moves from trading into the account or back.',
     two_fill_h: 'How to top up the account', two_fill: 'Press “Top up” in the account: the sum is credited on the server within your level’s limit (like the ATM on the page). Money also arrives as a newcomer gift and as transfers from friends.',
@@ -474,11 +474,12 @@ function vCab() {
   h += '<div class="kab-adr"><span class="lbl">' + x('your_adres') + '</span><b class="num">' + esc(me.imya || me.adres) + '</b><button class="btn-ghost" type="button" data-kb="copy" data-v="' + esc(me.adres) + '">' + x('copy') + '</button></div>' +
     '<p class="kab-note">' + esc(me.imya ? me.adres + ' · ' : '') + x('adres_s') + '</p>' +
     '<div class="kab-lv"><span class="lbl">' + x('level') + '</span><b>' + (u.nomer || 1) + ' · ' + esc(lvName || '') + '</b><span class="kab-xp num">' + x('xp', { x: u.xp || 0 }) + (u.sleduyushchiy ? ' · ' + x('next_at', { x: u.sleduyushchiy }) : '') + '</span></div>';
-  h += '<div class="kab-sec"><div class="kab-sh"><h3>' + x('w_h') + '</h3><button class="kab-link" type="button" data-kb="two">' + x('two_btn') + '</button></div>' +
-    '<div class="kab-wal"><div><span class="lbl">' + x('w_free') + '</span><b class="num">' + usd(w.svobodno) + '</b></div><div><span class="lbl">' + x('w_hold') + '</span><b class="num">' + usd(w.uderzhano) + '</b></div>' +
-    '<div><span class="lbl">' + x('w_gift') + '</span><b class="num">' + usd(w.podarok) + '</b><i>' + x(me.podarok === 'zakryt' ? 'w_gift_zakryt' : me.podarok === 'otkryt' ? 'w_gift_otkryt' : 'w_gift_net') + '</i></div></div>' +
-    '<div class="kab-game"><span>' + x('w_game') + '</span><b class="num">' + usd(Math.round(game * 100)) + '</b></div>' +
-    '<div class="kab-ra"><button class="btn-gold" type="button" data-kb="send">' + x('send') + '</button><button class="btn-ghost" type="button" data-kb="fill">' + x('fill') + '</button></div></div>';
+  // 16.11 слово Романа «непонятно, сколько денег в итоге»: одна сумма — игровой счёт + свободное в кабинете; остальное мелко и только если не ноль
+  var total = Math.round(game * 100) + (w.svobodno || 0);
+  h += '<div class="kab-sec"><div class="kab-total"><span class="lbl">' + x('w_total') + '</span><b class="num">' + usd(total) + '</b></div>' +
+    (w.uderzhano ? '<p class="kab-note">' + x('w_hold') + ': ' + usd(w.uderzhano) + '</p>' : '') +
+    (w.podarok ? '<p class="kab-note">' + x('w_gift') + ': ' + usd(w.podarok) + ' · ' + x(me.podarok === 'zakryt' ? 'w_gift_zakryt' : me.podarok === 'otkryt' ? 'w_gift_otkryt' : 'w_gift_net') + '</p>' : '') +
+    '<div class="kab-ra"><button class="btn-gold kab-wide" type="button" data-kb="send">' + x('send') + '</button></div></div>';
   var owe = me.ya_dolzhen || [], owed = me.mne_dolzhny || [];
   h += '<div class="kab-sec"><h3>' + x('owe_h') + '</h3>' + (owe.length ? owe.map(function (d) { return debtRow(d, true); }).join('') : '<p class="kab-none">' + x('none_owe') + '</p>') + '</div>';
   h += '<div class="kab-sec"><h3>' + x('owed_h') + '</h3>' + (owed.length ? owed.map(function (d) { return debtRow(d, false); }).join('') : '<p class="kab-none">' + x('none_owed') + '</p>') + '</div>';
@@ -518,7 +519,7 @@ function vFill() {
 
 /* ---------- send to a friend ---------- */
 function vSend() {
-  var s = st.sf, free = me && me.koshelek ? me.koshelek.svobodno : 0, h = head(x('send_h'), '');
+  var s = st.sf, free = (me && me.koshelek ? me.koshelek.svobodno : 0) + Math.round(((window.DofaSim && window.DofaSim.cash()) || 0) * 100), h = head(x('send_h'), '');
   h += '<div class="kab-seg" role="tablist">' + ['perevod', 'zaym', 'prosba'].map(function (v) { return '<button type="button" role="tab" aria-selected="' + (s.vid === v) + '" class="' + (s.vid === v ? 'on' : '') + '" data-kb="vid" data-v="' + v + '">' + x('t_' + v) + '</button>'; }).join('') + '</div>';
   h += '<label class="kab-f"><span>' + x('f_summa') + '</span><input id="sfSum" class="kab-num big" type="text" inputmode="numeric" autocomplete="off" maxlength="12" placeholder="' + x('sum_ph') + '" value="' + esc(s.summa) + '" data-focus></label>' +
     '<div class="kab-chips amts">' + [100, 1000, 5000, 10000].map(function (a) { return '<button type="button" class="kab-chip" data-kb="sfamt" data-a="' + a + '">$' + grp(a) + '</button>'; }).join('') + '</div>';
@@ -748,7 +749,12 @@ function act(a, b, e) {
       body3.klyuch = idempotent('mk:' + sf.vid + ':' + cents + ':' + sf.procent + ':' + body3.podpis);
       if (!body3.podpis) delete body3.podpis;
       setBusy(b, 1);
-      api('POST', '/chek', body3).then(function (r) {
+      // 16.11: в кабинете не хватает — берём недостающее с игрового счёта страницы (слово Романа: «на счету 14 тыс., а 10 тыс. отправить нельзя»)
+      var free = me && me.koshelek ? me.koshelek.svobodno : 0, need = cents - free, S2 = window.DofaSim, moved = 0;
+      var pre = need > 0 && S2 && S2.take && S2.take(need / 100)
+        ? api('POST', '/bankomat', { summa: need, klyuch: idempotent('auto' + need + ':' + Date.now()) }).then(function (r0) { if (r0.ok) moved = need; else S2.give(need / 100); return r0; })
+        : Promise.resolve({ ok: true });
+      pre.then(function () { return api('POST', '/chek', body3); }).then(function (r) {
         setBusy(b, 0);
         if (r.ok) { st = { res: r.d }; scr = 'ready'; render(true); refreshMe(true); }
         else if (r.d.oshibka === 'ne_hvataet') showErr(x('low_free')); else showErr(errText(r));
@@ -790,7 +796,7 @@ var incTok = null;
 
 function openCab() { if (me) { openOv('cab'); refreshMe(); } else openOv('login'); }
 function openSend(vid) {
-  var go = function () { openOv('send', { sf: { vid: vid || 'perevod', summa: '', podpis: '', procent: 10 }, ik: {} }); refreshMe(true).then(function () { var a = document.getElementById('sfAvail'); if (a && me) a.textContent = x('avail', { a: usd(me.koshelek.svobodno) }); }); };
+  var go = function () { openOv('send', { sf: { vid: vid || 'perevod', summa: '', podpis: '', procent: 10 }, ik: {} }); refreshMe(true).then(function () { var a = document.getElementById('sfAvail'); if (a && me) a.textContent = x('avail', { a: usd(me.koshelek.svobodno + Math.round(((window.DofaSim && window.DofaSim.cash()) || 0) * 100)) }); }); };
   if (me) go(); else { pending = go; openOv('login'); }
 }
 
