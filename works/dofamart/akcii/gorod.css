@@ -255,3 +255,8 @@ html.gr-lock .tabbar{display:none}
 .gr3-tg.ov .gr3-amt{display:none}
 .gr3-ab{position:absolute;left:0;top:0;margin:-18px 0 0 -44px;min-width:88px;min-height:34px;padding:0 14px;border-radius:17px;border:1px solid rgba(var(--acc),.9);background:rgba(5,10,20,.9);color:#bff8ff;font:800 14px var(--mono);white-space:nowrap;pointer-events:auto;cursor:pointer;box-shadow:0 0 18px -3px rgba(var(--acc),.9);will-change:transform}
 .gr3-ab[hidden]{display:none}
+/* этап 4: подсказка управления — на телефоне одна компактная строка внизу над кнопкой «Строить» */
+.gr3-tipm{display:none}
+@media (max-width:640px){.gr3-tip{top:auto;bottom:70px;left:12px;right:12px;gap:8px;padding:5px 6px 5px 10px;border-radius:10px;font-size:11.5px;line-height:1.25}
+.gr3-tip .gr3-tipd{display:none}.gr3-tip .gr3-tipm{display:block;flex:1 1 auto;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.gr3-tip button{min-height:30px;padding:0 10px;font-size:11.5px}.gr3.full .gr3-tip{top:auto;bottom:calc(70px + env(safe-area-inset-bottom,0px))}}

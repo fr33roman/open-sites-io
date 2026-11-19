@@ -340,7 +340,7 @@ Object.assign(D.ru, {
   m_size: 'Площадь', m_rule: 'Место', m_nb: 'Соседям', nb_r: '+{p}% в радиусе {r}', nb_d: '+{p}% всему району', m_got_nb: 'Прибавка от соседей', size_s: '{w}×{d}', cnt_s: '{a}/{b}',
   d_h: 'Район «{n}»', d_cond: 'Откроется на уровне {n} «{name}» за {x}', d_open: 'Открыть · {x}', d_have: 'Район открыт', d_lvl: 'Нужен уровень {n}', lvl_s: 'ур. {n}', mine: 'Мои здания', shop: 'Купить', no_stash: 'Склад пуст', mv: 'Переставить',
   st_hint: 'Здание уходит со склада на поле без потери ступени', own_s: 'Ступень {n} из 5',
-  tip: 'Тяните — сдвиг · правая кнопка мыши или два пальца — поворот · колесо — масштаб · выберите здание: подходящие клетки засветятся, остальное уйдёт в тень',
+  tip: 'Сдвиг — палец или мышь · поворот — два пальца или правая кнопка · масштаб — щипок или колесо · в стройке — нажмите на клетку, чтобы передвинуть здание', tip_m: 'Сдвиг — палец · поворот — два пальца · масштаб — щипок',
   pm_again: 'Ещё одно', undo: 'Отменить', t_undo: 'Отменено', rotm: 'Сдвиг / поворот: сейчас сдвиг', rotm_on: 'Сдвиг / поворот: сейчас поворот', live: 'Огни и машины', e_closed_c: 'Район закрыт · {c}'
 });
 Object.assign(D.en, {
@@ -356,7 +356,7 @@ Object.assign(D.en, {
   m_size: 'Size', m_rule: 'Place', m_nb: 'To neighbours', nb_r: '+{p}% within {r} cells', nb_d: '+{p}% to the whole district', m_got_nb: 'Neighbour bonus', size_s: '{w}×{d}', cnt_s: '{a}/{b}',
   d_h: 'District “{n}”', d_cond: 'Opens at level {n} “{name}” for {x}', d_open: 'Open · {x}', d_have: 'District is open', d_lvl: 'Level {n} needed', lvl_s: 'lv {n}', mine: 'My buildings', shop: 'Buy', no_stash: 'Storage is empty', mv: 'Move',
   st_hint: 'The building returns from storage to the field with its step kept', own_s: 'Step {n} of 5',
-  tip: 'Drag to pan · right mouse button or two fingers to rotate · wheel to zoom · pick a building: free cells light up, the rest falls into shadow',
+  tip: 'Pan — finger or mouse · rotate — two fingers or right button · zoom — pinch or wheel · in build mode, tap a cell to move the building', tip_m: 'Pan — finger · rotate — two fingers · zoom — pinch',
   pm_again: 'One more', undo: 'Undo', t_undo: 'Undone', rotm: 'Pan / rotate: now pan', rotm_on: 'Pan / rotate: now rotate', live: 'Lights and cars', e_closed_c: 'District is closed · {c}'
 });
 Object.assign(SH, {
@@ -561,7 +561,7 @@ function render(box) {
     '<button type="button" class="gr-btn" id="grAll" data-g="all">' + g('coll_all') + '</button></div>' +
     (can3() ? '<div class="gr-mode" role="group" aria-label="' + g('h') + '"><button type="button" class="chip' + (u3 ? ' on' : '') + '" data-g="mode" data-m="3d" aria-pressed="' + u3 + '">' + g('m3d') + '</button><button type="button" class="chip' + (u3 ? '' : ' on') + '" data-g="mode" data-m="list" aria-pressed="' + !u3 + '">' + g('mlist') + '</button></div>' : '') +
     (u3 ? '<div class="gr3" id="gr3"><div class="gr3-view" id="gr3v"></div>' + hudTop() + toolsHTML() + '<button type="button" class="gr3-build" id="gr3b" data-g="rib">' + g('build') + '</button><div class="gr3-agw" id="gr3ag" hidden></div><span class="gr3-cn num" id="gr3cnt"></span>' +
-        (tip ? '<p class="gr3-tip" id="gr3tip"><span>' + g('tip') + '</span><button type="button" data-g="tipx">' + g('tip_ok') + '</button></p>' : '') + '<div class="gr3-low" id="gr3low"></div></div>'
+        (tip ? '<p class="gr3-tip" id="gr3tip"><span class="gr3-tipd">' + g('tip') + '</span><span class="gr3-tipm">' + g('tip_m') + '</span><button type="button" data-g="tipx">' + g('tip_ok') + '</button></p>' : '') + '<div class="gr3-low" id="gr3low"></div></div>'
       : listHTML(c));
   if (u3) { G3().mount($('gr3v'), api3()); hud(); } else if (G3()) G3().dispose();
   refresh();
