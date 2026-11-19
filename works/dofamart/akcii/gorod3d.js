@@ -813,11 +813,11 @@ function build(box) {
   });
   canvas.addEventListener('pointermove', e => {
     const p = ptr.get(e.pointerId);
-    if (!p) { if (e.pointerType === 'mouse' && A.placing()) { const c = cellAt(e.clientX, e.clientY); if (c) A.cell(c.cx, c.cz, false); setEdge(e, true); } return; }
+    if (!p) return;                                            // 19.11: призрак за курсором не ходит — кнопки «Поставить» и «Отмена» убегали от мышки (слово Романа); двигается нажатием на клетку или перетаскиванием
     if (ptr.size === 2) {
       p.x = e.clientX; p.y = e.clientY; const a = [...ptr.values()], d = Math.hypot(a[0].x - a[1].x, a[0].y - a[1].y), an = Math.atan2(a[1].y - a[0].y, a[1].x - a[0].x);
       if (pinch > 0) { distT = clamp(distT * pinch / d, dMin(), dMax()); dist = distT; }
-      let da = an - twist; if (da > Math.PI) da -= 6.2832; if (da < -Math.PI) da += 6.2832; azT = az = az - da; pinch = d; twist = an; need(); return;
+      let da = an - twist; if (da > Math.PI) da -= 6.2832; if (da < -Math.PI) da += 6.2832; azT = az = az + da; pinch = d; twist = an; need(); return;   // 19.11: было «- da» — карта крутилась против пальцев (слово Романа: «управление инвертировано»)
     }
     if (!drag) return;
     const dx = e.clientX - drag.x, dy = e.clientY - drag.y; drag.moved += Math.abs(dx) + Math.abs(dy);
