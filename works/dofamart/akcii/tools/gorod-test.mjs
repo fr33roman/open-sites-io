@@ -125,4 +125,14 @@ ok(SF.city.p.length === 10, 'все десять прежних зданий п�
 ['vend', 'atm', 'pay', 'broker', 'vc', 'home', 'cowork', 'mall', 'park', 'fountain', 'port', 'maglev'].forEach(id => { for (let n = 0; n < 6; n++) { const sp = G.findSpot(SF.city, G.BY[id]); if (!sp) break; const r0 = G.place(SF, id, 10, T0, sp.x, sp.y, sp.r); if (r0.ok) SF.city.p[SF.city.p.length - 1].l = 5; } });
 console.log('  справка: прежний город (10 зданий, ступень 5, без соседства) = $' + Math.round(was) + '/ч; десять зданий на карте = $' + Math.round(old10) + '/ч; весь город ' + SF.city.p.length + ' построек = $' + Math.round(G.rateAll(SF.city)) + '/ч');
 ok(old10 <= was * 1.5 + 1, 'десять прежних зданий с соседством дают не больше ×1,5 прежнего дохода (' + (old10 / was).toFixed(2) + '×)');
+// --- этап 3 (19.11): прилипание призрака и старое сохранение ---
+{ const Sn = { cash: 1e9, city: null }; const cn = G.norm(Sn), b = G.BY.kiosk, o = G.occOf(cn, 0);
+  const a1 = G.snapAt(cn, b, 0, o, 5, 10);
+  ok(a1 && !G.check(cn, b, a1.x, a1.y, a1.r, o) && Math.abs(a1.y - 10) <= 3, 'прилипание: клик в глубине квартала → ближайшее место у дороги (' + (a1 && a1.x + ',' + a1.y) + ')');
+  ok(G.snapAt(cn, b, 0, o, 5, 3) === null, 'прилипание: в закрытом районе подходящего места рядом нет → красный призрак');
+  const a2 = G.snapAt(cn, b, 0, o, 5, 8); ok(a2 && a2.x === 5 && a2.y === 8, 'прилипание: клик по подходящей клетке остаётся на ней');
+  const r0 = G.place(Sn, 'kiosk', 10, T0, 5, 8, 0); const o2 = G.occOf(Sn.city, 0), a3 = G.snapAt(Sn.city, b, 0, o2, 5, 8);
+  ok(r0.ok && a3 && !(a3.x === 5 && a3.y === 8), 'прилипание: занятая клетка → призрак сдвигается на соседнюю свободную');
+  const old = { cash: 10, city: { b: { kiosk: { l: 3, t: T0 }, tower: { l: 5, t: T0 } }, 'in': 12, out: 40, streak: 2, last: 5 } }; const co = G.norm(old);
+  ok(co.v === 2 && co.p.length === 2 && co.p.every(it => !it.s && it.x >= 0) && co['in'] === 12 && co.out === 40, 'старое сохранение города (по одному зданию каждого вида) открывается: 2 здания расставлены, счета целы'); }
 console.log(bad ? 'ИТОГО: провалов ' + bad : 'ИТОГО: всё зелёное'); process.exit(bad ? 1 : 0);

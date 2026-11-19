@@ -219,3 +219,33 @@ html.gr-lock .tabbar{display:none}
 .rc-apps{grid-template-columns:repeat(3,minmax(0,1fr))}
 .rc-apps .btn-gold{min-width:0;white-space:normal;line-height:1.15;letter-spacing:0;font-size:13px}
 .rc-sh .rc-img{max-height:40vh}
+
+/* ---- этап 3 (19.11): кнопки у призрака, кольцо действий, «ещё одно / отменить», переключатель «Сдвиг ↔ Поворот» ---- */
+.gr3-root,.gr3 canvas{user-select:none;-webkit-user-select:none;-webkit-touch-callout:none}
+.gr3-b.on{border-color:rgb(var(--acc));background:linear-gradient(140deg,rgba(var(--acc),.32),rgba(var(--acc2),.4));color:#fff;box-shadow:0 0 16px -4px rgba(var(--acc),.9)}
+.gr3-b svg path{vector-effect:non-scaling-stroke}
+.gr3-gb,.gr3-ring{position:absolute;left:0;top:0;width:0;height:0;z-index:3;will-change:transform}
+.gr3-gm{position:absolute;left:0;bottom:62px;transform:translateX(-50%);max-width:min(260px,70vw);width:max-content;padding:6px 11px;border-radius:10px;background:rgba(5,10,20,.9);border:1px solid rgba(var(--acc),.5);color:var(--txt);font:600 12px/1.3 var(--sans);text-align:center;pointer-events:none;box-shadow:0 6px 22px -8px #000}
+.gr3-gb.bad .gr3-gm{border-color:#ff5a72;color:#ffc2cb;background:rgba(40,8,16,.92)}.gr3-gb.ok .gr3-gm{border-color:#38f0a0;color:#c8ffe6}
+.gr3-gk{position:absolute;left:0;bottom:8px;transform:translateX(-50%);display:flex;gap:9px}
+.gr3-rb{position:relative;display:grid;place-items:center;width:46px;height:46px;padding:0;border-radius:50%;border:1px solid rgba(var(--acc),.65);background:rgba(6,12,24,.92);color:var(--txt);cursor:pointer;pointer-events:auto;box-shadow:0 0 18px -6px rgba(var(--acc),.8),0 6px 16px -6px #000;transition:transform .15s ease,opacity .2s}
+.gr3-rb svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.gr3-rb:hover{border-color:rgb(var(--acc));transform:scale(1.07)}.gr3-rb:active{transform:scale(.94)}.gr3-rb:focus-visible{outline:2px solid rgb(var(--accl));outline-offset:2px}
+.gr3-gb.ok [data-g="pmok"]{border-color:#38f0a0;background:linear-gradient(140deg,#0e5a3c,#1ccf8a);color:#03140c}
+.gr3-rb.off,.gr3-gb .gr3-rb.off{opacity:.42}
+.gr3-ring .gr3-rb{position:absolute;left:0;top:0;transform:translate(calc(var(--rx) - 23px),calc(var(--ry) - 23px));animation:gr3rg .22s ease-out both}
+.gr3-ring .gr3-rb:hover{transform:translate(calc(var(--rx) - 23px),calc(var(--ry) - 23px)) scale(1.08)}
+.gr3-ring .gr3-rb[data-g="col"]{border-color:#ffd98a;color:#ffd98a}.gr3-ring .gr3-rb[data-g="up"]{border-color:#9a90ff;color:#cfc9ff}
+@keyframes gr3rg{from{opacity:0;transform:translate(-23px,-23px) scale(.4)}}
+.gr3-agw{position:absolute;left:12px;bottom:70px;z-index:3;display:flex;flex-wrap:wrap;gap:8px;max-width:calc(100% - 80px)}
+.gr3-agw[hidden]{display:none}
+.gr3-ag{min-height:42px;padding:0 16px;border-radius:21px;border:1px solid rgba(var(--acc),.6);background:rgba(6,12,24,.92);color:var(--txt);font:700 13px var(--sans);cursor:pointer;box-shadow:0 6px 20px -8px #000;backdrop-filter:blur(8px)}
+.gr3-ag.main{border:0;color:#03060C;background:linear-gradient(100deg,rgb(var(--acc)),rgb(var(--acc2)))}
+.gr3-ag:focus-visible{outline:2px solid rgb(var(--accl));outline-offset:2px}
+.gr3.full .gr3-agw{left:calc(14px + env(safe-area-inset-left,0px));bottom:calc(74px + env(safe-area-inset-bottom,0px))}
+@media (max-height:520px) and (orientation:landscape){.gr3-agw{bottom:62px}.gr3-gm{font-size:11px;bottom:56px}.gr3-rb{width:42px;height:42px}}
+@media (prefers-reduced-motion:reduce){.gr3-ring .gr3-rb{animation:none}}
+.gr3-tg.sel .gr3-nm{pointer-events:none}
+@media (max-height:520px) and (orientation:landscape){
+  .gr3-sheet.it{display:block;max-width:430px;padding:8px 12px}.gr3-sheet.it .m-btns{display:none}.gr3-sheet.it .grm-r{padding:3px 0}.gr3-sheet.it .grm-top{margin-bottom:2px}
+}

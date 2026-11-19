@@ -112,6 +112,13 @@ function findSpot(c, b, near, ign) {          // ближайшее допуст
       if (dd < bd && !check(c, b, x, y, r, o)) { bd = dd; best = { x: x, y: y, r: r }; } } }
   return best;
 }
+function snapAt(c, b, r, o, cx, cz) {                 // ближайшее подходящее место в радиусе 3 клеток от курсора; null — нет
+  const f = fp(b, r), x0 = Math.max(0, Math.min(MW - f.w, cx - ((f.w - 1) >> 1))), y0 = Math.max(0, Math.min(MD - f.d, cz - ((f.d - 1) >> 1)));
+  if (!check(c, b, x0, y0, r, o)) return { x: x0, y: y0, r: r };
+  let best = null, bd = 1e9;
+  for (let dy = -3; dy <= 3; dy++) for (let dx = -3; dx <= 3; dx++) { const x = x0 + dx, y = y0 + dy; if (x < 0 || y < 0 || x + f.w > MW || y + f.d > MD) continue; const dd = dx * dx + dy * dy + Math.abs(dx) * 0.01; if (dd < bd && !check(c, b, x, y, r, o)) { bd = dd; best = { x: x, y: y, r: r }; } }
+  return best;
+}
 const count = (c, id) => c.p.reduce((n, it) => n + (it.id === id ? 1 : 0), 0);
 const limOf = (b, lvl) => (lvl < b.lvl ? 0 : Math.min(b.lim, 1 + lvl - b.lvl));
 const itOf = (c, u) => { for (let i = 0; i < c.p.length; i++) if (c.p[i].u === u) return c.p[i]; return null; };
@@ -237,7 +244,7 @@ function collect(S, u, now) {                         // u пусто — «Со
 }
 
 const API = { B, BY, UPK, CATS, MAP, DIST, CAP_H, CAP_BANK_H, HALL_BONUS, MAXL, LES_FROM, NB_CAP, norm, owned, placed, capH, bonus, rate, rateAll, hoursOf, pend, pendAll, poolMax, stepCost, maxStep, dayOf, streakNow,
-  fp, rectOf, occOf, check, availMask, findSpot, count, limOf, itOf, nbOf, cellsTotal, cellsUsed, place, buy, move, store, openDist, settle, upgrade, collect };
+  fp, rectOf, occOf, check, availMask, findSpot, count, limOf, itOf, nbOf, cellsTotal, cellsUsed, place, buy, move, store, openDist, settle, upgrade, collect, snapAt };
 root.DofaGorod = API;
 if (typeof module !== 'undefined' && module.exports) { module.exports = API; }
 if (typeof document === 'undefined') return;
@@ -332,7 +339,9 @@ Object.assign(D.ru, {
   t_placed: 'Поставлено: {n}', t_moved: 'Переставлено: {n}', t_stored: 'На складе: {n}', t_opened: 'Район «{n}» открыт',
   m_size: 'Площадь', m_rule: 'Место', m_nb: 'Соседям', nb_r: '+{p}% в радиусе {r}', nb_d: '+{p}% всему району', m_got_nb: 'Прибавка от соседей', size_s: '{w}×{d}', cnt_s: '{a}/{b}',
   d_h: 'Район «{n}»', d_cond: 'Откроется на уровне {n} «{name}» за {x}', d_open: 'Открыть · {x}', d_have: 'Район открыт', d_lvl: 'Нужен уровень {n}', lvl_s: 'ур. {n}', mine: 'Мои здания', shop: 'Купить', no_stash: 'Склад пуст', mv: 'Переставить',
-  st_hint: 'Здание уходит со склада на поле без потери ступени', own_s: 'Ступень {n} из 5'
+  st_hint: 'Здание уходит со склада на поле без потери ступени', own_s: 'Ступень {n} из 5',
+  tip: 'Тяните — сдвиг · правая кнопка мыши или два пальца — поворот · колесо — масштаб · выберите здание: подходящие клетки засветятся, остальное уйдёт в тень',
+  pm_again: 'Ещё одно', undo: 'Отменить', t_undo: 'Отменено', rotm: 'Сдвиг / поворот: сейчас сдвиг', rotm_on: 'Сдвиг / поворот: сейчас поворот', live: 'Огни и машины', e_closed_c: 'Район закрыт · {c}'
 });
 Object.assign(D.en, {
   hint3: 'Drag to pan · two fingers or right button to rotate · wheel or pinch to zoom',
@@ -346,7 +355,9 @@ Object.assign(D.en, {
   t_placed: 'Placed: {n}', t_moved: 'Moved: {n}', t_stored: 'In storage: {n}', t_opened: 'District “{n}” opened',
   m_size: 'Size', m_rule: 'Place', m_nb: 'To neighbours', nb_r: '+{p}% within {r} cells', nb_d: '+{p}% to the whole district', m_got_nb: 'Neighbour bonus', size_s: '{w}×{d}', cnt_s: '{a}/{b}',
   d_h: 'District “{n}”', d_cond: 'Opens at level {n} “{name}” for {x}', d_open: 'Open · {x}', d_have: 'District is open', d_lvl: 'Level {n} needed', lvl_s: 'lv {n}', mine: 'My buildings', shop: 'Buy', no_stash: 'Storage is empty', mv: 'Move',
-  st_hint: 'The building returns from storage to the field with its step kept', own_s: 'Step {n} of 5'
+  st_hint: 'The building returns from storage to the field with its step kept', own_s: 'Step {n} of 5',
+  tip: 'Drag to pan · right mouse button or two fingers to rotate · wheel to zoom · pick a building: free cells light up, the rest falls into shadow',
+  pm_again: 'One more', undo: 'Undo', t_undo: 'Undone', rotm: 'Pan / rotate: now pan', rotm_on: 'Pan / rotate: now rotate', live: 'Lights and cars', e_closed_c: 'District is closed · {c}'
 });
 Object.assign(SH, {
   vend: '<rect x="14" y="32" width="36" height="22"/><path d="M10 32h44"/><rect x="20" y="38" width="16" height="10"/><path d="M42 38v10"/>',
@@ -364,7 +375,7 @@ Object.assign(SH, {
 });
 
 /* ---- состояние экрана: выбранное здание / район, режим стройки, лента, полный экран ---- */
-let openId = null, selU = 0, selD = -1, pm = null, ribOpen = false, ribCat = 'inc', ribWhy = '', full = false, nativeFs = false, fullPushed = false, boxKey = '';
+let undo = null, again = null, openId = null, selU = 0, selD = -1, pm = null, ribOpen = false, ribCat = 'inc', ribWhy = '', full = false, nativeFs = false, fullPushed = false, boxKey = '';
 const MWc = MAP.W, MDc = MAP.D, clampN = (v, a, b) => Math.max(a, Math.min(b, v));
 const dName = d => d[L()];
 const whyType = b => { const c = city(), lv = myLvl(); if (lv < b.lvl) return 'level'; if (count(c, b.id) >= limOf(b, lv)) return 'limit'; if (H.S().cash + 1e-9 < b.price) return 'funds'; return ''; };
@@ -381,10 +392,18 @@ const sync = () => { if (G3() && G3().alive()) G3().update(); };
 
 function items3() {
   const c = city(), now = H.now();
-  return c.p.filter(it => !it.s).map(it => { const f = fp(BY[it.id], it.r), p = pend(c, it, now); return { u: it.u, id: it.id, l: it.l, x: it.x, y: it.y, r: it.r, w: f.w, d: f.d, txt: p >= 1 ? '+' + short(p) : '', sel: it.u === selU }; });
+  return c.p.filter(it => !it.s && !(pm && pm.u === it.u)).map(it => { const f = fp(BY[it.id], it.r), p = pend(c, it, now); return { u: it.u, id: it.id, l: it.l, x: it.x, y: it.y, r: it.r, w: f.w, d: f.d, txt: p >= 1 ? '+' + short(p) : '', sel: it.u === selU }; });
 }
 function dists3() { const c = city(); return DIST.map(d => ({ id: d.id, open: c.d.indexOf(d.id) >= 0, name: dName(d), cond: myLvl() < d.lvl ? g('lock_lv', { n: d.lvl, x: short(d.price) }) : short(d.price) })); }
 function ghost3() { if (!pm) return null; const f = fp(BY[pm.id], pm.r); return { id: pm.id, x: pm.x, y: pm.y, r: pm.r, w: f.w, d: f.d, ok: pm.ok }; }
+function ghostUI() { const b = BY[pm.id]; return { msg: pmMsg(), price: pm.u ? 0 : b.price, rot: b.w !== b.d, mv: !!pm.u, lRot: g('pm_rot'), lOk: pm.u ? g('pm_ok_mv') : g('pm_ok') + ' · ' + short(b.price), lNo: g('pm_cancel') }; }
+function ringData() {
+  if (pm || !selU) return null; const c = city(), it = itOf(c, selU); if (!it || it.s) return null; const b = BY[it.id], now = H.now(), step = it.l, btns = [];
+  if (b.inc[0] > 0) btns.push({ g: 'col', ic: 'col', lbl: g('collect'), off: !(pend(c, it, now) >= 0.01) });
+  if (step < MAXL) btns.push({ g: 'up', ic: 'up', lbl: g('up', { n: step + 1 }) + ' · ' + short(stepCost(it.id, step + 1)), need: step + 1 >= LES_FROM && !H.lesDone(b.les) });
+  btns.push({ g: 'mv', ic: 'mv', lbl: g('pm_move') }, { g: 'st', ic: 'st', lbl: g('pm_store') });
+  return { u: it.u, btns: btns };
+}
 function radiusMark(m, b, rect, dmId) {
   if (!b.nb) return;
   if (b.nb.r > 0) { for (let z = Math.max(0, rect.y - b.nb.r); z < Math.min(MDc, rect.y + rect.d + b.nb.r); z++) for (let x = Math.max(0, rect.x - b.nb.r); x < Math.min(MWc, rect.x + rect.w + b.nb.r); x++) { const t = MAP.T[z * MWc + x]; if (t !== 1 && t !== 2) m[z * MWc + x] = 2; } }
@@ -408,7 +427,7 @@ function ovData() {
 }
 const distOfCell = q => MAP.DM[q.y * MWc + q.x];
 function api3() {
-  return { lang: L, label: g('lbl3'), loading: g('ld3'), hint: g('hint3'), map: MAP, items: items3, districts: dists3, overlay: ovData, ovSig: ovKey, ghost: ghost3, placing: () => !!pm, name: bn,
+  return { lang: L, label: g('lbl3'), loading: g('ld3'), hint: g('hint3'), map: MAP, items: items3, districts: dists3, overlay: ovData, ovSig: ovKey, ghost: ghost3, ghostUI: ghostUI, ring: ringData, sel: () => selU, beginMove: beginMove, dropGhost: () => { if (pm && pm.ok) H.vib(8); }, rotGhost: pmRot, placing: () => !!pm, name: bn,
     cell: pmCell, tapItem: u => selectItem(u), tapCell: (cx, cz) => tapCell(cx, cz),
     fail: () => { fail3d = true; if (G3()) G3().dispose(); const bx = $('gorodBox'); if (bx && !$('v-gorod').hidden) { boxKey = ''; render(bx); } } };
 }
@@ -418,16 +437,24 @@ function pmCheck() { const c = city(), b = BY[pm.id]; pm.err = check(c, b, pm.x,
 function startPlace(id, u) {
   const c = city(), b = BY[id], it = u ? itOf(c, u) : null, cen = (G3() && G3().center()) || { cx: MAP.START.x, cz: MAP.START.z };
   pm = { id: id, u: u || 0, r: it ? it.r : 0, x: cen.cx, y: cen.cz, ok: false, err: '' };
-  const sp = findSpot(c, b, { x: cen.cx, z: cen.cz }, u || 0);
+  const sp = it && !it.s ? { x: it.x, y: it.y, r: it.r } : findSpot(c, b, { x: cen.cx, z: cen.cz }, u || 0);
+  if (it) pm.from = it.s ? null : { x: it.x, y: it.y, r: it.r };
+  again = null;
   if (sp) { pm.x = sp.x; pm.y = sp.y; pm.r = sp.r; pmCheck(); if (G3() && G3().alive()) G3().focus(sp.x + 1, sp.y + 1); } else { pmCheck(); H.toast(g('e_space'), 'down', false); }
   ribOpen = false; selU = 0; selD = -1; hud(); sync();
 }
 function pmCell(cx, cz, confirm) {
-  if (!pm) return; const b = BY[pm.id], f = fp(b, pm.r);
-  const x = clampN(cx - ((f.w - 1) >> 1), 0, MWc - f.w), y = clampN(cz - ((f.d - 1) >> 1), 0, MDc - f.d), same = x === pm.x && y === pm.y;
-  pm.x = x; pm.y = y; pmCheck();
+  if (!pm) return; const c = city(), b = BY[pm.id], o = occOf(c, pm.u || 0), f = fp(b, pm.r), s0 = pm.x, s1 = pm.y;
+  let sn = snapAt(c, b, pm.r, o, cx, cz); if (!sn && b.w !== b.d) sn = snapAt(c, b, pm.r ^ 1, o, cx, cz);
+  if (sn) { pm.x = sn.x; pm.y = sn.y; pm.r = sn.r; }
+  else { pm.x = clampN(cx - ((f.w - 1) >> 1), 0, MWc - f.w); pm.y = clampN(cz - ((f.d - 1) >> 1), 0, MDc - f.d); }
+  const same = pm.x === s0 && pm.y === s1; pmCheck();
   if (confirm && same && pm.ok) { pmConfirm(); return; }
   hudPm(); sync();
+}
+function beginMove(u) {                                // перенос: долгое нажатие или перетаскивание выбранного здания
+  const c = city(), it = itOf(c, u); if (pm || !it || it.s) return false;
+  pm = { id: it.id, u: u, r: it.r, x: it.x, y: it.y, ok: true, err: '', from: { x: it.x, y: it.y, r: it.r } }; again = null; ribOpen = false; selU = 0; selD = -1; pmCheck(); H.vib(12); hud(); sync(); return true;
 }
 function pmRot() { if (!pm) return; const b = BY[pm.id]; if (b.w === b.d) return; pm.r ^= 1; const f = fp(b, pm.r); pm.x = clampN(pm.x, 0, MWc - f.w); pm.y = clampN(pm.y, 0, MDc - f.d); pmCheck(); hudPm(); sync(); }
 function pmConfirm() {
@@ -436,10 +463,17 @@ function pmConfirm() {
   if (pm.u) r = move(S, pm.u, pm.x, pm.y, pm.r, now); else r = place(S, id, myLvl(), now, pm.x, pm.y, pm.r);
   if (!r.ok) { H.vib(20); const m = r.err === 'funds' ? g('e_funds', { x: mny(BY[id].price, 0) }) : r.err === 'limit' ? g('e_limit', { n: limOf(BY[id], myLvl()) }) : r.err === 'level' ? g('e_level', { n: BY[id].lvl }) : g('e_' + r.err); H.toast(m, 'down', false); pm.err = r.err; hudPm(); return; }
   H.save(); H.snd(); H.vib([10, 30, 10]); H.toast(g(pm.u ? 't_moved' : 't_placed', { n: bn(id) }), 'up', true);
+  if (pm.u) undo = { k: 'move', u: pm.u, from: pm.from }; else { undo = { k: 'new', u: r.u, cost: BY[id].price }; again = !whyType(BY[id]) && BY[id].price <= 12000 ? { id: id } : null; }
   selU = 0; pm = null; H.render(); hud(); sync();
 }
 function pmCancel() { pm = null; hud(); sync(); }
-function selectItem(u) { if (pm) return; selU = u; selD = -1; ribOpen = false; hud(); sync(); const it = itOf(city(), u); if (it && G3() && G3().alive()) { const f = fp(BY[it.id], it.r); G3().focus(it.x + f.w / 2, it.y + f.d / 2); } }
+function undoLast() {
+  const u = undo; undo = null; if (!u) return; const S = H.S(), c = city(), it = itOf(c, u.u); if (!it) { hud(); return; }
+  if (u.k === 'new') { if (it.l > 1) { hud(); return; } c.p.splice(c.p.indexOf(it), 1); S.cash = r2(S.cash + u.cost); c.out = r2(c.out - u.cost); }
+  else if (u.from) { it.x = u.from.x; it.y = u.from.y; it.r = u.from.r; it.s = 0; } else { it.s = 1; it.x = it.y = -1; }
+  again = null; H.save(); H.snd(); H.vib(10); H.toast(g('t_undo'), 'up', true); selU = 0; H.render(); hud(); sync();
+}
+function selectItem(u) { if (pm) return; selU = u; selD = -1; ribOpen = false; hud(); sync(); }
 function tapCell(cx, cz) {
   if (pm) return; selU = 0; selD = -1;
   if (cx >= 0) { const d = MAP.DM[cz * MWc + cx]; if (d >= 0 && city().d.indexOf(d) < 0) selD = d; }
@@ -475,7 +509,7 @@ function sheetHTML() {
   const btns = (b.inc[0] > 0 ? '<button type="button" class="gr-btn" id="grsCol" data-g="col" data-u="' + it.u + '">' + g('collect') + '</button>' : '') +
     (step < MAXL ? '<button type="button" class="gr-btn alt" data-g="up" data-u="' + it.u + '"' + (need ? ' data-need="1"' : '') + '>' + g('up', { n: step + 1 }) + ' · ' + short(stepCost(it.id, step + 1)) + '</button>' : '') +
     '<button type="button" class="gr-btn alt" data-g="mv" data-u="' + it.u + '">' + g('pm_move') + '</button><button type="button" class="gr-btn alt" data-g="st" data-u="' + it.u + '">' + g('pm_store') + '</button>';
-  return '<div class="gr3-sheet"><button type="button" class="gr3-x" data-g="sclose" aria-label="' + g('sclose') + '">×</button><div class="grm-top">' + fig(it.id, it.l) + '<div><h2>' + esc(bn(it.id)) + '</h2><p class="grm-st num">' + g('own_s', { n: it.l }) + pips(it.l) + '</p></div></div>' +
+  return '<div class="gr3-sheet it"><button type="button" class="gr3-x" data-g="sclose" aria-label="' + g('sclose') + '">×</button><div class="grm-top">' + fig(it.id, it.l) + '<div><h2>' + esc(bn(it.id)) + '</h2><p class="grm-st num">' + g('own_s', { n: it.l }) + pips(it.l) + '</p></div></div>' +
     '<div class="grm-rows">' + rows + '</div>' + (need ? '<p class="grm-note">' + g('m_need_les', { name: esc(H.lesTitle(b.les)) }) + ' <a href="#learn" data-g="sclose">' + g('m_les_go') + '</a></p>' : '') + (b.perk ? '<p class="grm-note perk">' + g('perk_' + b.perk) + '</p>' : '') +
     '<p class="grm-err" id="grsErr" role="status"></p><div class="m-btns">' + btns + '</div></div>';
 }
@@ -490,35 +524,43 @@ function pmBarHTML() {
   return '<div class="gr3-pm"><div class="pm-t"><b>' + esc(bn(pm.id)) + '</b><span id="pmMsg" class="' + (pm.ok ? 'ok' : 'bad') + '">' + pmMsg() + '</span></div><div class="pm-b">' +
     (b.w !== b.d ? '<button type="button" class="gr-btn alt" data-g="pmrot">↻ ' + g('pm_rot') + '</button>' : '') + '<button type="button" class="gr-btn" id="pmOk" data-g="pmok"' + (pm.ok ? '' : ' data-off="1"') + '>' + (mv ? g('pm_ok_mv') : g('pm_ok') + ' · ' + short(b.price)) + '</button><button type="button" class="gr-btn alt" data-g="pmx">' + g('pm_cancel') + '</button></div></div>';
 }
-const pmMsg = () => (pm.ok ? g('pm_good') + ' · ' + g('size_s', { w: fp(BY[pm.id], pm.r).w, d: fp(BY[pm.id], pm.r).d }) : (pm.err ? g('e_' + pm.err) : g('pm_pick')));
+const pmMsg = () => {
+  if (pm.ok) return g('pm_good') + ' · ' + g('size_s', { w: fp(BY[pm.id], pm.r).w, d: fp(BY[pm.id], pm.r).d });
+  if (pm.err === 'closed') { const k = MAP.DM[clampN(pm.y, 0, MDc - 1) * MWc + clampN(pm.x, 0, MWc - 1)], d = dists3().find(q => q.id === k); if (d) return g('e_closed_c', { c: d.cond }); }
+  return pm.err ? g('e_' + pm.err) : g('pm_pick');
+};
 function hudPm() { const m = $('pmMsg'), ok = $('pmOk'); if (m && pm) { m.textContent = pmMsg(); m.className = pm.ok ? 'ok' : 'bad'; } if (ok && pm) ok.toggleAttribute('data-off', !pm.ok); if (!m) hud(); }
 function hud() {
   const low = $('gr3low'), el = $('gr3'); if (!low || !el) return;
   low.innerHTML = pm ? pmBarHTML() : selU ? sheetHTML() : selD >= 0 ? distSheetHTML() : ribOpen ? ribHTML() : '';
   el.classList.toggle('has-low', !!low.innerHTML); el.classList.toggle('placing', !!pm);
   const bb = $('gr3b'); if (bb) bb.hidden = !!pm || ribOpen || !!selU || selD >= 0;
+  const ag = $('gr3ag'); if (ag) { if (again && whyType(BY[again.id])) again = null; const show = !pm && !ribOpen && !selU && selD < 0 && (again || undo);
+    ag.innerHTML = show ? (undo ? '<button type="button" class="gr3-ag" data-g="undo">↶ ' + g('undo') + '</button>' : '') + (again ? '<button type="button" class="gr3-ag main" data-g="again">+ ' + g('pm_again') + ' · ' + short(BY[again.id].price) + '</button>' : '') : ''; ag.hidden = !show; }
   const cn = $('gr3cnt'); if (cn) cn.textContent = g('cells', { a: cellsUsed(city()), b: cellsTotal(city()) });
 }
 function hudTop() {
   return '<div class="gr3-top"><div class="gr3-tp"><span class="lbl">' + g('pool') + '</span><b class="num" id="grPool2"></b></div><button type="button" class="gr-btn" id="grAll2" data-g="all">' + g('coll_all') + '</button><button type="button" class="gr3-ex" data-g="unfull" aria-label="' + g('unfull') + '">' + g('unfull') + ' ×</button></div>';
 }
-const ICON = { full: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg>', unfull: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 4v5H4M15 4v5h5M9 20v-5H4M15 20v-5h5"/></svg>' };
+const ICON = { rot: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v18M3 12h18M12 3l-2.500 2.500M12 3l2.500 2.500M12 21l-2.500-2.500M12 21l2.500-2.500M3 12l2.500-2.500M3 12l2.500 2.500M21 12l-2.500-2.500M21 12l-2.500 2.500"/></svg>', live: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l2 6 6 .5-4.600 4 1.600 6L12 16l-5 3.500 1.600-6L4 9.500 10 9z"/></svg>', full: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg>', unfull: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 4v5H4M15 4v5h5M9 20v-5H4M15 20v-5h5"/></svg>' };
 function toolsHTML() {
-  const t = (a, ic, l) => '<button type="button" class="gr3-b" data-g="' + a + '" aria-label="' + l + '" title="' + l + '">' + ic + '</button>';
-  return '<div class="gr3-tools">' + t(full ? 'unfull' : 'full', full ? ICON.unfull : ICON.full, full ? g('unfull') : g('full')) + t('zin', '+', g('zin')) + t('zout', '−', g('zout')) + t('rl', '⟲', g('rl')) + t('rr', '⟳', g('rr')) + t('home', '⌂', g('home')) + '</div>';
+  const t = (a, ic, l, on) => '<button type="button" class="gr3-b' + (on ? ' on' : '') + '" data-g="' + a + '" aria-label="' + l + '" title="' + l + '"' + (on != null ? ' aria-pressed="' + !!on + '"' : '') + '>' + ic + '</button>';
+  const rm = !!(G3() && G3().alive() && G3().mode()), lv = (() => { try { const v = localStorage.getItem('dofa_gr_amb'); return v === null ? !(root.matchMedia && matchMedia('(max-width:700px)').matches) : v === '1'; } catch (e) { return true; } })();
+  return '<div class="gr3-tools">' + t(full ? 'unfull' : 'full', full ? ICON.unfull : ICON.full, full ? g('unfull') : g('full')) + t('zin', '+', g('zin')) + t('zout', '−', g('zout')) + t('rl', '⟲', g('rl')) + t('rr', '⟳', g('rr')) +
+    t('rotm', ICON.rot, rm ? g('rotm_on') : g('rotm'), rm) + t('live', ICON.live, g('live'), lv) + t('home', '⌂', g('home')) + '</div>';
 }
 function render(box) {
   if (!H || !box) return;
   const c = city(), u3 = use3d(), key = L() + '|' + u3, shell = $('gr3');
   if (u3 && shell && boxKey === key && box.contains(shell) && G3() && G3().alive()) { refresh(); hud(); sync(); return; }   // уже собрано: обновить значения, не пересоздавая сцену
   boxKey = key; if (!u3) { pm = null; selU = 0; selD = -1; if (full) setFull(false); }
-  let tip = false; try { tip = localStorage.getItem('dofa_gr_tip') !== '1'; } catch (e) { /* ничего */ }
+  let tip = false; try { tip = localStorage.getItem('dofa_gr_tip2') !== '1'; } catch (e) { /* ничего */ }
   box.innerHTML = defs + '<div class="vhead"><h1>' + g('h') + '</h1><p class="slogan">' + g('sub') + '</p></div>' +
     '<div class="gr-sum panel"><div class="gr-st"><span class="lbl">' + g('pool') + '</span><b class="num gr-big" id="grPool"></b><small class="num" id="grCap"></small></div>' +
     '<div class="gr-st"><span class="lbl">' + g('rate') + '</span><b class="num gr-mid" id="grRate"></b></div>' +
     '<button type="button" class="gr-btn" id="grAll" data-g="all">' + g('coll_all') + '</button></div>' +
     (can3() ? '<div class="gr-mode" role="group" aria-label="' + g('h') + '"><button type="button" class="chip' + (u3 ? ' on' : '') + '" data-g="mode" data-m="3d" aria-pressed="' + u3 + '">' + g('m3d') + '</button><button type="button" class="chip' + (u3 ? '' : ' on') + '" data-g="mode" data-m="list" aria-pressed="' + !u3 + '">' + g('mlist') + '</button></div>' : '') +
-    (u3 ? '<div class="gr3" id="gr3"><div class="gr3-view" id="gr3v"></div>' + hudTop() + toolsHTML() + '<button type="button" class="gr3-build" id="gr3b" data-g="rib">' + g('build') + '</button><span class="gr3-cn num" id="gr3cnt"></span>' +
+    (u3 ? '<div class="gr3" id="gr3"><div class="gr3-view" id="gr3v"></div>' + hudTop() + toolsHTML() + '<button type="button" class="gr3-build" id="gr3b" data-g="rib">' + g('build') + '</button><div class="gr3-agw" id="gr3ag" hidden></div><span class="gr3-cn num" id="gr3cnt"></span>' +
         (tip ? '<p class="gr3-tip" id="gr3tip"><span>' + g('tip') + '</span><button type="button" data-g="tipx">' + g('tip_ok') + '</button></p>' : '') + '<div class="gr3-low" id="gr3low"></div></div>'
       : listHTML(c));
   if (u3) { G3().mount($('gr3v'), api3()); hud(); } else if (G3()) G3().dispose();
@@ -616,14 +658,14 @@ function act(a, id, u, el) {
     case 'pick': { const w = whyType(b); if (w) { ribWhy = whyText(b, w); const e = $('grWhy'); if (e) e.textContent = ribWhy; H.vib(15); return; } startPlace(id, 0); return; }
     case 'unst': if (!it) return; if ($('modal') && !$('modal').hidden) { $('modal').hidden = true; } startPlace(it.id, it.u); return;
     case 'mv': if (!it) return; startPlace(it.id, it.u); return;
-    case 'st': r = store(S, u, now); if (!r.ok) return; H.save(); H.snd(); H.vib(10); H.toast(g('t_stored', { n: bn(it.id) }), 'up', true); selU = 0; H.render(); hud(); sync(); return;
+    case 'st': undo = null; again = null; r = store(S, u, now); if (!r.ok) return; H.save(); H.snd(); H.vib(10); H.toast(g('t_stored', { n: bn(it.id) }), 'up', true); selU = 0; H.render(); hud(); sync(); return;
     case 'pmok': pmConfirm(); return;
     case 'pmrot': pmRot(); return;
     case 'pmx': pmCancel(); return;
     case 'sclose': selU = 0; selD = -1; hud(); sync(); return;
     case 'tag': selectItem(u); return;
     case 'dist': selD = +id; selU = 0; ribOpen = false; hud(); sync(); return;
-    case 'dopen': {
+    case 'dopen': { undo = null;
       const k = +id; r = openDist(S, k, myLvl());
       if (!r.ok) { const e = $('grsErr'); if (e) e.textContent = r.err === 'level' ? g('d_lvl', { n: DIST[k].lvl }) : r.err === 'funds' ? g('e_funds', { x: mny(DIST[k].price, 0) }) : ''; H.vib(20); return; }
       H.save(); H.snd(); H.vib([10, 30, 10]); H.toast(g('t_opened', { n: dName(DIST[k]) }), 'up', true); selD = -1; H.render(); hud(); sync(); return;
@@ -635,15 +677,19 @@ function act(a, id, u, el) {
     case 'rl': if (G3()) G3().rot(-Math.PI / 4); return;
     case 'rr': if (G3()) G3().rot(Math.PI / 4); return;
     case 'home': if (G3()) G3().home(); return;
-    case 'tipx': try { localStorage.setItem('dofa_gr_tip', '1'); } catch (e) { /* ничего */ } { const t = $('gr3tip'); if (t) t.remove(); } return;
-    case 'all':
+    case 'rotm': if (G3()) { const m = G3().mode(!G3().mode()); el.classList.toggle('on', m); el.setAttribute('aria-pressed', m); el.title = m ? g('rotm_on') : g('rotm'); el.setAttribute('aria-label', el.title); } return;
+    case 'live': if (G3()) { const m = G3().live(!G3().live()); el.classList.toggle('on', m); el.setAttribute('aria-pressed', m); } return;
+    case 'undo': undoLast(); return;
+    case 'again': if (again) startPlace(again.id, 0); return;
+    case 'tipx': try { localStorage.setItem('dofa_gr_tip2', '1'); } catch (e) { /* ничего */ } { const t = $('gr3tip'); if (t) t.remove(); } return;
+    case 'all': undo = null;
       r = collect(S, '', now); if (!r.ok) { H.vib(20); return; }
       H.save(); H.snd(); H.vib([10, 30, 10]); H.toast(g('t_got', { x: mny(r.got) }), 'up', true); H.render(); return;
-    case 'col':
+    case 'col': undo = null;
       r = collect(S, u, now); if (!r.ok) { H.vib(20); return; }
       H.save(); H.snd(); H.vib([10, 30, 10]); H.toast(g('t_got', { x: mny(r.got) }), 'up', true); H.render(); if (openId && openId.u === u) modal(openId); hud(); return;
-    case 'buy': r = buy(S, id, myLvl(), now); break;
-    case 'up': r = upgrade(S, u, H.lesDone, now); break;
+    case 'buy': undo = null; r = buy(S, id, myLvl(), now); break;
+    case 'up': undo = null; r = upgrade(S, u, H.lesDone, now); break;
     default: return;
   }
   if (!r.ok) { const e = $('grmErr') && !$('modal').hidden ? $('grmErr') : $('grsErr'); if (e) e.textContent = errMsg(r, b); H.vib(20); return; }

@@ -4,7 +4,7 @@ import { open, sleep } from '../../_shots/akcii-obuchenie/drv.mjs';
 import { createRequire } from 'node:module';
 const G = createRequire(import.meta.url)('../gorod.js');
 const W = +(process.argv[2] || 481), THR = +(process.argv[3] || 1), MODE = process.argv[4] || 'new', mob = W < 700;
-const URL = 'http://127.0.0.1:8933/akcii/index.html';
+const URL = (process.env.GURL || 'http://127.0.0.1:8935') + '/akcii/index.html';
 const d = await open({ w: W, h: 900, dpr: 1, mobile: mob, url: URL });
 await d.go('about:blank'); await d.go(URL);
 await d.ev(`DofaSim.give(1)`);
