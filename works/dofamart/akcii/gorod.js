@@ -392,7 +392,7 @@ const sync = () => { if (G3() && G3().alive()) G3().update(); };
 
 function items3() {
   const c = city(), now = H.now();
-  return c.p.filter(it => !it.s && !(pm && pm.u === it.u)).map(it => { const f = fp(BY[it.id], it.r), p = pend(c, it, now); return { u: it.u, id: it.id, l: it.l, x: it.x, y: it.y, r: it.r, w: f.w, d: f.d, txt: p >= 1 ? '+' + short(p) : '', sel: it.u === selU }; });
+  return c.p.filter(it => !it.s && !(pm && pm.u === it.u)).map(it => { const f = fp(BY[it.id], it.r), p = pend(c, it, now); return { u: it.u, id: it.id, l: it.l, x: it.x, y: it.y, r: it.r, w: f.w, d: f.d, txt: p >= 1 ? '+' + short(p) : '', v: p, fill: Math.min(1, hoursOf(c, it, now) / capH(c)), sel: it.u === selU }; });
 }
 function dists3() { const c = city(); return DIST.map(d => ({ id: d.id, open: c.d.indexOf(d.id) >= 0, name: dName(d), cond: myLvl() < d.lvl ? g('lock_lv', { n: d.lvl, x: short(d.price) }) : short(d.price) })); }
 function ghost3() { if (!pm) return null; const f = fp(BY[pm.id], pm.r); return { id: pm.id, x: pm.x, y: pm.y, r: pm.r, w: f.w, d: f.d, ok: pm.ok }; }
@@ -427,7 +427,7 @@ function ovData() {
 }
 const distOfCell = q => MAP.DM[q.y * MWc + q.x];
 function api3() {
-  return { lang: L, label: g('lbl3'), loading: g('ld3'), hint: g('hint3'), map: MAP, items: items3, districts: dists3, overlay: ovData, ovSig: ovKey, ghost: ghost3, ghostUI: ghostUI, ring: ringData, sel: () => selU, beginMove: beginMove, dropGhost: () => { if (pm && pm.ok) H.vib(8); }, rotGhost: pmRot, placing: () => !!pm, name: bn,
+  return { lang: L, label: g('lbl3'), loading: g('ld3'), hint: g('hint3'), map: MAP, items: items3, districts: dists3, overlay: ovData, ovSig: ovKey, ghost: ghost3, ghostUI: ghostUI, building: () => !!pm || ribOpen, fmt: short, ring: ringData, sel: () => selU, beginMove: beginMove, dropGhost: () => { if (pm && pm.ok) H.vib(8); }, rotGhost: pmRot, placing: () => !!pm, name: bn,
     cell: pmCell, tapItem: u => selectItem(u), tapCell: (cx, cz) => tapCell(cx, cz),
     fail: () => { fail3d = true; if (G3()) G3().dispose(); const bx = $('gorodBox'); if (bx && !$('v-gorod').hidden) { boxKey = ''; render(bx); } } };
 }

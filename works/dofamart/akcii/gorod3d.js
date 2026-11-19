@@ -38,7 +38,7 @@ const DIM = { kiosk: [1.25, 1.1], exch: [1.6, 1.1], dc: [1.4, 1.0], hall: [1.7, 
   vend: [1.5, 0.8], atm: [1.3, 1.3], pay: [1.6, 0.9], broker: [1.9, 1.1], vc: [1.2, 1.2], home: [1.3, 1.1], cowork: [1.5, 1.2], mall: [1.9, 1.2], park: [0.9, 0.9], fountain: [1.5, 1.5], port: [1.9, 1.2], maglev: [1.95, 1.1] };
 const LH = l => 1 + 0.17 * (l - 1);
 const CHW = 12, CHD = 10;       // размер куска карты для отсечения
-const ICON = { chart: 0, bars: 1, dollar: 2, swap: 3, atm: 4, bank: 5, shop: 6, pay: 7, line: 8, vc: 9, home: 10, stripe: 11, maglev: 12, solid: 13, cloud: 14, glow: 15 };
+const ICON = { coin: 16, server: 17, anchor: 18, leaf: 19, train: 20, flask: 21, bag: 22, drop: 23, rocket: 24, people: 25, cap: 26, case: 27, pillars: 28, globe: 29, star: 30, clock: 31, chart: 0, bars: 1, dollar: 2, swap: 3, atm: 4, bank: 5, shop: 6, pay: 7, line: 8, vc: 9, home: 10, stripe: 11, maglev: 12, solid: 13, cloud: 14, glow: 15 };
 
 function build(box) {
   const THREE = root.THREE, MP = A.map, W = MP.W, D = MP.D, HH = MP.HILL_H, mob = window.matchMedia && matchMedia('(max-width:700px)').matches;
@@ -72,6 +72,9 @@ function build(box) {
   const TOR = () => TP('tor', () => new THREE.TorusGeometry(0.5, 0.035, 3, 20));
   const FRU = () => TP('fru', () => { const g = new THREE.BoxGeometry(1, 1, 1), p = g.attributes.position; for (let i = 0; i < p.count; i++) if (p.getY(i) > 0) { p.setX(i, p.getX(i) * 0.857); p.setZ(i, p.getZ(i) * 0.833); } g.computeVertexNormals(); return g; });
   const PLN = () => new THREE.PlaneGeometry(1, 1);
+  const WEDGE = () => TP('wedge', () => { const g = new THREE.BoxGeometry(1, 1, 1), p = g.attributes.position; for (let i = 0; i < p.count; i++) if (p.getY(i) > 0 && p.getX(i) > 0) p.setY(i, -0.2); g.computeVertexNormals(); return g; });     // односкатная крыша: высоко слева, низко справа
+  const GABLE = () => TP('gable', () => { const g = new THREE.BoxGeometry(1, 1, 1), p = g.attributes.position; for (let i = 0; i < p.count; i++) if (p.getY(i) > 0) p.setX(i, 0); g.computeVertexNormals(); return g; });                       // двускатная: конёк вдоль z
+  const ARC = () => TP('arc', () => new THREE.TorusGeometry(0.5, 0.075, 4, 16, Math.PI));
 
   const _v = new THREE.Vector3(), _n3 = new THREE.Matrix3();
   function Batch() { this.p = []; this.n = []; this.c = []; this.lp = []; this.lc = []; }
@@ -112,7 +115,16 @@ function build(box) {
     }
   })();
   const winTex = keep(new THREE.CanvasTexture(winC)); winTex.wrapS = winTex.wrapT = THREE.RepeatWrapping; winTex.colorSpace = THREE.SRGBColorSpace; winTex.anisotropy = 4;
-  const sgC = document.createElement('canvas'); sgC.width = sgC.height = 256;
+  // три других материала фасада: стекло с отражением неба, тёмный металл с полосами окон, светлый камень с арочными окнами (клетка 16×16, 8×8 — как у обычных окон)
+  const mkFac = (seed, drawCell) => { const cv = document.createElement('canvas'); cv.width = cv.height = 128; const x = cv.getContext('2d'), r = rng(seed); for (let j = 0; j < 8; j++) for (let i = 0; i < 8; i++) { x.save(); x.translate(i * 16, j * 16); x.beginPath(); x.rect(0, 0, 16, 16); x.clip(); drawCell(x, r(), r(), j); x.restore(); }
+    const t = keep(new THREE.CanvasTexture(cv)); t.wrapS = t.wrapT = THREE.RepeatWrapping; t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = 4; return t; };
+  const glassTex = mkFac(31, (x, v, v2, j) => { const g = x.createLinearGradient(0, 0, 0, 16); g.addColorStop(0, v < 0.18 ? '#ffe3a6' : '#4fb4e6'); g.addColorStop(0.55, v < 0.18 ? '#e8b868' : '#1f6fa0'); g.addColorStop(1, '#0d3556'); x.fillStyle = '#05182a'; x.fillRect(0, 0, 16, 16); x.fillStyle = g; x.fillRect(1, 1, 14, 14);
+    x.fillStyle = 'rgba(255,255,255,' + (0.1 + v2 * 0.26).toFixed(2) + ')'; x.beginPath(); x.moveTo(1, 1); x.lineTo(10, 1); x.lineTo(1, 11); x.fill(); if (v2 > 0.7) { x.fillStyle = 'rgba(220,250,255,.35)'; x.fillRect(11, 2, 2, 12); } });
+  const metalTex = mkFac(47, (x, v, v2) => { x.fillStyle = '#0b1322'; x.fillRect(0, 0, 16, 16); x.fillStyle = '#1b2640'; x.fillRect(0, 0, 16, 1); x.fillRect(0, 0, 1, 16); x.fillStyle = '#070d19'; x.fillRect(0, 15, 16, 1);
+    x.fillStyle = v < 0.24 ? '#ffd48a' : v < 0.5 ? '#bff4ff' : v < 0.7 ? '#14365a' : '#0d2644'; x.fillRect(1, 5, 14, 5); x.fillStyle = 'rgba(255,255,255,.22)'; x.fillRect(1, 5, 14, 1); if (v2 < 0.12) { x.fillStyle = '#ff7090'; x.fillRect(2, 12, 2, 2); } });
+  const stoneTex = mkFac(53, (x, v, v2) => { x.fillStyle = '#cbd6ea'; x.fillRect(0, 0, 16, 16); x.fillStyle = '#9aa8c2'; x.fillRect(0, 15, 16, 1); x.fillRect(15, 0, 1, 16); x.fillStyle = '#e9f0fb'; x.fillRect(0, 0, 16, 1);
+    x.fillStyle = v < 0.34 ? '#ffd48a' : '#1d2c4a'; x.beginPath(); x.moveTo(5, 13); x.lineTo(5, 6); x.arc(8, 6, 3, Math.PI, 0); x.lineTo(11, 13); x.closePath(); x.fill(); x.fillStyle = 'rgba(255,255,255,.3)'; x.fillRect(5, 12, 6, 1); });
+  const sgC = document.createElement('canvas'); sgC.width = 256; sgC.height = 512;
   (function () {
     const x = sgC.getContext('2d'), S = 64, cy = '#22e3ff', vi = '#9a90ff', wm = '#ffd98a', gr = '#38f0a0', rd = '#ff6a84';
     const cell = (i, fn) => { x.save(); x.translate((i % 4) * S, Math.floor(i / 4) * S); x.beginPath(); x.rect(0, 0, S, S); x.clip(); x.fillStyle = '#06101f'; x.fillRect(0, 0, S, S); fn(); x.restore(); };
@@ -134,15 +146,34 @@ function build(box) {
     cell(13, () => { x.fillStyle = '#bff8ff'; x.fillRect(0, 0, S, S); });
     cell(14, () => { frame(vi); txt('24/7', 20, vi); });
     cell(15, () => { x.clearRect(0, 0, S, S); const g = x.createRadialGradient(S / 2, S / 2, 0, S / 2, S / 2, S / 2); g.addColorStop(0, 'rgba(255,255,255,1)'); g.addColorStop(0.35, 'rgba(255,255,255,.4)'); g.addColorStop(1, 'rgba(255,255,255,0)'); x.fillStyle = g; x.fillRect(0, 0, S, S); });
+    const W2 = '#ffffff', st = (lw, fn) => { x.strokeStyle = W2; x.fillStyle = W2; x.lineWidth = lw; x.lineCap = 'round'; x.lineJoin = 'round'; fn(); };
+    cell(16, () => { frame(W2); st(4, () => { x.beginPath(); x.arc(32, 32, 19, 0, 6.3); x.stroke(); x.beginPath(); x.arc(32, 32, 12, 0, 6.3); x.stroke(); }); txt('$', 24, W2, 33); });
+    cell(17, () => { frame(W2); st(3, () => { [14, 28, 42].forEach(yy => { x.strokeRect(12, yy, 40, 10); x.beginPath(); x.arc(18, yy + 5, 1.6, 0, 6.3); x.fill(); x.moveTo(30, yy + 5); x.lineTo(46, yy + 5); x.stroke(); }); }); });
+    cell(18, () => { frame(W2); st(4, () => { x.beginPath(); x.arc(32, 15, 5, 0, 6.3); x.stroke(); x.beginPath(); x.moveTo(32, 20); x.lineTo(32, 50); x.moveTo(23, 28); x.lineTo(41, 28); x.moveTo(13, 38); x.quadraticCurveTo(18, 52, 32, 50); x.quadraticCurveTo(46, 52, 51, 38); x.stroke(); }); });
+    cell(19, () => { frame(W2); st(3, () => { x.beginPath(); x.moveTo(14, 48); x.quadraticCurveTo(10, 16, 50, 14); x.quadraticCurveTo(54, 50, 14, 48); x.fill(); x.strokeStyle = '#06101f'; x.beginPath(); x.moveTo(16, 46); x.lineTo(40, 24); x.stroke(); }); });
+    cell(20, () => { frame(W2); st(3, () => { x.beginPath(); x.moveTo(14, 44); x.lineTo(14, 26); x.quadraticCurveTo(14, 16, 26, 16); x.lineTo(46, 16); x.quadraticCurveTo(52, 18, 52, 28); x.lineTo(52, 44); x.closePath(); x.stroke(); x.fillRect(20, 22, 14, 9); x.fillRect(38, 22, 8, 9); x.beginPath(); x.moveTo(8, 52); x.lineTo(56, 52); x.stroke(); }); });
+    cell(21, () => { frame(W2); st(3, () => { x.beginPath(); x.moveTo(26, 12); x.lineTo(38, 12); x.moveTo(28, 12); x.lineTo(28, 28); x.lineTo(14, 50); x.lineTo(50, 50); x.lineTo(36, 28); x.lineTo(36, 12); x.stroke(); x.fillRect(22, 40, 20, 6); x.beginPath(); x.arc(32, 33, 2.2, 0, 6.3); x.fill(); }); });
+    cell(22, () => { frame(W2); st(3, () => { x.fillRect(16, 24, 32, 26); x.strokeStyle = W2; x.beginPath(); x.arc(32, 24, 9, Math.PI, 0); x.stroke(); }); });
+    cell(23, () => { frame(W2); st(3, () => { x.beginPath(); x.moveTo(32, 10); x.quadraticCurveTo(50, 32, 46, 42); x.quadraticCurveTo(42, 54, 32, 54); x.quadraticCurveTo(22, 54, 18, 42); x.quadraticCurveTo(14, 32, 32, 10); x.fill(); }); });
+    cell(24, () => { frame(W2); st(3, () => { x.beginPath(); x.moveTo(32, 8); x.quadraticCurveTo(46, 22, 42, 40); x.lineTo(22, 40); x.quadraticCurveTo(18, 22, 32, 8); x.fill(); x.beginPath(); x.moveTo(22, 34); x.lineTo(12, 48); x.lineTo(24, 42); x.moveTo(42, 34); x.lineTo(52, 48); x.lineTo(40, 42); x.fill(); x.beginPath(); x.moveTo(28, 46); x.lineTo(32, 56); x.lineTo(36, 46); x.stroke(); x.fillStyle = '#06101f'; x.beginPath(); x.arc(32, 24, 4, 0, 6.3); x.fill(); }); });
+    cell(25, () => { frame(W2); st(3, () => { [[22, 40], [42, 40]].forEach(q => { x.beginPath(); x.arc(q[0], 24, 7, 0, 6.3); x.fill(); x.beginPath(); x.arc(q[0], 52, 12, Math.PI, 0); x.fill(); }); }); });
+    cell(26, () => { frame(W2); st(3, () => { x.beginPath(); x.moveTo(32, 14); x.lineTo(54, 26); x.lineTo(32, 38); x.lineTo(10, 26); x.closePath(); x.fill(); x.beginPath(); x.moveTo(20, 34); x.lineTo(20, 44); x.quadraticCurveTo(32, 52, 44, 44); x.lineTo(44, 34); x.stroke(); x.beginPath(); x.moveTo(54, 26); x.lineTo(54, 42); x.stroke(); }); });
+    cell(27, () => { frame(W2); st(3, () => { x.strokeRect(12, 24, 40, 26); x.strokeRect(25, 15, 14, 9); x.beginPath(); x.moveTo(12, 36); x.lineTo(52, 36); x.stroke(); x.fillRect(28, 33, 8, 7); }); });
+    cell(28, () => { frame(W2); st(3, () => { x.beginPath(); x.moveTo(10, 24); x.lineTo(32, 11); x.lineTo(54, 24); x.closePath(); x.fill(); [16, 26, 38, 48].forEach(xx => { x.beginPath(); x.moveTo(xx, 28); x.lineTo(xx, 46); x.stroke(); }); x.fillRect(10, 48, 44, 5); }); });
+    cell(29, () => { frame(W2); st(3, () => { x.beginPath(); x.arc(32, 32, 20, 0, 6.3); x.stroke(); x.beginPath(); x.ellipse(32, 32, 9, 20, 0, 0, 6.3); x.stroke(); x.beginPath(); x.moveTo(12, 32); x.lineTo(52, 32); x.moveTo(15, 22); x.lineTo(49, 22); x.moveTo(15, 42); x.lineTo(49, 42); x.stroke(); }); });
+    cell(30, () => { frame(W2); st(2, () => { x.beginPath(); for (let i = 0; i < 10; i++) { const a = -Math.PI / 2 + i * Math.PI / 5, r = i % 2 ? 9 : 21; x[i ? 'lineTo' : 'moveTo'](32 + Math.cos(a) * r, 34 + Math.sin(a) * r); } x.closePath(); x.fill(); }); });
+    cell(31, () => { frame(W2); st(4, () => { x.beginPath(); x.arc(32, 32, 20, 0, 6.3); x.stroke(); x.beginPath(); x.moveTo(32, 32); x.lineTo(32, 18); x.moveTo(32, 32); x.lineTo(43, 38); x.stroke(); }); });
   })();
   const sgTex = keep(new THREE.CanvasTexture(sgC)); sgTex.colorSpace = THREE.SRGBColorSpace; sgTex.anisotropy = 4;
-  const uvOf = i => { const c = i % 4, r = Math.floor(i / 4); return [c / 4 + 0.006, 1 - (r + 1) / 4 + 0.006, (c + 1) / 4 - 0.006, 1 - r / 4 - 0.006]; };
+  const uvOf = i => { const c = i % 4, r = Math.floor(i / 4); return [c / 4 + 0.006, 1 - (r + 1) / 8 + 0.003, (c + 1) / 4 - 0.006, 1 - r / 8 - 0.003]; };
 
   const matBody = keep(new THREE.MeshLambertMaterial({ vertexColors: true, emissive: 0x0b1a30 }));
   const matLine = keep(new THREE.LineBasicMaterial({ vertexColors: true }));
   const matBright = keep(new THREE.MeshBasicMaterial({ vertexColors: true }));
   const matBeam = keep(new THREE.MeshBasicMaterial({ vertexColors: true, transparent: true, opacity: 0.2, depthWrite: false, blending: THREE.AdditiveBlending }));
   const matFac = keep(new THREE.MeshBasicMaterial({ map: winTex, vertexColors: true, side: THREE.DoubleSide, polygonOffset: true, polygonOffsetFactor: -1, polygonOffsetUnits: -2 }));
+  const mkMat = t => keep(new THREE.MeshBasicMaterial({ map: t, vertexColors: true, side: THREE.DoubleSide, polygonOffset: true, polygonOffsetFactor: -1, polygonOffsetUnits: -2 }));
+  const matFacG = mkMat(glassTex), matFacM = mkMat(metalTex), matFacS = mkMat(stoneTex);
   const matSign = keep(new THREE.MeshBasicMaterial({ map: sgTex, vertexColors: true, side: THREE.DoubleSide, polygonOffset: true, polygonOffsetFactor: -2, polygonOffsetUnits: -3 }));
   const matHalo = keep(new THREE.MeshBasicMaterial({ map: sgTex, vertexColors: true, transparent: true, depthWrite: false, blending: THREE.AdditiveBlending, side: THREE.DoubleSide, polygonOffset: true, polygonOffsetFactor: -1, polygonOffsetUnits: -1 }));
   const matGB = keep(new THREE.MeshBasicMaterial({ vertexColors: true, transparent: true, opacity: 0.42, depthWrite: false }));
@@ -260,205 +291,250 @@ function build(box) {
   let wn = 0, blinkList = [];
   const wm = new THREE.Matrix4();
 
-  // ctx: рисует кирпичики здания в локальных координатах (центр основания в 0, ось y вверх); BM — матрица в мир
-  function ctx(S, BM, ghost, cols, rnd, lvl) {
-    const batch = S.body, put = (t, bc, ec, px, py, pz, sx, sy, sz, ry, rx) => { _m.multiplyMatrices(BM, mat(px, py, pz, sx, sy, sz, ry, rx)); batch.add(t, _m, bc, ec); };
-    const tint = new THREE.Color().setRGB(0.42 + 0.08 * lvl, 0.42 + 0.08 * lvl, 0.42 + 0.08 * lvl);
+  // ctx: рисует кирпичики здания в локальных координатах (центр основания в 0, ось y вверх); BM — матрица в мир; hm — растяжение по высоте (знаки и окна его компенсируют)
+  function ctx(S, BM, ghost, cols, rnd, lvl, hm) {
+    hm = hm || 1; const batch = S.body, put = (t, bc, ec, px, py, pz, sx, sy, sz, ry, rx) => { _m.multiplyMatrices(BM, mat(px, py, pz, sx, sy, sz, ry, rx)); batch.add(t, _m, bc, ec); };
+    const bcol = a => a === 2 ? cols.b3 : a ? cols.b2 : cols.b, ecol = a => a === 2 ? cols.e3 : a ? cols.e2 : cols.e1, NE = cols.ne || [null, K.e1, K.e2, K.warm, K.white], FS = ghost ? null : S[cols.fk || 'fac'];
+    const tv = Math.min(1.25, (0.42 + 0.08 * lvl) * (cols.ti || 1)), tint = new THREE.Color().setRGB(tv, tv, tv);
     const C = { main: null, top: 0 };
     const fq = (x, y0, z, w, h, d, face, tc) => {
       const len = face < 2 ? w : d; if (len < 0.16 || h < 0.2) return;
-      const cols2 = Math.max(1, Math.round(len / 0.15)), rows = Math.max(1, Math.round((h - 0.1) / 0.17)), e = 0.012, ou = Math.floor(rnd() * 8) / 8, ov = Math.floor(rnd() * 8) / 8, y = y0 + 0.05, hh = h - 0.1;
+      const cols2 = Math.max(1, Math.round(len / 0.15)), rows = Math.max(1, Math.round((h * hm - 0.1) / 0.17)), e = 0.012, ou = Math.floor(rnd() * 8) / 8, ov = Math.floor(rnd() * 8) / 8, y = y0 + 0.05, hh = h - 0.1;
       const u0 = ou, u1 = ou + cols2 / 8, v0 = ov, v1 = ov + rows / 8;
-      if (face === 0) S.fac.q(BM, x - w / 2, y, z + d / 2 + e, w, 0, 0, 0, hh, 0, u0, v0, u1, v1, tc);
-      else if (face === 1) S.fac.q(BM, x + w / 2, y, z - d / 2 - e, -w, 0, 0, 0, hh, 0, u0, v0, u1, v1, tc);
-      else if (face === 2) S.fac.q(BM, x + w / 2 + e, y, z + d / 2, 0, 0, -d, 0, hh, 0, u0, v0, u1, v1, tc);
-      else S.fac.q(BM, x - w / 2 - e, y, z - d / 2, 0, 0, d, 0, hh, 0, u0, v0, u1, v1, tc);
+      if (face === 0) FS.q(BM, x - w / 2, y, z + d / 2 + e, w, 0, 0, 0, hh, 0, u0, v0, u1, v1, tc);
+      else if (face === 1) FS.q(BM, x + w / 2, y, z - d / 2 - e, -w, 0, 0, 0, hh, 0, u0, v0, u1, v1, tc);
+      else if (face === 2) FS.q(BM, x + w / 2 + e, y, z + d / 2, 0, 0, -d, 0, hh, 0, u0, v0, u1, v1, tc);
+      else FS.q(BM, x - w / 2 - e, y, z - d / 2, 0, 0, d, 0, hh, 0, u0, v0, u1, v1, tc);
     };
-    const neonCol = k => NEON[k || 1];
+    const neonCol = k => NE[k || 1];
     Object.assign(C, {
       bx(x, y0, z, w, h, d, alt, win, ry) {
-        put(BOX(), alt ? cols.b2 : cols.b, alt ? cols.e2 : cols.e1, x, y0 + h / 2, z, w, h, d, ry);
-        if (win && !ghost && !ry) { const tc = alt ? tint.clone().multiply(col(0xd8d0ff)) : tint; fq(x, y0, z, w, h, d, 0, tc); fq(x, y0, z, w, h, d, 1, tc); if (win === 1 || win === 2) { fq(x, y0, z, w, h, d, 2, tc); fq(x, y0, z, w, h, d, 3, tc); } if (!C.main || w * h > C.main[3] * C.main[4]) C.main = [x, y0, z, w, h, d]; }
+        put(BOX(), bcol(alt), ecol(alt), x, y0 + h / 2, z, w, h, d, ry);
+        if (win && !ghost && !ry) { const tc = alt === 1 ? tint.clone().multiply(col(0xd8d0ff)) : tint; fq(x, y0, z, w, h, d, 0, tc); fq(x, y0, z, w, h, d, 1, tc); if (win === 1 || win === 2) { fq(x, y0, z, w, h, d, 2, tc); fq(x, y0, z, w, h, d, 3, tc); } if (!C.main || w * h > C.main[3] * C.main[4]) C.main = [x, y0, z, w, h, d]; }
       },
       cyl(n, x, y0, z, w, h, d, alt, ry, win) {
-        put(CYL(n), alt ? cols.b2 : cols.b, alt ? cols.e2 : cols.e1, x, y0 + h / 2, z, w, h, d, ry);
-        if (win && !ghost) { const r = w / 2 + 0.012, hh = h - 0.1; for (let i = 0; i < n; i++) { const a0 = i / n * 6.2832, a1 = (i + 1) / n * 6.2832, len = 3.1416 * w / n * 1.0, cc = Math.max(1, Math.round(len / 0.15)), rows = Math.max(1, Math.round(hh / 0.17)), ou = Math.floor(rnd() * 8) / 8;
-          S.fac.q(BM, x + Math.sin(a0) * r, y0 + 0.05, z + Math.cos(a0) * r * d / w, Math.sin(a1) * r - Math.sin(a0) * r, 0, (Math.cos(a1) - Math.cos(a0)) * r * d / w, 0, hh, 0, ou, 0, ou + cc / 8, rows / 8, tint); } }
+        put(CYL(n), bcol(alt), ecol(alt), x, y0 + h / 2, z, w, h, d, ry);
+        if (win && !ghost) { const r = w / 2 + 0.012, hh = h - 0.1; for (let i = 0; i < n; i++) { const a0 = i / n * 6.2832, a1 = (i + 1) / n * 6.2832, len = 3.1416 * w / n * 1.0, cc = Math.max(1, Math.round(len / 0.15)), rows = Math.max(1, Math.round(hh * hm / 0.17)), ou = Math.floor(rnd() * 8) / 8;
+          FS.q(BM, x + Math.sin(a0) * r, y0 + 0.05, z + Math.cos(a0) * r * d / w, Math.sin(a1) * r - Math.sin(a0) * r, 0, (Math.cos(a1) - Math.cos(a0)) * r * d / w, 0, hh, 0, ou, 0, ou + cc / 8, rows / 8, tint); } }
       },
-      cone(n, x, y0, z, w, h, d, alt) { put(CONE(n), alt ? cols.b2 : cols.b, alt ? cols.e2 : cols.e1, x, y0 + h / 2, z, w, h, d); },
-      pyr(x, y0, z, w, h, d, alt) { put(PYR(), alt ? cols.b2 : cols.b, alt ? cols.e2 : cols.e1, x, y0 + h / 2, z, w, h, d); },
-      dome(x, y0, z, w, h, d, alt) { put(DOME(), alt ? cols.b2 : cols.b, alt ? cols.e2 : cols.e1, x, y0, z, w, h * 2, d); },
-      tb(x, y0, z, w, h, d, rx, alt) { put(BOX(), alt ? cols.b2 : cols.b, alt ? cols.e2 : cols.e1, x, y0 + h / 2, z, w, h, d, 0, rx); },
+      lay(ax, n, x, y, z, len, dia, alt) { put(CYL(n), bcol(alt), ecol(alt), x, y, z, dia, len, dia, ax === 'x' ? Math.PI / 2 : 0, Math.PI / 2); },        // цилиндр лёжа: свод, капсула поезда
+      cone(n, x, y0, z, w, h, d, alt) { put(CONE(n), bcol(alt), ecol(alt), x, y0 + h / 2, z, w, h, d); },
+      icone(n, x, y0, z, w, h, d, alt) { put(CONE(n), bcol(alt), ecol(alt), x, y0 + h / 2, z, w, h, d, 0, Math.PI); },
+      pyr(x, y0, z, w, h, d, alt) { put(PYR(), bcol(alt), ecol(alt), x, y0 + h / 2, z, w, h, d); },
+      dome(x, y0, z, w, h, d, alt) { put(DOME(), bcol(alt), ecol(alt), x, y0, z, w, h * 2, d); },
+      wedge(x, y0, z, len, h, wid, alt, ry) { put(WEDGE(), bcol(alt), ecol(alt), x, y0 + h / 2, z, len, h, wid, ry); },
+      gable(x, y0, z, w, h, d, alt, ry) { put(GABLE(), bcol(alt), ecol(alt), x, y0 + h / 2, z, w, h, d, ry); },
+      arc(x, y0, z, w, h, d, alt) { put(ARC(), bcol(alt), ecol(alt), x, y0, z, w, h, d); },
+      tb(x, y0, z, w, h, d, rx, alt) { put(BOX(), bcol(alt), ecol(alt), x, y0 + h / 2, z, w, h, d, 0, rx); },
       nb(x, y0, z, w, h, d, k) { if (ghost) return; _m.multiplyMatrices(BM, mat(x, y0 + h / 2, z, w, h, d)); S.glow.add(BOX(), _m, neonCol(k), null); },
-      ball(x, y, z, r, k) { if (ghost) return; _m.multiplyMatrices(BM, mat(x, y, z, r * 2, r * 2, r * 2)); S.glow.add(SPH(), _m, k ? neonCol(k) : K.glow, null); },
+      ball(x, y, z, r, k) { if (ghost) return; _m.multiplyMatrices(BM, mat(x, y, z, r * 2, r * 2 / hm, r * 2)); S.glow.add(SPH(), _m, k ? neonCol(k) : K.glow, null); },
       ring(x, y, z, r, k) { if (ghost) return; _m.multiplyMatrices(BM, mat(x, y, z, r * 2, r * 2, r * 2, 0, Math.PI / 2)); S.glow.add(TOR(), _m, neonCol(k), null); },
-      sg(x, y, z, w, h, ic, ry, k) { if (ghost) return; const u = uvOf(ICON[ic] != null ? ICON[ic] : 13); _m.multiplyMatrices(BM, mat(x, y, z, 1, 1, 1, ry)); const t = k ? neonCol(k) : K.white; S.sign.q(_m, -w / 2, -h / 2, 0, w, 0, 0, 0, h, 0, u[0], u[1], u[2], u[3], t); },
+      sg(x, y, z, w, h, ic, ry, k) { if (ghost) return; const u = uvOf(ICON[ic] != null ? ICON[ic] : 13); _m.multiplyMatrices(BM, mat(x, y, z, 1, 1, 1, ry)); const t = k ? neonCol(k) : K.white; h /= hm; S.sign.q(_m, -w / 2, -h / 2, 0, w, 0, 0, 0, h, 0, u[0], u[1], u[2], u[3], t); },
+      sgf(x, y, z, w, ic, k, ry) { if (ghost) return; const u = uvOf(ICON[ic] != null ? ICON[ic] : 13); _m.multiplyMatrices(BM, mat(x, y, z, 1, 1, 1, ry || 0, -Math.PI / 2)); S.sign.q(_m, -w / 2, -w / 2, 0, w, 0, 0, 0, w, 0, u[0], u[1], u[2], u[3], neonCol(k || 1)); },   // знак, лежащий на крыше: читается сверху
+      plate(x, y, z, w, d, k) { C.bx(x, y, z, w + 0.04, 0.03, d + 0.04, 0); C.nb(x, y + 0.03, z, w + 0.04, 0.008, d + 0.04, k || 1); },                                                      // подложка под знак с неоновой каймой
       ant(x, y0, z, h, k) { put(BOX(), cols.b2, cols.e2, x, y0 + h / 2, z, 0.03, h, 0.03); C.ball(x, y0 + h + 0.03, z, 0.04, k || 3); },
-      beamAt(x, y0, z, w, h) { if (ghost) return; _m.multiplyMatrices(BM, mat(x, y0 + h / 2, z, w, h, w)); S.beam.add(CYL(10), _m, K.beam, null); },
-      halo(w, d, k, a) { if (ghost) return; const u = uvOf(15), t = NEON[k || 1].clone().multiplyScalar(a || 0.5); _m.copy(BM); S.halo.q(_m, -w / 2, 0.055, d / 2, w, 0, 0, 0, 0, -d, u[0], u[1], u[2], u[3], t); }
+      beamAt(x, y0, z, w, h) { if (ghost) return; _m.multiplyMatrices(BM, mat(x, y0 + h / 2, z, w, h, w)); S.beam.add(CYL(10), _m, NE[1], null); },
+      halo(w, d, k, a) { if (ghost) return; const u = uvOf(15), t = NE[k || 1].clone().multiplyScalar(a || 0.5); _m.copy(BM); S.halo.q(_m, -w / 2, 0.055, d / 2, w, 0, 0, 0, 0, -d, u[0], u[1], u[2], u[3], t); }
     });
     return C;
   }
   const small = (c, x, y, z) => c.bx(x, y, z, 0.14, 0.07, 0.11, 1);   // кондиционер/блок на крыше
+  const NOPC = new Proxy({}, { get: () => () => 0 });                 // «сухой прогон»: только узнать высоту фигуры
 
-  // каждое здание — своя фигура; возвращает высоту верха. Ступень l (1…5) добавляет этажи, детали и огни.
+  // каждое здание — своя фигура и свой знак; возвращает высоту верха в своих единицах. Ступень l (1…5) добавляет этажи, детали и огни; общая высота подгоняется под таблицу TGT.
   const BLD = {
-    kiosk(c, l) { const h = 0.46 * LH(l); c.bx(0, 0, 0.02, 0.95, h, 0.78, 0, 2); c.bx(0, h, 0.02, 1.05, 0.05, 0.9, 1); c.tb(0, h - 0.16, 0.6, 1.0, 0.04, 0.42, 0.45, 1); c.nb(0, h - 0.1, 0.78, 0.98, 0.02, 0.02, 1);
-      c.sg(0, h * 0.5, 0.415, 0.6, 0.24, 'chart', 0); c.ant(0.34, h + 0.05, -0.22, 0.38 + 0.06 * l); c.dome(-0.3, h + 0.05, -0.15, 0.22, 0.1, 0.22); small(c, 0, h + 0.05, -0.18);
-      c.bx(0.66, 0, -0.22, 0.24, h * 0.82, 0.34, 1, 1); c.nb(0.66, h * 0.82, -0.22, 0.2, 0.015, 0.3, 2);
-      if (l >= 3) { c.bx(-0.05, h + 0.05, -0.1, 0.66, 0.26, 0.46, 1, 1); c.nb(-0.05, h + 0.31, -0.1, 0.7, 0.015, 0.5, 1); }
-      if (l >= 4) { c.tb(-0.42, h + 0.16, 0.2, 0.34, 0.025, 0.26, -0.5, 0); }
-      return h + (l >= 3 ? 0.31 : 0.05); },
-    exch(c, l) { const h = 0.6 * LH(l); c.bx(0, 0, 0, 1.5, 0.08, 1.04, 1); c.bx(0, 0.08, 0, 1.4, h, 0.95, 0, 1); [-0.55, -0.18, 0.18, 0.55].forEach(x => c.bx(x, 0.08, 0.5, 0.08, h * 0.8, 0.08, 1));
-      c.cyl(20, 0, h + 0.08, 0, 0.78, 0.06 + 0.02 * l, 0.78, 1); c.cyl(20, 0, h + 0.14 + 0.02 * l, 0, 0.5, 0.05, 0.5, 0); c.sg(0, h * 0.5 + 0.08, 0.485, 0.54, 0.26, 'swap', 0); c.nb(0, h + 0.075, 0.48, 1.42, 0.02, 0.02, 1);
-      c.ring(0, h + 0.2 + 0.02 * l, 0, 0.64, 1); c.sg(0.74, h * 0.62, 0.0, 0.5, 0.26, 'dollar', Math.PI / 2, 3);
-      if (l >= 3) { c.bx(-0.5, h + 0.08, -0.25, 0.34, 0.24, 0.34, 1, 1); c.nb(-0.5, h + 0.32, -0.25, 0.38, 0.015, 0.38, 2); }
-      if (l >= 4) { c.cyl(12, 0.5, h + 0.08, -0.25, 0.2, 0.34, 0.2, 1); c.ball(0.5, h + 0.45, -0.25, 0.05, 3); }
-      return h + 0.2 + 0.02 * l; },
-    dc(c, l) { const hh = 0.28 * LH(l); for (let i = 0; i < 3; i++) { c.bx(0, i * (hh + 0.06), 0, 1.35, hh, 0.98, i % 2, 2); c.nb(0, i * (hh + 0.06) + hh * 0.5, 0.495, 1.0, 0.03, 0.01, i % 2 ? 2 : 1); }
-      const t = 3 * (hh + 0.06); [-0.45, 0, 0.45].forEach(x => { c.cyl(10, x, t, -0.15, 0.3, 0.12, 0.3, 1); c.bx(x, t + 0.12, -0.15, 0.04, 0.12, 0.04, 0); });
-      c.bx(0.5, 0, 0.62, 0.3, 0.24, 0.2, 1, 1); c.sg(0, 0.18, 0.5, 0.3, 0.16, 'stripe', 0, 2);
-      if (l >= 2) c.nb(-0.5, t + 0.26, 0.2, 0.3, 0.012, 0.012, 1);
-      if (l >= 3) { c.bx(-0.7, 0, 0.7, 0.22, 0.5, 0.2, 0, 1); c.nb(-0.7, 0.5, 0.7, 0.24, 0.012, 0.22, 1); }
-      if (l >= 4) { [-0.62, 0.62].forEach(x => { c.bx(x, t + 0.04, 0.3, 0.2, 0.2, 0.2, 1, 1); c.ball(x, t + 0.3, 0.3, 0.04, 1); }); }
-      return t + 0.3; },
-    hall(c, l) { const h = 0.52 * LH(l); c.bx(0, 0, 0, 1.68, 0.1, 1.28, 1); c.bx(0, 0.1, 0.18, 1.5, 0.05, 0.9, 0); [-0.64, -0.32, 0, 0.32, 0.64].forEach(x => c.cyl(8, x, 0.15, 0.55, 0.1, h, 0.1, 0));
-      c.bx(0, 0.1, -0.2, 1.4, h, 0.5, 0, 1); c.nb(0, 0.1, 0.66, 1.5, 0.02, 0.02, 1);
-      c.cyl(3, 0, 0.1 + h, 0.25, 1.62, 0.42, 1.2, 1, Math.PI / 2); c.sg(0, 0.1 + h + 0.18, 0.84, 0.62, 0.2, 'line', 0, 1);
-      c.bx(0, 0.1 + h, -0.28, 1.2, 0.22, 0.3, 0, 1); c.sg(0, 0.1 + h + 0.12, -0.12, 0.5, 0.14, 'chart', 0);
-      if (l >= 3) { c.cyl(12, 0, 0.1 + h + 0.22, -0.28, 0.42, 0.26, 0.42, 1); c.dome(0, 0.1 + h + 0.48, -0.28, 0.34, 0.12, 0.34, 0); }
-      if (l >= 4) [-0.7, 0.7].forEach(x => { c.ant(x, 0.1 + h, -0.3, 0.5); });
-      return h + 0.56; },
-    bank(c, l) { const h = 0.74 * LH(l); c.bx(0, 0, 0, 1.55, 0.1, 1.28, 1); c.bx(0, 0.1, -0.05, 1.4, h, 1.0, 0, 1); [-0.58, -0.29, 0, 0.29, 0.58].forEach(x => c.cyl(10, x, 0.1, 0.5, 0.11, h * 0.92, 0.11, 1)); c.bx(0, 0.1 + h * 0.92, 0.5, 1.5, 0.07, 0.26, 1);
-      c.cyl(3, 0, 0.1 + h, -0.05, 1.52, 0.3, 1.02, 1, Math.PI / 2); c.dome(0, 0.1 + h + 0.3, -0.05, 0.46, 0.2, 0.46, 0); c.sg(0, 0.1 + h + 0.15, 0.5, 0.5, 0.17, 'bank', 0, 3); c.nb(0, 0.1, 0.62, 1.5, 0.02, 0.02, 3);
-      [-0.5, 0.5].forEach(x => c.bx(x, 0.1 + h, -0.05, 0.18, 0.12, 0.7, 0));
-      if (l >= 3) { c.bx(-0.62, 0.1, -0.52, 0.28, h * 1.25, 0.28, 1, 1); c.bx(0.62, 0.1, -0.52, 0.28, h * 1.25, 0.28, 1, 1); c.nb(0, 0.1 + h * 1.25, -0.52, 1.5, 0.02, 0.02, 3); }
-      if (l >= 5) c.ring(0, 0.1 + h + 0.62, -0.05, 0.4, 3);
-      return 0.1 + h + 0.55; },
-    lab(c, l) { const h = 0.55 * LH(l); c.bx(-0.25, 0, 0, 1.1, h, 1.0, 0, 1); c.bx(-0.25, h, 0, 1.15, 0.04, 1.05, 1); c.cyl(14, 0.5, 0, 0.3, 0.3, h + 0.85, 0.3, 1, 0, 1); c.dome(0.5, h + 0.85, 0.3, 0.7, 0.26, 0.7, 1); c.nb(0.5, h + 0.85, 0.3, 0.4, 0.012, 0.4, 2);
-      c.bx(-0.25, h + 0.04, 0, 0.32, 0.3, 0.32, 1, 1); c.sg(-0.25, h * 0.55, 0.505, 0.6, 0.26, 'bars', 0); c.cyl(8, -0.62, h + 0.04, -0.28, 0.12, 0.3, 0.12, 1); c.cyl(8, -0.38, h + 0.04, -0.28, 0.12, 0.2, 0.12, 1); c.ant(0.5, h + 1.08, 0.3, 0.3, 1);
-      if (l >= 3) { c.bx(-0.55, h + 0.34, 0.1, 0.3, 0.2, 0.3, 0, 1); c.nb(-0.55, h + 0.54, 0.1, 0.34, 0.014, 0.34, 1); }
-      if (l >= 4) c.ring(0.5, h + 0.55, 0.3, 0.55, 2);
-      return h + 1.15; },
-    fund(c, l) { const a = 0.9 * LH(l), b = 1.5 * LH(l); c.bx(-0.45, 0, 0.1, 0.7, a, 0.9, 0, 1); c.bx(0.4, 0, -0.1, 0.8, b, 0.9, 1, 1); c.bx(-0.45, a, 0.1, 0.4, 0.12, 0.5, 1); c.bx(-0.45, a, 0.1, 0.5, 0.04, 0.6, 0);
-      c.nb(0.4, b, -0.1, 0.84, 0.025, 0.94, 2); c.nb(0.78, 0.2, 0.36, 0.015, b - 0.3, 0.015, 1); c.nb(0.02, 0.2, 0.36, 0.015, b - 0.3, 0.015, 1); c.sg(0.4, b * 0.78, 0.365, 0.5, 0.22, 'line', 0, 2);
-      c.bx(0.4, b + 0.025, -0.1, 0.5, 0.18, 0.5, 0, 1); c.ant(0.4, b + 0.2, -0.1, 0.4, 2);
-      if (l >= 3) { c.bx(0.05, 0, -0.5, 0.3, a * 0.8, 0.3, 0, 1); }
-      if (l >= 4) c.nb(-0.45, a + 0.12, 0.1, 0.44, 0.015, 0.54, 1);
-      return b + 0.4; },
-    tower(c, l) {                              // ступенчатая башня: три уступа с окнами по всем граням, огни по рёбрам и шпиль; растёт с каждой ступенью
+    kiosk(c, l) { const h = 0.46 * LH(l);                                       // павильон с односкатной крышей, козырьком и столбом-вывеской
+      c.bx(0, 0, 0.02, 0.95, h, 0.7, 0, 2); c.wedge(0, h, 0.02, 0.9, 0.22 + 0.02 * l, 1.08, 2, -Math.PI / 2); c.tb(0, h - 0.12, 0.5, 1.04, 0.04, 0.34, 0.5, 1); c.nb(0, h - 0.07, 0.62, 1.04, 0.02, 0.02, 1);
+      c.sg(0, h * 0.5, 0.375, 0.5, 0.22, 'shop', 0, 2); c.bx(0.52, 0, -0.32, 0.05, h + 0.95, 0.05, 1); c.nb(0.52, h + 0.9, -0.32, 0.56, 0.03, 0.03, 2); c.sg(0.52, h + 0.62, -0.32, 0.5, 0.5, 'chart', 0, 1); c.ball(0.52, h + 1.0, -0.32, 0.04, 3);
+      if (l >= 3) { c.bx(-0.55, 0, -0.2, 0.3, h * 1.5, 0.4, 1, 1); c.nb(-0.55, h * 1.5, -0.2, 0.34, 0.015, 0.44, 2); }
+      if (l >= 4) c.ring(0, h + 0.3, 0, 0.45, 1);
+      return h + 1.0; },
+    exch(c, l) { const h = 0.56 * LH(l);                                        // круглый торговый зал с колоннадой, пристройка с бегущей строкой, знак на крыше
+      c.bx(0, 0, 0, 1.55, 0.07, 1.05, 1); c.cyl(24, 0.15, 0.07, 0.02, 1.0, h, 1.0, 0, 0, 1); c.cyl(24, 0.15, h + 0.07, 0.02, 1.1, 0.07, 1.1, 1); c.ring(0.15, h * 0.5 + 0.07, 0.02, 0.51, 1);
+      for (let i = 0; i < 7; i++) { const a = -1.3 + i * 0.433; c.cyl(8, 0.15 + Math.sin(a) * 0.56, 0.07, 0.02 + Math.cos(a) * 0.56, 0.07, h, 0.07, 1); }
+      c.plate(0.15, h + 0.14, 0.02, 0.62, 0.62, 1); c.sgf(0.15, h + 0.178, 0.02, 0.62, 'swap', 1);
+      c.bx(-0.6, 0.07, -0.18, 0.34, h * 1.55, 0.6, 1, 1); c.nb(-0.6, 0.07 + h * 1.55, -0.18, 0.38, 0.02, 0.64, 2); c.sg(-0.6, h * 0.8, 0.125, 0.28, 0.5, 'dollar', 0, 3);
+      if (l >= 3) c.ring(0.15, h + 0.32, 0.02, 0.38, 3);
+      if (l >= 4) c.ant(-0.6, 0.07 + h * 1.55, -0.18, 0.4, 3);
+      return h * 1.55 + 0.2; },
+    dc(c, l) { const h = 0.42 * LH(l);                                          // низкий серверный блок со светящимися щелями, градирни и труба
+      c.bx(0, 0, 0, 1.38, h, 0.96, 1, 1); for (let i = 0; i < 6; i++) c.nb(-0.55 + i * 0.22, 0.06, 0.485, 0.035, h - 0.12, 0.01, i % 2 ? 2 : 1);
+      [-0.42, 0, 0.42].forEach(x => { c.cyl(12, x, h, -0.2, 0.32, 0.13, 0.32, 2); c.ring(x, h + 0.13, -0.2, 0.14, 1); });
+      c.plate(0.44, h, 0.3, 0.34, 0.34, 1); c.sgf(0.44, h + 0.038, 0.3, 0.34, 'server', 1);
+      c.cyl(10, -0.6, 0, -0.38, 0.16, h + 0.6, 0.16, 1); c.ball(-0.6, h + 0.64, -0.38, 0.04, 3);
+      if (l >= 3) { c.bx(-0.6, 0, 0.4, 0.2, h * 1.5, 0.3, 0, 1); c.nb(-0.6, h * 1.5, 0.4, 0.22, 0.012, 0.32, 1); }
+      if (l >= 4) c.bx(0.1, h, 0.32, 0.5, 0.2, 0.26, 2, 1);
+      return h + 0.65; },
+    hall(c, l) { const h = 0.5 * LH(l);                                         // ратуша: ступени, портик с фронтоном и башня с часами и шпилем
+      c.bx(0, 0, 0, 1.68, 0.06, 1.28, 1); c.bx(0, 0.06, 0.56, 1.5, 0.05, 0.5, 2); c.bx(0, 0.11, 0.6, 1.4, 0.05, 0.36, 2); c.bx(0, 0.06, -0.12, 1.4, h, 0.78, 2, 1);
+      for (let i = 0; i < 6; i++) c.cyl(8, -0.6 + i * 0.24, 0.16, 0.5, 0.1, h - 0.1, 0.1, 2); c.bx(0, 0.06 + h - 0.06, 0.48, 1.5, 0.07, 0.56, 2); c.gable(0, 0.06 + h + 0.01, 0.48, 1.5, 0.26, 0.56, 2, 0); c.nb(0, 0.06, 0.8, 1.5, 0.02, 0.02, 1);
+      c.bx(0, 0.06 + h, -0.2, 0.5, 0.6, 0.5, 2, 1); c.sg(0, 0.06 + h + 0.34, 0.06, 0.3, 0.3, 'clock', 0, 1); c.pyr(0, 0.06 + h + 0.6, -0.2, 0.6, 0.6, 0.6, 1); c.ant(0, 0.06 + h + 1.2, -0.2, 0.25, 3);
+      if (l >= 3) [-0.62, 0.62].forEach(x => { c.bx(x, 0.06 + h, -0.12, 0.3, 0.22, 0.5, 2, 1); });
+      if (l >= 4) c.ring(0, 0.06 + h + 0.7, -0.2, 0.45, 3);
+      return h + 1.5; },
+    bank(c, l) { const h = 0.62 * LH(l);                                        // банк-сейф: массивный блок, четыре угловых башни, огромная монета-дверь и золотой знак на крыше
+      c.bx(0, 0, 0, 1.55, 0.07, 1.3, 1); c.bx(0, 0.07, 0, 1.1, h, 1.0, 2, 1);
+      [[-0.62, -0.5], [0.62, -0.5], [-0.62, 0.5], [0.62, 0.5]].forEach(q => { c.bx(q[0], 0.07, q[1], 0.3, h * 1.35, 0.3, 2, 1); c.bx(q[0], 0.07 + h * 1.35, q[1], 0.36, 0.05, 0.36, 1); c.nb(q[0], 0.12 + h * 1.35, q[1], 0.2, 0.02, 0.2, 1); });
+      c.sg(0, 0.07 + h * 0.45, 0.505, 0.56, 0.56, 'coin', 0, 1); c.plate(0, 0.07 + h, 0, 0.62, 0.62, 1); c.sgf(0, 0.07 + h + 0.038, 0, 0.62, 'dollar', 1); c.nb(0, 0.07, 0.66, 1.5, 0.02, 0.02, 1);
+      if (l >= 3) c.bx(0, 0.07 + h, -0.35, 0.8, 0.14, 0.2, 2, 1);
+      if (l >= 5) c.ring(0, 0.07 + h * 1.35 + 0.35, 0, 0.42, 3);
+      return 0.07 + h * 1.35 + 0.15; },
+    lab(c, l) { const h = 0.5 * LH(l);                                          // лаборатория: стеклянный корпус, круглая башня с куполом и колбы-трубы, знак-колба на крыше
+      c.bx(-0.4, 0, 0, 0.9, h, 0.95, 2, 1); c.cyl(20, 0.45, 0, 0.1, 0.78, h + 0.3, 0.78, 2, 0, 1); c.dome(0.45, h + 0.3, 0.1, 0.82, 0.36, 0.82, 2); c.ring(0.45, h + 0.3, 0.1, 0.43, 1);
+      c.plate(-0.4, h, 0.12, 0.5, 0.5, 1); c.sgf(-0.4, h + 0.038, 0.12, 0.5, 'flask', 1); c.cyl(8, -0.72, h, -0.36, 0.12, 0.5, 0.12, 2); c.cyl(8, -0.5, h, -0.36, 0.12, 0.34, 0.12, 2); c.nb(-0.72, h + 0.5, -0.36, 0.1, 0.02, 0.1, 2); c.nb(-0.5, h + 0.34, -0.36, 0.1, 0.02, 0.1, 1);
+      c.ant(0.45, h + 0.62, 0.1, 0.3, 1);
+      if (l >= 3) c.bx(-0.4, h, -0.3, 0.5, 0.22, 0.26, 2, 1);
+      if (l >= 4) c.ring(0.45, h + 0.1, 0.1, 0.55, 2);
+      return h + 0.95; },
+    fund(c, l) { const a = 1.0 * LH(l), b = 1.45 * LH(l);                      // фонд: две башни разной высоты и сквозной переход между ними
+      c.bx(0, 0, 0, 1.7, 0.06, 1.1, 1); c.bx(-0.52, 0.06, 0, 0.5, a, 0.7, 2, 1); c.bx(0.52, 0.06, 0, 0.5, b, 0.7, 2, 1);
+      c.bx(0, 0.06 + a * 0.62, 0, 0.6, 0.16, 0.4, 1, 1); c.nb(0, 0.22 + a * 0.62, 0, 0.62, 0.015, 0.42, 2); [[-0.78, -0.36], [-0.26, -0.36], [0.78, 0.36], [0.26, 0.36]].forEach(q => c.nb(q[0], 0.06, q[1], 0.025, q[0] < 0 ? a : b, 0.025, 1));
+      c.plate(-0.52, 0.06 + a, 0, 0.42, 0.52, 1); c.sgf(-0.52, 0.06 + a + 0.038, 0, 0.42, 'line', 1); c.pyr(0.52, 0.06 + b, 0, 0.42, 0.36, 0.5, 1); c.ant(0.52, 0.06 + b + 0.36, 0, 0.4, 2);
+      if (l >= 3) c.ring(-0.52, 0.06 + a + 0.25, 0, 0.3, 2);
+      if (l >= 4) c.sg(0.52, 0.06 + b * 0.8, 0.36, 0.34, 0.34, 'chart', 0, 1);
+      return 0.06 + b + 0.8; },
+    tower(c, l) {                              // ступенчатая стеклянная башня: три уступа, огни по рёбрам, шпиль
       const k = LH(l), h1 = 0.8 * k, h2 = 0.75 * k, h3 = 0.6 * k;
       c.bx(0, 0, 0, 1.3, 0.08, 1.3, 1); c.bx(0, 0.08, 0, 1.24, h1, 1.24, 0, 1); c.bx(0, h1 + 0.08, 0, 1.0, h2, 1.0, 1, 1); c.bx(0, h1 + h2 + 0.08, 0, 0.7, h3, 0.7, 0, 1);
       [[-0.62, -0.62], [0.62, -0.62], [-0.62, 0.62], [0.62, 0.62]].forEach(q => c.nb(q[0], 0.08, q[1], 0.03, h1, 0.03, 1));
       const t = h1 + h2 + h3 + 0.08; c.nb(0, h1 + 0.08, 0, 1.04, 0.02, 1.04, 2); c.nb(0, h1 + h2 + 0.08, 0, 0.74, 0.02, 0.74, 1); c.bx(0, t, 0, 0.5, 0.1, 0.5, 1); c.pyr(0, t + 0.1, 0, 0.34, 0.5, 0.34, 1); c.ant(0, t + 0.6, 0, 0.4, 1);
-      c.sg(0, h1 * 0.55 + 0.08, 0.625, 0.56, 0.22, 'chart', 0, 1);
+      c.sg(0, h1 * 0.55 + 0.08, 0.625, 0.62, 0.3, 'globe', 0, 1); c.plate(0, h1 + 0.08, 0.35, 0.5, 0.3, 1); c.sgf(0, h1 + 0.115, 0.35, 0.3, 'chart', 3, 0);
       if (l >= 3) { [-0.2, 0.2].forEach(x => c.nb(x, h1 + h2 + 0.08, 0.36, 0.02, h3, 0.02, 4)); }
       if (l >= 4) c.ring(0, t + 0.28, 0, 0.5, 2);
       return t + 1.0; },
-    inst(c, l) { const h = 0.55 * LH(l); c.bx(0, 0, 0, 1.62, 0.1, 1.52, 1); c.bx(0, 0.1, -0.05, 1.4, h, 0.95, 0, 1); c.bx(0, 0.1, 0.5, 1.5, 0.06, 0.45, 1); [-0.62, -0.31, 0, 0.31, 0.62].forEach(x => c.cyl(10, x, 0.16, 0.66, 0.1, h * 0.9, 0.1, 0));
-      c.bx(0, 0.1 + h * 0.9, 0.66, 1.46, 0.06, 0.2, 1); c.cyl(20, 0, 0.1 + h, -0.05, 1.0, 0.12, 1.0, 1); c.dome(0, 0.22 + h, -0.05, 0.86, 0.5, 0.86, 1); c.nb(0, 0.22 + h, -0.05, 0.9, 0.02, 0.9, 2);
-      c.cyl(8, 0, 0.22 + h + 0.5, -0.05, 0.12, 0.16, 0.12, 0); c.ant(0, 0.22 + h + 0.66, -0.05, 0.3, 1); c.sg(0, 0.1 + h * 0.55, 0.52, 0.5, 0.18, 'bars', 0, 2);
-      [-0.72, 0.72].forEach(x => { c.bx(x, 0.1, -0.05, 0.22, h * 1.2, 0.5, 1, 1); c.pyr(x, 0.1 + h * 1.2, -0.05, 0.3, 0.2, 0.62, 0); });
-      if (l >= 4) c.ring(0, 0.22 + h + 0.55, -0.05, 0.7, 1);
-      return h + 0.8; },
-    obs(c, l) { const h = 0.5 * LH(l); c.cyl(24, 0, 0, 0, 1.58, 0.12, 1.58, 0); c.cyl(20, 0, 0.12, 0, 1.4, h, 1.4, 1, 0, 1); c.nb(0, 0.12 + h * 0.5, 0.72, 0.5, 0.02, 0.02, 1);
-      c.cyl(20, 0, 0.12 + h, 0, 1.3, 0.1, 1.3, 0); c.dome(0, 0.22 + h, 0, 1.2, 0.58, 1.2, 1); c.nb(0, 0.22 + h + 0.02, 0.0, 0.04, 0.55, 0.04, 1);                 // щель купола: светящаяся полоса
-      const sl = new THREE.Vector3(); c.nb(0, 0.22 + h + 0.5, 0.0, 0.4, 0.05, 0.05, 4);
+    inst(c, l) { const h = 0.55 * LH(l);                                        // институт: П-образный корпус с атриумом-двором, ротонда с куполом
+      c.bx(0, 0, 0, 1.62, 0.06, 1.5, 1); c.bx(-0.6, 0.06, 0.0, 0.42, h, 1.3, 2, 1); c.bx(0.6, 0.06, 0, 0.42, h, 1.3, 2, 1); c.bx(0, 0.06, -0.55, 0.8, h * 1.15, 0.4, 2, 1);
+      c.nb(0, 0.065, 0.1, 0.74, 0.01, 0.88, 1); c.sgf(0, 0.085, 0.1, 0.62, 'cap', 1); [-0.24, 0.24].forEach(x => c.cyl(8, x, 0.06, 0.68, 0.09, h, 0.09, 2)); c.bx(0, 0.06 + h, 0.68, 0.66, 0.06, 0.16, 1);
+      c.cyl(16, 0, 0.06 + h * 1.15, -0.55, 0.62, 0.08, 0.62, 1); c.dome(0, 0.14 + h * 1.15, -0.55, 0.56, 0.3, 0.56, 2); c.ant(0, 0.14 + h * 1.15 + 0.3, -0.55, 0.3, 2);
+      [-0.6, 0.6].forEach(x => c.pyr(x, 0.06 + h, 0, 0.3, 0.2, 1.3, 1));
+      if (l >= 4) c.ring(0, 0.14 + h * 1.15 + 0.2, -0.55, 0.42, 1);
+      return 0.06 + h * 1.15 + 0.7; },
+    obs(c, l) { const h = 0.5 * LH(l);                                          // обсерватория: диск-основание, купол с щелью, телескоп
+      c.cyl(24, 0, 0, 0, 1.58, 0.12, 1.58, 0); c.cyl(20, 0, 0.12, 0, 1.4, h, 1.4, 1, 0, 1); c.sg(0, 0.12 + h * 0.5, 0.72, 0.5, 0.5, 'star', 0, 1);
+      c.cyl(20, 0, 0.12 + h, 0, 1.3, 0.1, 1.3, 0); c.dome(0, 0.22 + h, 0, 1.2, 0.58, 1.2, 2); c.nb(0, 0.22 + h + 0.02, 0.0, 0.04, 0.55, 0.04, 1); c.nb(0, 0.22 + h + 0.5, 0.0, 0.4, 0.05, 0.05, 4);
       c.cyl(10, 0.46, 0.22 + h + 0.44, 0.3, 0.14, 0.5, 0.14, 0); c.tb(0.46, 0.22 + h + 0.8, 0.45, 0.1, 0.44, 0.1, -0.7, 0); c.ball(0.52, 0.22 + h + 1.12, 0.62, 0.045, 1);
       c.bx(-0.72, 0.12, 0.2, 0.2, h * 0.7, 0.3, 1, 1); c.ant(0.2, 0.22 + h + 0.58, -0.1, 0.32, 2);
       if (l >= 3) c.ring(0, 0.2 + h * 0.9, 0, 0.86, 2);
       if (l >= 4) [-0.5, 0.5].forEach(x => c.cyl(8, x, 0.12, -0.7, 0.1, h * 1.3, 0.1, 1));
       return h + 0.8; },
-    vend(c, l) { const h = 0.5 * LH(l); c.bx(0, 0, 0, 1.3, h, 0.65, 0, 2); c.bx(0, h, 0, 1.5, 0.06, 0.8, 1); c.sg(-0.3, h * 0.55, 0.335, 0.5, 0.26, 'shop', 0, 2); c.sg(0.34, h * 0.55, 0.335, 0.4, 0.26, 'dollar', 0, 3); c.nb(0, h + 0.06, 0.4, 1.48, 0.015, 0.015, 1);
-      c.cyl(10, -0.5, 0, 0.5, 0.14, 0.28, 0.14, 1); c.cyl(10, 0.5, 0, 0.5, 0.14, 0.2, 0.14, 1); c.ant(0.5, h + 0.06, -0.2, 0.24 + 0.04 * l);
-      if (l >= 3) { c.bx(0, h + 0.06, -0.1, 0.8, 0.2, 0.4, 1, 1); c.nb(0, h + 0.26, -0.1, 0.84, 0.014, 0.44, 2); }
-      if (l >= 4) { c.tb(0.5, h + 0.12, 0.3, 0.36, 0.02, 0.26, -0.5, 0); }
-      return h + 0.1 + (l >= 3 ? 0.2 : 0); },
-    atm(c, l) { const h = 0.62 * LH(l); c.cyl(20, 0, 0, 0, 1.3, 0.06, 1.3, 0); c.bx(0, 0.06, 0, 0.9, h, 0.8, 0, 1); c.bx(-0.55, 0.06, 0.18, 0.18, h * 0.55, 0.5, 1); c.bx(0.55, 0.06, 0.18, 0.18, h * 0.55, 0.5, 1);
-      c.cyl(20, 0, h + 0.06, 0, 1.05, 0.05, 1.05, 1); c.cyl(18, 0, h + 0.11, 0, 0.5, 0.1, 0.5, 0); c.sg(0, h * 0.55, 0.405, 0.5, 0.26, 'atm', 0, 3); c.sg(-0.55, h * 0.3, 0.44, 0.28, 0.2, 'atm', 0, 3); c.sg(0.55, h * 0.3, 0.44, 0.28, 0.2, 'dollar', 0, 3);
-      c.nb(0, 0.06, 0.41, 0.9, 0.02, 0.02, 3); c.ant(0, h + 0.2, 0, 0.3, 1);
-      if (l >= 3) c.ring(0, h + 0.12, 0, 0.92, 1);
-      if (l >= 4) [-0.4, 0.4].forEach(x => c.bx(x, h + 0.11, -0.2, 0.18, 0.18, 0.18, 1, 1));
-      return h + 0.25; },
-    pay(c, l) { const h = 0.95 * LH(l); c.bx(0, 0, 0, 1.5, 0.06, 0.8, 1); c.bx(-0.58, 0.06, 0, 0.3, h, 0.62, 0, 1); c.bx(0.58, 0.06, 0, 0.3, h, 0.62, 0, 1); c.bx(0, h - 0.06, 0, 1.46, 0.22, 0.66, 1, 1); c.nb(0, h - 0.06, 0.34, 1.46, 0.018, 0.018, 1); c.nb(0, 0.06, 0.34, 1.46, 0.018, 0.018, 2);
-      c.cyl(20, 0, 0.12, 0, 0.62, 0.04, 0.62, 1); c.ball(0, 0.18 + 0.1 * l, 0, 0.1, 1); c.sg(0, h + 0.04, 0.0, 0.5, 0.2, 'pay', 0, 1); c.ring(0, 0.26 + 0.1 * l, 0, 0.5, 1);
-      if (l >= 3) { c.sg(0, h + 0.04, 0.0, 0.5, 0.2, 'pay', Math.PI, 1); c.ant(-0.58, h + 0.16, 0, 0.3); }
-      if (l >= 4) c.ant(0.58, h + 0.16, 0, 0.4, 2);
-      return h + 0.2; },
-    broker(c, l) { const h = 0.45 * LH(l), t = 1.0 * LH(l); c.bx(0, 0, 0, 1.9, 0.06, 1.1, 1); c.bx(0, 0.06, 0, 1.84, h, 1.04, 0, 1); c.bx(-0.5, 0.06 + h, -0.1, 0.8, t, 0.7, 1, 1); c.bx(0.45, 0.06 + h, 0.2, 0.7, 0.22, 0.4, 0, 1); c.nb(0, 0.12, 0.54, 1.7, 0.04, 0.02, 1);
-      c.sg(0.6, 0.06 + h * 0.6, 0.54, 0.55, 0.22, 'chart', 0, 1); c.nb(-0.5, 0.06 + h + t, -0.1, 0.84, 0.025, 0.74, 2); c.ant(-0.5, 0.06 + h + t + 0.025, -0.1, 0.45, 2); c.sg(-0.5, 0.06 + h + t * 0.78, 0.255, 0.44, 0.2, 'line', 0, 1);
-      small(c, 0.45, 0.06 + h + 0.22, 0.2);
-      if (l >= 3) c.bx(0.7, 0.06 + h + 0.22, 0.2, 0.3, 0.3, 0.3, 1, 1);
-      if (l >= 4) c.ring(-0.5, 0.06 + h + t + 0.3, -0.1, 0.62, 1);
-      return 0.06 + h + t + 0.2; },
-    vc(c, l) { const k = LH(l); c.bx(0, 0, 0, 1.15, 0.06, 1.15, 1); c.bx(0, 0.06, 0, 1.1, 0.5 * k, 1.1, 0, 1); c.bx(0, 0.56 * k, 0, 0.88, 0.45 * k, 0.88, 1, 1); c.bx(0, 1.01 * k, 0, 0.66, 0.4 * k, 0.66, 0, 1); c.bx(0, 1.41 * k, 0, 0.44, 0.3 * k, 0.44, 1, 1);
-      c.nb(0, 0.56 * k, 0, 0.92, 0.02, 0.92, 2); c.nb(0, 1.01 * k, 0, 0.7, 0.02, 0.7, 1); c.nb(0, 1.41 * k, 0, 0.48, 0.02, 0.48, 2); c.sg(0, 0.35 * k, 0.56, 0.4, 0.22, 'vc', 0, 2);
-      c.cone(4, 0, 1.71 * k, 0, 0.3, 0.45, 0.3, 1); c.ball(0, 2.2 * k, 0, 0.07, 1);
-      if (l >= 3) c.ring(0, 2.0 * k, 0, 0.5, 2);
-      if (l >= 4) [[-0.5, 0.5], [0.5, 0.5]].forEach(q => c.ant(q[0], 0.06 + 0.5 * k, q[1], 0.35, 1));
-      return 2.2 * k + 0.1; },
-    home(c, l) { const k = LH(l); c.bx(0, 0, 0, 1.3, 0.05, 1.1, 1); c.bx(-0.25, 0.05, 0, 0.8, 0.55 * k, 0.95, 0, 1); c.bx(0.35, 0.05, 0.05, 0.6, 0.9 * k, 0.8, 1, 1); c.bx(-0.25, 0.6 * k, 0, 0.9, 0.05, 1.05, 1); c.bx(0.35, 0.95 * k, 0.05, 0.7, 0.05, 0.9, 1);
-      c.nb(-0.25, 0.65 * k, 0, 0.92, 0.015, 1.07, 3); c.sg(-0.25, 0.28 * k, 0.485, 0.3, 0.2, 'home', 0, 3); c.bx(-0.62, 0.05, 0.46, 0.2, 0.14, 0.1, 1); c.cyl(8, 0.35, 1.0 * k, 0.05, 0.18, 0.1, 0.18, 0); small(c, 0.15, 1.0 * k, -0.2);
-      if (l >= 3) { c.bx(-0.25, 0.65 * k, 0, 0.5, 0.25, 0.5, 1, 1); c.nb(-0.25, 0.9 * k, 0, 0.54, 0.014, 0.54, 3); }
-      if (l >= 4) c.tb(0.35, 1.05 * k, 0.25, 0.5, 0.02, 0.3, -0.4, 0);
-      return 1.0 * k + (l >= 3 ? 0.15 : 0); },
-    cowork(c, l) { const h = 0.45 * LH(l); c.bx(0, 0, 0, 1.44, 0.05, 1.12, 1); c.bx(0, 0.05, 0, 1.4, h, 1.06, 0, 1); c.cyl(3, 0, 0.05 + h, 0, 1.45, 0.32, 1.1, 1, Math.PI / 2); c.sg(0, 0.05 + h * 0.55, 0.535, 0.54, 0.22, 'cloud', 0, 2); c.nb(0, 0.05, 0.55, 1.4, 0.02, 0.02, 2);
-      c.bx(0.45, 0.05 + h + 0.32, -0.2, 0.2, 0.26, 0.2, 1, 1); c.bx(-0.5, 0.05, 0.5, 0.26, 0.08, 0.22, 1); c.cyl(6, -0.5, 0.13, 0.5, 0.2, 0.18, 0.2, 0);
-      if (l >= 3) { c.bx(-0.45, 0.05 + h, -0.1, 0.5, 0.34, 0.5, 1, 1); c.nb(-0.45, 0.05 + h + 0.34, -0.1, 0.54, 0.014, 0.54, 2); }
-      if (l >= 4) c.ant(0.45, 0.05 + h + 0.58, -0.2, 0.36, 1);
-      return h + 0.4; },
-    mall(c, l) { const h = 0.5 * LH(l); c.bx(0, 0, 0, 1.9, 0.05, 1.15, 1); c.bx(0, 0.05, 0, 1.84, h, 1.08, 0, 1); c.nb(0, 0.05, 0.55, 1.84, 0.025, 0.02, 3); c.tb(0, h - 0.08, 0.7, 1.7, 0.04, 0.34, 0.4, 1); c.dome(0, 0.05 + h, 0, 1.3, 0.42, 0.88, 1);
-      c.sg(-0.6, 0.05 + h * 0.55, 0.545, 0.45, 0.2, 'shop', 0, 3); c.sg(0.6, 0.05 + h * 0.55, 0.545, 0.45, 0.2, 'stripe', 0, 2); c.bx(-0.8, 0.05 + h, 0, 0.3, 0.18, 0.5, 1); c.bx(0.8, 0.05 + h, 0, 0.3, 0.18, 0.5, 1); c.ant(0, 0.05 + h + 0.42, 0, 0.3, 3);
-      c.nb(0, 0.05 + h + 0.02, 0, 1.36, 0.02, 0.92, 3);
-      if (l >= 3) { c.bx(0, 0.05 + h + 0.44, 0, 0.5, 0.2, 0.4, 1, 1); }
-      if (l >= 4) [-0.7, 0.7].forEach(x => c.ant(x, 0.05 + h + 0.18, 0, 0.4, 2));
-      return h + 0.5 + (l >= 3 ? 0.2 : 0); },
-    park(c, l) { const k = 1 + 0.08 * (l - 1); c.bx(0, 0, 0, 0.85, 0.03, 0.85, 1); c.cyl(6, 0, 0.03, 0, 0.09, 0.3, 0.09, 0); c.cone(7, 0, 0.3, 0, 0.55 * k, 0.45 * k, 0.55 * k, 1); c.cone(7, 0, 0.62 * k, 0, 0.38 * k, 0.4 * k, 0.38 * k, 0); c.ball(0.28, 0.12, 0.25, 0.03, 1);
-      c.cyl(8, -0.3, 0.03, -0.3, 0.2, 0.18 * k, 0.2, 0); c.cone(6, -0.3, 0.2 * k, -0.3, 0.2, 0.22, 0.2, 1); c.nb(0, 0.03, 0.43, 0.8, 0.014, 0.014, 1);
-      if (l >= 3) { c.cone(6, 0.3, 0.03, -0.3, 0.22, 0.4, 0.22, 1); c.ball(-0.3, 0.1, 0.3, 0.03, 3); }
+    vend(c, l) { const h = 0.5 * LH(l);                                         // навес-консоль на тонких опорах над рядом автоматов, знак на навесе
+      c.bx(0, 0, -0.2, 1.3, h, 0.3, 0, 1); c.bx(0, h, 0.02, 1.5, 0.06, 0.66, 1); [-0.68, 0.68].forEach(x => c.bx(x, 0, 0.3, 0.05, h, 0.05, 1)); c.nb(0, h - 0.02, 0.06, 1.42, 0.012, 0.5, 1);
+      [-0.45, 0, 0.45].forEach((x, i) => { c.bx(x, 0, 0.1, 0.32, h * 0.8, 0.22, 0); c.nb(x, h * 0.4, 0.215, 0.22, h * 0.34, 0.01, i % 2 ? 2 : 1); });
+      c.plate(0, h + 0.06, 0.02, 0.5, 0.5, 1); c.sgf(0, h + 0.1, 0.02, 0.5, 'bag', 1); c.ant(0.62, h + 0.06, -0.15, 0.24 + 0.04 * l);
+      if (l >= 3) { c.bx(-0.4, h + 0.06, -0.2, 0.5, 0.2, 0.3, 1, 1); c.nb(-0.4, h + 0.26, -0.2, 0.54, 0.014, 0.34, 2); }
+      if (l >= 4) c.tb(0.5, h + 0.12, 0.3, 0.36, 0.02, 0.26, -0.5, 0);
+      return h + 0.12 + (l >= 3 ? 0.2 : 0); },
+    atm(c, l) { const h = 0.62 * LH(l);                                         // диск на ножке: тонкий стебель держит большую светящуюся тарелку со знаком
+      c.cyl(20, 0, 0, 0, 1.0, 0.06, 1.0, 0); c.cyl(12, 0, 0.06, 0, 0.3, h, 0.3, 1); c.cyl(24, 0, h + 0.06, 0, 1.3, 0.09, 1.3, 2); c.ring(0, h + 0.1, 0, 0.65, 1); c.ring(0, h + 0.05, 0, 0.6, 2);
+      c.bx(0, 0.06, 0.32, 0.5, 0.34, 0.3, 1, 1); c.sg(0, 0.22, 0.475, 0.36, 0.2, 'atm', 0, 1); c.plate(0, h + 0.15, 0, 0.62, 0.62, 1); c.sgf(0, h + 0.188, 0, 0.62, 'atm', 1);
+      c.ant(0, h + 0.2, -0.3, 0.3, 1);
+      if (l >= 3) c.ring(0, h + 0.26, 0, 0.9, 1);
+      if (l >= 4) [-0.4, 0.4].forEach(x => c.bx(x, h + 0.15, -0.35, 0.18, 0.18, 0.18, 1, 1));
+      return h + 0.3; },
+    pay(c, l) { const h = 0.85 * LH(l);                                         // шлюз: две опоры и высокая арка с «порталом» и знаком
+      c.bx(0, 0, 0, 1.5, 0.06, 0.8, 1); c.bx(-0.6, 0.06, 0, 0.28, h, 0.55, 2, 1); c.bx(0.6, 0.06, 0, 0.28, h, 0.55, 2, 1); c.arc(0, 0.06 + h, 0, 1.12, 1.4, 0.5, 2);
+      c.sg(0, 0.06 + h * 0.62, 0, 0.5, 0.5, 'pay', 0, 1); c.ball(0, 0.06 + h + 0.74, 0, 0.07, 3); c.nb(0, 0.06, 0.34, 1.46, 0.018, 0.018, 2); c.plate(0, 0.06, 0.3, 0.34, 0.2, 1); c.sgf(0, 0.1, 0.3, 0.22, 'pay', 1);
+      if (l >= 3) { c.ant(-0.6, 0.06 + h, 0, 0.3, 3); c.ant(0.6, 0.06 + h, 0, 0.3, 3); }
+      if (l >= 4) c.ring(0, 0.06 + h + 0.3, 0, 0.5, 1);
+      return 0.06 + h + 0.82; },
+    broker(c, l) { const h = 0.4 * LH(l), t = 0.9 * LH(l);                      // брокерский дом: высокий объём нависает консолью над низким подиумом
+      c.bx(0, 0, 0, 1.9, 0.06, 1.1, 1); c.bx(-0.3, 0.06, 0, 1.3, h, 1.0, 2, 1); c.bx(0.2, 0.06 + h, -0.1, 1.1, t, 0.7, 0, 1); [0.2, -0.35].forEach(z => c.bx(0.72, 0.06, z, 0.07, h, 0.07, 1));
+      c.nb(0.55, 0.06 + h - 0.02, -0.1, 0.4, 0.012, 0.62, 2); c.nb(-0.3, 0.06, 0.52, 1.3, 0.03, 0.02, 1);
+      c.plate(0.2, 0.06 + h + t, -0.1, 0.6, 0.6, 1); c.sgf(0.2, 0.06 + h + t + 0.038, -0.1, 0.6, 'case', 1); c.ant(-0.2, 0.06 + h + t, -0.1, 0.45, 2); c.sg(-0.55, 0.06 + h * 0.55, 0.505, 0.5, 0.22, 'chart', 0, 1);
+      if (l >= 3) c.bx(-0.7, 0.06 + h, 0.1, 0.4, 0.3, 0.4, 1, 1);
+      if (l >= 4) c.ring(0.2, 0.06 + h + t + 0.3, -0.1, 0.5, 3);
+      return 0.06 + h + t + 0.6; },
+    vc(c, l) { const k = LH(l);                                                 // хаб: тонкая игла с «тарелкой»-капсулой и шпилем
+      c.bx(0, 0, 0, 1.15, 0.06, 1.15, 1); c.bx(0, 0.06, 0, 0.9, 0.4, 0.9, 2, 1); c.cyl(10, 0, 0.46, 0, 0.22, 1.5 * k, 0.22, 1);
+      const ys = 0.46 + 1.15 * k; c.cyl(20, 0, ys, 0, 0.78, 0.06, 0.78, 1); c.dome(0, ys + 0.06, 0, 0.5, 0.22, 0.5, 2); c.icone(12, 0, ys - 0.2, 0, 0.7, 0.2, 0.7, 2); c.ring(0, ys + 0.03, 0, 0.4, 1);
+      c.cone(6, 0, 0.46 + 1.5 * k, 0, 0.2, 0.4, 0.2, 1); c.ball(0, 0.46 + 1.5 * k + 0.44, 0, 0.05, 2); c.plate(0, 0.46, 0.27, 0.4, 0.4, 1); c.sgf(0, 0.498, 0.27, 0.4, 'rocket', 1);
+      if (l >= 3) [-0.38, 0.38].forEach(x => { c.cyl(8, x, 0.46, 0.38, 0.1, 0.4 * k, 0.1, 1); c.ball(x, 0.46 + 0.4 * k + 0.05, 0.38, 0.04, 2); });
+      if (l >= 4) c.ring(0, ys + 0.3, 0, 0.3, 2);
+      return 0.46 + 1.5 * k + 0.5; },
+    home(c, l) { const k = LH(l);                                               // жилой модуль: двускатные крыши разной высоты, труба, большой знак-домик
+      c.bx(0, 0, 0, 1.3, 0.05, 1.1, 1); c.bx(0.3, 0.05, 0, 0.6, 0.7 * k, 0.8, 2, 1); c.gable(0.3, 0.05 + 0.7 * k, 0, 0.66, 0.3, 0.86, 1, 0); c.bx(-0.3, 0.05, 0.05, 0.55, 0.4 * k, 0.7, 0, 1); c.gable(-0.3, 0.05 + 0.4 * k, 0.05, 0.6, 0.22, 0.76, 2, 0);
+      c.nb(0.3, 0.05 + 0.7 * k + 0.3, 0, 0.025, 0.015, 0.88, 1); c.nb(-0.3, 0.05 + 0.4 * k + 0.22, 0.05, 0.025, 0.015, 0.78, 3); c.sg(0.3, 0.05 + 0.7 * k * 0.5, 0.405, 0.36, 0.36, 'home', 0, 1); c.bx(0.5, 0.05 + 0.7 * k + 0.12, -0.2, 0.1, 0.22, 0.1, 1);
+      c.sg(-0.3, 0.05 + 0.4 * k * 0.5, 0.405, 0.3, 0.18, 'stripe', 0, 3);
+      if (l >= 3) { c.bx(-0.3, 0.05 + 0.4 * k + 0.1, 0.05, 0.24, 0.26, 0.24, 2, 1); }
+      if (l >= 4) c.ring(0.3, 0.05 + 0.7 * k + 0.45, 0, 0.4, 3);
+      return 0.05 + 0.7 * k + 0.45; },
+    cowork(c, l) { const h = 0.4 * LH(l);                                       // коворкинг: стеклянный свод-атриум между двумя корпусами
+      c.bx(0, 0, 0, 1.44, 0.05, 1.12, 1); c.bx(-0.52, 0.05, 0, 0.4, h, 1.0, 2, 1); c.bx(0.52, 0.05, 0, 0.4, h, 1.0, 2, 1); c.lay('z', 14, 0, 0.39, 0, 1.0, 0.68, 2); c.nb(0, 0.73, 0, 0.03, 0.012, 0.98, 1); c.nb(-0.17, 0.61, 0, 0.02, 0.012, 0.98, 2); c.nb(0.17, 0.61, 0, 0.02, 0.012, 0.98, 2);
+      c.sg(0, 0.39, 0.505, 0.4, 0.4, 'cloud', 0, 1); c.plate(-0.52, 0.05 + h, 0, 0.32, 0.5, 1); c.sgf(-0.52, 0.05 + h + 0.038, 0, 0.32, 'people', 1); c.cyl(6, 0.52, 0.05 + h, 0.3, 0.2, 0.08, 0.2, 0);
+      if (l >= 3) c.bx(0.52, 0.05 + h, -0.1, 0.36, 0.3, 0.6, 2, 1);
+      if (l >= 4) c.ant(0.52, 0.05 + h + 0.3, -0.1, 0.36, 1);
+      return 0.75 + (l >= 3 ? 0.15 : 0); },
+    mall(c, l) { const h = 0.42 * LH(l);                                        // пассаж: длинный стеклянный свод вдоль, торцевые флагштоки, полосатые навесы
+      c.bx(0, 0, 0, 1.9, 0.05, 1.15, 1); c.bx(0, 0.05, -0.38, 1.84, h, 0.36, 2, 1); c.bx(0, 0.05, 0.4, 1.84, h * 0.7, 0.3, 2, 1); c.lay('x', 14, 0, 0.31, 0, 1.4, 0.52, 2); c.nb(0, 0.57, 0, 1.4, 0.012, 0.03, 1);
+      c.tb(0, h * 0.7 + 0.02, 0.62, 1.7, 0.04, 0.3, 0.4, 1); c.sg(0.55, 0.05 + h * 0.35, 0.555, 0.5, 0.2, 'stripe', 0, 2); c.sg(-0.55, 0.05 + h * 0.35, 0.555, 0.5, 0.2, 'shop', 0, 1);
+      c.plate(-0.45, 0.05 + h, -0.38, 0.3, 0.3, 1); c.sgf(-0.45, 0.05 + h + 0.038, -0.38, 0.3, 'bag', 1); [-0.88, 0.88].forEach(x => { c.bx(x, 0.05, 0, 0.14, h + 0.45, 0.14, 1, 1); c.ball(x, h + 0.55, 0, 0.05, 3); });
+      if (l >= 3) c.bx(0.4, 0.05 + h, -0.38, 0.6, 0.2, 0.3, 1, 1);
+      if (l >= 4) c.ring(0, 0.57, 0, 0.3, 1);
+      return h + 0.6; },
+    park(c, l) { const k = 1 + 0.08 * (l - 1);                                  // сквер: сосны разной высоты, пруд-кольцо, знак-лист на земле
+      c.bx(0, 0, 0, 0.85, 0.03, 0.85, 1); c.cyl(6, -0.12, 0.03, -0.12, 0.09, 0.3, 0.09, 0); c.cone(7, -0.12, 0.3, -0.12, 0.55 * k, 0.5 * k, 0.55 * k, 1); c.cone(7, -0.12, 0.66 * k, -0.12, 0.38 * k, 0.45 * k, 0.38 * k, 2); c.cone(6, -0.12, 0.98 * k, -0.12, 0.22 * k, 0.3 * k, 0.22 * k, 1);
+      c.cyl(8, -0.3, 0.03, 0.28, 0.2, 0.18 * k, 0.2, 0); c.cone(6, -0.3, 0.2 * k, 0.28, 0.2, 0.26, 0.2, 1); c.sgf(0.2, 0.045, 0.24, 0.3, 'leaf', 1); c.ball(0.3, 0.1, -0.3, 0.03, 3);
+      if (l >= 3) { c.cone(6, 0.3, 0.03, -0.3, 0.22, 0.5, 0.22, 1); c.ball(-0.3, 0.1, 0.1, 0.03, 3); }
       if (l >= 4) c.ring(0, 0.04, 0, 0.8, 1);
-      return 0.98 * k; },
+      return 1.3 * k; },
     fountain(c, l) { c.cyl(24, 0, 0, 0, 1.5, 0.12, 1.5, 0); c.cyl(22, 0, 0.12, 0, 1.2, 0.05, 1.2, 1); c.nb(0, 0.17, 0, 1.0, 0.01, 1.0, 1); c.cyl(8, 0, 0.12, 0, 0.18, 0.5 + 0.06 * l, 0.18, 1); c.cyl(16, 0, 0.5 + 0.06 * l, 0, 0.5, 0.05, 0.5, 1);
-      c.ball(0, 0.72 + 0.06 * l, 0, 0.09, 1); c.cone(8, 0, 0.55 + 0.06 * l, 0, 0.16, 0.26, 0.16, 1); c.ring(0, 0.2, 0, 1.05, 1);
+      c.ball(0, 0.9 + 0.06 * l, 0, 0.09, 1); c.cone(8, 0, 0.55 + 0.06 * l, 0, 0.16, 0.26, 0.16, 1); c.nb(0, 0.58 + 0.06 * l, 0, 0.03, 0.34, 0.03, 1); c.ring(0, 0.2, 0, 1.05, 1); c.plate(0, 0.17, 0.42, 0.3, 0.3, 1); c.sgf(0, 0.21, 0.42, 0.3, 'drop', 1);
       if (l >= 3) { c.ring(0, 0.56 + 0.06 * l, 0, 0.5, 2); [0, 1, 2, 3].forEach(i => c.ball(Math.cos(i * 1.5708) * 0.52, 0.16, Math.sin(i * 1.5708) * 0.52, 0.035, 4)); }
       if (l >= 4) [0, 1, 2, 3].forEach(i => c.cyl(8, Math.cos(i * 1.5708 + 0.78) * 0.68, 0.12, Math.sin(i * 1.5708 + 0.78) * 0.68, 0.08, 0.22, 0.08, 1));
-      return 0.8 + 0.06 * l; },
-    port(c, l) { const k = LH(l); c.bx(0, 0, 0, 1.9, 0.1, 1.2, 1); c.nb(0, 0.1, 0.6, 1.9, 0.02, 0.02, 1);
-      [[-0.7, 0.28, 0], [-0.25, 0.28, 1], [0.2, 0.28, 0], [-0.5, 0.28, 1]].forEach((q, i) => { c.bx(q[0], 0.1 + (i === 3 ? 0.26 * k : 0), q[1], 0.42, 0.26 * k, 0.3, q[2], 1); });
+      return 1.0 + 0.06 * l; },
+    port(c, l) { const k = LH(l);                                               // порт: склад со знаком-якорем, контейнеры, портальный кран
+      c.bx(0, 0, 0, 1.9, 0.1, 1.2, 1); c.nb(0, 0.1, 0.6, 1.9, 0.02, 0.02, 1);
+      [[-0.7, 0.28, 0], [-0.25, 0.28, 2], [0.2, 0.28, 1], [-0.5, 0.28, 2]].forEach((q, i) => { c.bx(q[0], 0.1 + (i === 3 ? 0.26 * k : 0), q[1], 0.42, 0.26 * k, 0.3, q[2], 1); });
       c.bx(0.75, 0.1, -0.3, 0.09, 0.95 * k, 0.09, 1); c.bx(0.38, 0.1 + 0.9 * k, -0.3, 0.8, 0.07, 0.07, 1); c.bx(0.75, 0.1, 0.1, 0.09, 0.95 * k, 0.09, 1); c.bx(0.38, 0.1 + 0.9 * k, 0.1, 0.8, 0.07, 0.07, 1); c.bx(0.75, 0.1 + 0.9 * k, -0.1, 0.1, 0.07, 0.5, 1);
       c.ball(0.02, 0.1 + 0.9 * k, -0.3, 0.04, 3); c.ball(0.02, 0.1 + 0.9 * k, 0.1, 0.04, 3);
-      c.bx(-0.3, 0.1, -0.35, 0.9, 0.3, 0.4, 0, 1); c.sg(-0.3, 0.3, -0.145, 0.5, 0.16, 'maglev', 0, 1);
-      if (l >= 3) { c.bx(0.1, 0.1, -0.45, 0.5, 0.2 * k, 0.25, 1); c.bx(0.1, 0.1 + 0.2 * k, -0.45, 0.5, 0.2 * k, 0.25, 0); }
+      c.bx(-0.3, 0.1, -0.35, 0.9, 0.3, 0.4, 1, 1); c.plate(-0.3, 0.4, -0.35, 0.36, 0.34, 1); c.sgf(-0.3, 0.438, -0.35, 0.34, 'anchor', 1);
+      if (l >= 3) { c.bx(0.1, 0.1, -0.45, 0.5, 0.2 * k, 0.25, 2); c.bx(0.1, 0.1 + 0.2 * k, -0.45, 0.5, 0.2 * k, 0.25, 0); }
       if (l >= 4) c.ant(-0.85, 0.1, 0.4, 0.5, 1);
       return 1.1 * k; },
-    maglev(c, l) { const h = 0.14; c.bx(0, 0, 0, 1.95, h, 1.1, 1); [-0.8, -0.27, 0.27, 0.8].forEach(x => c.bx(x, h, -0.38, 0.08, 0.5, 0.08, 0)); c.bx(0, h + 0.5, -0.38, 1.95, 0.07, 0.3, 1); c.nb(0, h + 0.57, -0.38, 1.95, 0.015, 0.05, 1); c.nb(0, h + 0.5, -0.24, 1.95, 0.012, 0.012, 2);
-      c.bx(0, h + 0.02, 0.18, 1.7, 0.2 * LH(l), 0.42, 0, 2); c.tb(0, h + 0.02 + 0.2 * LH(l) - 0.03, 0.18, 1.7, 0.03, 0.46, 0.0, 1); c.sg(0, h + 0.14, 0.395, 1.0, 0.12, 'maglev', 0, 1); c.ball(0.86, h + 0.14, 0.18, 0.05, 1);
-      c.bx(-0.55, h + 0.3, 0.18, 0.62, 0.24, 0.4, 1, 1); c.nb(-0.55, h + 0.54, 0.18, 0.66, 0.014, 0.44, 1);
+    maglev(c, l) { const h = 0.14;                                              // станция на эстакаде: капсула поезда, длинная балка с огнями, знак-поезд на крыше
+      c.bx(0, 0, 0, 1.95, h, 1.1, 1); [-0.8, -0.27, 0.27, 0.8].forEach(x => c.bx(x, h, -0.38, 0.08, 0.5, 0.08, 0)); c.bx(0, h + 0.5, -0.38, 1.95, 0.07, 0.3, 1); c.nb(0, h + 0.57, -0.38, 1.95, 0.015, 0.05, 1); c.nb(0, h + 0.5, -0.24, 1.95, 0.012, 0.012, 2);
+      c.lay('x', 12, 0, h + 0.14, 0.18, 1.7, 0.26, 2); c.nb(0, h + 0.2, 0.31, 1.5, 0.02, 0.02, 1); c.cone(10, 0.9, h + 0.01, 0.18, 0.26, 0.2, 0.26, 2); c.ball(0.88, h + 0.14, 0.18, 0.05, 1);
+      c.bx(-0.55, h + 0.3, 0.18, 0.62, 0.24, 0.4, 1, 1); c.plate(-0.55, h + 0.54, 0.18, 0.4, 0.3, 1); c.sgf(-0.55, h + 0.578, 0.18, 0.3, 'train', 1);
       if (l >= 3) { c.bx(0.55, h + 0.28, 0.18, 0.5, 0.2, 0.4, 1, 1); c.nb(0.55, h + 0.48, 0.18, 0.54, 0.014, 0.44, 2); }
       if (l >= 4) [-0.9, 0.9].forEach(x => c.ant(x, h + 0.57, -0.38, 0.35, 1));
       return h + 0.6 + (l >= 4 ? 0.3 : 0); }
   };
+  // облик типа: акцентные цвета (бирюза, фиолет, янтарь, розовый, лайм, белый лёд) и материал фасада — по смыслу: торговля, финансы, техника, жильё и отдых, транспорт
+  const QC = { tq: 0x22e3ff, vi: 0x9a90ff, am: 0xffc25a, pk: 0xff5fa8, lm: 0x9dff5a, ic: 0xe8f8ff };
+  const MATS = { glass: { b: 0x0f2c4c, b2: 0x143a60, b3: 0x1f6a9c, fk: 'facG', ti: 1 }, metal: { b: 0x0c1424, b2: 0x16203a, b3: 0x2a3550, fk: 'facM', ti: 1 }, stone: { b: 0x4a5673, b2: 0x3d4963, b3: 0x7080a0, fk: 'facS', ti: 1.4 }, plain: { b: 0x10213b, b2: 0x1a1744, b3: 0x1e3a62, fk: 'fac', ti: 1 } };
+  const LIV = { kiosk: ['pk', 'am', 'ic', 'plain'], exch: ['am', 'tq', 'ic', 'metal'], dc: ['tq', 'vi', 'ic', 'metal'], hall: ['ic', 'am', 'tq', 'stone'], bank: ['am', 'ic', 'vi', 'stone'], lab: ['lm', 'tq', 'ic', 'glass'], fund: ['vi', 'ic', 'pk', 'metal'], tower: ['tq', 'vi', 'ic', 'glass'],
+    inst: ['ic', 'vi', 'am', 'stone'], obs: ['vi', 'tq', 'ic', 'glass'], vend: ['am', 'pk', 'ic', 'metal'], atm: ['lm', 'ic', 'am', 'plain'], pay: ['tq', 'ic', 'pk', 'metal'], broker: ['ic', 'am', 'tq', 'metal'], vc: ['vi', 'pk', 'ic', 'glass'], home: ['lm', 'pk', 'ic', 'plain'],
+    cowork: ['pk', 'tq', 'ic', 'glass'], mall: ['am', 'pk', 'ic', 'glass'], park: ['lm', 'tq', 'ic', 'plain'], fountain: ['tq', 'ic', 'vi', 'plain'], port: ['am', 'tq', 'ic', 'metal'], maglev: ['ic', 'tq', 'vi', 'metal'] };
+  // высота здания в клетках: [ступень 1, ступень 5]; промежуточные — по прямой
+  const TGT = { kiosk: [1.1, 1.8], vend: [1.1, 1.9], atm: [1.25, 2.1], pay: [1.6, 2.8], park: [1.0, 1.7], fountain: [1.2, 2.2], maglev: [1.2, 2.2], port: [1.4, 2.8], home: [1.5, 3.0], cowork: [1.3, 2.6], mall: [1.3, 2.4], dc: [1.4, 3.0], hall: [1.9, 3.3], bank: [1.7, 3.3],
+    lab: [1.6, 3.2], fund: [2.0, 3.8], tower: [2.5, 4.0], inst: [1.8, 3.2], obs: [1.7, 3.0], exch: [1.5, 3.1], broker: [2.0, 3.8], vc: [2.4, 4.0] };
+  const livC = {};
+  function livery(id) {
+    if (livC[id]) return livC[id]; const L = LIV[id] || LIV.kiosk, M = MATS[L[3]], a1 = col(QC[L[0]]), a2 = col(QC[L[1]]), a3 = col(QC[L[2]]);
+    return (livC[id] = { b: col(M.b).lerp(a1, 0.08), b2: col(M.b2).lerp(a2, 0.08), b3: col(M.b3), e1: a1.clone().multiplyScalar(0.62), e2: a2.clone().multiplyScalar(0.62), e3: a3.clone().multiplyScalar(0.5), fk: M.fk, ti: M.ti, ne: [null, a1, a2, a3, K.white], pad: a1.clone().multiplyScalar(0.4) });
+  }
   const chunkOf = (cx, cz) => Math.floor(cx / CHW) + 4 * Math.floor(cz / CHD);
-  function newSet() { return { body: new Batch(), glow: new Batch(), beam: new Batch(), fac: new QB(), sign: new QB(), halo: new QB() }; }
+  function newSet() { return { body: new Batch(), glow: new Batch(), beam: new Batch(), fac: new QB(), facG: new QB(), facM: new QB(), facS: new QB(), sign: new QB(), halo: new QB() }; }
   // одно здание в набор S: площадка, фигура, детали ступени; возвращает рост для подписи и выбора
   function addBuilding(S, it, ghost, cols, rnd) {
     const dim = DIM[it.id] || [1.5, 1.2], fw = it.w, fd = it.d, s = Math.min(fw / dim[0], fd / dim[1]) * 0.95, cx = it.x + fw / 2, cz = it.y + fd / 2, base = elevAt(it.x + (fw >> 1), it.y + (fd >> 1)), l = it.l;
-    if (!ghost) { _m.copy(mat(wx(cx), base + 0.025, wz(cz), fw * 0.96, 0.05, fd * 0.96)); S.body.add(BOX(), _m, K.pad, K.dim); }
-    const BM = new THREE.Matrix4().compose(_p.set(wx(cx), base + 0.05, wz(cz)), _q.setFromEuler(_e.set(0, it.r ? Math.PI / 2 : 0, 0)), _s.set(s, s, s));
-    const c = ctx(S, BM, ghost, cols, rnd, l), top = BLD[it.id](c, l), lw = (it.r ? fd : fw) / s, ld = (it.r ? fw : fd) / s;
+    const lv = ghost ? { b: cols.b, b2: cols.b2, b3: cols.b, e1: cols.e1, e2: cols.e2, e3: cols.e1 } : livery(it.id);
+    const tg = TGT[it.id] || [1.4, 3], tgt = tg[0] + (tg[1] - tg[0]) * (l - 1) / 4, top0 = Math.max(0.3, BLD[it.id](NOPC, l) || 1), hm = clamp(tgt / (top0 * s), 0.85, 2.4);
+    if (!ghost) { _m.copy(mat(wx(cx), base + 0.025, wz(cz), fw * 0.96, 0.05, fd * 0.96)); S.body.add(BOX(), _m, K.pad, lv.pad); }
+    const BM = new THREE.Matrix4().compose(_p.set(wx(cx), base + 0.05, wz(cz)), _q.setFromEuler(_e.set(0, it.r ? Math.PI / 2 : 0, 0)), _s.set(s, s * hm, s));
+    const c = ctx(S, BM, ghost, lv, rnd, l, hm), top = BLD[it.id](c, l), lw = (it.r ? fd : fw) / s, ld = (it.r ? fw : fd) / s;
     // каждая ступень добавляет деталей: свечение земли, антенна, угловые опоры с огнями, луч
     if (!ghost) {
       if (l >= 3) { c.halo(lw * 1.5, ld * 1.5, 1, 0.55); c.nb(0, 0, ld / 2 * 0.99, lw * 0.98, 0.03, 0.02, 1); c.nb(0, 0, -ld / 2 * 0.99, lw * 0.98, 0.03, 0.02, 1); }
-      if (l >= 2 && it.id !== 'park' && it.id !== 'fountain' && l < 5) { }
       if (l >= 4) [[-1, -1], [1, -1], [-1, 1], [1, 1]].forEach(q => { const px = q[0] * (lw / 2 - 0.08), pz = q[1] * (ld / 2 - 0.08); c.bx(px, 0, pz, 0.06, 0.3, 0.06, 1); c.ball(px, 0.34, pz, 0.045, 4); });
       if (l >= 5) { c.beamAt(0, top + 0.1, 0, 0.16, 1.7); c.ball(0, top + 0.42, 0, 0.09, 4); c.halo(lw * 2.2, ld * 2.2, 2, 0.5); }
       else if (l >= 2) c.ball(lw / 2 - 0.05, 0.1, ld / 2 - 0.05, 0.035, 1);
       // мигающие окна: несколько отдельных светящихся окошек на главной грани
       if (c.main && wn < WMAX - 8) { const mb = c.main, nBl = 2 + l; for (let i = 0; i < nBl && wn < WMAX; i++) {
         const face = Math.floor(rnd() * 2), lx = (rnd() - 0.5) * (mb[3] - 0.2), ly = mb[1] + 0.12 + rnd() * Math.max(0.05, mb[4] - 0.26), px = mb[0] + lx, pz = mb[2] + (face ? -1 : 1) * (mb[5] / 2 + 0.02);
-        dm.rotation.set(0, face ? Math.PI : 0, 0); dm.position.set(px, ly, pz); dm.scale.set(1, 1, 1); dm.updateMatrix(); wm.multiplyMatrices(BM, dm.matrix); wins.setMatrixAt(wn, wm); wins.setColorAt(wn, rnd() < 0.5 ? lit1 : lit2); blinkList.push(wn); wn++; } }
+        dm.rotation.set(0, face ? Math.PI : 0, 0); dm.position.set(px, ly, pz); dm.scale.set(1, 1 / hm, 1); dm.updateMatrix(); wm.multiplyMatrices(BM, dm.matrix); wins.setMatrixAt(wn, wm); wins.setColorAt(wn, rnd() < 0.5 ? lit1 : lit2); blinkList.push(wn); wn++; } }
     }
-    return { top: top, base: base, s: s, cx: cx, cz: cz };
+    return { top: top * hm, base: base, s: s, cx: cx, cz: cz };
   }
 
   /* --- декор вокруг карты: низкий «горизонт» из домов, деревья, холм-рельеф, фонари --- */
@@ -495,7 +571,7 @@ function build(box) {
     if (b.lp.length) { const ln = new THREE.LineSegments(geoOf(b.lp, null, b.lc), matLine); scene.add(ln); list.push(ln); }
     if (S.glow.p.length) { const m = new THREE.Mesh(geoOf(S.glow.p, S.glow.n, S.glow.c), matBright); m.frustumCulled = false; scene.add(m); list.push(m); }
     if (S.beam.p.length) { const m = new THREE.Mesh(geoOf(S.beam.p, S.beam.n, S.beam.c), matBeam); m.frustumCulled = false; scene.add(m); list.push(m); }
-    if (S.fac.p.length) { const m = new THREE.Mesh(geoQ(S.fac), matFac); m.frustumCulled = false; scene.add(m); list.push(m); }
+    [['fac', matFac], ['facG', matFacG], ['facM', matFacM], ['facS', matFacS]].forEach(q => { const Q = S[q[0]]; if (Q && Q.p.length) { const m = new THREE.Mesh(geoQ(Q), q[1]); m.frustumCulled = false; scene.add(m); list.push(m); } });
     if (S.sign.p.length) { const m = new THREE.Mesh(geoQ(S.sign), matSign); m.frustumCulled = false; scene.add(m); list.push(m); }
     if (S.halo.p.length) { const m = new THREE.Mesh(geoQ(S.halo), matHalo); m.frustumCulled = false; m.renderOrder = 1; scene.add(m); list.push(m); }
   }
@@ -541,7 +617,7 @@ function build(box) {
       its.push({ u: it.u, id: it.id, x: it.x, y: it.y, w: it.w, d: it.d, base: res.base, h: res.base + (res.top + (l >= 5 ? 1.2 : 0.4)) * res.s + 0.2, ax: wx(res.cx), az: wz(res.cz), ay: res.base + (res.top + (l >= 5 ? 1.2 : 0.5)) * res.s + 0.15 });
     });
     Object.keys(chunks).forEach(k => { const one = newSet(); one.body = chunks[k]; flush({ body: chunks[k], glow: new Batch(), beam: new Batch(), fac: new QB(), sign: new QB(), halo: new QB() }, meshes); });
-    flush({ body: new Batch(), glow: S.glow, beam: S.beam, fac: S.fac, sign: S.sign, halo: S.halo }, meshes);
+    flush({ body: new Batch(), glow: S.glow, beam: S.beam, fac: S.fac, facG: S.facG, facM: S.facM, facS: S.facS, sign: S.sign, halo: S.halo }, meshes);
     wins.count = wn; wins.instanceMatrix.needsUpdate = true; if (wins.instanceColor) wins.instanceColor.needsUpdate = true;
     buildTags(items);
   }
@@ -596,17 +672,35 @@ function build(box) {
     const items = A.items(), by = {}; items.forEach(i => { by[i.u] = i; });
     const near = dist < fit * 0.62; rootEl.classList.toggle('near', near);
     tags.forEach(t => {
-      const i = by[t.u]; if (i) { const a = i.txt || ''; if (a !== t.txt) { t.txt = a; t.amt.textContent = a; t.amt.hidden = !a; } if (t.sel !== !!i.sel) { t.sel = !!i.sel; t.el.classList.toggle('sel', t.sel); } }
+      const i = by[t.u]; if (i) { const a = i.txt || ''; if (a !== t.txt) { t.txt = a; t.amt.textContent = a; t.amt.hidden = !a; } t.fill = i.fill || 0; t.v = i.v || 0; if (t.sel !== !!i.sel) { t.sel = !!i.sel; t.el.classList.toggle('sel', t.sel); } }
       pos(t);
     });
     distTags.forEach(pos); updGhostUI(); updRing();
+    const bld = A.building ? A.building() : A.placing(); if (bld !== bldOn) { bldOn = bld; rootEl.classList.toggle('bld', bld); }          // стройка: ярлыки дохода скрыты полностью
+    if (++dcTick % 6 === 0) declutter(); clearTimeout(dcT); dcT = setTimeout(declutter, 110);
     if (gUI.vis) { _pv.set(gUI.x, gUI.y, gUI.z).project(cam); const ok = _pv.z < 1; gbEl.style.transform = ok ? 'translate(' + clamp((_pv.x + 1) / 2 * w, 76, w - 76).toFixed(1) + 'px,' + clamp((1 - _pv.y) / 2 * h, 118, h - 24).toFixed(1) + 'px)' : 'translate(-999px,-999px)'; }
     if (!ringEl.hidden) { _pv.set(ringPos.x, ringPos.y, ringPos.z).project(cam); ringEl.style.transform = 'translate(' + ((_pv.x + 1) / 2 * w).toFixed(1) + 'px,' + ((1 - _pv.y) / 2 * h).toFixed(1) + 'px)'; }
   }
   const _pv = new THREE.Vector3();
+  /* ярлыки дохода: не наползают друг на друга. Раз в несколько кадров (и когда движение кончилось) оставляем ближние к камере, пересекающиеся прячем;
+     на телефоне — только заполненные от 25 %; при сильном отдалении вместо россыпи — один общий значок сбора */
+  let bldOn = false, dcTick = 0, dcT = 0; const abEl = document.createElement('button'); abEl.type = 'button'; abEl.className = 'gr3-ab'; abEl.setAttribute('data-g', 'all'); abEl.hidden = true; tagBox.appendChild(abEl);
+  function declutter() {
+    dcT = 0; if (!inst || !w) return; const bld = bldOn, far = dist > fit * 1.55, cand = [], used = []; let sum = 0, n = 0, ax = 0, ay = 0;
+    tags.forEach(t => { t.dd = Math.hypot(cam.position.x - t.x, cam.position.y - t.y, cam.position.z - t.z); if (t.txt && t.vis) { sum += t.v || 0; n++; ax += t.sx; ay += t.sy; } });
+    tags.forEach(t => { const want = !bld && t.txt && t.vis && (t.sel || (!far && (!mob || (t.fill || 0) >= 0.25))); if (want) cand.push(t); else if (t.hid !== true) { t.hid = true; t.el.classList.add('ov'); } });
+    cand.sort((a, b) => (b.sel ? 1 : 0) - (a.sel ? 1 : 0) || a.dd - b.dd);
+    cand.forEach(t => { const hw = (t.txt.length * 7.4 + 24) / 2, r = [t.sx - hw - 3, t.sy - 33, t.sx + hw + 3, t.sy]; let hit = false;
+      if (!t.sel) for (let k = 0; k < used.length; k++) { const u = used[k]; if (r[0] < u[2] && r[2] > u[0] && r[1] < u[3] && r[3] > u[1]) { hit = true; break; } }
+      if (hit) { if (t.hid !== true) { t.hid = true; t.el.classList.add('ov'); } } else { used.push(r); if (t.hid !== false) { t.hid = false; t.el.classList.remove('ov'); } } });
+    const showB = !bld && far && n >= 2 && sum >= 1;
+    if (showB) { const tx = '+' + (A.fmt ? A.fmt(sum) : Math.round(sum)); if (abEl.textContent !== tx) abEl.textContent = tx; abEl.style.transform = 'translate(' + clamp(ax / n, 50, w - 50).toFixed(1) + 'px,' + clamp(ay / n, 60, h - 40).toFixed(1) + 'px)'; }
+    if (abEl.hidden === showB) abEl.hidden = !showB;
+  }
   function pos(t) {
     _pv.set(t.x, t.y, t.z).project(cam); const ok = _pv.z < 1 && Math.abs(_pv.x) < 1.15 && Math.abs(_pv.y) < 1.15;
     if (ok !== t.vis) { t.vis = ok; t.el.style.display = ok ? '' : 'none'; }
+    t.sx = (_pv.x + 1) / 2 * w; t.sy = (1 - _pv.y) / 2 * h;
     if (ok) t.el.style.transform = 'translate(' + ((_pv.x + 1) / 2 * w).toFixed(1) + 'px,' + ((1 - _pv.y) / 2 * h).toFixed(1) + 'px)';
   }
 
@@ -619,8 +713,8 @@ function build(box) {
   try { const v = localStorage.getItem('dofa_gr_amb'); ambOn = v === null ? !mob : v === '1'; } catch (e) { /* ничего */ }   // на телефоне «жизнь города» по умолчанию выключена (батарея), включается кнопкой
   const pv = { x: 0, z: 0 }; const ptr = new Map(); let drag = null, pinch = 0, twist = 0, edge = null, lpTimer = 0;
   const tf = Math.tan(cam.fov * Math.PI / 360);
-  function fitDist() {                                       // стартовая дальность: на экране 12 клеток в ширину (телефон стоя) … 28 (широкий экран)
-    const a = Math.max(0.4, w / Math.max(1, h)), span = clamp(12 + 14 * (a - 0.5), 12, 28); return span / (2 * tf * a);
+  function fitDist() {                                       // стартовая дальность (этап 3б — ближе): ~10–12 клеток в ширину на телефоне стоя … ~21 на широком экране
+    const a = Math.max(0.4, w / Math.max(1, h)), span = clamp(10.4 + 10 * (a - 0.5), 10.4, 21); return span / (2 * tf * a);
   }
   const dMin = () => fit * 0.3, dMax = () => Math.min(fit * 2.9, 44 / (2 * tf * Math.max(0.4, w / Math.max(1, h))));
   function resize() {

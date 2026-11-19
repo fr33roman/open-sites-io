@@ -19,7 +19,7 @@ function base() {
 var BASE = base();
 if (!BASE) return;
 
-var VER = '1119a';
+var VER = '1119f';
 (function () { var l = document.createElement('link'); l.rel = 'stylesheet'; l.href = 'kabinet.css?v=' + VER; document.head.appendChild(l); })();
 
 /* ---------- small helpers ---------- */
@@ -346,7 +346,14 @@ var errHtml = '<p class="kab-err" role="alert" hidden></p>';
 
 /* ---------- login / registration / recovery ---------- */
 function pwField(id, label, ac, extra) {
-  return '<label class="kab-f"><span>' + label + '</span><span class="kab-pw"><input id="' + id + '" type="password" autocomplete="' + ac + '" minlength="6" maxlength="128" ' + (extra || '') + ' value="' + esc(st[id] || '') + '"><button type="button" class="kab-eye" data-kb="eye" data-for="' + id + '">' + x('show') + '</button></span></label>';
+  return '<label class="kab-f"><span>' + label + '</span><span class="kab-pw"><input id="' + id + '" name="' + (ac === 'current-password' ? 'password' : id === 'parol2' ? 'new-password-2' : 'new-password') + '" type="password" autocomplete="' + ac + '" minlength="6" maxlength="128" ' + (extra || '') + ' value="' + esc(st[id] || '') + '"><button type="button" class="kab-eye" data-kb="eye" data-for="' + id + '">' + x('show') + '</button></span></label>';
+}
+/* 19.11: при регистрации номер выдаёт сервер, в форме его нет — браузер запоминал пароль без номера и потом подставлял только номер из истории поля. Отдаём пару сами. */
+function storeCred(id, pw, say) {
+  try {
+    if (!window.PasswordCredential || !id || !pw) return;
+    navigator.credentials.store(new PasswordCredential({ id: id, password: pw, name: id })).then(function () { if (say) toast(x('saved_stored'), null, true); }, function () {});
+  } catch (e) {}
 }
 function tgAvail() { try { return !!(window.Telegram && Telegram.WebApp && Telegram.WebApp.initData); } catch (e) { return false; } }
 function vLogin() {
@@ -407,7 +414,7 @@ function vReg() {
 }
 function vSaved() {
   return head(x('saved_h'), '') + '<div class="kab-adr"><span class="lbl">' + x('saved_adres') + '</span><b class="num" id="kabAdr">' + esc(st.adres) + '</b>' +
-    '<button class="btn-ghost" type="button" data-kb="copy" data-v="' + esc(st.adres) + '">' + x('copy') + '</button></div><p class="kab-note">' + x('saved_p') + '</p>' +
+    '<button class="btn-ghost" type="button" data-kb="copy" data-v="' + esc(st.adres) + '">' + x('copy') + '</button></div><form class="kab-keep" onsubmit="return false" aria-hidden="true"><input name="username" type="text" autocomplete="username" tabindex="-1" readonly value="' + esc(st.adres) + '"><input name="password" type="password" autocomplete="new-password" tabindex="-1" readonly value="' + esc(st.pw || '') + '"></form><p class="kab-note">' + x('saved_p') + '</p>' +
     (st.podarok ? '<p class="kab-gift">' + x('saved_gift') + '</p>' : '') +
     (window.PasswordCredential ? '<button class="btn-ghost kab-wide" type="button" data-kb="store">' + x('saved_store') + '</button>' : '') +
     (st.tok ? '<button class="btn-gold kab-wide" type="button" data-kb="to-chek" data-enter>' + x('saved_chek') + '</button>' : '<button class="btn-gold kab-wide" type="button" data-kb="open-cab" data-enter>' + x('saved_go') + '</button>');
@@ -650,7 +657,7 @@ function act(a, b, e) {
       var ad = (q('adres').value || '').trim(), pw = q('parol').value; st.adres = ad; showErr('');
       if (!ad || !pw) { showErr(x('err_vhod')); return; }
       setBusy(b, 1);
-      api('POST', '/vhod', { adres: ad.toLowerCase(), parol: pw }).then(function (r) { setBusy(b, 0); if (r.ok) afterAuth(); else showErr(errText(r)); });
+      api('POST', '/vhod', { adres: ad.toLowerCase(), parol: pw }).then(function (r) { setBusy(b, 0); if (r.ok) { storeCred(ad.toLowerCase(), pw); afterAuth(); } else showErr(errText(r)); });
       return;
     }
     case 'tg': {
@@ -681,11 +688,12 @@ function act(a, b, e) {
         setBusy(b, 0);
         if (!r.ok) { showErr(errText(r)); return; }
         st = { adres: r.d.adres, podarok: r.d.podarok, pw: st.parol, tok: pending ? incTok : null }; /* пришёл по ссылке-чеку: с экрана «Кабинет создан» ведём обратно к чеку */
+        storeCred(st.adres, st.pw);
         refreshMe(true).then(function () { scr = 'saved'; render(true); startPoll(); });
       });
       return;
     }
-    case 'store': try { var cr = new PasswordCredential({ id: st.adres, password: st.pw, name: st.adres }); navigator.credentials.store(cr).then(function () { toast(x('saved_stored'), null, true); }, function () {}); } catch (er) {} return;
+    case 'store': storeCred(st.adres, st.pw, true); return;
     case 'rec-next': {
       var ad3 = (q('adres').value || '').trim().toLowerCase(); st.adres = ad3; showErr('');
       if (!ad3) { showErr(x('err_vhod')); return; }

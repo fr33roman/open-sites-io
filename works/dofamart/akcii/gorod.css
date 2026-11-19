@@ -249,3 +249,9 @@ html.gr-lock .tabbar{display:none}
 @media (max-height:520px) and (orientation:landscape){
   .gr3-sheet.it{display:block;max-width:430px;padding:8px 12px}.gr3-sheet.it .m-btns{display:none}.gr3-sheet.it .grm-r{padding:3px 0}.gr3-sheet.it .grm-top{margin-bottom:2px}
 }
+
+/* этап 3б: ярлыки дохода — скрыты в стройке, не наползают друг на друга; общий значок сбора при сильном отдалении */
+.gr3-root.bld .gr3-amt,.gr3-root.bld .gr3-ab{display:none!important}
+.gr3-tg.ov .gr3-amt{display:none}
+.gr3-ab{position:absolute;left:0;top:0;margin:-18px 0 0 -44px;min-width:88px;min-height:34px;padding:0 14px;border-radius:17px;border:1px solid rgba(var(--acc),.9);background:rgba(5,10,20,.9);color:#bff8ff;font:800 14px var(--mono);white-space:nowrap;pointer-events:auto;cursor:pointer;box-shadow:0 0 18px -3px rgba(var(--acc),.9);will-change:transform}
+.gr3-ab[hidden]{display:none}

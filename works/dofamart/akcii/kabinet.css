@@ -172,3 +172,6 @@ body.kab-open{overflow:hidden}
 @media (min-width:900px) and (max-width:1599px){.kab-hsend span{display:none}.kab-hsend{padding:0 11px}}
 /* 18.11: в шапке на компьютере у «Отправить другу» только значок — меню разделов (с «Городом») должно помещаться целиком */
 @media (min-width:900px){.kab-hsend span{display:none}.kab-hsend{padding:0 11px}}
+
+/* 19.11: скрытая пара «номер + пароль» на экране «Кабинет создан» — для менеджера паролей браузера */
+.kab-keep{position:absolute;width:1px;height:1px;overflow:hidden;opacity:0;pointer-events:none;clip-path:inset(50%)}
