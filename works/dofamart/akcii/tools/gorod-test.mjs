@@ -135,4 +135,28 @@ ok(old10 <= was * 1.5 + 1, 'десять прежних зданий с сосе
   ok(r0.ok && a3 && !(a3.x === 5 && a3.y === 8), 'прилипание: занятая клетка → призрак сдвигается на соседнюю свободную');
   const old = { cash: 10, city: { b: { kiosk: { l: 3, t: T0 }, tower: { l: 5, t: T0 } }, 'in': 12, out: 40, streak: 2, last: 5 } }; const co = G.norm(old);
   ok(co.v === 2 && co.p.length === 2 && co.p.every(it => !it.s && it.x >= 0) && co['in'] === 12 && co.out === 40, 'старое сохранение города (по одному зданию каждого вида) открывается: 2 здания расставлены, счета целы'); }
+// --- этап 5 (20.11): поворот любой постройки на 0 / 90 / 180 / 270 ---
+{ const Sr = { cash: 1e9, city: null }; G.norm(Sr);
+  const sz = (id, r) => { const f = G.fp(G.BY[id], r); return f.w + '×' + f.d; };
+  ok([0, 1, 2, 3].every(r => sz('kiosk', r) === '1×1') && [0, 1, 2, 3].every(r => sz('home', r) === '2×2'), 'поворот: 1×1 и квадратный 2×2 не меняют площадь при любом r');
+  ok(sz('mall', 0) === '3×2' && sz('mall', 1) === '2×3' && sz('mall', 2) === '3×2' && sz('mall', 3) === '2×3', 'поворот: неквадратный 3×2 даёт 3×2, 2×3, 3×2, 2×3 для r = 0…3');
+  [['park', 10, 8, 10], ['home', 10, 2, 8]].forEach(q => { const un = [];
+    [0, 1, 2, 3].forEach(r => { const S9 = { cash: 1e9, city: null }; G.norm(S9); const rr = G.place(S9, q[0], q[1], T0, q[2], q[3], r); const it = S9.city.p[0]; un.push(rr.ok && it.r === r); });
+    ok(un.every(Boolean), 'поворот: ' + q[0] + ' ставится и хранится с r = 0, 1, 2, 3'); });
+  const Sm = { cash: 1e9, city: null }; G.norm(Sm); const rm = G.place(Sm, 'mall', 10, T0, 7, 8, 0); ok(rm.ok, 'торговый пассаж 3×2 поставлен (r = 0)');
+  const um = Sm.city.p[0].u; let okAll = true;
+  [1, 2, 3, 0].forEach(r => { const f = G.fp(G.BY.mall, r), res = G.move(Sm, um, 7, 8, r, T0); if (!res.ok || Sm.city.p[0].r !== r) okAll = false; });
+  ok(okAll, 'поворот: перенос с r = 1, 2, 3, 0 проходит и сохраняет поворот (' + [Sm.city.p[0].x, Sm.city.p[0].y, Sm.city.p[0].r] + ')');
+  const before = { x: Sm.city.p[0].x, y: Sm.city.p[0].y, r: Sm.city.p[0].r }; G.move(Sm, um, 12, 13, 3, T0); const it = Sm.city.p[0]; it.x = before.x; it.y = before.y; it.r = before.r;
+  ok(it.r === 0, 'поворот: отмена переноса возвращает прежний r');
+  const Sa = { cash: 1e9, city: null }; const ca = G.norm(Sa), o = G.occOf(ca, 0), mb = G.BY.mall;
+  [0, 1, 2, 3].forEach(r => { const sn = G.snapAt(ca, mb, r, o, 8, 10); ok(sn && sn.r === r && !G.check(ca, mb, sn.x, sn.y, r, o), 'прилипание не меняет выбранный поворот r = ' + r); });
+  const sp = G.findSpot(ca, mb, { x: 8, z: 10 }, 0, 2); ok(sp && (sp.r === 2 || sp.r === 3), 'поиск места начинает с выбранного поворота (r = 2)');
+  const sq = G.findSpot(ca, G.BY.home, { x: 8, z: 10 }, 0, 3); ok(sq && sq.r === 3, 'квадратная постройка в «Ещё одно» сохраняет r = 3');
+  const Sb = { cash: 1e9, city: { v: 2, p: [{ u: 1, id: 'mall', l: 1, t: T0, x: 7, y: 8, r: 1, s: 0 }, { u: 2, id: 'kiosk', l: 1, t: T0, x: 2, y: 8, r: 0, s: 0 }, { u: 3, id: 'park', l: 1, t: T0, x: 8, y: 10, r: 3, s: 0 }], n: 4, d: [0], 'in': 0, out: 0, streak: 0, last: -1 } };
+  const cb = G.norm(Sb); ok(cb.p[0].r === 1 && cb.p[1].r === 0 && cb.p[2].r === 3, 'сохранение: старое r = 1 читается как раньше, новое r = 3 сохраняется');
+  const js = JSON.parse(JSON.stringify(Sb)); const cj = G.norm(js); ok(cj.p[2].r === 3 && cj.p[0].r === 1, 'сохранение: после записи в JSON и чтения r = 3 и r = 1 на месте');
+  const Sc = { cash: 1, city: { v: 2, p: [{ u: 1, id: 'home', l: 1, t: T0, x: 6, y: 10, r: 7, s: 0 }, { u: 2, id: 'park', l: 1, t: T0, x: 8, y: 10, r: -1, s: 0 }, { u: 3, id: 'mall', l: 1, t: T0, x: 12, y: 13, r: 'x', s: 0 }], n: 4, d: [0], 'in': 0, out: 0, streak: 0, last: -1 } };
+  const cc2 = G.norm(Sc); ok(cc2.p.every(it => it.r === 0 || it.r === 1 || it.r === 2 || it.r === 3), 'сохранение: мусорные r (7, −1, «x») приводятся к 0…3 (' + cc2.p.map(it => it.r) + ')');
+}
 console.log(bad ? 'ИТОГО: провалов ' + bad : 'ИТОГО: всё зелёное'); process.exit(bad ? 1 : 0);

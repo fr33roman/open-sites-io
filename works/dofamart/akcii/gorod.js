@@ -65,7 +65,8 @@ const T = new Uint8Array(MW * MD), DM = new Int8Array(MW * MD).fill(-1);
 })();
 const MAP = { W: MW, D: MD, T: T, DM: DM, DIST: DIST, HILL_H: HILL_H, START: { x: 11, z: 11 } };
 const r2 = v => Math.round(v * 100) / 100;
-const fp = (b, r) => (r ? { w: b.d, d: b.w } : { w: b.w, d: b.d });
+const fp = (b, r) => ((r & 1) ? { w: b.d, d: b.w } : { w: b.w, d: b.d });
+const rotN = r => ((+r | 0) % 4 + 4) % 4;                // поворот 0…3 = 0°/90°/180°/270°; нечётный меняет стороны местами
 const rectOf = it => { const f = fp(BY[it.id], it.r); return { x: it.x, y: it.y, w: f.w, d: f.d }; };
 const distOf = it => DM[it.y * MW + it.x];
 
@@ -104,11 +105,11 @@ function availMask(c, b, r, ign) {           // клетки, которые в�
   for (let y = 0; y + f.d <= MD; y++) for (let x = 0; x + f.w <= MW; x++) if (!check(c, b, x, y, r, o)) for (let j = 0; j < f.d; j++) for (let i = 0; i < f.w; i++) m[(y + j) * MW + x + i] = 1;
   return m;
 }
-function findSpot(c, b, near, ign) {          // ближайшее допустимое место к точке near {x,z}; поворот 0 или 1
-  const o = occOf(c, ign); let best = null, bd = 1e18; near = near || MAP.START;
-  for (let r = 0; r < (b.w === b.d ? 1 : 2); r++) { const f = fp(b, r);
+function findSpot(c, b, near, ign, pref) {    // ближайшее допустимое место к точке near {x,z}; pref — желаемый поворот (0…3), запасной — соседний +90°
+  const o = occOf(c, ign); let best = null, bd = 1e18; near = near || MAP.START; pref = rotN(pref);
+  for (let k = 0; k < (b.w === b.d ? 1 : 2); k++) { const r = (pref + k) & 3, f = fp(b, r);
     for (let y = 0; y + f.d <= MD; y++) for (let x = 0; x + f.w <= MW; x++) {
-      const dd = Math.pow(x + f.w / 2 - near.x, 2) + Math.pow(y + f.d / 2 - near.z, 2) + r * 0.01;
+      const dd = Math.pow(x + f.w / 2 - near.x, 2) + Math.pow(y + f.d / 2 - near.z, 2) + k * 0.01;
       if (dd < bd && !check(c, b, x, y, r, o)) { bd = dd; best = { x: x, y: y, r: r }; } } }
   return best;
 }
@@ -143,7 +144,7 @@ function norm(S) {                                   // привести сос�
   if (!Array.isArray(c.d) || c.d.indexOf(0) < 0) c.d = [0].concat(Array.isArray(c.d) ? c.d.filter(k => k > 0 && k < DIST.length) : []);
   const seen = {}; c.n = Math.max(+c.n || 1, 1);
   c.p = c.p.filter(it => it && BY[it.id] && it.l >= 1).map(it => {
-    it.l = Math.min(MAXL, Math.floor(it.l)); it.t = +it.t || 0; it.r = it.r ? 1 : 0;
+    it.l = Math.min(MAXL, Math.floor(it.l)); it.t = +it.t || 0; it.r = rotN(it.r);
     if (!(it.u >= 1) || seen[it.u]) it.u = c.n++; seen[it.u] = 1; if (it.u >= c.n) c.n = it.u + 1;
     if (!it.s) { const q = fp(BY[it.id], it.r); it.x = Math.floor(+it.x); it.y = Math.floor(+it.y); if (!(it.x >= 0 && it.y >= 0 && it.x + q.w <= MW && it.y + q.d <= MD)) it.s = 1; }
     if (it.s) { it.s = 1; it.x = it.y = -1; }
@@ -189,8 +190,8 @@ function pay(S, c, b, now, spot) {
 function place(S, id, lvl, now, x, y, rot) {         // купить новое здание и поставить на клетки (x, y — левый верхний угол)
   const c = norm(S), b = BY[id], e = precheck(S, c, id, lvl);
   if (e) return { ok: false, err: e };
-  const g = check(c, b, x, y, rot ? 1 : 0, occOf(c, 0)); if (g) return { ok: false, err: g };
-  const it = pay(S, c, b, now, { x: x, y: y, r: rot ? 1 : 0 }); return { ok: true, cost: b.price, u: it.u };
+  const rr = rotN(rot), g = check(c, b, x, y, rr, occOf(c, 0)); if (g) return { ok: false, err: g };
+  const it = pay(S, c, b, now, { x: x, y: y, r: rr }); return { ok: true, cost: b.price, u: it.u };
 }
 function buy(S, id, lvl, now) {                      // купить без выбора места — на первое подходящее (вид «Список»)
   const c = norm(S), b = BY[id], e = precheck(S, c, id, lvl);
@@ -200,7 +201,7 @@ function buy(S, id, lvl, now) {                      // купить без вы
 }
 function move(S, u, x, y, rot, now) {                // перенос бесплатный; здание со склада ставится тем же вызовом
   const c = norm(S), it = itOf(c, u); if (!it) return { ok: false, err: 'none' };
-  const b = BY[it.id], r = rot ? 1 : 0, g = check(c, b, x, y, r, occOf(c, u)); if (g) return { ok: false, err: g };
+  const b = BY[it.id], r = rotN(rot), g = check(c, b, x, y, r, occOf(c, u)); if (g) return { ok: false, err: g };
   if (it.s) it.t = now;                              // на складе доход не копится
   it.x = x; it.y = y; it.r = r; it.s = 0; return { ok: true };
 }
@@ -340,7 +341,7 @@ Object.assign(D.ru, {
   m_size: 'Площадь', m_rule: 'Место', m_nb: 'Соседям', nb_r: '+{p}% в радиусе {r}', nb_d: '+{p}% всему району', m_got_nb: 'Прибавка от соседей', size_s: '{w}×{d}', cnt_s: '{a}/{b}',
   d_h: 'Район «{n}»', d_cond: 'Откроется на уровне {n} «{name}» за {x}', d_open: 'Открыть · {x}', d_have: 'Район открыт', d_lvl: 'Нужен уровень {n}', lvl_s: 'ур. {n}', mine: 'Мои здания', shop: 'Купить', no_stash: 'Склад пуст', mv: 'Переставить',
   st_hint: 'Здание уходит со склада на поле без потери ступени', own_s: 'Ступень {n} из 5',
-  tip: 'Сдвиг — палец или мышь · поворот — два пальца или правая кнопка · масштаб — щипок или колесо · в стройке — нажмите на клетку, чтобы передвинуть здание', tip_m: 'Сдвиг — палец · поворот — два пальца · масштаб — щипок',
+  tip: 'Сдвиг — мышь · поворот — правая кнопка · масштаб — колесо · здание — клик, поворот — R', tip_m: 'Сдвиг — палец · поворот — два пальца · масштаб — щипок',
   pm_again: 'Ещё одно', undo: 'Отменить', t_undo: 'Отменено', rotm: 'Сдвиг / поворот: сейчас сдвиг', rotm_on: 'Сдвиг / поворот: сейчас поворот', live: 'Огни и машины', e_closed_c: 'Район закрыт · {c}'
 });
 Object.assign(D.en, {
@@ -356,7 +357,7 @@ Object.assign(D.en, {
   m_size: 'Size', m_rule: 'Place', m_nb: 'To neighbours', nb_r: '+{p}% within {r} cells', nb_d: '+{p}% to the whole district', m_got_nb: 'Neighbour bonus', size_s: '{w}×{d}', cnt_s: '{a}/{b}',
   d_h: 'District “{n}”', d_cond: 'Opens at level {n} “{name}” for {x}', d_open: 'Open · {x}', d_have: 'District is open', d_lvl: 'Level {n} needed', lvl_s: 'lv {n}', mine: 'My buildings', shop: 'Buy', no_stash: 'Storage is empty', mv: 'Move',
   st_hint: 'The building returns from storage to the field with its step kept', own_s: 'Step {n} of 5',
-  tip: 'Pan — finger or mouse · rotate — two fingers or right button · zoom — pinch or wheel · in build mode, tap a cell to move the building', tip_m: 'Pan — finger · rotate — two fingers · zoom — pinch',
+  tip: 'Pan — mouse · rotate — right button · zoom — wheel · building — click, rotate — R', tip_m: 'Pan — finger · rotate — two fingers · zoom — pinch',
   pm_again: 'One more', undo: 'Undo', t_undo: 'Undone', rotm: 'Pan / rotate: now pan', rotm_on: 'Pan / rotate: now rotate', live: 'Lights and cars', e_closed_c: 'District is closed · {c}'
 });
 Object.assign(SH, {
@@ -396,7 +397,7 @@ function items3() {
 }
 function dists3() { const c = city(); return DIST.map(d => ({ id: d.id, open: c.d.indexOf(d.id) >= 0, name: dName(d), cond: myLvl() < d.lvl ? g('lock_lv', { n: d.lvl, x: short(d.price) }) : short(d.price) })); }
 function ghost3() { if (!pm) return null; const f = fp(BY[pm.id], pm.r); return { id: pm.id, x: pm.x, y: pm.y, r: pm.r, w: f.w, d: f.d, ok: pm.ok }; }
-function ghostUI() { const b = BY[pm.id]; return { msg: pmMsg(), price: pm.u ? 0 : b.price, rot: b.w !== b.d, mv: !!pm.u, lRot: g('pm_rot'), lOk: pm.u ? g('pm_ok_mv') : g('pm_ok') + ' · ' + short(b.price), lNo: g('pm_cancel') }; }
+function ghostUI() { const b = BY[pm.id]; return { msg: pmMsg(), price: pm.u ? 0 : b.price, rot: true, mv: !!pm.u, lRot: g('pm_rot'), lOk: pm.u ? g('pm_ok_mv') : g('pm_ok') + ' · ' + short(b.price), lNo: g('pm_cancel') }; }
 function ringData() {
   if (pm || !selU) return null; const c = city(), it = itOf(c, selU); if (!it || it.s) return null; const b = BY[it.id], now = H.now(), step = it.l, btns = [];
   if (b.inc[0] > 0) btns.push({ g: 'col', ic: 'col', lbl: g('collect'), off: !(pend(c, it, now) >= 0.01) });
@@ -434,10 +435,10 @@ function api3() {
 
 /* ---- режим стройки ---- */
 function pmCheck() { const c = city(), b = BY[pm.id]; pm.err = check(c, b, pm.x, pm.y, pm.r, occOf(c, pm.u || 0)); pm.ok = !pm.err; }
-function startPlace(id, u) {
+function startPlace(id, u, pr) {
   const c = city(), b = BY[id], it = u ? itOf(c, u) : null, cen = (G3() && G3().center()) || { cx: MAP.START.x, cz: MAP.START.z };
-  pm = { id: id, u: u || 0, r: it ? it.r : 0, x: cen.cx, y: cen.cz, ok: false, err: '' };
-  const sp = it && !it.s ? { x: it.x, y: it.y, r: it.r } : findSpot(c, b, { x: cen.cx, z: cen.cz }, u || 0);
+  pm = { id: id, u: u || 0, r: it ? it.r : rotN(pr), x: cen.cx, y: cen.cz, ok: false, err: '' };
+  const sp = it && !it.s ? { x: it.x, y: it.y, r: it.r } : findSpot(c, b, { x: cen.cx, z: cen.cz }, u || 0, it ? it.r : pr);
   if (it) pm.from = it.s ? null : { x: it.x, y: it.y, r: it.r };
   again = null;
   if (sp) { pm.x = sp.x; pm.y = sp.y; pm.r = sp.r; pmCheck(); if (G3() && G3().alive()) G3().focus(sp.x + 1, sp.y + 1); } else { pmCheck(); H.toast(g('e_space'), 'down', false); }
@@ -445,7 +446,7 @@ function startPlace(id, u) {
 }
 function pmCell(cx, cz, confirm) {
   if (!pm) return; const c = city(), b = BY[pm.id], o = occOf(c, pm.u || 0), f = fp(b, pm.r), s0 = pm.x, s1 = pm.y;
-  let sn = snapAt(c, b, pm.r, o, cx, cz); if (!sn && b.w !== b.d) sn = snapAt(c, b, pm.r ^ 1, o, cx, cz);
+  let sn = snapAt(c, b, pm.r, o, cx, cz); if (!sn && b.w !== b.d) sn = snapAt(c, b, (pm.r + 1) & 3, o, cx, cz) || snapAt(c, b, (pm.r + 3) & 3, o, cx, cz);
   if (sn) { pm.x = sn.x; pm.y = sn.y; pm.r = sn.r; }
   else { pm.x = clampN(cx - ((f.w - 1) >> 1), 0, MWc - f.w); pm.y = clampN(cz - ((f.d - 1) >> 1), 0, MDc - f.d); }
   const same = pm.x === s0 && pm.y === s1; pmCheck();
@@ -456,14 +457,15 @@ function beginMove(u) {                                // перенос: дол
   const c = city(), it = itOf(c, u); if (pm || !it || it.s) return false;
   pm = { id: it.id, u: u, r: it.r, x: it.x, y: it.y, ok: true, err: '', from: { x: it.x, y: it.y, r: it.r } }; again = null; ribOpen = false; selU = 0; selD = -1; pmCheck(); H.vib(12); hud(); sync(); return true;
 }
-function pmRot() { if (!pm) return; const b = BY[pm.id]; if (b.w === b.d) return; pm.r ^= 1; const f = fp(b, pm.r); pm.x = clampN(pm.x, 0, MWc - f.w); pm.y = clampN(pm.y, 0, MDc - f.d); pmCheck(); hudPm(); sync(); }
+function pmRot() { if (!pm) return; const b = BY[pm.id]; pm.r = (pm.r + 3) & 3;   // каждое нажатие — на 90° по часовой стрелке (на карте сверху)
+  const f = fp(b, pm.r); pm.x = clampN(pm.x, 0, MWc - f.w); pm.y = clampN(pm.y, 0, MDc - f.d); pmCheck(); hudPm(); sync(); }
 function pmConfirm() {
   if (!pm) return; if (!pm.ok) { H.vib(20); hudPm(); return; }
   const S = H.S(), now = H.now(), id = pm.id; let r;
   if (pm.u) r = move(S, pm.u, pm.x, pm.y, pm.r, now); else r = place(S, id, myLvl(), now, pm.x, pm.y, pm.r);
   if (!r.ok) { H.vib(20); const m = r.err === 'funds' ? g('e_funds', { x: mny(BY[id].price, 0) }) : r.err === 'limit' ? g('e_limit', { n: limOf(BY[id], myLvl()) }) : r.err === 'level' ? g('e_level', { n: BY[id].lvl }) : g('e_' + r.err); H.toast(m, 'down', false); pm.err = r.err; hudPm(); return; }
   H.save(); H.snd(); H.vib([10, 30, 10]); H.toast(g(pm.u ? 't_moved' : 't_placed', { n: bn(id) }), 'up', true);
-  if (pm.u) undo = { k: 'move', u: pm.u, from: pm.from }; else { undo = { k: 'new', u: r.u, cost: BY[id].price }; again = !whyType(BY[id]) && BY[id].price <= 12000 ? { id: id } : null; }
+  if (pm.u) undo = { k: 'move', u: pm.u, from: pm.from }; else { undo = { k: 'new', u: r.u, cost: BY[id].price }; again = !whyType(BY[id]) && BY[id].price <= 12000 ? { id: id, r: pm.r } : null; }
   selU = 0; pm = null; H.render(); hud(); sync();
 }
 function pmCancel() { pm = null; hud(); sync(); }
@@ -522,7 +524,7 @@ function distSheetHTML() {
 function pmBarHTML() {
   const b = BY[pm.id], mv = !!pm.u;
   return '<div class="gr3-pm"><div class="pm-t"><b>' + esc(bn(pm.id)) + '</b><span id="pmMsg" class="' + (pm.ok ? 'ok' : 'bad') + '">' + pmMsg() + '</span></div><div class="pm-b">' +
-    (b.w !== b.d ? '<button type="button" class="gr-btn alt" data-g="pmrot">↻ ' + g('pm_rot') + '</button>' : '') + '<button type="button" class="gr-btn" id="pmOk" data-g="pmok"' + (pm.ok ? '' : ' data-off="1"') + '>' + (mv ? g('pm_ok_mv') : g('pm_ok') + ' · ' + short(b.price)) + '</button><button type="button" class="gr-btn alt" data-g="pmx">' + g('pm_cancel') + '</button></div></div>';
+    '<button type="button" class="gr-btn alt" data-g="pmrot">↻ ' + g('pm_rot') + '</button>' + '<button type="button" class="gr-btn" id="pmOk" data-g="pmok"' + (pm.ok ? '' : ' data-off="1"') + '>' + (mv ? g('pm_ok_mv') : g('pm_ok') + ' · ' + short(b.price)) + '</button><button type="button" class="gr-btn alt" data-g="pmx">' + g('pm_cancel') + '</button></div></div>';
 }
 const pmMsg = () => {
   if (pm.ok) return g('pm_good') + ' · ' + g('size_s', { w: fp(BY[pm.id], pm.r).w, d: fp(BY[pm.id], pm.r).d });
@@ -680,7 +682,7 @@ function act(a, id, u, el) {
     case 'rotm': if (G3()) { const m = G3().mode(!G3().mode()); el.classList.toggle('on', m); el.setAttribute('aria-pressed', m); el.title = m ? g('rotm_on') : g('rotm'); el.setAttribute('aria-label', el.title); } return;
     case 'live': if (G3()) { const m = G3().live(!G3().live()); el.classList.toggle('on', m); el.setAttribute('aria-pressed', m); } return;
     case 'undo': undoLast(); return;
-    case 'again': if (again) startPlace(again.id, 0); return;
+    case 'again': if (again) startPlace(again.id, 0, again.r); return;
     case 'tipx': try { localStorage.setItem('dofa_gr_tip2', '1'); } catch (e) { /* ничего */ } { const t = $('gr3tip'); if (t) t.remove(); } return;
     case 'all': undo = null;
       r = collect(S, '', now); if (!r.ok) { H.vib(20); return; }
