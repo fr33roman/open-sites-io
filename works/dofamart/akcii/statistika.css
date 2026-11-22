@@ -1,0 +1,90 @@
+/* dofamart · Акции — раздел «Статистика» (#stat). Стиль «Квант»: карточки, крупные цифры, зелёный/красный для результата. Телефон 481 px — главный. */
+#v-stat .st-sub{margin-top:8px;color:var(--mut);font-size:14px;max-width:60ch}
+.st-per{display:flex;gap:8px;margin:-6px 0 16px;overflow-x:auto;scrollbar-width:none}
+.st-per::-webkit-scrollbar{display:none}
+.st-per .chip{flex:1 0 auto}
+.st-card{background:var(--sur);border:1px solid var(--line);border-radius:var(--r);padding:18px;margin-bottom:14px;min-width:0}
+.st-h2{font:600 15px/1.2 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--gold-l);margin-bottom:14px}
+.st-h3{font:500 11px/1.3 var(--sans);letter-spacing:.16em;text-transform:uppercase;color:var(--mut);margin:22px 0 10px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.st-of{letter-spacing:0;text-transform:none;font-size:11px;color:var(--mut);opacity:.85}
+.st-note{color:var(--mut);font-size:13px;line-height:1.5;margin-top:10px}
+.st-empty{text-align:left}.st-empty p{color:var(--mut);margin:0 0 16px;max-width:52ch}
+.st-empty .btn-gold{display:inline-flex;align-items:center;min-height:46px;padding:0 22px}
+/* итог */
+.st-big b{display:block;font-size:34px;line-height:1.1;margin:6px 0 4px}
+.st-big small{color:var(--mut);font-size:13px}
+.st-bar{display:flex;height:12px;border-radius:7px;overflow:hidden;margin:16px 0 12px;background:var(--sur2);gap:2px}
+.st-bar i{display:block;min-width:3px}
+.c1{background:var(--gold)}.c2{background:rgb(var(--acc2))}.c3{background:var(--l4)}.c4{background:var(--up)}.c5{background:var(--mut)}
+.st-ls{list-style:none;display:grid;gap:2px}
+.st-ls li{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid var(--line);font-size:14px}
+.st-ls li:last-child{border:0}
+.st-ls li span{flex:1;min-width:0}
+.st-ls li em{font-style:normal;color:var(--mut);font-size:12px;margin-left:6px}
+.st-ls li b{font-weight:500;white-space:nowrap}
+.st-dot{width:9px;height:9px;border-radius:50%;flex:none}
+.st-rts{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.st-rt{background:var(--sur2);border-radius:12px;padding:12px;display:grid;gap:2px;min-width:0}
+.st-rt span{font-size:12px;color:var(--mut)}.st-rt b{font-size:17px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.st-rt small{font-size:12px}
+.st-rt.tot{grid-column:1/-1;border:1px solid rgba(var(--acc),.3)}
+/* плитки */
+.st-tiles{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.st-tile{background:var(--sur2);border-radius:12px;padding:12px;min-width:0;display:grid;gap:5px;align-content:start}
+.st-tile .lbl{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.st-tile b{font-size:16px;font-weight:500;overflow-wrap:anywhere}
+.st-tile small{color:var(--mut);font-size:12px}
+/* таблицы */
+.st-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:0 -4px;padding:0 4px}
+.st-tb{border-collapse:collapse;width:100%;min-width:340px;font-size:13px}
+.st-tb th{font:500 10.5px/1.3 var(--sans);letter-spacing:.12em;text-transform:uppercase;color:var(--mut);text-align:left;padding:6px 8px;white-space:nowrap}
+.st-tb td{padding:9px 8px;border-top:1px solid var(--line);white-space:nowrap}
+.st-tb .r{text-align:right}
+/* кривая */
+.st-chart svg{width:100%;height:210px;display:block;border-radius:10px;background:rgba(255,255,255,.02)}
+.st-chart .z{stroke:rgba(255,255,255,.25);stroke-dasharray:4 5;stroke-width:1;vector-effect:non-scaling-stroke}
+.st-chart .l{fill:none;stroke-width:2;vector-effect:non-scaling-stroke}
+.st-chart .l.u{stroke:var(--up)}.st-chart .l.d{stroke:var(--down)}
+.st-chart .a.u{fill:rgba(var(--upc),.14);stroke:none}.st-chart .a.d{fill:rgba(var(--dnc),.14);stroke:none}
+.st-chart circle{stroke:var(--bg);stroke-width:2}.st-chart circle.mu{fill:var(--up)}.st-chart circle.md{fill:var(--down)}
+.st-ax{display:flex;justify-content:space-between;font-size:12px;color:var(--mut);margin-top:6px}
+/* ставки, город */
+.st-open{list-style:none;display:grid}
+.st-open li{display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-top:1px solid var(--line);font-size:14px}
+.st-open li span{min-width:0;overflow-wrap:anywhere}
+.st-open li em{display:block;font-style:normal;color:var(--mut);font-size:12px;margin-top:2px}
+.st-open li b{font-weight:500;white-space:nowrap}
+/* лента */
+.st-chips{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;margin-bottom:10px}
+.st-chips::-webkit-scrollbar{display:none}
+.st-chips .chip{flex:0 0 auto;min-height:40px}
+.st-feed{list-style:none;display:grid}
+.st-feed li{display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:baseline;padding:9px 0 9px 12px;border-top:1px solid var(--line);font-size:13.5px;border-left:2px solid var(--mut)}
+.st-feed li.trade{border-left-color:var(--gold)}.st-feed li.open{border-left-color:var(--acc2)}.st-feed li.city{border-left-color:var(--l4)}.st-feed li.money{border-left-color:var(--up)}
+.st-feed time{color:var(--mut);font-size:12px;white-space:nowrap}
+.st-feed span{min-width:0;overflow-wrap:anywhere}
+.st-feed b{font-weight:500;white-space:nowrap}
+.st-more{margin-top:12px;min-height:44px;padding:0 18px}
+/* сетка */
+.st-hm{display:grid;grid-template-columns:30px repeat(24,minmax(11px,1fr));gap:2px;min-width:360px;align-items:center}
+.st-hm em{font-style:normal;font-size:10px;color:var(--mut);text-align:center;height:14px}
+.st-hm b{font:500 11px var(--sans);color:var(--mut)}
+.st-hm i{display:block;height:19px;border-radius:3px;background:rgba(255,255,255,.05)}
+/* почему */
+.st-ins{list-style:none;display:grid;gap:8px}
+.st-ins li{padding:12px 14px;background:var(--sur2);border-radius:12px;border-left:2px solid var(--gold);font-size:14px;line-height:1.5}
+.st-why{list-style:none;display:grid;gap:8px}
+.st-why li{padding:12px 14px;background:var(--sur2);border-radius:12px;border-left:2px solid var(--mut)}
+.st-why li.win{border-left-color:var(--up)}.st-why li.lose{border-left-color:var(--down)}
+.st-why .h{display:flex;flex-wrap:wrap;gap:4px 10px;align-items:baseline;font-size:13.5px}
+.st-why .h b:first-child{min-width:0;overflow-wrap:anywhere}
+.st-why .h span{color:var(--mut);font-size:12px}
+.st-why .h time{color:var(--mut);font-size:12px;margin-left:auto}
+.st-why p{margin-top:6px;font-size:13.5px;line-height:1.5;color:var(--txt);opacity:.88}
+@media (min-width:760px){
+  .st-card{padding:24px}
+  .st-tiles{grid-template-columns:repeat(4,1fr)}
+  .st-rts{grid-template-columns:repeat(3,1fr)}.st-rt.tot{grid-column:auto}
+  .st-big b{font-size:44px}
+  .st-per .chip{flex:0 0 auto;min-width:120px}
+  .st-hm i{height:24px}
+}

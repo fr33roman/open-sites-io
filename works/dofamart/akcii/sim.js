@@ -346,6 +346,8 @@ const liqPrice = (entry, side, lev) => entry * (1 - side / lev);
 const betValue = b => round2(b.a / b.p * (b.cur >= 0 ? b.cur : b.p));
 function betsValue(S) { let v = 0; (S.bets || []).forEach(b => { if (b && b.p > 0 && b.a > 0) v += betValue(b); }); return round2(v); }
 function equity(S, M) { let v = S.cash + betsValue(S); S.positions.forEach(p => { v += posValue(p, M.px[p.sym]); }); return v; }
+// 23.11 «Статистика»: журнал событий S.log — кольцо до 500 компактных записей (k — тип, t — время, дальше поля события); старые сохранения без него открываются как есть.
+function lg(S, t, k, o) { if (!Array.isArray(S.log)) S.log = []; S.log.push(Object.assign({ k: k, t: t }, o)); if (S.log.length > 500) S.log.splice(0, S.log.length - 500); }
 // 18.11 «Город»: деньги города (доход и траты на здания) в результат торговли не входят — вычитаем их из итога.
 const cityAdj = S => (S.city ? round2((+S.city['in'] || 0) - (+S.city.out || 0)) : 0);
 function pushCurve(S, M) {
@@ -395,6 +397,7 @@ function deposit(S, M, amount) {
   if (!(amount >= 1) || amount > room(S) + 1e-9 || amount > vaultOf(S) + 1e-9) return false;
   S.vault = round2(vaultOf(S) - amount);
   S.cash = round2(S.cash + amount); S.deposited = round2(S.deposited + amount);
+  lg(S, M.t, 'd', { a: amount });
   S.bench += amount / M.px[BENCH];           // "bought the index and never touched it"
   pushCurve(S, M);
   return true;
@@ -428,6 +431,7 @@ function open(S, M, sym, side, amount, lev) {
     S.positions.push(p);
   }
   S.cash = round2(S.cash - amount - fee);
+  lg(S, t, 'o', { s: sym, d: side, l: lev, a: amount, f: fee });
   a.fees = round2(a.fees + fee); a.opens++; if (imp) a.imp++; a.lastActT = t;
   pushCurve(S, M);
   return { ok: true, pos: p, fee: fee, imp: imp };
@@ -447,6 +451,7 @@ function close(S, M, id, liq) {
   else if (tr.net < 0) { a.streak++; a.lastLossT = M.t; if (tr.net < a.maxLoss) a.maxLoss = tr.net; }
   if (liq) a.liq++; else a.lastActT = M.t;
   S.trades.unshift(tr); if (S.trades.length > 300) S.trades.length = 300;
+  lg(S, M.t, 'c', { s: p.sym, d: p.side, l: p.lev, a: p.margin, n: tr.net, x: tr.liq ? 1 : 0 });
   pushCurve(S, M);
   return tr;
 }
@@ -505,7 +510,7 @@ function restore(d, now) {
 }
 
 Object.assign(E, { KEY, FEE, LEVS, CATS, CAT, INS, SYMS, BENCH, FINE_N, newMarket, status, step, synthHist, setCandles, applyQuote, chg24,
-  newState, reset, cityAdj, vaultOf, VAULT0, pnl, posValue, betValue, betsValue, liqPrice, equity, deposit, grant, LEVELS, LIMITS, PROFIT_XP, profitXp, earned, netNow, trackNet, xpTotal, own, levelOf, room, maxAmount, open, close, sweep, sweepCandles, advance, stats, restore, num, round2, bridge, gauss });
+  newState, reset, lg, cityAdj, vaultOf, VAULT0, pnl, posValue, betValue, betsValue, liqPrice, equity, deposit, grant, LEVELS, LIMITS, PROFIT_XP, profitXp, earned, netNow, trackNet, xpTotal, own, levelOf, room, maxAmount, open, close, sweep, sweepCandles, advance, stats, restore, num, round2, bridge, gauss });
 if (typeof module !== 'undefined' && module.exports) { module.exports = E; }
 if (typeof document === 'undefined') return;
 
@@ -712,6 +717,7 @@ function load() {
   if (S.lang !== 'en') S.lang = 'ru';
 }
 function save() {
+  try { if (window.DofaStat && S) DofaStat.onSave(S); } catch (e) {}
   try { localStorage.setItem(KEY, JSON.stringify(Object.assign({}, S, { market: { t: M.t, px: M.px, q: M.q } }))); } catch (e) {}
 }
 
@@ -2220,7 +2226,7 @@ if (typeof document !== 'undefined') {
 }
 
 // Bottom bar: four main sections and "More" with a slide-up sheet for the rest.
-const MORE = ['wallet', 'news', 'truth', 'compare', 'top', 'quests', 'learn'];
+const MORE = ['wallet', 'news', 'truth', 'stat', 'compare', 'top', 'quests', 'learn'];
 Object.assign(T.ru, { nav_more: 'Ещё', more_title: 'Ещё разделы', more_news: 'Что пишут о рынках за сутки', more_truth: 'Честный итог ваших сделок',
   more_compare: 'Два графика на одном экране', more_top: 'Лучшие результаты' });
 Object.assign(T.en, { nav_more: 'More', more_title: 'More sections', more_news: 'What the press says today', more_truth: 'The honest result of your trades',
@@ -2502,7 +2508,9 @@ function doBet() {
   if (!(p >= BLO && p <= BHI) || (m.gs || m.end) <= Date.now()) { setTxt(msg, t('bet_closed')); return; }
   if (S.bets.length >= 40) { setTxt(msg, t('bet_many')); return; }
   S.cash = E.round2(S.cash - a);
-  S.bets.unshift({ id: S.nextId++, mk: m.id, q: pk.title, o: pk.lab, oi: b.oi, p: p, cur: p, a: a, at: Date.now(), end: m.gs || m.end });
+  const bc = ui.btab === 'sport' ? 'sp_' + ui.sport : ui.bcat, blv = (ui.btab === 'pred' && ui.bcat === 'live') || !!(m.gs && m.gs < Date.now());   // 23.11: раздел и «Лайв» — для «Статистики»
+  S.bets.unshift({ id: S.nextId++, mk: m.id, q: pk.title, o: pk.lab, oi: b.oi, p: p, cur: p, a: a, at: Date.now(), end: m.gs || m.end, c: bc, lv: blv ? 1 : 0 });
+  E.lg(S, Date.now(), 'b', { a: a, p: p, c: bc, lv: blv ? 1 : 0, q: String(pk.title).slice(0, 70) });
   S.betAgg.n++; S.betAgg.staked = E.round2(S.betAgg.staked + a);
   save(); ui.bet = null; if (S.sound) snd.key(); vib(12);
   toast(tf('bet_done', { k: coef(p) })); render();
@@ -2511,7 +2519,8 @@ function closeBet(b, price, how) {
   const pay = E.round2(b.a / b.p * Math.max(0, Math.min(1, price)));
   S.cash = E.round2(S.cash + pay); S.betAgg.paid = E.round2(S.betAgg.paid + pay); if (pay > b.a) S.betAgg.won++;
   S.bets = S.bets.filter(x => x !== b);
-  S.betHist.unshift({ q: b.q, o: b.o, p: b.p, a: b.a, pay: pay, how: how, at: Date.now() });
+  S.betHist.unshift({ q: b.q, o: b.o, p: b.p, a: b.a, pay: pay, how: how, at: Date.now(), at0: b.at, c: b.c, lv: b.lv });
+  E.lg(S, Date.now(), 'r', { a: b.a, v: pay, h: how, c: b.c, lv: b.lv, q: String(b.q).slice(0, 70) });
   if (S.betHist.length > 60) S.betHist.length = 60;
   return pay;
 }
@@ -2838,7 +2847,7 @@ function answer(k) {
 /* =====================================================================
    10. ROUTING, EVENTS, TICK
    ===================================================================== */
-const VIEWS = ['money', 'market', 'gorod', 'compare', 'wallet', 'truth', 'news', 'bets', 'top', 'quests', 'learn'];
+const VIEWS = ['money', 'market', 'gorod', 'compare', 'wallet', 'truth', 'news', 'bets', 'top', 'quests', 'learn', 'stat'];
 function render() {
   sig = posSig(); chartsKill();
   if (ui.view !== 'learn' && window.DofaObu) DofaObu.stop();
@@ -2851,6 +2860,7 @@ function render() {
   else if (ui.view === 'quests') renderQuests();
   else if (ui.view === 'gorod') { if (window.DofaGorod) DofaGorod.render($('gorodBox')); }
   else if (ui.view === 'learn') renderLearn();
+  else if (ui.view === 'stat') { if (window.DofaStat) DofaStat.render($('statBox')); }
   else if (ui.view === 'compare') { renderCompare(); cmpLoad(); }
   if (ui.view === 'wallet') S.qx.wal = 1;
   if (ui.view === 'compare' && S.cmp.syms.length >= 2) S.qx.cmp = 1;
@@ -3004,6 +3014,10 @@ function init() {
     S: () => S, lang: () => S.lang, money: (v, d) => money(v, d), now: () => Date.now(), save: () => save(), render: () => render(),
     toast: (m, c, ok) => toast(m, c, ok), snd: () => snd.win(), vib: p => vib(p), level: () => E.levelOf(S), levelName: i => lvName(i),
     lesDone: i => !!(S.les[i + 1]), lesTitle: i => (LESSONS[i] ? LESSONS[i][S.lang === 'en' ? 'en' : 'ru'].t : ''), result: () => E.stats(S, M).result });
+  if (window.DofaStat) {   // 23.11: раздел «Статистика» (statistika.js): словари в T, мост к данным
+    Object.assign(T.ru, DofaStat.dict.ru); Object.assign(T.en, DofaStat.dict.en);
+    DofaStat.init({ S: () => S, M: () => M, E: E, INS: INS, t: t, tf: tf, money: money, qm: qm, now: () => Date.now(), lang: () => S.lang, result: () => E.stats(S, M).result, save: () => save() });
+  }
   readSkin(); applyLang(); route();
   if (r.liq.length) onLiq(r.liq);
   document.addEventListener('click', onClick);
