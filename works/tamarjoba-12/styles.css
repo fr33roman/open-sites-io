@@ -1,0 +1,805 @@
+/* ==========================================================================
+   TAMARJOBA 12 — навигация деревом (23.11.2026), основа — стиль 11
+   Стиль 9а: брендбук клиента — #FC0304 (алый гранат), #000000 (тушь), #B4B4B4 (серебро),
+   #FFFFFF / #F6F6F7 / #EDEDEF. Шрифты: Open Sans, Neucha, Noto Serif Georgian / Sylfaen.
+   Префикс всех классов: .tja-
+   ========================================================================== */
+
+:root {
+  --bg: #F6F6F7;
+  --bg-deep: #EDEDEF;
+  --panel: #FFFFFF;
+  --warm: #FFF3F1;
+  --ink: #000000;
+  --ink-soft: #262629;
+  --silver: #B4B4B4;
+  --silver-dark: #58585E;
+  --red: #FC0304;
+  --red-dark: #CC0001;
+  --red-soft: rgba(252, 3, 4, 0.08);
+  --line: rgba(0, 0, 0, 0.10);
+  --line-strong: rgba(0, 0, 0, 0.18);
+  --line-red: rgba(252, 3, 4, 0.38);
+  --font-main: 'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-hand: 'Neucha', cursive;
+  --font-geo: 'Noto Serif Georgian', 'Sylfaen', Georgia, serif;
+  --radius-xl: 28px;
+  --radius-lg: 22px;
+  --radius-md: 16px;
+  --radius-pill: 999px;
+  --ease-spring: cubic-bezier(0.22, 1, 0.36, 1);
+  --header-h: 68px;
+}
+
+*, *::before, *::after { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+html {
+  background-color: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-main);
+  font-size: 16px;
+  line-height: 1.5;
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body.tja-body { margin: 0; min-height: 100vh; background: var(--bg); color: var(--ink); overflow-x: hidden; }
+body.tja-body.is-modal-open { overflow: hidden; }
+
+img { max-width: 100%; height: auto; display: block; }
+a { color: inherit; text-decoration: none; }
+button, input, select { font: inherit; color: inherit; }
+button { cursor: pointer; }
+:focus-visible { outline: 3px solid var(--red); outline-offset: 2px; }
+.tja-input:focus-visible, .tja-pick__b:focus-visible { outline: none; }
+
+.tja-wrap { max-width: 1320px; margin: 0 auto; padding: 0 24px; }
+
+/* ---------- Слой 2–3: толщина и отклик света ---------- */
+.tja-spot {
+  position: relative;
+  background-color: var(--panel);
+  background-image: radial-gradient(420px circle at var(--mx, -600px) var(--my, -600px), rgba(252, 3, 4, 0.07), transparent 65%);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 16px 38px rgba(0, 0, 0, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  transition: border-color 0.26s var(--ease-spring), transform 0.26s var(--ease-spring), box-shadow 0.26s var(--ease-spring);
+}
+.tja-spot:hover { border-color: var(--line-red); box-shadow: 0 20px 44px rgba(0, 0, 0, 0.09), inset 0 1px 0 rgba(255, 255, 255, 0.95); }
+
+/* Слой 4: РОВНО ОДНА карточка с градиентной маской-рамкой — видеокурсы с акцией */
+.tja-card--featured { position: relative; }
+.tja-card--featured::before {
+  content: ""; position: absolute; inset: 0; border-radius: inherit; padding: 2px;
+  background: linear-gradient(135deg, #FC0304 0%, #000000 52%, transparent 95%);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor; mask-composite: exclude; pointer-events: none;
+}
+
+/* ---------- Кнопки ---------- */
+.tja-btn, .tja-cta {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  border: 1.5px solid var(--ink); border-radius: var(--radius-pill);
+  font-weight: 700; white-space: nowrap; line-height: 1.2; cursor: pointer;
+  transition: transform 0.22s var(--ease-spring), background-color 0.22s ease, color 0.22s ease, border-color 0.22s ease, box-shadow 0.22s ease;
+}
+.tja-btn { min-height: 44px; padding: 8px 18px; font-size: 0.9rem; }
+.tja-cta { min-height: 48px; padding: 12px 24px; font-size: 0.96rem; white-space: normal; text-align: center; }
+.tja-btn--red, .tja-cta--red {
+  background-color: var(--red-dark); background-image: linear-gradient(180deg, #E50203 0%, #C70001 100%);
+  color: #FFFFFF; border-color: var(--red-dark); box-shadow: 0 10px 24px rgba(252, 3, 4, 0.24);
+}
+.tja-btn--red:hover, .tja-cta--red:hover { background-color: #A80002; background-image: none; border-color: #A80002; transform: translateY(-2px); }
+.tja-btn--ghost, .tja-cta--ghost { background: #FFFFFF; color: var(--ink); }
+.tja-btn--ghost:hover, .tja-cta--ghost:hover { background: var(--ink); color: #FFFFFF; transform: translateY(-2px); }
+.tja-cta--dark { background: var(--ink); color: #FFFFFF; }
+.tja-cta--dark:hover { background: var(--red); border-color: var(--red); transform: translateY(-2px); }
+.tja-cta:disabled { opacity: 0.45; cursor: not-allowed; transform: none; box-shadow: none; }
+.tja-cta--big { min-height: 60px; padding: 14px 26px; font-size: 1.04rem; justify-content: space-between; gap: 18px; text-align: left; }
+
+/* ---------- Шапка ---------- */
+.tja-header { position: sticky; top: 0; z-index: 60; background: rgba(255, 255, 255, 0.96); border-bottom: 1px solid var(--line); backdrop-filter: blur(6px); }
+.tja-header__inner { max-width: 1320px; margin: 0 auto; padding: 8px 24px; min-height: var(--header-h); display: flex; align-items: center; gap: 22px; }
+.tja-brand { display: inline-flex; align-items: center; min-height: 44px; flex-shrink: 0; }
+.tja-brand__logo { height: 42px; width: auto; }
+.tja-panel { flex: 1; min-width: 0; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.tja-nav { display: flex; align-items: center; gap: 2px; }
+.tja-nav__link {
+  display: inline-flex; align-items: center; min-height: 44px; padding: 8px 12px;
+  border: 0; border-radius: var(--radius-pill); background: transparent;
+  font-size: 0.9rem; font-weight: 700; white-space: nowrap; color: var(--ink);
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+.tja-nav__link:hover { background: var(--bg-deep); color: var(--red); }
+.tja-header__right { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+.tja-burger { display: none; }
+
+/* ---------- Первый экран ---------- */
+.tja-main { display: block; }
+.tja-hero { position: relative; padding: 32px 0 72px; overflow: hidden; background: var(--bg); }
+.tja-drift-layer { position: absolute; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
+.tja-drift-char {
+  position: absolute; font-family: var(--font-geo); font-size: clamp(2.8rem, 5vw, 4.8rem); font-weight: 700;
+  color: rgba(0, 0, 0, 0.045); user-select: none; animation: tjaDrift 18s ease-in-out infinite alternate;
+}
+.tja-drift-char--red { color: rgba(252, 3, 4, 0.075); }
+.tja-drift-char:nth-child(1) { top: 6%; left: 4%; animation-duration: 14s; }
+.tja-drift-char:nth-child(2) { top: 18%; left: 44%; animation-duration: 19s; }
+.tja-drift-char:nth-child(3) { top: 68%; left: 8%; animation-duration: 16s; }
+.tja-drift-char:nth-child(4) { top: 10%; right: 6%; animation-duration: 21s; }
+.tja-drift-char:nth-child(5) { top: 56%; left: 48%; animation-duration: 17s; }
+.tja-drift-char:nth-child(6) { top: 76%; right: 12%; animation-duration: 22s; }
+.tja-drift-char:nth-child(7) { top: 38%; left: 26%; animation-duration: 15s; }
+@keyframes tjaDrift { 0% { transform: translate3d(0, 0, 0) rotate(-4deg); } 100% { transform: translate3d(14px, -18px, 0) rotate(5deg); } }
+
+.tja-hero__grid { position: relative; z-index: 1; display: grid; grid-template-columns: minmax(0, 1.12fr) minmax(0, 0.88fr); gap: 24px; align-items: stretch; }
+.tja-hero__copy { min-width: 0; padding: 44px 44px 40px; display: flex; flex-direction: column; justify-content: center; align-items: flex-start; gap: 24px; }
+
+.tja-coord {
+  display: inline-block; margin: 0; padding: 2px 0 2px 12px;
+  border-left: 3px solid var(--red); border-radius: 0; background: transparent;
+  font-size: 0.8rem; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase;
+}
+.tja-h1 { margin: 0; font-size: clamp(2.2rem, 4.3vw, 3.7rem); font-weight: 800; line-height: 1.07; letter-spacing: -0.025em; }
+.tja-h1 em { font-family: var(--font-hand); font-style: normal; font-weight: 400; color: var(--red); font-size: 1.12em; padding: 0 2px; }
+.tja-lead { margin: 0; font-size: 1.08rem; font-weight: 600; color: var(--ink-soft); max-width: 52ch; }
+
+.tja-hello { display: grid; gap: 8px; justify-items: start; max-width: 100%; }
+.tja-hello__label { font-family: var(--font-hand); font-size: 1.3rem; color: var(--red-dark); letter-spacing: 0.02em; }
+.tja-hello-btn {
+  max-width: 100%; display: inline-flex; align-items: center; flex-wrap: wrap; gap: 8px;
+  min-height: 52px; padding: 8px 14px; background: var(--bg); border: 1.5px solid var(--ink); border-radius: var(--radius-md);
+  transition: border-color 0.2s ease, transform 0.2s var(--ease-spring);
+}
+.tja-hello-btn:hover { border-color: var(--red); transform: translateY(-2px); }
+.tja-hello-btn__geo { font-family: var(--font-geo); font-size: 1.35rem; font-weight: 700; color: var(--red); }
+.tja-hello-btn__sep { color: var(--silver-dark); font-weight: 700; }
+.tja-hello-btn__tr { font-family: var(--font-hand); font-size: 1.12rem; letter-spacing: 0.02em; }
+.tja-hello-btn__sound { display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 28px; border-radius: 50%; background: var(--ink); color: #FFFFFF; font-size: 0.78rem; }
+
+/* Правая колонка: сменный баннер */
+.tja-hero__stage { padding: 20px; display: flex; flex-direction: column; gap: 14px; min-width: 0; }
+.tja-promo { flex: 1 1 auto; display: flex; min-height: 0; }
+.tja-promo__frame {
+  position: relative; flex: 1; min-height: 480px; border-radius: 140px 140px 20px 20px;
+  overflow: hidden; border: 2px solid var(--ink); background: #FFFFFF; isolation: isolate;
+}
+.tja-promo__slide, .tja-promo__img { position: absolute; inset: 0; width: 100%; height: 100%; }
+.tja-promo__slide { opacity: 0; visibility: hidden; transition: opacity 0.9s ease, visibility 0s 0.9s; }
+.tja-promo__slide.is-on { opacity: 1; visibility: visible; transition: opacity 0.9s ease; }
+.tja-promo__img, .tja-promo__slide img { object-fit: cover; object-position: 50% 34%; width: 100%; height: 100%; }
+.tja-promo__slide video { display: none; width: 100%; height: 100%; object-fit: cover; object-position: 50% 62%; }
+.tja-promo__card {
+  position: absolute; left: 16px; right: 16px; bottom: 16px; z-index: 2;
+  display: grid; gap: 4px; justify-items: start; padding: 16px 18px;
+  background: #FFFFFF; border: 1.5px solid var(--ink); border-radius: 18px; box-shadow: 0 14px 30px -12px rgba(0, 0, 0, 0.35);
+}
+.tja-promo__title { font-size: 1.12rem; font-weight: 800; line-height: 1.25; }
+.tja-promo__text { margin: 0; font-size: 0.92rem; color: var(--ink-soft); }
+.tja-promo__btn { margin-top: 8px; min-height: 44px; padding: 8px 20px; font-size: 0.9rem; }
+
+.tja-hero__foot { display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 48px; }
+.tja-promo__dots { display: flex; }
+.tja-promo__dots:empty { display: none; }
+.tja-promo__dot { position: relative; width: 44px; height: 44px; border: 0; background: transparent; padding: 0; }
+.tja-promo__dot::before { content: ""; position: absolute; left: 50%; top: 50%; width: 9px; height: 9px; margin: -4.5px 0 0 -4.5px; border-radius: 50%; background: rgba(0, 0, 0, 0.25); transition: width 0.3s var(--ease-spring), background-color 0.3s, margin 0.3s; }
+.tja-promo__dot.is-on::before { width: 26px; margin-left: -13px; border-radius: 6px; background: var(--red); }
+.tja-ig-badge {
+  margin-left: auto; display: inline-flex; align-items: center; gap: 10px; min-height: 48px; padding: 10px 16px;
+  background: var(--ink); color: #FFFFFF; border-radius: var(--radius-md); font-size: 0.9rem; font-weight: 700;
+  transition: background-color 0.2s ease, transform 0.2s var(--ease-spring);
+}
+.tja-ig-badge:hover { background: var(--red); transform: translateY(-2px); }
+.tja-ig-badge__dot { width: 10px; height: 10px; border-radius: 50%; background: var(--red); box-shadow: 0 0 0 4px rgba(252, 3, 4, 0.28); animation: tjaPulse 2s infinite; }
+.tja-ig-badge:hover .tja-ig-badge__dot { background: #FFFFFF; }
+@keyframes tjaPulse { 0%, 100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.25); opacity: 0.75; } }
+
+/* ---------- Секции: общий ритм ---------- */
+.tja-sec { padding: 84px 0; scroll-margin-top: calc(var(--header-h) - 4px); }
+.tja-sec--white { background: #FFFFFF; }
+.tja-sec--gray { background: var(--bg); }
+.tja-sec--warm { background: var(--warm); }
+.tja-sec--dark { background: var(--ink); color: #FFFFFF; }
+.tja-sec__head {
+  display: flex; align-items: baseline; justify-content: space-between; flex-wrap: wrap; gap: 12px;
+  margin-bottom: 36px; padding-bottom: 14px; border-bottom: 2px solid var(--ink);
+}
+.tja-h2 { margin: 0; font-size: clamp(1.7rem, 3vw, 2.45rem); font-weight: 800; line-height: 1.12; letter-spacing: -0.015em; }
+.tja-sec__tag { font-family: var(--font-hand); font-size: 1.2rem; border-bottom: 2px solid var(--red); padding-bottom: 2px; letter-spacing: 0.03em; }
+.tja-sec__link { display: inline-flex; align-items: center; gap: 6px; min-height: 44px; font-weight: 800; border-bottom: 2px solid var(--red); }
+.tja-sec__link:hover { color: var(--red); }
+.tja-sec__cta { display: flex; justify-content: center; margin-top: 44px; }
+.tja-h3 { margin: 0; font-size: 1.22rem; font-weight: 800; line-height: 1.22; }
+.tja-badge {
+  display: inline-flex; align-items: center; align-self: flex-start; padding: 4px 10px; border-radius: 6px;
+  background: var(--bg-deep); color: var(--ink); font-size: 0.74rem; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase;
+}
+.tja-badge--red { background: var(--red-dark); background-image: linear-gradient(180deg, #E50203 0%, #C70001 100%); color: #FFFFFF; }
+
+/* ---------- 3. Путь ученика ---------- */
+.tja-steps { position: relative; list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 22px; }
+.tja-steps::before {
+  content: ""; position: absolute; top: 22px; left: 22px; right: 22px; height: 2px;
+  background: linear-gradient(90deg, var(--red), var(--ink) 70%); transform-origin: left center;
+  transition: transform 1.3s var(--ease-spring);
+}
+.tja-step { position: relative; padding-top: 68px; }
+.tja-step__n {
+  position: absolute; top: 0; left: 0; z-index: 1; width: 46px; height: 46px; display: grid; place-items: center;
+  border-radius: 50%; border: 2px solid var(--ink); background: #FFFFFF; font-size: 0.92rem; font-weight: 800;
+  transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease, transform 0.3s var(--ease-spring);
+}
+.tja-step:first-child .tja-step__n { background: var(--red-dark); border-color: var(--red-dark); color: #FFFFFF; }
+.tja-step:hover .tja-step__n { background: var(--ink); color: #FFFFFF; transform: scale(1.08); }
+.tja-step p { margin: 8px 0 0; font-size: 0.93rem; color: var(--ink-soft); }
+
+/* ---------- 10. Отзывы ---------- */
+.tja-reviews { position: relative; padding: 60px 72px 52px 120px; background: var(--ink); color: #FFFFFF; border-radius: var(--radius-xl); overflow: hidden; }
+.tja-reviews__mark { position: absolute; left: 34px; top: 8px; font-family: Georgia, "Times New Roman", serif; font-size: 9rem; line-height: 1; color: var(--red); pointer-events: none; }
+.tja-reviews__stage { display: grid; }
+.tja-rev { grid-area: 1 / 1; margin: 0; display: grid; align-content: center; gap: 22px; opacity: 0; visibility: hidden; transform: translateY(16px); transition: opacity 0.45s ease, transform 0.55s var(--ease-spring), visibility 0s 0.55s; }
+.tja-rev.is-on { opacity: 1; visibility: visible; transform: none; transition: opacity 0.55s ease 0.15s, transform 0.6s var(--ease-spring) 0.15s; }
+.tja-rev.is-out { opacity: 0; visibility: visible; transform: translateY(-14px); transition: opacity 0.38s ease, transform 0.45s var(--ease-spring); }
+.tja-rev blockquote { margin: 0; font-size: clamp(1.1rem, 1.9vw, 1.5rem); font-weight: 600; line-height: 1.5; max-width: 60ch; }
+.tja-rev figcaption { display: flex; align-items: center; gap: 12px; font-size: 0.95rem; font-weight: 800; color: #EDEDEF; }
+.tja-rev figcaption::before { content: ""; width: 28px; height: 2px; background: var(--red); }
+.tja-reviews__count { position: absolute; right: 28px; bottom: 22px; font-size: 0.82rem; font-weight: 700; letter-spacing: 0.1em; color: var(--silver); }
+
+/* ---------- 12. Запись ---------- */
+.tja-book-grid { display: grid; grid-template-columns: minmax(0, 1.18fr) minmax(0, 0.82fr); gap: 22px; align-items: stretch; }
+.tja-form { padding: 30px; display: flex; flex-direction: column; gap: 18px; }
+.tja-form__fields { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.tja-field { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.tja-field__label { font-size: 0.86rem; font-weight: 700; }
+.tja-input { width: 100%; min-height: 48px; padding: 10px 14px; border-radius: var(--radius-md); border: 1.5px solid var(--line-strong); background: #FFFFFF; font-size: 0.95rem; }
+.tja-input:focus { outline: none; border-color: var(--red); box-shadow: 0 0 0 3px rgba(252, 3, 4, 0.14); }
+.tja-consent { display: flex; align-items: center; gap: 10px; min-height: 44px; font-size: 0.86rem; color: var(--ink-soft); cursor: pointer; }
+.tja-consent__box { width: 20px; height: 20px; accent-color: var(--red); flex-shrink: 0; }
+.tja-form__ok { padding: 14px; border-radius: var(--radius-md); background: #000000; color: #FFFFFF; font-size: 0.92rem; font-weight: 700; }
+.tja-form__ok[hidden] { display: none; }
+.tja-places { padding: 30px; display: flex; flex-direction: column; justify-content: space-between; gap: 22px; }
+.tja-dl { margin: 0; padding: 0; list-style: none; display: grid; gap: 14px; }
+.tja-dl__row { display: grid; grid-template-columns: minmax(0, 1fr) auto; grid-template-areas: "city go" "addr go"; row-gap: 4px; column-gap: 16px; align-items: center; padding-bottom: 14px; border-bottom: 1px solid var(--line); }
+.tja-dl__city { grid-area: city; font-size: 0.82rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em; border-left: 3px solid var(--red); padding-left: 8px; }
+.tja-dl__addr { grid-area: addr; font-size: 1rem; line-height: 1.35; font-weight: 700; }
+.tja-dl__go { grid-area: go; align-self: center; }
+.tja-route {
+  position: relative; display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; padding: 1px;
+  border-radius: 50%; background: var(--red); background-clip: content-box; color: #FFFFFF; animation: tjaNav 2.2s ease-in-out infinite;
+}
+.tja-route::after { content: ""; position: absolute; inset: -3px; border-radius: 50%; border: 2px solid rgba(252, 3, 4, 0.45); animation: tjaNavRing 2.2s ease-out infinite; pointer-events: none; }
+.tja-route svg { width: 19px; height: 19px; fill: currentColor; }
+.tja-route:hover { background: var(--ink); background-clip: content-box; }
+@keyframes tjaNav { 0%, 100% { box-shadow: 0 6px 16px -6px rgba(252, 3, 4, 0.6); filter: brightness(1); } 50% { box-shadow: 0 8px 24px -4px rgba(252, 3, 4, 0.85); filter: brightness(1.12); } }
+@keyframes tjaNavRing { 0% { transform: scale(0.85); opacity: 0.9; } 100% { transform: scale(1.25); opacity: 0; } }
+.tja-quick-links { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.tja-quick-link {
+  position: relative; overflow: hidden; isolation: isolate; min-height: 44px; padding: 8px 14px; border-radius: var(--radius-md); color: #FFFFFF;
+  font-size: 0.88rem; font-weight: 700; display: inline-flex; align-items: center; justify-content: space-between; animation: tjaGlow 2.8s ease-in-out infinite;
+}
+.tja-quick-link::after { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(110deg, transparent 30%, rgba(255, 255, 255, 0.38) 48%, transparent 66%); transform: translateX(-120%); animation: tjaShine 3.6s ease-in-out infinite; }
+.tja-quick-link:nth-child(1) { background: linear-gradient(135deg, #1FA855, #0E7A3F); --glow: rgba(37, 211, 102, 0.45); }
+.tja-quick-link:nth-child(2) { background: linear-gradient(135deg, #1E88C8, #136AA3); --glow: rgba(34, 158, 217, 0.45); animation-delay: 0.9s; }
+.tja-quick-link:nth-child(3) { grid-column: 1 / -1; background: linear-gradient(135deg, #E00203, #A80002); --glow: rgba(252, 3, 4, 0.4); animation-delay: 1.8s; }
+.tja-quick-link:nth-child(2)::after { animation-delay: 1.2s; }
+.tja-quick-link:nth-child(3)::after { animation-delay: 2.4s; }
+.tja-quick-link:hover { filter: brightness(1.08); }
+@keyframes tjaGlow { 0%, 100% { box-shadow: 0 0 0 0 transparent; } 50% { box-shadow: 0 8px 22px -6px var(--glow, transparent); } }
+@keyframes tjaShine { 0%, 55% { transform: translateX(-120%); } 85%, 100% { transform: translateX(120%); } }
+
+/* Свой выпадающий список */
+.tja-pick { position: relative; }
+.tja-pick__native { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
+.tja-pick__b {
+  display: flex; align-items: center; justify-content: space-between; gap: 10px; width: 100%; min-height: 48px; padding: 10px 14px 10px 16px; text-align: left;
+  border-radius: var(--radius-md); border: 1.5px solid var(--line-strong); background: #FFFFFF; font-size: 0.95rem; transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.tja-pick__b:hover { border-color: var(--ink); }
+.tja-pick__b:focus-visible { border-color: var(--red); box-shadow: 0 0 0 3px rgba(252, 3, 4, 0.14); }
+.tja-pick__b[aria-expanded="true"] { border-color: var(--red); box-shadow: 0 0 0 3px rgba(252, 3, 4, 0.14); }
+.tja-pick__v { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.tja-pick__c { flex: none; width: 10px; height: 10px; margin-top: -4px; border-right: 2px solid var(--red); border-bottom: 2px solid var(--red); transform: rotate(45deg); transition: transform 0.3s var(--ease-spring), margin 0.3s; }
+.tja-pick__b[aria-expanded="true"] .tja-pick__c { transform: rotate(-135deg); margin-top: 4px; }
+.tja-pick__list {
+  position: absolute; z-index: 40; left: 0; right: 0; top: calc(100% + 8px); list-style: none; margin: 0; padding: 6px; display: grid; gap: 2px;
+  max-height: min(320px, 56vh); overflow-y: auto; overscroll-behavior: contain; outline: 0; background: #FFFFFF; border: 1.5px solid var(--ink); border-radius: 18px;
+  box-shadow: 0 24px 48px -18px rgba(0, 0, 0, 0.45); opacity: 0; visibility: hidden; transform: translateY(-6px) scale(0.98); transform-origin: top center;
+  transition: opacity 0.2s ease, transform 0.28s var(--ease-spring), visibility 0s 0.28s;
+}
+.tja-pick.is-open .tja-pick__list { opacity: 1; visibility: visible; transform: none; transition: opacity 0.2s ease, transform 0.28s var(--ease-spring); }
+.tja-opt { display: flex; align-items: center; min-height: 44px; padding: 8px 14px; border-radius: 12px; font-size: 0.94rem; font-weight: 600; cursor: pointer; transition: background-color 0.15s ease; }
+.tja-opt.is-cur { background: var(--bg-deep); }
+.tja-opt[aria-selected="true"] { background: var(--red-soft); color: var(--red-dark); box-shadow: inset 3px 0 0 var(--red); }
+@media (hover: hover) { .tja-opt:hover { background: var(--bg-deep); } }
+
+/* ---------- Окна по центру экрана ---------- */
+.tja-mb { position: fixed; inset: 0; z-index: 120; display: flex; align-items: center; justify-content: center; padding: 16px; background: rgba(0, 0, 0, 0.62); backdrop-filter: blur(3px); overflow-y: auto; overscroll-behavior: contain; animation: tjaFade 0.25s ease; }
+.tja-mb[hidden] { display: none; }
+@keyframes tjaFade { from { opacity: 0; } to { opacity: 1; } }
+.tja-modal {
+  position: relative; width: min(640px, 100%); max-height: calc(100vh - 32px); max-height: calc(100dvh - 32px); overflow-y: auto; overscroll-behavior: contain;
+  background: #FFFFFF; color: var(--ink); border-radius: var(--radius-xl); border: 2px solid var(--ink); padding: 28px; box-shadow: 0 30px 80px rgba(0, 0, 0, 0.35);
+  display: flex; flex-direction: column; gap: 18px; animation: tjaPopIn 0.34s var(--ease-spring);
+}
+.tja-modal--wide { width: min(1080px, 100%); }
+.tja-modal--shop { width: min(760px, 100%); }
+@keyframes tjaPopIn { from { opacity: 0; transform: translateY(16px) scale(0.96); } to { opacity: 1; transform: none; } }
+.tja-modal__top { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; padding-bottom: 14px; border-bottom: 2px solid var(--ink); }
+.tja-modal__top > div { display: grid; gap: 6px; justify-items: start; }
+.tja-modal__title { margin: 2px 0 0; font-size: 1.55rem; font-weight: 800; line-height: 1.18; }
+.tja-modal__x { flex: none; min-width: 44px; min-height: 44px; border-radius: 50%; border: 1.5px solid var(--ink); background: var(--bg); font-size: 1.1rem; font-weight: 800; transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease; }
+.tja-modal__x:hover { background: var(--red); border-color: var(--red); color: #FFFFFF; }
+.tja-drawer__lead { margin: 0; font-size: 0.98rem; color: var(--ink-soft); }
+.tja-drawer__about { display: grid; grid-template-columns: 120px 1fr; gap: 18px; align-items: start; }
+.tja-drawer__about[hidden] { display: none; }
+.tja-drawer__photo { width: 120px; height: 120px; border-radius: var(--radius-md); object-fit: cover; border: 2px solid var(--ink); }
+.tja-drawer__text { display: grid; gap: 10px; font-size: 0.95rem; line-height: 1.55; color: var(--ink-soft); }
+.tja-drawer__text p { margin: 0; }
+.tja-drawer__tiers { display: grid; gap: 10px; }
+.tja-tier-row { padding: 12px 14px; border-radius: var(--radius-md); background: var(--bg); border: 1px solid var(--line-strong); display: flex; align-items: center; justify-content: space-between; gap: 14px; }
+.tja-tier-row__name { font-weight: 700; font-size: 0.92rem; }
+.tja-tier-row__val { font-weight: 800; font-size: 0.95rem; color: var(--red-dark); text-align: right; }
+.tja-drawer__list { margin: 0; padding-left: 20px; display: grid; gap: 8px; font-size: 0.92rem; }
+.tja-drawer__list:empty { display: none; }
+
+/* Магазин */
+.tja-shop { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; }
+.tja-shop__item { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 18px; align-items: center; padding: 18px; background: var(--bg); border: 1px solid var(--line); border-radius: var(--radius-lg); }
+.tja-shop__info { display: grid; gap: 4px; }
+.tja-shop__info strong { font-size: 1.05rem; }
+.tja-shop__info span { font-size: 0.9rem; color: var(--ink-soft); }
+.tja-shop__buy { display: grid; gap: 8px; justify-items: end; text-align: right; }
+.tja-shop__price { font-size: 1.3rem; font-weight: 800; color: var(--red); line-height: 1.1; }
+.tja-shop__price small { display: block; margin-top: 2px; font-size: 0.74rem; font-weight: 600; color: var(--silver-dark); }
+.tja-shop__price--ask { font-size: 1rem; color: var(--silver-dark); }
+.tja-shop .tja-cta { min-height: 44px; padding: 8px 22px; }
+
+/* Алфавит в окне */
+.tja-alpha-layout { display: grid; grid-template-columns: minmax(0, 1.18fr) minmax(0, 0.82fr); gap: 20px; align-items: stretch; }
+.tja-alpha-deck { padding: 20px; background: var(--bg); border: 1px solid var(--line); border-radius: var(--radius-lg); }
+.tja-alpha-deck__top { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 14px; }
+.tja-alpha-deck__hint { font-family: var(--font-hand); font-size: 1.1rem; color: var(--silver-dark); }
+.tja-alpha-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+.tja-letter-card { position: relative; height: 128px; padding: 0; border: 0; background: transparent; perspective: 900px; transition: transform 0.25s var(--ease-spring); }
+.tja-letter-card.is-pulse::after { content: ""; position: absolute; inset: -4px; border-radius: 18px; border: 2px solid var(--red); animation: tjaRingPulse 1.8s ease-in-out infinite; pointer-events: none; }
+@keyframes tjaRingPulse { 0%, 100% { opacity: 0.9; transform: scale(1); } 50% { opacity: 0.25; transform: scale(1.04); } }
+.tja-letter-card__inner { position: relative; display: block; width: 100%; height: 100%; transform-style: preserve-3d; transition: transform 0.52s var(--ease-spring), opacity 0.35s ease; }
+.tja-letter-card.is-flipped .tja-letter-card__inner { transform: rotateY(180deg); }
+.tja-letter-card__face { position: absolute; inset: 0; backface-visibility: hidden; -webkit-backface-visibility: hidden; border-radius: var(--radius-md); border: 1.5px solid var(--ink); display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 10px; }
+.tja-letter-card__front { background: linear-gradient(180deg, #FFFFFF 0%, #F6F6F7 100%); }
+.tja-letter-card__glyph { font-family: var(--font-geo); font-size: 2.5rem; font-weight: 700; line-height: 1; transition: color 0.2s ease, transform 0.3s var(--ease-spring); }
+.tja-letter-card__sound { margin-top: 8px; font-size: 0.84rem; font-weight: 700; opacity: 0; transform: translateY(8px) scale(0.9); transition: opacity 0.45s ease, transform 0.55s var(--ease-spring); }
+.tja-letter-card.is-said .tja-letter-card__sound { opacity: 1; transform: none; }
+.tja-letter-card__back { background: linear-gradient(180deg, #18181B 0%, #000000 100%); color: #FFFFFF; border-color: var(--red); transform: rotateY(180deg); text-align: center; }
+.tja-letter-card__word { font-family: var(--font-geo); font-size: 1.25rem; font-weight: 700; }
+.tja-letter-card__read { margin-top: 4px; font-size: 0.8rem; font-weight: 700; color: var(--red); }
+@media (hover: hover) {
+  .tja-letter-card:hover { transform: translateY(-3px); }
+  .tja-letter-card:hover .tja-letter-card__front { border-color: var(--red); box-shadow: 0 10px 24px -12px rgba(252, 3, 4, 0.55); }
+  .tja-letter-card:hover .tja-letter-card__glyph { color: var(--red); transform: scale(1.12); }
+}
+.tja-alpha-grid.is-turning .tja-letter-card__inner { opacity: 0; transform: translateY(8px) scale(0.94); }
+.tja-alpha-grid .tja-letter-card:nth-child(2) .tja-letter-card__inner { transition-delay: 0s, 0.03s; }
+.tja-alpha-grid .tja-letter-card:nth-child(3) .tja-letter-card__inner { transition-delay: 0s, 0.06s; }
+.tja-alpha-grid .tja-letter-card:nth-child(4) .tja-letter-card__inner { transition-delay: 0s, 0.09s; }
+.tja-alpha-grid .tja-letter-card:nth-child(5) .tja-letter-card__inner { transition-delay: 0s, 0.12s; }
+.tja-alpha-grid .tja-letter-card:nth-child(6) .tja-letter-card__inner { transition-delay: 0s, 0.15s; }
+.tja-alpha-grid .tja-letter-card:nth-child(7) .tja-letter-card__inner { transition-delay: 0s, 0.18s; }
+.tja-alpha-grid .tja-letter-card:nth-child(8) .tja-letter-card__inner { transition-delay: 0s, 0.21s; }
+
+.tja-word-game { padding: 22px; display: flex; flex-direction: column; justify-content: space-between; gap: 16px; background: var(--ink); color: #FFFFFF; border-radius: var(--radius-lg); }
+.tja-word-game__head { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.tja-word-game__title { margin: 0; font-size: 1.1rem; font-weight: 800; color: #FFFFFF; }
+.tja-word-game__reset { min-height: 44px; padding: 6px 14px; border-radius: var(--radius-pill); border: 1px solid rgba(255, 255, 255, 0.28); background: rgba(255, 255, 255, 0.08); color: #FFFFFF; font-size: 0.82rem; font-weight: 700; }
+.tja-word-game__reset:hover { border-color: var(--red); background: var(--red); }
+.tja-slots { display: grid; grid-template-columns: repeat(9, 1fr); gap: 6px; }
+.tja-slot { height: 46px; border-radius: 10px; border: 1.5px dashed rgba(255, 255, 255, 0.35); background: rgba(255, 255, 255, 0.05); display: flex; align-items: center; justify-content: center; font-family: var(--font-geo); font-size: 1.2rem; font-weight: 700; transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.2s var(--ease-spring); }
+.tja-slot.is-filled { border-style: solid; border-color: var(--red); background: var(--red); transform: scale(1.04); }
+.tja-tray { display: flex; flex-wrap: wrap; gap: 8px; }
+.tja-chip { min-width: 46px; min-height: 46px; padding: 0 12px; border-radius: 50%; border: 1.5px solid rgba(255, 255, 255, 0.35); background: #1A1A1D; color: #FFFFFF; font-family: var(--font-geo); font-size: 1.25rem; font-weight: 700; transition: transform 0.2s var(--ease-spring), border-color 0.2s ease; }
+.tja-chip.is-next { border-color: var(--red); box-shadow: 0 0 0 3px rgba(252, 3, 4, 0.35); }
+.tja-chip.is-used { opacity: 0.22; pointer-events: none; }
+.tja-chip.is-wrong { animation: tjaShake 0.32s ease; border-color: var(--red); }
+@keyframes tjaShake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-5px); } 75% { transform: translateX(5px); } }
+.tja-word-game__win { padding: 14px; border-radius: var(--radius-md); background: rgba(252, 3, 4, 0.16); border: 1px solid var(--red); display: flex; flex-direction: column; gap: 10px; }
+.tja-word-game__win[hidden] { display: none; }
+
+/* ---------- Мягкое появление при прокрутке (только то, что ниже экрана на момент загрузки) ---------- */
+.tja-reveal .tja-rv:not(.is-in) { opacity: 0; transform: translateY(14px); }
+.tja-reveal .tja-rv { transition: opacity 0.7s ease, transform 0.8s var(--ease-spring); }
+.tja-reveal .tja-spot.tja-rv { transition: opacity 0.7s ease, transform 0.8s var(--ease-spring), border-color 0.26s var(--ease-spring), box-shadow 0.26s var(--ease-spring); }
+.tja-reveal .tja-steps.tja-rv:not(.is-in)::before { transform: scaleX(0); }
+
+
+/* ==========================================================================
+   TAMARJOBA 12 — дерево: шапка с «Курсы», главная кнопка, плитки, ленты, окна ветвей
+   ========================================================================== */
+
+/* ---------- Шапка: выпадающий список «Курсы» ---------- */
+.tja-nav__item { position: relative; display: flex; align-items: center; }
+.tja-nav__link--drop::after {
+  content: ""; width: 7px; height: 7px; margin: -3px 0 0 9px; border-right: 2px solid var(--red); border-bottom: 2px solid var(--red);
+  transform: rotate(45deg); transition: transform 0.25s var(--ease-spring), margin 0.25s;
+}
+.tja-nav__item:hover .tja-nav__link--drop::after, .tja-nav__item:focus-within .tja-nav__link--drop::after { transform: rotate(-135deg); margin-top: 3px; }
+.tja-sub {
+  list-style: none; margin: 0; padding: 8px; position: absolute; z-index: 70; top: calc(100% + 6px); left: -10px; min-width: 340px;
+  background: #FFFFFF; border: 1.5px solid var(--ink); border-radius: 20px; box-shadow: 0 24px 48px -18px rgba(0, 0, 0, 0.45);
+  opacity: 0; visibility: hidden; transform: translateY(-6px); transition: opacity 0.2s ease, transform 0.28s var(--ease-spring), visibility 0s 0.28s;
+}
+.tja-sub::before { content: ""; position: absolute; left: 0; right: 0; top: -10px; height: 10px; }
+.tja-nav__item:hover .tja-sub, .tja-nav__item:focus-within .tja-sub { opacity: 1; visibility: visible; transform: none; transition: opacity 0.2s ease, transform 0.28s var(--ease-spring); }
+.tja-sub a {
+  display: flex; align-items: center; gap: 12px; min-height: 46px; padding: 8px 12px; border-radius: 13px;
+  font-size: 0.94rem; font-weight: 700; transition: background-color 0.18s ease, color 0.18s ease;
+}
+.tja-sub a b { flex: none; width: 30px; height: 30px; display: grid; place-items: center; border-radius: 50%; background: var(--bg-deep); font-family: var(--font-geo); font-size: 0.95rem; color: var(--red-dark); transition: background-color 0.18s, color 0.18s; }
+.tja-sub a:hover { background: var(--bg); color: var(--red-dark); }
+.tja-sub a:hover b { background: var(--red); color: #FFFFFF; }
+
+/* ---------- Первый экран: главная кнопка «Узнай свой уровень» ---------- */
+.tja-hero { padding: 28px 0 56px; }
+.tja-hero__copy { gap: 22px; }
+.tja-level {
+  display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 16px; width: 100%; max-width: 540px; min-height: 88px; padding: 14px 22px 14px 16px;
+  border-radius: 24px; color: #FFFFFF; background-color: var(--red-dark); background-image: linear-gradient(180deg, #E50203 0%, #C70001 100%);
+  box-shadow: 0 16px 34px rgba(252, 3, 4, 0.3); transition: transform 0.25s var(--ease-spring), box-shadow 0.25s ease;
+}
+.tja-level:hover { transform: translateY(-3px); box-shadow: 0 22px 40px rgba(252, 3, 4, 0.38); }
+.tja-level__ic { width: 56px; height: 56px; display: grid; place-items: center; border-radius: 50%; background: #FFFFFF; color: var(--red); font-family: var(--font-geo); font-size: 1.9rem; font-weight: 700; }
+.tja-level__t { display: grid; gap: 2px; text-align: left; }
+.tja-level__t strong { font-size: 1.3rem; font-weight: 800; line-height: 1.15; }
+.tja-level__t small { font-size: 0.92rem; font-weight: 600; opacity: 0.92; }
+.tja-level__go { font-size: 1.5rem; font-weight: 800; }
+.tja-second { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 16px 28px; }
+.tja-alpha-link { display: inline-flex; align-items: center; gap: 8px; min-height: 48px; font-size: 0.98rem; font-weight: 800; border-bottom: 2px solid var(--red); transition: color 0.2s ease, gap 0.25s var(--ease-spring); }
+.tja-alpha-link:hover { color: var(--red-dark); gap: 14px; }
+.tja-hero__stage { position: relative; padding: 18px; display: block; }
+.tja-hero__stage .tja-promo { height: 100%; }
+.tja-promo__dots { position: absolute; z-index: 3; top: 26px; right: 26px; padding: 0 4px; background: rgba(255, 255, 255, 0.92); border: 1px solid var(--line-strong); border-radius: var(--radius-pill); }
+
+/* ---------- Цифры (три, одной полосой) ---------- */
+.tja-sec--facts { padding: 40px 0; }
+.tja-facts { margin: 0; display: grid; grid-template-columns: 1.1fr 1fr 1.15fr; }
+.tja-fact { padding: 4px 36px; border-left: 1px solid var(--line-strong); }
+.tja-fact:first-child { padding-left: 0; border-left: 0; }
+.tja-fact dt { display: flex; align-items: baseline; flex-wrap: wrap; gap: 4px 10px; margin: 0; }
+.tja-fact__num { font-size: clamp(2.6rem, 4.6vw, 4.2rem); font-weight: 800; line-height: 1; letter-spacing: -0.035em; }
+.tja-fact__pre { font-family: var(--font-hand); font-size: 1.6rem; color: var(--red-dark); }
+.tja-fact dd { margin: 8px 0 0; font-size: 0.98rem; font-weight: 600; color: var(--silver-dark); max-width: 24ch; }
+
+/* ---------- Навигатор: первый уровень дерева ---------- */
+.tja-nodes { display: grid; grid-template-columns: 1.3fr 1fr 1fr; gap: 18px; }
+.tja-node {
+  display: flex; flex-direction: column; align-items: flex-start; gap: 10px; min-height: 214px; padding: 26px 26px 24px; overflow: hidden; color: var(--ink);
+  background-color: var(--panel);
+}
+.tja-node:hover { transform: translateY(-4px); }
+.tja-node__ic {
+  width: 54px; height: 54px; display: grid; place-items: center; border-radius: 50%; background: var(--ink); color: #FFFFFF;
+  font-family: var(--font-geo); font-size: 1.6rem; font-weight: 700; transition: background-color 0.25s ease, transform 0.35s var(--ease-spring);
+}
+.tja-node:hover .tja-node__ic { background: var(--red); transform: rotate(-8deg) scale(1.06); }
+.tja-node .tja-h3 { font-size: 1.32rem; }
+.tja-node p { margin: 0; font-size: 0.97rem; color: var(--ink-soft); max-width: 34ch; }
+.tja-node .tja-badge { margin-top: auto; }
+.tja-node__go { position: absolute; right: 22px; top: 24px; font-size: 1.4rem; font-weight: 800; color: var(--red); transition: transform 0.3s var(--ease-spring); }
+.tja-node:hover .tja-node__go { transform: translateX(5px); }
+.tja-node--group { background-image: radial-gradient(420px circle at var(--mx, -600px) var(--my, -600px), rgba(252, 3, 4, 0.1), transparent 65%); }
+.tja-node--group .tja-node__ic { background: var(--red); }
+
+/* ---------- Путь ученика: четыре шага ---------- */
+.tja-steps { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.tja-sec--tight { padding: 64px 0; }
+
+/* ---------- Почему у нас получается ---------- */
+.tja-why { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: 1.1fr 1fr 1fr 1.1fr; counter-reset: why; }
+.tja-why li { counter-increment: why; display: grid; align-content: start; gap: 6px; padding: 8px 28px 8px 0; margin-right: 28px; border-right: 1px solid var(--line-strong); }
+.tja-why li:last-child { border-right: 0; margin-right: 0; }
+.tja-why li::before { content: counter(why, decimal-leading-zero); font-family: var(--font-hand); font-size: 2rem; line-height: 1; color: var(--red); }
+.tja-why strong { font-size: 1.12rem; font-weight: 800; line-height: 1.25; }
+.tja-why span { font-size: 0.95rem; color: var(--ink-soft); }
+
+/* ---------- О школе и лента педагогов ---------- */
+.tja-about { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 40px; align-items: center; margin-bottom: 34px; }
+.tja-founder { margin: 0; }
+.tja-founder__photo { width: 190px; height: 238px; object-fit: cover; object-position: 50% 14%; border: 2px solid var(--ink); border-radius: 95px 95px 18px 18px; background: #EFEFEF; }
+.tja-about__body { display: flex; flex-direction: column; align-items: flex-start; gap: 12px; }
+.tja-about__name { margin: 0; font-size: clamp(1.8rem, 3vw, 2.5rem); font-weight: 800; line-height: 1.1; }
+.tja-about__p { margin: 0; font-size: 1.1rem; max-width: 46ch; color: var(--ink-soft); }
+
+.tja-lent__nav { display: flex; gap: 8px; margin-left: auto; }
+.tja-lent__btn { width: 46px; height: 46px; border-radius: 50%; border: 1.5px solid var(--ink); background: #FFFFFF; font-size: 1.15rem; font-weight: 800; transition: background-color 0.2s, color 0.2s, opacity 0.2s; }
+.tja-lent__btn:hover:not(:disabled) { background: var(--ink); color: #FFFFFF; }
+.tja-lent__btn:disabled { opacity: 0.3; cursor: default; }
+.tja-lent__track { display: flex; gap: 16px; list-style: none; margin: 0; padding: 4px 0 28px; margin-bottom: -18px; overflow-x: auto; overscroll-behavior-x: contain; scroll-snap-type: x mandatory; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+.tja-lent__track::-webkit-scrollbar { display: none; }
+.tja-lent__track > * { flex: 0 0 auto; scroll-snap-align: start; }
+.tja-team-item { position: relative; overflow: hidden; display: flex; flex-direction: column; width: 216px; cursor: pointer; background-color: var(--panel); }
+.tja-team-item__img { width: 100%; aspect-ratio: 1 / 1; object-fit: cover; transition: transform 0.6s var(--ease-spring); }
+.tja-team-item:hover .tja-team-item__img { transform: scale(1.05); }
+.tja-team-item__info { padding: 12px 14px 16px; min-height: 96px; }
+.tja-team-item__name { display: block; font-size: 1.02rem; font-weight: 800; }
+.tja-team-item__role { display: block; font-size: 0.84rem; color: var(--silver-dark); margin-top: 3px; line-height: 1.35; }
+.tja-team-item__open {
+  position: absolute; top: 10px; right: 10px; min-width: 44px; min-height: 44px; border-radius: 50%; border: 1px solid var(--line-strong);
+  background: rgba(255, 255, 255, 0.94); font-size: 1.2rem; font-weight: 800; display: inline-flex; align-items: center; justify-content: center;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+.tja-team-item:hover .tja-team-item__open { background: var(--red); border-color: var(--red); color: #FFFFFF; }
+
+/* ---------- Статьи ---------- */
+.tja-blog { display: grid; grid-template-columns: 1.3fr 1fr 1fr; gap: 18px; }
+.tja-post { display: flex; flex-direction: column; gap: 14px; padding: 12px 12px 18px; overflow: hidden; color: inherit; }
+.tja-post:hover { transform: translateY(-4px); }
+.tja-post__cover { position: relative; display: flex; align-items: center; justify-content: center; gap: 10px; height: 150px; overflow: hidden; border-radius: 16px; font-family: var(--font-geo); font-size: 4.2rem; font-weight: 700; line-height: 1; }
+.tja-post__cover b { font-weight: 700; }
+.tja-post__cover--k { background: var(--ink); color: #FFFFFF; }
+.tja-post__cover--k b:nth-child(1) { color: var(--red); }
+.tja-post__cover--k b:nth-child(2) { transform: translateY(10px); }
+.tja-post__cover--r { background: var(--red); color: #FFFFFF; }
+.tja-post__cover--g { background: var(--bg-deep); color: var(--ink); }
+.tja-post__col { display: flex; flex-direction: column; gap: 10px; padding: 0 6px; }
+.tja-post__t { margin: 0; font-size: 1.12rem; font-weight: 800; line-height: 1.25; }
+.tja-post:hover .tja-post__t { color: var(--red-dark); }
+
+/* ---------- Контакты: места сверху быстрых связей ---------- */
+.tja-quick-links { grid-template-columns: 1fr 1fr; }
+.tja-quick-link:nth-child(3) { grid-column: auto; }
+.tja-places { gap: 18px; justify-content: flex-start; }
+
+/* ---------- Подвал: короткий ---------- */
+.tja-footer { background: #FFFFFF; border-top: 2px solid var(--ink); padding: 34px 0 22px; }
+.tja-footer__row { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 18px 36px; margin-bottom: 22px; }
+.tja-footer__logo { width: 180px; height: auto; }
+.tja-footer__nav { display: flex; flex-wrap: wrap; gap: 0 22px; }
+.tja-footer__soc { display: flex; flex-wrap: wrap; gap: 8px; }
+.tja-footer__nav a { display: inline-flex; align-items: center; min-height: 44px; font-size: 0.95rem; font-weight: 700; }
+.tja-footer__nav a:hover { color: var(--red); }
+.tja-footer__soc a { display: inline-flex; align-items: center; min-height: 44px; padding: 8px 16px; border: 1.5px solid var(--ink); border-radius: var(--radius-pill); font-size: 0.88rem; font-weight: 700; transition: background-color 0.2s, color 0.2s; }
+.tja-footer__soc a:hover { background: var(--ink); color: #FFFFFF; }
+.tja-footer__copy { display: block; padding-top: 16px; border-top: 1px solid var(--line); font-size: 0.86rem; font-weight: 600; color: var(--ink-soft); }
+
+/* ---------- Окна ветвей дерева ---------- */
+.tja-modal--mid { width: min(780px, 100%); }
+.tja-tabs { display: flex; gap: 6px; padding: 5px; background: var(--bg-deep); border-radius: 18px; }
+.tja-tab { flex: 1; min-height: 48px; padding: 8px 12px; border: 0; border-radius: 14px; background: transparent; font-size: 0.95rem; font-weight: 800; transition: background-color 0.2s ease, color 0.2s ease; }
+.tja-tab:hover { background: rgba(255, 255, 255, 0.7); }
+.tja-tab[aria-selected="true"] { background: var(--ink); color: #FFFFFF; }
+.tja-tabpanel { display: grid; gap: 16px; }
+.tja-tabpanel[hidden] { display: none; }
+.tja-chips { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 10px; }
+.tja-chips li { padding: 10px 16px; background: var(--bg); border: 1px solid var(--line-strong); border-radius: 14px; font-size: 0.92rem; font-weight: 600; }
+.tja-chips strong { color: var(--red); font-size: 1.2rem; font-weight: 800; margin-right: 3px; }
+.tja-levels { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: 1fr 1fr 1.12fr; gap: 14px; counter-reset: lv; }
+.tja-lv { position: relative; display: grid; gap: 10px; align-content: start; padding: 18px; background: #FFFFFF; border: 1.5px solid var(--ink); border-radius: 20px; }
+.tja-lv:not(:last-child)::after { content: "→"; position: absolute; z-index: 2; right: -13px; top: 50%; width: 24px; height: 24px; margin-top: -12px; display: grid; place-items: center; border-radius: 50%; background: var(--red); color: #FFFFFF; font-size: 0.8rem; font-weight: 800; }
+.tja-lv__n { display: inline-grid; place-items: center; width: 62px; height: 46px; border-radius: 14px; background: var(--ink); color: #FFFFFF; font-size: 1.3rem; font-weight: 800; }
+.tja-lv:last-child .tja-lv__n { background: var(--red-dark); }
+.tja-lv__b { display: grid; gap: 4px; }
+.tja-lv__b strong { font-size: 1.02rem; }
+.tja-lv__b span { font-size: 0.88rem; color: var(--ink-soft); }
+.tja-more { display: flex; align-items: center; justify-content: space-between; gap: 12px; width: 100%; min-height: 52px; padding: 10px 18px; border: 1.5px dashed var(--ink); border-radius: 16px; background: transparent; font-size: 0.96rem; font-weight: 800; text-align: left; transition: background-color 0.2s, border-color 0.2s; }
+.tja-more:hover { background: var(--bg); border-color: var(--red); }
+.tja-more__c { flex: none; width: 10px; height: 10px; margin-top: -4px; border-right: 2px solid var(--red); border-bottom: 2px solid var(--red); transform: rotate(45deg); transition: transform 0.3s var(--ease-spring), margin 0.3s; }
+.tja-more[aria-expanded="true"] .tja-more__c { transform: rotate(-135deg); margin-top: 4px; }
+.tja-topics[hidden] { display: none; }
+.tja-topics ol { margin: 0; padding: 0; list-style: none; counter-reset: tjt; columns: 2; column-gap: 28px; }
+.tja-topics li { counter-increment: tjt; break-inside: avoid; display: flex; gap: 10px; padding: 7px 0; border-bottom: 1px solid var(--line-strong); font-size: 0.92rem; line-height: 1.35; }
+.tja-topics li::before { content: counter(tjt, decimal-leading-zero); flex: 0 0 auto; color: var(--red); font-weight: 800; font-size: 0.8rem; padding-top: 2px; }
+@media (max-width: 560px) { .tja-topics ol { columns: 1; } }
+.tja-cities { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.tja-city { display: grid; gap: 6px; padding: 18px; background: var(--bg); border-radius: 18px; border-left: 3px solid var(--red); font-weight: 700; }
+.tja-city__n { font-size: 0.8rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: var(--red-dark); }
+.tja-rowlist { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.tja-rowlist li { display: grid; grid-template-columns: 40px minmax(0, 1fr); gap: 14px; align-items: center; padding: 14px 16px; background: var(--bg); border: 1px solid var(--line); border-radius: 18px; }
+.tja-rowlist b { width: 40px; height: 40px; display: grid; place-items: center; border-radius: 50%; background: var(--red); color: #FFFFFF; font-weight: 800; }
+.tja-rowlist div { display: grid; gap: 1px; }
+.tja-rowlist strong { font-size: 1.02rem; }
+.tja-rowlist span { font-size: 0.9rem; color: var(--ink-soft); }
+.tja-note { margin: 0; font-size: 0.92rem; color: var(--ink-soft); }
+.tja-modal__cta { display: flex; flex-wrap: wrap; gap: 10px; }
+.tja-modal__cta .tja-cta { flex: 1 1 200px; }
+.tja-kidsrow { display: flex; gap: 12px; }
+.tja-kt { width: 64px; height: 64px; display: grid; place-items: center; font-family: var(--font-geo); font-size: 2rem; font-weight: 700; border: 2px solid var(--ink); border-radius: 18px; }
+.tja-kt--w { background: #FFFFFF; box-shadow: 4px 4px 0 var(--red); transform: rotate(-5deg); }
+.tja-kt--r { background: var(--red); color: #FFFFFF; box-shadow: 4px 4px 0 var(--ink); transform: rotate(3deg); }
+.tja-kt--k { background: var(--ink); color: #FFFFFF; box-shadow: 4px 4px 0 var(--red); transform: rotate(-2deg); }
+.tja-modal .tja-badge { font-size: 0.7rem; }
+
+/* ==========================================================================
+   АДАПТИВ
+   ========================================================================== */
+@media (max-width: 1100px) {
+  .tja-header__inner { justify-content: space-between; }
+  .tja-burger {
+    display: inline-flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; width: 48px; height: 48px;
+    border: 1.5px solid var(--ink); border-radius: 14px; background: #FFFFFF; padding: 0;
+  }
+  .tja-burger span { display: block; width: 20px; height: 2px; background: var(--ink); border-radius: 2px; transition: transform 0.3s var(--ease-spring), opacity 0.2s ease; }
+  .tja-header.is-open .tja-burger span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .tja-header.is-open .tja-burger span:nth-child(2) { opacity: 0; }
+  .tja-header.is-open .tja-burger span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+  .tja-panel {
+    display: none; position: absolute; top: 100%; left: 0; right: 0; flex-direction: column; align-items: stretch; gap: 14px;
+    padding: 6px 24px 20px; background: #FFFFFF; border-bottom: 2px solid var(--ink); box-shadow: 0 24px 40px -20px rgba(0, 0, 0, 0.35);
+    max-height: calc(100dvh - var(--header-h)); overflow-y: auto;
+  }
+  .tja-header.is-open .tja-panel { display: flex; animation: tjaMenu 0.28s var(--ease-spring); }
+  @keyframes tjaMenu { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: none; } }
+  .tja-nav { flex-direction: column; align-items: stretch; gap: 0; }
+  .tja-nav__item { display: block; }
+  .tja-nav__link { min-height: 50px; padding: 8px 6px; border-radius: 0; border-bottom: 1px solid var(--line); font-size: 1.02rem; justify-content: space-between; text-align: left; width: 100%; }
+  .tja-nav__link:hover { background: transparent; }
+  .tja-nav__link--drop::after { display: none; }
+  .tja-sub { position: static; z-index: auto; min-width: 0; margin: 2px 0 6px 10px; padding: 0 0 0 12px; border: 0; border-left: 2px solid var(--line-red); border-radius: 0; background: transparent; box-shadow: none; opacity: 1; visibility: visible; transform: none; transition: none; }
+  .tja-sub::before { display: none; }
+  .tja-sub a { min-height: 46px; padding: 6px 4px; border-radius: 0; font-size: 0.97rem; font-weight: 600; }
+  .tja-sub a b { width: 28px; height: 28px; }
+  .tja-header__right { flex-direction: column; align-items: stretch; }
+  .tja-header__right .tja-btn { min-height: 50px; font-size: 1rem; }
+  .tja-brand { margin-right: auto; }
+}
+
+@media (max-width: 1060px) {
+  .tja-hero__grid, .tja-book-grid { grid-template-columns: minmax(0, 1fr); }
+  .tja-promo__frame { min-height: 0; aspect-ratio: 4 / 3; }
+  .tja-hero__stage .tja-promo { height: auto; }
+  .tja-nodes { grid-template-columns: 1fr 1fr; }
+  .tja-steps { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 30px; }
+  .tja-steps::before { display: none; }
+  .tja-why { grid-template-columns: 1fr 1fr; row-gap: 22px; }
+  .tja-why li:nth-child(2) { border-right: 0; margin-right: 0; }
+  .tja-blog { grid-template-columns: 1fr 1fr; }
+  .tja-blog .tja-post:first-child { grid-column: 1 / -1; }
+}
+
+@media (max-width: 720px) {
+  :root { --header-h: 60px; }
+  .tja-wrap { padding: 0 16px; }
+  .tja-header__inner { padding: 6px 14px; min-height: var(--header-h); }
+  .tja-brand__logo { height: 34px; }
+  .tja-panel { padding: 4px 16px 18px; }
+
+  .tja-hero { padding: 6px 0 32px; }
+  .tja-hero__grid { gap: 12px; }
+  .tja-hero__copy { padding: 18px 16px 20px; gap: 14px; }
+  .tja-h1 { font-size: 1.9rem; }
+  .tja-lead { font-size: 0.98rem; }
+  .tja-level { min-height: 76px; gap: 12px; padding: 10px 16px 10px 12px; border-radius: 20px; }
+  .tja-level__ic { width: 48px; height: 48px; font-size: 1.6rem; }
+  .tja-level__t strong { font-size: 1.12rem; }
+  .tja-level__t small { font-size: 0.84rem; }
+  .tja-second { flex-direction: column; align-items: flex-start; gap: 4px; }
+  .tja-hero__stage { padding: 10px; }
+  .tja-promo__frame { aspect-ratio: auto; height: 300px; border-radius: 22px; }
+  .tja-has-video .tja-promo__slide--video img { display: none; }
+  .tja-has-video .tja-promo__slide--video video { display: block; }
+  .tja-promo__slide:not(.tja-promo__slide--video) img { object-position: 50% 22%; }
+  .tja-promo__card { left: 8px; right: 8px; bottom: 8px; padding: 10px 12px; gap: 2px; }
+  .tja-promo__title { font-size: 0.98rem; }
+  .tja-promo__text { font-size: 0.84rem; }
+  .tja-promo__btn { margin-top: 4px; min-height: 40px; padding: 6px 16px; font-size: 0.85rem; }
+  .tja-promo__dots { top: 14px; right: 14px; }
+
+  .tja-sec { padding: 36px 0; }
+  .tja-sec--tight { padding: 36px 0; }
+  .tja-sec__head { margin-bottom: 18px; padding-bottom: 10px; }
+  .tja-sec__tag { display: none; }
+  .tja-h2 { font-size: 1.55rem; }
+  .tja-sec--facts { padding: 22px 0; }
+  .tja-facts { grid-template-columns: 0.8fr 1fr 1.2fr; }
+  .tja-fact { padding: 0 0 0 10px; }
+  .tja-fact:first-child { padding-left: 0; }
+  .tja-fact dt { gap: 2px 5px; }
+  .tja-fact__num { font-size: 1.65rem; letter-spacing: -0.04em; }
+  .tja-fact__pre { font-size: 1rem; }
+  .tja-fact dd { margin-top: 4px; font-size: 0.74rem; line-height: 1.3; }
+
+  .tja-nodes { grid-template-columns: 1fr 1fr; gap: 10px; }
+  .tja-node { min-height: 150px; padding: 14px 14px 12px; gap: 6px; border-radius: 18px; }
+  .tja-node__ic { width: 40px; height: 40px; font-size: 1.25rem; }
+  .tja-node .tja-h3 { font-size: 1.02rem; }
+  .tja-node p { font-size: 0.8rem; line-height: 1.35; }
+  .tja-node__go { right: 12px; top: 14px; font-size: 1.15rem; }
+  .tja-node .tja-badge { margin-top: 2px; padding: 3px 7px; font-size: 0.62rem; letter-spacing: 0.02em; }
+
+  .tja-steps { grid-template-columns: minmax(0, 1fr); gap: 12px; row-gap: 12px; }
+  .tja-steps::before { display: block; top: 22px; bottom: 22px; left: 19px; right: auto; width: 2px; height: auto; background: linear-gradient(180deg, var(--red), var(--ink) 80%); transform-origin: center top; }
+  .tja-reveal .tja-steps.tja-rv:not(.is-in)::before { transform: scaleY(0); }
+  .tja-step { padding: 0 0 0 56px; min-height: 40px; }
+  .tja-step__n { width: 40px; height: 40px; font-size: 0.8rem; }
+  .tja-step .tja-h3 { font-size: 1rem; }
+  .tja-step p { margin-top: 1px; font-size: 0.86rem; }
+
+  .tja-why { grid-template-columns: 1fr 1fr; gap: 14px 12px; }
+  .tja-why li { padding: 12px 10px 12px 0; margin-right: 0; border-right: 0; border-top: 1px solid var(--line-strong); gap: 3px; }
+  .tja-why li::before { font-size: 1.4rem; }
+  .tja-why strong { font-size: 0.95rem; }
+  .tja-why span { font-size: 0.8rem; line-height: 1.35; }
+
+  .tja-reviews { padding: 48px 20px 40px; border-radius: 22px; }
+  .tja-reviews__mark { left: 14px; top: -4px; font-size: 4.6rem; }
+  .tja-rev { gap: 14px; }
+  .tja-rev blockquote { font-size: 1rem; line-height: 1.45; }
+  .tja-reviews__count { right: 16px; bottom: 12px; }
+
+  .tja-about { grid-template-columns: 112px minmax(0, 1fr); gap: 16px; margin-bottom: 18px; }
+  .tja-founder__photo { width: 112px; height: 140px; border-radius: 56px 56px 14px 14px; }
+  .tja-about__body { gap: 8px; }
+  .tja-about__name { font-size: 1.4rem; }
+  .tja-about__p { font-size: 0.92rem; }
+  .tja-lent__nav { display: none; }
+  .tja-lent__track { gap: 12px; margin: 0 -16px; padding: 4px 16px 8px; scroll-padding-inline: 16px; }
+  .tja-team-item { width: 148px; }
+  .tja-team-item__info { padding: 8px 10px 12px; min-height: 84px; }
+  .tja-team-item__name { font-size: 0.92rem; }
+  .tja-team-item__role { font-size: 0.74rem; }
+  .tja-team-item__open { top: 6px; right: 6px; min-width: 44px; min-height: 44px; }
+
+  .tja-blog { display: flex; grid-template-columns: none; }
+  .tja-blog .tja-post { flex: 0 0 74%; max-width: 300px; }
+  .tja-post { gap: 10px; padding: 10px 10px 14px; }
+  .tja-post__cover { height: 96px; font-size: 3.2rem; }
+  .tja-post__t { font-size: 1rem; }
+
+  .tja-form, .tja-places { padding: 18px 16px; }
+  .tja-form { gap: 14px; }
+  .tja-form__fields { grid-template-columns: 1fr; gap: 12px; }
+  .tja-quick-links { gap: 8px; }
+
+  .tja-footer { padding: 24px 0 16px; }
+  .tja-footer__row { gap: 6px; margin-bottom: 12px; }
+  .tja-footer__logo { width: 150px; }
+  .tja-footer__nav { gap: 0 16px; }
+  .tja-footer__nav a { min-height: 44px; }
+  .tja-footer__soc a { padding: 8px 14px; }
+
+  .tja-mb { padding: 8px; align-items: stretch; }
+  .tja-modal { padding: 18px 14px; max-height: calc(100dvh - 16px); margin: auto 0; border-radius: 22px; gap: 14px; }
+  .tja-modal__title { font-size: 1.3rem; }
+  .tja-drawer__about { grid-template-columns: 84px 1fr; gap: 14px; }
+  .tja-drawer__photo { width: 84px; height: 84px; }
+  .tja-tier-row { flex-direction: column; align-items: flex-start; gap: 2px; }
+  .tja-tier-row__val { text-align: left; }
+  .tja-shop__item { grid-template-columns: 1fr; gap: 12px; }
+  .tja-shop__buy { grid-template-columns: 1fr auto; align-items: center; justify-items: start; text-align: left; }
+  .tja-tab { padding: 6px 8px; font-size: 0.84rem; line-height: 1.2; }
+  .tja-levels { grid-template-columns: minmax(0, 1fr); gap: 16px; }
+  .tja-lv { grid-template-columns: 62px minmax(0, 1fr); align-items: center; padding: 12px 14px; gap: 14px; }
+  .tja-lv:not(:last-child)::after { content: "↓"; right: auto; left: 31px; top: auto; bottom: -19px; margin: 0; }
+  .tja-cities { grid-template-columns: 1fr; }
+  .tja-chips { gap: 6px; }
+  .tja-chips li { padding: 7px 9px; font-size: 0.8rem; border-radius: 12px; }
+  .tja-chips strong { font-size: 1.05rem; }
+  .tja-modal__cta .tja-cta { flex: 1 1 100%; }
+  .tja-alpha-layout { grid-template-columns: minmax(0, 1fr); }
+  .tja-alpha-deck { padding: 12px; }
+  .tja-alpha-grid { gap: 8px; }
+  .tja-letter-card { height: 88px; }
+  .tja-letter-card__face { padding: 6px 4px; }
+  .tja-letter-card__glyph { font-size: 1.85rem; }
+  .tja-letter-card__sound { margin-top: 4px; font-size: 0.7rem; }
+  .tja-letter-card__word { font-size: 0.95rem; }
+  .tja-letter-card__read { font-size: 0.64rem; line-height: 1.2; }
+  .tja-word-game { padding: 16px; }
+  .tja-slots { gap: 4px; }
+  .tja-slot { height: 40px; font-size: 1.05rem; }
+}
+
+@media (max-width: 380px) {
+  .tja-h1 { font-size: 1.7rem; }
+  .tja-node p { font-size: 0.76rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
+}
+
+/* на телефоне приветствие в одну строку — значок звука не переносится */
+@media (max-width: 560px) {
+  .tja-hello-btn { flex-wrap: nowrap; gap: 6px; padding-right: 10px; }
+  .tja-hello-btn__geo { font-size: 1.2rem; white-space: nowrap; }
+  .tja-hello-btn__tr { font-size: 0.92rem; white-space: nowrap; min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+  .tja-hello-btn__sound { flex: 0 0 28px; }
+}
