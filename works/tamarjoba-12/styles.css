@@ -43,7 +43,7 @@ html {
   -webkit-text-size-adjust: 100%;
 }
 
-body.tja-body { margin: 0; min-height: 100vh; background: var(--bg); color: var(--ink); overflow-x: hidden; }
+body.tja-body { margin: 0; min-height: 100vh; background: var(--bg); color: var(--ink); overflow-x: clip; } /* clip, не hidden: hidden ломает «прилипающую» шапку (23.11) */
 body.tja-body.is-modal-open { overflow: hidden; }
 
 img { max-width: 100%; height: auto; display: block; }
@@ -806,7 +806,7 @@ button { cursor: pointer; }
 
 /* 23.11: пока открыто меню на телефоне, страница под ним стоит; листается только само меню, фон затемнён */
 @media (max-width: 1100px) {
-  html.tja-menu-open, html.tja-menu-open body { overflow: hidden; }
+  html.tja-menu-open { overflow: hidden; } /* только html: если прятать и у body, шапка-«липучка» уезжает вместе со страницей (замечание Романа 23.11) */
   html.tja-menu-open body::after { content: ''; position: fixed; inset: 0; background: rgba(0,0,0,0.28); z-index: 40; }
 }
 
