@@ -24,7 +24,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Neucha&family=Noto+Serif+Georgian:wght@600;700&family=Open+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=20261123b">
+  <link rel="stylesheet" href="styles.css?v=20261123c">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -106,7 +106,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
           <a class="tja-nav__link" href="#contacts">Контакты</a>
         </nav>
         <div class="tja-header__right">
-          <a class="tja-btn tja-btn--ghost" href="https://tamarjoba.site/test" target="_blank" rel="noopener">Узнать свой уровень</a>
+          <a class="tja-btn tja-btn--ghost" href="#level" data-level-start>Узнать свой уровень</a>
           <a class="tja-btn tja-btn--red" href="#contacts">Связаться с нами</a>
         </div>
       </div>
@@ -136,10 +136,10 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
           <h1 class="tja-h1">Учить грузинский <em>легко!</em> Вместе с Тамарджобой</h1>
           <p class="tja-lead">Группы в Тбилиси и Батуми, онлайн и индивидуально.</p>
 
-          <a class="tja-level" href="https://tamarjoba.site/test" target="_blank" rel="noopener">
+          <a class="tja-level" href="#level" data-level-start>
             <span class="tja-level__ic" aria-hidden="true">ა</span>
-            <span class="tja-level__t"><strong>Узнай свой уровень языка</strong><small>Быстрая диагностика, 15 вопросов</small></span>
-            <span class="tja-level__go" aria-hidden="true">↗</span>
+            <span class="tja-level__t"><strong>Узнай свой уровень языка</strong><small>Тест прямо здесь, 15 вопросов</small></span>
+            <span class="tja-level__go" aria-hidden="true">↓</span>
           </a>
 
           <div class="tja-second">
@@ -184,6 +184,23 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
             <dd>подписчиков в соцсетях</dd>
           </div>
         </dl>
+      </div>
+    </section>
+
+    <section class="tja-sec tja-sec--gray tja-sec--tight tja-sec--lvl" id="level" aria-label="Узнайте свой уровень">
+      <div class="tja-wrap">
+        <div class="tja-lvl" id="tja-lvl" data-state="intro">
+          <div class="tja-lvl__chars" aria-hidden="true"><span>ა</span><span>ბ</span><span>გ</span><span>დ</span><span>ე</span></div>
+          <div class="tja-lvl__intro" id="tja-lvl-intro">
+            <div class="tja-lvl__copy">
+              <h2 class="tja-h2">Узнайте свой уровень</h2>
+              <p>15 вопросов, около 3 минут, результат сразу</p>
+            </div>
+            <button type="button" class="tja-cta tja-cta--red tja-lvl__start" id="tja-lvl-start">Начать тест <span aria-hidden="true">→</span></button>
+          </div>
+          <div class="tja-lvl__quiz" id="tja-lvl-quiz" hidden></div>
+          <div class="tja-lvl__res" id="tja-lvl-res" hidden></div>
+        </div>
       </div>
     </section>
 
@@ -242,9 +259,9 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
           <span class="tja-sec__tag">четыре шага</span>
         </div>
         <ol class="tja-steps tja-rv">
-          <li class="tja-step">
+          <li class="tja-step" data-level-start-li>
             <b class="tja-step__n">01</b>
-            <h3 class="tja-h3">Узнайте свой уровень</h3>
+            <h3 class="tja-h3"><a class="tja-step__a" href="#level" data-level-start>Узнайте свой уровень</a></h3>
             <p>Тест, 15 вопросов.</p>
           </li>
           <li class="tja-step">
@@ -532,7 +549,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
           <div class="tja-tray" id="tja-word-tray" aria-label="Кнопки грузинских букв"></div>
           <div class="tja-word-game__win" id="tja-word-win" hidden>
             <strong>Гамарджоба! Так здороваются по-грузински.</strong>
-            <a class="tja-cta tja-cta--red" href="https://tamarjoba.site/test" target="_blank" rel="noopener">Пройти тест на знания языка <span aria-hidden="true">↗</span></a>
+            <a class="tja-cta tja-cta--red" href="#level" data-level-start>Пройти тест на знания языка <span aria-hidden="true">→</span></a>
           </div>
         </div>
       </div>
@@ -581,21 +598,21 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
           <li><strong>2</strong> раза в неделю</li>
         </ul>
         <ol class="tja-levels">
-          <li class="tja-lv">
+          <li class="tja-lv" data-step="a1">
             <b class="tja-lv__n">A1</b>
             <div class="tja-lv__b">
               <strong>40 часов · 5 месяцев</strong>
               <span>4 часа разговорной практики бесплатно</span>
             </div>
           </li>
-          <li class="tja-lv">
+          <li class="tja-lv" data-step="a2">
             <b class="tja-lv__n">A2</b>
             <div class="tja-lv__b">
               <strong>32 часа · 4 месяца</strong>
               <span>3 часа разговорной практики бесплатно</span>
             </div>
           </li>
-          <li class="tja-lv">
+          <li class="tja-lv" data-step="a2plus">
             <b class="tja-lv__n">A2+</b>
             <div class="tja-lv__b">
               <strong>40 часов · 5 месяцев</strong>
@@ -667,7 +684,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
 
       <div class="tja-modal__cta">
         <button type="button" class="tja-cta tja-cta--red" id="tja-group-book" data-book="Групповое онлайн">Записаться в группу</button>
-        <a class="tja-cta tja-cta--ghost" href="https://tamarjoba.site/test" target="_blank" rel="noopener">Узнать свой уровень <span aria-hidden="true">↗</span></a>
+        <a class="tja-cta tja-cta--ghost" href="#level" data-level-start>Узнать свой уровень <span aria-hidden="true">→</span></a>
       </div>
     </div>
   </div>
@@ -820,7 +837,8 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
   </div>
 
   <script src="promo.js?v=20261123b" defer></script>
-  <script src="script.js?v=20261123b" defer></script>
+  <script src="test-data.js?v=20261123a" defer></script>
+  <script src="script.js?v=20261123c" defer></script>
 <a class="osb-bot" href="https://t.me/opensites_io?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5%21%20%D0%A1%D0%BC%D0%BE%D1%82%D1%80%D1%8E%20%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%20%D1%81%D0%B0%D0%B9%D1%82%D0%B0%20%D0%B4%D0%BB%D1%8F%20%C2%ABTamarjoba%C2%BB%20%E2%80%94%20%D1%85%D0%BE%D1%87%D1%83%20%D1%82%D0%B0%D0%BA%D0%BE%D0%B9" target="_blank" rel="noopener"><span class="osb-in"><span>Сделано в <span class="osb-mark"><span class="osb-dot"></span>open-sites.io</span></span><span class="osb-cta">Написать нам →</span></span></a>
 <script src="https://crm.3.78.134.4.sslip.io/e.js" defer></script>
 </body>

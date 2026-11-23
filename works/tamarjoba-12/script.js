@@ -928,12 +928,14 @@
   function closeMenu() {
     if (!header || !header.classList.contains('is-open')) return;
     header.classList.remove('is-open');
+    document.documentElement.classList.remove('tja-menu-open');
     burger.setAttribute('aria-expanded', 'false');
     burger.setAttribute('aria-label', 'Открыть меню');
   }
   if (burger && header) {
     burger.addEventListener('click', function () {
       var open = header.classList.toggle('is-open');
+      document.documentElement.classList.toggle('tja-menu-open', open);
       burger.setAttribute('aria-expanded', open ? 'true' : 'false');
       burger.setAttribute('aria-label', open ? 'Закрыть меню' : 'Открыть меню');
     });
@@ -941,7 +943,9 @@
       if (e.target.closest('.tja-panel a')) closeMenu();
     });
     document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeMenu(); });
-    document.addEventListener('pointerdown', function (e) { if (!e.target.closest('#tja-header')) closeMenu(); });
+    /* 23.11 слово Романа: меню не закрывается от прокрутки — только крестиком или касанием (не свайпом) по свободному месту.
+       click после свайпа браузер не присылает, поэтому прокрутка меню не трогает. */
+    document.addEventListener('click', function (e) { if (!e.target.closest('#tja-header')) closeMenu(); });
     window.addEventListener('resize', function () { if (window.innerWidth > 1100) closeMenu(); });
   }
 
@@ -968,6 +972,228 @@
       }
     }
   }
+
+  /* --------------------------------------------------------------------------
+     7б. «УЗНАЙТЕ СВОЙ УРОВЕНЬ»: тест прямо в карточке #level, вопросы и уровни — test-data.js
+         итог ведёт на наши окна: группа (со ступенью уровня), запись, индивидуальные, видеокурс
+     -------------------------------------------------------------------------- */
+  (function () {
+    var T = window.TJA_TEST;
+    var card = document.getElementById('tja-lvl');
+    if (!T || !card) return;
+    var intro = document.getElementById('tja-lvl-intro');
+    var quiz = document.getElementById('tja-lvl-quiz');
+    var res = document.getElementById('tja-lvl-res');
+    var Q = T.questions, N = Q.length;
+    var idx = 0, score = 0, locked = false, active = false, timer = 0;
+    var body, bar, cnt, partEl, skipBtn, built = false;
+
+    function sizeTo(fn) {
+      /* карточка плавно растёт: фиксируем старую высоту, меняем содержимое, едем к новой */
+      var h0 = card.offsetHeight;
+      card.style.height = h0 + 'px';
+      fn();
+      var h1 = card.scrollHeight;
+      if (reducedMotion || h0 === h1) { card.style.height = ''; return; }
+      void card.offsetHeight;
+      card.style.height = h1 + 'px';
+      var done = function () { card.style.height = ''; card.removeEventListener('transitionend', onEnd); };
+      var onEnd = function (e) { if (e.target === card && e.propertyName === 'height') done(); };
+      card.addEventListener('transitionend', onEnd);
+      setTimeout(done, 700);
+    }
+
+    function build() {
+      quiz.innerHTML = '';
+      var top = el('div', 'tja-lvl__top');
+      partEl = el('span', 'tja-lvl__part');
+      cnt = el('span', 'tja-lvl__cnt');
+      top.appendChild(partEl); top.appendChild(cnt);
+      var track = el('div', 'tja-lvl__bar');
+      track.setAttribute('role', 'progressbar');
+      track.setAttribute('aria-valuemin', '0'); track.setAttribute('aria-valuemax', String(N));
+      bar = el('i'); track.appendChild(bar);
+      body = el('div', 'tja-lvl__qb');
+      body.setAttribute('aria-live', 'polite');
+      skipBtn = el('button', 'tja-lvl__skip', 'Пропустить');
+      skipBtn.type = 'button';
+      skipBtn.addEventListener('click', function () { answer(-1); });
+      quiz.appendChild(top); quiz.appendChild(track); quiz.appendChild(body); quiz.appendChild(skipBtn);
+      built = true;
+    }
+
+    function render(i) {
+      var q = Q[i];
+      partEl.textContent = q.part;
+      cnt.textContent = 'Вопрос ' + (i + 1) + ' из ' + N;
+      bar.style.width = (i / N * 100) + '%';
+      bar.parentNode.setAttribute('aria-valuenow', String(i));
+      body.innerHTML = '';
+      body.appendChild(el('span', 'tja-lvl__task', 'Заполните пропуск'));
+      var ph = el('p', 'tja-lvl__q');
+      ph.lang = 'ka';
+      var parts = q.q.split('___');
+      for (var k = 0; k < parts.length; k++) {
+        ph.appendChild(document.createTextNode(parts[k]));
+        if (k < parts.length - 1) ph.appendChild(el('span', 'tja-lvl__gap'));
+      }
+      body.appendChild(ph);
+      body.appendChild(el('p', 'tja-lvl__hint', q.hint));
+      var list = el('div', 'tja-lvl__opts');
+      for (var o = 0; o < q.options.length; o++) {
+        var b = el('button', 'tja-lvl__opt', q.options[o]);
+        b.type = 'button';
+        b.lang = 'ka';
+        b.setAttribute('data-i', String(o));
+        b.addEventListener('click', function (e) { answer(+e.currentTarget.getAttribute('data-i')); });
+        list.appendChild(b);
+      }
+      body.appendChild(list);
+      locked = false;
+      skipBtn.disabled = false;
+    }
+
+    function answer(choice) {
+      if (locked || !active) return;
+      locked = true;
+      skipBtn.disabled = true;
+      var q = Q[idx];
+      var ok = choice === q.answer;
+      if (ok) score++;
+      var opts = body.querySelectorAll('.tja-lvl__opt');
+      for (var i = 0; i < opts.length; i++) {
+        opts[i].disabled = true;
+        if (i === q.answer) opts[i].classList.add('is-right');
+        else if (i === choice) opts[i].classList.add('is-wrong');
+        else opts[i].classList.add('is-dim');
+      }
+      if (choice >= 0) {
+        var gaps = body.querySelectorAll('.tja-lvl__gap');
+        var pieces = q.options[choice].split(' … ');
+        for (var g = 0; g < gaps.length; g++) {
+          gaps[g].textContent = pieces[g] || pieces[0];
+          gaps[g].classList.add('is-filled', ok ? 'is-right' : 'is-wrong');
+        }
+      }
+      playTone(ok ? 659.25 : 220, 0.12, 'sine');
+      timer = setTimeout(next, choice < 0 ? 350 : 900);
+    }
+
+    function next() {
+      idx++;
+      bar.style.width = (idx / N * 100) + '%';
+      if (idx >= N) { showResult(); return; }
+      body.classList.add('is-out');
+      timer = setTimeout(function () {
+        render(idx);
+        body.classList.remove('is-out');
+        body.classList.add('is-in');
+        setTimeout(function () { body.classList.remove('is-in'); }, 400);
+      }, reducedMotion ? 0 : 220);
+    }
+
+    function measure() {
+      /* карточка держит высоту самого длинного вопроса — экран не прыгает */
+      quiz.style.minHeight = '';
+      var keep = idx, mx = 0;
+      for (var i = 0; i < N; i++) { render(i); mx = Math.max(mx, quiz.offsetHeight); }
+      quiz.style.minHeight = mx + 'px';
+      render(keep);
+    }
+
+    function start() {
+      clearTimeout(timer);
+      idx = 0; score = 0; active = true;
+      if (!built) build();
+      sizeTo(function () {
+        intro.hidden = true; res.hidden = true; quiz.hidden = false;
+        card.setAttribute('data-state', 'quiz');
+        measure();
+      });
+      if (document.fonts && document.fonts.ready) {
+        document.fonts.ready.then(function () {
+          if (active && !quiz.hidden && idx === 0 && !locked) { card.style.height = ''; measure(); }
+        });
+      }
+    }
+
+    function pick(sc) {
+      var L = T.levels;
+      for (var i = 0; i < L.length; i++) if (sc >= L[i].min) return L[i];
+      return L[L.length - 1];
+    }
+
+    function lnk(cls, text, fn) {
+      var b = el('button', cls, text);
+      b.type = 'button';
+      b.addEventListener('click', fn);
+      return b;
+    }
+
+    /* ступень уровня в окне «Групповое обучение»: рамка алым и метка «Ваш уровень» */
+    function markStep(step) {
+      var all = document.querySelectorAll('.tja-lv[data-step]');
+      for (var i = 0; i < all.length; i++) all[i].classList.toggle('is-yours', all[i].getAttribute('data-step') === step);
+    }
+
+    function showResult() {
+      active = false;
+      var L = pick(score);
+      sizeTo(function () {
+        quiz.hidden = true; intro.hidden = true; res.hidden = false;
+        card.setAttribute('data-state', 'result');
+        res.innerHTML = '';
+        var R = 54, C = 2 * Math.PI * R;
+        var ring = el('div', 'tja-lvl__ring');
+        ring.innerHTML = '<svg viewBox="0 0 128 128" aria-hidden="true"><circle class="tja-lvl__ring-bg" cx="64" cy="64" r="' + R + '"/><circle class="tja-lvl__ring-fg" cx="64" cy="64" r="' + R + '" stroke-dasharray="' + C.toFixed(1) + '" stroke-dashoffset="' + C.toFixed(1) + '" transform="rotate(-90 64 64)"/></svg>';
+        ring.appendChild(el('b', null, score + '/' + N));
+        res.appendChild(ring);
+        var info = el('div', 'tja-lvl__info');
+        info.appendChild(el('span', 'tja-lvl__tag', 'Тест завершён'));
+        var h = el('h3', 'tja-lvl__level');
+        h.appendChild(document.createTextNode('Ваш уровень: '));
+        h.appendChild(el('em', null, L.level));
+        info.appendChild(h);
+        info.appendChild(el('p', 'tja-lvl__score', 'Результат: ' + score + ' из ' + N));
+        info.appendChild(el('p', 'tja-lvl__text', L.text));
+        var acts = el('div', 'tja-lvl__acts');
+        acts.appendChild(lnk('tja-cta tja-cta--red', 'Перейти к курсу ' + L.course, function () { openByKey('group', null); markStep(L.step); }));
+        acts.appendChild(lnk('tja-cta tja-cta--ghost', 'Записаться в группу ' + L.course, function () { selectCourseAndScroll('Групповое онлайн'); }));
+        info.appendChild(acts);
+        var more = el('div', 'tja-lvl__more');
+        if (L.level === 'A1 часть 1') more.appendChild(lnk('tja-lvl__lnk', 'Начать с видеокурса «Алфавит»', function () { openByKey('video', null); }));
+        more.appendChild(lnk('tja-lvl__lnk', 'Индивидуально', function () { openByKey('individual', null); }));
+        more.appendChild(lnk('tja-lvl__lnk', 'Пройти ещё раз', start));
+        info.appendChild(more);
+        res.appendChild(info);
+        requestAnimationFrame(function () { requestAnimationFrame(function () {
+          var fg = res.querySelector('.tja-lvl__ring-fg');
+          if (fg) fg.setAttribute('stroke-dashoffset', (C * (1 - score / N)).toFixed(1));
+        }); });
+      });
+    }
+
+    document.getElementById('tja-lvl-start').addEventListener('click', start);
+
+    /* кнопки «Узнай свой уровень» в шапке, первом экране, окнах: к блоку и сразу старт */
+    document.addEventListener('click', function (e) {
+      var a = e.target.closest && e.target.closest('[data-level-start]');
+      if (!a) return;
+      e.preventDefault();
+      closeAllModals();
+      closeMenu();
+      setTimeout(function () {
+        card.scrollIntoView({ behavior: reducedMotion ? 'auto' : 'smooth', block: 'center' });
+        if (card.getAttribute('data-state') !== 'quiz') setTimeout(start, reducedMotion ? 0 : 350);
+      }, 60);
+    });
+
+    var rzT = 0;
+    window.addEventListener('resize', function () {
+      clearTimeout(rzT);
+      rzT = setTimeout(function () { if (active && !quiz.hidden && !locked) { card.style.height = ''; measure(); } }, 200);
+    });
+  })();
 
   /* --------------------------------------------------------------------------
      8. СВЕТОВОЙ ОТКЛИК (--mx, --my) только у карточки под курсором

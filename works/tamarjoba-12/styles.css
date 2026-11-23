@@ -623,7 +623,7 @@ button { cursor: pointer; }
   .tja-panel {
     display: none; position: absolute; top: 100%; left: 0; right: 0; flex-direction: column; align-items: stretch; gap: 14px;
     padding: 6px 24px 20px; background: #FFFFFF; border-bottom: 2px solid var(--ink); box-shadow: 0 24px 40px -20px rgba(0, 0, 0, 0.35);
-    max-height: calc(100dvh - var(--header-h)); overflow-y: auto;
+    max-height: calc(100dvh - var(--header-h)); overflow-y: auto; overscroll-behavior: contain;
   }
   .tja-header.is-open .tja-panel { display: flex; animation: tjaMenu 0.28s var(--ease-spring); }
   @keyframes tjaMenu { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: none; } }
@@ -802,4 +802,144 @@ button { cursor: pointer; }
   .tja-hello-btn__geo { font-size: 1.2rem; white-space: nowrap; }
   .tja-hello-btn__tr { font-size: 0.92rem; white-space: nowrap; min-width: 0; overflow: hidden; text-overflow: ellipsis; }
   .tja-hello-btn__sound { flex: 0 0 28px; }
+}
+
+/* 23.11: пока открыто меню на телефоне, страница под ним стоит; листается только само меню, фон затемнён */
+@media (max-width: 1100px) {
+  html.tja-menu-open, html.tja-menu-open body { overflow: hidden; }
+  html.tja-menu-open body::after { content: ''; position: fixed; inset: 0; background: rgba(0,0,0,0.28); z-index: 40; }
+}
+
+/* ==========================================================================
+   23.11 · Узнайте свой уровень: тест прямо в карточке #level
+   ========================================================================== */
+.tja-sec--lvl { padding: 44px 0; }
+.tja-lvl {
+  position: relative; overflow: hidden; background: #0E0E0E; color: #FFFFFF; border-radius: 28px; padding: 40px 48px;
+  box-shadow: 0 30px 60px -28px rgba(0, 0, 0, 0.55); transition: height 0.5s var(--ease-spring);
+}
+.tja-lvl::after { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 5px; background: var(--red); }
+.tja-lvl__chars { position: absolute; right: 28px; top: 50%; transform: translateY(-50%); display: flex; gap: 6px; pointer-events: none; user-select: none; }
+.tja-lvl__chars span { font-family: var(--font-geo); font-weight: 700; font-size: 8.5rem; line-height: 1; color: rgba(255, 255, 255, 0.05); }
+.tja-lvl__chars span:nth-child(2n) { color: rgba(252, 3, 4, 0.14); }
+.tja-lvl[data-state="quiz"] .tja-lvl__chars, .tja-lvl[data-state="result"] .tja-lvl__chars { opacity: 0.25; }
+.tja-lvl > *:not(.tja-lvl__chars) { position: relative; z-index: 1; }
+.tja-lvl [hidden] { display: none !important; }
+
+.tja-lvl__intro { display: flex; align-items: center; justify-content: space-between; gap: 28px; }
+.tja-lvl__copy { display: grid; gap: 10px; max-width: 560px; }
+.tja-lvl .tja-h2 { color: #FFFFFF; }
+.tja-lvl__copy p { margin: 0; font-size: 1.08rem; color: #D6D6D8; }
+.tja-lvl__start { flex: none; min-width: 230px; min-height: 60px; font-size: 1.05rem; }
+
+.tja-lvl__quiz { display: flex; flex-direction: column; max-width: 860px; margin: 0 auto; }
+.tja-lvl__top { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 12px; }
+.tja-lvl__part { display: inline-flex; padding: 4px 10px; border: 1.5px solid var(--red); border-radius: 8px; font-size: 0.78rem; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase; color: #FFFFFF; }
+.tja-lvl__cnt { font-size: 0.92rem; font-weight: 700; color: #C9C9CC; }
+.tja-lvl__bar { height: 4px; border-radius: 4px; background: rgba(255, 255, 255, 0.14); overflow: hidden; margin-bottom: 22px; }
+.tja-lvl__bar i { display: block; height: 100%; width: 0; background: var(--red); border-radius: 4px; transition: width 0.5s var(--ease-spring); }
+.tja-lvl__qb { flex: 1; display: flex; flex-direction: column; transition: opacity 0.2s ease, transform 0.22s ease; }
+.tja-lvl__qb.is-out { opacity: 0; transform: translateX(-26px); }
+.tja-lvl__qb.is-in { animation: tjaLvlIn 0.38s var(--ease-spring); }
+@keyframes tjaLvlIn { from { opacity: 0; transform: translateX(30px); } to { opacity: 1; transform: none; } }
+.tja-lvl__task { font-size: 0.84rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: #B4B4B4; }
+.tja-lvl__q { margin: 10px 0 6px; font-family: var(--font-geo); font-weight: 600; font-size: clamp(1.45rem, 2.6vw, 2.1rem); line-height: 1.4; }
+.tja-lvl__hint { margin: 0 0 22px; font-size: 0.9rem; color: #B4B4B4; }
+.tja-lvl__gap {
+  display: inline-block; min-width: 2.6em; margin: 0 0.12em; padding: 0 0.2em; text-align: center; vertical-align: baseline;
+  border-bottom: 3px solid var(--red); line-height: 1.15; min-height: 1.1em; transition: color 0.2s ease;
+}
+.tja-lvl__gap.is-filled { animation: tjaGapPop 0.4s var(--ease-spring); }
+.tja-lvl__gap.is-right { color: #4ADE80; border-color: #4ADE80; }
+.tja-lvl__gap.is-wrong { color: #FF6B6C; border-color: #FF6B6C; }
+@keyframes tjaGapPop { 0% { transform: translateY(-10px) scale(0.85); opacity: 0.3; } 100% { transform: none; opacity: 1; } }
+.tja-lvl__opts { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: auto; }
+.tja-lvl__opt {
+  min-height: 62px; padding: 12px 16px; border: 1.5px solid rgba(255, 255, 255, 0.24); border-radius: 18px; background: rgba(255, 255, 255, 0.06);
+  color: #FFFFFF; font-family: var(--font-geo); font-weight: 600; font-size: 1.12rem; line-height: 1.25; text-align: center; cursor: pointer;
+  transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.25s var(--ease-spring), opacity 0.25s ease;
+}
+.tja-lvl__opt:hover:not(:disabled) { background: rgba(255, 255, 255, 0.14); border-color: #FFFFFF; transform: translateY(-2px); }
+.tja-lvl__opt:focus-visible, .tja-lvl__skip:focus-visible, .tja-lvl__lnk:focus-visible { outline: 3px solid #FFFFFF; outline-offset: 3px; }
+.tja-lvl__opt:disabled { cursor: default; }
+.tja-lvl__opt.is-right { background: rgba(74, 222, 128, 0.18); border-color: #4ADE80; color: #FFFFFF; }
+.tja-lvl__opt.is-wrong { background: rgba(252, 3, 4, 0.22); border-color: #FF6B6C; animation: tjaShake 0.4s ease; }
+.tja-lvl__opt.is-dim { opacity: 0.4; }
+@keyframes tjaShake { 20%, 60% { transform: translateX(-5px); } 40%, 80% { transform: translateX(5px); } }
+.tja-lvl__skip { align-self: flex-end; min-height: 44px; margin-top: 10px; padding: 8px 4px; border: 0; background: transparent; color: #C9C9CC; font-size: 0.92rem; font-weight: 700; text-decoration: underline; text-underline-offset: 4px; cursor: pointer; }
+.tja-lvl__skip:hover:not(:disabled) { color: #FFFFFF; }
+.tja-lvl__skip:disabled { opacity: 0.4; cursor: default; }
+
+.tja-lvl__res { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 40px; align-items: center; max-width: 900px; margin: 0 auto; }
+.tja-lvl__ring { position: relative; width: 168px; height: 168px; }
+.tja-lvl__ring svg { width: 100%; height: 100%; }
+.tja-lvl__ring-bg, .tja-lvl__ring-fg { fill: none; stroke-width: 10; }
+.tja-lvl__ring-bg { stroke: rgba(255, 255, 255, 0.12); }
+.tja-lvl__ring-fg { stroke: var(--red); stroke-linecap: round; transition: stroke-dashoffset 1.2s var(--ease-spring) 0.2s; }
+.tja-lvl__ring b { position: absolute; inset: 0; display: grid; place-items: center; font-size: 2.1rem; font-weight: 800; }
+.tja-lvl__info { display: grid; gap: 10px; justify-items: start; }
+.tja-lvl__tag { font-size: 0.8rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: #B4B4B4; }
+.tja-lvl__level { margin: 0; font-size: clamp(1.8rem, 3.6vw, 2.8rem); font-weight: 800; line-height: 1.1; }
+.tja-lvl__level em { font-style: normal; color: var(--red); }
+.tja-lvl__score { margin: 0; font-weight: 700; color: #E4E4E6; }
+.tja-lvl__text { margin: 0; max-width: 520px; color: #D6D6D8; }
+.tja-lvl__acts { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 8px; }
+.tja-lvl .tja-cta--ghost { background: transparent; color: #FFFFFF; border-color: #FFFFFF; }
+.tja-lvl .tja-cta--ghost:hover { background: #FFFFFF; color: #0E0E0E; }
+.tja-lvl__more { display: flex; flex-wrap: wrap; gap: 4px 20px; }
+.tja-lvl__lnk { min-height: 44px; padding: 8px 0; border: 0; background: transparent; color: #D6D6D8; font-size: 0.92rem; font-weight: 700; text-decoration: underline; text-underline-offset: 4px; cursor: pointer; }
+.tja-lvl__lnk:hover { color: #FFFFFF; }
+
+/* ступень уровня в окне «Групповое обучение» */
+.tja-lv.is-yours { border-color: var(--red); box-shadow: 0 0 0 3px rgba(252, 3, 4, 0.18); }
+.tja-lv.is-yours::before { content: "Ваш уровень"; position: absolute; z-index: 3; top: -11px; left: 14px; padding: 2px 9px; border-radius: 6px; background: var(--red-dark); color: #FFFFFF; font-size: 0.7rem; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase; }
+.tja-step__a { color: inherit; }
+.tja-step__a:hover { color: var(--red); }
+
+@media (max-width: 720px) {
+  .tja-sec--lvl { padding: 20px 0 12px; }
+  .tja-lvl { padding: 24px 18px 20px 22px; border-radius: 22px; }
+  .tja-lvl__chars span { font-size: 5.5rem; }
+  .tja-lvl__chars { right: 8px; }
+  .tja-lvl__intro { flex-direction: column; align-items: stretch; gap: 18px; }
+  .tja-lvl__copy { gap: 8px; }
+  .tja-lvl__copy p { font-size: 0.98rem; }
+  .tja-lvl__start { min-width: 0; width: 100%; }
+  .tja-lvl__bar { margin-bottom: 16px; }
+  .tja-lvl__q { font-size: 1.32rem; margin: 8px 0 4px; }
+  .tja-lvl__hint { margin-bottom: 14px; }
+  .tja-lvl__opts { grid-template-columns: minmax(0, 1fr); gap: 8px; }
+  .tja-lvl__opt { min-height: 52px; padding: 8px 14px; font-size: 1.05rem; }
+  .tja-lvl__skip { margin-top: 4px; }
+  .tja-lvl__res { grid-template-columns: minmax(0, 1fr); gap: 14px; justify-items: center; text-align: center; }
+  .tja-lvl__ring { width: 112px; height: 112px; }
+  .tja-lvl__ring b { font-size: 1.45rem; }
+  .tja-lvl__info { justify-items: center; gap: 8px; }
+  .tja-lvl__acts { width: 100%; flex-direction: column; }
+  .tja-lvl__acts .tja-cta { width: 100%; }
+  .tja-lvl__more { justify-content: center; gap: 0 18px; }
+}
+
+/* ==========================================================================
+   23.11 · Меню в контрастном тоне: тёмная панель на телефоне и тёмный список «Курсы» на компьютере
+   ========================================================================== */
+.tja-sub { background: #0E0E0E; border-color: #0E0E0E; box-shadow: 0 24px 48px -16px rgba(0, 0, 0, 0.55); }
+.tja-sub a { color: #FFFFFF; }
+.tja-sub a b { background: transparent; border: 1.5px solid var(--red); color: var(--red); }
+.tja-sub a:hover, .tja-sub a:focus-visible { background: rgba(255, 255, 255, 0.1); color: #FFFFFF; }
+.tja-sub a:hover b, .tja-sub a:focus-visible b { background: var(--red); border-color: var(--red); color: #FFFFFF; }
+
+@media (max-width: 1100px) {
+  .tja-header.is-open .tja-burger { background: #0E0E0E; border-color: #0E0E0E; }
+  .tja-header.is-open .tja-burger span { background: #FFFFFF; }
+  .tja-panel { background: #0E0E0E; color: #FFFFFF; border-bottom: 2px solid var(--red); box-shadow: 0 28px 44px -18px rgba(0, 0, 0, 0.6); }
+  .tja-nav__link { color: #FFFFFF; border-bottom-color: rgba(255, 255, 255, 0.1); }
+  .tja-nav__link:hover, .tja-nav__link:focus-visible { color: var(--red); background: transparent; }
+  .tja-nav__link--drop { color: #B4B4B4; font-size: 0.8rem; letter-spacing: 0.1em; text-transform: uppercase; }
+  .tja-sub { border-left: 2px solid var(--red); background: transparent; box-shadow: none; }
+  .tja-sub a { color: #FFFFFF; font-weight: 600; border-bottom: 1px solid rgba(255, 255, 255, 0.1); }
+  .tja-sub a:hover, .tja-sub a:focus-visible { background: transparent; color: var(--red); }
+  .tja-sub a:hover b, .tja-sub a:focus-visible b { background: var(--red); color: #FFFFFF; }
+  .tja-header__right .tja-btn--ghost { background: transparent; color: #FFFFFF; border-color: #FFFFFF; }
+  .tja-header__right .tja-btn--ghost:hover { background: #FFFFFF; color: #0E0E0E; }
 }
