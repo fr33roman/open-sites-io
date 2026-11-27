@@ -1,0 +1,691 @@
+/* ==========================================================================
+   DOFAMART · SOVEREIGN DESK (Вариант 1 — Тёмный Швейцарский Терминал)
+   Палитра: Обсидиан #080A0D · Графит #0F1318 · Шампань #CCA969 · Изумруд #2FBF83
+   Шрифты: Spectral + Golos Text + JetBrains Mono
+   ========================================================================== */
+:root {
+  --bg: #080A0D;
+  --sur: #0F1318;
+  --sur2: #151B23;
+  --sur3: #1B222D;
+  --line: rgba(255, 255, 255, 0.08);
+  --line-s: rgba(204, 169, 105, 0.30);
+  --txt: #F1EFEA;
+  --txt2: #9AA3B0;
+  --txt3: #687382;
+  --gold: #CCA969;
+  --gold-l: #E6CCA0;
+  --gold-dim: rgba(204, 169, 105, 0.12);
+  --up: #2FBF83;
+  --up-bg: rgba(47, 191, 131, 0.12);
+  --dn: #E05666;
+  --dn-bg: rgba(224, 86, 102, 0.12);
+  --steel: #7DA6CE;
+  --serif: "Spectral", Georgia, serif;
+  --sans: "Golos Text", system-ui, -apple-system, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, Consolas, monospace;
+  --r: 14px;
+  --r-sm: 10px;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+[hidden] { display: none !important; }
+html { background: var(--bg); color: var(--txt); -webkit-text-size-adjust: 100%; }
+body.dfa-body {
+  font: 400 14.5px/1.55 var(--sans);
+  background:
+    radial-gradient(62vmax 42vmax at 82% -8%, rgba(204, 169, 105, 0.08), transparent 62%),
+    radial-gradient(50vmax 40vmax at 12% 108%, rgba(47, 191, 131, 0.05), transparent 60%),
+    var(--bg);
+  min-height: 100dvh;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+a { color: inherit; text-decoration: none; }
+button, input { font: inherit; color: inherit; }
+button { background: none; border: 0; cursor: pointer; }
+svg { fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+.num { font-family: var(--mono); font-variant-numeric: tabular-nums; letter-spacing: -0.02em; }
+.dfa-up { color: var(--up); }
+.dfa-down { color: var(--dn); }
+.dfa-gold { color: var(--gold-l); }
+
+/* ---------- Верхняя биржевая лента ---------- */
+.dfa-ticker-bar {
+  height: 32px;
+  background: #050709;
+  border-bottom: 1px solid var(--line);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  position: relative;
+  z-index: 40;
+}
+.dfa-ticker-track {
+  display: flex;
+  gap: 28px;
+  white-space: nowrap;
+  padding-left: 16px;
+  animation: dfaTicker 42s linear infinite;
+}
+.dfa-ticker-bar:hover .dfa-ticker-track { animation-play-state: paused; }
+@keyframes dfaTicker {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+.dfa-tick-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font: 500 11.5px var(--mono);
+  color: var(--txt2);
+}
+.dfa-tick-item b { color: var(--txt); font-weight: 600; }
+
+/* ---------- Каркас приложения ---------- */
+.dfa-shell {
+  display: grid;
+  grid-template-columns: 256px minmax(0, 1fr);
+  min-height: calc(100dvh - 32px);
+}
+
+/* ---------- Левая рельса ---------- */
+.dfa-rail {
+  background: linear-gradient(180deg, #0C0F14 0%, #090C10 100%);
+  border-right: 1px solid var(--line);
+  padding: 18px 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  position: sticky;
+  top: 0;
+  height: calc(100dvh - 32px);
+  overflow-y: auto;
+}
+.dfa-logo { display: flex; align-items: center; gap: 11px; padding: 4px 6px; }
+.dfa-monogram {
+  width: 34px; height: 34px; border-radius: 8px;
+  display: inline-flex; align-items: center; justify-content: center;
+  background: linear-gradient(145deg, #252016, #14120E);
+  border: 1px solid var(--line-s);
+  color: var(--gold-l);
+  font: 600 13px var(--serif);
+  letter-spacing: 0.06em;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12);
+}
+.dfa-monogram.sm { width: 28px; height: 28px; font-size: 11px; }
+.dfa-brand-txt { display: flex; flex-direction: column; line-height: 1.1; }
+.dfa-brand-txt strong { font: 600 14px var(--sans); letter-spacing: 0.14em; }
+.dfa-brand-txt small { font: 500 9.5px var(--mono); letter-spacing: 0.18em; color: var(--gold); margin-top: 3px; }
+
+.dfa-acct-chip {
+  background: linear-gradient(180deg, rgba(255,255,255,0.035), rgba(255,255,255,0.015));
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 12px;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+.dfa-acct-row { display: flex; align-items: center; justify-content: space-between; gap: 6px; margin-bottom: 10px; }
+.dfa-acct-id { font-size: 11px; color: var(--txt2); }
+.dfa-tier-badge {
+  font: 500 10px var(--sans);
+  padding: 2px 7px;
+  border-radius: 4px;
+  background: var(--gold-dim);
+  color: var(--gold-l);
+  border: 1px solid rgba(204, 169, 105, 0.25);
+}
+.dfa-acct-eq span { display: block; font-size: 11px; color: var(--txt3); }
+.dfa-acct-eq strong { display: block; font-size: 20px; font-weight: 600; color: var(--txt); margin-top: 2px; }
+.dfa-acct-mini {
+  margin-top: 10px; padding-top: 9px; border-top: 1px solid var(--line);
+  display: flex; justify-content: space-between; font-size: 11.5px; color: var(--txt2);
+}
+
+.dfa-nav { display: flex; flex-direction: column; gap: 3px; }
+.dfa-nav-item {
+  display: flex; align-items: center; gap: 10px;
+  min-height: 42px; padding: 0 11px;
+  border-radius: 9px;
+  color: var(--txt2);
+  font: 500 13.5px var(--sans);
+  border: 1px solid transparent;
+  transition: background 0.18s, color 0.18s, border-color 0.18s;
+}
+.dfa-nav-item svg { width: 18px; height: 18px; flex: none; opacity: 0.75; }
+.dfa-nav-item:hover { background: rgba(255, 255, 255, 0.035); color: var(--txt); }
+.dfa-nav-item.is-active {
+  background: linear-gradient(90deg, rgba(204, 169, 105, 0.13), rgba(204, 169, 105, 0.03));
+  border-color: rgba(204, 169, 105, 0.28);
+  color: var(--txt);
+}
+.dfa-nav-item.is-active svg { color: var(--gold-l); opacity: 1; }
+.dfa-pill {
+  margin-left: auto; font-style: normal; font: 600 10px var(--mono);
+  padding: 2px 6px; border-radius: 4px; background: var(--sur2); color: var(--txt2);
+}
+.dfa-pill.live { background: var(--up-bg); color: var(--up); }
+.dfa-pill.gold { background: var(--gold-dim); color: var(--gold-l); }
+
+.dfa-rail-cta { margin-top: auto; padding-top: 12px; border-top: 1px solid var(--line); }
+.dfa-rail-note { font-size: 11.5px; color: var(--txt3); line-height: 1.45; margin-top: 8px; }
+.dfa-rail-note b { color: var(--gold-l); font-weight: 500; }
+
+.dfa-rail-foot { display: flex; flex-direction: column; gap: 8px; }
+.dfa-ver-switch {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 4px;
+  padding: 3px; background: var(--sur); border: 1px solid var(--line); border-radius: 8px;
+}
+.dfa-ver-switch a {
+  text-align: center; font-size: 11px; font-weight: 500; padding: 6px 4px; border-radius: 6px; color: var(--txt2);
+}
+.dfa-ver-switch a.is-on { background: var(--sur3); color: var(--gold-l); }
+.dfa-back-link { font-size: 12px; color: var(--txt3); padding: 2px 4px; }
+.dfa-back-link:hover { color: var(--txt2); }
+
+/* ---------- Верхняя шапка рабочей зоны ---------- */
+.dfa-stage { display: flex; flex-direction: column; min-width: 0; }
+.dfa-topbar {
+  height: 58px;
+  padding: 0 28px;
+  border-bottom: 1px solid var(--line);
+  background: rgba(8, 10, 13, 0.82);
+  backdrop-filter: blur(12px);
+  position: sticky; top: 0; z-index: 25;
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+}
+.dfa-mob-brand { display: none; align-items: center; gap: 8px; font: 600 13px var(--sans); letter-spacing: 0.12em; }
+.dfa-crumb { display: flex; align-items: center; gap: 16px; }
+.dfa-coord {
+  display: inline-block;
+  font: 600 10.5px var(--mono);
+  letter-spacing: 0.14em;
+  color: var(--gold);
+  border-left: 2px solid var(--gold);
+  padding-left: 9px;
+}
+.dfa-live-dot { display: inline-flex; align-items: center; gap: 6px; font: 500 11.5px var(--mono); color: var(--txt2); }
+.dfa-live-dot i { width: 6px; height: 6px; border-radius: 50%; background: var(--up); box-shadow: 0 0 8px var(--up); }
+.dfa-top-right { display: flex; align-items: center; gap: 8px; }
+.dfa-ver-mini { display: none; gap: 4px; }
+.dfa-ver-mini a { font-size: 11px; padding: 5px 8px; border-radius: 6px; border: 1px solid var(--line); color: var(--txt2); }
+.dfa-ver-mini a.is-on { border-color: var(--line-s); color: var(--gold-l); background: var(--gold-dim); }
+
+/* ---------- Кнопки и элементы управления ---------- */
+.dfa-btn-gold {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  min-height: 42px; padding: 0 18px; border-radius: 9px;
+  background: linear-gradient(180deg, #D9B87B 0%, #B89352 100%);
+  color: #120E07; font: 600 13px var(--sans); letter-spacing: 0.02em;
+  box-shadow: 0 1px 0 rgba(255,255,255,0.35) inset, 0 8px 20px -10px rgba(204, 169, 105, 0.75);
+  transition: transform 0.15s, filter 0.15s;
+}
+.dfa-btn-gold:hover { filter: brightness(1.06); transform: translateY(-1px); }
+.dfa-btn-gold:active { transform: translateY(0); }
+.dfa-btn-gold svg { width: 15px; height: 15px; }
+.dfa-btn-gold.sm { min-height: 36px; padding: 0 13px; font-size: 12.5px; }
+.dfa-btn-gold.xs { min-height: 32px; padding: 0 11px; font-size: 12px; }
+
+.dfa-btn-ghost {
+  display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+  min-height: 42px; padding: 0 15px; border-radius: 9px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid var(--line);
+  color: var(--txt); font: 500 13px var(--sans);
+  transition: border-color 0.15s, background 0.15s;
+}
+.dfa-btn-ghost:hover { border-color: rgba(255,255,255,0.22); background: rgba(255,255,255,0.06); }
+.dfa-btn-ghost.sm { min-height: 36px; padding: 0 12px; font-size: 12.5px; }
+.dfa-btn-ghost.xs { min-height: 32px; padding: 0 10px; font-size: 12px; }
+.dfa-wide { width: 100%; }
+.dfa-btn-row { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 14px; }
+
+.dfa-seg {
+  display: inline-flex; gap: 2px; padding: 3px;
+  background: var(--sur); border: 1px solid var(--line); border-radius: 9px;
+}
+.dfa-seg button {
+  min-height: 34px; padding: 0 12px; border-radius: 7px;
+  font: 500 12.5px var(--sans); color: var(--txt2);
+  transition: background 0.15s, color 0.15s;
+}
+.dfa-seg button.is-on { background: var(--sur3); color: var(--gold-l); }
+.dfa-seg.sm button { min-height: 30px; padding: 0 10px; font-size: 12px; }
+.dfa-seg.xs button { min-height: 28px; padding: 0 9px; font-size: 11.5px; font-family: var(--mono); }
+
+.dfa-chips { display: flex; gap: 6px; flex-wrap: wrap; }
+.dfa-chip {
+  min-height: 34px; padding: 0 12px; border-radius: 8px;
+  border: 1px solid var(--line); background: var(--sur);
+  font: 500 12.5px var(--sans); color: var(--txt2);
+  transition: border-color 0.15s, color 0.15s, background 0.15s;
+}
+.dfa-chip:hover { color: var(--txt); border-color: rgba(255,255,255,0.18); }
+.dfa-chip.is-on { border-color: var(--line-s); background: var(--gold-dim); color: var(--gold-l); }
+
+/* ---------- Основная сетка контента ---------- */
+.dfa-main { padding: 24px 28px 64px; max-width: 1320px; width: 100%; margin: 0 auto; }
+.dfa-vhead { margin-bottom: 22px; }
+.dfa-vhead-row { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+.dfa-vhead h1 { font: 500 clamp(26px, 3vw, 34px)/1.1 var(--serif); letter-spacing: -0.015em; }
+.dfa-vlead { color: var(--txt2); margin-top: 8px; max-width: 66ch; font-size: 14px; }
+
+/* ---------- Карточки (5 слоёв глубины) ---------- */
+.dfa-card {
+  position: relative;
+  background: linear-gradient(180deg, rgba(22, 28, 37, 0.92) 0%, rgba(14, 18, 24, 0.96) 100%);
+  border: 1px solid var(--line);
+  border-radius: var(--r);
+  padding: 20px;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06), 0 16px 34px -22px rgba(0, 0, 0, 0.75);
+  min-width: 0;
+}
+.dfa-spot::before {
+  content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
+  background: radial-gradient(260px circle at var(--mx, 50%) var(--my, 0%), rgba(204, 169, 105, 0.09), transparent 65%);
+  opacity: 0; transition: opacity 0.25s;
+}
+.dfa-spot:hover::before { opacity: 1; }
+.dfa-card-top { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 12px; flex-wrap: wrap; }
+.dfa-card-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 16px; flex-wrap: wrap; }
+.dfa-card-head h2 { font: 500 18px/1.2 var(--serif); color: var(--txt); }
+.dfa-lbl { font: 600 10.5px/1.2 var(--mono); letter-spacing: 0.14em; color: var(--txt3); text-transform: uppercase; }
+
+/* ---------- Экран 1: KPI и дашборд ---------- */
+.dfa-kpi-grid {
+  display: grid;
+  grid-template-columns: 1.35fr 1fr 1fr;
+  gap: 14px;
+  margin-bottom: 16px;
+}
+.dfa-big-num { font-size: clamp(28px, 3vw, 38px); font-weight: 600; line-height: 1.08; margin: 4px 0 14px; }
+.dfa-badge-up {
+  font-size: 12px; font-weight: 600; padding: 4px 9px; border-radius: 6px;
+  background: var(--up-bg); color: var(--up);
+}
+.dfa-alloc-bar { display: flex; height: 8px; border-radius: 4px; overflow: hidden; gap: 2px; margin-bottom: 12px; background: var(--sur3); }
+.dfa-alloc-bar i { display: block; height: 100%; }
+.dfa-alloc-legend { list-style: none; display: flex; flex-wrap: wrap; gap: 8px 16px; font-size: 12px; color: var(--txt2); }
+.dfa-alloc-legend li { display: inline-flex; align-items: center; gap: 6px; }
+.dfa-alloc-legend b { color: var(--txt); font-weight: 500; }
+.dfa-dot { width: 8px; height: 8px; border-radius: 2px; flex: none; }
+
+.dfa-sub-kpi { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 6px; }
+.dfa-sub-kpi > div { background: rgba(255,255,255,0.025); border: 1px solid var(--line); border-radius: 10px; padding: 11px 12px; }
+.dfa-sub-kpi small { display: block; font-size: 11.5px; color: var(--txt2); margin-bottom: 4px; }
+.dfa-sub-kpi strong { font-size: 16px; font-weight: 600; }
+
+.dfa-rating-pill {
+  font-size: 11px; font-weight: 600; padding: 4px 9px; border-radius: 6px;
+  background: var(--gold-dim); color: var(--gold-l); border: 1px solid rgba(204, 169, 105, 0.3);
+}
+.dfa-credit-split { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 8px 0 12px; }
+.dfa-credit-split > div { background: rgba(255,255,255,0.025); border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; }
+.dfa-credit-split small { display: block; font-size: 11.5px; color: var(--txt2); }
+.dfa-credit-split strong { font-size: 18px; font-weight: 600; }
+.dfa-ref-strip {
+  display: flex; align-items: center; justify-content: space-between; gap: 10px;
+  padding-top: 10px; border-top: 1px solid var(--line);
+}
+.dfa-ref-strip small { display: block; font-size: 11px; color: var(--txt3); }
+.dfa-ref-strip strong { font-size: 13px; color: var(--txt); }
+
+.dfa-grid-main { display: grid; grid-template-columns: 1.48fr 1fr; gap: 14px; margin-bottom: 16px; }
+.dfa-grid-lower { display: grid; grid-template-columns: 1.25fr 1fr; gap: 14px; margin-bottom: 16px; }
+
+.dfa-chart-readout { font-size: 12px; color: var(--txt2); margin-top: 3px; }
+.dfa-bench-toggles { display: flex; gap: 6px; }
+.dfa-canvas-wrap { width: 100%; height: 240px; position: relative; }
+.dfa-canvas-wrap.tall { height: 320px; }
+.dfa-canvas-wrap canvas { width: 100%; height: 100%; display: block; }
+.dfa-bench-summary {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;
+  margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--line);
+}
+.dfa-bench-box small { display: block; font-size: 11.5px; color: var(--txt3); }
+.dfa-bench-box strong { display: block; font-size: 15px; margin-top: 2px; }
+
+/* Диагностика Правда */
+.dfa-insights { list-style: none; display: grid; gap: 9px; }
+.dfa-insights li {
+  padding: 11px 13px; border-radius: 10px;
+  background: rgba(255,255,255,0.025);
+  border-left: 2px solid var(--gold);
+  font-size: 13.5px; line-height: 1.45;
+}
+.dfa-insights li.good { border-left-color: var(--up); }
+.dfa-insights li.warn { border-left-color: var(--dn); }
+.dfa-insights li b { display: block; font-size: 12px; font-family: var(--mono); color: var(--txt2); margin-bottom: 2px; }
+.dfa-truth-foot {
+  margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--line);
+  display: flex; align-items: center; justify-content: space-between; gap: 10px;
+}
+.dfa-truth-foot small { display: block; font-size: 11px; color: var(--txt3); }
+.dfa-truth-foot b { font-size: 12.5px; color: var(--dn); }
+
+/* Тепловая карта 7x24 */
+.dfa-hm-tip { font-size: 12px; color: var(--gold-l); margin-top: 3px; }
+.dfa-hm-scroll { overflow-x: auto; padding-bottom: 4px; }
+.dfa-hm { display: grid; grid-template-columns: 30px repeat(24, minmax(12px, 1fr)); gap: 3px; min-width: 420px; align-items: center; }
+.dfa-hm em { font-style: normal; font: 500 9.5px var(--mono); color: var(--txt3); text-align: center; }
+.dfa-hm b { font: 500 11px var(--sans); color: var(--txt2); }
+.dfa-hm i {
+  display: block; height: 22px; border-radius: 3px;
+  background: rgba(255,255,255,0.04); cursor: pointer;
+  transition: transform 0.12s, outline 0.12s;
+}
+.dfa-hm i:hover { transform: scale(1.18); outline: 1px solid var(--gold-l); z-index: 2; }
+
+/* Таблицы */
+.dfa-table-wrap { overflow-x: auto; }
+.dfa-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.dfa-table th {
+  font: 600 10.5px var(--mono); text-transform: uppercase; letter-spacing: 0.1em;
+  color: var(--txt3); text-align: left; padding: 8px 8px; border-bottom: 1px solid var(--line);
+}
+.dfa-table td { padding: 10px 8px; border-bottom: 1px solid rgba(255,255,255,0.04); white-space: nowrap; }
+.dfa-table .r { text-align: right; }
+
+/* Лента */
+.dfa-feed { list-style: none; display: grid; }
+.dfa-feed li {
+  display: grid; grid-template-columns: 82px 1fr auto; gap: 12px; align-items: baseline;
+  padding: 10px 12px; border-top: 1px solid var(--line); border-left: 2px solid var(--txt3); font-size: 13.5px;
+}
+.dfa-feed li.trade { border-left-color: var(--gold); }
+.dfa-feed li.bet { border-left-color: var(--steel); }
+.dfa-feed li.loan { border-left-color: var(--up); }
+.dfa-feed time { font: 400 11.5px var(--mono); color: var(--txt3); }
+
+/* Пустое состояние */
+.dfa-empty-hero {
+  display: grid; grid-template-columns: 1.25fr 1fr; gap: 20px;
+  padding: 28px; border-radius: var(--r);
+  background: linear-gradient(135deg, rgba(204,169,105,0.09), rgba(15,19,24,0.96) 55%);
+  border: 1px solid var(--line-s);
+}
+.dfa-empty-hero h2 { font: 500 28px/1.15 var(--serif); margin: 10px 0; }
+.dfa-empty-hero p { color: var(--txt2); max-width: 52ch; }
+.dfa-empty-steps { display: grid; gap: 10px; align-content: center; }
+.dfa-step-item {
+  display: flex; gap: 12px; align-items: flex-start;
+  padding: 12px 14px; border-radius: 10px; background: rgba(255,255,255,0.03); border: 1px solid var(--line);
+}
+.dfa-step-item span { font: 600 13px var(--mono); color: var(--gold-l); }
+.dfa-step-item b { display: block; font-size: 13.5px; }
+.dfa-step-item small { color: var(--txt3); font-size: 12px; }
+
+/* ---------- Экран 2: Торговый терминал ---------- */
+.dfa-terminal { display: grid; grid-template-columns: 248px minmax(0, 1fr) 300px; gap: 14px; align-items: start; }
+.dfa-watchlist {
+  background: var(--sur); border: 1px solid var(--line); border-radius: var(--r);
+  overflow: hidden; max-height: 640px; display: flex; flex-direction: column;
+}
+.dfa-watch-head {
+  display: flex; justify-content: space-between; padding: 12px 14px;
+  border-bottom: 1px solid var(--line); background: rgba(255,255,255,0.02);
+}
+.dfa-watch-list { overflow-y: auto; display: grid; }
+.dfa-watch-row {
+  display: flex; align-items: center; justify-content: space-between; gap: 8px;
+  padding: 11px 14px; border-bottom: 1px solid rgba(255,255,255,0.04); text-align: left;
+  transition: background 0.14s;
+}
+.dfa-watch-row:hover { background: rgba(255,255,255,0.03); }
+.dfa-watch-row.is-on { background: var(--gold-dim); border-left: 2px solid var(--gold); }
+.dfa-watch-row strong { display: block; font: 600 13px var(--mono); }
+.dfa-watch-row small { display: block; font-size: 11px; color: var(--txt3); }
+.dfa-watch-r { text-align: right; }
+
+.dfa-chart-col { display: grid; gap: 14px; min-width: 0; }
+.dfa-mkt-top { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 10px; }
+.dfa-asset-title { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+.dfa-asset-title strong { font: 600 22px var(--serif); }
+.dfa-asset-title span { color: var(--txt2); font-size: 13.5px; }
+.dfa-src-tag { font-style: normal; font: 600 10px var(--mono); padding: 2px 7px; border-radius: 4px; background: var(--up-bg); color: var(--up); }
+.dfa-asset-price { text-align: right; }
+.dfa-asset-price strong { font-size: 22px; display: block; line-height: 1.1; }
+.dfa-asset-price span { font-size: 12.5px; }
+.dfa-mkt-tools { display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 10px; }
+.dfa-ohlc { font-size: 11.5px; color: var(--txt2); }
+.dfa-mkt-btns { display: flex; gap: 6px; }
+
+.dfa-ticket { position: sticky; top: 72px; }
+.dfa-free { font-size: 12px; color: var(--txt2); }
+.dfa-free b { color: var(--txt); }
+.dfa-side-seg { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin: 12px 0 14px; }
+.dfa-side-seg button {
+  min-height: 40px; border-radius: 9px; border: 1px solid var(--line);
+  font: 600 12.5px var(--sans); color: var(--txt2); background: var(--sur2);
+}
+.dfa-side-seg .is-buy.is-on { background: var(--up-bg); border-color: rgba(47,191,131,0.5); color: var(--up); }
+.dfa-side-seg .is-sell.is-on { background: var(--dn-bg); border-color: rgba(224,86,102,0.5); color: var(--dn); }
+
+.dfa-field-lbl { display: block; margin-bottom: 12px; }
+.dfa-field-lbl > span { display: block; font-size: 11.5px; color: var(--txt2); margin-bottom: 6px; }
+.dfa-input-box {
+  display: flex; align-items: center; gap: 8px;
+  height: 44px; padding: 0 12px; border-radius: 9px;
+  background: #090C10; border: 1px solid var(--line);
+}
+.dfa-input-box.sm { height: 40px; flex: 1; }
+.dfa-input-box:focus-within { border-color: var(--gold); }
+.dfa-input-box span { color: var(--txt3); font-family: var(--mono); }
+.dfa-input-box input { flex: 1; min-width: 0; background: none; border: 0; outline: 0; font-size: 15px; }
+
+.dfa-quick-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin-bottom: 14px; }
+.dfa-quick-row button {
+  min-height: 36px; border-radius: 8px; border: 1px solid var(--line); background: var(--sur2);
+  font: 500 12px var(--mono); color: var(--txt2);
+}
+.dfa-quick-row button.is-on, .dfa-quick-row button:hover {
+  border-color: var(--line-s); color: var(--gold-l); background: var(--gold-dim);
+}
+.dfa-order-meta {
+  display: grid; gap: 7px; padding: 12px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
+  margin-bottom: 14px; font-size: 12.5px;
+}
+.dfa-order-meta div { display: flex; justify-content: space-between; }
+.dfa-order-meta dt { color: var(--txt3); font-family: var(--sans); }
+.dfa-btn-trade {
+  width: 100%; min-height: 44px; border-radius: 10px; font: 600 13.5px var(--sans); color: #08120C;
+  transition: filter 0.15s;
+}
+.dfa-btn-trade.buy { background: linear-gradient(180deg, #3BD192, #25A46E); }
+.dfa-btn-trade.sell { background: linear-gradient(180deg, #EB6B7A, #C94252); color: #FFF; }
+.dfa-btn-trade:hover { filter: brightness(1.06); }
+.dfa-micro-note { font-size: 11.5px; color: var(--txt3); margin-top: 10px; line-height: 1.45; }
+
+.dfa-pos-list { display: grid; gap: 8px; }
+.dfa-pos-item {
+  display: grid; grid-template-columns: 1.2fr 1fr 1fr auto; gap: 10px; align-items: center;
+  padding: 12px; border-radius: 10px; background: rgba(255,255,255,0.025); border: 1px solid var(--line);
+}
+.dfa-pos-item small { display: block; font-size: 11px; color: var(--txt3); }
+
+/* ---------- Экран 3: Спорт и Прогнозы ---------- */
+.dfa-bets-layout { display: grid; grid-template-columns: minmax(0, 1fr) 320px; gap: 16px; align-items: start; }
+.dfa-bets-main { display: grid; gap: 14px; }
+.dfa-events-list { display: grid; gap: 10px; }
+.dfa-event-card {
+  background: var(--sur); border: 1px solid var(--line); border-radius: 12px;
+  padding: 15px 16px; display: flex; align-items: center; justify-content: space-between; gap: 14px; flex-wrap: wrap;
+}
+.dfa-event-info { flex: 1; min-width: 220px; }
+.dfa-event-meta { font: 500 11px var(--mono); color: var(--gold); letter-spacing: 0.06em; margin-bottom: 4px; }
+.dfa-event-title { font: 600 15px/1.3 var(--sans); }
+.dfa-odds-group { display: flex; gap: 7px; flex-wrap: wrap; }
+.dfa-odd-btn {
+  min-width: 82px; min-height: 44px; padding: 6px 11px; border-radius: 9px;
+  background: var(--sur2); border: 1px solid var(--line);
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px;
+  transition: border-color 0.15s, background 0.15s;
+}
+.dfa-odd-btn span { font-size: 10.5px; color: var(--txt3); }
+.dfa-odd-btn b { font: 600 13.5px var(--mono); color: var(--gold-l); }
+.dfa-odd-btn:hover, .dfa-odd-btn.is-picked { border-color: var(--gold); background: var(--gold-dim); }
+
+/* Единственная акцентная градиентная рамка на странице — Купон прогноза */
+.dfa-slip-card {
+  position: sticky; top: 72px;
+  border: 1px solid transparent;
+  background:
+    linear-gradient(180deg, #151B24 0%, #0E131A 100%) padding-box,
+    linear-gradient(145deg, rgba(204,169,105,0.65), rgba(255,255,255,0.08) 48%, rgba(47,191,131,0.4)) border-box;
+}
+.dfa-slip-empty { padding: 24px 10px; text-align: center; color: var(--txt3); font-size: 13.5px; border: 1px dashed var(--line); border-radius: 10px; }
+.dfa-slip-pick { padding: 12px; border-radius: 10px; background: rgba(255,255,255,0.03); border: 1px solid var(--line); margin-bottom: 14px; }
+.dfa-slip-pick small { display: block; color: var(--txt3); font-size: 11.5px; margin-bottom: 4px; }
+.dfa-slip-row { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+.dfa-odds-pill { padding: 3px 8px; border-radius: 6px; background: var(--gold-dim); color: var(--gold-l); font-weight: 600; font-size: 13px; }
+.dfa-slip-payout { display: flex; justify-content: space-between; align-items: baseline; padding: 12px 0; border-top: 1px solid var(--line); margin-bottom: 12px; }
+.dfa-slip-payout strong { font-size: 20px; }
+.dfa-active-bets { display: grid; gap: 8px; }
+
+/* ---------- Экран 4: Друзья, Чеки и Займы ---------- */
+.dfa-cheque-studio { display: grid; grid-template-columns: 1fr 1.05fr; gap: 16px; margin-bottom: 16px; align-items: start; }
+.dfa-cheque-fields { margin-top: 16px; }
+.dfa-rate-head { display: flex; justify-content: space-between; font-size: 12.5px; margin-bottom: 6px; color: var(--txt2); }
+.dfa-range { width: 100%; accent-color: var(--gold); margin-bottom: 6px; }
+.dfa-rate-calc { font-size: 12.5px; color: var(--gold-l); margin-bottom: 14px; }
+
+.dfa-cheque-preview-col { display: grid; gap: 14px; }
+.dfa-bank-cheque {
+  position: relative; overflow: hidden;
+  border-radius: 16px; padding: 24px 26px;
+  background:
+    radial-gradient(120% 90% at 100% 0%, rgba(204, 169, 105, 0.24), transparent 55%),
+    repeating-linear-gradient(135deg, rgba(204, 169, 105, 0.03) 0 2px, transparent 2px 10px),
+    linear-gradient(145deg, #1B1812 0%, #0E1014 60%, #141820 100%);
+  border: 1px solid rgba(204, 169, 105, 0.48);
+  box-shadow: 0 24px 48px -22px rgba(0, 0, 0, 0.85), inset 0 1px 0 rgba(255, 255, 255, 0.16);
+}
+.dfa-cheque-top { display: flex; justify-content: space-between; align-items: center; gap: 10px; font: 600 10.5px var(--mono); letter-spacing: 0.14em; color: var(--gold); }
+.dfa-cheque-kind { margin-top: 18px; font: 600 11px var(--mono); letter-spacing: 0.12em; color: var(--txt2); }
+.dfa-cheque-amount { font-size: clamp(32px, 4vw, 44px); font-weight: 600; color: var(--gold-l); line-height: 1.05; margin: 8px 0 10px; }
+.dfa-cheque-note { font: 500 15px/1.4 var(--serif); font-style: italic; color: var(--txt); opacity: 0.9; min-height: 42px; }
+.dfa-cheque-foot {
+  margin-top: 20px; padding-top: 14px; border-top: 1px solid rgba(204, 169, 105, 0.22);
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;
+}
+.dfa-cheque-foot small { display: block; font: 600 9.5px var(--mono); letter-spacing: 0.12em; color: var(--txt3); }
+.dfa-cheque-foot b { display: block; font-size: 13px; margin-top: 2px; }
+
+.dfa-vanity-desc { font-size: 12.5px; color: var(--txt2); margin-bottom: 12px; }
+.dfa-vanity-desc code { font-family: var(--mono); color: var(--gold-l); }
+.dfa-vanity-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.dfa-vanity-status { font-size: 12.5px; color: var(--up); font-weight: 600; padding: 8px 12px; border-radius: 8px; background: var(--up-bg); }
+
+.dfa-loans-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+.dfa-loan-list { display: grid; gap: 10px; }
+.dfa-loan-item {
+  padding: 13px 14px; border-radius: 10px; background: rgba(255,255,255,0.025); border: 1px solid var(--line);
+  display: grid; gap: 8px;
+}
+.dfa-loan-head { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
+.dfa-loan-head strong { font-size: 14px; }
+.dfa-loan-meta { display: flex; gap: 12px; flex-wrap: wrap; font-size: 12px; color: var(--txt2); }
+.dfa-loan-bar { height: 5px; border-radius: 3px; background: var(--sur3); overflow: hidden; }
+.dfa-loan-bar i { display: block; height: 100%; background: var(--gold); }
+.dfa-loan-actions { display: flex; gap: 7px; flex-wrap: wrap; }
+
+/* ---------- Экран 5: Банк и Уровни ---------- */
+.dfa-bank-grid { display: grid; grid-template-columns: 1fr 1.15fr; gap: 16px; }
+.dfa-vault-bal-lbl { font-size: 12.5px; color: var(--txt2); margin-top: 14px; }
+.dfa-vault-bal { font-size: clamp(30px, 3.6vw, 42px); font-weight: 600; color: var(--gold-l); margin: 4px 0 14px; }
+.dfa-vault-meta { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; padding: 12px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); margin-bottom: 16px; font-size: 12.5px; color: var(--txt2); }
+.dfa-ranks { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.dfa-rank-row {
+  padding: 10px 12px; border-radius: 9px; background: rgba(255,255,255,0.02); border: 1px solid var(--line);
+  display: flex; justify-content: space-between; align-items: center; font-size: 13px;
+}
+.dfa-rank-row.is-cur { border-color: var(--line-s); background: var(--gold-dim); }
+.dfa-rank-row.is-done { opacity: 0.72; }
+.dfa-rank-row small { display: block; font-size: 11px; color: var(--txt3); }
+
+/* ---------- Модалка «Минута тишины» и Toast ---------- */
+.dfa-modal {
+  position: fixed; inset: 0; z-index: 80;
+  background: rgba(4, 6, 9, 0.78); backdrop-filter: blur(8px);
+  display: flex; align-items: center; justify-content: center; padding: 16px;
+}
+.dfa-modal-card {
+  width: 100%; max-width: 420px; padding: 24px; border-radius: 16px;
+  background: var(--sur); border: 1px solid var(--line-s); text-align: center;
+}
+.dfa-modal-card h2 { font: 500 26px var(--serif); margin: 6px 0; }
+.dfa-modal-card p { color: var(--txt2); font-size: 13.5px; }
+.dfa-close { width: 36px; height: 36px; border-radius: 8px; font-size: 22px; color: var(--txt2); }
+.dfa-breath-ring {
+  width: 150px; height: 150px; margin: 26px auto; border-radius: 50%;
+  border: 2px solid var(--gold); background: radial-gradient(circle, rgba(204,169,105,0.18), transparent 70%);
+  display: flex; align-items: center; justify-content: center;
+  font: 600 14px var(--mono); color: var(--gold-l);
+  animation: dfaBreath 8s ease-in-out infinite;
+}
+@keyframes dfaBreath {
+  0%, 100% { transform: scale(0.86); opacity: 0.7; }
+  50% { transform: scale(1.12); opacity: 1; }
+}
+
+.dfa-toast {
+  position: fixed; right: 20px; bottom: 20px; z-index: 90;
+  padding: 11px 16px; border-radius: 10px;
+  background: #18202B; border: 1px solid var(--line-s); color: var(--txt);
+  font: 500 13px var(--sans); box-shadow: 0 14px 30px rgba(0,0,0,0.55);
+  opacity: 0; transform: translateY(10px); pointer-events: none; transition: opacity 0.2s, transform 0.2s;
+}
+.dfa-toast.is-show { opacity: 1; transform: translateY(0); }
+
+/* ---------- Мобильная док-панель ---------- */
+.dfa-mob-dock { display: none; }
+
+@media (max-width: 1160px) {
+  .dfa-kpi-grid { grid-template-columns: 1fr 1fr; }
+  .dfa-card-hero { grid-column: 1 / -1; }
+  .dfa-terminal { grid-template-columns: 1fr 290px; }
+  .dfa-watchlist { grid-column: 1 / -1; max-height: 210px; }
+  .dfa-bets-layout { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 920px) {
+  .dfa-shell { grid-template-columns: 1fr; }
+  .dfa-rail { display: none; }
+  .dfa-mob-brand { display: flex; }
+  .dfa-crumb { display: none; }
+  .dfa-ver-mini { display: flex; }
+  .dfa-topbar { padding: 0 14px; }
+  .dfa-main { padding: 16px 14px 92px; }
+  .dfa-grid-main, .dfa-grid-lower, .dfa-cheque-studio, .dfa-loans-grid, .dfa-bank-grid, .dfa-empty-hero {
+    grid-template-columns: 1fr;
+  }
+  .dfa-terminal { grid-template-columns: 1fr; }
+  .dfa-pos-item { grid-template-columns: 1fr 1fr; }
+  .dfa-mob-dock {
+    position: fixed; left: 0; right: 0; bottom: 0; z-index: 50;
+    display: grid; grid-template-columns: repeat(5, 1fr);
+    background: rgba(9, 12, 16, 0.94); backdrop-filter: blur(14px);
+    border-top: 1px solid var(--line);
+    padding: 6px 6px calc(6px + env(safe-area-inset-bottom, 0px));
+  }
+  .dfa-mob-dock a {
+    display: flex; flex-direction: column; align-items: center; gap: 3px;
+    padding: 6px 2px; font-size: 10px; color: var(--txt2); border-radius: 8px;
+  }
+  .dfa-mob-dock a svg { width: 20px; height: 20px; }
+  .dfa-mob-dock a.is-active { color: var(--gold-l); }
+  .dfa-toast { bottom: 78px; right: 14px; left: 14px; text-align: center; }
+}
+
+@media (max-width: 560px) {
+  .dfa-kpi-grid { grid-template-columns: 1fr; }
+  .dfa-ranks { grid-template-columns: 1fr; }
+  .dfa-bench-summary { grid-template-columns: 1fr; }
+  .dfa-feed li { grid-template-columns: 62px 1fr; }
+  .dfa-feed li b { grid-column: 2; }
+  #dfaPauseBtn, #dfaModeToggle { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dfa-ticker-track, .dfa-breath-ring { animation: none !important; }
+}

@@ -1,0 +1,576 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#F6F2EA">
+<title>DOFAMART · Atelier Wealth — Частный финансовый кабинет, рынок и P2P-займы</title>
+<meta name="description" content="Светлый премиальный симулятор инвестиций, спортивных прогнозов, P2P-займов и личной статистики капитала.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Literata:ital,opsz,wght@0,7..72,500;0,7..72,600;1,7..72,500&family=Onest:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body class="dfb-body">
+
+<div class="dfb-strip">
+  <div class="dfb-wrap dfb-strip-in">
+    <div class="dfb-strip-quotes num" id="dfbStripQuotes"></div>
+    <div class="dfb-strip-right">
+      <div class="dfb-ver-switch" aria-label="Выбор стиля">
+        <a href="../dofamart-fin-a/index.html">1 · Обсидиан</a>
+        <a href="index.html" class="is-on">2 · Пергамент</a>
+      </div>
+      <a href="../dofamart/akcii/index.html" class="dfb-strip-back">Текущий сайт →</a>
+    </div>
+  </div>
+</div>
+
+<header class="dfb-masthead">
+  <div class="dfb-wrap dfb-mast-top">
+    <a href="#stat" class="dfb-brand" data-nav="stat">
+      <span class="dfb-seal" aria-hidden="true">DF</span>
+      <span>
+        <strong>DOFAMART</strong>
+        <small>ATELIER WEALTH · PRIVATE DESK</small>
+      </span>
+    </a>
+
+    <div class="dfb-mast-metrics">
+      <div class="dfb-mast-kpi">
+        <span>ЧИСТЫЙ КАПИТАЛ</span>
+        <strong class="num" id="dfbTopEquity">$348 620.00</strong>
+      </div>
+      <div class="dfb-mast-kpi">
+        <span>СВОБОДНО</span>
+        <strong class="num" id="dfbTopCash">$118 420</strong>
+      </div>
+      <div class="dfb-mast-kpi">
+        <span>РЕЙТИНГ</span>
+        <strong class="num dfb-cobalt">AAA · 942</strong>
+      </div>
+    </div>
+
+    <div class="dfb-mast-actions">
+      <button type="button" class="dfb-btn-line sm" id="dfbModeBtn">Демо-счёт</button>
+      <button type="button" class="dfb-btn-line sm" id="dfbPauseBtn">Пауза 4×4</button>
+      <button type="button" class="dfb-btn-ink sm" data-nav="loans">+ Чек другу</button>
+    </div>
+  </div>
+
+  <div class="dfb-mast-nav-bar">
+    <div class="dfb-wrap dfb-nav-row">
+      <nav class="dfb-nav" aria-label="Основные разделы">
+        <a href="#stat" class="is-active" data-nav="stat">Кабинет и Статистика</a>
+        <a href="#market" data-nav="market">Биржевой зал <em class="num">199</em></a>
+        <a href="#bets" data-nav="bets">Спорт и Прогнозы <em class="dfb-live-pill">LIVE</em></a>
+        <a href="#loans" data-nav="loans">Займы, Чеки и Друзья <em class="num" id="dfbLoanCnt">3</em></a>
+        <a href="#bank" data-nav="bank">Частный Банк и Уровни</a>
+      </nav>
+      <span class="dfb-edition num">ID1042 · @BANKIR · УР. 5 ИНВЕСТОР</span>
+    </div>
+  </div>
+</header>
+
+<main class="dfb-wrap dfb-main">
+
+  <section class="dfb-view" id="view-stat">
+    <div class="dfb-head-bar">
+      <div>
+        <span class="dfb-kicker">ЧАСТНЫЙ ОТЧЁТ ПО ПОРТФЕЛЮ · #STAT</span>
+        <h1>Состояние капитала и аналитика сделок</h1>
+      </div>
+      <div class="dfb-seg" id="dfbPeriodSeg">
+        <button type="button" data-per="day">Сегодня</button>
+        <button type="button" data-per="7d">7 дней</button>
+        <button type="button" data-per="30d" class="is-on">30 дней</button>
+        <button type="button" data-per="all">Всё время</button>
+      </div>
+    </div>
+
+    <div class="dfb-empty-paper" id="dfbEmptyBox" hidden>
+      <div>
+        <span class="dfb-kicker">НОВЫЙ СЧЁТ ОТКРЫТ</span>
+        <h2>Ваш инвестиционный счёт готов к работе</h2>
+        <p>На резервном счёте <b class="num">$10 000 000</b> виртуальных средств. Начните с первой сделки в биржевом зале, прогноза на спорт или отправьте другу подарочный чек на $100 000.</p>
+        <div class="dfb-btn-row">
+          <button type="button" class="dfb-btn-cobalt" data-nav="market">Открыть биржевой зал</button>
+          <button type="button" class="dfb-btn-line" data-nav="loans">Выписать чек другу</button>
+          <button type="button" class="dfb-btn-line" id="dfbDemoRestore">Показать демо-портфель</button>
+        </div>
+      </div>
+      <ol class="dfb-empty-ol">
+        <li><b>01 · Пополнение из сейфа</b> — виртуальный капитал без карт и реальных списаний.</li>
+        <li><b>02 · Сделки и прогнозы</b> — живые котировки Binance, акции США и коэффициенты Polymarket.</li>
+        <li><b>03 · Аудит «Правда» и займы</b> — разбор ваших ошибок и P2P-кредитование друзей.</li>
+      </ol>
+    </div>
+
+    <div class="dfb-desk" id="dfbStatDesk">
+      
+      <div class="dfb-desk-main">
+        
+        <div class="dfb-sheet dfb-kpi-strip">
+          <div class="dfb-kpi-cell big">
+            <span class="dfb-lbl">ЧИСТЫЙ КАПИТАЛ</span>
+            <strong class="num" id="dfbStatEquity">$348 620.00</strong>
+            <em class="num dfb-up" id="dfbStatDelta">+$48 620.00 · +16.2% к внесённому</em>
+          </div>
+          <div class="dfb-kpi-cell">
+            <span class="dfb-lbl">ТОРГОВЛЯ</span>
+            <strong class="num dfb-up" id="dfbStatTrade">+$34 890</strong>
+            <small>42 сделки · 64% в плюс</small>
+          </div>
+          <div class="dfb-kpi-cell">
+            <span class="dfb-lbl">СПОРТ И POLYMARKET</span>
+            <strong class="num dfb-up" id="dfbStatBets">+$9 430</strong>
+            <small>15 прогнозов · серия 4</small>
+          </div>
+          <div class="dfb-kpi-cell">
+            <span class="dfb-lbl">ДОХОД С ЗАЙМОВ</span>
+            <strong class="num dfb-cobalt" id="dfbStatLoan">+$4 300</strong>
+            <small>комиссии −$1 420</small>
+          </div>
+        </div>
+
+        <article class="dfb-sheet">
+          <div class="dfb-sheet-head">
+            <h2>Структура вложений</h2>
+            <span class="dfb-lbl num">РЕЗЕРВ СЕЙФА: <b id="dfbStatVault">$9 700 000</b></span>
+          </div>
+          <div class="dfb-bar" id="dfbAllocBar"></div>
+          <ul class="dfb-legend" id="dfbAllocLegend"></ul>
+        </article>
+
+        <article class="dfb-sheet">
+          <div class="dfb-sheet-head">
+            <div>
+              <h2>Динамика капитала против рынка</h2>
+              <div class="dfb-readout num" id="dfbEqReadout">Наведите курсор на график для просмотра значения по дням</div>
+            </div>
+            <div class="dfb-chips">
+              <button type="button" class="dfb-chip is-on" data-bench="sp500">Индекс S&amp;P 500</button>
+              <button type="button" class="dfb-chip" data-bench="cash">Без сделок</button>
+            </div>
+          </div>
+          <div class="dfb-canvas-wrap">
+            <canvas id="dfbEquityCanvas"></canvas>
+          </div>
+          <div class="dfb-bench-row" id="dfbBenchRow"></div>
+        </article>
+
+        <article class="dfb-sheet">
+          <div class="dfb-sheet-head">
+            <div>
+              <h2>Матрица времени: когда вы в плюсе</h2>
+              <div class="dfb-readout num" id="dfbHmTip">Пн–Вс × 00–23 ч · выберите ячейку для деталей</div>
+            </div>
+            <div class="dfb-seg sm" id="dfbHmSeg">
+              <button type="button" data-hm="res" class="is-on">Прибыль $</button>
+              <button type="button" data-hm="act">Активность</button>
+            </div>
+          </div>
+          <div class="dfb-hm-wrap">
+            <div class="dfb-hm" id="dfbHeatmap"></div>
+          </div>
+        </article>
+
+        <article class="dfb-sheet">
+          <div class="dfb-sheet-head">
+            <h2>Отчёт по плечу и классам активов</h2>
+            <span class="dfb-lbl">ЗАКРЫТЫЕ СДЕЛКИ</span>
+          </div>
+          <div class="dfb-table-wrap">
+            <table class="dfb-table">
+              <thead>
+                <tr><th>Категория / Плечо</th><th class="r">Сделок</th><th class="r">Успешных</th><th class="r">Результат $</th></tr>
+              </thead>
+              <tbody id="dfbBreakdownBody"></tbody>
+            </table>
+          </div>
+        </article>
+
+        <article class="dfb-sheet">
+          <div class="dfb-sheet-head">
+            <h2>Лента событий счёта</h2>
+            <div class="dfb-chips" id="dfbFeedFilt">
+              <button type="button" class="dfb-chip is-on" data-f="all">Все</button>
+              <button type="button" class="dfb-chip" data-f="trade">Сделки</button>
+              <button type="button" class="dfb-chip" data-f="bet">Прогнозы</button>
+              <button type="button" class="dfb-chip" data-f="loan">Займы</button>
+            </div>
+          </div>
+          <ul class="dfb-feed" id="dfbFeedList"></ul>
+        </article>
+      </div>
+
+      <aside class="dfb-desk-side">
+        
+        <div class="dfb-passport">
+          <div class="dfb-pass-top">
+            <span>DOFA PRIVATE PASSPORT</span>
+            <span class="num">AAA · 942</span>
+          </div>
+          <div class="dfb-pass-id num">@bankir · id1042</div>
+          <div class="dfb-pass-rank">Уровень 5 · Инвестор · 1 480 / 2 200 XP</div>
+          <div class="dfb-pass-bar"><i style="width:67%"></i></div>
+          <div class="dfb-pass-loans">
+            <div><small>МНЕ ДОЛЖНЫ</small><b class="num" id="dfbSideOwed">$42 500</b></div>
+            <div><small>Я ДОЛЖЕН</small><b class="num" id="dfbSideOwe">$12 000</b></div>
+            <div><small>ДРУЗЬЯ</small><b class="num">7 / 5 акт.</b></div>
+          </div>
+          <button type="button" class="dfb-btn-paper dfb-wide" data-nav="loans">
+            Выписать чек другу (+$100K) →
+          </button>
+        </div>
+
+        <article class="dfb-sheet">
+          <div class="dfb-sheet-head">
+            <h2>Аудит «Почему так вышло»</h2>
+            <span class="dfb-lbl">ПРАВДА</span>
+          </div>
+          <ul class="dfb-audit" id="dfbAuditList"></ul>
+          <div class="dfb-audit-foot">
+            <span>Сделок в спешке: <b class="dfb-down num">4 (25% винрейт)</b></span>
+            <button type="button" class="dfb-btn-line xs" id="dfbPauseSide">Минута тишины</button>
+          </div>
+        </article>
+
+        <article class="dfb-sheet dfb-ref-box">
+          <span class="dfb-lbl">РЕФЕРАЛЬНАЯ ПРОГРАММА</span>
+          <h3>Подарите другу $100 000</h3>
+          <p>Отправьте персональную ссылку-чек. Друг сразу торгует подарочным капиталом, а вы получаете опыт после 3 его заданий.</p>
+          <div class="dfb-copy-row">
+            <code class="num">open-sites.io/c/id1042</code>
+            <button type="button" class="dfb-btn-cobalt xs" id="dfbQuickCopy">Копировать</button>
+          </div>
+        </article>
+      </aside>
+    </div>
+  </section>
+
+  <section class="dfb-view" id="view-market" hidden>
+    <div class="dfb-head-bar">
+      <div>
+        <span class="dfb-kicker">РЫНОК · 199 ИНСТРУМЕНТОВ</span>
+        <h1>Биржевой зал и торговые позиции</h1>
+      </div>
+      <div class="dfb-chips" id="dfbMktCats">
+        <button type="button" class="dfb-chip is-on" data-cat="crypto">Крипта · Live</button>
+        <button type="button" class="dfb-chip" data-cat="stocks">Акции</button>
+        <button type="button" class="dfb-chip" data-cat="metals">Металлы</button>
+        <button type="button" class="dfb-chip" data-cat="fx">Валюты</button>
+        <button type="button" class="dfb-chip" data-cat="indices">Индексы</button>
+      </div>
+    </div>
+
+    <div class="dfb-mkt-grid">
+      <aside class="dfb-sheet dfb-watch">
+        <div class="dfb-watch-head">
+          <span class="dfb-lbl">АКТИВ</span>
+          <span class="dfb-lbl">ЦЕНА · 24Ч</span>
+        </div>
+        <div class="dfb-watch-list" id="dfbWatchList"></div>
+      </aside>
+
+      <div class="dfb-mkt-center">
+        <article class="dfb-sheet">
+          <div class="dfb-sym-bar">
+            <div>
+              <div class="dfb-sym-title"><strong id="dfbSymCode">BTC / USDT</strong> <span id="dfbSymName">Bitcoin</span> <em id="dfbSymSrc">LIVE · BINANCE</em></div>
+              <div class="dfb-readout num" id="dfbOhlc">O 92 410 · H 94 890 · L 91 980 · C 94 280</div>
+            </div>
+            <div class="dfb-sym-right">
+              <strong class="num" id="dfbSymPrice">$94 280.40</strong>
+              <span class="num dfb-up" id="dfbSymChg">+2.84%</span>
+            </div>
+          </div>
+          <div class="dfb-chart-bar">
+            <div class="dfb-seg xs" id="dfbTfSeg">
+              <button type="button" data-tf="1m">1м</button>
+              <button type="button" data-tf="5m">5м</button>
+              <button type="button" data-tf="1h" class="is-on">1ч</button>
+              <button type="button" data-tf="24h">24ч</button>
+            </div>
+            <div class="dfb-seg xs" id="dfbCsSeg">
+              <button type="button" data-cs="candle" class="is-on">Свечи</button>
+              <button type="button" data-cs="line">Линия</button>
+            </div>
+          </div>
+          <div class="dfb-canvas-wrap tall">
+            <canvas id="dfbMarketCanvas"></canvas>
+          </div>
+        </article>
+
+        <article class="dfb-sheet">
+          <div class="dfb-sheet-head">
+            <h2>Открытые позиции</h2>
+            <span class="dfb-lbl num" id="dfbPosCnt">2 позиции</span>
+          </div>
+          <div class="dfb-pos-list" id="dfbPosList"></div>
+        </article>
+      </div>
+
+      <aside class="dfb-sheet dfb-ticket">
+        <div class="dfb-sheet-head">
+          <span class="dfb-lbl">ЗАЯВКА НА СДЕЛКУ</span>
+          <span class="dfb-free num">Свободно <b id="dfbOrderFree">$118 420</b></span>
+        </div>
+        <div class="dfb-side-seg" id="dfbSideSeg">
+          <button type="button" data-side="1" class="is-buy is-on">Купить · Лонг</button>
+          <button type="button" data-side="-1" class="is-sell">Продать · Шорт</button>
+        </div>
+        <label class="dfb-fld">
+          <span>Сумма залога ($)</span>
+          <div class="dfb-inp"><span>$</span><input type="number" id="dfbOrderAmt" value="5000" min="50" step="100" class="num"></div>
+        </label>
+        <div class="dfb-quick" id="dfbOrderPct">
+          <button type="button" data-pct="0.1">10%</button>
+          <button type="button" data-pct="0.25">25%</button>
+          <button type="button" data-pct="0.5">50%</button>
+          <button type="button" data-pct="1">Всё</button>
+        </div>
+        <div class="dfb-fld">
+          <span>Кредитное плечо</span>
+          <div class="dfb-quick" id="dfbLevSeg">
+            <button type="button" data-lev="1">×1</button>
+            <button type="button" data-lev="2" class="is-on">×2</button>
+            <button type="button" data-lev="5">×5</button>
+            <button type="button" data-lev="10">×10</button>
+          </div>
+        </div>
+        <dl class="dfb-meta num" id="dfbOrderMeta"></dl>
+        <button type="button" class="dfb-btn-trade buy" id="dfbPlaceOrder">Открыть Лонг BTC</button>
+        <p class="dfb-fine">Комиссия 0.1% от объёма позиции. Срока закрытия нет.</p>
+      </aside>
+    </div>
+  </section>
+
+  <section class="dfb-view" id="view-bets" hidden>
+    <div class="dfb-head-bar">
+      <div>
+        <span class="dfb-kicker">РЫНКИ ПРОГНОЗОВ БЕЗ МАРЖИ БУКМЕКЕРА</span>
+        <h1>Спорт и события Polymarket</h1>
+      </div>
+      <div class="dfb-seg" id="dfbBetTab">
+        <button type="button" data-bt="sport" class="is-on">Спортивная линия</button>
+        <button type="button" data-bt="poly">Прогнозы Polymarket</button>
+      </div>
+    </div>
+
+    <div class="dfb-bets-grid">
+      <div class="dfb-bets-left">
+        <div class="dfb-chips" id="dfbSportFilt">
+          <button type="button" class="dfb-chip is-on" data-sp="all">Все матчи</button>
+          <button type="button" class="dfb-chip" data-sp="football">Футбол</button>
+          <button type="button" class="dfb-chip" data-sp="mma">UFC / Бокс</button>
+          <button type="button" class="dfb-chip" data-sp="nba">NBA</button>
+          <button type="button" class="dfb-chip" data-sp="tennis">Теннис</button>
+        </div>
+        <div class="dfb-events" id="dfbEventsList"></div>
+        <article class="dfb-sheet">
+          <div class="dfb-sheet-head">
+            <h2>Открытые прогнозы</h2>
+            <span class="dfb-lbl num" id="dfbBetsCnt">2 в игре</span>
+          </div>
+          <div class="dfb-pos-list" id="dfbActiveBets"></div>
+        </article>
+      </div>
+
+      <aside class="dfb-sheet dfb-slip">
+        <div class="dfb-sheet-head">
+          <span class="dfb-lbl">КУПОН ПРОГНОЗА</span>
+          <span class="dfb-free num">Баланс <b id="dfbSlipFree">$118 420</b></span>
+        </div>
+        <div id="dfbSlipEmpty" class="dfb-slip-empty">
+          Выберите коэффициент в линии, чтобы рассчитать выплату и оформить прогноз.
+        </div>
+        <div id="dfbSlipForm" hidden>
+          <div class="dfb-slip-box">
+            <small id="dfbSlipEv">—</small>
+            <div class="dfb-slip-line"><strong id="dfbSlipOut">—</strong><span class="num dfb-cobalt" id="dfbSlipOdds">×1.00</span></div>
+          </div>
+          <label class="dfb-fld">
+            <span>Сумма прогноза ($)</span>
+            <div class="dfb-inp"><span>$</span><input type="number" id="dfbSlipAmt" value="1000" min="10" step="50" class="num"></div>
+          </label>
+          <div class="dfb-quick" id="dfbSlipPre">
+            <button type="button" data-sa="100">$100</button>
+            <button type="button" data-sa="500">$500</button>
+            <button type="button" data-sa="2500">$2 500</button>
+            <button type="button" data-sa="max">10%</button>
+          </div>
+          <div class="dfb-payout">
+            <span>Потенциальная выплата</span>
+            <strong class="num dfb-up" id="dfbSlipPay">$0.00</strong>
+          </div>
+          <button type="button" class="dfb-btn-cobalt dfb-wide" id="dfbConfirmBet">Подтвердить прогноз</button>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <section class="dfb-view" id="view-loans" hidden>
+    <div class="dfb-head-bar">
+      <div>
+        <span class="dfb-kicker">ЧАСТНОЕ КРЕДИТОВАНИЕ И РЕФЕРАЛЬНЫЕ ЧЕКИ</span>
+        <h1>Друзья, P2P-займы и именные чеки</h1>
+      </div>
+      <span class="dfb-badge-cobalt num">КРЕДИТНЫЙ РЕЙТИНГ AAA · 942 / 1000</span>
+    </div>
+
+    <div class="dfb-cheque-layout">
+      <article class="dfb-sheet">
+        <div class="dfb-seg" id="dfbChType">
+          <button type="button" data-ct="transfer" class="is-on">Отправить чек</button>
+          <button type="button" data-ct="lend">Дать в долг</button>
+          <button type="button" data-ct="borrow">Попросить в долг</button>
+        </div>
+        <div class="dfb-ch-form">
+          <label class="dfb-fld">
+            <span>Сумма чека ($)</span>
+            <div class="dfb-inp"><span>$</span><input type="number" id="dfbChAmt" value="15000" min="100" step="500" class="num"></div>
+          </label>
+          <div class="dfb-quick" id="dfbChPre">
+            <button type="button" data-ca="5000">$5K</button>
+            <button type="button" data-ca="15000" class="is-on">$15K</button>
+            <button type="button" data-ca="50000">$50K</button>
+            <button type="button" data-ca="100000">$100K</button>
+          </div>
+          <div id="dfbRateWrap" hidden>
+            <div class="dfb-rate-top"><span>Процент за 30 дней (единоразово)</span><b class="num dfb-cobalt" id="dfbRateVal">12%</b></div>
+            <input type="range" id="dfbRateInp" min="0" max="30" value="12" class="dfb-range">
+            <div class="dfb-readout num" id="dfbRateCalc">К возврату: $16 800</div>
+          </div>
+          <label class="dfb-fld">
+            <span>Подпись на бланке чека</span>
+            <div class="dfb-inp"><input type="text" id="dfbChNote" maxlength="80" value="На первую сделку в портфеле — возвращай с прибылью"></div>
+          </label>
+          <div class="dfb-btn-row">
+            <button type="button" class="dfb-btn-cobalt" id="dfbMakeCheque">Сформировать чек-ссылку</button>
+            <button type="button" class="dfb-btn-line" id="dfbCopyInvite">Скопировать инвайт</button>
+          </div>
+          <p class="dfb-fine">Друг по ссылке получает <b>+$100 000</b> подарком на старт. Чек действует 7 дней; невостребованные средства возвращаются автоматически.</p>
+        </div>
+      </article>
+
+      <div class="dfb-ch-right">
+        
+        <div class="dfb-paper-cheque">
+          <div class="dfb-pch-head">
+            <span>DOFA PRIVATE BANK · GENEVA / TBILISI</span>
+            <span class="num">CHECK № DF-8492</span>
+          </div>
+          <div class="dfb-pch-kind" id="dfbPchKind">ПЕРСОНАЛЬНЫЙ ПЕРЕВОД · +$100 000 НОВИЧКУ</div>
+          <div class="dfb-pch-amt num" id="dfbPchAmt">$15 000.00</div>
+          <div class="dfb-pch-note" id="dfbPchNote">«На первую сделку в портфеле — возвращай с прибылью»</div>
+          <div class="dfb-pch-foot">
+            <div><small>ВЫПИСАЛ</small><b class="num">@bankir · id1042</b></div>
+            <div><small>УСЛОВИЯ</small><b class="num" id="dfbPchTerms">0% · 7 дней</b></div>
+            <div><small>БОНУС НОВИЧКУ</small><b class="num dfb-up">+$100 000</b></div>
+          </div>
+        </div>
+
+        <article class="dfb-sheet">
+          <div class="dfb-sheet-head">
+            <span class="dfb-lbl">КОРОТКОЕ ИМЯ КОШЕЛЬКА</span>
+            <span class="dfb-badge-cobalt">НАВСЕГДА</span>
+          </div>
+          <p class="dfb-fine" style="margin-top:0;margin-bottom:10px">Короткое имя вместо <code>id1042</code> на чеках и в рейтинге. Игровые доллары не продаются — только уникальное имя.</p>
+          <div class="dfb-vanity-bar">
+            <div class="dfb-inp sm"><span>@</span><input type="text" id="dfbVanityInp" value="wealth" maxlength="20"></div>
+            <span class="dfb-vanity-res num" id="dfbVanityRes">@wealth свободно · 1 900 ★</span>
+          </div>
+        </article>
+      </div>
+    </div>
+
+    <div class="dfb-two-col">
+      <article class="dfb-sheet">
+        <div class="dfb-sheet-head"><h2>Мне должны</h2><strong class="num dfb-up" id="dfbOwedTot">$42 500</strong></div>
+        <div class="dfb-loan-list" id="dfbOwedList"></div>
+      </article>
+      <article class="dfb-sheet">
+        <div class="dfb-sheet-head"><h2>Я должен</h2><strong class="num dfb-down" id="dfbOweTot">$12 000</strong></div>
+        <div class="dfb-loan-list" id="dfbOweList"></div>
+      </article>
+    </div>
+
+    <div class="dfb-two-col">
+      <article class="dfb-sheet">
+        <div class="dfb-sheet-head"><h2>Открытые ссылки-чеки</h2><span class="dfb-lbl">СРОК 7 ДНЕЙ</span></div>
+        <div class="dfb-loan-list" id="dfbChList"></div>
+      </article>
+      <article class="dfb-sheet">
+        <div class="dfb-sheet-head"><h2>Реферальная книга</h2><span class="dfb-lbl">ОПЫТ ПОСЛЕ 3 ЗАДАНИЙ</span></div>
+        <div class="dfb-table-wrap">
+          <table class="dfb-table">
+            <thead><tr><th>Приглашённый</th><th>Статус</th><th class="r">Задания</th><th class="r">Бонус</th></tr></thead>
+            <tbody id="dfbFriendsBody"></tbody>
+          </table>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section class="dfb-view" id="view-bank" hidden>
+    <div class="dfb-head-bar">
+      <div>
+        <span class="dfb-kicker">DOFA RESERVE VAULT</span>
+        <h1>Частный банк и система рангов</h1>
+      </div>
+      <span class="dfb-lbl num">РЕЗЕРВ: <b id="dfbVaultTop">$9 700 000</b></span>
+    </div>
+
+    <div class="dfb-two-col">
+      <article class="dfb-sheet dfb-vault-sheet">
+        <span class="dfb-lbl">СВОБОДНЫЕ СРЕДСТВА НА СЧЁТЕ</span>
+        <div class="dfb-vault-big num" id="dfbVaultCash">$118 420.00</div>
+        <div class="dfb-vault-info">
+          <span>Доступно в резерве: <b class="num" id="dfbVaultRes">$9 700 000</b></span>
+          <span>За курс из 11 уроков: <b class="num dfb-up">+$20 000 000</b></span>
+        </div>
+        <div class="dfb-quick" id="dfbDepBtns">
+          <button type="button" data-dep="10000">+$10K</button>
+          <button type="button" data-dep="50000">+$50K</button>
+          <button type="button" data-dep="250000">+$250K</button>
+          <button type="button" data-dep="1000000">+$1M</button>
+        </div>
+        <p class="dfb-fine">Виртуальные средства служат для обучения и моделирования. Пополнение и вывод реальных денег технически отсутствуют.</p>
+      </article>
+
+      <article class="dfb-sheet">
+        <div class="dfb-sheet-head"><h2>10 ступеней мастерства</h2><span class="dfb-cobalt num">1 480 / 2 200 XP</span></div>
+        <div class="dfb-ranks" id="dfbRanksList"></div>
+      </article>
+    </div>
+  </section>
+</main>
+
+<nav class="dfb-mob-nav" aria-label="Мобильная навигация">
+  <a href="#stat" class="is-active" data-nav="stat">Кабинет</a>
+  <a href="#market" data-nav="market">Рынок</a>
+  <a href="#bets" data-nav="bets">Прогнозы</a>
+  <a href="#loans" data-nav="loans">Займы</a>
+  <a href="#bank" data-nav="bank">Банк</a>
+</nav>
+
+<div class="dfb-modal" id="dfbPauseModal" hidden>
+  <div class="dfb-modal-card" role="dialog" aria-modal="true" aria-labelledby="dfbPauseH">
+    <div class="dfb-sheet-head">
+      <span class="dfb-kicker">ДИСЦИПЛИНА · ПРАВДА</span>
+      <button type="button" class="dfb-close" id="dfbClosePause" aria-label="Закрыть">×</button>
+    </div>
+    <h2 id="dfbPauseH">Минута тишины</h2>
+    <p>Рынок никуда не уйдёт. Сделайте 4 ровных дыхательных цикла перед следующим решением.</p>
+    <div class="dfb-breath" id="dfbBreathText">Вдох · 4 сек</div>
+    <button type="button" class="dfb-btn-ink dfb-wide" id="dfbEndPause">Вернуться к портфелю</button>
+  </div>
+</div>
+
+<div class="dfb-toast" id="dfbToast" role="status" aria-live="polite"></div>
+
+<script src="app.js"></script>
+</body>
+</html>

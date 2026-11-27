@@ -1,0 +1,714 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#080A0D">
+<title>DOFAMART · Sovereign Desk — Финансовый терминал, прогнозы и P2P-займы</title>
+<meta name="description" content="Институциональный симулятор торговли, прогнозов на спорт, P2P-займов и глубокой аналитики капитала на виртуальные средства.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Spectral:ital,wght@0,500;0,600;1,500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body class="dfa-body">
+
+<div class="dfa-ticker-bar" aria-label="Живые котировки">
+  <div class="dfa-ticker-track" id="dfaTickerTrack"></div>
+</div>
+
+<div class="dfa-shell">
+  
+  <aside class="dfa-rail" aria-label="Основная навигация">
+    <div class="dfa-brand">
+      <a class="dfa-logo" href="#stat" data-nav="stat">
+        <span class="dfa-monogram" aria-hidden="true">DF</span>
+        <span class="dfa-brand-txt">
+          <strong>DOFAMART</strong>
+          <small>SOVEREIGN DESK</small>
+        </span>
+      </a>
+    </div>
+
+    <div class="dfa-acct-chip">
+      <div class="dfa-acct-row">
+        <span class="dfa-acct-id num" id="dfaRailId">id1042 · @bankir</span>
+        <span class="dfa-tier-badge" id="dfaRailLvl">Ур. 5 · Инвестор</span>
+      </div>
+      <div class="dfa-acct-eq">
+        <span>Чистый капитал</span>
+        <strong class="num" id="dfaRailEquity">$348 620.00</strong>
+      </div>
+      <div class="dfa-acct-mini">
+        <span>Свободно: <b class="num" id="dfaRailCash">$118 420</b></span>
+        <span class="dfa-up num" id="dfaRailRoi">+16.2%</span>
+      </div>
+    </div>
+
+    <nav class="dfa-nav" aria-label="Разделы терминала">
+      <a href="#stat" class="dfa-nav-item is-active" data-nav="stat">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19h16M7 15V9M12 15V5M17 15v-4"/></svg>
+        <span>Кабинет и Статистика</span>
+      </a>
+      <a href="#market" class="dfa-nav-item" data-nav="market">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 17l6-6 4 3 8-8"/><path d="M16 6h5v5"/></svg>
+        <span>Торговый терминал</span>
+        <em class="dfa-pill num">199</em>
+      </a>
+      <a href="#bets" class="dfa-nav-item" data-nav="bets">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 3v18M3 12h18"/></svg>
+        <span>Спорт и Прогнозы</span>
+        <em class="dfa-pill live">LIVE</em>
+      </a>
+      <a href="#loans" class="dfa-nav-item" data-nav="loans">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="6" width="18" height="12" rx="2"/><path d="M3 10h18M8 14h4"/></svg>
+        <span>Друзья, Чеки и Займы</span>
+        <em class="dfa-pill gold" id="dfaLoanBadge">3</em>
+      </a>
+      <a href="#bank" class="dfa-nav-item" data-nav="bank">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 10h18M5 10v8M10 10v8M14 10v8M19 10v8M2 18h20M12 3l9 7H3z"/></svg>
+        <span>Банк и Уровни</span>
+      </a>
+    </nav>
+
+    <div class="dfa-rail-cta">
+      <button type="button" class="dfa-btn-gold dfa-wide" data-open-cheque>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+        <span>Выписать чек другу</span>
+      </button>
+      <p class="dfa-rail-note">Другу — <b>+$100 000</b> виртуального капитала за вход по вашей ссылке.</p>
+    </div>
+
+    <div class="dfa-rail-foot">
+      <div class="dfa-ver-switch" aria-label="Переключатель дизайн-концептов">
+        <a href="index.html" class="is-on">1 · Обсидиан</a>
+        <a href="../dofamart-fin-b/index.html">2 · Пергамент</a>
+      </div>
+      <a href="../dofamart/akcii/index.html" class="dfa-back-link">← Текущий Dofamart</a>
+    </div>
+  </aside>
+
+  <div class="dfa-stage">
+    <header class="dfa-topbar">
+      <div class="dfa-top-left">
+        <div class="dfa-mob-brand">
+          <span class="dfa-monogram sm">DF</span>
+          <strong>DOFAMART</strong>
+        </div>
+        <div class="dfa-crumb">
+          <span class="dfa-coord">DOFA PRIVATE TERMINAL · СИМУЛЯЦИЯ</span>
+          <span class="dfa-live-dot"><i></i>Binance &amp; Polymarket Feed</span>
+        </div>
+      </div>
+      <div class="dfa-top-right">
+        <div class="dfa-ver-mini">
+          <a href="index.html" class="is-on">Стиль 1</a>
+          <a href="../dofamart-fin-b/index.html">Стиль 2</a>
+        </div>
+        <button type="button" class="dfa-btn-ghost sm" id="dfaModeToggle" title="Переключить между демо-портфелем и чистым стартом">
+          Демо-портфель
+        </button>
+        <button type="button" class="dfa-btn-ghost sm" id="dfaPauseBtn" title="Минута тишины — контроль эмоций">
+          Пауза 4×4
+        </button>
+        <button type="button" class="dfa-btn-gold sm" data-open-cheque>
+          + Чек другу
+        </button>
+      </div>
+    </header>
+
+    <main class="dfa-main">
+
+      <section class="dfa-view" id="view-stat">
+        <div class="dfa-vhead">
+          <div class="dfa-vhead-row">
+            <h1>Кабинет и аналитика капитала</h1>
+            <div class="dfa-seg" id="dfaStatPeriod" role="tablist" aria-label="Период статистики">
+              <button type="button" data-per="day">Сегодня</button>
+              <button type="button" data-per="7d">7 дней</button>
+              <button type="button" data-per="30d" class="is-on">30 дней</button>
+              <button type="button" data-per="all">Всё время</button>
+            </div>
+          </div>
+          <p class="dfa-vlead">Полная картина счёта: структура активов, кривая доходности против S&amp;P 500, поведенческие ошибки и книга займов.</p>
+        </div>
+
+        <div class="dfa-empty-hero" id="dfaEmptyState" hidden>
+          <div class="dfa-empty-copy">
+            <span class="dfa-coord">СТАРТОВЫЙ СЧЁТ АКТИВИРОВАН</span>
+            <h2>Ваш личный финансовый стол готов к первой сделке</h2>
+            <p>В сейфе доступно <b class="num">$10 000 000</b> виртуального резерва. Откройте первую позицию на рынке, соберите прогноз на спорт или отправьте другу подарочный чек на $100 000.</p>
+            <div class="dfa-btn-row">
+              <button type="button" class="dfa-btn-gold" data-nav="market">Перейти в терминал</button>
+              <button type="button" class="dfa-btn-ghost" data-nav="loans">Отправить чек другу (+$100K)</button>
+              <button type="button" class="dfa-btn-ghost" id="dfaRestoreDemo">Вернуть демо-портфель</button>
+            </div>
+          </div>
+          <div class="dfa-empty-steps">
+            <div class="dfa-step-item"><span>01</span><div><b>Пополните счёт из сейфа</b><small>Без риска и реальных списаний</small></div></div>
+            <div class="dfa-step-item"><span>02</span><div><b>Совершите 3 сделки или прогноза</b><small>Откроется карта времени и аудит «Правда»</small></div></div>
+            <div class="dfa-step-item"><span>03</span><div><b>Пригласите друга чеком</b><small>Оба получите очки и репутацию кредитора</small></div></div>
+          </div>
+        </div>
+
+        <div id="dfaStatContent">
+          
+          <div class="dfa-kpi-grid">
+            <article class="dfa-card dfa-card-hero dfa-spot">
+              <div class="dfa-card-top">
+                <span class="dfa-lbl">СОВОКУПНЫЙ КАПИТАЛ (NET WORTH)</span>
+                <span class="dfa-badge-up num" id="dfaKpiDelta">+$48 620.00 (+16.2%)</span>
+              </div>
+              <div class="dfa-big-num num" id="dfaKpiTotal">$348 620.00</div>
+              <div class="dfa-alloc-bar" id="dfaAllocBar" aria-label="Структура капитала"></div>
+              <ul class="dfa-alloc-legend" id="dfaAllocLegend"></ul>
+            </article>
+
+            <article class="dfa-card dfa-spot">
+              <span class="dfa-lbl">РЕЗУЛЬТАТ ТОРГОВЛИ И ПРОГНОЗОВ</span>
+              <div class="dfa-sub-kpi">
+                <div>
+                  <small>Торговля (42 сделки)</small>
+                  <strong class="num dfa-up" id="dfaKpiTrade">+$34 890</strong>
+                </div>
+                <div>
+                  <small>Спорт и Polymarket</small>
+                  <strong class="num dfa-up" id="dfaKpiBets">+$9 430</strong>
+                </div>
+                <div>
+                  <small>Проценты по займам</small>
+                  <strong class="num dfa-gold" id="dfaKpiLoanInc">+$4 300</strong>
+                </div>
+                <div>
+                  <small>Ушло на комиссии</small>
+                  <strong class="num dfa-down" id="dfaKpiFees">−$1 420</strong>
+                </div>
+              </div>
+            </article>
+
+            <article class="dfa-card dfa-card-credit dfa-spot">
+              <div class="dfa-card-top">
+                <span class="dfa-lbl">КРЕДИТНЫЙ РЕЙТИНГ И СЕТЬ</span>
+                <span class="dfa-rating-pill num">AAA · 942</span>
+              </div>
+              <div class="dfa-credit-split">
+                <div>
+                  <small>Мне должны (2)</small>
+                  <strong class="num dfa-up" id="dfaKpiOwed">$42 500</strong>
+                </div>
+                <div>
+                  <small>Я должен (1)</small>
+                  <strong class="num dfa-down" id="dfaKpiOwe">$12 000</strong>
+                </div>
+              </div>
+              <div class="dfa-ref-strip">
+                <div>
+                  <small>Реферальная сеть</small>
+                  <strong id="dfaRefCount">7 друзей · 5 активных</strong>
+                </div>
+                <button type="button" class="dfa-btn-gold xs" data-nav="loans">Займы и чеки →</button>
+              </div>
+            </article>
+          </div>
+
+          <div class="dfa-grid-main">
+            <article class="dfa-card dfa-chart-card">
+              <div class="dfa-card-head">
+                <div>
+                  <h2>Кривая капитала во времени</h2>
+                  <div class="dfa-chart-readout num" id="dfaEqReadout">Наведите на график для детализации по дню</div>
+                </div>
+                <div class="dfa-bench-toggles">
+                  <button type="button" class="dfa-chip is-on" data-bench="sp500">vs S&amp;P 500</button>
+                  <button type="button" class="dfa-chip" data-bench="cash">vs Наличные</button>
+                </div>
+              </div>
+              <div class="dfa-canvas-wrap">
+                <canvas id="dfaEquityCanvas"></canvas>
+              </div>
+              <div class="dfa-bench-summary" id="dfaBenchSummary"></div>
+            </article>
+
+            <article class="dfa-card dfa-truth-card">
+              <div class="dfa-card-head">
+                <h2>Диагностика «Почему так вышло»</h2>
+                <span class="dfa-lbl">АУДИТ ПОВЕДЕНИЯ</span>
+              </div>
+              <ul class="dfa-insights" id="dfaInsightsList"></ul>
+              <div class="dfa-truth-foot">
+                <div>
+                  <small>Сделок в спешке (менее 3 мин)</small>
+                  <b class="num">4 сделки · точность 25%</b>
+                </div>
+                <button type="button" class="dfa-btn-ghost xs" id="dfaPauseInline">Минута тишины</button>
+              </div>
+            </article>
+          </div>
+
+          <div class="dfa-grid-lower">
+            <article class="dfa-card">
+              <div class="dfa-card-head">
+                <div>
+                  <h2>Когда вы зарабатываете, а когда теряете</h2>
+                  <div class="dfa-hm-tip num" id="dfaHmTip">Сетка 7 дней × 24 часа · наведите на ячейку</div>
+                </div>
+                <div class="dfa-seg sm" id="dfaHmMode">
+                  <button type="button" data-hm="res" class="is-on">Результат $</button>
+                  <button type="button" data-hm="act">Сделки</button>
+                </div>
+              </div>
+              <div class="dfa-hm-scroll">
+                <div class="dfa-hm" id="dfaHeatmap"></div>
+              </div>
+            </article>
+
+            <article class="dfa-card">
+              <div class="dfa-card-head">
+                <h2>Эффективность по плечу и рынкам</h2>
+                <span class="dfa-lbl">ЗАКРЫТЫЕ ПОЗИЦИИ</span>
+              </div>
+              <div class="dfa-table-wrap">
+                <table class="dfa-table">
+                  <thead>
+                    <tr>
+                      <th>Сегмент / Плечо</th>
+                      <th class="r">Сделок</th>
+                      <th class="r">В плюс</th>
+                      <th class="r">Итог $</th>
+                    </tr>
+                  </thead>
+                  <tbody id="dfaBreakdownBody"></tbody>
+                </table>
+              </div>
+            </article>
+          </div>
+
+          <article class="dfa-card">
+            <div class="dfa-card-head">
+              <h2>Журнал операций кабинета</h2>
+              <div class="dfa-chips" id="dfaFeedFilter">
+                <button type="button" class="dfa-chip is-on" data-f="all">Все</button>
+                <button type="button" class="dfa-chip" data-f="trade">Сделки</button>
+                <button type="button" class="dfa-chip" data-f="bet">Прогнозы</button>
+                <button type="button" class="dfa-chip" data-f="loan">Займы и чеки</button>
+              </div>
+            </div>
+            <ul class="dfa-feed" id="dfaFeedList"></ul>
+          </article>
+        </div>
+      </section>
+
+      <section class="dfa-view" id="view-market" hidden>
+        <div class="dfa-vhead">
+          <div class="dfa-vhead-row">
+            <h1>Торговый терминал</h1>
+            <div class="dfa-chips" id="dfaMktCats">
+              <button type="button" class="dfa-chip is-on" data-cat="crypto">Крипта · Live</button>
+              <button type="button" class="dfa-chip" data-cat="stocks">Акции</button>
+              <button type="button" class="dfa-chip" data-cat="metals">Металлы</button>
+              <button type="button" class="dfa-chip" data-cat="fx">Валюты</button>
+              <button type="button" class="dfa-chip" data-cat="indices">Индексы</button>
+            </div>
+          </div>
+          <p class="dfa-vlead">199 инструментов с котировками в реальном времени, плечом до ×10 и честным расчётом ликвидации и комиссии 0.1%.</p>
+        </div>
+
+        <div class="dfa-terminal">
+          
+          <aside class="dfa-watchlist">
+            <div class="dfa-watch-head">
+              <span class="dfa-lbl">ИНСТРУМЕНТЫ</span>
+              <span class="dfa-lbl">ЦЕНА / 24Ч</span>
+            </div>
+            <div class="dfa-watch-list" id="dfaWatchList"></div>
+          </aside>
+
+          <div class="dfa-chart-col">
+            <article class="dfa-card dfa-mkt-card">
+              <div class="dfa-mkt-top">
+                <div class="dfa-asset-title">
+                  <strong id="dfaSymCode">BTC / USDT</strong>
+                  <span id="dfaSymName">Bitcoin</span>
+                  <em class="dfa-src-tag" id="dfaSymSrc">LIVE · BINANCE</em>
+                </div>
+                <div class="dfa-asset-price">
+                  <strong class="num" id="dfaSymPrice">$94 280.40</strong>
+                  <span class="num dfa-up" id="dfaSymChg">+2.84%</span>
+                </div>
+              </div>
+              <div class="dfa-mkt-tools">
+                <div class="dfa-ohlc num" id="dfaOhlc">O 92 410 · H 94 890 · L 91 980 · C 94 280</div>
+                <div class="dfa-mkt-btns">
+                  <div class="dfa-seg xs" id="dfaTfGroup">
+                    <button type="button" data-tf="1m">1м</button>
+                    <button type="button" data-tf="5m">5м</button>
+                    <button type="button" data-tf="1h" class="is-on">1ч</button>
+                    <button type="button" data-tf="24h">24ч</button>
+                  </div>
+                  <div class="dfa-seg xs" id="dfaChartStyle">
+                    <button type="button" data-cs="candle" class="is-on">Свечи</button>
+                    <button type="button" data-cs="line">Линия</button>
+                  </div>
+                </div>
+              </div>
+              <div class="dfa-canvas-wrap tall">
+                <canvas id="dfaMarketCanvas"></canvas>
+              </div>
+            </article>
+
+            <article class="dfa-card">
+              <div class="dfa-card-head">
+                <h2>Открытые позиции</h2>
+                <span class="dfa-lbl num" id="dfaOpenPosCount">2 активные</span>
+              </div>
+              <div class="dfa-pos-list" id="dfaPositionsList"></div>
+            </article>
+          </div>
+
+          <aside class="dfa-order-col">
+            <article class="dfa-card dfa-ticket">
+              <div class="dfa-card-top">
+                <span class="dfa-lbl">ОРДЕР-ТИКЕТ</span>
+                <span class="dfa-free num">Свободно: <b id="dfaOrderFree">$118 420</b></span>
+              </div>
+
+              <div class="dfa-side-seg" id="dfaSideSeg">
+                <button type="button" data-side="1" class="is-buy is-on">Купить · Лонг</button>
+                <button type="button" data-side="-1" class="is-sell">Продать · Шорт</button>
+              </div>
+
+              <label class="dfa-field-lbl">
+                <span>Залог позиции (USD)</span>
+                <div class="dfa-input-box">
+                  <span>$</span>
+                  <input type="number" id="dfaOrderAmt" value="5000" min="50" step="100" class="num">
+                </div>
+              </label>
+
+              <div class="dfa-quick-row" id="dfaOrderPct">
+                <button type="button" data-pct="0.1">10%</button>
+                <button type="button" data-pct="0.25">25%</button>
+                <button type="button" data-pct="0.5">50%</button>
+                <button type="button" data-pct="1">Всё</button>
+              </div>
+
+              <div class="dfa-field-lbl">
+                <span>Кредитное плечо</span>
+                <div class="dfa-quick-row" id="dfaLevGroup">
+                  <button type="button" data-lev="1">×1</button>
+                  <button type="button" data-lev="2" class="is-on">×2</button>
+                  <button type="button" data-lev="5">×5</button>
+                  <button type="button" data-lev="10">×10</button>
+                </div>
+              </div>
+
+              <dl class="dfa-order-meta num" id="dfaOrderMeta"></dl>
+
+              <button type="button" class="dfa-btn-trade buy" id="dfaPlaceOrder">Открыть Лонг BTC</button>
+              <p class="dfa-micro-note">Срока экспирации нет — позицию закрываете вручную или по цене ликвидации.</p>
+            </article>
+          </aside>
+        </div>
+      </section>
+
+      <section class="dfa-view" id="view-bets" hidden>
+        <div class="dfa-vhead">
+          <div class="dfa-vhead-row">
+            <h1>Спорт и рынки прогнозов</h1>
+            <div class="dfa-seg" id="dfaBetTab">
+              <button type="button" data-bt="sport" class="is-on">Спорт · Линия</button>
+              <button type="button" data-bt="poly">Polymarket · Прогнозы</button>
+            </div>
+          </div>
+          <p class="dfa-vlead">Честные коэффициенты без маржи букмекера (`1 / вероятность исхода`) и возможность продать купон до финала.</p>
+        </div>
+
+        <div class="dfa-bets-layout">
+          <div class="dfa-bets-main">
+            <div class="dfa-chips" id="dfaBetSportsFilter">
+              <button type="button" class="dfa-chip is-on" data-sp="all">Все события</button>
+              <button type="button" class="dfa-chip" data-sp="football">Футбол</button>
+              <button type="button" class="dfa-chip" data-sp="mma">UFC / Бокс</button>
+              <button type="button" class="dfa-chip" data-sp="nba">Баскетбол NBA</button>
+              <button type="button" class="dfa-chip" data-sp="tennis">Теннис ATP</button>
+            </div>
+
+            <div class="dfa-events-list" id="dfaEventsList"></div>
+
+            <article class="dfa-card">
+              <div class="dfa-card-head">
+                <h2>Активные прогнозы в игре</h2>
+                <span class="dfa-lbl num" id="dfaActiveBetsCount">2 открытых</span>
+              </div>
+              <div class="dfa-active-bets" id="dfaActiveBetsList"></div>
+            </article>
+          </div>
+
+          <aside class="dfa-slip-col">
+            <article class="dfa-card dfa-slip-card">
+              <div class="dfa-card-top">
+                <span class="dfa-lbl">КУПОН ПРОГНОЗА</span>
+                <span class="dfa-free num">Баланс: <b id="dfaSlipFree">$118 420</b></span>
+              </div>
+              <div id="dfaSlipEmpty" class="dfa-slip-empty">
+                Нажмите на любой коэффициент в линии слева, чтобы рассчитать выплату и оформить прогноз.
+              </div>
+              <div id="dfaSlipForm" hidden>
+                <div class="dfa-slip-pick">
+                  <small id="dfaSlipEvent">—</small>
+                  <div class="dfa-slip-row">
+                    <strong id="dfaSlipOutcome">—</strong>
+                    <span class="dfa-odds-pill num" id="dfaSlipOdds">×1.00</span>
+                  </div>
+                </div>
+                <label class="dfa-field-lbl">
+                  <span>Сумма прогноза ($)</span>
+                  <div class="dfa-input-box">
+                    <span>$</span>
+                    <input type="number" id="dfaSlipAmt" value="1000" min="10" step="50" class="num">
+                  </div>
+                </label>
+                <div class="dfa-quick-row" id="dfaSlipPresets">
+                  <button type="button" data-sa="100">$100</button>
+                  <button type="button" data-sa="500">$500</button>
+                  <button type="button" data-sa="2500">$2 500</button>
+                  <button type="button" data-sa="max">10%</button>
+                </div>
+                <div class="dfa-slip-payout">
+                  <span>Потенциальная выплата</span>
+                  <strong class="num dfa-up" id="dfaSlipPayout">$0.00</strong>
+                </div>
+                <button type="button" class="dfa-btn-gold dfa-wide" id="dfaConfirmBet">Разместить прогноз</button>
+              </div>
+            </article>
+          </aside>
+        </div>
+      </section>
+
+      <section class="dfa-view" id="view-loans" hidden>
+        <div class="dfa-vhead">
+          <div class="dfa-vhead-row">
+            <h1>Друзья, P2P-чеки и кредитное бюро</h1>
+            <span class="dfa-rating-pill num">КРЕДИТНЫЙ РЕЙТИНГ AAA · 942 / 1000</span>
+          </div>
+          <p class="dfa-vlead">Выписывайте именные чеки друзьям, выдавайте займы до 30% на 30 дней и зарабатывайте репутацию частного банкира.</p>
+        </div>
+
+        <div class="dfa-cheque-studio">
+          <article class="dfa-card">
+            <div class="dfa-seg" id="dfaChequeType">
+              <button type="button" data-ct="transfer" class="is-on">Отправить чек</button>
+              <button type="button" data-ct="lend">Дать в долг</button>
+              <button type="button" data-ct="borrow">Попросить в долг</button>
+            </div>
+
+            <div class="dfa-cheque-fields">
+              <label class="dfa-field-lbl">
+                <span>Сумма чека (USD)</span>
+                <div class="dfa-input-box">
+                  <span>$</span>
+                  <input type="number" id="dfaChAmt" value="15000" min="100" step="500" class="num">
+                </div>
+              </label>
+
+              <div class="dfa-quick-row" id="dfaChPresets">
+                <button type="button" data-ca="5000">$5K</button>
+                <button type="button" data-ca="15000" class="is-on">$15K</button>
+                <button type="button" data-ca="50000">$50K</button>
+                <button type="button" data-ca="100000">$100K</button>
+              </div>
+
+              <div id="dfaChRateWrap" hidden>
+                <div class="dfa-rate-head">
+                  <span>Ставка на 30 дней (единоразово)</span>
+                  <strong class="num dfa-gold" id="dfaChRateVal">12%</strong>
+                </div>
+                <input type="range" id="dfaChRate" min="0" max="30" value="12" class="dfa-range">
+                <div class="dfa-rate-calc num" id="dfaChRateCalc">К возврату через 30 дней: $16 800</div>
+              </div>
+
+              <label class="dfa-field-lbl">
+                <span>Подпись на чеке (до 80 знаков)</span>
+                <div class="dfa-input-box">
+                  <input type="text" id="dfaChNote" maxlength="80" value="На первую сделку по BTC — возвращай с прибылью" placeholder="Например: На старт в портфель">
+                </div>
+              </label>
+
+              <div class="dfa-btn-row">
+                <button type="button" class="dfa-btn-gold" id="dfaCreateCheque">Выписать чек-ссылку</button>
+                <button type="button" class="dfa-btn-ghost" id="dfaCopyRefLink">Скопировать инвайт</button>
+              </div>
+              <p class="dfa-micro-note">Новичок по вашей ссылке автоматически получает <b>+$100 000</b> на старт. Чек действует 7 дней; если не заберут — сумма вернётся.</p>
+            </div>
+          </article>
+
+          <div class="dfa-cheque-preview-col">
+            <div class="dfa-bank-cheque" id="dfaBankCheque">
+              <div class="dfa-cheque-top">
+                <span class="dfa-cheque-bank">DOFA PRIVATE RESERVE · CHEQUE</span>
+                <span class="dfa-cheque-serial num" id="dfaChSerial">NO. DF-8492-A</span>
+              </div>
+              <div class="dfa-cheque-kind" id="dfaChPreviewKind">ПЕРСОНАЛЬНЫЙ ПЕРЕВОД · +$100 000 НОВИЧКУ</div>
+              <div class="dfa-cheque-amount num" id="dfaChPreviewAmt">$15 000.00</div>
+              <div class="dfa-cheque-note" id="dfaChPreviewNote">«На первую сделку по BTC — возвращай с прибылью»</div>
+              <div class="dfa-cheque-foot">
+                <div>
+                  <small>ОТ КОГО</small>
+                  <b class="num">@bankir · id1042</b>
+                </div>
+                <div>
+                  <small>УСЛОВИЯ</small>
+                  <b class="num" id="dfaChPreviewTerms">Без % · 7 дней</b>
+                </div>
+                <div>
+                  <small>ПОДАРОК ДРУГУ</small>
+                  <b class="num dfa-up">+$100 000</b>
+                </div>
+              </div>
+            </div>
+
+            <article class="dfa-card dfa-vanity-card">
+              <div class="dfa-card-top">
+                <span class="dfa-lbl">КОРОТКОЕ ИМЯ КОШЕЛЬКА (VANITY HANDLE)</span>
+                <span class="dfa-pill gold">НАВСЕГДА</span>
+              </div>
+              <p class="dfa-vanity-desc">Вместо номера <code>id1042</code> друзья видят именную подпись на чеках и в рейтинге. Игровые доллары не продаются — только статусное имя.</p>
+              <div class="dfa-vanity-row">
+                <div class="dfa-input-box sm">
+                  <span>@</span>
+                  <input type="text" id="dfaVanityInput" value="sovereign" maxlength="20" placeholder="bankir, whale...">
+                </div>
+                <div class="dfa-vanity-status num" id="dfaVanityStatus">Свободно · 1 400 ★</div>
+              </div>
+            </article>
+          </div>
+        </div>
+
+        <div class="dfa-loans-grid">
+          <article class="dfa-card">
+            <div class="dfa-card-head">
+              <h2>Мне должны</h2>
+              <span class="dfa-up num" id="dfaOwedTotal">$42 500</span>
+            </div>
+            <div class="dfa-loan-list" id="dfaOwedList"></div>
+          </article>
+
+          <article class="dfa-card">
+            <div class="dfa-card-head">
+              <h2>Я должен</h2>
+              <span class="dfa-down num" id="dfaOweTotal">$12 000</span>
+            </div>
+            <div class="dfa-loan-list" id="dfaOweList"></div>
+          </article>
+        </div>
+
+        <div class="dfa-loans-grid">
+          <article class="dfa-card">
+            <div class="dfa-card-head">
+              <h2>Активные ссылки-чеки</h2>
+              <span class="dfa-lbl">ДЕЙСТВУЮТ 7 ДНЕЙ</span>
+            </div>
+            <div class="dfa-loan-list" id="dfaChequesList"></div>
+          </article>
+
+          <article class="dfa-card">
+            <div class="dfa-card-head">
+              <h2>Приглашённые друзья</h2>
+              <span class="dfa-lbl">ОПЫТ ЗА АКТИВНОСТЬ</span>
+            </div>
+            <div class="dfa-table-wrap">
+              <table class="dfa-table">
+                <thead>
+                  <tr><th>Друг</th><th>Статус</th><th class="r">Заданий</th><th class="r">Ваш бонус</th></tr>
+                </thead>
+                <tbody id="dfaFriendsBody"></tbody>
+              </table>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="dfa-view" id="view-bank" hidden>
+        <div class="dfa-vhead">
+          <div class="dfa-vhead-row">
+            <h1>DOFA Private Vault и система рангов</h1>
+            <span class="dfa-lbl num">РЕЗЕРВ: <b id="dfaVaultLeft">$9 700 000</b></span>
+          </div>
+          <p class="dfa-vlead">Мгновенное пополнение виртуального счёта из личного сейфа и карьерная лестница от Ученика до Оракула.</p>
+        </div>
+
+        <div class="dfa-bank-grid">
+          <article class="dfa-card dfa-vault-card">
+            <span class="dfa-coord">DOFA PRIVATE RESERVE</span>
+            <div class="dfa-vault-bal-lbl">Свободные средства на счёте</div>
+            <div class="dfa-vault-bal num" id="dfaVaultCash">$118 420.00</div>
+            <div class="dfa-vault-meta">
+              <span>Доступно в резерве: <b class="num" id="dfaVaultRes">$9 700 000</b></span>
+              <span>Бонус за 11 уроков: <b class="num dfa-up">+$20 000 000</b></span>
+            </div>
+            <div class="dfa-quick-row" id="dfaDepositBtns">
+              <button type="button" data-dep="10000">+$10 000</button>
+              <button type="button" data-dep="50000">+$50 000</button>
+              <button type="button" data-dep="250000">+$250 000</button>
+              <button type="button" data-dep="1000000">+$1 000 000</button>
+            </div>
+            <p class="dfa-micro-note">Игровые средства предназначены исключительно для обучения и моделирования. Вывод и покупка за реальные деньги отсутствуют.</p>
+          </article>
+
+          <article class="dfa-card">
+            <div class="dfa-card-head">
+              <h2>Карьерная лестница (10 уровней)</h2>
+              <span class="dfa-gold num" id="dfaXpLabel">1 480 / 2 200 XP</span>
+            </div>
+            <div class="dfa-ranks" id="dfaRanksList"></div>
+          </article>
+        </div>
+      </section>
+    </main>
+  </div>
+</div>
+
+<nav class="dfa-mob-dock" aria-label="Мобильное меню">
+  <a href="#stat" class="is-active" data-nav="stat">
+    <svg viewBox="0 0 24 24"><path d="M4 19h16M7 15V9M12 15V5M17 15v-4"/></svg>
+    <span>Кабинет</span>
+  </a>
+  <a href="#market" data-nav="market">
+    <svg viewBox="0 0 24 24"><path d="M3 17l6-6 4 3 8-8"/><path d="M16 6h5v5"/></svg>
+    <span>Рынок</span>
+  </a>
+  <a href="#bets" data-nav="bets">
+    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 3v18M3 12h18"/></svg>
+    <span>Прогнозы</span>
+  </a>
+  <a href="#loans" data-nav="loans">
+    <svg viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="12" rx="2"/><path d="M3 10h18"/></svg>
+    <span>Займы</span>
+  </a>
+  <a href="#bank" data-nav="bank">
+    <svg viewBox="0 0 24 24"><path d="M3 10h18M5 10v8M12 10v8M19 10v8M2 18h20M12 3l9 7H3z"/></svg>
+    <span>Банк</span>
+  </a>
+</nav>
+
+<div class="dfa-modal" id="dfaPauseModal" hidden>
+  <div class="dfa-modal-card" role="dialog" aria-modal="true" aria-labelledby="dfaPauseTitle">
+    <div class="dfa-card-top">
+      <span class="dfa-coord">КОНТРОЛЬ ЭМОЦИЙ · ПРАВДА</span>
+      <button type="button" class="dfa-close" id="dfaClosePause" aria-label="Закрыть">×</button>
+    </div>
+    <h2 id="dfaPauseTitle">Минута тишины</h2>
+    <p>Рынок никуда не денется. После серии эмоциональных сделок сделайте 4 спокойных цикла дыхания.</p>
+    <div class="dfa-breath-ring" id="dfaBreathRing">
+      <span id="dfaBreathPhase">Вдох · 4</span>
+    </div>
+    <button type="button" class="dfa-btn-ghost dfa-wide" id="dfaEndPause">Вернуться с холодной головой</button>
+  </div>
+</div>
+
+<div class="dfa-toast" id="dfaToast" role="status" aria-live="polite"></div>
+
+<script src="app.js"></script>
+</body>
+</html>
